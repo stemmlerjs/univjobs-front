@@ -1,0 +1,8 @@
+{
+  "linters": {
+    "javascript": {
+      "type": "jshint",
+	  "include": "(\\.js$)"
+    }
+  }
+}
