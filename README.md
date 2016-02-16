@@ -1,24 +1,45 @@
+# Portfolio Redux App
 
-# univjobs-front (univjobs-front)
+A Portfolio example of an isomorphic rendering application in React and Redux. [Live Example Here](http://www.callumrimmer.co.uk)
 
-> Frontend of UnivJobs (React + Redux)
+<img src="http://g.recordit.co/cO0pqgO8Fo.gif" width="728" />
 
-## Running your project
+## Development Installation
 
-The generated project includes a development server on port `3000`, which will rebuild the app whenever you change application code. To start the server (with the dev-tools enabled), run:
+In the project's directory, run the following commands:
 
-```bash
+```
+$ npm install
 $ npm start
 ```
 
-To run the server with the dev-tools disabled, run:
+Then Visit
 
-```bash
-$ DEBUG=false npm start
+```
+http://localhost:3002
 ```
 
-To build for production, this command will output optimized production code:
+## Releasing to Production
 
-```bash
+Production has Devtools, logging and hot reloading middleware removed and the scripts/css compressed. 
+
+In the project's directory, run the following commands:
+
+```
 $ npm run build
+$ npm run start-prod
 ```
+
+Then Visit
+
+```
+http://localhost:3002
+```
+
+## Other Boilerplate code
+
+[General Redux App (with Undo)](https://github.com/caljrimmer/isomorphic-redux-app)
+
+## Credit
+
+App template was based on [Lanyon Theme](https://github.com/poole/lanyon) by [mdo](https://github.com/mdo)
