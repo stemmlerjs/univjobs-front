@@ -1,0 +1,13 @@
+[ignore]
+<PROJECT_ROOT>/student_job/node_modules/.*
+<PROJECT_ROOT>/student_job/assets/bundles/.*
+
+[include]
+<PROJECT_ROOT>/student_job/node_modules/react
+<PROJECT_ROOT>/student_job/assets/js/.*
+<PROJECT_ROOT>/student_job/node_modules/fbjs/flow/lib
+
+[libs]
+./student_job/node_modules/fbjs/flow/lib
+
+[options]

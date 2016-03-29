@@ -1,91 +1,42 @@
-var path = require('path');
-var webpack = require('webpack');
-var merge = require('merge');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var path = require("path")
+var webpack = require('webpack')
+var BundleTracker = require('webpack-bundle-tracker')
 
-var webpackConfig = {
+
+module.exports = {
+  context: __dirname,
+      
+  entry: [
+      'webpack-dev-server/client?http://0.0.0.0:3000', // WebpackDevServer host and port
+      'webpack/hot/only-dev-server', // "only" prevents reload on syntax errors
+      './js/index', // Your appʼs entry point
+  ],
+
   output: {
-    path: path.join(__dirname, 'dist'),
-    filename: 'bundle.js',
-    publicPath: '/static/'
+    path: path.resolve('../univjobs-back/student_job/assets/bundles/'),
+      // filename: '[name]-[hash].js',
+      filename: '[name]-[hash].js',
+      publicPath: 'http://localhost:3000/assets/bundles/' // Tell django to use this URL to load packages and not use STATIC_URL + bundle_name
   },
+
   plugins: [
-    new webpack.optimize.OccurenceOrderPlugin(),
-    new webpack.NoErrorsPlugin()
-  ]
-};
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoErrorsPlugin(), // don't reload if there is an error
+    new BundleTracker({filename: './webpack-stats.json'}),
+  ],
 
-if (process.env.NODE_ENV === 'production') {
-
-  webpackConfig = merge(webpackConfig,{
-    devtool: "source-map",
-    entry : [
-      './src/client/index.js'
-    ],
-    module: {
-      loaders: [{
-        test: /\.js$/,
-        loader: 'babel',
-        exclude: /node_modules/,
-        include: __dirname
+  module: {
+    loaders: [
+      // we pass the output from babel loader to react-hot loader
+      { test: /\.js?$/,
+        loaders: ['react-hot', 'jsx', 'babel?presets[]=react'],
+        exclude: /node_modules/
       },
-      { test: /\.(png|jpg|gif|jpeg)$/, loader: 'url-loader?limit=8192'},
-      { test: /\.css$/, loader: ExtractTextPlugin.extract('style-loader', 'css-loader?sourceMap') }
-    ]},
-    plugins : [
-      new webpack.DefinePlugin({
-        'process.env': {
-          NODE_ENV: JSON.stringify('production')
-        }
-      }),
-      new ExtractTextPlugin("app.css"),
-      new webpack.optimize.UglifyJsPlugin({minimize: true})
-    ]  
-  });
-
-}else{
-
-  webpackConfig = merge(webpackConfig,{
-    devtool: 'inline-source-map',
-    module: {
-      loaders: [{
-        test: /\.js$/,
-        loader: 'babel',
-        exclude: /node_modules/,
-        include: __dirname,
-        query: {
-          optional: ['runtime'],
-          stage: 2,
-          env: {
-            development: {
-              plugins: [
-                'react-transform'
-              ],
-              extra: {
-                'react-transform': {
-                  transforms: [{
-                    transform:  'react-transform-hmr',
-                    imports: ['react'],
-                    locals:  ['module']
-                  }]
-                }
-              }
-            }
-          }
-        }
-      },
-      { test: /\.(png|jpg|gif|jpeg)$/, loader: 'url-loader?limit=8192'},
-      { test: /\.css$/, loader: 'style-loader!css-loader' }
-    ]},
-    entry : [
-      'webpack-hot-middleware/client',
-      './src/client/index.js'
     ],
-    plugins : [
-      new webpack.HotModuleReplacementPlugin()
-    ]  
-  });
-  
+  },
+
+  resolve: {
+    modulesDirectories: ['node_modules', 'bower_components'],
+    extensions: ['', '.js', '.jsx']
+  }
 }
-
-module.exports = webpackConfig;

@@ -1,0 +1,13 @@
+{
+	"defs": [
+		"browser",
+		"ecma6",
+		"react"
+	],
+	"plugins": {
+		"highlight": {},
+		"webpack":{},
+		"node": {},
+		"complete_strings": {}
+	}
+}
