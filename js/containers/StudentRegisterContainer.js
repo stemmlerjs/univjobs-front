@@ -1,4 +1,4 @@
-// @flow
+/* @flow */
 import React from 'react';
 
 import StudentRegister from '../components/StudentRegister';
@@ -35,24 +35,23 @@ class StudentRegisterContainer extends React.Component {
     };
   }
 
+  state: {
+    password: string,
+    email: string
+  };
+
+
   componentDidMount() {
-    $.ajax({
-      url: 'http://localhost:8000/api/account/1/',
-      dataType: 'json',
-      success: function (data) {
-        this.setState({ data });
-      }.bind(this),
-    });
   }
 
   componentWillUnmount() {
   }
 
-  handleChangeEmail(event) {
+  handleChangeEmail(event: any) {
     this.setState({ email: event.target.value });
   }
 
-  handleChangePassword(event) {
+  handleChangePassword(event: any) {
     this.setState({ password: event.target.value });
   }
 
@@ -67,11 +66,9 @@ class StudentRegisterContainer extends React.Component {
       headers: {
         'X-CSRFToken': csrftoken,
       },
-    }).then((response) => {
-      this.setState({ token: response.data.key });
-      console.log(response);
+    }).then((response: any) => {
+      this.setState({ token: string = response.data.key });
     }).catch((response) => {
-      // console.log(response);
       this.setState({ data: response });
     });
 
@@ -100,6 +97,7 @@ class StudentRegisterContainer extends React.Component {
       />
     );
   }
+
 }
 
 

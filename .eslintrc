@@ -1,7 +1,9 @@
 {
+  "parser": "babel-eslint",
   "extends": "airbnb",
 
   "plugins": [
+    "babel",
     "flow-vars"
   ],
   "rules": {
