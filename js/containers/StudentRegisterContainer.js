@@ -35,23 +35,17 @@ class StudentRegisterContainer extends React.Component {
     };
   }
 
-  state: {
-    password: string,
-    email: string
-  };
-
-
   componentDidMount() {
   }
 
   componentWillUnmount() {
   }
 
-  handleChangeEmail(event: any) {
+  handleChangeEmail(any) {
     this.setState({ email: event.target.value });
   }
 
-  handleChangePassword(event: any) {
+  handleChangePassword(any) {
     this.setState({ password: event.target.value });
   }
 
