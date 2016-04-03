@@ -14,7 +14,7 @@ module.exports = {
   output: {
     path: path.resolve('../django/univjobs/assets/bundles/'),
     filename: '[name]-[hash].js',
-    publicPath: 'http://localhost:3000/assets/bundles/', // Tell django to use this URL to load packages and not use STATIC_URL + bundle_name
+    publicPath: 'http://www.univjobs.ca/assets/bundles/', // Tell django to use this URL to load packages and not use STATIC_URL + bundle_name
   },
 
   plugins: [
