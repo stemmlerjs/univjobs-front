@@ -1,6 +1,7 @@
 import React, { PropTypes}  from 'react';
 
-import {Button, Banner, Footer, Heading, Input, NavItem, Space, Toolbar} from 'rebass';
+import {Button, Banner,  Heading, Input, NavItem, Space, Toolbar} from 'rebass';
+import MainFooter from './MainFooter';
 
 function StudentRegister (props) {
 
@@ -30,6 +31,7 @@ function StudentRegister (props) {
             <Banner
                 align="center"
                 backgroundImage="http://libreshot.com/wp-content/uploads/2015/05/coffee-and-laptop-861x574.jpg"
+                style={{marginBottom: '0px'}}
             >
 
             <Heading
@@ -37,8 +39,8 @@ function StudentRegister (props) {
                 big={true}
                 level={1}
                 size={0}
-                >
-                    GET HIRED
+             >
+                GET HIRED
 
                 </Heading>
 
@@ -54,7 +56,7 @@ function StudentRegister (props) {
                     <Input
                         label="Sign Up"
                         name="email"
-                        placeholder="Email"
+                        placeholder="School Email"
                         rounded={true}
                         defaultValue={props.email}
                         onChange={props.handleChangeEmail}
@@ -62,9 +64,9 @@ function StudentRegister (props) {
                     />
 
                 <Input
-                    label="Password"
+                    label=""
                     name="password"
-                    placeholder="password"
+                    placeholder="Password"
                     rounded={true}
                     onChange={props.handleChangePassword}
                     type="password"
@@ -78,10 +80,8 @@ function StudentRegister (props) {
                 >
                     Submit
                 </Button>
-
             </Banner>
-            <Footer>
-            </Footer>
+            <MainFooter />
         </div>
     );
 }

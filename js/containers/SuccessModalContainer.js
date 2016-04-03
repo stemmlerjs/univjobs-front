@@ -1,36 +1,18 @@
 import React from 'react';
 
-import StudentRegister from '../components/StudentRegister';
-import SuccessModal from '../components/SuccessModal';
-
-import assign from 'object-assign';
-import $ from 'jquery';
-import axios from 'axios';
-
-class StudentRegisterContainer extends React.Component {
+class SuccessModalContainer extends React.Component {
 
     constructor() {
         super();
-        this.state = assign({
-            password: '',
-            email: '',
+        this.state = {
             modalOpen: false
-        });
-        
- //       this.toggle = this.toggle.bind(this);
+        };
     }
 
-    handleChangeEmail (event) {
-        this.setState({email: event.target.value});
-    }
 
-    handleChangePassword (event) {
-        this.setState({password: event.target.value});
+    handleModalOnRegister () {
+        this.setState({modalOpen: true});
     }
-
-//    handleModalOnSubmit () {
-//       this.setState({modalOpen: true});
-//    }
 
     handleSubmit () {
         var csrftoken = getCookie('csrftoken');
@@ -49,10 +31,8 @@ class StudentRegisterContainer extends React.Component {
             // console.log(response);
             this.setState({ data: response });
         });
-  
-        //Turn on modal
-        this.setState({modalOpen: true});
 
+        this.handleModalOnRegister();
         // $.ajax({
         //     url: 'http://localhost:8000/api/account/1/',
         //     dataType: 'json',
@@ -63,14 +43,13 @@ class StudentRegisterContainer extends React.Component {
     }
 
     componentDidMount() {
-        //$.ajax({
-        //    url: 'http://localhost:8000/api/account/1/',
-        //    dataType: 'json',
-        //    success: function(data) {
-        //        this.setState({data: data});
-        //    }.bind(this)
-       // });
-
+        $.ajax({
+            url: 'http://localhost:8000/api/account/1/',
+            dataType: 'json',
+            success: function(data) {
+                this.setState({data: data});
+            }.bind(this)
+        });
     }
 
     componentWillUnmount() {
@@ -78,7 +57,6 @@ class StudentRegisterContainer extends React.Component {
 
     render() {
         return (
-          <div>
             <StudentRegister
                 handleChangeEmail={(event) => this.handleChangeEmail(event)}
                 handleChangePassword={(event) => this.handleChangePassword(event)}
@@ -87,10 +65,6 @@ class StudentRegisterContainer extends React.Component {
                 email={this.state.email}
                 password={this.state.password}
             />
-            <SuccessModal 
-              open={this.state.modalOpen}
-            />
-          </div>
         );
     }
 }
