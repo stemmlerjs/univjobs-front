@@ -21,6 +21,7 @@ module.exports = {
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(), // don't reload if there is an error
     new BundleTracker({ filename: '../django/univjobs/webpack-stats.json' }),
+    new webpack.optimize.UglifyJsPlugin({minimize: true}),
   ],
 
   module: {
