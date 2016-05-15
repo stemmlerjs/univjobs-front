@@ -1,4 +1,15 @@
 {
- "presets": ["es2015"],
- "plugins": ["transform-flow-strip-types"]
+	"presets": [
+		"react",
+		"es2015",
+		"stage-0"
+	],
+	"env": {
+		"start":{
+			"presets": [
+				"react-hmre"
+			]
+		}
+	},
+	"plugins": ["transform-flow-strip-types"]
 }
