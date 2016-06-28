@@ -1,6 +1,0 @@
-NOTE ON:
-  
-  CONSTANT ROUTES:
-    - Please see 7:16m, it talks about components that are always active on every page.
-    - It reminds me about django templating
-    - http://courses.reactjsprogram.com/couses/reactjsfundamentals/lectures/760339
