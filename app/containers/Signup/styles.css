@@ -1,0 +1,6 @@
+.page {
+  composes: centeredPage from 'sharedStyles/styles.css';
+  background-size: cover;
+  background-image: 'assets/images/front/coffeelaptop.jpg';
+}
+

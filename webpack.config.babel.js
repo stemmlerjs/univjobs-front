@@ -10,6 +10,7 @@ process.env.BABEL_ENV = LAUNCH_COMMAND
 const PATHS = {
   app: path.join(__dirname, 'app'),
   build: path.join(__dirname, 'dist'),
+  images: path.join(__dirname, 'images')
 }
 
 const HTMLWebpackPluginConfig = new HtmlWebpackPlugin({
@@ -34,8 +35,10 @@ const base = {
   },
   module: {
     loaders: [
+      { test: /\.(png|jpg)$/, loader: 'url-loader?limit=8192' },
       {test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader'},
       {test: /\.css$/, loader: 'style!css?sourceMap&modules&localIdentName=[name]__[local]___[hash:base64:5]'}
+      
     ]
   },
   resolve: {
