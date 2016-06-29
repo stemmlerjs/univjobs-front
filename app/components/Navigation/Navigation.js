@@ -3,12 +3,13 @@ import { nav, leftsideNavItems, rightsideNavItems,
   logo, btn, pseudoBtn, loginIcon } from './styles.css'
 
 Navigation.PropTypes = {
-  isAStudent: PropTypes.bool.isRequired
+  isAStudent: PropTypes.bool.isRequired,
+  onSwitchUserType: PropTypes.func.isRequired
 }
 
-export default function Navigation ({isAStudent}) {
+export default function Navigation ({isAStudent, onSwitchUserType}) {
   // we can conditionally render this navigation page as well
-  console.log("Is a student?", isAStudent);
+  //console.log("Is a student?", isAStudent);
 
   return (
     <div className={nav}>
@@ -22,13 +23,13 @@ export default function Navigation ({isAStudent}) {
         <div className={rightsideNavItems}>
           <div><i className={'fa fa-user login-icon' + ' ' + loginIcon} aria-hidden="true"></i></div>
           <div className={pseudoBtn}>LOGIN</div>
-          <button className={btn}>EMPLOYER</button>
+          <button onClick={onSwitchUserType} className={btn}>EMPLOYER</button>
         </div>
         : 
         <div className={rightsideNavItems}>
           <div><i className={'fa fa-user login-icon' + ' ' + loginIcon} aria-hidden="true"></i></div>
           <div className={pseudoBtn}>LOGIN</div>
-          <button className={btn}>STUDENT</button>
+          <button onClick={onSwitchUserType} className={btn}>STUDENT</button>
         </div>
       }
     </div>
