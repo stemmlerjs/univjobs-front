@@ -1,0 +1,14 @@
+.centeredContainer {
+  width: 33%;
+  height: 60%;
+}
+
+.header {
+  text-align: center;
+  composes: header from 'sharedStyles/styles.css';
+}
+
+.subHeader {
+  text-align: center;
+  composes: subHeader from 'sharedStyles/styles.css';
+}

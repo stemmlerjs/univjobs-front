@@ -1,1 +1,1 @@
-export StudentSignupContainer from './Signup/StudentSignupContainer'
+export SignupContainer from './Signup/SignupContainer'

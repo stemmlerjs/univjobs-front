@@ -1,0 +1,77 @@
+.nav {
+    display: flex;
+    justify-content: space-between;
+    background-color: #52A7FA;
+    color: #100C27;
+    height: 63px;
+    padding-left: 80px;
+    padding-right: 80px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    border-bottom: solid white 1px;
+
+    z-index: 1;
+
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+    -webkit-box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+    -moz-box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+}
+
+.leftsideNavItems {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.rightsideNavItems {
+    display: flex;
+    align-items: center;
+}
+
+.rightsideNavItems > button {
+    margin-left: 20px;
+}
+
+.rightsideNavItems > div {
+  margin-left: 20px;
+}
+
+.logo {
+    font-weight: 700;
+    background-color: #9A9E9D;
+    border-radius: 3px;
+    width: 54px;
+    color: #52A7FA;
+}
+
+.btn {
+    /*position:relative;
+    width:100%;*/
+    padding: 10px 15px 10px 15px;
+    border-radius: 6px;
+    border: 0;
+    background: white;
+    font-size: 1.0em;
+    color: #52A7FA;
+    text-shadow: 1px 1px 0px rgba(0, 0, 0, .1);
+    box-shadow: 0px 3px 0px #c1c1c1;
+    cursor: pointer;
+}
+
+.btn:active {
+    top: 3px;
+    box-shadow: none;
+}
+
+.pseudoBtn {
+  cursor: pointer;
+}
+
+.loginIcon {
+  font-size:30px;
+}
+
+
+
