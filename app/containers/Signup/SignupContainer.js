@@ -1,17 +1,29 @@
 import React from 'react'
-import { centeredPage } from './styles.css'
+import { studentSignupPage, employerSignupPage } from './styles.css'
 
 import { Navigation, StudentSignup, EmployerSignup } from 'components'
-console.log(EmployerSignup);
+
+// TODO: Hook up to state
+const isAStudent = false;
 
 const SignupContainer = React.createClass({
+  // To switch between the appropriate view, lets set up an attribute in our state store
+  // where we tell if the user is on the STUDENT or EMPLOYER signup page.
+  // We can conditionally render the component based on this state
+
   render () {
     return (
       <div>
-        <Navigation />
-          <div className={centeredPage}>
-            <StudentSignup/>
-          </div>
+        <Navigation isAStudent={isAStudent} />
+          { isAStudent === true ?
+            <div className={studentSignupPage}>
+              <StudentSignup/>
+            </div>
+            :
+            <div className={employerSignupPage}>
+              <EmployerSignup/>
+            </div>
+          }
       </div>
     )
   },

@@ -6,7 +6,7 @@
       lastUpdated,
       // All the answers to either the student or employers info
     },
-    userType,
+    isAStudent,
     isAuthorized,
     authToken,
     emailVerified
