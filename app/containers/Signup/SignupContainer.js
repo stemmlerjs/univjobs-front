@@ -36,7 +36,7 @@ const SignupContainer = React.createClass({
 
 function mapStateToProps(state) {
   return {
-    isAStudent: state.isAStudent
+    isAStudent: state.users.isAStudent
   }
 }
 

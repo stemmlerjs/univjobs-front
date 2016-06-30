@@ -45,7 +45,7 @@ const initialState = {
 }
 
 // USERS REDUCER
-export default function Users (state = initialState, action) {
+export default function users (state = initialState, action) {
   console.log(action);
   switch (action.type) {
     case SWITCHED_TO_USER_TYPE_STUDENT :
