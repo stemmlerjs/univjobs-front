@@ -1,16 +1,60 @@
 {
   // Your account information
   user: {
-    uid,
-    profileInfo: {
+    uid: '',
+    isCreatingAccount: false,
+    isFetching: false,
+    studentProfile: {},
+    employerProfile: {},
+    isAStudent: true,
+    accessToken: '',
+    emailVerified: false,
+    error: ''
+    // Student
+    studentProfileInfo: {
+      email,
+      password,
       lastUpdated,
-      // All the answers to either the student or employers info
+      emailPreferences,
+      firstName,
+      lastName,
+      studentStatus,
+      degreeName,
+      schoolName,
+      enrollmentMonth,
+      enrollmentYear,
+      graduationMonth,
+      graduationYear,
+      lastUpdated,
     },
-    isAStudent,
-    isAuthorized,
-    authToken,
-    emailVerified
+    // Employer
+    employerProfileInfo: {
+      email,
+      password,
+      lastUpdated,
+      emailPreferences,
+      firstName,
+      lastName,
+      lastUpdated
+    }
   },
+
+  signupForm: {
+    studentSignupForm: {
+      email: '',
+      password: '',
+      error: []
+    },
+    employerSignupForm: {
+      firstName: '',
+      lastName: '',
+      companyName: '',
+      phone: '',
+      email: '',
+      password: '',
+    },
+    error: ''
+  }
 
   jobs: {
     [jobId]: {

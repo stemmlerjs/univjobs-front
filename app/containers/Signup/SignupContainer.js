@@ -3,16 +3,16 @@ import { studentSignupPage, employerSignupPage } from './styles.css'
 import { connect } from 'react-redux'
 import { Navigation, StudentSignup, EmployerSignup } from 'components'
 import { bindActionCreators } from 'redux'
-import * as userActionCreators from 'redux/modules/users/users'
-import * as employerActionCreators from 'redux/modules/employerSignup/employerSignup'
+import * as userActionCreators from 'redux/modules/user/user'
+import * as signupFormActionCreators from 'redux/modules/signupForm/signupForm'
 
-/*  Using the spread operator, we combine all of the action creators from users() and employerSignup()
+/*  Using the spread operator, we combine all of the action creators from users()
 */
 
 const actionCreators = {
   ...userActionCreators,
-  ...employerActionCreators
-};
+  ...signupFormActionCreators
+}
 
 const SignupContainer = React.createClass({
   // NOTE: We cannot list the action listeners acquired through connect as props here,
@@ -20,7 +20,9 @@ const SignupContainer = React.createClass({
 
   propTypes: {
     isAStudent: PropTypes.bool.isRequired,
-    empFormVisible: PropTypes.bool.isRequired
+    studentEmail: PropTypes.string.isRequired,
+    studentPassword: PropTypes.string.isRequired,
+    studentFormError: PropTypes.string.isRequired
   },
 
 /**
@@ -35,17 +37,27 @@ const SignupContainer = React.createClass({
     this.props.switchedUserType(this.props.isAStudent);
   },
 
+  handleOpenSignupModal (e) {
+    e.preventDefault();
+    console.log("Pressed button", this)
+  },
+
   render () {
     return (
       <div>
         <Navigation onSwitchUserType={this.handleSwitchUserType} isAStudent={this.props.isAStudent} />
           { this.props.isAStudent === true ?
             <div className={studentSignupPage}>
-              <StudentSignup/>
+              <StudentSignup  
+                emailText={this.props.studentEmail}
+                passwordText={this.props.studentPassword}
+                updateStudentSignupForm={this.props.updateStudentForm}
+                submitSignupForm={this.props.submitStudentSignupForm}
+                error={this.props.studentFormError}/>
             </div>
             :
             <div className={employerSignupPage}>
-              <EmployerSignup showEmployerSignupForm={this.props.showEmployerSignupForm}/>
+              <EmployerSignup onOpenSignupModal={this.handleOpenSignupModal}/>
             </div>
           }
       </div>
@@ -53,10 +65,13 @@ const SignupContainer = React.createClass({
   },
 })
 
-function mapStateToProps({users, employerSignup}) {
+function mapStateToProps({user, signupForm}) {
+  console.log(signupForm)
   return {
-    isAStudent: users.isAStudent,
-    empFormVisible: employerSignup.empFormVisible,
+    isAStudent: user.isAStudent,
+    studentEmail: signupForm.studentSignupForm.email ? signupForm.studentSignupForm.email : '',
+    studentPassword: signupForm.studentSignupForm.password ? signupForm.studentSignupForm.password : '',
+    studentFormError: signupForm.studentSignupForm.error ? signupForm.studentSignupForm.error : ''
   }
 }
 
