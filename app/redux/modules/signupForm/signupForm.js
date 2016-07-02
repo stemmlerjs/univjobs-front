@@ -27,19 +27,33 @@ export function submitStudentFormError(error) {
 
 export function submitStudentSignupForm(email, password) {
   return function(dispatch) {
-    // Do form validation
+    const promise = new Promise((resolve, reject) => {
+      // Do form validation
     if(!validateEmail(email)) {
-      return dispatch(submitStudentFormError('Please enter in a valid email address'))
+      dispatch(submitStudentFormError('Please enter in a valid email address'))
+      resolve(false)
+      return;
     }
     if(!validatePassword(password)) {
-      return dispatch(submitStudentFormError('Please enter a password with length greater than 6 characters'))
+      dispatch(submitStudentFormError('Please enter a password with length greater than 6 characters'))
+      resolve(false)
+      return;
     }
 
     // If good, create user
     dispatch(userActions.creatingUserAccount())
-    return createStudentAccount(email, password)
-      .then((key) => dispatch(userActions.createUserAccountSuccess(key)))
-      .catch((err) => dispatch(userActions.createUserAccountFailure(err)))
+    createStudentAccount(email, password)
+      .then((key) => {
+        dispatch(userActions.createUserAccountSuccess(key))
+        resolve(true)
+      })
+      .catch((err) => {
+        dispatch(userActions.createUserAccountFailure(err))
+        dispatch(submitStudentFormError('This email address is already registered'))
+        resolve(false)
+      })
+    })
+    return promise;
   }
 }
 

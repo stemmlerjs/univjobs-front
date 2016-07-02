@@ -116,14 +116,21 @@ export default function user (state = initialState, action) {
         ...state,
         isAStudent: false
       }
+    case CREATING_USER_ACCOUNT :
+      return {
+        ...state,
+        isCreatingAccount: true
+      }
     case CREATE_USER_ACCOUNT_SUCCESS :
       return {
         ...state,
-        accessToken: action.accessToken
+        accessToken: action.accessToken,
+        isCreatingAccount: false
       }
     case CREATE_USER_ACCOUNT_FAILURE :
       return {
         ...state,
+        isCreatingAccount: false,
         error: action.error
       }
     case UPDATE_USER_ACCOUNT_INFO: 

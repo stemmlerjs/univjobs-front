@@ -1,13 +1,17 @@
 import React from 'react'
-import { Router, Route, hashHistory, IndexRoute } from 'react-router'
-import { SignupContainer } from '../containers'
+import { Router, Route, hashHistory, IndexRoute, browserHistory } from 'react-router'
+import { SignupContainer, CreateStudentProfileContainer } from '../containers'
+import { syncHistoryWithStore } from 'react-router-redux'
 
 // Purpose of IndexRoute - if none of the routes match, we go here
-export default function getRoutes(checkAuth) {
+export default function getRoutes(store, checkAuth) {
+  const history = syncHistoryWithStore(browserHistory, store)
+
   return (
-    <Router history={hashHistory}>
-      <Router path='/' component={SignupContainer}>
-      </Router>
+    <Router history={history}>
+      <Route path='/' component={SignupContainer}/>
+      <Route path='create/student' component={CreateStudentProfileContainer} />
     </Router>
   )
 }
+

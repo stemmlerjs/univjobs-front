@@ -25,6 +25,10 @@ const SignupContainer = React.createClass({
     studentFormError: PropTypes.string.isRequired
   },
 
+  contextTypes: {
+    router: PropTypes.object.isRequired
+  },
+
 /**
   * handleSwitchUserType
   *
@@ -53,7 +57,8 @@ const SignupContainer = React.createClass({
                 passwordText={this.props.studentPassword}
                 updateStudentSignupForm={this.props.updateStudentForm}
                 submitSignupForm={this.props.submitStudentSignupForm}
-                error={this.props.studentFormError}/>
+                error={this.props.studentFormError}
+                router={this.context.router}/>
             </div>
             :
             <div className={employerSignupPage}>

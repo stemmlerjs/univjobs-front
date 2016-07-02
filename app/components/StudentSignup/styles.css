@@ -32,9 +32,9 @@
 }
 
 .input {
-    width: 40%;
-    text-align: center;
-    padding: .5em .6em;
+    width: 300px;
+    text-align: left;
+    padding: .5em 1em;
     margin: 8px;
     display: inline-block;
     border: 1px solid #ccc;

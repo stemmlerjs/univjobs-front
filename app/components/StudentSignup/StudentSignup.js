@@ -2,25 +2,26 @@ import React, { PropTypes } from 'react'
 import { centeredContainer, header, subHeader, btn, btnContainer,
  input, inputContainer, errorMessage } from './styles.css'
 
+ //
+
 StudentSignup.propTypes = {
   submitSignupForm: PropTypes.func.isRequired,
   updateStudentSignupForm: PropTypes.func.isRequired,
   emailText: PropTypes.string.isRequired,
   passwordText: PropTypes.string.isRequired,
-  error: PropTypes.string.isRequired
+  error: PropTypes.string.isRequired,
+  router: PropTypes.object.isRequired
 }
 
-export default function StudentSignup ({submitSignupForm, updateStudentSignupForm, emailText, passwordText, error}) {
+export default function StudentSignup ({submitSignupForm, updateStudentSignupForm, emailText, passwordText, error, router}) {
   function handleUserSubmit(e) {
     e.preventDefault();
     submitSignupForm(emailText, passwordText)
       .then((actionResult) => {
-        if(actionResult.type === 'CREATE_USER_ACCOUNT_SUCCESS') {
-          // direct to next page!!!
-        } else {
-          // something went wrong creating the user
-        }
-      })
+        if(actionResult) {
+          router.push('/create/student')
+        } 
+      }).catch((err) => console.log(err))
   }
 
   return (
