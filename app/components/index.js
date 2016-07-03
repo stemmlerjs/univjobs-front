@@ -1,3 +1,5 @@
 export Navigation from './Navigation/Navigation'
 export StudentSignup from './StudentSignup/StudentSignup'
 export EmployerSignup from './EmployerSignup/EmployerSignup'
+export Sidebar from './Sidebar/Sidebar'
+export EmployerProfile from './EmployerProfile/EmployerProfile'

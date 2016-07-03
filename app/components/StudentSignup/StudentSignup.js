@@ -19,7 +19,7 @@ export default function StudentSignup ({submitSignupForm, updateStudentSignupFor
     submitSignupForm(emailText, passwordText)
       .then((actionResult) => {
         if(actionResult) {
-          router.push('/createaccount/st')
+          router.push('/profile/st')
         } 
       }).catch((err) => console.log(err))
   }

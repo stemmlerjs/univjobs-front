@@ -1,7 +1,7 @@
 import React from 'react'
 import { Router, Route, hashHistory, IndexRoute, browserHistory } from 'react-router'
-import { SignupContainer, CreateStudentProfileContainer, 
-  CreateEmployerProfileContainer } from '../containers'
+import { SignupContainer, StudentProfileContainer, 
+  EmployerProfileContainer } from '../containers'
 
 // Purpose of IndexRoute - if none of the routes match, we go here
 export default function getRoutes(checkAuth) {
@@ -9,8 +9,8 @@ export default function getRoutes(checkAuth) {
   return (
     <Router history={hashHistory}>
       <Route path='/' component={SignupContainer}/>
-      <Route path='createaccount/st' component={CreateStudentProfileContainer} />
-      <Route path='createaccount/em' component={CreateEmployerProfileContainer} />
+      <Route path='profile/st' component={StudentProfileContainer} />
+      <Route path='profile/em' component={EmployerProfileContainer} />
     </Router>
   )
 }

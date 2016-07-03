@@ -20,3 +20,61 @@
   font-weight: 800;
   color: white;
 }
+
+.input {
+    text-align: left;
+    padding: .5em 1em;
+    margin: 8px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    vertical-align: middle;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+        color: inherit;
+    font: inherit;
+}
+
+/* SIDEBAR STYLES */
+.sidebar {
+  position: fixed;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  width: 87px;
+  background-color: #414A51;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+}
+
+.sidebarLogo {
+  position: absolute;
+    top: 30px;
+    left: 21px;
+    color: white;
+} 
+
+.sidebarItemsContainer {
+  width: 100%;
+  text-align: center;
+}
+
+.sidebarItem {
+  height: 87px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 29px;
+  border-top: solid #707980 1px;
+
+}
+.sidebarItem:nth-of-type(6) {
+  border-bottom: solid #707980 1px;
+}
+.profileImg {
+  width: 66px;
+}
+

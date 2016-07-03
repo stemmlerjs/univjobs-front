@@ -28,16 +28,6 @@ const styles = {
     width: '537px',
     marginLeft: '0px',
     textAlign: 'center'
-  },
-  title: {
-    marginTop: '0'
-  },
-  closeButtonStyle: {
-    cursor: 'pointer',
-    position: 'absolute',
-    fontSize: '1.8em',
-    right: '10px',
-    top: '0px'
   }
 };
 
@@ -65,7 +55,7 @@ const EmployerSignup = React.createClass({
       submitSignupForm(firstNameText, lastNameText, companyNameText, phoneText, emailText, passwordText)
         .then((actionResult) => {
           if(actionResult) {
-            router.push('/createaccount/em')
+            router.push('/profile/em')
           } 
         }).catch((err) => console.log(err))
     } 

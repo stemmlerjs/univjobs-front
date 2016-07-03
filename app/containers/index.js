@@ -1,3 +1,4 @@
 export SignupContainer from './Signup/SignupContainer'
-export CreateStudentProfileContainer from './CreateStudentProfile/CreateStudentProfileContainer'
-export CreateEmployerProfileContainer from './CreateEmployerProfile/CreateEmployerProfileContainer'
+export StudentProfileContainer from './StudentProfile/StudentProfileContainer'
+export EmployerProfileContainer from './EmployerProfile/EmployerProfileContainer'
+export SidebarContainer from './Sidebar/SidebarContainer'

@@ -1,0 +1,38 @@
+.profileContainer {
+  width: 630px;
+  text-align:center;
+}
+
+.profileHeader {
+  font-size:30px;
+  margin-bottom:20px;
+}
+
+.profileField {
+
+}
+
+.profileFieldName {
+  width: 21%;
+  height: 20px;
+  font-size: 18px;
+  color: #52575D;
+  padding: 15px;
+  display:inline-block;
+}
+
+.profileFieldContent {
+  width: 75%;
+  display:inline;
+}
+
+.input {
+  composes: input from 'sharedStyles/styles.css';
+  width: 50%;
+}
+
+.textarea {
+  composes: input from 'sharedStyles/styles.css';
+  width: 50%;
+  resize: vertical;
+}
