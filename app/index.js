@@ -6,7 +6,6 @@ import { createStore, applyMiddleware, compose, combineReducers } from 'redux'
 import * as reducers from 'redux/modules'
 import thunk from 'redux-thunk'
 import { initializeBodyStyles } from 'helpers/styles'
-import { syncHistoryWithStore } from 'react-router-redux'
 
 // Initialize CSS Styles for BODY tag
 initializeBodyStyles();
@@ -18,7 +17,7 @@ const store = createStore(combineReducers(reducers),
 
 ReactDOM.render(
   <Provider store={store}>
-    { getRoutes(store) }
+    { getRoutes() }
   </Provider>,
   document.getElementById('app')
 )

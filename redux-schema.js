@@ -43,7 +43,7 @@
     studentSignupForm: {
       email: '',
       password: '',
-      error: []
+      error: ''
     },
     employerSignupForm: {
       firstName: '',
@@ -52,6 +52,7 @@
       phone: '',
       email: '',
       password: '',
+      error: ''
     },
     error: ''
   }

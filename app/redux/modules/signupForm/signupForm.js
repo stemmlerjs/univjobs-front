@@ -1,5 +1,6 @@
-import { validateEmail, validatePassword } from 'helpers/utils'
-import { createStudentAccount } from 'helpers/auth'
+import { validateFirstName, validateLastName, validateCompanyName,
+  validatePhoneNumber, validateEmail, validatePassword } from 'helpers/utils'
+import { createStudentAccount, createEmployerAccount } from 'helpers/auth'
 import * as userActions from '../user/user'
 
 // ACTIONS
@@ -18,9 +19,24 @@ export function updateStudentForm (fieldName, newValue) {
   }
 }
 
+export function updateEmployerForm(fieldName, newValue) {
+  return {
+    type: UPDATE_EMPLOYER_FORM,
+    fieldName,
+    newValue
+  }
+}
+
 export function submitStudentFormError(error) {
   return {
     type: SUBMIT_STUDENT_FORM_ERROR,
+    error
+  }
+}
+
+export function submitEmployerFormError(error) {
+  return {
+    type: SUBMIT_EMPLOYER_FORM_ERROR,
     error
   }
 }
@@ -57,6 +73,62 @@ export function submitStudentSignupForm(email, password) {
   }
 }
 
+export function submitEmployerSignupForm(firstName, lastName, companyName, phone, email, password) {
+  return function(dispatch) {
+    const promise = new Promise((resolve, reject) => {
+        // Do form validation
+      if(!validateFirstName(firstName)) {
+        dispatch(submitEmployerFormError('Please enter your first name'))
+        resolve(false)
+        return;
+      }
+
+      if(!validateLastName(lastName)) {
+        dispatch(submitEmployerFormError('Please enter your last name'))
+        resolve(false)
+        return;
+      }
+
+      if(!validateCompanyName(companyName)) {
+        dispatch(submitEmployerFormError('Please enter your company name'))
+        resolve(false)
+        return;
+      }
+
+      if(!validatePhoneNumber(phone)) {
+        dispatch(submitEmployerFormError('Please enter in a valid phone number'))
+        resolve(false)
+        return;
+      }
+
+      if(!validateEmail(email)) {
+        dispatch(submitEmployerFormError('Please enter in a valid email address'))
+        resolve(false)
+        return;
+      }
+      if(!validatePassword(password)) {
+        dispatch(submitEmployerFormError('Please enter a password with length greater than 6 characters'))
+        resolve(false)
+        return;
+      }
+
+      // If good, create user
+      dispatch(userActions.creatingUserAccount())
+      createEmployerAccount(firstName, lastName, companyName, phone, email, password) 
+        .then((key) => {
+          dispatch(userActions.createUserAccountSuccess(key))
+          resolve(true)
+        })
+        .catch(() => {
+          dispatch(userActions.createUserAccountFailure(err))
+          dispatch(submitEmployerFormError('This email address is already registered'))
+          resolve(false)
+        })
+    })
+    return promise; 
+  }
+}
+
 
 // ============================================================ //
 // ======================= SIGNUP FORM REDUCER ======================= //
@@ -83,6 +155,11 @@ export default function signupForm (state = initialState, action) {
       return {
         ...state,
         studentSignupForm: studentSignupForm(state.studentSignupForm, action)
+      }
+    case SUBMIT_EMPLOYER_FORM_ERROR:
+      return {
+        ...state,
+        employerSignupForm: employerSignupForm(state.employerSignupForm, action)
       }
     default :
       return state
@@ -128,9 +205,24 @@ const employerSignupFormInitialState = {
   companyName: '',
   phone: '',
   email: '',
-  password: ''
+  password: '',
+  error: ''
 }
 
 function employerSignupForm(state = employerSignupFormInitialState, action) {
-  
+  switch(action.type) {
+    case UPDATE_EMPLOYER_FORM :
+      return {
+        ...state,
+        [action.fieldName]: action.newValue,
+        error: ''
+      }
+    case SUBMIT_EMPLOYER_FORM_ERROR:
+      return {
+        ...state,
+        error: action.error
+      }
+    default:
+      return state
+  }
 }

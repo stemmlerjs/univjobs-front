@@ -22,7 +22,14 @@ const SignupContainer = React.createClass({
     isAStudent: PropTypes.bool.isRequired,
     studentEmail: PropTypes.string.isRequired,
     studentPassword: PropTypes.string.isRequired,
-    studentFormError: PropTypes.string.isRequired
+    studentFormError: PropTypes.string.isRequired,
+    employerFirstName: PropTypes.string.isRequired,
+    employerLastName: PropTypes.string.isRequired,
+    employerCompanyName: PropTypes.string.isRequired,
+    employerPhone: PropTypes.string.isRequired,
+    employerEmail: PropTypes.string.isRequired,
+    employerPassword: PropTypes.string.isRequired,
+    employerFormError: PropTypes.string.isRequired
   },
 
   contextTypes: {
@@ -41,11 +48,6 @@ const SignupContainer = React.createClass({
     this.props.switchedUserType(this.props.isAStudent);
   },
 
-  handleOpenSignupModal (e) {
-    e.preventDefault();
-    console.log("Pressed button", this)
-  },
-
   render () {
     return (
       <div>
@@ -62,7 +64,17 @@ const SignupContainer = React.createClass({
             </div>
             :
             <div className={employerSignupPage}>
-              <EmployerSignup onOpenSignupModal={this.handleOpenSignupModal}/>
+              <EmployerSignup 
+                submitSignupForm={this.props.submitEmployerSignupForm}
+                updateEmployerSignupForm={this.props.updateEmployerForm}
+                firstNameText={this.props.employerFirstName}
+                lastNameText={this.props.employerLastName}
+                companyNameText={this.props.employerCompanyName}
+                phoneText={this.props.employerPhone}
+                emailText={this.props.employerEmail}
+                passwordText={this.props.employerPassword}
+                error={this.props.employerFormError}
+                router={this.context.router}/>
             </div>
           }
       </div>
@@ -76,7 +88,14 @@ function mapStateToProps({user, signupForm}) {
     isAStudent: user.isAStudent,
     studentEmail: signupForm.studentSignupForm.email ? signupForm.studentSignupForm.email : '',
     studentPassword: signupForm.studentSignupForm.password ? signupForm.studentSignupForm.password : '',
-    studentFormError: signupForm.studentSignupForm.error ? signupForm.studentSignupForm.error : ''
+    studentFormError: signupForm.studentSignupForm.error ? signupForm.studentSignupForm.error : '',
+    employerFirstName: signupForm.employerSignupForm.firstName ? signupForm.employerSignupForm.firstName : '',
+    employerLastName: signupForm.employerSignupForm.lastName ? signupForm.employerSignupForm.lastName : '',
+    employerCompanyName: signupForm.employerSignupForm.companyName ? signupForm.employerSignupForm.companyName : '',
+    employerPhone: signupForm.employerSignupForm.phone ? signupForm.employerSignupForm.phone : '',
+    employerEmail: signupForm.employerSignupForm.email ? signupForm.employerSignupForm.email : '',
+    employerPassword: signupForm.employerSignupForm.password ? signupForm.employerSignupForm.password : '',
+    employerFormError: signupForm.employerSignupForm.error ? signupForm.employerSignupForm.error : ''
   }
 }
 
