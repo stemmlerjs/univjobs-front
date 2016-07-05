@@ -15,7 +15,7 @@ export default function Navigation ({isAStudent, onSwitchUserType}) {
     <div className={nav}>
       <div className={leftsideNavItems}>
           <div className={logo}>
-            <img src="https://github.com/UnivJobs/univjobs-front/blob/01-KhalilSetup/images/front/defaultlogo.PNG?raw=true"></img>
+            <img src="https://github.com/UnivJobs/univjobs-front/blob/master/images/front/defaultlogo.PNG?raw=true"></img>
           </div>
       </div>
 
