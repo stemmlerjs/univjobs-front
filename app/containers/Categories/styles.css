@@ -1,0 +1,23 @@
+
+.categories {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.title {
+  text-align:center;
+}
+
+.mainContainer {
+  background-color: #DDDEE0;
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  right: 0px;
+  left: 87px;
+}
+
+.category {
+  width:350px;
+  height: 200px;
+}

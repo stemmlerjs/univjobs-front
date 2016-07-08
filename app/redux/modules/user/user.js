@@ -104,7 +104,6 @@ const initialState = {
 }
 
 export default function user (state = initialState, action) {
-  console.log(action);
   switch (action.type) {
     case SWITCHED_TO_USER_TYPE_STUDENT :
       return {

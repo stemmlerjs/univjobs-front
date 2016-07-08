@@ -83,7 +83,6 @@ const SignupContainer = React.createClass({
 })
 
 function mapStateToProps({user, signupForm}) {
-  console.log(signupForm)
   return {
     isAStudent: user.isAStudent,
     studentEmail: signupForm.studentSignupForm.email ? signupForm.studentSignupForm.email : '',

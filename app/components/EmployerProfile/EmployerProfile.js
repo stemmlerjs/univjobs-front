@@ -3,6 +3,7 @@ import { ProfileField } from 'components'
 import { profileContainer, profileHeader, profileField, profileFieldName, profileFieldContent, input,
   textarea, btn, dropzone, resetBtnContainer, dropzoneContent, photoIcon, saveBtnContainer, saveBtn } from './styles.css'
 import Dropzone from 'react-dropzone'
+import { Link } from 'react-router'
 
 export default function EmployerProfile (props) {
   function onDrop(files) {
@@ -46,7 +47,7 @@ export default function EmployerProfile (props) {
       </ProfileField>
       <div className={profileField}>
         <div className={saveBtnContainer}>
-          <button className={saveBtn}>Save</button>
+          <Link to="/categories"><button className={saveBtn}>Save</button></Link>
         </div>
       </div>
     </div>
