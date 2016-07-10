@@ -8,10 +8,10 @@ export default function getRoutes(checkAuth) {
 
   return (
     <Router history={hashHistory}>
-      <Route path='/' component={SignupContainer}/>
-      <Route path='profile/st' component={StudentProfileContainer} />
-      <Route path='profile/em' component={EmployerProfileContainer} />
-      <Route path='categories' component={CategoriesContainer} />
+      <Route path='/' component={SignupContainer} onEnter={checkAuth}/>
+      <Route path='profile/st' component={StudentProfileContainer} onEnter={checkAuth}/>
+      <Route path='profile/em' component={EmployerProfileContainer} onEnter={checkAuth}/>
+      <Route path='categories' component={CategoriesContainer} onEnter={checkAuth}/>
     </Router>
   )
 }

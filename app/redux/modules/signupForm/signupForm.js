@@ -1,6 +1,6 @@
 import { validateFirstName, validateLastName, validateCompanyName,
   validatePhoneNumber, validateEmail, validatePassword } from 'helpers/utils'
-import { createStudentAccount, createEmployerAccount } from 'helpers/auth'
+import { createStudentAccount, createEmployerAccount, setAccessToken } from 'helpers/auth'
 import * as userActions from '../user/user'
 
 // ACTIONS
@@ -59,13 +59,17 @@ export function submitStudentSignupForm(email, password) {
     // If good, create user
     dispatch(userActions.creatingUserAccount())
     createStudentAccount(email, password)
-      .then((key) => {
-        dispatch(userActions.createUserAccountSuccess(key))
+      .then((response) => {
+        const accessToken = response.data.key;
+        setAccessToken(accessToken) // save access token as cookie
+        dispatch(userActions.createUserAccountSuccess(accessToken)) // Bind access token to state
         resolve(true)
       })
       .catch((err) => {
         dispatch(userActions.createUserAccountFailure(err))
-        dispatch(submitStudentFormError('This email address is already registered'))
+        
+          // Dispatch different error messages
+          dispatch(submitStudentFormError('This email address is already registered'))
         resolve(false)
       })
     })

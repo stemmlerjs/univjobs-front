@@ -2,7 +2,6 @@ import React, { PropTypes } from 'react'
 import { centeredContainer, header, subHeader, btn, btnContainer,
  input, inputContainer, errorMessage } from './styles.css'
 
- //
 
 StudentSignup.propTypes = {
   submitSignupForm: PropTypes.func.isRequired,
@@ -17,8 +16,8 @@ export default function StudentSignup ({submitSignupForm, updateStudentSignupFor
   function handleUserSubmit(e) {
     e.preventDefault();
     submitSignupForm(emailText, passwordText)
-      .then((actionResult) => {
-        if(actionResult) {
+      .then((success) => {
+        if(success) {
           router.push('/profile/st')
         } 
       }).catch((err) => console.log(err))

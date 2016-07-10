@@ -51,7 +51,19 @@ const developmentConfig = {
     contentBase: PATHS.build,
     hot: true,
     inline: true,
-    progress: true,
+    progress: true
+    // proxy: {
+    //   '/api*': {
+    //     target: 'http://eoymxx-univjobs-back-staging-univjobs.runnableapp.com',
+    //     secure: false,
+    //     prependPath: true,
+    //     hostRewrite: true,
+    //     autoRewrite: true,
+    //     headers: {
+    //       'Access-Control-Allow-Methods': 'GET, POST, OPTIONS, PUT, PATCH, DELETE'
+    //     }
+    //   }
+    // }
   },
   plugins: [HTMLWebpackPluginConfig, new webpack.HotModuleReplacementPlugin()]
 }
