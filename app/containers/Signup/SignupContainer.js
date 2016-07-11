@@ -5,6 +5,7 @@ import { Navigation, StudentSignup, EmployerSignup } from 'components'
 import { bindActionCreators } from 'redux'
 import * as userActionCreators from 'redux/modules/user/user'
 import * as signupFormActionCreators from 'redux/modules/signupForm/signupForm'
+import { checkIfAuthed } from 'helpers/auth'
 
 /*  Using the spread operator, we combine all of the action creators from users()
 */
@@ -33,7 +34,8 @@ const SignupContainer = React.createClass({
   },
 
   contextTypes: {
-    router: PropTypes.object.isRequired
+    router: PropTypes.object.isRequired,
+    store: PropTypes.object.isRequired
   },
 
 /**
@@ -46,6 +48,23 @@ const SignupContainer = React.createClass({
   handleSwitchUserType (e) {
     e.preventDefault();
     this.props.switchedUserType(this.props.isAStudent);
+  },
+
+  componentWillReceiveProps() {
+
+  },
+
+  componentWillMount() {
+    // Check our auth stuff HERE instead of using onEnter
+    checkIfAuthed(this.context.store)
+      .then(() => {
+        console.log(this)
+        // Get user info and then decide whether the user is a student or an employer, then route to appropriate page
+        this.context.router.replace('/profile/em')
+      })
+      .catch(() => {
+        console.log(this)
+      })
   },
 
   render () {

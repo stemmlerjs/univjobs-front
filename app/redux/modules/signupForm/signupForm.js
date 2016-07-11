@@ -1,6 +1,6 @@
 import { validateFirstName, validateLastName, validateCompanyName,
   validatePhoneNumber, validateEmail, validatePassword } from 'helpers/utils'
-import { createStudentAccount, createEmployerAccount, setAccessToken } from 'helpers/auth'
+import { createStudentAccount, createEmployerAccount, setAccessToken, getAccessToken } from 'helpers/auth'
 import * as userActions from '../user/user'
 
 // ACTIONS
@@ -56,20 +56,31 @@ export function submitStudentSignupForm(email, password) {
       return;
     }
 
-    // If good, create user
+    // CREATE USER ACCOUNT (api/register)
     dispatch(userActions.creatingUserAccount())
     createStudentAccount(email, password)
       .then((response) => {
-        const accessToken = response.data.key;
-        setAccessToken(accessToken) // save access token as cookie
-        dispatch(userActions.createUserAccountSuccess(accessToken)) // Bind access token to state
-        resolve(true)
+        // GET ACCESS TOKEN (api/token/auth)
+        getAccessToken(email, password)
+          .then(function(response) {
+            // SET ACCESS TOKEN TO COOKIE AND STATE
+            const accessToken = response.data.token;
+            setAccessToken(accessToken) // save access token as cookie
+            dispatch(userActions.createUserAccountSuccess(accessToken)) // Bind access token to state
+            resolve(true)
+          })
+          .catch(function(err) {
+
+          })
       })
+      // ERROR CREATING ACCOUNT (api/register)
       .catch((err) => {
         dispatch(userActions.createUserAccountFailure(err))
-        
-          // Dispatch different error messages
-          dispatch(submitStudentFormError('This email address is already registered'))
+          if(err.status === 500) {
+            dispatch(submitStudentFormError('Sorry! Something went wrong on our end. Please let us know.'))
+          } else {
+            dispatch(submitStudentFormError('This email address is already registered'))
+          }
         resolve(false)
       })
     })

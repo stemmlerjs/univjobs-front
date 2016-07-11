@@ -1,6 +1,5 @@
   import { createStudentAccount } from 'helpers/auth'
 
-
   // **********************************************************************
   // **********************************************************************
   
@@ -70,6 +69,25 @@
   const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
   const LOGIN_FAILURE = 'LOGIN_FAILURE'
   const LOGGING_OUT = 'LOGGING_OUT'
+
+  export function loggingIn () {
+    return {
+      type: LOGGING_IN
+    }
+  }
+
+  export function loginSuccess(accessToken) {
+    return {
+      type: LOGIN_SUCCESS,
+      accessToken: accessToken
+    }
+  }
+
+  export function loginFailure() {
+    return {
+      type: LOGIN_FAILURE
+    }
+  }
 
   const FETCHING_USER_INFO = 'FETCHING_USER_INFO'
   const FETCHING_USER_INFO_SUCCESS = 'FETCHING_USER_INFO_SUCCESS'
@@ -150,12 +168,14 @@ export default function user (state = initialState, action) {
       return {
         ...state,
         isLoggingIn: false,
-        isAuthenticated: true
+        isAuthenticated: true,
+        accessToken: action.accessToken
       }
     case LOGIN_FAILURE:
       return {
         ...state,
-        isLoggingIn: false
+        isLoggingIn: false,
+        isAuthenticated: false
       }
     case LOGGING_OUT:
       return {

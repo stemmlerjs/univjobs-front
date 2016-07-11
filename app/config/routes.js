@@ -3,16 +3,19 @@ import { Router, Route, hashHistory, IndexRoute, browserHistory } from 'react-ro
 import { SignupContainer, StudentProfileContainer, 
   EmployerProfileContainer, CategoriesContainer } from '../containers'
 
+
+
 // Purpose of IndexRoute - if none of the routes match, we go here
-export default function getRoutes(checkAuth) {
+export default function getRoutes() {
 
   return (
-    <Router history={hashHistory}>
-      <Route path='/' component={SignupContainer} onEnter={checkAuth}/>
-      <Route path='profile/st' component={StudentProfileContainer} onEnter={checkAuth}/>
-      <Route path='profile/em' component={EmployerProfileContainer} onEnter={checkAuth}/>
-      <Route path='categories' component={CategoriesContainer} onEnter={checkAuth}/>
+    <Router history={hashHistory} >
+      <Route path='/' component={SignupContainer} />
+      <Route path='profile/st' component={StudentProfileContainer} />
+      <Route path='profile/em' component={EmployerProfileContainer} />
+      <Route path='categories' component={CategoriesContainer} />
     </Router>
   )
 }
+
 
