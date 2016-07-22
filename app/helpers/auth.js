@@ -3,6 +3,23 @@ import config from 'config'
 import cookie from 'react-cookie'
 import { loggingIn, loginSuccess, loginFailure } from 'redux/modules/user/user'
 
+function getUserInfo(accessToken) {
+  const promise = new Promise((resolve, reject) => {
+    axios.create({
+      url: config.baseUrl + 'account/',
+      method: "get",
+      headers: {
+        'Authorization': 'JWT ' + accessToken
+      }
+    })
+    .then((result) => {
+      resolve(result)
+    })
+  })
+  return promise;
+  
+}
+
 function checkTokenExpiry (token) {
   return axios.post(config.baseUrl + 'token/verify/', {
     token: token
@@ -37,15 +54,21 @@ export function checkIfAuthed (store) {
         reject(false)
       } else {
         // Check to see if token is still valid
+        // ACTION: DISPATCH (LOGGING_IN)
+
         store.dispatch(loggingIn())
-        checkTokenExpiry(accessToken)
+        getUserInfo(accessToken)
           .then(function(response) {
             console.log("access token from cookie is still valid", response)
+
+            // ACTION: DISPATCH (LOGGING_IN_SUCCESS)
             store.dispatch(loginSuccess(accessToken))
             resolve(true)
           })
           .catch(function(err){
             console.log('NOPE, access token from cookie is not valid- we should go home', err)
+            
+            // ACTION: DISPATCH (LOGGING_IN_FAILURE)
             store.dispatch(loginFailure())
             reject(false)
           })
@@ -59,17 +82,19 @@ export function checkIfAuthed (store) {
 export function createStudentAccount(email, password) {
   return axios.post(config.baseUrl + 'register/', {
     email: email,
-    password1: password,
-    password2: password
+    password: password
   })
 }
 
 // Create Employer Account
-export function createEmployerAccount(firstName, lastName, companyName, phone, email, password) {
-  return axios.post(config.baseUrl + 'register/', {
+export function createEmployerAccount(firstName, lastName, companyName, mobile, email, password) {
+  return axios.post(config.baseUrl + 'register/business/', {
     email: email,
-    password1: password,
-    password2: password
+    password: password,
+    first_name: firstName,
+    last_name: lastName,
+    company_name: companyName,
+    mobile: mobile
   })
 }
 

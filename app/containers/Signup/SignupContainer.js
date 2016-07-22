@@ -58,12 +58,13 @@ const SignupContainer = React.createClass({
     // Check our auth stuff HERE instead of using onEnter
     checkIfAuthed(this.context.store)
       .then(() => {
-        console.log(this)
+        console.log("The user is authed")
         // Get user info and then decide whether the user is a student or an employer, then route to appropriate page
         this.context.router.replace('/profile/em')
       })
-      .catch(() => {
-        console.log(this)
+      .catch((err) => {
+        console.log("Error detecting if user is authed")
+        console.log(err)
       })
   },
 

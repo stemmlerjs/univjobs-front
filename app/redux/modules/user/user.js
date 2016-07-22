@@ -93,6 +93,36 @@
   const FETCHING_USER_INFO_SUCCESS = 'FETCHING_USER_INFO_SUCCESS'
   const FETCHING_USER_INFO_FAILURE = 'FETCHING_USER_INFO_FAILURE'
 
+  export function fectchingUserInfo() {
+    return {
+      type: FETCHING_USER_INFO,
+      isFetching: true
+    }
+  }
+
+  export function fetchingUserInfoSuccess (isAStudent, info) {
+    if(isAStudent) {
+      return {
+        type: FETCHING_USER_INFO_SUCCESS,
+        isFetching: false,
+        studentProfile: info
+      }
+    } else {
+        return {
+          type: FETCHING_USER_INFO_SUCCESS,
+          isFetching: false,
+          employerProfile: info
+        }
+    }
+  }
+
+  export function fetchingUserInfoFailure () {
+    return {
+      type: FETCHING_USER_INFO_FAILURE,
+      isFetching: false
+    }
+  }
+
 
 // ============================================================ //
 // ======================= USER REDUCER ======================= //
@@ -193,6 +223,7 @@ export default function user (state = initialState, action) {
 // ============================================================ //
 
 const initialStudentProfileState = {
+  is_profile_completed: '',
   email: '',
   password: '',
   lastUpated: '',

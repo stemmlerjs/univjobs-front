@@ -1,5 +1,5 @@
 import { validateFirstName, validateLastName, validateCompanyName,
-  validatePhoneNumber, validateEmail, validatePassword } from 'helpers/utils'
+  validatePhoneNumber, validateStudentEmail, validateEmployerEmail, validatePassword } from 'helpers/utils'
 import { createStudentAccount, createEmployerAccount, setAccessToken, getAccessToken } from 'helpers/auth'
 import * as userActions from '../user/user'
 
@@ -45,44 +45,61 @@ export function submitStudentSignupForm(email, password) {
   return function(dispatch) {
     const promise = new Promise((resolve, reject) => {
       // Do form validation
-    if(!validateEmail(email)) {
-      dispatch(submitStudentFormError('Please enter in a valid email address'))
-      resolve(false)
-      return;
-    }
-    if(!validatePassword(password)) {
-      dispatch(submitStudentFormError('Please enter a password with length greater than 6 characters'))
-      resolve(false)
-      return;
-    }
+      validateStudentEmail(email, (success, message) => {
+        // EMAIL IS NOT VALID
+        if(!success) {
+          dispatch(submitStudentFormError(message))
+          resolve(false)
 
-    // CREATE USER ACCOUNT (api/register)
-    dispatch(userActions.creatingUserAccount())
-    createStudentAccount(email, password)
-      .then((response) => {
-        // GET ACCESS TOKEN (api/token/auth)
-        getAccessToken(email, password)
-          .then(function(response) {
-            // SET ACCESS TOKEN TO COOKIE AND STATE
-            const accessToken = response.data.token;
-            setAccessToken(accessToken) // save access token as cookie
-            dispatch(userActions.createUserAccountSuccess(accessToken)) // Bind access token to state
-            resolve(true)
-          })
-          .catch(function(err) {
-
-          })
-      })
-      // ERROR CREATING ACCOUNT (api/register)
-      .catch((err) => {
-        dispatch(userActions.createUserAccountFailure(err))
-          if(err.status === 500) {
-            dispatch(submitStudentFormError('Sorry! Something went wrong on our end. Please let us know.'))
+        // EMAIL IS VALID
+        } else {
+          // Validate Password
+          if(!validatePassword(password)) {
+            dispatch(submitStudentFormError('Please enter a password with length greater than 6 characters'))
+            resolve(false)
           } else {
-            dispatch(submitStudentFormError('This email address is already registered'))
+            // EMAIL AND PASSWORD VALID
+            // ACTION: DISPATCH (CREATING_USER_ACCOUNT)
+            dispatch(userActions.creatingUserAccount())
+
+            // ACTION: DISPATCH (FETCHING_USER_INFO)
+            dispatch(userActions.fectchingUserInfo())
+            createStudentAccount(email, password)
+              .then((response) => {
+
+                const token = response.data.token
+                const userInfo = response.data.user
+
+                // save access token as cookie
+                setAccessToken(token) 
+
+                // ACTION: DISPATCH (CREATING_USER_ACCOUNT_SUCCESS)
+                dispatch(userActions.createUserAccountSuccess(token)) 
+
+                // ACTION: DISPATCH (FETCHING_USER_INFO_SUCCESS)
+                dispatch(userActions.fetchingUserInfoSuccess(true, userInfo))
+
+                resolve(true)
+              })
+              .catch((err) => {
+                const errMsg = "";
+                // errMsg = err.data.email ? err.data.email[0] : ''
+                // errMsg = err.data.password ? errMsg + "\n" + err.data.password[0] : errMsg
+                
+                // ACTION: DISPATCH (CREATING_USER_ACCOUNT_FAILURE)
+                dispatch(userActions.createUserAccountFailure(errMsg))
+
+                // ACTION: DISPATCH (FETCHING_USER_INFO_FAILURE)
+                dispatch(userActions.fetchingUserInfoFailure())
+
+                // ACTION: DISPATCH (SUBMIT_STUDENT_FORM_ERROR)
+                dispatch(submitStudentFormError(errMsg))
+
+                resolve(false)
+              })
           }
-        resolve(false)
-      })
+        }
+      }) // End of validateStudentEmail
     })
     return promise;
   }
@@ -116,7 +133,7 @@ export function submitEmployerSignupForm(firstName, lastName, companyName, phone
         return;
       }
 
-      if(!validateEmail(email)) {
+      if(!validateEmployerEmail(email)) {
         dispatch(submitEmployerFormError('Please enter in a valid email address'))
         resolve(false)
         return;
@@ -128,15 +145,42 @@ export function submitEmployerSignupForm(firstName, lastName, companyName, phone
       }
 
       // If good, create user
+      // ACTION: DISPATCH (CREATING_USER_ACCOUNT)
       dispatch(userActions.creatingUserAccount())
+
+      // ACTION: DISPATCH (FETCHING_USER_INFO)
+      dispatch(userActions.fectchingUserInfo())
+
       createEmployerAccount(firstName, lastName, companyName, phone, email, password) 
-        .then((key) => {
-          dispatch(userActions.createUserAccountSuccess(key))
+        .then((response) => {
+
+          const token = response.data.token
+          const userInfo = response.data.user
+
+          // save access token as cookie
+          setAccessToken(token) 
+
+          // ACTION: DISPATCH (CREATING_USER_ACCOUNT_SUCCESS)
+          dispatch(userActions.createUserAccountSuccess(token))
+
+          // ACTION: DISPATCH (FETCHING_USER_INFO_SUCCESS)
+          dispatch(userActions.fetchingUserInfoSuccess(false, userInfo))
+
           resolve(true)
         })
-        .catch(() => {
+        .catch((err) => {
+          resolve(false)
+          debugger;
+
+          // ACTION: DISPATCH (CREATING_USER_ACCOUNT_FAILURE)
           dispatch(userActions.createUserAccountFailure(err))
-          dispatch(submitEmployerFormError('This email address is already registered'))
+
+          // ACTION: DISPATCH (FETCHING_USER_INFO_FAILURE)
+          dispatch(userActions.fetchingUserInfoFailure())
+
+          // ACTION: DISPATCH (SUBMIT_STUDENT_FORM_ERROR)
+          dispatch(submitStudentFormError(err.message))
+
           resolve(false)
         })
     })
