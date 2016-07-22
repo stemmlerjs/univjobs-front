@@ -55,17 +55,28 @@ const SignupContainer = React.createClass({
   },
 
   componentWillMount() {
-    // Check our auth stuff HERE instead of using onEnter
-    checkIfAuthed(this.context.store)
-      .then(() => {
-        console.log("The user is authed")
-        // Get user info and then decide whether the user is a student or an employer, then route to appropriate page
-        this.context.router.replace('/profile/em')
-      })
-      .catch((err) => {
-        console.log("Error detecting if user is authed")
-        console.log(err)
-      })
+    authRedirectFilter('/profile/em', null, this.context.store, this.context.router)
+
+      function authRedirectFilter(successAuthRedirect, failureAuthRedirect, store, router) {
+        checkIfAuthed(store)
+          .then(() => {
+            // 
+            if(successAuthRedirect) {
+              console.log(`AUTH: Successful auth, redirecting to ${successAuthRedirect}`)
+              router.replace(successAuthRedirect)
+            } else {
+              console.log(`AUTH: Successful auth, no redirect provided.`)
+            }
+          })
+          .catch((err) => {
+            if(failureAuthRedirect) {
+              console.log(`AUTH: Failed auth, redirecting to ${failureAuthRedirect}`)
+              router.replace(failureAuthRedirect)
+            } else {
+              console.log(`AUTH: Failed auth, no redirect provided.`)
+            }
+          })
+      }
   },
 
   render () {

@@ -82,9 +82,11 @@ export function submitStudentSignupForm(email, password) {
                 resolve(true)
               })
               .catch((err) => {
-                const errMsg = "";
-                // errMsg = err.data.email ? err.data.email[0] : ''
-                // errMsg = err.data.password ? errMsg + "\n" + err.data.password[0] : errMsg
+                var errMsg = "";
+                
+                if(err.data.email) {
+                  errMsg = errMsg + err.data.email[0]
+                }
                 
                 // ACTION: DISPATCH (CREATING_USER_ACCOUNT_FAILURE)
                 dispatch(userActions.createUserAccountFailure(errMsg))
