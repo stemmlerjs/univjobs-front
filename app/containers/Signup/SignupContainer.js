@@ -60,11 +60,10 @@ const SignupContainer = React.createClass({
         student: '/profile/st',
         employer: '/profile/em'
       },
-      failureRedirect: null
+      failureRedirect: null,
+      restricted: null
     }
     authRedirectFilter(config, this.context.store, this.context.router)
-
-
   },
 
   render () {

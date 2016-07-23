@@ -33,9 +33,13 @@ export function getUserInfo(token) {
   */
 
 export function setAccessToken (token) {
+  var d = new Date();
+  d.setTime(d.getTime() + 30*60*1000); // set cookie to last 30 mins
   cookie.save('univjobs-access-token', token, {
-   path: '/'
- });
+    path: '/'
+  }, {
+    expires: d
+  });
 }
 
 // 
