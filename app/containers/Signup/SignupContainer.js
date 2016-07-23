@@ -5,7 +5,7 @@ import { Navigation, StudentSignup, EmployerSignup } from 'components'
 import { bindActionCreators } from 'redux'
 import * as userActionCreators from 'redux/modules/user/user'
 import * as signupFormActionCreators from 'redux/modules/signupForm/signupForm'
-import { checkIfAuthed } from 'helpers/auth'
+import { authRedirectFilter } from 'config/routes'
 
 /*  Using the spread operator, we combine all of the action creators from users()
 */
@@ -55,28 +55,16 @@ const SignupContainer = React.createClass({
   },
 
   componentWillMount() {
-    authRedirectFilter('/profile/em', null, this.context.store, this.context.router)
+    const config = {
+      successRedirect: {
+        student: '/profile/st',
+        employer: '/profile/em'
+      },
+      failureRedirect: null
+    }
+    authRedirectFilter(config, this.context.store, this.context.router)
 
-      function authRedirectFilter(successAuthRedirect, failureAuthRedirect, store, router) {
-        checkIfAuthed(store)
-          .then(() => {
-            // 
-            if(successAuthRedirect) {
-              console.log(`AUTH: Successful auth, redirecting to ${successAuthRedirect}`)
-              router.replace(successAuthRedirect)
-            } else {
-              console.log(`AUTH: Successful auth, no redirect provided.`)
-            }
-          })
-          .catch((err) => {
-            if(failureAuthRedirect) {
-              console.log(`AUTH: Failed auth, redirecting to ${failureAuthRedirect}`)
-              router.replace(failureAuthRedirect)
-            } else {
-              console.log(`AUTH: Failed auth, no redirect provided.`)
-            }
-          })
-      }
+
   },
 
   render () {

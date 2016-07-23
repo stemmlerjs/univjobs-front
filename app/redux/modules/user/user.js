@@ -93,26 +93,18 @@
   const FETCHING_USER_INFO_SUCCESS = 'FETCHING_USER_INFO_SUCCESS'
   const FETCHING_USER_INFO_FAILURE = 'FETCHING_USER_INFO_FAILURE'
 
-  export function fectchingUserInfo() {
+  export function fetchingUserInfo() {
     return {
-      type: FETCHING_USER_INFO,
-      isFetching: true
+      type: FETCHING_USER_INFO
     }
   }
 
-  export function fetchingUserInfoSuccess (isAStudent, info) {
-    if(isAStudent) {
-      return {
-        type: FETCHING_USER_INFO_SUCCESS,
-        isFetching: false,
-        studentProfile: info
-      }
-    } else {
-        return {
-          type: FETCHING_USER_INFO_SUCCESS,
-          isFetching: false,
-          employerProfile: info
-        }
+  export function fetchingUserInfoSuccess (isAStudent, profileInfo) {
+    return {
+      type: FETCHING_USER_INFO_SUCCESS,
+      isFetching: false,
+      isAStudent,
+      profileInfo,
     }
   }
 
@@ -212,6 +204,30 @@ export default function user (state = initialState, action) {
         ...state,
         isAuthenticated: false,
         accessToken: ''
+      }
+    case FETCHING_USER_INFO:
+      return {
+        ...state,
+        isFetching: true
+      }
+    case FETCHING_USER_INFO_SUCCESS: 
+      if(action.isAStudent) {
+         return {
+          ...state,
+          isFetching: false,
+          studentProfile: action.profileInfo
+        }
+      } else {
+        return {
+          ...state,
+          isFetching: false,
+          employerProfile: action.profileInfo
+        }
+      }
+    case FETCHING_USER_INFO_FAILURE:
+      return {
+        ...state,
+        isFetching: false
       }
     default :
       return state

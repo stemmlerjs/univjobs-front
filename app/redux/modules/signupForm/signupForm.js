@@ -63,7 +63,7 @@ export function submitStudentSignupForm(email, password) {
             dispatch(userActions.creatingUserAccount())
 
             // ACTION: DISPATCH (FETCHING_USER_INFO)
-            dispatch(userActions.fectchingUserInfo())
+            dispatch(userActions.fetchingUserInfo())
             createStudentAccount(email, password)
               .then((response) => {
 
@@ -77,7 +77,10 @@ export function submitStudentSignupForm(email, password) {
                 dispatch(userActions.createUserAccountSuccess(token)) 
 
                 // ACTION: DISPATCH (FETCHING_USER_INFO_SUCCESS)
-                dispatch(userActions.fetchingUserInfoSuccess(true, userInfo))
+                dispatch(userActions.fetchingUserInfoSuccess(
+                  true, // (isAStudent)
+                  userInfo
+                ))
 
                 resolve(true)
               })
@@ -151,7 +154,7 @@ export function submitEmployerSignupForm(firstName, lastName, companyName, phone
       dispatch(userActions.creatingUserAccount())
 
       // ACTION: DISPATCH (FETCHING_USER_INFO)
-      dispatch(userActions.fectchingUserInfo())
+      dispatch(userActions.fetchingUserInfo())
 
       createEmployerAccount(firstName, lastName, companyName, phone, email, password) 
         .then((response) => {
