@@ -32,7 +32,7 @@ export function validateLastName(lastName) {
 
 export function validatePhoneNumber(phone) {
   var re = /^(?:(?:\(?(?:00|\+)([1-4]\d\d|[1-9]\d?)\)?)?[\-\.\ \\\/]?)?((?:\(?\d{1,}\)?[\-\.\ \\\/]?){0,})(?:[\-\.\ \\\/]?(?:#|ext\.?|extension|x)[\-\.\ \\\/]?(\d+))?$/i
-  return re.test(phone);
+  return re.test(phone) && (phone.length === 10);
 }
 
 export function validateCompanyName(companyName) {

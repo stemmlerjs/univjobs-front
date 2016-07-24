@@ -19,7 +19,7 @@ export function getUserInfo(token) {
       'authorization': 'JWT ' + token
     }
   }
-  return axios.get(config.baseUrl + 'account/', requestConfig)
+  return axios.get(config.baseUrl + 'me/', requestConfig)
 }
 
 /**

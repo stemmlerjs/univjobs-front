@@ -215,13 +215,15 @@ export default function user (state = initialState, action) {
          return {
           ...state,
           isFetching: false,
-          studentProfile: action.profileInfo
+          studentProfile: action.profileInfo,
+          isAStudent: action.isAStudent
         }
       } else {
         return {
           ...state,
           isFetching: false,
-          employerProfile: action.profileInfo
+          employerProfile: action.profileInfo,
+          isAStudent: action.isAStudent
         }
       }
     case FETCHING_USER_INFO_FAILURE:

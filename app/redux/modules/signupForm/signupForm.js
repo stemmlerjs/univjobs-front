@@ -133,7 +133,7 @@ export function submitEmployerSignupForm(firstName, lastName, companyName, phone
       }
 
       if(!validatePhoneNumber(phone)) {
-        dispatch(submitEmployerFormError('Please enter in a valid phone number'))
+        dispatch(submitEmployerFormError('Please enter in a valid phone 10 digit number'))
         resolve(false)
         return;
       }
@@ -167,6 +167,7 @@ export function submitEmployerSignupForm(firstName, lastName, companyName, phone
 
           // ACTION: DISPATCH (CREATING_USER_ACCOUNT_SUCCESS)
           dispatch(userActions.createUserAccountSuccess(token))
+          debugger;
 
           // ACTION: DISPATCH (FETCHING_USER_INFO_SUCCESS)
           dispatch(userActions.fetchingUserInfoSuccess(false, userInfo))
@@ -175,7 +176,6 @@ export function submitEmployerSignupForm(firstName, lastName, companyName, phone
         })
         .catch((err) => {
           resolve(false)
-          debugger;
 
           // ACTION: DISPATCH (CREATING_USER_ACCOUNT_FAILURE)
           dispatch(userActions.createUserAccountFailure(err))
