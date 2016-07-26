@@ -5,6 +5,40 @@ import { loggingIn, loginSuccess, loginFailure,
   fetchingUserInfo, fetchingUserInfoSuccess, fetchingUserInfoFailure } from 'redux/modules/user/user'
 
 /**
+  * attemptLogin
+  *   - Retrieves access token from API through a GET to /account with the
+  *       token included in the header of the request.
+  *
+  * @param (String) - email
+  * @param (String) - 
+  */
+
+export function attemptLogin (email, password) {
+  let bodyData = {
+    email,
+    password
+  }
+
+  return axios({
+    method: 'post',
+    url: config.baseUrl + 'login/',
+    headers: {
+      "content-type": "application/json"
+    },
+    data: JSON.stringify(bodyData)
+  })
+}
+
+// login('meow@sheridancollege.ca', 'password1')
+//   .then(function(res){
+//     console.log(res.data)
+//   })
+//   .catch(function(err){
+//     console.log(err)
+//   })
+
+
+/**
   * Get User Info
   *   - Retrieves access token from API through a GET to /account with the
   *       token included in the header of the request.
