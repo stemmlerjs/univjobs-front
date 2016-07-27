@@ -13,7 +13,7 @@ import { loggingIn, loginSuccess, loginFailure,
   * @param (String) - 
   */
 
-export function attemptLogin (email, password) {
+export function login (email, password) {
   let bodyData = {
     email,
     password

@@ -10,8 +10,8 @@ const StudentProfileContainer = React.createClass({
     const config = {
       failureRedirect: '/',
       restricted: {
-        to: 'EMPLOYERS',
-        redirectTo: '/profile/st'
+        to: 'STUDENTS',
+        redirectTo: '/profile/em'
       }
     }
     authRedirectFilter(config, this.context.store, this.context.router)

@@ -8,6 +8,7 @@ import * as signupFormActionCreators from 'redux/modules/signupForm/signupForm'
 import * as loginFormActionCreators from 'redux/modules/loginForm/loginForm'
 import { authRedirectFilter } from 'config/routes'
 import SkyLight from 'react-skylight'
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
 /*  Using the spread operator, we combine all of the action creators from users()
 */
@@ -67,7 +68,10 @@ const SignupContainer = React.createClass({
     employerPhone: PropTypes.string.isRequired,
     employerEmail: PropTypes.string.isRequired,
     employerPassword: PropTypes.string.isRequired,
-    employerFormError: PropTypes.string.isRequired
+    employerFormError: PropTypes.string.isRequired,
+    loginFormEmailText: PropTypes.string.isRequired,
+    loginFormPasswordText: PropTypes.string.isRequired,
+    loginFormErrorText: PropTypes.string.isRequired
   },
 
   contextTypes: {
@@ -112,15 +116,38 @@ const SignupContainer = React.createClass({
 
 
   handleLoginAttempt (e) {
-    e.preventDefault(),
-    console.log('aids')
+    e.preventDefault()
+    this.props.submitLoginForm(
+      this.props.loginFormEmailText,
+      this.props.loginFormPasswordText
+    )
+    .then(({isAStudent, isProfileCompleted}) => {
+      //TODO: Implement this as a tiny module (function) to put inside of authRedirectionFilter
+
+      if(isAStudent && isProfileCompleted) {
+        // Route to Student Dashboard 
+
+      } else if (isAStudent && !isProfileCompleted) {
+        // Route to Student Profile
+        this.context.router.replace('/profile/st')
+
+      } else if (!isAStudent && isProfileCompleted) {
+        // Route to employer dashboard
+
+      } else if (!isAStudent && !isProfileCompleted) {
+        // Route to Employer Profile
+        this.context.router.replace('/profile/em')
+
+      }
+    })
+    // .catch((y) => {
+      
+    // })
   },
 
 /**
   * componentWillMount
   *
-  *  Opens the Login modal. Can be triggered on either Student or Employer view.
-  *  Function is passed to the Navigation component as Props
   */
 
   componentWillMount() {
@@ -199,7 +226,6 @@ const SignupContainer = React.createClass({
 })
 
 function mapStateToProps({user, signupForm, loginForm}) {
-  console.log(loginForm)
   return {
     isAStudent: user.isAStudent,
     studentEmail: signupForm.studentSignupForm.email ? signupForm.studentSignupForm.email : '',
@@ -212,7 +238,9 @@ function mapStateToProps({user, signupForm, loginForm}) {
     employerEmail: signupForm.employerSignupForm.email ? signupForm.employerSignupForm.email : '',
     employerPassword: signupForm.employerSignupForm.password ? signupForm.employerSignupForm.password : '',
     employerFormError: signupForm.employerSignupForm.error ? signupForm.employerSignupForm.error : '',
-    loginFormErrorText: loginForm.error ? signupForm.error : '',
+    loginFormEmailText: loginForm.email ? loginForm.email : '',
+    loginFormPasswordText: loginForm.password ? loginForm.password : '',
+    loginFormErrorText: loginForm.error ? loginForm.error : ''
   }
 }
 
