@@ -11,13 +11,16 @@ const StudentProfileContainer = React.createClass({
   },
   componentWillMount() {
     const config = {
-      failureRedirect: '/',
+      failureRedirect: '/join',
       restricted: {
         to: 'STUDENTS',
         redirectTo: '/profile/em'
       }
     }
     authRedirectFilter(config, this.context.store, this.context.router)
+  },
+  componentWillUnmount() {
+    console.log("wait, no we have to check")
   },
   render () {
     return (

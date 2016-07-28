@@ -11,7 +11,7 @@ const EmployerProfileContainer = React.createClass({
   },
   componentWillMount() {
     const config = {
-      failureRedirect: '/',
+      failureRedirect: '/join',
       restricted: {
         to: 'EMPLOYERS',
         redirectTo: '/profile/st'

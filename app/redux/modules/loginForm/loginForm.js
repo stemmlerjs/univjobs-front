@@ -35,7 +35,6 @@ export function submitLoginForm(email, password) {
     actuallySubmitLoginFormDispatch()
 
     const promise = new Promise((resolve, reject) => {
-      debugger;
       if(!validateEmployerEmail(email)) {
         // ACTION: DISPATCH (SUBMIT_LOGIN_FORM_ERROR)
         dispatch(submitLoginFormError('Please enter a valid email address'))
@@ -58,7 +57,10 @@ export function submitLoginForm(email, password) {
           setAccessToken(token)
 
           // ACTION: DISPATCH (LOGIN_SUCCESS)
-          dispatch(loginSuccess(token))
+          dispatch(loginSuccess(token, 
+            response.data.user.is_a_student, 
+            response.data.user.is_profile_completed
+          ))
 
           // Now decide if they are a student or 
           resolve({

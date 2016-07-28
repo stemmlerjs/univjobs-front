@@ -8,7 +8,6 @@ import * as signupFormActionCreators from 'redux/modules/signupForm/signupForm'
 import * as loginFormActionCreators from 'redux/modules/loginForm/loginForm'
 import { authRedirectFilter } from 'config/routes'
 import SkyLight from 'react-skylight'
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
 /*  Using the spread operator, we combine all of the action creators from users()
 */
@@ -123,7 +122,6 @@ const SignupContainer = React.createClass({
     )
     .then(({isAStudent, isProfileCompleted}) => {
       //TODO: Implement this as a tiny module (function) to put inside of authRedirectionFilter
-      debugger;
       if(isAStudent && isProfileCompleted) {
         // Route to Student Dashboard 
 

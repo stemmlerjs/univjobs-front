@@ -69,6 +69,7 @@ export function submitStudentSignupForm(email, password) {
 
                 const token = response.data.token
                 const userInfo = response.data.user
+                debugger;
 
                 // save access token as cookie
                 setAccessToken(token) 

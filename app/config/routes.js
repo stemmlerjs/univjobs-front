@@ -1,18 +1,31 @@
 import React from 'react'
 import { Router, Route, hashHistory, IndexRoute, browserHistory } from 'react-router'
 import { SignupContainer, StudentProfileContainer, 
-  EmployerProfileContainer, CategoriesContainer } from '../containers'
+  EmployerProfileContainer, CategoriesContainer, InitialOverlay } from '../containers'
 import { checkIfAuthed } from 'helpers/auth'
+
+class Test extends React.Component {
+  render() {
+    return (
+      <div>
+        THis is a test mon frere
+      </div>
+    );
+  }
+}
+
 
 // Purpose of IndexRoute - if none of the routes match, we go here
 export default function getRoutes() {
 
   return (
     <Router history={hashHistory} >
-      <Route path='/' component={SignupContainer} />
-      <Route path='profile/st' component={StudentProfileContainer} />
-      <Route path='profile/em' component={EmployerProfileContainer} />
-      <Route path='categories' component={CategoriesContainer} />
+        <Route path='/' component={InitialOverlay}>
+          <Route path='/join' component={SignupContainer} />
+          <Route path='/profile/st' component={StudentProfileContainer} />
+          <Route path='/profile/em' component={EmployerProfileContainer} />
+          <Route path='/categories' component={CategoriesContainer} />
+        </Route>
     </Router>
   )
 }

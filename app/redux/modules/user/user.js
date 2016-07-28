@@ -85,16 +85,18 @@
     }
   }
 
-  export function loginSuccess(accessToken) {
+  export function loginSuccess(accessToken, isAStudent, isProfileCompleted) {
     return {
       type: LOGIN_SUCCESS,
-      accessToken: accessToken
+      accessToken: accessToken,
+      isAStudent,
+      isProfileCompleted
     }
   }
 
   export function logoutSuccess () {
     return {
-      type: LOGGING_OUT,
+      type: LOGOUT_SUCCESS,
       accessToken: '',
       isAuthenticated: false
     }
@@ -155,6 +157,7 @@ const initialState = {
   studentProfile: {},
   employerProfile: {},
   isAStudent: true,
+  isProfileCompleted: false,
   accessToken: '',
   emailVerified: false,
   error: ''
@@ -217,7 +220,9 @@ export default function user (state = initialState, action) {
         ...state,
         isLoggingIn: false,
         isAuthenticated: true,
-        accessToken: action.accessToken
+        accessToken: action.accessToken,
+        isAStudent: action.isAStudent,
+        isProfileCompleted: action.isProfileCompleted
       }
     case LOGIN_FAILURE:
       return {
@@ -242,14 +247,16 @@ export default function user (state = initialState, action) {
           ...state,
           isFetching: false,
           studentProfile: action.profileInfo,
-          isAStudent: action.isAStudent
+          isAStudent: action.isAStudent,
+          // isProfileCompleted: action.isProfileCompleted
         }
       } else {
         return {
           ...state,
           isFetching: false,
           employerProfile: action.profileInfo,
-          isAStudent: action.isAStudent
+          isAStudent: action.isAStudent,
+          // isProfileCompleted: action.isProfileCompleted
         }
       }
     case FETCHING_USER_INFO_FAILURE:
@@ -267,7 +274,6 @@ export default function user (state = initialState, action) {
 // ============================================================ //
 
 const initialStudentProfileState = {
-  is_profile_completed: '',
   email: '',
   password: '',
   lastUpated: '',
