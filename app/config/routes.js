@@ -4,17 +4,6 @@ import { SignupContainer, StudentProfileContainer,
   EmployerProfileContainer, CategoriesContainer, InitialOverlay } from '../containers'
 import { checkIfAuthed } from 'helpers/auth'
 
-class Test extends React.Component {
-  render() {
-    return (
-      <div>
-        THis is a test mon frere
-      </div>
-    );
-  }
-}
-
-
 // Purpose of IndexRoute - if none of the routes match, we go here
 export default function getRoutes() {
 
@@ -55,7 +44,7 @@ export default function getRoutes() {
         student: '/jobs/feed',
         employer: '/applications/feed'  
       },
-      failureRedirect: '/'              (this is taken upon unsuccessful authentication)
+      failureRedirect: '/join'              (this is taken upon unsuccessful authentication)
       restricted: {
         to: 'EMPLOYERS' || 'STUDENTS'   (use one of these to restrict the other)
         redirectTo: '/profile/st'       (usually the converse equivalent of the route)
@@ -81,7 +70,8 @@ export function authRedirectFilter({successRedirect, failureRedirect, restricted
     }
   }
 
-  checkIfAuthed(store)
+  const promise = new Promise((resolve, reject) => {
+    checkIfAuthed(store)
     .then(() => {
       console.log("AUTH: Successful auth!")
       const isAStudent = store.getState().user.isAStudent
@@ -97,6 +87,7 @@ export function authRedirectFilter({successRedirect, failureRedirect, restricted
           router.replace(successRedirect.employer)
         }
       }
+      resolve()
     })
     .catch((err) => {
       if(failureRedirect) {
@@ -110,6 +101,11 @@ export function authRedirectFilter({successRedirect, failureRedirect, restricted
       } else {
         console.log(`AUTH: Failed auth, no redirect provided.`)
       }
+      resolve();
     })
+  })
+
+  return promise;
+
 }
 

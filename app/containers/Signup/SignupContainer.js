@@ -57,6 +57,7 @@ const SignupContainer = React.createClass({
   // however, we can list the results of mapStateToProps here.
 
   propTypes: {
+    closeOverlay: PropTypes.func.isRequired,
     isAStudent: PropTypes.bool.isRequired,
     studentEmail: PropTypes.string.isRequired,
     studentPassword: PropTypes.string.isRequired,
@@ -158,6 +159,9 @@ const SignupContainer = React.createClass({
       restricted: null
     }
     authRedirectFilter(config, this.context.store, this.context.router)
+      .then(() => {
+        this.props.closeOverlay()
+      })
   },
 
   render () {
@@ -224,7 +228,7 @@ const SignupContainer = React.createClass({
 
 function mapStateToProps({user, signupForm, loginForm}) {
   return {
-    isAStudent: user.isAStudent,
+    isAStudent: user.isAStudent ? user.isAStudent : '',
     studentEmail: signupForm.studentSignupForm.email ? signupForm.studentSignupForm.email : '',
     studentPassword: signupForm.studentSignupForm.password ? signupForm.studentSignupForm.password : '',
     studentFormError: signupForm.studentSignupForm.error ? signupForm.studentSignupForm.error : '',

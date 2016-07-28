@@ -42,7 +42,7 @@ export function logout(store, router) {
     // ACTION: DISPATCH (LOGGING_OUT)
     store.dispatch(logoutSuccess())
     cookie.remove('univjobs-access-token')
-    router.replace('/')
+    router.replace('/join')
   })
   .catch(() => {
     // ACTION: DISPATCH (LOGGING_OUT)
