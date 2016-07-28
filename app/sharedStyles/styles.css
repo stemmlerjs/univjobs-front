@@ -70,6 +70,7 @@
   color: white;
   font-size: 29px;
   border-top: solid #707980 1px;
+  cursor: pointer;
 
 }
 .sidebarItem:nth-of-type(6) {

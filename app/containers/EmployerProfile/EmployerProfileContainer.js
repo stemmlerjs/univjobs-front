@@ -20,6 +20,7 @@ const EmployerProfileContainer = React.createClass({
     authRedirectFilter(config, this.context.store, this.context.router)
   },
   render () {
+    console.log(this.context)
     return (
       <div className={pageContainer}>
         <SidebarContainer/>

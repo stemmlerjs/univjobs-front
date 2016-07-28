@@ -2,7 +2,7 @@ import axios from 'axios'
 import config from 'config'
 import cookie from 'react-cookie'
 import { loggingIn, loginSuccess, loginFailure,
-  fetchingUserInfo, fetchingUserInfoSuccess, fetchingUserInfoFailure } from 'redux/modules/user/user'
+  fetchingUserInfo, loggingOut, logoutSuccess, logoutFailure, fetchingUserInfoSuccess, fetchingUserInfoFailure } from 'redux/modules/user/user'
 
 /**
   * attemptLogin
@@ -29,13 +29,27 @@ export function login (email, password) {
   })
 }
 
-// login('meow@sheridancollege.ca', 'password1')
-//   .then(function(res){
-//     console.log(res.data)
-//   })
-//   .catch(function(err){
-//     console.log(err)
-//   })
+
+export function logout(store, router) {
+  // ACTION: DISPATCH (LOGGING_OUT)
+  store.dispatch(loggingOut())
+
+  axios({
+    method: 'post',
+    url: config.baseUrl + 'logout/'
+  })
+  .then((res) => {
+    // ACTION: DISPATCH (LOGGING_OUT)
+    store.dispatch(logoutSuccess())
+    cookie.remove('univjobs-access-token')
+    router.replace('/')
+  })
+  .catch(() => {
+    // ACTION: DISPATCH (LOGGING_OUT)
+    store.dispatch(logoutFailure())
+
+  })
+}
 
 
 /**

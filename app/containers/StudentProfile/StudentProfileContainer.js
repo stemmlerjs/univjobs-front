@@ -1,5 +1,8 @@
 import React, { PropTypes } from 'react'
 import { authRedirectFilter } from 'config/routes'
+import { StudentProfile } from 'components'
+import { SidebarContainer } from 'containers'
+import { pageContainer } from './styles.css'
 
 const StudentProfileContainer = React.createClass({
   contextTypes: {
@@ -18,7 +21,10 @@ const StudentProfileContainer = React.createClass({
   },
   render () {
     return (
-      <div>CREATE STUDENT PROFILE</div>
+      <div className={pageContainer}>
+        <SidebarContainer/>
+        <StudentProfile/>
+      </div>
     )
   },
 })

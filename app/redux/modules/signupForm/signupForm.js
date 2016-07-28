@@ -143,6 +143,7 @@ export function submitEmployerSignupForm(firstName, lastName, companyName, phone
         resolve(false)
         return;
       }
+
       if(!validatePassword(password)) {
         dispatch(submitEmployerFormError('Please enter a password with length greater than 6 characters'))
         resolve(false)
@@ -167,7 +168,6 @@ export function submitEmployerSignupForm(firstName, lastName, companyName, phone
 
           // ACTION: DISPATCH (CREATING_USER_ACCOUNT_SUCCESS)
           dispatch(userActions.createUserAccountSuccess(token))
-          debugger;
 
           // ACTION: DISPATCH (FETCHING_USER_INFO_SUCCESS)
           dispatch(userActions.fetchingUserInfoSuccess(false, userInfo))
@@ -175,16 +175,20 @@ export function submitEmployerSignupForm(firstName, lastName, companyName, phone
           resolve(true)
         })
         .catch((err) => {
-          resolve(false)
+
+          let errorMessage = 'An error occurred';
+          if(err.data.hasOwnProperty('email')){
+            errorMessage = err.data.email[0];
+          }
 
           // ACTION: DISPATCH (CREATING_USER_ACCOUNT_FAILURE)
-          dispatch(userActions.createUserAccountFailure(err))
+          dispatch(userActions.createUserAccountFailure(errorMessage))
 
           // ACTION: DISPATCH (FETCHING_USER_INFO_FAILURE)
           dispatch(userActions.fetchingUserInfoFailure())
 
           // ACTION: DISPATCH (SUBMIT_STUDENT_FORM_ERROR)
-          dispatch(submitStudentFormError(err.message))
+          dispatch(submitEmployerFormError(errorMessage))
 
           resolve(false)
         })

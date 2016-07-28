@@ -69,10 +69,19 @@
   const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
   const LOGIN_FAILURE = 'LOGIN_FAILURE'
   const LOGGING_OUT = 'LOGGING_OUT'
+  const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS'
+  const LOGOUT_FAILURE = 'LOGOUT_FAILURE'
 
   export function loggingIn () {
     return {
       type: LOGGING_IN
+    }
+  }
+
+  export function loggingOut () {
+    return {
+      type: LOGGING_OUT,
+      isLoggingOut: true
     }
   }
 
@@ -83,9 +92,25 @@
     }
   }
 
+  export function logoutSuccess () {
+    return {
+      type: LOGGING_OUT,
+      accessToken: '',
+      isAuthenticated: false
+    }
+  }
+
   export function loginFailure() {
     return {
-      type: LOGIN_FAILURE
+      type: LOGIN_FAILURE,
+      isLoggingIn: false
+    }
+  }
+
+  export function logoutFailure() {
+    return {
+      type: LOGOUT_FAILURE,
+      isLoggingOut: false
     }
   }
 
@@ -123,6 +148,7 @@
 const initialState = {
   uid: '',
   isLoggingIn: false,
+  isLoggingOut: false,
   isCreatingAccount: false,
   isFetching: false,
   isAuthenticated: false,

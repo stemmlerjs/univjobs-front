@@ -1,7 +1,8 @@
 import React, { PropTypes } from 'react'
 import { sidebar, sidebarLogo, sidebarItemsContainer, sidebarItem, profileImg } from 'sharedStyles/styles.css'
 
-export default function SideBar (props) {
+
+export default function SideBar ({onLogout}) {
   return (
     <div className={sidebar}>
       <div className={sidebarLogo}>LOGO</div>
@@ -11,7 +12,9 @@ export default function SideBar (props) {
         <div className={sidebarItem}><i className="fa fa-users" aria-hidden="true"></i></div>
         <div className={sidebarItem}><i className="fa fa-plus-square" aria-hidden="true"></i></div>
         <div className={sidebarItem}><i className="fa fa-thumb-tack" aria-hidden="true"></i></div>
-        <div className={sidebarItem}><i className="fa fa-power-off" aria-hidden="true"></i></div>
+        <div className={sidebarItem} onClick={onLogout}>
+          <i className="fa fa-power-off" aria-hidden="true"></i>
+        </div>
       </div>
     </div>
   )

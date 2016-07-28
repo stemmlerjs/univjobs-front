@@ -123,7 +123,7 @@ const SignupContainer = React.createClass({
     )
     .then(({isAStudent, isProfileCompleted}) => {
       //TODO: Implement this as a tiny module (function) to put inside of authRedirectionFilter
-
+      debugger;
       if(isAStudent && isProfileCompleted) {
         // Route to Student Dashboard 
 
@@ -140,9 +140,9 @@ const SignupContainer = React.createClass({
 
       }
     })
-    // .catch((y) => {
-      
-    // })
+    .catch((err) => {
+      console.log("Could not login", err)
+    })
   },
 
 /**
@@ -163,7 +163,6 @@ const SignupContainer = React.createClass({
   },
 
   render () {
-    console.log(this.props)
     return (
       <div>
         <Navigation 
