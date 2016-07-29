@@ -1,6 +1,14 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+import { hideOverlay } from 'redux/modules/application/application'
+import animationStyles from './style.css'
+
+const styles = {
+  main: {
+    textAlign:'center'
+  }
+}
 
 const InitialOverlay = React.createClass({
   contextTypes: {
@@ -8,19 +16,11 @@ const InitialOverlay = React.createClass({
     router: PropTypes.object.isRequired
   },
 
-  componentWillMount() {
-
-  },
-  componentDidMount() {
-
-  },
-
   closeOverlay() {
-    console.log("Now, we close the overlay!!!")
+    this.context.store.dispatch(hideOverlay())
   },
 
   render () {
-    console.log(this.props, "my props");
     // Supply all child props with the closeOverlay() function
     const childrenWithProps = React.Children.map(this.props.children,
      (child) => React.cloneElement(child, {
@@ -28,14 +28,17 @@ const InitialOverlay = React.createClass({
      })
     );
     return (
-      <div>
+      <div style={styles.main}>
         <ReactCSSTransitionGroup
-          transitionName="appear"
-          transitionEnterTimeout={500}
-          transitionLeaveTimeout={500}>
-          { this.props.isAuthenticated === true ? 
-            <div style={{zIndex: '1000', position: 'fixed', backgroundColor:'white', left: 0, right: 0, top: 0}}>
-              Overlay Test
+          transitionName={animationStyles}
+          transitionAppear={true}
+          transitionLeave={true}
+          transitionEnterTimeout={600}
+          transitionAppearTimeout={600}
+          transitionLeaveTimeout={300}>
+          { this.props.isOverlayActive === true ? 
+            <div style={{zIndex: '1000', position: 'fixed', backgroundColor:'white', left: 0, right: 0, top: 0, bottom: 0}}>
+              <h1>Welcome to Univjobs!</h1>
             </div>
             : null
           }
@@ -46,9 +49,9 @@ const InitialOverlay = React.createClass({
   },
 })
 // We should have a new value on the user called 'isOverlayActive'
-function mapStateToProps({user}) {
+function mapStateToProps({application}) {
   return {
-    isAuthenticated: user.isAuthenticated ? user.isAuthenticated : false,
+    isOverlayActive: application.isOverlayActive ? true : false,
   }
 }
 

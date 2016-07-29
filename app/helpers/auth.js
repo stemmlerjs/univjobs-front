@@ -172,7 +172,9 @@ export function checkIfAuthed (store) {
             ))
 
             // ACTION: DISPATCH (LOGGING_IN_SUCCESS)
-            store.dispatch(loginSuccess(accessToken))
+            store.dispatch(loginSuccess(accessToken,
+              response.data.is_a_student,
+              response.data.is_profile_completed))
             resolve(true)
           })
           .catch(function(err){

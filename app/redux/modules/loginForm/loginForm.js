@@ -69,8 +69,6 @@ export function submitLoginForm(email, password) {
           })
         })
         .catch((err) => { 
-          console.log(err)
-
           if(err.status === 400){
             // ACTION: DISPATCH (SUBMIT_LOGIN_FORM_ERROR)
             dispatch(submitLoginFormError('Either username or password is incorrect.'))
@@ -79,10 +77,10 @@ export function submitLoginForm(email, password) {
             dispatch(loginFailure('Either username or password is incorrect.'))
           } else {
             // ACTION: DISPATCH (SUBMIT_LOGIN_FORM_ERROR)
-            dispatch(submitLoginFormError('Either username or password is incorrect.'))
+            dispatch(submitLoginFormError('Network error'))
 
             // ACTION: DISPATCH (LOGIN_FAILURE)
-            dispatch(loginFailure('Either username or password is incorrect.'))
+            dispatch(loginFailure('Network error'))
           }
           console.log("error", err)
           reject(false)

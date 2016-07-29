@@ -160,6 +160,7 @@ const SignupContainer = React.createClass({
     }
     authRedirectFilter(config, this.context.store, this.context.router)
       .then(() => {
+        if(this.context.store.getState().application.isOverlayActive)
         this.props.closeOverlay()
       })
   },
@@ -228,7 +229,7 @@ const SignupContainer = React.createClass({
 
 function mapStateToProps({user, signupForm, loginForm}) {
   return {
-    isAStudent: user.isAStudent ? user.isAStudent : '',
+    isAStudent: user.isAStudent ? true : false,
     studentEmail: signupForm.studentSignupForm.email ? signupForm.studentSignupForm.email : '',
     studentPassword: signupForm.studentSignupForm.password ? signupForm.studentSignupForm.password : '',
     studentFormError: signupForm.studentSignupForm.error ? signupForm.studentSignupForm.error : '',

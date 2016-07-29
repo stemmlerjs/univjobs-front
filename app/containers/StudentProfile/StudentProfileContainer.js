@@ -11,13 +11,20 @@ const StudentProfileContainer = React.createClass({
   },
   componentWillMount() {
     const config = {
-      failureRedirect: '/join',
+      failureRedirect: {
+        student: '/join',
+        employer: '/join'
+      },
       restricted: {
         to: 'STUDENTS',
         redirectTo: '/profile/em'
       }
     }
     authRedirectFilter(config, this.context.store, this.context.router)
+      .then(() => {
+        if(this.context.store.getState().application.isOverlayActive)
+        this.props.closeOverlay()
+      })
   },
   componentWillUnmount() {
     console.log("wait, no we have to check")

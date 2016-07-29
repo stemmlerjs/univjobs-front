@@ -11,13 +11,20 @@ const EmployerProfileContainer = React.createClass({
   },
   componentWillMount() {
     const config = {
-      failureRedirect: '/join',
+      failureRedirect: {
+        student: '/join',
+        employer: '/join'
+      },
       restricted: {
         to: 'EMPLOYERS',
         redirectTo: '/profile/st'
       }
     }
     authRedirectFilter(config, this.context.store, this.context.router)
+      .then(() => {
+        if(this.context.store.getState().application.isOverlayActive)
+        this.props.closeOverlay()
+      })
   },
   render () {
     console.log(this.context)
