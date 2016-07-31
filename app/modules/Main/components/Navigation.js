@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import { Link } from 'react-router'
 import { nav, leftsideNavItems, rightsideNavItems, 
-  logoText, noDeco, btn, pseudoBtn, loginIcon} from './styles.css'
+  logoText, noDeco, btn, pseudoBtn, loginIcon} from '../styles/NavigationStyles.css'
 
 
 Navigation.ropTypes = {

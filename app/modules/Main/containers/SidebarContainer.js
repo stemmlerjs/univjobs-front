@@ -1,5 +1,5 @@
 import React from 'react'
-import { Sidebar } from 'components/'
+import { Sidebar } from 'modules/Main'
 import { logout } from 'helpers/auth'
 
 const SidebarContainer = React.createClass({

@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import SkyLight from 'react-skylight'
 
-import { centeredContainer, header, subHeader, modalContent, errorMessage, btn, input } from './styles.css'
+import { centeredContainer, header, subHeader, modalContent, errorMessage, btn, input } from '../styles/EmployerSignupStyles.css'
 
 const styles = {
   overlayStyles: {

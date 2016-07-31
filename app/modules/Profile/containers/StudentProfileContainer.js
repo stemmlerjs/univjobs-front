@@ -1,10 +1,10 @@
 import React, { PropTypes } from 'react'
-import { SidebarContainer } from 'containers'
-import { EmployerProfile } from 'components'
-import { pageContainer } from './styles.css'
 import { authRedirectFilter } from 'config/routes'
+import { StudentProfile } from 'modules/Profile'
+import { SidebarContainer } from 'modules/Main'
+import { pageContainer } from '../styles/StudentProfileContainerStyles.css'
 
-const EmployerProfileContainer = React.createClass({
+const StudentProfileContainer = React.createClass({
   contextTypes: {
     router: PropTypes.object.isRequired,
     store: PropTypes.object.isRequired
@@ -16,8 +16,8 @@ const EmployerProfileContainer = React.createClass({
         employer: '/join'
       },
       restricted: {
-        to: 'EMPLOYERS',
-        redirectTo: '/profile/st'
+        to: 'STUDENTS',
+        redirectTo: '/profile/em'
       }
     }
     authRedirectFilter(config, this.context.store, this.context.router)
@@ -26,15 +26,16 @@ const EmployerProfileContainer = React.createClass({
         this.props.closeOverlay()
       })
   },
+  componentWillUnmount() {
+    console.log("wait, no we have to check")
+  },
   render () {
-    console.log(this.context)
     return (
       <div className={pageContainer}>
         <SidebarContainer/>
-        <EmployerProfile/>
+        <StudentProfile/>
       </div>
     )
-  }
+  },
 })
-export default EmployerProfileContainer
-
+export default StudentProfileContainer

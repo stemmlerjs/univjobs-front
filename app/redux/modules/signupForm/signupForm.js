@@ -69,7 +69,6 @@ export function submitStudentSignupForm(email, password) {
 
                 const token = response.data.token
                 const userInfo = response.data.user
-                debugger;
 
                 // save access token as cookie
                 setAccessToken(token) 
@@ -86,10 +85,14 @@ export function submitStudentSignupForm(email, password) {
                 resolve(true)
               })
               .catch((err) => {
-                var errMsg = "";
-                
-                if(err.data.email) {
-                  errMsg = errMsg + err.data.email[0]
+                let errMsg = "";
+
+                if(!err.hasOwnProperty('data')) {
+                  errMsg = "Couldn't connect to Univjobs. Please check your network connection."
+                } else {
+                  if(err.data.email) {
+                    errMsg = errMsg + err.data.email[0]
+                  }
                 }
                 
                 // ACTION: DISPATCH (CREATING_USER_ACCOUNT_FAILURE)
@@ -176,10 +179,14 @@ export function submitEmployerSignupForm(firstName, lastName, companyName, phone
           resolve(true)
         })
         .catch((err) => {
+          let errMsg = "";
 
-          let errorMessage = 'An error occurred';
-          if(err.data.hasOwnProperty('email')){
-            errorMessage = err.data.email[0];
+          if(!err.hasOwnProperty('data')) {
+            errMsg = "Couldn't connect to Univjobs. Please check your network connection."
+          } else {
+            if(err.data.email) {
+              errMsg = errMsg + err.data.email[0]
+            }
           }
 
           // ACTION: DISPATCH (CREATING_USER_ACCOUNT_FAILURE)

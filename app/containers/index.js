@@ -1,6 +1,0 @@
-export SignupContainer from './Signup/SignupContainer'
-export StudentProfileContainer from './StudentProfile/StudentProfileContainer'
-export EmployerProfileContainer from './EmployerProfile/EmployerProfileContainer'
-export SidebarContainer from './Sidebar/SidebarContainer'
-export CategoriesContainer from './Categories/CategoriesContainer'
-export InitialOverlay from './InitialOverlay/InitialOverlay'

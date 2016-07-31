@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
-import { ProfileField } from 'components'
+import { ProfileField } from 'modules/Profile'
 import { profileContainer, profileHeader, profileField, profileFieldName, profileFieldContent, input,
-  textarea, btn, dropzone, resetBtnContainer, dropzoneContent, photoIcon, saveBtnContainer, saveBtn } from './styles.css'
+  textarea, btn, dropzone, resetBtnContainer, dropzoneContent, photoIcon, saveBtnContainer, saveBtn } from '../styles/EmployerProfileStyles.css'
 import Dropzone from 'react-dropzone'
 import { Link } from 'react-router'
 

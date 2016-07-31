@@ -1,7 +1,6 @@
 import React from 'react'
 import { Router, Route, hashHistory, IndexRoute, browserHistory } from 'react-router'
-import { SignupContainer, StudentProfileContainer, 
-  EmployerProfileContainer, CategoriesContainer, InitialOverlay } from '../containers'
+import { SignupContainer, StudentProfileContainer, EmployerProfileContainer, InitialOverlay, CategoriesContainer } from 'modules'
 import { checkIfAuthed } from 'helpers/auth'
 
 // Purpose of IndexRoute - if none of the routes match, we go here

@@ -1,13 +1,17 @@
 import React, { PropTypes } from 'react'
-import { studentSignupPage, employerSignupPage, input, errorMessage, loginBtn } from './styles.css'
 import { connect } from 'react-redux'
-import { Navigation, StudentSignup, EmployerSignup } from 'components'
 import { bindActionCreators } from 'redux'
 import * as userActionCreators from 'redux/modules/user/user'
 import * as signupFormActionCreators from 'redux/modules/signupForm/signupForm'
 import * as loginFormActionCreators from 'redux/modules/loginForm/loginForm'
 import { authRedirectFilter } from 'config/routes'
 import SkyLight from 'react-skylight'
+
+import { studentSignupPage, employerSignupPage, input, errorMessage, loginBtn } from '../styles/SignupContainerStyles.css'
+
+import StudentSignup from '../components/StudentSignup'
+import EmployerSignup from '../components/EmployerSignup'
+import { Navigation } from 'modules/Main'
 
 /*  Using the spread operator, we combine all of the action creators from users()
 */

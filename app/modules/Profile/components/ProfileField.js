@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-import { profileFieldName, profileFieldContent } from './style.css'
+import { profileFieldName, profileFieldContent } from '../styles/ProfileFieldStyles.css'
 
 ProfileField.propTypes = {
   title: PropTypes.string.isRequired

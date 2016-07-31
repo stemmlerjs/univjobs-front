@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router'
-import { SidebarContainer } from 'containers'
-import { title, mainContainer, container, categories, category } from './styles.css'
+import { SidebarContainer } from 'modules/Main'
+import { title, mainContainer, container, categories, category } from '../styles/CategoriesContainerStyles.css'
 
 const categoryList = [{
   key: 1,
@@ -77,6 +77,9 @@ const Title = function({subHeading}) {
 }
 
 const CategoriesContainer = React.createClass({
+  componentWillMount() {
+    this.props.closeOverlay()
+  },
   render () {
     return (
       <div className={mainContainer}>

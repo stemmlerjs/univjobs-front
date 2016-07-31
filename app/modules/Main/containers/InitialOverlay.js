@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import { hideOverlay } from 'redux/modules/application/application'
-import animationStyles from './style.css'
+import animationStyles from '../styles/InitialOverlayStyles.css'
 
 const styles = {
   main: {
