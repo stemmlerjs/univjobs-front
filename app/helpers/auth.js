@@ -3,6 +3,7 @@ import config from 'config'
 import cookie from 'react-cookie'
 import { loggingIn, loginSuccess, loginFailure,
   fetchingUserInfo, loggingOut, logoutSuccess, logoutFailure, fetchingUserInfoSuccess, fetchingUserInfoFailure } from 'redux/modules/user/user'
+import _ from 'lodash'
 
 /**
   * attemptLogin
@@ -165,10 +166,8 @@ export function checkIfAuthed (store) {
           .then(function(response) {
             console.log("access token from cookie is still valid", response)
 
-            // TODO: SORT THIS PART OUT BECAUSE THE API KEEPS ON CHANGING 
-            // **********************************************************
             const isAStudent = response.data.user.is_a_student
-            let profileInfo = response.data;
+            let profileInfo = _.cloneDeep(response.data);
             delete profileInfo.user
 
             // ACTION: DISPATCH (FETCHING_USER_INFO_SUCCESS)
@@ -180,7 +179,7 @@ export function checkIfAuthed (store) {
             // ACTION: DISPATCH (LOGGING_IN_SUCCESS)
             store.dispatch(loginSuccess(accessToken,
               response.data.user.is_a_student,
-              response.data.is_profile_completed))
+              response.data.user.is_profile_completed))
             resolve(true)
           })
           .catch(function(err){

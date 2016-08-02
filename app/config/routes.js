@@ -52,8 +52,7 @@ export default function getRoutes() {
   */
 
 export function authRedirectFilter({successRedirect, failureRedirect, restricted}, store, router) {
-  const isAStudent = store.getState().user.isAStudent
-  const inRestrictedRoute = isUserInRestrictedRoute(isAStudent)
+
 
   function isUserInRestrictedRoute(isAStudent) {
     if(restricted) {
@@ -73,8 +72,14 @@ export function authRedirectFilter({successRedirect, failureRedirect, restricted
   }
 
   const promise = new Promise((resolve, reject) => {
+    let isAStudent;
+    let inRestrictedRoute;
+
     checkIfAuthed(store)
     .then(() => {
+      // After authentication, we know if the user is a student or an employer
+      isAStudent = store.getState().user.isAStudent
+      inRestrictedRoute = isUserInRestrictedRoute(isAStudent)
       console.log("AUTH: Successful auth!")
       if(successRedirect && !inRestrictedRoute) {
         if(successRedirect.student && isAStudent) {
@@ -88,6 +93,9 @@ export function authRedirectFilter({successRedirect, failureRedirect, restricted
       resolve()
     })
     .catch((err) => {
+      // After authentication, we know if the user is a student or an employer
+      isAStudent = store.getState().user.isAStudent
+      inRestrictedRoute = isUserInRestrictedRoute(isAStudent)
       if(failureRedirect) {
         if(failureRedirect.student && isAStudent) {
           console.log(`AUTH: Failed 'Student' auth redirect provided. GOTO: ${failureRedirect.student}`)
