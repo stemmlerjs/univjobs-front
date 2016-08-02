@@ -165,15 +165,21 @@ export function checkIfAuthed (store) {
           .then(function(response) {
             console.log("access token from cookie is still valid", response)
 
+            // TODO: SORT THIS PART OUT BECAUSE THE API KEEPS ON CHANGING 
+            // **********************************************************
+            const isAStudent = response.data.user.is_a_student
+            let profileInfo = response.data;
+            delete profileInfo.user
+
             // ACTION: DISPATCH (FETCHING_USER_INFO_SUCCESS)
             store.dispatch(fetchingUserInfoSuccess(
-              response.data.is_a_student,
-              response.data
+              isAStudent,
+              profileInfo
             ))
 
             // ACTION: DISPATCH (LOGGING_IN_SUCCESS)
             store.dispatch(loginSuccess(accessToken,
-              response.data.is_a_student,
+              response.data.user.is_a_student,
               response.data.is_profile_completed))
             resolve(true)
           })

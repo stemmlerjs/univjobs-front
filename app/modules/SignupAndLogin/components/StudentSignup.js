@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react'
 import { centeredContainer, header, subHeader, btn, btnContainer,
  input, inputContainer, errorMessage } from '../styles/StudentSignupStyles.css'
-import classNames from 'classnames'
 
 StudentSignup.propTypes = {
   submitSignupForm: PropTypes.func.isRequired,
