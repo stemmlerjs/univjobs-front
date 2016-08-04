@@ -9,17 +9,30 @@ import axios from 'axios'
 const EmployerProfileContainer = React.createClass({
   contextTypes: {
     router: PropTypes.object.isRequired,
-    store: PropTypes.object.isRequired
+    store: PropTypes.object.isRequired,
   },
 
   retrieveAllLists() {
-    lists.getIndustries()
-    axios.all([
-      lists.getIndustries()
-    ])
+    const promise = new Promise((resolve, reject) => {
+      axios.all([
+        lists.getIndustries()
+      ])
+      .then((resp) => resolve(resp))
+      .catch((resp) => resolve(resp))
+    })
+    return promise;
   },
 
-  componentWillMount() {
+  mapListsToProps(lists) {
+    const promise = new Promise((resolve, reject) => {
+      console.log(lists)
+      resolve()
+    });
+
+    return promise;
+  },
+
+  doRedirectionFilter(){
     const config = {
       failureRedirect: {
         student: '/join',
@@ -30,12 +43,19 @@ const EmployerProfileContainer = React.createClass({
         redirectTo: '/profile/st'
       }
     }
-    this.retrieveAllLists()
+
     authRedirectFilter(config, this.context.store, this.context.router)
       .then(() => {
         if(this.context.store.getState().application.isOverlayActive)
         this.props.closeOverlay()
       })
+  },
+
+  componentWillMount() {
+    /*  On page load, we will first get all the required lists for the screen */  
+    this.retrieveAllLists()
+      .then(this.mapListsToProps)
+      .then(this.doRedirectionFilter) 
   },
 
   render () {

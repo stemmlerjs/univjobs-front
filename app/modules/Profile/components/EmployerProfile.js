@@ -1,10 +1,11 @@
 import React, { PropTypes } from 'react'
 import { ProfileField } from 'modules/Profile'
 import { profileContainer, profileHeader, profileField, profileFieldName, profileFieldContent, input,
-  textarea, btn, dropzone, resetBtnContainer, dropzoneContent, photoIcon, saveBtnContainer, saveBtn } from '../styles/EmployerProfileStyles.css'
+  textarea, btn, dropzone, resetBtnContainer, dropzoneContent, photoIcon, saveBtnContainer, saveBtn,
+  inlineDropzone } from '../styles/EmployerProfileStyles.css'
 import Dropzone from 'react-dropzone'
 import { Link } from 'react-router'
-
+import DropdownInput from './DropdownInput'
 
 export default function EmployerProfile (props) {
   function onDrop(files) {
@@ -13,6 +14,7 @@ export default function EmployerProfile (props) {
 
   return (
     <div className={profileContainer}>
+      <DropdownInput/>
       <div className={profileHeader}>MY BUSINESS PROFILE</div>
       <ProfileField title="Company Name">
         <input className={input} type="text" placeholder="Pied Piper"></input>
@@ -27,7 +29,9 @@ export default function EmployerProfile (props) {
               <div>Drag and drop</div>
             </div>
           </Dropzone>
-          <button className={btn}>Change your picture</button>
+          <Dropzone className={inlineDropzone} onDrop={onDrop}>
+            <button className={btn}>Change your picture</button>
+          </Dropzone>
       </ProfileField>
       <ProfileField title="Business Website">
         <input className={input} type="text"></input>

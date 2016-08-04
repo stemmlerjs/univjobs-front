@@ -1,0 +1,4 @@
+.dropdownInput {
+  composes: input from 'sharedStyles/styles.css';
+  width: 50%;
+}

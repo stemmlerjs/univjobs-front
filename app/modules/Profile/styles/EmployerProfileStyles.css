@@ -103,3 +103,10 @@
   width: 156px;
 }
 
+.inlineDropzone {
+  width: auto;
+  height: auto;
+  border: none;
+  border-radius: 0px;
+  display: inline-block;
+}
