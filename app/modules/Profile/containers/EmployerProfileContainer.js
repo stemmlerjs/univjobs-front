@@ -4,18 +4,21 @@ import { EmployerProfile } from 'modules/Profile'
 import { pageContainer } from '../styles/EmployerProfileContainerStyles.css'
 import { authRedirectFilter } from 'config/routes'
 import * as lists from 'helpers/lists'
+import axios from 'axios'
 
 const EmployerProfileContainer = React.createClass({
   contextTypes: {
     router: PropTypes.object.isRequired,
     store: PropTypes.object.isRequired
   },
+
   retrieveAllLists() {
     lists.getIndustries()
     axios.all([
       lists.getIndustries()
     ])
   },
+
   componentWillMount() {
     const config = {
       failureRedirect: {
@@ -34,6 +37,7 @@ const EmployerProfileContainer = React.createClass({
         this.props.closeOverlay()
       })
   },
+
   render () {
     return (
       <div className={pageContainer}>
@@ -43,5 +47,6 @@ const EmployerProfileContainer = React.createClass({
     )
   }
 })
+
 export default EmployerProfileContainer
 
