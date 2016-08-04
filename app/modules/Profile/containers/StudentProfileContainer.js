@@ -9,6 +9,9 @@ const StudentProfileContainer = React.createClass({
     router: PropTypes.object.isRequired,
     store: PropTypes.object.isRequired
   },
+  retriveAllLists() {
+
+  },
   componentWillMount() {
     const config = {
       failureRedirect: {

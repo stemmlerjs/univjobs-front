@@ -3,11 +3,18 @@ import { SidebarContainer } from 'modules/Main'
 import { EmployerProfile } from 'modules/Profile'
 import { pageContainer } from '../styles/EmployerProfileContainerStyles.css'
 import { authRedirectFilter } from 'config/routes'
+import * as lists from 'helpers/lists'
 
 const EmployerProfileContainer = React.createClass({
   contextTypes: {
     router: PropTypes.object.isRequired,
     store: PropTypes.object.isRequired
+  },
+  retrieveAllLists() {
+    lists.getIndustries()
+    axios.all([
+      lists.getIndustries()
+    ])
   },
   componentWillMount() {
     const config = {
@@ -20,6 +27,7 @@ const EmployerProfileContainer = React.createClass({
         redirectTo: '/profile/st'
       }
     }
+    this.retrieveAllLists()
     authRedirectFilter(config, this.context.store, this.context.router)
       .then(() => {
         if(this.context.store.getState().application.isOverlayActive)
@@ -27,7 +35,6 @@ const EmployerProfileContainer = React.createClass({
       })
   },
   render () {
-    console.log(this.context)
     return (
       <div className={pageContainer}>
         <SidebarContainer/>

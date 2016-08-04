@@ -164,7 +164,7 @@ export function checkIfAuthed (store) {
         getUserInfo(accessToken)
           .then(function(response) {
             console.log("access token from cookie is still valid", response)
-
+            
             // ACTION: DISPATCH (FETCHING_USER_INFO_SUCCESS)
             store.dispatch(fetchingUserInfoSuccess(
               response.data.is_a_student,
