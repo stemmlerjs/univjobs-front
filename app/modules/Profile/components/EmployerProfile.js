@@ -8,6 +8,8 @@ import { Link } from 'react-router'
 import DropdownInput from './DropdownInput'
 
 export default function EmployerProfile (props) {
+  console.log("Woooo", props)
+
   function onDrop(files) {
     console.log('Files:', files)
   }
@@ -17,10 +19,22 @@ export default function EmployerProfile (props) {
       <DropdownInput/>
       <div className={profileHeader}>MY BUSINESS PROFILE</div>
       <ProfileField title="Company Name">
-        <input className={input} type="text" placeholder="Pied Piper"></input>
+        <input 
+          className={input} 
+          type="text" 
+          placeholder="Pied Piper"
+          value={props.companyName}
+          onChange={(e) => props.updateProfileField('companyName', e.target.value, false)}
+          ></input>
       </ProfileField>
       <ProfileField title="Industry">
-        <input className={input} type="text" placeholder="Telecommunications"></input>
+        <input 
+          className={input} 
+          type="text" 
+          value={props.industry}
+          placeholder="Telecommunications"
+          onChange={(e) => props.updateProfileField('industry', e.target.value, false)}>
+          </input>
       </ProfileField>
       <ProfileField title="Logo">
         <Dropzone className={dropzone} onDrop={onDrop}>
@@ -34,13 +48,27 @@ export default function EmployerProfile (props) {
           </Dropzone>
       </ProfileField>
       <ProfileField title="Business Website">
-        <input className={input} type="text"></input>
+        <input 
+          className={input} 
+          value={props.website}
+          onChange={(e) => props.updateProfileField('website', e.target.value, false)}
+          type="text">
+        </input>
       </ProfileField>
       <ProfileField title="Who we are">
-        <textarea rows="6" className={textarea}></textarea>
+        <textarea rows="6" className={textarea}
+          value={props.description}
+          onChange={(e) => props.updateProfileField('description', e.target.value, false)}>
+        </textarea>
       </ProfileField>
       <ProfileField title="# of employees">
-        <input className={input} type="text" placeholder="You can say 50+"></input>
+        <input 
+          className={input} 
+          type="text" 
+          value={props.employeeCount}
+          onChange={(e) => props.updateProfileField('employeeCount', e.target.value, false)}
+          placeholder="You can say 50+">
+        </input>
       </ProfileField>
       <ProfileField title="Office location">
         <input className={input} type="text" placeholder="Silicon Valley, California"></input>
