@@ -2,21 +2,35 @@ import React, { PropTypes } from 'react'
 import { ProfileField } from 'modules/Profile'
 import { profileContainer, profileHeader, profileField, profileFieldName, profileFieldContent, input,
   textarea, btn, dropzone, resetBtnContainer, dropzoneContent, photoIcon, saveBtnContainer, saveBtn,
-  inlineDropzone } from '../styles/EmployerProfileStyles.css'
+  inlineDropzone, comboBox } from '../styles/EmployerProfileStyles.css'
 import Dropzone from 'react-dropzone'
 import { Link } from 'react-router'
-import DropdownInput from './DropdownInput'
+import { Combobox } from 'react-widgets'
+import 'react-widgets/lib/less/react-widgets.less'
 
 export default function EmployerProfile (props) {
-  console.log("Woooo", props)
+  console.log(props)
+
+  const messages = {
+    emptyFilter: "Press ENTER to add a new industry."
+  }
 
   function onDrop(files) {
     console.log('Files:', files)
   }
 
+
+  let isOpen = undefined;
+  function enterPressCheck(event) {
+    let keyCode = event.keyCode || event.charCode;
+    if(keyCode === 13) {
+      isOpen = false;
+      isOpen = undefined
+    }
+  }
+
   return (
     <div className={profileContainer}>
-      <DropdownInput/>
       <div className={profileHeader}>MY BUSINESS PROFILE</div>
       <ProfileField title="Company Name">
         <input 
@@ -28,13 +42,17 @@ export default function EmployerProfile (props) {
           ></input>
       </ProfileField>
       <ProfileField title="Industry">
-        <input 
-          className={input} 
-          type="text" 
-          value={props.industry}
-          placeholder="Telecommunications"
-          onChange={(e) => props.updateProfileField('industry', e.target.value, false)}>
-          </input>
+        <Combobox
+          className={comboBox}
+          textField="industry"
+          valueField="id"
+          filter="startsWith"
+          data={props.industryList} 
+          onKeyUp={enterPressCheck}
+          messages={messages}
+          open={isOpen}
+          onChange={value => props.updateProfileField('industry', value, false)}
+        />
       </ProfileField>
       <ProfileField title="Logo">
         <Dropzone className={dropzone} onDrop={onDrop}>

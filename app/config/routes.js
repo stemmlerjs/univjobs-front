@@ -52,8 +52,6 @@ export default function getRoutes() {
   */
 
 export function authRedirectFilter({successRedirect, failureRedirect, restricted}, store, router) {
-
-
   function isUserInRestrictedRoute(isAStudent) {
     if(restricted) {
       if(restricted.to === 'EMPLOYERS' && isAStudent) {

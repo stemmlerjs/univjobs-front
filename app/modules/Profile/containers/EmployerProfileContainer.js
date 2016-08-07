@@ -37,32 +37,14 @@ const EmployerProfileContainer = React.createClass({
   retrieveAllLists() {
     const promise = new Promise((resolve, reject) => {
       axios.all([
-        lists.getIndustries()
+        lists.getIndustries(this.context.store)
       ])
-      .then((resp) => resolve(resp))
-      .catch((resp) => resolve(resp))
+      .then((resp) => resolve(true))
+      .catch((resp) => resolve(true))
     })
     return promise;
   },
 
-/** mapListsToProps
-  *
-  * This function acquires all the required lists from /api/lists/{choice}
-  * and resolves it's returned promise object on completion.
-  *
-  * @param (Array) - lists
-  * @return (Promise)
-  *
-  */
-
-  mapListsToProps(lists) {
-    const promise = new Promise((resolve, reject) => {
-      console.log(lists)
-      resolve()
-    });
-
-    return promise;
-  },
 
 /** doRedirectionFilter
   *
@@ -105,19 +87,18 @@ const EmployerProfileContainer = React.createClass({
   componentWillMount() {
     /*  On page load, we will first get all the required lists for the screen */  
     this.retrieveAllLists()
-      .then(this.mapListsToProps)
       .then(this.doRedirectionFilter) 
       .then(this.finallyDisableOverlay)
   },
 
   render () {
-    console.log("all props", this.props)
     return (
       <div className={pageContainer}>
         <SidebarContainer/>
         <EmployerProfile 
           companyName={this.props.companyName}
           industry={this.props.industry}
+          industryList={this.props.industryList}
           website={this.props.website}
           description={this.props.description}
           employeeCount={this.props.employeeCount}
@@ -134,9 +115,9 @@ const EmployerProfileContainer = React.createClass({
 
 function mapStateToProps({user, profile}) {
   return {
-    isAStudent: user.isAStudent ? true : false,
     companyName: profile.employerProfile.companyName ? profile.employerProfile.companyName : '',
     industry: profile.employerProfile.industry ? profile.employerProfile.industry : '',
+    industryList: profile.lists.industries ? profile.lists.industries : [],
     website: profile.employerProfile.website ? profile.employerProfile.website : '',
     description: profile.employerProfile.description ? profile.employerProfile.description : '',
     employeeCount: profile.employerProfile.employeeCount ? profile.employerProfile.employeeCount : '',
