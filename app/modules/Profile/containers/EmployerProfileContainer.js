@@ -91,6 +91,10 @@ const EmployerProfileContainer = React.createClass({
       .then(this.finallyDisableOverlay)
   },
 
+  handleSubmit(empProps) {
+    console.log(empProps)
+  },
+
   render () {
     return (
       <div className={pageContainer}>
@@ -107,6 +111,7 @@ const EmployerProfileContainer = React.createClass({
           officePostalCode={this.props.officePostalCode}
           logoUrl={this.props.logoUrl}
           updateProfileField={this.props.updateProfileField}
+          onSubmit={this.handleSubmit}
         />
       </div>
     )

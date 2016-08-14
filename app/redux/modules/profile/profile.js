@@ -33,6 +33,8 @@ const UPDATE_PROFILE_FIELD = 'PROFILE.UPDATE_PROFILE_FIELD'
 const SAVE_PROFILE_ERROR = 'PROFILE.SAVE_PROFILE_ERROR'
 const SAVE_PROFILE_SUCCESS = 'PROFILE.SAVE_PROFILE_SUCCESS'
 
+const FETCHING_PROFILE_INFO_SUCCESS = 'FETCHING_PROFILE_INFO_SUCCESS'
+
 // =======================================================
 // ================== ACTION CREATORS ====================
 // =======================================================
@@ -123,6 +125,15 @@ export function listRetrieved(listName, listArray) {
   }
 }
 
+export function fetchingProfileInfoSuccess (isProfileCompleted, profileInfo, isAStudent) {
+  return {
+    type: FETCHING_PROFILE_INFO_SUCCESS,
+    isProfileCompleted,
+    profileInfo,
+    isAStudent
+  }
+}
+
 // =======================================================
 // ================== INITIAL STATE ======================
 // =======================================================
@@ -132,7 +143,8 @@ const initialState = {
   studentProfile: {},
   lists: {},
   error: '',
-  isSubmittingForm: false
+  isSubmittingForm: false,
+  isProfileCompleted: false
 }
 
 const initialEmployerProfileState = {
@@ -191,6 +203,20 @@ export default function profile (state = initialState, action) {
         ...state,
         lists: lists(state.lists, action)
       }
+    case FETCHING_PROFILE_INFO_SUCCESS: 
+    if(action.isAStudent) {
+      return {
+        ...state,
+        isProfileCompleted: action.isProfileCompleted,
+        studentProfile: studentProfile(state.studentProfile, action)
+      }
+    } else {
+      return {
+        ...state,
+        isProfileCompleted: action.isProfileCompleted,
+        employerProfile: employerProfile(state.employerProfile, action)
+      }
+    }
     default :
       return state
   }
@@ -204,6 +230,19 @@ function employerProfile(state = initialEmployerProfileState, action) {
       return {
         ...state,
         [action.fieldName]: action.newValue
+      }
+    case FETCHING_PROFILE_INFO_SUCCESS:
+      return {
+        ...state,
+          companyName: action.profileInfo.company_name,
+          industry: action.profileInfo.industry,
+          website: action.profileInfo.website,
+          description: action.profileInfo.description,
+          employeeCount: action.profileInfo.employee_count,
+          officeAddress: action.profileInfo.office_address,
+          officeCity: action.profileInfo.office_city,
+          officePostalCode: action.profileInfo.office_postal_code,
+          logoUrl: action.profileInfo.logo
       }
     default: 
       return state

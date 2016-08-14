@@ -39,3 +39,10 @@ export function validateCompanyName(companyName) {
   var re = /^[a-z ,.'-]{2,30}$/i
   return re.test(companyName)
 }
+
+export function detectEnterPress(event, callback) {
+  let keyCode = event.keyCode || event.charCode;
+  if(keyCode === 13) {
+    callback()
+  } 
+}

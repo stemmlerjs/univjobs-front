@@ -6,6 +6,7 @@ import * as signupFormActionCreators from 'redux/modules/signupForm/signupForm'
 import * as loginFormActionCreators from 'redux/modules/loginForm/loginForm'
 import { authRedirectFilter } from 'config/routes'
 import SkyLight from 'react-skylight'
+import { detectEnterPress } from 'helpers/utils'
 
 import { studentSignupPage, employerSignupPage, input, errorMessage, loginBtn } from '../styles/SignupContainerStyles.css'
 
@@ -120,7 +121,7 @@ const SignupContainer = React.createClass({
 
 
   handleLoginAttempt (e) {
-    e.preventDefault()
+    if(e) e.preventDefault()
     this.props.submitLoginForm(
       this.props.loginFormEmailText,
       this.props.loginFormPasswordText
@@ -169,6 +170,23 @@ const SignupContainer = React.createClass({
       })
   },
 
+  /**
+  * submitOnEnter
+  *
+  * Hooks into the reusable detectEnterPress() function and fires off a submit when 
+  * enter is pressed while the login modal is open AND email and password are not null
+  * AND email or password is focused.
+  *
+  * @return (void)
+  *
+  */
+
+  submitOnEnter() {
+    if((this.props.loginFormEmailText !== "") && (this.props.loginFormPasswordText !== "")) {
+      this.handleLoginAttempt()
+    }
+  },
+
   render () {
     return (
       <div>
@@ -188,11 +206,13 @@ const SignupContainer = React.createClass({
             <div>
               <input className={input} 
                 onChange={(e) => this.props.updateLoginForm('email', e.target.value)}
-                type="text" 
+                type="text"
+                onKeyUp={(e) => detectEnterPress(e, this.submitOnEnter)} 
                 placeholder="Email"/>
               <input className={input} 
                 onChange={(e) => this.props.updateLoginForm('password', e.target.value)}
                 type="password" 
+                onKeyUp={(e) => detectEnterPress(e, this.submitOnEnter)} 
                 placeholder="Password"/>
             </div>
             <div className={errorMessage}>

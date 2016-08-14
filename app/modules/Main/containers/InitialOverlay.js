@@ -21,6 +21,10 @@ const InitialOverlay = React.createClass({
   },
 
   render () {
+    let elem = document.querySelector('div[data-reactroot]');   
+    if(elem) elem.style.height= '100%'
+    
+
     // Supply all child props with the closeOverlay() function
     const childrenWithProps = React.Children.map(this.props.children,
      (child) => React.cloneElement(child, {

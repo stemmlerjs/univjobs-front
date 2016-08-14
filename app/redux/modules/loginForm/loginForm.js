@@ -1,6 +1,8 @@
 import { validateEmployerEmail, validatePassword } from 'helpers/utils'
 import { login, setAccessToken, getUserInfo } from 'helpers/auth'
 import { loggingIn, loginSuccess, loginFailure } from 'redux/modules/user/user'
+import { fetchingProfileInfoSuccess } from 'redux/modules/profile/profile'
+import _ from 'lodash'
 
 const UPDATE_LOGIN_FORM = 'UPDATE_LOGIN_FORM'
 // const SUBMIT_LOGIN_FORM = 'SUBMIT_LOGIN_FORM'
@@ -45,15 +47,12 @@ export function submitLoginForm(email, password) {
       // ACTION: DISPATCH (LOGGING_IN)
       dispatch(loggingIn())
 
-      //TODO: TEST THIS WITH REAL EMAIL AND PASSWORD AFTER JULIO TAKES OFF CSRF TOKENS
-
       login(email, password)
         .then((response) => {
           // ACTION: DISPATCH (LOGIN_SUCCESS)
           dispatch(submitLoginFormSuccess())
 
           var token = response.data.token
-
           setAccessToken(token)
 
           // ACTION: DISPATCH (LOGIN_SUCCESS)
@@ -62,11 +61,27 @@ export function submitLoginForm(email, password) {
             response.data.user.is_profile_completed
           ))
 
-          // Now decide if they are a student or 
-          resolve({
-            isAStudent: response.data.user.is_a_student, 
-            isProfileCompleted: response.data.user.is_profile_completed
-          })
+          /* GET PROFILE INFO */
+          getUserInfo(token)
+            .then((res) => {
+
+              const isAStudent = res.data.user.is_a_student
+              const isProfileCompleted = res.data.user.is_profile_completed
+              let profileInfo = _.cloneDeep(res.data);
+              delete profileInfo.user
+
+              //ACTION: PROFILE - DISPATCH (FETCHING_PROFILE_INFO_SUCCESS)
+              dispatch(fetchingProfileInfoSuccess(
+                isProfileCompleted,
+                profileInfo,
+                isAStudent
+              ))
+
+              resolve({
+                isAStudent: response.data.user.is_a_student, 
+                isProfileCompleted: response.data.user.is_profile_completed
+              })
+            })
         })
         .catch((err) => { 
           if(err.status === 400){
