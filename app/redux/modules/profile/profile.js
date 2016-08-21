@@ -1,3 +1,6 @@
+import {validateCompanyName , validateAddress, validateCity, validatePostalCode} from 'helpers/utils'
+import { employerProfilePUT } from 'helpers/profile'
+
 // =======================================================
 // ==================== ACTIONS ==========================
 // =======================================================
@@ -33,7 +36,7 @@ const UPDATE_PROFILE_FIELD = 'PROFILE.UPDATE_PROFILE_FIELD'
 const SAVE_PROFILE_ERROR = 'PROFILE.SAVE_PROFILE_ERROR'
 const SAVE_PROFILE_SUCCESS = 'PROFILE.SAVE_PROFILE_SUCCESS'
 
-const FETCHING_PROFILE_INFO_SUCCESS = 'FETCHING_PROFILE_INFO_SUCCESS'
+const FETCHING_PROFILE_INFO_SUCCESS = 'PROFILE.FETCHING_INFO_SUCCESS'
 
 // =======================================================
 // ================== ACTION CREATORS ====================
@@ -134,6 +137,92 @@ export function fetchingProfileInfoSuccess (isProfileCompleted, profileInfo, isA
   }
 }
 
+export function saveProfileError(profileErrorsObj, isAStudent) {
+  return {
+    type: SAVE_PROFILE_ERROR,
+    isAStudent,
+    profileErrorsObj
+  }
+}
+
+function validateEmployerProfileFields(profileInfo, next) {
+  let submitErrorsExist = false;
+  let profileFieldErrors = {
+    companyName: false,
+    industry: false,
+    logoUrl: false,
+    website: false,
+    description: false,
+    employeeCount: false,
+    officeAddress: false,
+    officeCity: false,
+    officePostalCode: false
+  }
+  
+  // Validate each field in it's own unique way
+  profileFieldErrors.companyName = validateCompanyName(profileInfo.companyName) ? false : true
+  profileFieldErrors.industry = typeof profileInfo.industry == "object" ? false : true
+  profileFieldErrors.employeeCount = profileInfo.employeeCount > 0 ? false : true
+  profileFieldErrors.officeAddress = validateAddress(profileInfo.officeAddress) && profileInfo.officeAddress != "" ? false : true
+  profileFieldErrors.officePostalCode = validatePostalCode(profileInfo.officePostalCode) ? false : true 
+  profileFieldErrors.officeCity = validateCity(profileInfo.officeCity) ? false : true
+
+  // If an error exists in the map, then submitErrorsExist === true
+  for (var attr in profileFieldErrors) {
+    if (profileFieldErrors[attr] === true) submitErrorsExist = true;
+  }
+
+  next(submitErrorsExist, profileFieldErrors)
+}
+
+export function submitProfileFirstTime(userTypeInt, profileInfo, user) {
+  return function (dispatch) {
+    switch(userTypeInt) {
+      case 0:
+
+        return;
+      case 1:
+        console.log("SUBMITTING EMPLOYER PROFILE FIRST TIME")
+        validateEmployerProfileFields(profileInfo, (errorsExist, profileFieldErrors) => {
+          if(errorsExist) {
+            // DISPATCH - SAVE_PROFILE_ERROR
+            dispatch(saveProfileError(profileFieldErrors, false))
+          } else {
+            // No errors, proceed to /PUT on api/me
+            var putData = {
+              is_a_student: false,
+              is_profile_completed: true, // set this flag to true so we know for next time
+              company_name: profileInfo.companyName,
+              logo: profileInfo.logoUrl,
+              office_location: profileInfo.officeAddress,
+              office_city: profileInfo.officeCity,
+              office_postal_code: profileInfo.officePostalCode,
+              description: profileInfo.description,
+              website: profileInfo.website,
+              employee_count: profileInfo.employeeCount,
+              industry: profileInfo.industry.id,
+              date_joined: user.dateJoined,
+              first_name: user.firstName,
+              last_name: user.lastName,
+              email: user.email
+            }
+            
+            employerProfilePUT(putData)
+          }
+        })
+        return;
+      default:
+        return;
+    }
+  }
+}
+
+export function updateProfile(userTypeInt, profileInfo) {
+  return function (dispatch) {
+
+  }
+}
+
 // =======================================================
 // ================== INITIAL STATE ======================
 // =======================================================
@@ -142,9 +231,9 @@ const initialState = {
   employerProfile: {},
   studentProfile: {},
   lists: {},
-  error: '',
   isSubmittingForm: false,
-  isProfileCompleted: false
+  isProfileCompleted: false,
+  submitErrorsExist: false,
 }
 
 const initialEmployerProfileState = {
@@ -156,8 +245,21 @@ const initialEmployerProfileState = {
   officeAddress: '',
   officeCity: '',
   officePostalCode: '',
-  logoUrl: ''
+  logoUrl: '',
+  propsErrorMap: {}
 }
+
+const employerProfileErrorsInitialState = {
+    companyName: false,
+    industry: false,
+    logoUrl: false,
+    website: false,
+    description: false,
+    employeeCount: false,
+    officeAddress: false,
+    officeCity: false,
+    officePostalCode: false
+  }
 
 const initialStudentProfileState = {
   
@@ -204,19 +306,33 @@ export default function profile (state = initialState, action) {
         lists: lists(state.lists, action)
       }
     case FETCHING_PROFILE_INFO_SUCCESS: 
-    if(action.isAStudent) {
-      return {
-        ...state,
-        isProfileCompleted: action.isProfileCompleted,
-        studentProfile: studentProfile(state.studentProfile, action)
+      if(action.isAStudent) {
+        return {
+          ...state,
+          isProfileCompleted: action.isProfileCompleted,
+          studentProfile: studentProfile(state.studentProfile, action)
+        }
+      } else {
+        return {
+          ...state,
+          isProfileCompleted: action.isProfileCompleted,
+          employerProfile: employerProfile(state.employerProfile, action)
+        }
       }
-    } else {
-      return {
-        ...state,
-        isProfileCompleted: action.isProfileCompleted,
-        employerProfile: employerProfile(state.employerProfile, action)
+    case SAVE_PROFILE_ERROR:
+      if(action.isAStudent) {
+        return {
+          ...state,
+          submitErrorsExist: true,
+          studentProfile: studentProfile(state.studentProfile, action)
+        }
+      } else {
+        return {
+          ...state,
+          submitErrorsExist: true,
+          employerProfile: employerProfile(state.employerProfile, action)
+        }
       }
-    }
     default :
       return state
   }
@@ -229,7 +345,8 @@ function employerProfile(state = initialEmployerProfileState, action) {
     case UPDATE_PROFILE_FIELD: 
       return {
         ...state,
-        [action.fieldName]: action.newValue
+        [action.fieldName]: action.newValue,
+        propsErrorMap: employerProfileErrors(state.propsErrorMap, action)
       }
     case FETCHING_PROFILE_INFO_SUCCESS:
       return {
@@ -244,8 +361,23 @@ function employerProfile(state = initialEmployerProfileState, action) {
           officePostalCode: action.profileInfo.office_postal_code,
           logoUrl: action.profileInfo.logo
       }
+    case SAVE_PROFILE_ERROR:
+      return {
+        ...state,
+        propsErrorMap: action.profileErrorsObj
+      }
     default: 
       return state
+  }
+}
+
+function employerProfileErrors(state = employerProfileErrorsInitialState, action) {
+  switch(action.type) {
+    case UPDATE_PROFILE_FIELD:
+      return {
+        ...state,
+        [action.fieldName]: false
+      }
   }
 }
 

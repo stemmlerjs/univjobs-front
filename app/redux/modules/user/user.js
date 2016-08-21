@@ -126,11 +126,16 @@
     }
   }
 
-  export function fetchingUserInfoSuccess (isAStudent) {
+  export function fetchingUserInfoSuccess (isAStudent, dateJoined, email, firstName, lastName, mobile) {
     return {
       type: FETCHING_USER_INFO_SUCCESS,
       isFetching: false,
       isAStudent,
+      dateJoined,
+      email,
+      firstName,
+      lastName,
+      mobile
     }
   }
 
@@ -153,12 +158,15 @@ const initialState = {
   isCreatingAccount: false,
   isFetching: false,
   isAuthenticated: false,
-  // studentProfile: {},
-  // employerProfile: {},
   isAStudent: true,
   isProfileCompleted: false,
   accessToken: '',
   emailVerified: false,
+  dateJoined: '',
+  email: '',
+  firstName: '',
+  lastName: '',
+  mobile: '',
   error: ''
 }
 
@@ -248,6 +256,11 @@ export default function user (state = initialState, action) {
           //studentProfile: action.profileInfo,
           isAStudent: action.isAStudent,
           // isProfileCompleted: action.isProfileCompleted
+          dateJoined: action.dateJoined,
+          email: action.email,
+          firstName: action.firstName,
+          lastName: action.lastName,
+          mobile: action.mobile
         }
       } else {
         return {
@@ -256,6 +269,11 @@ export default function user (state = initialState, action) {
           //employerProfile: action.profileInfo,
           isAStudent: action.isAStudent,
           // isProfileCompleted: action.isProfileCompleted
+          dateJoined: action.dateJoined,
+          email: action.email,
+          firstName: action.firstName,
+          lastName: action.lastName,
+          mobile: action.mobile
         }
       }
     case FETCHING_USER_INFO_FAILURE:

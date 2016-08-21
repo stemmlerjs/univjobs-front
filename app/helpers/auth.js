@@ -167,6 +167,14 @@ export function checkIfAuthed (store) {
           .then(function(response) {
             console.log("access token from cookie is still valid", response)
 
+            // User Details
+            const dateJoined = response.data.user.date_joined
+            const email = response.data.user.email
+            const firstName = response.data.user.first_name 
+            const lastName = response.data.user.last_name 
+            const mobile = response.data.user.mobile
+
+            // Profile Details
             const isAStudent = response.data.user.is_a_student
             const isProfileCompleted = response.data.user.is_profile_completed
             let profileInfo = _.cloneDeep(response.data);
@@ -174,7 +182,7 @@ export function checkIfAuthed (store) {
 
             // ACTION: USER - DISPATCH (FETCHING_USER_INFO_SUCCESS)
             store.dispatch(fetchingUserInfoSuccess(
-              isAStudent
+              isAStudent, dateJoined, email, firstName, lastName, mobile
             ))
 
             // ACTION: PROFILE - DISPATCH (FETCHING_PROFILE_INFO_SUCCESS)
@@ -206,6 +214,10 @@ export function checkIfAuthed (store) {
     console.log("*************************************************************")
   })
   return promise;
+}
+
+export function getAccessToken() {
+  return cookie.load('univjobs-access-token');
 }
 
 

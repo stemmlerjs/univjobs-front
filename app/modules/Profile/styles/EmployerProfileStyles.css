@@ -15,6 +15,7 @@
 
 }
 
+
 .profileFieldName {
   width: 21%;
   height: 20px;
@@ -120,7 +121,11 @@
   padding-top: 0;
   padding-bottom: 0;
   padding-left: 0;
-  color: black;
+  color: black !important;
+}
+
+.comboBox > input {
+  color: black !important;
 }
 
 .city {
@@ -140,4 +145,16 @@
       height: 165px;
     width: 165px;
     position: absolute;
+}
+
+.error {
+  border: solid 1px red !important;
+   /* make it glow! */
+    -webkit-box-shadow: 0px 3px 1px red;
+       -moz-box-shadow: 0px 3px 1px red;
+            box-shadow: 0px 3px 1px red; /* some variation of blue for the shadow */
+}
+
+.industryMargin {
+      margin-bottom: 15px;
 }

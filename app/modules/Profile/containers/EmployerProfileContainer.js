@@ -92,7 +92,16 @@ const EmployerProfileContainer = React.createClass({
   },
 
   handleSubmit(empProps) {
-    console.log(empProps)
+    // If Profile is NOT completed, do /PUT. All fields must be populated and valid.
+    if(!this.props.isProfileCompleted) {
+      console.log("PROFILE NOT COMPLETED")
+      this.context.store.dispatch(
+        profileActionCreators.submitProfileFirstTime(1, empProps, this.props.user)
+      )
+    } else {
+      // If Profile is completed already, do /PATCH. All fields must be populated and valid.
+      actionCreators.updateProfile(1, empProps)
+    }
   },
 
   render () {
@@ -112,6 +121,8 @@ const EmployerProfileContainer = React.createClass({
           logoUrl={this.props.logoUrl}
           updateProfileField={this.props.updateProfileField}
           onSubmit={this.handleSubmit}
+          submitErrorsExist={this.props.submitErrorsExist}
+          profileErrorsMap={this.props.profileErrorsMap}
         />
       </div>
     )
@@ -120,6 +131,7 @@ const EmployerProfileContainer = React.createClass({
 
 function mapStateToProps({user, profile}) {
   return {
+    user: user ? user : {},
     companyName: profile.employerProfile.companyName ? profile.employerProfile.companyName : '',
     industry: profile.employerProfile.industry ? profile.employerProfile.industry : '',
     industryList: profile.lists.industries ? profile.lists.industries : [],
@@ -129,7 +141,20 @@ function mapStateToProps({user, profile}) {
     officeAddress: profile.employerProfile.officeAddress ? profile.employerProfile.officeAddress : '',
     officeCity: profile.employerProfile.officeCity ? profile.employerProfile.officeCity : '',
     officePostalCode: profile.employerProfile.officePostalCode ? profile.employerProfile.officePostalCode : '',
-    logoUrl: profile.employerProfile.logoUrl ? profile.employerProfile.logoUrl : ''
+    logoUrl: profile.employerProfile.logoUrl ? profile.employerProfile.logoUrl : '',
+    isProfileCompleted: profile.isProfileCompleted ? profile.isProfileCompleted : '',
+    submitErrorsExist: profile.submitErrorsExist ? profile.submitErrorsExist : false,
+    profileErrorsMap: profile.employerProfile.propsErrorMap ? profile.employerProfile.propsErrorMap : {
+      companyName: false,
+      industry: false,
+      logoUrl: false,
+      website: false,
+      description: false,
+      employeeCount: false,
+      officeAddress: false,
+      officeCity: false,
+      officePostalCode: false
+    }
   }
 }
 

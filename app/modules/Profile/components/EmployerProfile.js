@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react'
 import { ProfileField } from 'modules/Profile'
 import { profileContainer, profileHeader, profileField, profileFieldName, profileFieldContent, input,
   textarea, btn, dropzone, resetBtnContainer, dropzoneContent, photoIcon, saveBtnContainer, saveBtn,
-  inlineDropzone, comboBox, city, postalcode, citypostalcoderelative, dropPoint } from '../styles/EmployerProfileStyles.css'
+  inlineDropzone, comboBox, city, postalcode, citypostalcoderelative, dropPoint, error, industryMargin } from '../styles/EmployerProfileStyles.css'
 import Dropzone from 'react-dropzone'
 import { Link } from 'react-router'
 import { Combobox } from 'react-widgets'
@@ -11,13 +11,13 @@ import MaskedTextInput from 'react-text-mask'
 
 export default function EmployerProfile (props) {
   console.log(props)
-
-  // Filter messages for Comboboxes when not found
   const messages = {
     emptyFilter: "Can't find your industry? Let us know at theunivjobs@gmail.com."
   }
 
-  // Display the profile new profile picture when the user drags and drops or selects one.
+  /* 
+  *   Display the profile new profile picture when the user drags and drops or selects one.
+  */
   function onDrop(files) {
     let dropPhotoDiv = document.getElementById('dropPhotoDiv')
 
@@ -38,7 +38,7 @@ export default function EmployerProfile (props) {
       {/* COMPANY NAME */}
       <ProfileField title="Company Name">
         <input 
-          className={input} 
+          className={props.profileErrorsMap.companyName ? input + ' ' + error : input} 
           type="text" 
           placeholder="Pied Piper"
           value={props.companyName}
@@ -47,9 +47,9 @@ export default function EmployerProfile (props) {
       </ProfileField>
 
     {/* INDUSTRY */}
-      <ProfileField title="Industry">
+      <ProfileField title="Industry" styles={industryMargin}>
         <Combobox
-          className={comboBox}
+          className={props.profileErrorsMap.industry ? comboBox + ' ' + error : comboBox}
           textField="industry"
           valueField="id"
           filter="contains"
@@ -93,7 +93,7 @@ export default function EmployerProfile (props) {
     {/* EMPLOYEE COUNT */}
       <ProfileField title="# of employees">
         <input 
-          className={input} 
+          className={props.profileErrorsMap.employeeCount ? input + ' ' + error : input} 
           type="number" 
           min="1"
           value={props.employeeCount}
@@ -104,7 +104,7 @@ export default function EmployerProfile (props) {
 
       {/* ADDRESS */}
       <ProfileField title="Address">
-        <input className={input} 
+        <input className={props.profileErrorsMap.officeAddress ? input + ' ' + error : input} 
           type="text" 
           placeholder="150 John St"
           onChange={(e) => props.updateProfileField('officeAddress', e.target.value, false)}>
@@ -113,14 +113,14 @@ export default function EmployerProfile (props) {
 
       {/* CITY / POSTAL CODE*/}
       <ProfileField title="City / Postal Code">
-        <input className={input + ' ' + city + ' ' + citypostalcoderelative} 
+        <input className={props.profileErrorsMap.officeCity ? input + ' ' + city + ' ' + citypostalcoderelative + ' ' + error : input + ' ' + city + ' ' + citypostalcoderelative} 
           type="text" 
           placeholder="Toronto"
           onChange={(e) => props.updateProfileField('officeCity', e.target.value, false)}>
         </input>
         <MaskedTextInput
           mask={[/[A-Z]/i, /\d/, /[A-Z]/i, ' ', /\d/, /[A-Z]/i, /\d/]}
-          className={input + ' ' + postalcode + ' ' + citypostalcoderelative}
+          className={props.profileErrorsMap.officePostalCode ? input + ' ' + postalcode + ' ' + citypostalcoderelative + ' ' + error : input + ' ' + postalcode + ' ' + citypostalcoderelative}
           placeholder="M5V 3E3"
           guide={false}
           onChange={(e) => props.updateProfileField('officePostalCode', e.target.value, false)}
