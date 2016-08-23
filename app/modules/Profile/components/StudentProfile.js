@@ -1,8 +1,15 @@
-import React from 'react'
+import React, { PropTypes } from 'react'
+import { ProfileField } from 'modules/Profile'
+import { profileContainer, profileHeader, profileField, profileFieldName, profileFieldContent } from '../styles/EmployerProfileStyles.css'
+import { }
+
 const StudentProfile = React.createClass({
   render () {
     return (
-      <div>Hello!!!!</div>
+      <div className={profileContainer}>
+      	<div className={profileHeader}>Complete your profile so we can find you a job today!
+	</div>
+      </div>
     )
   },
 })
