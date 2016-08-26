@@ -4,7 +4,8 @@ const config = {
     baseUrl: 'http://localhost:3000/api/'
   },
   prod: {
-    baseUrl: 'http://eoymxx-univjobs-back-staging-univjobs.runnableapp.com/api/'
+    baseUrl: 'http://eoymxx-univjobs-back-staging-univjobs.runnableapp.com/api/',
+    mediaUrl: 'http://eoymxx-univjobs-back-staging-univjobs.runnableapp.com/media/'
   }
 }
 

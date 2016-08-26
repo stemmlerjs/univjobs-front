@@ -8,12 +8,20 @@ import { Link } from 'react-router'
 import { Combobox } from 'react-widgets'
 import 'react-widgets/lib/less/react-widgets.less'
 import MaskedTextInput from 'react-text-mask'
+import _ from 'lodash'
+import config from 'config'
 
 export default function EmployerProfile (props) {
   console.log(props)
   const messages = {
     emptyFilter: "Can't find your industry? Let us know at theunivjobs@gmail.com."
   }
+
+  // let photoDiv = document.getElementById('dropPhotoDiv')
+  // if(photoDiv && props.logoUrl) {
+  //   //photoDiv.style.backgroundImage = `url('${config.mediaUrl + props.logoUrl.substring(props.logoUrl.indexOf("/media/") + 7)}')` // blob
+  // } 
+  
 
   /* 
   *   Display the profile new profile picture when the user drags and drops or selects one.
@@ -29,7 +37,10 @@ export default function EmployerProfile (props) {
     dropPhotoDiv.style.border = "0"
     document.getElementById('fa-camera').style.visibility = "hidden"
     document.getElementById('drag-drop').style.visibility = "hidden"
+
+    props.updateProfileField('logoUrl', files[0], false)
   }
+
 
   return (
     <div className={profileContainer}>
@@ -56,6 +67,7 @@ export default function EmployerProfile (props) {
           data={props.industryList} 
           messages={messages}
           onChange={value => props.updateProfileField('industry', value, false)}
+          value={props.industry}
         />
       </ProfileField>
 
@@ -107,6 +119,7 @@ export default function EmployerProfile (props) {
         <input className={props.profileErrorsMap.officeAddress ? input + ' ' + error : input} 
           type="text" 
           placeholder="150 John St"
+          value={props.officeAddress}
           onChange={(e) => props.updateProfileField('officeAddress', e.target.value, false)}>
         </input>
       </ProfileField>
@@ -116,6 +129,7 @@ export default function EmployerProfile (props) {
         <input className={props.profileErrorsMap.officeCity ? input + ' ' + city + ' ' + citypostalcoderelative + ' ' + error : input + ' ' + city + ' ' + citypostalcoderelative} 
           type="text" 
           placeholder="Toronto"
+          value={props.officeCity}
           onChange={(e) => props.updateProfileField('officeCity', e.target.value, false)}>
         </input>
         <MaskedTextInput
@@ -123,6 +137,7 @@ export default function EmployerProfile (props) {
           className={props.profileErrorsMap.officePostalCode ? input + ' ' + postalcode + ' ' + citypostalcoderelative + ' ' + error : input + ' ' + postalcode + ' ' + citypostalcoderelative}
           placeholder="M5V 3E3"
           guide={false}
+          value={props.officePostalCode}
           onChange={(e) => props.updateProfileField('officePostalCode', e.target.value, false)}
         />
       </ProfileField>
