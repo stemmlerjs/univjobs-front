@@ -13,32 +13,73 @@ import config from 'config'
 
 export default function EmployerProfile (props) {
   console.log(props)
+
+  /*
+  * Miscellaneous messages. 
+  * emptyFilter - used in the dropdown for Industry
+  */
+
   const messages = {
     emptyFilter: "Can't find your industry? Let us know at theunivjobs@gmail.com."
   }
 
-  // let photoDiv = document.getElementById('dropPhotoDiv')
-  // if(photoDiv && props.logoUrl) {
-  //   //photoDiv.style.backgroundImage = `url('${config.mediaUrl + props.logoUrl.substring(props.logoUrl.indexOf("/media/") + 7)}')` // blob
-  // } 
-  
-
   /* 
-  *   Display the profile new profile picture when the user drags and drops or selects one.
+  *  placePhoto()
+  * 
+  *  Actually places the photo from the url specified onto the element.
+  *  @param <element> - element
+  *  @param String - url
+  *  @return void
   */
-  function onDrop(files) {
-    let dropPhotoDiv = document.getElementById('dropPhotoDiv')
 
-    // Preview the image
-    dropPhotoDiv.style.backgroundImage = `url('${files[0].preview}')` // blob
-    dropPhotoDiv.style.backgroundSize = "cover"
-
+  function placePhoto(element, url) {
+    // Update the LOGO div with the profile picture
+    element.style.backgroundImage = url
+    element.style.backgroundRepeat= "no-repeat";
+    element.style.backgroundPosition= "center center";
+    element.style.backgroundSize = "125%";
+    
     // Hide icon, text and border
-    dropPhotoDiv.style.border = "0"
+    element.style.border = "0"
     document.getElementById('fa-camera').style.visibility = "hidden"
     document.getElementById('drag-drop').style.visibility = "hidden"
+  }
 
+  /* 
+  *  onDrop()
+  * 
+  *  Display the profile new profile picture when the user drags and drops or selects one.
+  *  @param [] - files
+  *  @return void
+  */
+  function onDrop(files) {
+    // Update props with the File object (profile picture)
     props.updateProfileField('logoUrl', files[0], false)
+  }
+
+
+  /*
+  * Place the logo from props onto the Profile Picture field.
+  */
+
+  // === New Profile Picture file upload
+  if(typeof props.logoUrl == "object") {
+    let dropPhotoDiv = document.getElementById('dropPhotoDiv')
+    let url = `url('${props.logoUrl.preview}')` // blob
+    placePhoto(dropPhotoDiv, url)
+
+  } 
+
+  // === Existing Profile Picture 
+  else if(props.logoUrl.indexOf("/media") === 0) { 
+    // Dev Profile Pictures (via /media)
+    let photoDiv = document.getElementById('dropPhotoDiv')
+    if(photoDiv) {
+      let url = `url('${config.mediaUrl + props.logoUrl.substring(props.logoUrl.indexOf("/media/") + 7)}')` // blob
+      placePhoto(photoDiv, url)
+    } 
+  } else {
+    // Prod Profile Pictures (via ???)
   }
 
 

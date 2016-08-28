@@ -100,7 +100,10 @@ const EmployerProfileContainer = React.createClass({
       )
     } else {
       // If Profile is completed already, do /PATCH. All fields must be populated and valid.
-      actionCreators.updateProfile(1, empProps)
+      this.context.store.dispatch(
+        profileActionCreators.updateProfile(1, empProps, this.props.user, this.props.snapshot)
+      )
+      console.log("Profile already completed, lets patch this")
     }
   },
 
@@ -132,6 +135,7 @@ const EmployerProfileContainer = React.createClass({
 function mapStateToProps({user, profile}) {
   return {
     user: user ? user : {},
+    snapshot: profile.snapshot ? profile.snapshot : {},
     companyName: profile.employerProfile.companyName ? profile.employerProfile.companyName : '',
     industry: profile.employerProfile.industry ? profile.employerProfile.industry : '',
     industryList: profile.lists.industries ? profile.lists.industries : [],

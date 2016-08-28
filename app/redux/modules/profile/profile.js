@@ -1,5 +1,5 @@
 import {validateCompanyName , validateAddress, validateCity, validatePostalCode} from 'helpers/utils'
-import { employerProfilePUT } from 'helpers/profile'
+import { employerProfilePUT, employerProfilePATCH } from 'helpers/profile'
 
 // =======================================================
 // ==================== ACTIONS ==========================
@@ -161,7 +161,8 @@ function validateEmployerProfileFields(profileInfo, next) {
   
   // Validate each field in it's own unique way
   profileFieldErrors.companyName = validateCompanyName(profileInfo.companyName) ? false : true
-  profileFieldErrors.industry = typeof profileInfo.industry == "object" ? false : true
+  //profileFieldErrors.industry = typeof profileInfo.industry == "object" || typeof profileInfo.industry == "number" ? false : true
+  profileFieldErrors.industry = industry != "" ? false : true
   profileFieldErrors.employeeCount = profileInfo.employeeCount > 0 ? false : true
   profileFieldErrors.officeAddress = validateAddress(profileInfo.officeAddress) && profileInfo.officeAddress != "" ? false : true
   profileFieldErrors.officePostalCode = validatePostalCode(profileInfo.officePostalCode) ? false : true 
@@ -174,6 +175,27 @@ function validateEmployerProfileFields(profileInfo, next) {
 
   next(submitErrorsExist, profileFieldErrors)
 }
+
+function compareToSnapshot(oldProfile, newProfile, callback) {
+  for(var prop in newProfile) {
+    if(newProfile[prop] == oldProfile[prop]) {
+      delete newProfile[prop]
+    }
+  }
+  callback(newProfile)
+}
+
+/*  
+* submitProfileFirstTime
+* 
+* This first submit to the profile will be done through the use of a PUT request.
+* We change the isProfileCompleted flag to == true after this.
+*
+* @param userTypeInt (Number) - 0 if a student, 1 if employer
+* @param profileInfo (Object) - data to PUT
+* @param user (Object) - data to PUT
+* 
+*/
 
 export function submitProfileFirstTime(userTypeInt, profileInfo, user) {
   return function (dispatch) {
@@ -228,9 +250,59 @@ export function submitProfileFirstTime(userTypeInt, profileInfo, user) {
   }
 }
 
-export function updateProfile(userTypeInt, profileInfo) {
+export function updateProfile(userTypeInt, profileInfo, user, snapshot) {
   return function (dispatch) {
+    switch(userTypeInt) {
+      case 0:
 
+        return;
+      case 1:
+        console.log("UPDATING PROFILE")
+        validateEmployerProfileFields(profileInfo, (errorsExist, profileFieldErrors) => {
+          if(errorsExist) {
+            // DISPATCH - SAVE_PROFILE_ERROR
+            dispatch(saveProfileError(profileFieldErrors, false))
+          } else {
+            // No errors, proceed to /PATCH on api/me
+            
+            var changedData = {
+             // user: {
+              //"user-is_a_student": false,           // doesn't change
+              //   "user-is_profile_completed": true,
+              //   "user-email": user.email,
+              //   "user-first_name": user.firstName,
+              //   "user-last_name": user.lastName,
+              //   "user-is_active": true,
+              //   //"user-date_joined": user.dateJoined,  // doesn't change
+              //   "user-mobile": user.mobile,
+              // // },
+              //is_a_student: false,                  // doesn't change
+              // is_profile_completed: true, // set this flag to true so we know for next time
+              company_name: profileInfo.companyName,
+              logo: profileInfo.logoUrl,
+              office_location: profileInfo.officeAddress,
+              office_city: profileInfo.officeCity,
+              office_postal_code: profileInfo.officePostalCode,
+              description: profileInfo.description,
+              website: profileInfo.website,
+              employee_count: profileInfo.employeeCount,
+              industry: profileInfo.industry.id ? profileInfo.industry.id : profileInfo.industry,
+              // date_joined: user.dateJoined,
+              // first_name: user.firstName,
+              // last_name: user.lastName,
+              // email: user.email
+            }
+
+            compareToSnapshot(snapshot, changedData, (result) => {
+              employerProfilePATCH(result)
+
+            })
+          }
+        })
+        return;
+      default:
+        return;
+    }
   }
 }
 
@@ -241,6 +313,7 @@ export function updateProfile(userTypeInt, profileInfo) {
 const initialState = {
   employerProfile: {},
   studentProfile: {},
+  snapshot: {},
   lists: {},
   isSubmittingForm: false,
   isProfileCompleted: false,
@@ -321,13 +394,15 @@ export default function profile (state = initialState, action) {
         return {
           ...state,
           isProfileCompleted: action.isProfileCompleted,
-          studentProfile: studentProfile(state.studentProfile, action)
+          studentProfile: studentProfile(state.studentProfile, action),
+          snapshot: action.profileInfo
         }
       } else {
         return {
           ...state,
           isProfileCompleted: action.isProfileCompleted,
-          employerProfile: employerProfile(state.employerProfile, action)
+          employerProfile: employerProfile(state.employerProfile, action),
+          snapshot: action.profileInfo
         }
       }
     case SAVE_PROFILE_ERROR:
@@ -367,7 +442,7 @@ function employerProfile(state = initialEmployerProfileState, action) {
           website: action.profileInfo.website,
           description: action.profileInfo.description,
           employeeCount: action.profileInfo.employee_count,
-          officeAddress: action.profileInfo.office_address,
+          officeAddress: action.profileInfo.office_location,
           officeCity: action.profileInfo.office_city,
           officePostalCode: action.profileInfo.office_postal_code,
           logoUrl: action.profileInfo.logo

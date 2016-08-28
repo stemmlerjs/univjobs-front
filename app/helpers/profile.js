@@ -19,3 +19,21 @@ export function employerProfilePUT(data) {
     data: formData
   })
 }
+
+export function employerProfilePATCH(data) {
+  let formData = new FormData();
+  const accessToken = getAccessToken();
+
+  for(let key in data) {
+    formData.append(key, data[key])
+  }
+
+  return axios({
+    method: 'patch',
+    url: config.baseUrl + 'me/',
+    headers: {
+      "Authorization": "JWT " + accessToken
+    },
+    data: formData
+  })
+}
