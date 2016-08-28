@@ -162,7 +162,7 @@ function validateEmployerProfileFields(profileInfo, next) {
   // Validate each field in it's own unique way
   profileFieldErrors.companyName = validateCompanyName(profileInfo.companyName) ? false : true
   //profileFieldErrors.industry = typeof profileInfo.industry == "object" || typeof profileInfo.industry == "number" ? false : true
-  profileFieldErrors.industry = industry != "" ? false : true
+  profileFieldErrors.industry = profileInfo.industry != "" ? false : true
   profileFieldErrors.employeeCount = profileInfo.employeeCount > 0 ? false : true
   profileFieldErrors.officeAddress = validateAddress(profileInfo.officeAddress) && profileInfo.officeAddress != "" ? false : true
   profileFieldErrors.officePostalCode = validatePostalCode(profileInfo.officePostalCode) ? false : true 
@@ -210,7 +210,6 @@ export function submitProfileFirstTime(userTypeInt, profileInfo, user) {
             // DISPATCH - SAVE_PROFILE_ERROR
             dispatch(saveProfileError(profileFieldErrors, false))
           } else {
-            debugger;
             // No errors, proceed to /PUT on api/me
             var putData = {
              // user: {
