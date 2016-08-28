@@ -227,7 +227,7 @@ export function submitProfileFirstTime(userTypeInt, profileInfo, user) {
               is_profile_completed: true, // set this flag to true so we know for next time
               company_name: profileInfo.companyName,
               logo: profileInfo.logoUrl,
-              office_location: profileInfo.officeAddress,
+              office_address: profileInfo.officeAddress,
               office_city: profileInfo.officeCity,
               office_postal_code: profileInfo.officePostalCode,
               description: profileInfo.description,
