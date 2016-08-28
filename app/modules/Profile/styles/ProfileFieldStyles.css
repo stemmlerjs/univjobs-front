@@ -11,3 +11,28 @@
   width: 75%;
   display:inline;
 }
+
+.flexContainer {
+	border: 1px solid black;
+	list-style: none;
+	margin: 0px;
+	padding: 0px;
+	align-items: flex-start;
+
+	/* For Safari */
+	display: -webkit-flex;
+	-webkit-flex-direction: row;
+	
+	/* Chrome */
+	display: flex;
+	flex-direction: row;
+}
+
+.flexTitle {
+	font-size: 18px;
+	color: #5257D;
+	padding-left: 20px;
+	padding-right: 10px;
+	text-align: left;
+}
+

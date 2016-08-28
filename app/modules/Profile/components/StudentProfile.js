@@ -1,8 +1,8 @@
 import React, { PropTypes } from 'react'
-import { ProfileField } from 'modules/Profile'
+import { ProfileField, StudentContainer } from 'modules/Profile'
 import { Combobox, DropdownList, DateTimePicker } from 'react-widgets'
 import Dropzone from 'react-dropzone'
-import { pageContainer, profileField, profileHeader, input, nameField,  emailField, dropDown, dropzone, dropzoneContent, inlineDropzone, btn, saveBtnContainer, saveBtn} from '../styles/StudentProfileContainerStyles.css'
+import { pageContainer, profileField, profileHeader, container, input, nameField,  emailField, dropDown, dropzone, dropzoneContent, inlineDropzone, btn, saveBtnContainer, saveBtn} from '../styles/StudentProfileContainerStyles.css'
 
 export default function StudentProfile (props) {
  console.log(props)
@@ -17,7 +17,7 @@ export default function StudentProfile (props) {
 
  const degree = ['Diploma', 'Associates', 'Bachelors', 'Masters', 'PHD'];
 
- const major = ['Software', 'Makeup'];
+ const major = ['Software Development & Network Engineering', 'Makeup'];
 
  const gender = ['Male', 'Female'];
 
@@ -42,55 +42,67 @@ export default function StudentProfile (props) {
       	<div className={profileHeader}>Complete your profile so we can find you a job today!</div>
 
 	{/* EMAIL NOTIFICATIONS */}
-	<ProfileField title="My email notification:" styles={emailField}>
-	 <DropdownList
-	  className={dropDown}
-	  defaultValue={'Once a week if new jobs are posted'}
-	  data={data}
-	  messages={messages}
-	/>	
-	</ProfileField>
+	<StudentContainer title="My email notification preferences:"> 
+	<li>
+	  <DropdownList
+	   className = {dropDown}
+	   defaultValue={'Once a week if new jobs are posted'}
+	   data={data}
+	   messages={messages}
+	 />
+	</li>
+	</StudentContainer>
 
-	{/*FIRST NAME, LAST NAME*/}
-	<ProfileField title="My name is" 
-	 styles={nameField}>
-	 <input
-	   className={input}
-	   type="text"
-	   placeholder="First name">
-	 </input>
+	{/*FIRST NAME, LAST NAME*, STATUS */}
+	<StudentContainer title="My name is">
+	 <li>
+	    <input
+	     className={input}
+	     type="text"
+	     placeholder="First name">
+	    </input>
+	 </li>
+ 
+	 <li>
+	   <input
+	    className={input}
+	    type="text"
+	    placeholder="Last Name">
+	   </input>
+	 </li> 
 
-	 <input
-	   className={input}
-	   type="text"
-	   placeholder="Last Name">
-	 </input>
-	</ProfileField>
-
-	{/* STATUS */}
-	<ProfileField title="I am a" 
-	 styles={nameField}>
-	 <DropdownList
-	  className={dropDown}
-	  defaultValue={'Full-time student'}
-	  data={stat}
-	  messages={messages}
-	/>	
-	</ProfileField>
+	 <li>
+	   <p>, and I am a</p>
+	 </li>
+	 {/* STATUS */}
+	 <li>
+	   <DropdownList
+	     className={dropDown}
+	     defaultValue={'Full-time student'}
+	     data={stat}
+	      messages={messages}
+ 	    />	
+	 </li> 
+	 <li>
+	   <p>student.</p>
+	 </li>
+	</StudentContainer>
 
 	{/* DEGREE */}
-	<ProfileField title="I am pursuing a " 
+	<StudentContainer title="I am pursuing a " 
 	 styles={nameField}>
-	 <DropdownList
-	  className={dropDown}
-	  defaultValue={'Diploma'}
-	  data={degree}
-	  messages={messages}
-	/>	
-	</ProfileField>
+	 <li>
+	   <DropdownList
+	    className={dropDown}
+	    defaultValue={'Diploma'}
+	    data={degree}
+	    messages={messages}
+	   />
+         </li>
+	</StudentContainer>
 
 	{/* START DATE */}
-	<ProfileField title="I enrolled in " 
+	<StudentContainer title="I enrolled in " 
 	 styles={nameField}>
 	 <DateTimePicker
 	  className={dropDown}
@@ -100,10 +112,10 @@ export default function StudentProfile (props) {
 	  className={dropDown}
 	  format='mm YY'
 	/>	
-	</ProfileField>
+	</StudentContainer>
 
 	{/* END DATE */}
-	<ProfileField title="I will graduate in" 
+	<StudentContainer title="And I will graduate in" 
 	 styles={nameField}>
 	 <DateTimePicker
 	  className={dropDown}
@@ -113,41 +125,43 @@ export default function StudentProfile (props) {
 	  className={dropDown}
 	  format='mm YY'
 	/>	
-	</ProfileField>
+	</StudentContainer>
 
 	{/* MAJOR */}
-	<ProfileField title="I am a" 
-	 styles={nameField}>
-	 <DropdownList
-	  className={dropDown}
-	  defaultValue={'MAJOR'}
-	  data={major}
-	  messages={messages}
-	/>	
-	</ProfileField>
+	<StudentContainer title="I am a"
+	  styles={nameField}>
+	  <li>
+	    <DropdownList
+	      className={dropDown}
+	      defaultValue={'MAJOR'}
+	      data={major}
+	      messages={messages}
+	     />
+	  </li>
+	</StudentContainer>
 
 	{/* GPA */}
-	<ProfileField title="My GPA is" 
+	<StudentContainer title="My GPA is" 
 	 styles={nameField}>
 	 <input
 	   className={input}
 	   type="text"
 	   placeholder="GPA">
 	 </input>
-	</ProfileField>
+	</StudentContainer>
 
 	{/* PERSONAL EMAIL */}
-	<ProfileField title="My personal email is" 
+	<StudentContainer title="My personal email is" 
 	 styles={nameField}>
 	 <input
 	   className={input}
 	   type="text"
 	   placeholder="Email">
 	 </input>
-	</ProfileField>
+	</StudentContainer>
 
 	{/* GENDER */}
-	<ProfileField title="I am " 
+	<StudentContainer title="I am " 
 	 styles={nameField}>
 	 <DropdownList
 	  className={dropDown}
@@ -155,50 +169,50 @@ export default function StudentProfile (props) {
 	  data={gender}
 	  messages={messages}
 	/>	
-	</ProfileField>
+	</StudentContainer>
 
 	{/* SPORTS */}
-	<ProfileField title="I play " 
+	<StudentContainer title="I play " 
 	 styles={nameField}>
 	 <input
 	   className={input}
 	   type="text"
 	   placeholder="Sports team">
 	 </input>
-	</ProfileField>
+	</StudentContainer>
 
 	{/* CLUB */}
-	<ProfileField title="I attend " 
+	<StudentContainer title="I attend " 
 	 styles={nameField}>
 	 <input
 	   className={input}
 	   type="text"
 	   placeholder="School club">
 	 </input>
-	</ProfileField>
+	</StudentContainer>
 
 	{/* LANGUAGE */}
-	<ProfileField title="I speak " 
+	<StudentContainer title="I speak " 
 	 styles={nameField}>
 	 <input
 	   className={input}
 	   type="text"
 	   placeholder="languages">
 	 </input>
-	</ProfileField>
+	</StudentContainer>
 
 	{/* CAR */}
-	<ProfileField title="I drive a car " 
+	<StudentContainer title="I drive a car " 
 	 styles={nameField}>
 	 <input
 	   className={input}
 	   type="text"
 	   placeholder="yes or no">
 	 </input>
-	</ProfileField>
-
+	</StudentContainer>
+	
 	{/* EXPERIENCE */}
-	<ProfileField title="I recently worked at " 
+	<StudentContainer title="I recently worked at " 
 	 styles={nameField}>
 	 <input
 	   className={input}
@@ -211,40 +225,40 @@ export default function StudentProfile (props) {
 	   type="text"
 	   placeholder="Position">
 	 </input>
-	</ProfileField>
+	</StudentContainer>
 
 	{/* FUN FACTS */}
-	<ProfileField title="A fun fact about me is " 
+	<StudentContainer title="A fun fact about me is " 
 	 styles={nameField}>
 	 <input
 	   className={input}
 	   type="text"
 	   placeholder="Example: I can juggles chainsaws">
 	 </input>
-	</ProfileField>
+	</StudentContainer>
 
 	{/* CITY */}
-	<ProfileField title="My hometown is" 
+	<StudentContainer title="My hometown is" 
 	 styles={nameField}>
 	 <input
 	   className={input}
 	   type="text"
 	   placeholder="City">
 	 </input>
-	</ProfileField>
+	</StudentContainer>
 
 	{/* HOBBIES */}
-	<ProfileField title="My favourite hobbies are" 
+	<StudentContainer title="My favourite hobbies are" 
 	 styles={nameField}>
 	 <input
 	   className={input}
 	   type="text"
 	   placeholder="Playing guitar, Making movies, etc..">
 	 </input>
-	</ProfileField>
+	</StudentContainer>
 
       {/* PHOTO & RESUME */}
-      <ProfileField title="Take a business selfie">
+      <StudentContainer title="Take a business selfie">
         <Dropzone id="dropPhotoDiv" className={dropzone} onDrop={onDrop} accept='image/*' multiple={false}>
           <div className={dropzoneContent}>
             <i id="fa-camera" className={"fa fa-camera "} aria-hidden="true"></i>
@@ -258,7 +272,7 @@ export default function StudentProfile (props) {
             <div id="drag-drop"></div>
           </div>
         </Dropzone>
-      </ProfileField>
+      </StudentContainer>
 
     {/* ======== SAVE BUTTON ======== */}
       <div className={profileField}>
