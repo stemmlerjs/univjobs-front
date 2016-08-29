@@ -211,6 +211,20 @@ export function submitProfileFirstTime(userTypeInt, profileInfo, user) {
             }
             
             employerProfilePUT(putData)
+            .then((res) => {
+
+                // DISPATCH - SAVE_PROFILE_SUCCESS
+                dispatch(saveProfileSuccess())
+              })
+              .catch((err) => {
+
+                // DISPATCH - SAVE_PROFILE_ERROR
+                dispatch(saveProfileError({}, [
+                  'HTTP Error Occurred',
+                  err
+              ], false))
+
+              })
           }
         })
         return;
@@ -442,7 +456,7 @@ function employerProfile(state = initialEmployerProfileState, action) {
           website: action.profileInfo.website,
           description: action.profileInfo.description,
           employeeCount: action.profileInfo.employee_count,
-          officeAddress: action.profileInfo.office_location,
+          officeAddress: action.profileInfo.office_address,
           officeCity: action.profileInfo.office_city,
           officePostalCode: action.profileInfo.office_postal_code,
           logoUrl: action.profileInfo.logo
