@@ -5,6 +5,11 @@ import { moment } from 'moment'
 import Dropzone from 'react-dropzone'
 import { pageContainer, profileField, profileHeader, container, input, nameField,  emailField, dropDown, dropzone, dropzoneContent, inlineDropzone, btn, saveBtnContainer, saveBtn} from '../styles/StudentProfileContainerStyles.css'
 
+var Moment = require('moment')
+var momentLocalizer = require('react-widgets/lib/localizers/moment')
+
+momentLocalizer(Moment)
+
 export default function StudentProfile (props) {
  console.log(props)
  const messages = {
@@ -123,7 +128,7 @@ export default function StudentProfile (props) {
 	 <DateTimePicker
 	  className={dropDown}
 	  time={false}
-	  format='mm YY'
+	  format='mmm YY'
 	/>	
 	 <DateTimePicker
 	  className={dropDown}
