@@ -14,6 +14,12 @@ import * as userActionCreators from 'redux/modules/user/user'
 import * as profileActionCreators from 'redux/modules/profile/profile'
 // ======================================
 
+// ============= MESSAGES ===============
+var ReactToastr = require("react-toastr");
+var {ToastContainer} = ReactToastr; // This is a React Element.
+var ToastMessageFactory = React.createFactory(ReactToastr.ToastMessage.animation);
+// ======================================
+
 const actionCreators = {
   ...profileActionCreators,
   ...userActionCreators
@@ -84,6 +90,47 @@ const EmployerProfileContainer = React.createClass({
     }
   },
 
+  /*
+  * componentWillReceiveProps
+  *
+  * When props come in, lets do the following:
+  * - check for error messages to display an error message
+  * - check for a success message to display a success message
+  *
+  * @param (Object) newProps
+  */
+
+  componentWillReceiveProps(newProps) {
+    let error = newProps.error;
+    let submitSuccess = newProps.submitSuccess;
+    
+    if(submitSuccess) {
+      this.refs.container.success(
+        "Woohoo :)",
+        "Profile successfully updated!", {
+        timeOut: 3000
+      });
+    }
+
+    if(error) {
+      this.refs.container.error(
+        error,
+        "Something went wrong while trying to submit", {
+        timeOut: 3000
+      });
+    }
+  },
+
+  /*
+  * componentWillMount
+  *
+  * When the actual DOM is loaded, lets get all the lists required
+  * then do the redirection filter (if required) and then 
+  * close the overlay
+  *
+  * @param (Object) newProps
+  */
+
   componentWillMount() {
     /*  On page load, we will first get all the required lists for the screen */  
     this.retrieveAllLists()
@@ -104,6 +151,8 @@ const EmployerProfileContainer = React.createClass({
         profileActionCreators.updateProfile(1, empProps, this.props.user, this.props.snapshot)
       )
       console.log("Profile already completed, lets patch this")
+
+      
     }
   },
 
@@ -127,6 +176,9 @@ const EmployerProfileContainer = React.createClass({
           submitErrorsExist={this.props.submitErrorsExist}
           profileErrorsMap={this.props.profileErrorsMap}
         />
+        <ToastContainer ref="container"
+          toastMessageFactory={ToastMessageFactory}
+          className="toast-top-right" />
       </div>
     )
   }
@@ -158,7 +210,9 @@ function mapStateToProps({user, profile}) {
       officeAddress: false,
       officeCity: false,
       officePostalCode: false
-    }
+    },
+    error: profile.error ? profile.error : '',
+    submitSuccess: profile.submitSuccess ? profile.submitSuccess : false
   }
 }
 

@@ -1,5 +1,4 @@
-import {validateCompanyName , validateAddress, validateCity, validatePostalCode} from 'helpers/utils'
-import { employerProfilePUT, employerProfilePATCH } from 'helpers/profile'
+import { employerProfilePUT, employerProfilePATCH, compareToSnapshot, validateEmployerProfileFields } from 'helpers/profile'
 
 // =======================================================
 // ==================== ACTIONS ==========================
@@ -137,52 +136,19 @@ export function fetchingProfileInfoSuccess (isProfileCompleted, profileInfo, isA
   }
 }
 
-export function saveProfileError(profileErrorsObj, isAStudent) {
+export function saveProfileError(profileErrorsObj, error, isAStudent) {
   return {
     type: SAVE_PROFILE_ERROR,
     isAStudent,
+    error,
     profileErrorsObj
   }
 }
 
-function validateEmployerProfileFields(profileInfo, next) {
-  let submitErrorsExist = false;
-  let profileFieldErrors = {
-    companyName: false,
-    industry: false,
-    logoUrl: false,
-    website: false,
-    description: false,
-    employeeCount: false,
-    officeAddress: false,
-    officeCity: false,
-    officePostalCode: false
+export function saveProfileSuccess() {
+  return {
+    type: SAVE_PROFILE_SUCCESS
   }
-  
-  // Validate each field in it's own unique way
-  profileFieldErrors.companyName = validateCompanyName(profileInfo.companyName) ? false : true
-  //profileFieldErrors.industry = typeof profileInfo.industry == "object" || typeof profileInfo.industry == "number" ? false : true
-  profileFieldErrors.industry = industry != "" ? false : true
-  profileFieldErrors.employeeCount = profileInfo.employeeCount > 0 ? false : true
-  profileFieldErrors.officeAddress = validateAddress(profileInfo.officeAddress) && profileInfo.officeAddress != "" ? false : true
-  profileFieldErrors.officePostalCode = validatePostalCode(profileInfo.officePostalCode) ? false : true 
-  profileFieldErrors.officeCity = validateCity(profileInfo.officeCity) ? false : true
-
-  // If an error exists in the map, then submitErrorsExist === true
-  for (var attr in profileFieldErrors) {
-    if (profileFieldErrors[attr] === true) submitErrorsExist = true;
-  }
-
-  next(submitErrorsExist, profileFieldErrors)
-}
-
-function compareToSnapshot(oldProfile, newProfile, callback) {
-  for(var prop in newProfile) {
-    if(newProfile[prop] == oldProfile[prop]) {
-      delete newProfile[prop]
-    }
-  }
-  callback(newProfile)
 }
 
 /*  
@@ -207,8 +173,13 @@ export function submitProfileFirstTime(userTypeInt, profileInfo, user) {
         console.log("SUBMITTING EMPLOYER PROFILE FIRST TIME")
         validateEmployerProfileFields(profileInfo, (errorsExist, profileFieldErrors) => {
           if(errorsExist) {
+
             // DISPATCH - SAVE_PROFILE_ERROR
-            dispatch(saveProfileError(profileFieldErrors, false))
+            dispatch(saveProfileError(profileFieldErrors, [
+              "Couldn't save profile.",
+              'Please fill in missing fields'
+            ], false))
+
           } else {
             debugger;
             // No errors, proceed to /PUT on api/me
@@ -260,8 +231,13 @@ export function updateProfile(userTypeInt, profileInfo, user, snapshot) {
         console.log("UPDATING PROFILE")
         validateEmployerProfileFields(profileInfo, (errorsExist, profileFieldErrors) => {
           if(errorsExist) {
+
             // DISPATCH - SAVE_PROFILE_ERROR
-            dispatch(saveProfileError(profileFieldErrors, false))
+            dispatch(saveProfileError(profileFieldErrors, [
+              "Couldn't save profile.\n",
+              'Please fill in missing fields'
+            ], false))
+
           } else {
             // No errors, proceed to /PATCH on api/me
             
@@ -295,7 +271,20 @@ export function updateProfile(userTypeInt, profileInfo, user, snapshot) {
 
             compareToSnapshot(snapshot, changedData, (result) => {
               employerProfilePATCH(result)
+                .then((res) => {
 
+                  // DISPATCH - SAVE_PROFILE_SUCCESS
+                  dispatch(saveProfileSuccess())
+                })
+                .catch((err) => {
+
+                  // DISPATCH - SAVE_PROFILE_ERROR
+                  dispatch(saveProfileError({}, [
+                    'HTTP Error Occurred',
+                    err
+                ], false))
+
+                })
             })
           }
         })
@@ -318,6 +307,8 @@ const initialState = {
   isSubmittingForm: false,
   isProfileCompleted: false,
   submitErrorsExist: false,
+  submitSuccess: false,
+  error: ''
 }
 
 const initialEmployerProfileState = {
@@ -375,12 +366,14 @@ export default function profile (state = initialState, action) {
         return {
           ...state,
           studentProfile: studentProfile(state.studentProfile, action),
+          submitSuccess: false,
           error: ''
         }
       } else {
         return {
           ...state,
           employerProfile: employerProfile(state.employerProfile, action),
+          submitSuccess: false,
           error: ''
         }
       }
@@ -410,14 +403,22 @@ export default function profile (state = initialState, action) {
         return {
           ...state,
           submitErrorsExist: true,
+          error: action.error,
           studentProfile: studentProfile(state.studentProfile, action)
         }
       } else {
         return {
           ...state,
           submitErrorsExist: true,
+          error: action.error,
           employerProfile: employerProfile(state.employerProfile, action)
         }
+      }
+    case SAVE_PROFILE_SUCCESS:
+      return {
+        ...state,
+        submitSuccess: true,
+        error: ''
       }
     default :
       return state

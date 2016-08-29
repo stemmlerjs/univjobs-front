@@ -114,7 +114,7 @@ export default function EmployerProfile (props) {
 
     {/* LOGO */}
       <ProfileField title="Logo">
-        <Dropzone id="dropPhotoDiv" className={dropzone} onDrop={onDrop} accept='image/*' multiple={false}>
+        <Dropzone id="dropPhotoDiv" className={props.profileErrorsMap.logoUrl ? dropzone + ' ' + error : dropzone} onDrop={onDrop} accept='image/*' multiple={false}>
           <div className={dropzoneContent}>
             <i id="fa-camera" className={"fa fa-camera " + photoIcon} aria-hidden="true"></i>
             <div id="drag-drop">Drag and drop</div>
