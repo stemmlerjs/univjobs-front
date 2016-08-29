@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react'
 import { ProfileField, StudentContainer } from 'modules/Profile'
-import { Combobox, DropdownList, DateTimePicker } from 'react-widgets'
+import { Combobox, DropdownList, DateTimePicker, Calendar} from 'react-widgets'
+import { moment } from 'moment'
 import Dropzone from 'react-dropzone'
 import { pageContainer, profileField, profileHeader, container, input, nameField,  emailField, dropDown, dropzone, dropzoneContent, inlineDropzone, btn, saveBtnContainer, saveBtn} from '../styles/StudentProfileContainerStyles.css'
 
@@ -106,11 +107,13 @@ export default function StudentProfile (props) {
 	 styles={nameField}>
 	 <DateTimePicker
 	  className={dropDown}
-	  format='mm YY'
+	  time={false}
+	  format='MMM'
 	/>	
 	 <DateTimePicker
 	  className={dropDown}
-	  format='mm YY'
+	  time={false}
+	  format='mmm YYY'
 	/>	
 	</StudentContainer>
 
@@ -119,10 +122,12 @@ export default function StudentProfile (props) {
 	 styles={nameField}>
 	 <DateTimePicker
 	  className={dropDown}
+	  time={false}
 	  format='mm YY'
 	/>	
 	 <DateTimePicker
 	  className={dropDown}
+	  time={false}
 	  format='mm YY'
 	/>	
 	</StudentContainer>
