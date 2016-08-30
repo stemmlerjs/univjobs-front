@@ -73,6 +73,11 @@ export function submitStudentSignupForm(email, password) {
 
                 const token = response.data.token
                 const userInfo = response.data.user
+                const isAStudent = response.data.user.user.is_a_student
+                const isProfileCompleted = response.data.user.user.is_profile_completed
+
+                let profileInfo = _.cloneDeep(response.data.user)
+                delete profileInfo.user;
 
                 // save access token as cookie
                 setAccessToken(token) 
@@ -80,10 +85,17 @@ export function submitStudentSignupForm(email, password) {
                 // ACTION: DISPATCH (CREATING_USER_ACCOUNT_SUCCESS)
                 dispatch(userActions.createUserAccountSuccess(token)) 
 
-                // ACTION: DISPATCH (FETCHING_USER_INFO_SUCCESS)
-                dispatch(userActions.fetchingUserInfoSuccess(
-                  true, // (isAStudent)
-                  userInfo
+                // // ACTION: DISPATCH (LOGIN_SUCCESS)
+                dispatch(userActions.loginSuccess(token, 
+                  isAStudent, 
+                  isProfileCompleted
+                ))
+
+                // //ACTION: PROFILE - DISPATCH (FETCHING_PROFILE_INFO_SUCCESS)
+                dispatch(profileActions.fetchingProfileInfoSuccess(
+                  isProfileCompleted,
+                  profileInfo,
+                  isAStudent
                 ))
 
                 resolve(true)

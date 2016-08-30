@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router'
 import { SidebarContainer } from 'modules/Main'
-import { title, mainContainer, container, categories, category } from '../styles/CategoriesContainerStyles.css'
+import { title, mainContainer, container, categories, category, categoryText, headingStyle, subHeadingStyle } from '../styles/CategoriesContainerStyles.css'
 
 const categoryList = [{
   key: 1,
@@ -44,9 +44,11 @@ const categoryList = [{
 const Category = function({heading, subHeading, url}) {
   return (
     <Link to={url}>
-      <div>
-        <h3>{heading}</h3>
-        <p>{subHeading}</p>
+      <div className={category}>
+        <div className={categoryText}>
+          <h3 className={headingStyle}>{heading}</h3>
+          <p className={subHeadingStyle}>{subHeading}</p>
+        </div>
       </div>
     </Link>
   )
@@ -56,12 +58,12 @@ const Categories = function(props) {
   return (
     <div className={categories}>
       { categoryList.map(({key, heading, subHeadingForEmp, url}) => {
-        return 
-        <Category className={category}
+        return <Category
           key={key} 
           heading={heading} 
           subHeading={subHeadingForEmp} 
-          url={url}/>
+          url={url}>
+        </Category>
       })}
     </div>
   )

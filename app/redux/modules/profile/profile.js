@@ -337,19 +337,32 @@ const initialEmployerProfileState = {
 }
 
 const employerProfileErrorsInitialState = {
-    companyName: false,
-    industry: false,
-    logoUrl: false,
-    website: false,
-    description: false,
-    employeeCount: false,
-    officeAddress: false,
-    officeCity: false,
-    officePostalCode: false
+  companyName: false,
+  industry: false,
+  logoUrl: false,
+  website: false,
+  description: false,
+  employeeCount: false,
+  officeAddress: false,
+  officeCity: false,
+  officePostalCode: false
   }
 
 const initialStudentProfileState = {
-  
+  // email,
+  // password,
+  // lastUpdated,
+  // emailPreferences,
+  // firstName,
+  // lastName,
+  // studentStatus,
+  // degreeName,
+  // schoolName,
+  // enrollmentMonth,
+  // enrollmentYear,
+  // graduationMonth,
+  // graduationYear,
+  // lastUpdated,
 }
 
 const initialListsState = {

@@ -254,6 +254,8 @@ const SignupContainer = React.createClass({
   },
 })
 
+// The entire redux store is passed in here,
+// Return an object defining which values you want to bind to props
 function mapStateToProps({user, signupForm, loginForm}) {
   return {
     isAStudent: user.isAStudent ? true : false,
@@ -286,4 +288,5 @@ function mapActionCreatorsToProps(dispatch) {
   return bindActionCreators(actionCreators, dispatch)
 }
 
+// connect(specify_what_keys_you_want_from_store, wraps_dispatch_around_action_creators)(container)
 export default connect(mapStateToProps, mapActionCreatorsToProps)(SignupContainer)
