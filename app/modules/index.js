@@ -4,4 +4,5 @@ export StudentProfileContainer from './Profile/containers/StudentProfileContaine
 export EmployerProfileContainer from './Profile/containers/EmployerProfileContainer'
 export InitialOverlay from './Main/containers/InitialOverlay'
 export CategoriesContainer from './Categories/containers/CategoriesContainer'
+export CreateJobContainer from './CreateJob/containers/CreateJobContainer'
 
