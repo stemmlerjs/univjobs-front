@@ -126,12 +126,16 @@
     }
   }
 
-  export function fetchingUserInfoSuccess (isAStudent, profileInfo) {
+  export function fetchingUserInfoSuccess (isAStudent, dateJoined, email, firstName, lastName, mobile) {
     return {
       type: FETCHING_USER_INFO_SUCCESS,
       isFetching: false,
       isAStudent,
-      profileInfo,
+      dateJoined,
+      email,
+      firstName,
+      lastName,
+      mobile
     }
   }
 
@@ -154,12 +158,15 @@ const initialState = {
   isCreatingAccount: false,
   isFetching: false,
   isAuthenticated: false,
-  studentProfile: {},
-  employerProfile: {},
   isAStudent: true,
   isProfileCompleted: false,
   accessToken: '',
   emailVerified: false,
+  dateJoined: '',
+  email: '',
+  firstName: '',
+  lastName: '',
+  mobile: '',
   error: ''
 }
 
@@ -195,21 +202,21 @@ export default function user (state = initialState, action) {
         isCreatingAccount: false,
         error: action.error
       }
-    case UPDATE_USER_ACCOUNT_INFO: 
-      if(state.isAStudent) {
-        return {
-          ...state,
-          // Initially, studentProfile will be null, other times, we will just be patching pieces of it on an update function.
-          // We still need to maintain the state of the profile data as it's being constructored. Probably
-          // on a separate modal or something.
-          // action.profileData will have it 
-          studentProfile: studentProfileInfo(state.studentProfile, action)
-        }
-      } 
-      // else {
-      //   ...state,
-      //   employerProfile: employerProfileInfo(state.studentProfile, action)
-      // }
+    // case UPDATE_USER_ACCOUNT_INFO: 
+    //   if(state.isAStudent) {
+    //     return {
+    //       ...state,
+    //       // Initially, studentProfile will be null, other times, we will just be patching pieces of it on an update function.
+    //       // We still need to maintain the state of the profile data as it's being constructored. Probably
+    //       // on a separate modal or something.
+    //       // action.profileData will have it 
+    //       studentProfile: studentProfileInfo(state.studentProfile, action)
+    //     }
+    //   } 
+    //   // else {
+    //   //   ...state,
+    //   //   employerProfile: employerProfileInfo(state.studentProfile, action)
+    //   // }
     case LOGGING_IN: 
       return {
         ...state,
@@ -246,17 +253,27 @@ export default function user (state = initialState, action) {
          return {
           ...state,
           isFetching: false,
-          studentProfile: action.profileInfo,
+          //studentProfile: action.profileInfo,
           isAStudent: action.isAStudent,
           // isProfileCompleted: action.isProfileCompleted
+          dateJoined: action.dateJoined,
+          email: action.email,
+          firstName: action.firstName,
+          lastName: action.lastName,
+          mobile: action.mobile
         }
       } else {
         return {
           ...state,
           isFetching: false,
-          employerProfile: action.profileInfo,
+          //employerProfile: action.profileInfo,
           isAStudent: action.isAStudent,
           // isProfileCompleted: action.isProfileCompleted
+          dateJoined: action.dateJoined,
+          email: action.email,
+          firstName: action.firstName,
+          lastName: action.lastName,
+          mobile: action.mobile
         }
       }
     case FETCHING_USER_INFO_FAILURE:
@@ -273,50 +290,50 @@ export default function user (state = initialState, action) {
 // ================== STUDENT PROFILE REDUCER ================= //
 // ============================================================ //
 
-const initialStudentProfileState = {
-  email: '',
-  password: '',
-  lastUpated: '',
-  emailPreferenceOption: '',
-  firstName: '',
-  lastName: '',
-  studentStatus: '',
-  degreeName: '',
-  schoolName: '',
-  enrollmentMonth: '',
-  enrollmentYear: '',
-  graduationMonth: '',
-  graduationYear: '',
-  major: '',
-  gpa: '',
-  personalEmail: '',
-  gender: '',
-  playsOnSportsTeam: '',
-  onSchoolClub: '',
-  speaksOtherLanguages: '',
-  hasCarOnCampus: '',
-  mostRecentCompany: '',
-  mostRecentPosition: '',
-  funFact: '',
-  city: '',
-  hobbies: '',
-  profilePicture: '',
-  resume: ''
-}
+// const initialStudentProfileState = {
+//   email: '',
+//   password: '',
+//   lastUpated: '',
+//   emailPreferenceOption: '',
+//   firstName: '',
+//   lastName: '',
+//   studentStatus: '',
+//   degreeName: '',
+//   schoolName: '',
+//   enrollmentMonth: '',
+//   enrollmentYear: '',
+//   graduationMonth: '',
+//   graduationYear: '',
+//   major: '',
+//   gpa: '',
+//   personalEmail: '',
+//   gender: '',
+//   playsOnSportsTeam: '',
+//   onSchoolClub: '',
+//   speaksOtherLanguages: '',
+//   hasCarOnCampus: '',
+//   mostRecentCompany: '',
+//   mostRecentPosition: '',
+//   funFact: '',
+//   city: '',
+//   hobbies: '',
+//   profilePicture: '',
+//   resume: ''
+// }
 
-function studentProfileInfo (state = initialStudentProfileState, action) {
-  switch (action.type) {
-    case SWITCHED_TO_USER_TYPE_STUDENT :
-      return {
-        ...state,
-        isAStudent: true
-      }
-    case SWITCHED_TO_USER_TYPE_EMPLOYER :
-      return {
-        ...state,
-        isAStudent: false
-      }
-    default :
-      return state
-  }
-}
+// function studentProfileInfo (state = initialStudentProfileState, action) {
+//   switch (action.type) {
+//     case SWITCHED_TO_USER_TYPE_STUDENT :
+//       return {
+//         ...state,
+//         isAStudent: true
+//       }
+//     case SWITCHED_TO_USER_TYPE_EMPLOYER :
+//       return {
+//         ...state,
+//         isAStudent: false
+//       }
+//     default :
+//       return state
+//   }
+// }

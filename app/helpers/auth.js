@@ -3,6 +3,7 @@ import config from 'config'
 import cookie from 'react-cookie'
 import { loggingIn, loginSuccess, loginFailure,
   fetchingUserInfo, loggingOut, logoutSuccess, logoutFailure, fetchingUserInfoSuccess, fetchingUserInfoFailure } from 'redux/modules/user/user'
+import { fetchingProfileInfoSuccess } from 'redux/modules/profile/profile'
 import _ from 'lodash'
 
 /**
@@ -166,14 +167,29 @@ export function checkIfAuthed (store) {
           .then(function(response) {
             console.log("access token from cookie is still valid", response)
 
+            // User Details
+            const dateJoined = response.data.user.date_joined
+            const email = response.data.user.email
+            const firstName = response.data.user.first_name 
+            const lastName = response.data.user.last_name 
+            const mobile = response.data.user.mobile
+
+            // Profile Details
             const isAStudent = response.data.user.is_a_student
+            const isProfileCompleted = response.data.user.is_profile_completed
             let profileInfo = _.cloneDeep(response.data);
             delete profileInfo.user
 
-            // ACTION: DISPATCH (FETCHING_USER_INFO_SUCCESS)
+            // ACTION: USER - DISPATCH (FETCHING_USER_INFO_SUCCESS)
             store.dispatch(fetchingUserInfoSuccess(
-              isAStudent,
-              profileInfo
+              isAStudent, dateJoined, email, firstName, lastName, mobile
+            ))
+
+            // ACTION: PROFILE - DISPATCH (FETCHING_PROFILE_INFO_SUCCESS)
+            store.dispatch(fetchingProfileInfoSuccess(
+              isProfileCompleted,
+              profileInfo,
+              isAStudent
             ))
 
             // ACTION: DISPATCH (LOGGING_IN_SUCCESS)
@@ -200,5 +216,8 @@ export function checkIfAuthed (store) {
   return promise;
 }
 
+export function getAccessToken() {
+  return cookie.load('univjobs-access-token');
+}
 
 

@@ -5,9 +5,9 @@ ProfileField.propTypes = {
   title: PropTypes.string.isRequired
 }
 
-export default function ProfileField ({title, children}) {
+export default function ProfileField ({title, styles, children}) {
   return (
-    <div>
+    <div className={styles}>
       <div className={profileFieldName}>{ title }</div>
       <div className={profileFieldContent}>
         { children }

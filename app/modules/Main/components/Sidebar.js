@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
 import { sidebar, sidebarLogo, sidebarItemsContainer, sidebarItem, profileImg } from 'sharedStyles/styles.css'
-
+import { Link } from 'react-router'
 
 export default function SideBar ({onLogout}) {
   return (

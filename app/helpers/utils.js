@@ -39,3 +39,34 @@ export function validateCompanyName(companyName) {
   var re = /^[a-z ,.'-]{2,30}$/i
   return re.test(companyName)
 }
+
+export function detectEnterPress(event, callback) {
+  let keyCode = event.keyCode || event.charCode;
+  if(keyCode === 13) {
+    callback()
+  } 
+}
+
+export function validatePostalCode(postalcode) {
+  if(postalcode === undefined) {
+    return false
+  } else {
+      var re = /^[\w ]+$/
+      return re.test(postalcode) && (postalcode.length === 7)
+  }
+}
+
+export function validateCity(city) {
+  var re = /^[a-z ,.'-]{2,30}$/i
+  return re.test(city)
+}
+
+export function validateCompanyName(name) {
+  let re = /^([a-zA-Z ]){2,30}$/
+  return re.test(name)
+}
+
+export function validateAddress(address) {
+  let re = /^[a-z0-9 ,.'-]{2,30}$/i // numbers, letters and spaces only
+  return re.test(address)
+}
