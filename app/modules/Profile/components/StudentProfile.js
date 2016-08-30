@@ -1,9 +1,13 @@
 import React, { PropTypes } from 'react'
 import { ProfileField, StudentContainer } from 'modules/Profile'
 import { Combobox, DropdownList, DateTimePicker, Calendar} from 'react-widgets'
-import { moment } from 'moment'
 import Dropzone from 'react-dropzone'
-import { pageContainer, profileField, profileHeader, container, input, nameField,  emailField, dropDown, dropzone, dropzoneContent, inlineDropzone, btn, saveBtnContainer, saveBtn} from '../styles/StudentProfileContainerStyles.css'
+import { pageContainer, profileField, profileHeader, container, input, nameField,  emailField, dropDown, dropzone, dropzoneContent, inlineDropzone, btn, saveBtnContainer, saveBtnList, saveBtn, space} from '../styles/StudentProfileContainerStyles.css'
+
+var Moment = require('moment')
+var momentLocalizer = require('react-widgets/lib/localizers/moment')
+
+momentLocalizer(Moment)
 
 export default function StudentProfile (props) {
  console.log(props)
@@ -102,35 +106,22 @@ export default function StudentProfile (props) {
          </li>
 	</StudentContainer>
 
-	{/* START DATE */}
+	{/* START DATE & END DATE */}
 	<StudentContainer title="I enrolled in " 
 	 styles={nameField}>
 	 <DateTimePicker
 	  className={dropDown}
 	  time={false}
-	  format='MMM'
-	/>	
+	  format='LL'
+	 />	
+	 <p>,and I will graduate in</p>
 	 <DateTimePicker
 	  className={dropDown}
 	  time={false}
-	  format='mmm YYY'
+	  format='LL'
 	/>	
 	</StudentContainer>
 
-	{/* END DATE */}
-	<StudentContainer title="And I will graduate in" 
-	 styles={nameField}>
-	 <DateTimePicker
-	  className={dropDown}
-	  time={false}
-	  format='mm YY'
-	/>	
-	 <DateTimePicker
-	  className={dropDown}
-	  time={false}
-	  format='mm YY'
-	/>	
-	</StudentContainer>
 
 	{/* MAJOR */}
 	<StudentContainer title="I am a"
@@ -148,21 +139,37 @@ export default function StudentProfile (props) {
 	{/* GPA */}
 	<StudentContainer title="My GPA is" 
 	 styles={nameField}>
-	 <input
-	   className={input}
-	   type="text"
-	   placeholder="GPA">
-	 </input>
+	 <li>
+	    <input
+	     className={input}
+	     type="text"
+	     placeholder="GPA">
+	    </input>
+	 </li>
+	 <li>
+	   <p>or</p>
+	 </li>
+	 <li className={saveBtnList}>
+	   <button className={saveBtn}>I do not have a GPA</button>
+	 </li>
 	</StudentContainer>
 
 	{/* PERSONAL EMAIL */}
 	<StudentContainer title="My personal email is" 
 	 styles={nameField}>
-	 <input
-	   className={input}
-	   type="text"
-	   placeholder="Email">
-	 </input>
+	 <li>
+	  <input
+	    className={input}
+	    type="text"
+	    placeholder="Email">
+	  </input>
+	 </li> 
+	 <li>
+	   <p>or</p>
+	 </li>
+	 <li className={saveBtnList}>
+	   <button className={saveBtn}>I prefer school email</button>
+	 </li>
 	</StudentContainer>
 
 	{/* GENDER */}
@@ -177,43 +184,66 @@ export default function StudentProfile (props) {
 	</StudentContainer>
 
 	{/* SPORTS */}
-	<StudentContainer title="I play " 
+	<StudentContainer title="I"
 	 styles={nameField}>
+	 <li className={saveBtnList}>
+	   <button className={saveBtn}>play</button>
+	   <button className={saveBtn}>do not play</button>
+	 </li>
+	 <li className={space}>
+	 	<p>on a sports team</p>
+	 </li>
 	 <input
 	   className={input}
 	   type="text"
-	   placeholder="Sports team">
+	   placeholder="Type the schools sports team">
 	 </input>
 	</StudentContainer>
 
 	{/* CLUB */}
-	<StudentContainer title="I attend " 
+	<StudentContainer title="I " 
 	 styles={nameField}>
+	 <li className={saveBtnList}>
+	   <button className={saveBtn}>am</button>
+	   <button className={saveBtn}>am not</button>
+	 </li>
+	 <li className={space}>
+	 	<p>on a school club</p>
+	 </li>
 	 <input
 	   className={input}
 	   type="text"
-	   placeholder="School club">
+	   placeholder="Type the school clubs names">
 	 </input>
 	</StudentContainer>
 
 	{/* LANGUAGE */}
-	<StudentContainer title="I speak " 
+	<StudentContainer title="I" 
 	 styles={nameField}>
+	 <li className={saveBtnList}>
+	   <button className={saveBtn}>speak</button>
+	   <button className={saveBtn}>do not speak</button>
+	 </li>
+	 <li className={space}>
+	 	<p>other languages</p>
+	 </li>
 	 <input
 	   className={input}
 	   type="text"
-	   placeholder="languages">
+	   placeholder="Type the languages you speak">
 	 </input>
 	</StudentContainer>
 
 	{/* CAR */}
-	<StudentContainer title="I drive a car " 
+	<StudentContainer title="I " 
 	 styles={nameField}>
-	 <input
-	   className={input}
-	   type="text"
-	   placeholder="yes or no">
-	 </input>
+	 <li className={saveBtnList}>
+	   <button className={saveBtn}>drive</button>
+	   <button className={saveBtn}>do not drive</button>
+	 </li>
+	 <li className={space}>
+	 	<p>a car on campus.</p>
+	 </li>
 	</StudentContainer>
 	
 	{/* EXPERIENCE */}
@@ -270,7 +300,7 @@ export default function StudentProfile (props) {
             <div id="drag-drop"></div>
           </div>
         </Dropzone>
-
+	<p>,here is my resume</p>
         <Dropzone id="dropPhotoDiv" className={dropzone} onDrop={onDrop} accept='image/*' multiple={false}>
           <div className={dropzoneContent}>
             <i id="fa-camera" className={"fa fa-camera "} aria-hidden="true"></i>
