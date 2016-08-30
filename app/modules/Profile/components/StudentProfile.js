@@ -122,7 +122,6 @@ export default function StudentProfile (props) {
 	/>	
 	</StudentContainer>
 
-
 	{/* MAJOR */}
 	<StudentContainer title="I am a"
 	  styles={nameField}>

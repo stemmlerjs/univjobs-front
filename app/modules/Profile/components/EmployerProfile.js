@@ -8,28 +8,80 @@ import { Link } from 'react-router'
 import { Combobox } from 'react-widgets'
 import 'react-widgets/lib/less/react-widgets.less'
 import MaskedTextInput from 'react-text-mask'
+import _ from 'lodash'
+import config from 'config'
 
 export default function EmployerProfile (props) {
   console.log(props)
+
+  /*
+  * Miscellaneous messages. 
+  * emptyFilter - used in the dropdown for Industry
+  */
+
   const messages = {
     emptyFilter: "Can't find your industry? Let us know at theunivjobs@gmail.com."
   }
 
   /* 
-  *   Display the profile new profile picture when the user drags and drops or selects one.
+  *  placePhoto()
+  * 
+  *  Actually places the photo from the url specified onto the element.
+  *  @param <element> - element
+  *  @param String - url
+  *  @return void
   */
-  function onDrop(files) {
-    let dropPhotoDiv = document.getElementById('dropPhotoDiv')
 
-    // Preview the image
-    dropPhotoDiv.style.backgroundImage = `url('${files[0].preview}')` // blob
-    dropPhotoDiv.style.backgroundSize = "cover"
-
+  function placePhoto(element, url) {
+    // Update the LOGO div with the profile picture
+    element.style.backgroundImage = url
+    element.style.backgroundRepeat= "no-repeat";
+    element.style.backgroundPosition= "center center";
+    element.style.backgroundSize = "125%";
+    
     // Hide icon, text and border
-    dropPhotoDiv.style.border = "0"
+    element.style.border = "0"
     document.getElementById('fa-camera').style.visibility = "hidden"
     document.getElementById('drag-drop').style.visibility = "hidden"
   }
+
+  /* 
+  *  onDrop()
+  * 
+  *  Display the profile new profile picture when the user drags and drops or selects one.
+  *  @param [] - files
+  *  @return void
+  */
+  function onDrop(files) {
+    // Update props with the File object (profile picture)
+    props.updateProfileField('logoUrl', files[0], false)
+  }
+
+
+  /*
+  * Place the logo from props onto the Profile Picture field.
+  */
+
+  // === New Profile Picture file upload
+  if(typeof props.logoUrl == "object") {
+    let dropPhotoDiv = document.getElementById('dropPhotoDiv')
+    let url = `url('${props.logoUrl.preview}')` // blob
+    placePhoto(dropPhotoDiv, url)
+
+  } 
+
+  // === Existing Profile Picture 
+  else if(props.logoUrl.indexOf("/media") === 0) { 
+    // Dev Profile Pictures (via /media)
+    let photoDiv = document.getElementById('dropPhotoDiv')
+    if(photoDiv) {
+      let url = `url('${config.mediaUrl + props.logoUrl.substring(props.logoUrl.indexOf("/media/") + 7)}')` // blob
+      placePhoto(photoDiv, url)
+    } 
+  } else {
+    // Prod Profile Pictures (via ???)
+  }
+
 
   return (
     <div className={profileContainer}>
@@ -56,12 +108,13 @@ export default function EmployerProfile (props) {
           data={props.industryList} 
           messages={messages}
           onChange={value => props.updateProfileField('industry', value, false)}
+          value={props.industry}
         />
       </ProfileField>
 
     {/* LOGO */}
       <ProfileField title="Logo">
-        <Dropzone id="dropPhotoDiv" className={dropzone} onDrop={onDrop} accept='image/*' multiple={false}>
+        <Dropzone id="dropPhotoDiv" className={props.profileErrorsMap.logoUrl ? dropzone + ' ' + error : dropzone} onDrop={onDrop} accept='image/*' multiple={false}>
           <div className={dropzoneContent}>
             <i id="fa-camera" className={"fa fa-camera " + photoIcon} aria-hidden="true"></i>
             <div id="drag-drop">Drag and drop</div>
@@ -107,6 +160,7 @@ export default function EmployerProfile (props) {
         <input className={props.profileErrorsMap.officeAddress ? input + ' ' + error : input} 
           type="text" 
           placeholder="150 John St"
+          value={props.officeAddress}
           onChange={(e) => props.updateProfileField('officeAddress', e.target.value, false)}>
         </input>
       </ProfileField>
@@ -116,6 +170,7 @@ export default function EmployerProfile (props) {
         <input className={props.profileErrorsMap.officeCity ? input + ' ' + city + ' ' + citypostalcoderelative + ' ' + error : input + ' ' + city + ' ' + citypostalcoderelative} 
           type="text" 
           placeholder="Toronto"
+          value={props.officeCity}
           onChange={(e) => props.updateProfileField('officeCity', e.target.value, false)}>
         </input>
         <MaskedTextInput
@@ -123,6 +178,7 @@ export default function EmployerProfile (props) {
           className={props.profileErrorsMap.officePostalCode ? input + ' ' + postalcode + ' ' + citypostalcoderelative + ' ' + error : input + ' ' + postalcode + ' ' + citypostalcoderelative}
           placeholder="M5V 3E3"
           guide={false}
+          value={props.officePostalCode}
           onChange={(e) => props.updateProfileField('officePostalCode', e.target.value, false)}
         />
       </ProfileField>

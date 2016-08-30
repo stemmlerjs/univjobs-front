@@ -128,6 +128,7 @@ const SignupContainer = React.createClass({
     )
     .then(({isAStudent, isProfileCompleted}) => {
       //TODO: Implement this as a tiny module (function) to put inside of authRedirectionFilter
+
       if(isAStudent && isProfileCompleted) {
         // Route to Student Dashboard 
 
@@ -137,6 +138,7 @@ const SignupContainer = React.createClass({
 
       } else if (!isAStudent && isProfileCompleted) {
         // Route to employer dashboard
+        console.log("TODO: WE NEED TO ROUTE TO THE EMPLOYER DASHBOARD IF THE PROFILE IS COMPLETED. WE'RE STILL DEBUGGING THE PROFILE RIGHT NOW THOUGH")
 
       } else if (!isAStudent && !isProfileCompleted) {
         // Route to Employer Profile
