@@ -139,6 +139,7 @@ const SignupContainer = React.createClass({
       } else if (!isAStudent && isProfileCompleted) {
         // Route to employer dashboard
         console.log("TODO: WE NEED TO ROUTE TO THE EMPLOYER DASHBOARD IF THE PROFILE IS COMPLETED. WE'RE STILL DEBUGGING THE PROFILE RIGHT NOW THOUGH")
+        this.context.router.replace('/categories')
 
       } else if (!isAStudent && !isProfileCompleted) {
         // Route to Employer Profile

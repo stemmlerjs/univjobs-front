@@ -2,6 +2,9 @@ import { validateFirstName, validateLastName, validateCompanyName,
   validatePhoneNumber, validateStudentEmail, validateEmployerEmail, validatePassword } from 'helpers/utils'
 import { createStudentAccount, createEmployerAccount, setAccessToken, getAccessToken } from 'helpers/auth'
 import * as userActions from '../user/user'
+import { fetchingProfileInfoSuccess } from 'redux/modules/profile/profile'
+import _ from 'lodash'
+
 
 // ACTIONS
 const UPDATE_STUDENT_FORM = 'UPDATE_STUDENT_FORM'
@@ -166,15 +169,31 @@ export function submitEmployerSignupForm(firstName, lastName, companyName, phone
 
           const token = response.data.token
           const userInfo = response.data.user
+          const isAStudent = response.data.user.user.is_a_student
+          const isProfileCompleted = response.data.user.user.is_profile_completed
 
+          let profileInfo = _.cloneDeep(res.data.user);
+          delete profileInfo.user // delete base user {} from profile info
+
+          debugger;
           // save access token as cookie
           setAccessToken(token) 
 
           // ACTION: DISPATCH (CREATING_USER_ACCOUNT_SUCCESS)
           dispatch(userActions.createUserAccountSuccess(token))
 
-          // ACTION: DISPATCH (FETCHING_USER_INFO_SUCCESS)
-          dispatch(userActions.fetchingUserInfoSuccess(false, userInfo))
+          // ACTION: DISPATCH (LOGIN_SUCCESS)
+          dispatch(loginSuccess(token, 
+            isAStudent, 
+            isProfileCompleted
+          ))
+
+          //ACTION: PROFILE - DISPATCH (FETCHING_PROFILE_INFO_SUCCESS)
+          dispatch(fetchingProfileInfoSuccess(
+            isProfileCompleted,
+            profileInfo,
+            isAStudent
+          ))
 
           resolve(true)
         })

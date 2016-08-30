@@ -66,12 +66,12 @@ const EmployerProfileContainer = React.createClass({
   doRedirectionFilter(){
     const config = {
       failureRedirect: {
-        student: '/join',
-        employer: '/join'
+        student: '/join',         // if not logged in, go here (student)
+        employer: '/join'         // if not logged in, go here (employer)
       },
       restricted: {
-        to: 'EMPLOYERS',
-        redirectTo: '/profile/st'
+        to: 'EMPLOYERS',          // employers only on this route
+        redirectTo: '/profile/st' // if not an employer, redirect to the student equivalent
       }
     }
 
