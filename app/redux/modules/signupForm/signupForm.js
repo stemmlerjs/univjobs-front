@@ -2,6 +2,7 @@ import { validateFirstName, validateLastName, validateCompanyName,
   validatePhoneNumber, validateStudentEmail, validateEmployerEmail, validatePassword } from 'helpers/utils'
 import { createStudentAccount, createEmployerAccount, setAccessToken, getAccessToken } from 'helpers/auth'
 import * as userActions from '../user/user'
+import * as profileActions from '../profile/profile'
 import { fetchingProfileInfoSuccess } from 'redux/modules/profile/profile'
 import _ from 'lodash'
 
@@ -164,6 +165,7 @@ export function submitEmployerSignupForm(firstName, lastName, companyName, phone
       // ACTION: DISPATCH (FETCHING_USER_INFO)
       dispatch(userActions.fetchingUserInfo())
 
+
       createEmployerAccount(firstName, lastName, companyName, phone, email, password) 
         .then((response) => {
 
@@ -172,10 +174,9 @@ export function submitEmployerSignupForm(firstName, lastName, companyName, phone
           const isAStudent = response.data.user.user.is_a_student
           const isProfileCompleted = response.data.user.user.is_profile_completed
 
-          let profileInfo = _.cloneDeep(res.data.user);
+          let profileInfo = _.cloneDeep(response.data.user);
           delete profileInfo.user // delete base user {} from profile info
 
-          debugger;
           // save access token as cookie
           setAccessToken(token) 
 
@@ -183,13 +184,13 @@ export function submitEmployerSignupForm(firstName, lastName, companyName, phone
           dispatch(userActions.createUserAccountSuccess(token))
 
           // ACTION: DISPATCH (LOGIN_SUCCESS)
-          dispatch(loginSuccess(token, 
+          dispatch(userActions.loginSuccess(token, 
             isAStudent, 
             isProfileCompleted
           ))
 
           //ACTION: PROFILE - DISPATCH (FETCHING_PROFILE_INFO_SUCCESS)
-          dispatch(fetchingProfileInfoSuccess(
+          dispatch(profileActions.fetchingProfileInfoSuccess(
             isProfileCompleted,
             profileInfo,
             isAStudent
@@ -209,13 +210,13 @@ export function submitEmployerSignupForm(firstName, lastName, companyName, phone
           }
 
           // ACTION: DISPATCH (CREATING_USER_ACCOUNT_FAILURE)
-          dispatch(userActions.createUserAccountFailure(errorMessage))
+          dispatch(userActions.createUserAccountFailure(errMsg))
 
           // ACTION: DISPATCH (FETCHING_USER_INFO_FAILURE)
           dispatch(userActions.fetchingUserInfoFailure())
 
           // ACTION: DISPATCH (SUBMIT_STUDENT_FORM_ERROR)
-          dispatch(submitEmployerFormError(errorMessage))
+          dispatch(submitEmployerFormError(errMsg))
 
           resolve(false)
         })
