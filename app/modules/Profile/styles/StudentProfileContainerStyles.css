@@ -1,13 +1,131 @@
+/*Note that any symbol of $ means that it 
+ * maybe can be a shared style for employer profile
+ *
+ * */
+
 .pageContainer {
-  background-color: #DDDEE0;
-  position: absolute;
-  top: 0px;
-  bottom: 0px;
-  right: 0px;
-  left: 0px;
-  display: flex;
-  justify-content: center;
-  flex-direction: row;
-  align-items:center;
+	width: 1000px;
+	text-align: center;
+	margin: auto;
+	margin-top: 4%;
+	margin-bottom: 3%;
 }
 
+.profileHeader {
+	font-size: 30px;
+	margin-bottom: 20px;
+}
+
+
+.input {
+  composes: input from 'sharedStyles/styles.css';
+}
+
+.nameField {
+	padding-right: -15%;
+}
+
+.emailField {
+	width: auto%;
+	display: inline-blocks;
+}
+
+
+.dropDown {
+	composes: input from 'sharedStyles/styles.css';
+	padding-top: 0;
+	padding-bottom: 0;
+	padding-left: 0;
+	color: black !important;
+}
+
+.dropzone {
+    width: 165px;
+    height: 165px;
+    border: 2px dashed rgb(102, 102, 102);
+    border-radius: 5px;
+    display: inline-block;
+    color: #53585E;
+}
+
+.dropzoneContent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+    width: 100%;
+  height: 100%;
+}
+
+.inlineDropzone {
+  width: auto;
+  height: auto;
+  border: none;
+  border-radius: 0px;
+  display: inline-block;
+}
+
+.btn {
+    margin-top: 40px;
+    padding: 10px 15px 10px 15px;
+    border-radius: 3px;
+    border: 0;
+    background: #3697DB;
+    font-size: 13px;
+    color: white;
+    text-shadow: 1px 1px 0px rgba(0, 0, 0, .1);
+    cursor: pointer;
+    margin: 0 auto;
+    width: 156px;
+    margin-left: 7px;
+}
+.profileField {
+
+}
+
+.saveBtnContainer {
+  width: 100%;
+  display:inline-block;
+  text-align:center;
+  margin-left:13%;
+  margin-top:18px;
+}
+
+.saveBtnList {
+	padding-left: 20px;
+	padding-top: 8.5px;
+}
+
+.saveBtn:active {
+  margin-left: 25%;
+  margin-top: 21px;
+  padding: 10px 15px 10px 15px;
+  border-radius: 3px;
+  border: 0;
+  background: #3697DB;
+  font-size: 13px;
+  color: white;
+  text-shadow: 1px 1px 0px rgba(0, 0, 0, .1);
+  cursor: pointer;
+  margin: 0 auto;
+  width: 156px;
+}
+
+.saveBtn {
+  margin-left: 25%;
+  margin-top: 21px;
+  padding: 10px 15px 10px 15px;
+  border-radius: 3px;
+  border: 0;
+  background: white;
+  font-size: 13px;
+  color: black;
+  text-shadow: 1px 1px 0px rgba(0, 0, 0, .1);
+  cursor: pointer;
+  margin: 0 auto;
+  width: 156px;
+}
+.space {
+  padding-left: 10px;
+  padding-right: 5px;
+}
