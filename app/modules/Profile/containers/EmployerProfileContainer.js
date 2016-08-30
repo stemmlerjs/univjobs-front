@@ -66,12 +66,12 @@ const EmployerProfileContainer = React.createClass({
   doRedirectionFilter(){
     const config = {
       failureRedirect: {
-        student: '/join',
-        employer: '/join'
+        student: '/join',         // if not logged in, go here (student)
+        employer: '/join'         // if not logged in, go here (employer)
       },
       restricted: {
-        to: 'EMPLOYERS',
-        redirectTo: '/profile/st'
+        to: 'EMPLOYERS',          // employers only on this route
+        redirectTo: '/profile/st' // if not an employer, redirect to the student equivalent
       }
     }
 
@@ -141,7 +141,6 @@ const EmployerProfileContainer = React.createClass({
   handleSubmit(empProps) {
     // If Profile is NOT completed, do /PUT. All fields must be populated and valid.
     if(!this.props.isProfileCompleted) {
-      console.log("PROFILE NOT COMPLETED")
       this.context.store.dispatch(
         profileActionCreators.submitProfileFirstTime(1, empProps, this.props.user)
       )
@@ -151,8 +150,6 @@ const EmployerProfileContainer = React.createClass({
         profileActionCreators.updateProfile(1, empProps, this.props.user, this.props.snapshot)
       )
       console.log("Profile already completed, lets patch this")
-
-      
     }
   },
 
