@@ -73,11 +73,11 @@ export function submitStudentSignupForm(email, password) {
 
                 const token = response.data.token
                 const userInfo = response.data.user
-                const isAStudent = response.data.user.user.is_a_student
-                const isProfileCompleted = response.data.user.user.is_profile_completed
+                const isAStudent = response.data.user.is_a_student
+                const isProfileCompleted = response.data.user.is_profile_completed
 
                 let profileInfo = _.cloneDeep(response.data.user)
-                delete profileInfo.user;
+                // delete profileInfo.user;
 
                 // save access token as cookie
                 setAccessToken(token) 

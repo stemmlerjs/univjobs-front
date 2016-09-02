@@ -15,8 +15,7 @@ export default function StudentProfile (props) {
     emptyFilter: "Can't find your industry? Let us know at theunivjobs@gmail.com."
  }
 
- const data = [ 'Once a week if new jobs are posted' ,'Everytime a new job is posted', 'Once a day if new jobs are posted'
-  ];
+ const data = [ 'Once a week if new jobs are posted' ,'Everytime a new job is posted', 'Once a day if new jobs are posted'];
 
  const stat = ['Full-time student', 'Part-time student', 'Recent graduate'];
 

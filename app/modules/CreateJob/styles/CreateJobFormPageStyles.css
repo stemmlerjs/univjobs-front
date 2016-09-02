@@ -1,0 +1,61 @@
+.pageContainer {
+  width: 630px;
+  text-align:center;
+  margin: auto;
+  margin-top: 4%;
+  margin-bottom: 3%;
+}
+
+.input {
+  composes: input from 'sharedStyles/styles.css';
+  width: 50%;
+}
+
+.textarea {
+  composes: input from 'sharedStyles/styles.css';
+  width: 50%;
+  resize: vertical;
+}
+
+.saveBtnContainer {
+  width: 100%;
+  display:inline-block;
+  text-align:center;
+  margin-left:13%;
+  margin-top:18px;
+}
+
+.saveBtnList {
+  padding-left: 20px;
+  padding-top: 8.5px;
+}
+
+.saveBtn:active {
+  margin-left: 25%;
+  margin-top: 21px;
+  padding: 10px 15px 10px 15px;
+  border-radius: 3px;
+  border: 0;
+  background: #3697DB;
+  font-size: 13px;
+  color: white;
+  text-shadow: 1px 1px 0px rgba(0, 0, 0, .1);
+  cursor: pointer;
+  margin: 0 auto;
+  width: 156px;
+}
+
+.saveBtn {
+  margin-left: 25%;
+  margin-top: 21px;
+  padding: 10px 15px 10px 15px;
+  border-radius: 3px;
+  border: 0;
+  background: white;
+  font-size: 13px;
+  color: black;
+  text-shadow: 1px 1px 0px rgba(0, 0, 0, .1);
+  cursor: pointer;
+  margin: 0 auto;
+  width: 156px;
+}

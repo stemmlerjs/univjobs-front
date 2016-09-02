@@ -1,0 +1,22 @@
+.mainContainer {
+  background-color: #DDDEE0;
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  right: 0px;
+  left: 87px;
+}
+
+.circle {
+  width: 25px;
+  height: 25px;
+  border-radius: 30px;
+  border: solid 1px #515459;
+  display: inline-block;
+  margin-left: 3px;
+  margin-right: 3px;
+}
+
+.selectedCircle {
+  background-color: #515459;
+}

@@ -80,6 +80,7 @@ const Title = function({subHeading}) {
 
 const CategoriesContainer = React.createClass({
   componentWillMount() {
+    // Hide the overlay on mount if coming from direct URL
     this.props.closeOverlay()
   },
   render () {
