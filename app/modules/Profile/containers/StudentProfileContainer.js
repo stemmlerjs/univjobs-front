@@ -161,12 +161,12 @@ const StudentProfileContainer = React.createClass({
       <div className={pageContainer}>
         <SidebarContainer/>
         <StudentProfile
-	  emailPreferences={this.props.emailPreferences}
-	  emailPrefList={this.props.emailPrefList}
-	  firstName={this.props.firstName}
-	  lastName={this.props.lastName}
-	  studentStatus={this.props.studentStatus}
-	  studentStatusList={this.props.studentStatusList}
+      	  emailPreferences={this.props.emailPreferences}
+      	  emailPrefList={this.props.emailPrefList}
+      	  firstName={this.props.firstName}
+      	  lastName={this.props.lastName}
+      	  studentStatus={this.props.studentStatus}
+      	  studentStatusList={this.props.studentStatusList}
 
 	  /*       
 	  degreeName={this.props.degreeName}
@@ -206,12 +206,12 @@ function mapStateToProps({user, profile}) {
   return {
     user: user ? user: {},
     snapshot: profile.snapshot ? profile.snapshot : {},
-    emailPreferences: profile.studentProfile.emailPreferences ? profile.studentProfile.emailPreferences : '',
-    emailPrefList: profile.lists.emailPreferences ? profile.lists.emailPreferences : '',
+    emailPreferences: profile.studentProfile.emailPreferences ? profile.studentProfile.emailPreferences : 2,  // DEFAULT value (string || number)
+    emailPrefList: profile.lists.emailPreferences ? profile.lists.emailPreferences : [],                      // list of selected value (array)
     firstName: profile.studentProfile.firstName ? profile.studentProfile.firstName : '',
     lastName: profile.studentProfile.lastName ? profile.studentProfile.lastname : '',
-    studentStatus: profile.studentProfile.studentStatus ? profile.studentProfile.studentStatus : '',
-    studentStatusList: profile.lists.studentStatuses ? profile.lists.studentStatuses : '',
+    studentStatus: profile.studentProfile.studentStatus ? profile.studentProfile.studentStatus : '',          // DEFAULT value (String || number)
+    studentStatusList: profile.lists.studentStatuses ? profile.lists.studentStatuses : [],                    // list of selected value (array)
 
     /*
     degreeName: profile.studentProfile.degreeName ? profile.studentProfile.degreeName : '',

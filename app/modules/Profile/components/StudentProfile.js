@@ -39,13 +39,12 @@ export default function StudentProfile (props) {
 	<StudentContainer title="My email notification preferences:"> 
 	<li>
 	  <DropdownList
-	   className = {dropDown}
-	   defaultValue={props.emailPrefList[2]}
+	   className={dropDown}
 	   textField="email_pref"
 	   valueField="id"
 	   messages={messages}
 	   data={props.emailPrefList}
-	   onChange={value => props.updateProfileField('emailPreference',value ,true)}
+	   onChange={value => props.updateProfileField('emailPreferences', value, true)}
 	   value={props.emailPreferences}
 	 />
 	</li>
@@ -81,14 +80,14 @@ export default function StudentProfile (props) {
 	 
 	 {/* STATUS */}
 	 <li>
-	   <DropdownList
+	  <DropdownList
 	     className={dropDown}
-	     defaultValue={props.studentStatusList[0]}
+	     
 	     textField="status"
 	     valueField="id"
 	     messages={messages}
 	     data={props.studentStatusList}
-	     onChange={value => props.updateProfileField('studentStatus', value, false)}
+	     onChange={value => props.updateProfileField('studentStatus', value, true)}
 	     value={props.studentStatus}
  	    />
 	 </li> 

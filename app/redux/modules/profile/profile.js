@@ -323,81 +323,7 @@ const initialState = {
   error: ''
 }
 
-const initialEmployerProfileState = {
-  companyName: '',
-  industry: '',
-  website: '',
-  description: '',
-  employeeCount: '',
-  officeAddress: '',
-  officeCity: '',
-  officePostalCode: '',
-  logoUrl: '',
-  propsErrorMap: {}
-}
 
-const employerProfileErrorsInitialState = {
-  companyName: false,
-  industry: false,
-  logoUrl: false,
-  website: false,
-  description: false,
-  employeeCount: false,
-  officeAddress: false,
-  officeCity: false,
-  officePostalCode: false
-}
-
-const initialStudentProfileState = {
-	emailPreferences: '',
-	firstName: '',
-   	lastName: '',
-  	studentStatus: '', 
-   	degreeName: '',
-   	schoolName: '',
-   	enrollmentDate: '',
-   	graduationDate: '',
-   	major: '',
-   	gpa: '',
-   	personalEmail: '',
-   	gender: '',
-   	sportsTeam: '',
-   	schoolClub: '',
-   	languages: '',
-   	hasCar: '',
-   	companyName: '',
-   	position: '',
-   	hometown: '',
-   	hobbies: '',
-   	photo: '',
-   	resume: '',
-   	propsErrorMap: {}
-}
-
-const initialStudentProfileErrorState = {
-	emailPreferences: false,
-	firstName: false,
-   	lastName: false,
-  	studentStatus: false,
-   	degreeName: false,
-   	schoolName: false,
-   	enrollmentDate: false,
-   	graduationDate: false,
-   	major: false,
-   	gpa: false,
-   	personalEmail: false,
-   	gender: false,
-   	sportsTeam: false,
-   	schoolClub: false,
-   	languages: false,
-   	hasCar: false,
-   	companyName: false,
-   	position: false,
-   	hometown: false,
-   	hobbies: false,
-   	photo: false,
-   	resume: false,
-}
 
 const initialListsState = {
   industries: [],
@@ -416,7 +342,10 @@ const initialListsState = {
 // ==================== REDUCERS =========================
 // =======================================================
 
-// ========= BASE PROFILE REDUCER
+/* ===================================================================
+*   PROFILE (MAIN, shared amount both employer and student)
+*  ===================================================================
+*/ 
 
 export default function profile (state = initialState, action) {
   switch(action.type) {
@@ -484,7 +413,23 @@ export default function profile (state = initialState, action) {
   }
 }
 
-// =========== EMPLOYER PROFILE (SUB-REDUCER)
+/* ===================================================================
+*   EMPLOYER PROFILE REDUCERS
+*  ===================================================================
+*/ 
+
+const initialEmployerProfileState = {
+  companyName: '',
+  industry: '',
+  website: '',
+  description: '',
+  employeeCount: '',
+  officeAddress: '',
+  officeCity: '',
+  officePostalCode: '',
+  logoUrl: '',
+  propsErrorMap: {}
+}
 
 function employerProfile(state = initialEmployerProfileState, action) {
   switch(action.type) {
@@ -517,7 +462,100 @@ function employerProfile(state = initialEmployerProfileState, action) {
   }
 }
 
+const employerProfileErrorsInitialState = {
+  companyName: false,
+  industry: false,
+  logoUrl: false,
+  website: false,
+  description: false,
+  employeeCount: false,
+  officeAddress: false,
+  officeCity: false,
+  officePostalCode: false
+}
+
 function employerProfileErrors(state = employerProfileErrorsInitialState, action) {
+  switch(action.type) {
+    case UPDATE_PROFILE_FIELD:
+      return {
+        ...state,
+        [action.fieldName]: false // we do this because if the field was updated, we'll assume there isn't an error until
+                                  // the next submit
+      }
+  }
+}
+
+/* ===================================================================
+*   STUDENT PROFILE REDUCERS
+*  ===================================================================
+*/ 
+
+const initialStudentProfileState = {
+  emailPreferences: '',
+  firstName: '',
+  lastName: '',
+  studentStatus: '', 
+  degreeName: '',
+  schoolName: '',
+  enrollmentDate: '',
+  graduationDate: '',
+  major: '',
+  gpa: '',
+  personalEmail: '',
+  gender: '',
+  sportsTeam: '',
+  schoolClub: '',
+  languages: '',
+  hasCar: '',
+  companyName: '',
+  position: '',
+  hometown: '',
+  hobbies: '',
+  photo: '',
+  resume: '',
+  propsErrorMap: {}
+}
+
+function studentProfile(state = initialStudentProfileState, action) {
+  switch(action.type) {
+    case UPDATE_PROFILE_FIELD: 
+      return {
+        ...state,
+        [action.fieldName]: action.newValue,
+        propsErrorMap: studentProfileErrors(state.propsErrorMap, action)
+      }
+    default: 
+      return state
+  }
+}
+
+
+const initialStudentProfileErrorState = {
+  emailPreferences: false,
+  firstName: false,
+  lastName: false,
+  studentStatus: false,
+  degreeName: false,
+  schoolName: false,
+  enrollmentDate: false,
+  graduationDate: false,
+  major: false,
+  gpa: false,
+  personalEmail: false,
+  gender: false,
+  sportsTeam: false,
+  schoolClub: false,
+  languages: false,
+  hasCar: false,
+  companyName: false,
+  position: false,
+  hometown: false,
+  hobbies: false,
+  photo: false,
+  resume: false,
+}
+
+function studentProfileErrors(state = initialStudentProfileErrorState, action) {
   switch(action.type) {
     case UPDATE_PROFILE_FIELD:
       return {
@@ -527,21 +565,10 @@ function employerProfileErrors(state = employerProfileErrorsInitialState, action
   }
 }
 
-// =========== STUDENT PROFILE (SUB-REDUCER)
-
-function studentProfile(state = initialEmployerProfileState, action) {
-  switch(action.type) {
-    case UPDATE_PROFILE_FIELD: 
-      return {
-        ...state,
-        [action.fieldName]: action.newValue
-      }
-    default: 
-      return state
-  }
-}
-
-// =========== LISTS (SUB-REDUCER)
+/* ===================================================================
+*   LISTS REDUCERS
+*  ===================================================================
+*/ 
 
 function lists (state = initialListsState, action) {
   switch(action.listType) {
