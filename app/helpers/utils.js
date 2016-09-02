@@ -70,3 +70,8 @@ export function validateAddress(address) {
   let re = /^[a-z0-9 ,.'-]{2,30}$/i // numbers, letters and spaces only
   return re.test(address)
 }
+
+export function validateJobTitle(jobTitle) {
+  var re = /^[a-z ,.'-]{2,40}$/i
+  return re.test(jobTitle)
+}

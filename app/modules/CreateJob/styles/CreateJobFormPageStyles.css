@@ -1,5 +1,5 @@
 .pageContainer {
-  width: 630px;
+  width: 75%;
   text-align:center;
   margin: auto;
   margin-top: 4%;
@@ -28,15 +28,31 @@
 .saveBtnList {
   padding-left: 20px;
   padding-top: 8.5px;
+  display: inline-block;
 }
 
 .saveBtn:active {
-  margin-left: 25%;
+/*  margin-left: 25%;
   margin-top: 21px;
   padding: 10px 15px 10px 15px;
   border-radius: 3px;
   border: 0;
   background: #3697DB;
+  font-size: 13px;
+  color: white;
+  text-shadow: 1px 1px 0px rgba(0, 0, 0, .1);
+  cursor: pointer;
+  margin: 0 auto;
+  width: 156px;*/
+}
+
+.selectedSaveBtn {
+  margin-left: 25%;
+  margin-top: 21px;
+  padding: 10px 15px 10px 15px;
+  border-radius: 3px;
+  border: 0;
+  background-color: #52A7FA;
   font-size: 13px;
   color: white;
   text-shadow: 1px 1px 0px rgba(0, 0, 0, .1);
@@ -58,4 +74,21 @@
   cursor: pointer;
   margin: 0 auto;
   width: 156px;
+}
+
+.inlineDate {
+  display: inline-block;
+  width: 50%;
+}
+
+.navSaveBtn {
+  background-color: #54A6FC;
+  color: white;
+  margin:4px;
+}
+
+.navBackBtn {
+  background-color: #535760;
+  color: white;
+  margin:4px;
 }
