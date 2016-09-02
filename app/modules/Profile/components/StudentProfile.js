@@ -2,7 +2,8 @@ import React, { PropTypes } from 'react'
 import { ProfileField, StudentContainer } from 'modules/Profile'
 import { Combobox, DropdownList, DateTimePicker, Calendar} from 'react-widgets'
 import Dropzone from 'react-dropzone'
-import { pageContainer, profileField, profileHeader, container, input, nameField,  emailField, dropDown, dropzone, dropzoneContent, inlineDropzone, btn, saveBtnContainer, saveBtnList, saveBtn, space} from '../styles/StudentProfileContainerStyles.css'
+import { pageContainer, profileField, profileHeader, container, input, nameField,  emailField, dropDown, shortDropDown, mediumDropDown, longDropDown, dropzone, dropzoneContent, inlineDropzone, btn, saveBtnContainer, saveBtnList, saveBtn, space} from '../styles/StudentProfileContainerStyles.css'
+import ReactTooltip from 'react-tooltip'
 
 var Moment = require('moment')
 var momentLocalizer = require('react-widgets/lib/localizers/moment')
@@ -39,7 +40,7 @@ export default function StudentProfile (props) {
 	<StudentContainer title="My email notification preferences:"> 
 	<li>
 	  <DropdownList
-	   className={dropDown}
+	   className={mediumDropDown}
 	   textField="email_pref"
 	   valueField="id"
 	   messages={messages}
@@ -81,8 +82,7 @@ export default function StudentProfile (props) {
 	 {/* STATUS */}
 	 <li>
 	  <DropdownList
-	     className={dropDown}
-	     
+	     className={shortDropDown}
 	     textField="status"
 	     valueField="id"
 	     messages={messages}
@@ -91,57 +91,75 @@ export default function StudentProfile (props) {
 	     value={props.studentStatus}
  	    />
 	 </li> 
+	 <li>
+	    <p>student.</p>
+	 </li>
 	</StudentContainer>
-/*
-	{/* DEGREE *
+
+	{/* DEGREE */}
 
 	<StudentContainer title="I am pursuing a " 
 	 styles={nameField}>
 	 <li>
 	   <DropdownList
-	    className={dropDown}
-	    defaultValue={'Diploma'}
+	    className={shortDropDown}
+	    textField="edu_level"
+	    valueField="id"
 	    messages={messages}
-	    //data={props.degreeName}
-	     onChange={value => props.updateProfileField('degreeName', value, false)}
+	    data={props.educationLevelList}
+	    onChange={value => props.updateProfileField('educationLevel', value, true)}
+	    value={props.educationLevel}
 	   />
          </li>
+	 <li>
+	   <p>from [Insert School Name]</p>
+	 </li>
 	</StudentContainer>
 
-	{/* START DATE & END DATE 
+	{/* START DATE & END DATE*/}
 	<StudentContainer title="I enrolled in " 
 	 styles={nameField}>
 	 <DateTimePicker
 	  className={dropDown}
 	  time={false}
-	  format='LL'	
+	  format='LL'
+	  onChange={value => props.updateProfileField('enrollmentDate', value, true)}
 	  value={props.enrollmentDate}
-	  onChange={value => props.updateProfileField('enrollmentDate', value, false)}
 	 />	
 	 <p>,and I will graduate in</p>
 	 <DateTimePicker
 	  className={dropDown}
 	  time={false}
 	  format='LL'
+	  onChange={value => props.updateProfileField('graduationDate', value, true)}
 	  value={props.graduationDate}
-	  onChange={value => props.updateProfileField('graduationDate', value, false)}
 	/>	
 	</StudentContainer>
 
-	{/* MAJOR *
-	<StudentContainer title="I am a"
+	{/* MAJOR */}
+	<StudentContainer title="I am studying"
 	  styles={nameField}>
 	  <li>
 	    <DropdownList
-	      className={dropDown}
-	      defaultValue={'MAJOR'}
-	      //data={props.major}
+	      className={longDropDown}
+	      textField="major"
+	      valueField="id"
 	      messages={messages}
-	      onChange={value => props.updateProfileField('major', value, false)}
+	      data={props.majorsList}
+	      onChange={value => props.updateProfileField('major', value, true)}
+	      value={props.major}
 	     />
+	  </li>
+	  <li>
+	    <i className="fa fa-info-circle fa-2x" aria-hidden="true" data-tip="Major not there? Please email us at univjobs@gmail.com and we will help you out"></i>
+	    <ReactTooltip place="bottom"
+	    	type="warning"
+		effect="float"
+	    />
 	  </li>
 	</StudentContainer>
 
+	/*
 	{/* GPA *
 	<StudentContainer title="My GPA is" 
 	 styles={nameField}>

@@ -1,11 +1,10 @@
-import React, { PropTypes } from 'react'
-import { authRedirectFilter } from 'config/routes'
-import { StudentProfile } from 'modules/Profile'
-import { SidebarContainer } from 'modules/Main'
-import { pageContainer } from '../styles/StudentProfileContainerStyles.css'
-import * as lists from 'helpers/lists'
-import axios from 'axios'
-
+import React, { PropTypes } from 'react' 
+import { authRedirectFilter } from 'config/routes' 
+import { StudentProfile } from 'modules/Profile' 
+import { SidebarContainer } from 'modules/Main' 
+import { pageContainer } from '../styles/StudentProfileContainerStyles.css' 
+import * as lists from 'helpers/lists' 
+import axios from 'axios' 
 // ========= REDUX AND STATE IMPORTS ========== //
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -44,8 +43,8 @@ const StudentProfileContainer = React.createClass({
 	   axios.all([
 		    lists.getEmailPref(this.context.store),
 		    lists.getStudentStatus(this.context.store),
-	//	    lists.getEducationLevel(this.context.store),
-	//	    list.getMajor(this.context.store),
+		    lists.getEducationLevel(this.context.store),
+		    lists.getMajor(this.context.store),
 	//	    list.getGender(this.context.store),
 
 	   ])
@@ -167,13 +166,16 @@ const StudentProfileContainer = React.createClass({
       	  lastName={this.props.lastName}
       	  studentStatus={this.props.studentStatus}
       	  studentStatusList={this.props.studentStatusList}
-
-	  /*       
-	  degreeName={this.props.degreeName}
+	  educationLevel={this.props.educationLevel}
+	  educationLevelList={this.props.educationLevelList}
+	  /*
 	  schoolName={this.props.schoolName}
+	  */
 	  enrollmentDate={this.props.enrollmentDate}
 	  graduationDate={this.props.graduationDate}
 	  major={this.props.major}
+	  majorsList={this.props.majorsList}
+	  /*
 	  gpa={this.props.gpa}
 	  personalEmail={this.props.personalEmail}
 	  gender={this.props.gender}
@@ -204,21 +206,25 @@ const StudentProfileContainer = React.createClass({
 
 function mapStateToProps({user, profile}) {
   return {
-    user: user ? user: {},
+    user: user ? user : {},
     snapshot: profile.snapshot ? profile.snapshot : {},
     emailPreferences: profile.studentProfile.emailPreferences ? profile.studentProfile.emailPreferences : 2,  // DEFAULT value (string || number)
     emailPrefList: profile.lists.emailPreferences ? profile.lists.emailPreferences : [],                      // list of selected value (array)
     firstName: profile.studentProfile.firstName ? profile.studentProfile.firstName : '',
-    lastName: profile.studentProfile.lastName ? profile.studentProfile.lastname : '',
-    studentStatus: profile.studentProfile.studentStatus ? profile.studentProfile.studentStatus : '',          // DEFAULT value (String || number)
+    lastName: profile.studentProfile.lastName ? profile.studentProfile.lastName : '',
+    studentStatus: profile.studentProfile.studentStatus ? profile.studentProfile.studentStatus : 1,          // DEFAULT value (String || number)
     studentStatusList: profile.lists.studentStatuses ? profile.lists.studentStatuses : [],                    // list of selected value (array)
-
+    educationLevel: profile.studentProfile.educationLevel ? profile.studentProfile.educationLevel : 0,
+    educationLevelList: profile.lists.eduLevels ? profile.lists.eduLevels : [],
     /*
-    degreeName: profile.studentProfile.degreeName ? profile.studentProfile.degreeName : '',
     schoolName: profile.studentProfile.schoolName ? profile.studentProfile.schoolName : '',
-    enrollmentDate: profile.studentProfile.enrollmentDate ?  profile.studentProfile.enrollmentDate : '', 
-    graduationDate: profile.studentProfile.graduationDate ? profile.studentProfile.graduationDate : '',  
-    major: profile.studentProfile.major ? profile.studentProfile.major : '',  
+    */
+    enrollmentDate: profile.studentProfile.enrollmentDate ?  profile.studentProfile.enrollmentDate : new Date(), 
+    graduationDate: profile.studentProfile.graduationDate ? profile.studentProfile.graduationDate : new Date(),  
+    major: profile.studentProfile.major ? profile.studentProfile.major : 0,  
+    majorsList: profile.lists.majors ? profile.lists.majors : [],
+
+	    /*
     gpa: profile.studentProfile.gpa ? profile.studentProfile.gpa : '',
     personalEmail: profile.studentProfile.personalEmail ? profile.studentProfile.personalEmail : '',
     gender: profile.studentProfile.gender ? profile.studentProfile.gender : '',
@@ -238,12 +244,14 @@ function mapStateToProps({user, profile}) {
 	firstName: false,
    	lastName: false,
   	studentStatus: false,
-   /*
-	degreeName: false,
+	educationLevel: false,
+	/*
    	schoolName: false,
+	*/
    	enrollmentDate: false,
    	graduationDate: false,
-   	major: false,
+	major: false,
+	/*
    	gpa: false,
    	personalEmail: false,
    	gender: false,

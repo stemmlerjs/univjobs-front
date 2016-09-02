@@ -62,8 +62,8 @@ export function getEducationLevel(store) {
 export function getMajor(store) {
   const promise = new Promise((resolve, reject) => {
     axios.get(config.baseUrl + 'list/majors')
-    .then((response) => {
-      store.dispatch(listRetrieved('majors', response.data))
+    .then((response) =>{
+      store.dispatch(listRetrieved('MAJORS', response.data))
 	resolve(true);
     })
     .catch(()=> {

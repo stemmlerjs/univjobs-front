@@ -39,6 +39,34 @@
 	color: black !important;
 }
 
+
+.shortDropDown {
+	composes: input from 'sharedStyles/styles.css';
+	width: 200px;
+	padding-top: 0;
+	padding-bottom: 0;
+	padding-left: 0;
+	color: black !important;
+}
+
+.mediumDropDown {
+	composes: input from 'sharedStyles/styles.css';
+	width: 300px;
+	padding-top: 0;
+	padding-bottom: 0;
+	padding-left: 0;
+	color: black !important;
+}
+
+.longDropDown {
+	composes: input from 'sharedStyles/styles.css';
+	width: 550px;
+	padding-top: 0;
+	padding-bottom: 0;
+	padding-left: 0;
+	color: black !important;
+}
+
 .dropzone {
     width: 165px;
     height: 165px;
