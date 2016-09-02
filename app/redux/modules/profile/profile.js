@@ -349,7 +349,7 @@ const employerProfileErrorsInitialState = {
 }
 
 const initialStudentProfileState = {
-	emailPreference: '',
+	emailPreferences: '',
 	firstName: '',
    	lastName: '',
   	studentStatus: '', 
@@ -361,12 +361,12 @@ const initialStudentProfileState = {
    	gpa: '',
    	personalEmail: '',
    	gender: '',
-   	//sportsTeam: '',
-   	//schoolClub: '',
-   	//languages: '',
-   	//hasCar: '',
-   	//companyName: '',
-   	//position: '',
+   	sportsTeam: '',
+   	schoolClub: '',
+   	languages: '',
+   	hasCar: '',
+   	companyName: '',
+   	position: '',
    	hometown: '',
    	hobbies: '',
    	photo: '',

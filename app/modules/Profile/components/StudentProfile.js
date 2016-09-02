@@ -40,12 +40,13 @@ export default function StudentProfile (props) {
 	<li>
 	  <DropdownList
 	   className = {dropDown}
+	   defaultValue={props.emailPrefList[2]}
 	   textField="email_pref"
 	   valueField="id"
 	   messages={messages}
 	   data={props.emailPrefList}
+	   onChange={value => props.updateProfileField('emailPreference',value ,true)}
 	   value={props.emailPreferences}
-	   onChange={(e) => props.updateProfileField('emailPreferences', e.target.value, false)}
 	 />
 	</li>
 	</StudentContainer>
@@ -57,8 +58,8 @@ export default function StudentProfile (props) {
 	     className={input}
 	     type="text"
 	     placeholder="First name"
+	     onChange={(e)=> props.updateProfileField('firstName', e.target.value, true)}
 	     value={props.firstName}
-	     onChange={value => props.updateProfileField('firstName', value, false)}
 	     >
 	    </input>
 	 </li>
@@ -68,8 +69,8 @@ export default function StudentProfile (props) {
 	    className={input}
 	    type="text"
 	    placeholder="Last Name"
+	    onChange={(e)=> props.updateProfileField('lastName', e.target.value, true)}
 	    value={props.lastName}
-	    onChange={value => props.updateProfileField('lastName', value, false)}
 	    >
 	    </input>
 	 </li> 
@@ -77,26 +78,22 @@ export default function StudentProfile (props) {
 	 <li>
 	   <p>, and I am a</p>
 	 </li>
-	 </StudentContainer>
-/*
 	 
-	 {/* STATUS *
+	 {/* STATUS */}
 	 <li>
 	   <DropdownList
 	     className={dropDown}
-	     defaultValue={'Full-time student'}
-	     valueField='id'
-	     data={props.studentStatusList}
-	     value={props.studentStatus}
+	     defaultValue={props.studentStatusList[0]}
+	     textField="status"
+	     valueField="id"
 	     messages={messages}
+	     data={props.studentStatusList}
 	     onChange={value => props.updateProfileField('studentStatus', value, false)}
+	     value={props.studentStatus}
  	    />
 	 </li> 
-	 <li>
-	   <p>student.</p>
-	 </li>
 	</StudentContainer>
-
+/*
 	{/* DEGREE *
 
 	<StudentContainer title="I am pursuing a " 

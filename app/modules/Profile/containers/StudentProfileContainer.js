@@ -43,7 +43,7 @@ const StudentProfileContainer = React.createClass({
    const promise = new Promise((resolve, reject) => {
 	   axios.all([
 		    lists.getEmailPref(this.context.store),
-	//	    lists.getStudentStatus(this.context.store),
+		    lists.getStudentStatus(this.context.store),
 	//	    lists.getEducationLevel(this.context.store),
 	//	    list.getMajor(this.context.store),
 	//	    list.getGender(this.context.store),
@@ -103,7 +103,7 @@ const StudentProfileContainer = React.createClass({
 
   componentWillReceiveProps(newProps) {
      let error = newProps.error;
-     let subtmitSuccess = newProps.submitSuccess;
+     let submitSuccess = newProps.submitSuccess;
      
      if(submitSuccess) {
 	this.refs.container.success(
@@ -161,7 +161,7 @@ const StudentProfileContainer = React.createClass({
       <div className={pageContainer}>
         <SidebarContainer/>
         <StudentProfile
-	  emailPreference={this.props.emailPreference}
+	  emailPreferences={this.props.emailPreferences}
 	  emailPrefList={this.props.emailPrefList}
 	  firstName={this.props.firstName}
 	  lastName={this.props.lastName}
@@ -188,6 +188,7 @@ const StudentProfileContainer = React.createClass({
 	  photo={this.props.photo}
 	  resume={this.props.resume}
 */
+	  updateProfileField={this.props.updateProfileField}
 	  submitErrorsExist={this.props.submitErrorsExist}
 	  profileErrorsMap={this.props.profileErrorsMap}
 	
@@ -210,7 +211,7 @@ function mapStateToProps({user, profile}) {
     firstName: profile.studentProfile.firstName ? profile.studentProfile.firstName : '',
     lastName: profile.studentProfile.lastName ? profile.studentProfile.lastname : '',
     studentStatus: profile.studentProfile.studentStatus ? profile.studentProfile.studentStatus : '',
-   // studentStatusList: profile.lists.studentStatusesList ? profile.lists.studentStatusesList : '',
+    studentStatusList: profile.lists.studentStatuses ? profile.lists.studentStatuses : '',
 
     /*
     degreeName: profile.studentProfile.degreeName ? profile.studentProfile.degreeName : '',
@@ -259,7 +260,7 @@ function mapStateToProps({user, profile}) {
 	*/
     },
     error: profile.error ? profile.error : '',
-    submitSuccess: profile.submtiSuccess ? profilesubtiSuccess : false
+    submitSuccess: profile.submitSuccess ? profilesubmitSuccess : false
   }
 }
 
