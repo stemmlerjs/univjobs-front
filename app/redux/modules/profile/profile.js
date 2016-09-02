@@ -346,23 +346,57 @@ const employerProfileErrorsInitialState = {
   officeAddress: false,
   officeCity: false,
   officePostalCode: false
-  }
+}
 
 const initialStudentProfileState = {
-  // email,
-  // password,
-  // lastUpdated,
-  // emailPreferences,
-  // firstName,
-  // lastName,
-  // studentStatus,
-  // degreeName,
-  // schoolName,
-  // enrollmentMonth,
-  // enrollmentYear,
-  // graduationMonth,
-  // graduationYear,
-  // lastUpdated,
+	emailPreference: '',
+	firstName: '',
+   	lastName: '',
+  	studentStatus: '', 
+   	degreeName: '',
+   	schoolName: '',
+   	enrollmentDate: '',
+   	graduationDate: '',
+   	major: '',
+   	gpa: '',
+   	personalEmail: '',
+   	gender: '',
+   	//sportsTeam: '',
+   	//schoolClub: '',
+   	//languages: '',
+   	//hasCar: '',
+   	//companyName: '',
+   	//position: '',
+   	hometown: '',
+   	hobbies: '',
+   	photo: '',
+   	resume: '',
+   	propsErrorMap: {}
+}
+
+const initialStudentProfileErrorState = {
+	emailPreferences: false,
+	firstName: false,
+   	lastName: false,
+  	studentStatus: false,
+   	degreeName: false,
+   	schoolName: false,
+   	enrollmentDate: false,
+   	graduationDate: false,
+   	major: false,
+   	gpa: false,
+   	personalEmail: false,
+   	gender: false,
+   	sportsTeam: false,
+   	schoolClub: false,
+   	languages: false,
+   	hasCar: false,
+   	companyName: false,
+   	position: false,
+   	hometown: false,
+   	hobbies: false,
+   	photo: false,
+   	resume: false,
 }
 
 const initialListsState = {
@@ -421,7 +455,7 @@ export default function profile (state = initialState, action) {
           isProfileCompleted: action.isProfileCompleted,
           employerProfile: employerProfile(state.employerProfile, action),
           snapshot: action.profileInfo
-        }
+         }
       }
     case SAVE_PROFILE_ERROR:
       if(action.isAStudent) {
