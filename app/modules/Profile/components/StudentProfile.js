@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react'
 import { ProfileField, StudentContainer } from 'modules/Profile'
 import { Combobox, DropdownList, DateTimePicker, Calendar, Multiselect, SelectList} from 'react-widgets'
 import Dropzone from 'react-dropzone'
-import { pageContainer, profileField, profileHeader, container, input, shortInput, nameField,  emailField, dropDown, shortDropDown, mediumDropDown, longDropDown, dropzone, dropzoneContent, inlineDropzone, btn, saveBtnContainer, saveBtnList, saveBtn, space} from '../styles/StudentProfileContainerStyles.css'
+import { pageContainer, profileField, profileHeader, container, input, shortInput, nameField,  emailField, dropDown, shortDropDown, mediumDropDown, longDropDown, dropzone, dropzoneContent, inlineDropzone, btn, saveBtnContainer, saveBtnList, saveBtnClicked, saveBtn, space} from '../styles/StudentProfileContainerStyles.css'
 import ReactTooltip from 'react-tooltip'
 
 var Moment = require('moment')
@@ -16,6 +16,33 @@ export default function StudentProfile (props) {
     emptyFilter: "Can't find your industry? Let us know at theunivjobs@gmail.com."
  }
 
+  /** hasCarClicked
+   *  
+   *  This selects the hasCar attribute and binds to the redux store
+   *
+   **/
+  function hasCarClicked(e) {
+   switch(e.target.getAttribute('data-selection')) {
+	case "0":
+	  props.updateProfileField('hasCar', true, true)
+	  return;
+	case "1":
+          props.updateProfileField('hasCar', false, true)
+          return
+	default:
+	  return;
+   }
+  }
+  
+  /* 
+   *   *  placePhoto()
+   *   * 
+   *   *  Actually places the photo from the url specified onto the element.
+   *   *  @param <element> - element
+   *   *  @param String - url
+   *   *  @return void
+   *   */
+
   /* 
   *   Display the profile new profile picture when the user drags and drops or selects one.
   */
@@ -28,8 +55,21 @@ export default function StudentProfile (props) {
 
     // Hide icon, text and border
     dropPhotoDiv.style.border = "0"
-    document.getElementById('fa-camera').style.visibility = "hidden"
-    document.getElementById('drag-drop').style.visibility = "hidden"
+    document.getElementById('fa-user').style.visibility = "hidden"
+    document.getElementById('drag-dropPhoto').style.visibility = "hidden"
+  }
+
+  function onDropResume(files) {
+    let dropResumeDiv = document.getElementById('dropResumeDiv')
+
+    // Preview the image
+    dropResumeDiv.style.borderStyle = "solid" // blob
+    dropResumeDiv.style.borderColor = "	#00BFFF" // blob
+    dropResumeDiv.style.backgroundSize = "cover"
+
+    document.getElementById('fa-pdf').style.color = "#00BFFF"
+    document.getElementById('drag-dropResume').innerHTML = "Resume Uploaded ◕‿‿◕"
+    document.getElementById('drag-dropResume').style.color = '#00BFFF'
   }
 
     return (
@@ -277,95 +317,109 @@ export default function StudentProfile (props) {
 	</StudentContainer>
 
 	{/* CAR */}
-	<StudentContainer title="I " 
-	 styles={nameField}>
+	<StudentContainer title="I " styles={nameField}>
 	 <li className={saveBtnList}>
-	   <button className={saveBtn} 
-	           data-selection="0"
-	   >drive</button>
-	   <button className={saveBtn}>do not drive</button>
+	   <button className={props.hasCar ? saveBtnClicked : saveBtn} 
+		   data-selection="0"
+		   onClick={hasCarClicked}
+	    >
+		    have
+	    </button>
+	   <button className={props.hasCar === false ? saveBtnClicked : saveBtn} 
+		   data-selection="1"
+		   onClick={hasCarClicked}
+	    >
+		    do not have
+	    </button>
 	 </li>
 	 <li className={space}>
 	 	<p>a car on campus.</p>
 	 </li>
 	</StudentContainer>
 	
-	{/* EXPERIENCE 
-	<StudentContainer title="I recently worked at " 
-	 styles={nameField}>
-	 <input
+	{/* EXPERIENCE */} 
+	<StudentContainer title="I recently worked at "      styles={nameField}>
+	<li> 
+         <input
 	   className={input}
 	   type="text"
 	   placeholder="Company Name"
 	   value={props.companyName}
-	   onChange={value => props.updateProfileField('companyName', value, false)}
+	   onChange={(e) => props.updateProfileField('companyName', e.target.value, true)}
+	   >
+	  </input>
+	 </li>
+	  <li>
+	    <p>working as</p>
+	  </li>
+	  <li>
+	   <input
+	    className={input}
+	    type="text"
+	    placeholder="Position"
+	    value={props.position}
+	    onChange={(e) => props.updateProfileField('position', e.target.value, true)} 
 	   >
 	 </input>
-	 <p>working as</p>
+	 </li>
+	</StudentContainer>
+
+	{/* FUN FACTS */}
+	<StudentContainer title="A fun fact about me is ">
+	<li>
 	 <input
 	   className={input}
 	   type="text"
-	   placeholder="Position"
-	   value={props.position}
-	   onChange={value => props.updateProfileField('position', value, false)}
-	   
-	   >
+	   placeholder="Example: I can juggles chainsaws, I can eat 60 hot dogs in 30 minutes"
+	   onChange={(e) => props.updateProfileField('funFacts', e.target.value, true)}
+	   value={props.funFacts}
+	  >
 	 </input>
+	 </li>
 	</StudentContainer>
 
-	{/* FUN FACTS 
-	<StudentContainer title="A fun fact about me is " 
-	 styles={nameField}>
-	 <input
-	   className={input}
-	   type="text"
-	   placeholder="Example: I can juggles chainsaws">
-	 </input>
-	</StudentContainer>
-
-	{/* CITY 
-	<StudentContainer title="My hometown is" 
-	 styles={nameField}>
+	{/* CITY */}
+	<StudentContainer title="My hometown is">
 	 <input
 	   className={input}
 	   type="text"
 	   placeholder="City"
 	   value={props.hometown}
-	   onChange={value => props.updateProfileField('hometown', value, false)}
+	   onChange={(e) => props.updateProfileField('hometown', e.target.value, true)}
 	   >
 	 </input>
 	</StudentContainer>
 
-	{/* HOBBIES 
-	<StudentContainer title="My favourite hobbies are" 
-	 styles={nameField}>
-	 <input
-	   className={input}
+	{/* HOBBIES */}
+	<StudentContainer title="My favourite hobbies are"> 
+	 <li>
+	  <input
+	   className={shortInput}
 	   type="text"
 	   placeholder="Playing guitar, Making movies, etc.."
+	   onChange={(e) => props.updateProfileField('hobbies', e.target.value, true)}
 	   value={props.hobbies}
-	   onChange={value => props.updateProfileField('firstName', value, false)}
 	   >
-	 </input>
+	  </input>
+	 </li>
 	</StudentContainer>
 
-      {/* PHOTO & RESUME 
+      {/* PHOTO & RESUME */}
       <StudentContainer title="Take a business selfie">
         <Dropzone id="dropPhotoDiv" className={dropzone} onDrop={onDrop} accept='image/*' multiple={false}>
           <div className={dropzoneContent}>
-            <i id="fa-camera" className={"fa fa-camera "} aria-hidden="true"></i>
-            <div id="drag-drop"></div>
+            <i id="fa-user" className={"fa fa-user fa-3x"} aria-hidden="true"></i>
+            <div id="drag-dropPhoto">Upload a photo</div>
           </div>
-        </Dropzone>
-	<p>,here is my resume</p>
-        <Dropzone id="dropPhotoDiv" className={dropzone} onDrop={onDrop} accept='image/*' multiple={false}>
+         </Dropzone>
+	<p className={space}>,here is my resume</p>
+        <Dropzone id="dropResumeDiv" className={dropzone} onDrop={onDropResume} accept='application/pdf' multiple={false}>
           <div className={dropzoneContent}>
-            <i id="fa-camera" className={"fa fa-camera "} aria-hidden="true"></i>
-            <div id="drag-drop"></div>
+            <i id="fa-pdf" className={"fa fa-file-pdf-o fa-3x"} aria-hidden="true"></i>
+            <div id="drag-dropResume">Upload your resume</div>
           </div>
         </Dropzone>
       </StudentContainer>
-
     {/* ======== SAVE BUTTON ======== */}
       <div className={profileField}>
         <div className={saveBtnContainer}>

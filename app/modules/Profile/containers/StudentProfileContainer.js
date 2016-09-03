@@ -29,23 +29,6 @@ const StudentProfileContainer = React.createClass({
     store: PropTypes.object.isRequired
   },
 
-  /** setSelectedButton
-   *  
-   *  This selects the hasCar attribute and binds to the redux store
-   *
-   */
-  function hasCarClicked(e) {
-   switch(e.target.getAttribute('data-selection')) {
-	case "0":
-	  props.updateFormField('hasCar', true, 1)
-	  return
-	case "1":
-          props.updateFormField('hasCar', false, 1)
-          return
-	default:
-	  return;
-   }
-  }
 
  /** retrieveAllLists
   *
@@ -203,12 +186,13 @@ const StudentProfileContainer = React.createClass({
 	  languages={this.props.languages}
 	  languagesList={this.props.languagesList}
 	  hasCar={this.props.hasCar}
-	  /*
 	  companyName={this.props.companyName}
 	  position={this.props.position}
+	  funFacts={this.props.funFacts}
 	  hometown={this.props.hometown}
 	  hobbies={this.props.hobbies}
 	  photo={this.props.photo}
+	  /*
 	  resume={this.props.resume}
 */
 	  updateProfileField={this.props.updateProfileField}
@@ -250,16 +234,16 @@ function mapStateToProps({user, profile}) {
     gendersList: profile.lists.genders ? profile.lists.genders : [],
     sportsTeam: profile.studentProfile.sportsTeam ? profile.studentProfile.sportsTeam : '',
     schoolClub: profile.studentProfile.schoolClub ? profile.studentProfile.schoolClub: '', 
-    languages: profile.studentProfile.languages ? profile.studentProfile.languages : 0,
+    languages: profile.studentProfile.languages ? profile.studentProfile.languages : [],
     languagesList: profile.lists.languages ? profile.lists.languages : [],
-    hasCar: profile.studentProfile.hasCar ? profile.studentProfile.hasCar : '',
-    /*
+    hasCar: profile.studentProfile.hasCar ? profile.studentProfile.hasCar : false,
     companyName: profile.studentProfile.companyName ? profile.studentProfile.companyName : '',
     position: profile.studentProfile.position ? profile.studentProfile.position : '',
+    funFacts: profile.studentProfile.funFacts ? profile.studentProfile.funFacts : '',
     hometown: profile.studentProfile.hometown ? profile.studentProfile.hometown : '',
+    hobbies: profile.studentProfile.hobbies? profile.studentProfile.hobbies: '',
     photo: profile.studentProfile.photo ? profile.studentProfile.photo : '',
     resume: profile.studentProfile.resume ? profile.studentProfile.resume : '',
-    */
     propsErrorMap: profile.studentProfile.propsErrorMap ? profile.studentProfile.propsErrorMap : { 
 	emailPreferences: false,
 	firstName: false,
@@ -279,14 +263,13 @@ function mapStateToProps({user, profile}) {
    	schoolClub: false,
    	languages: false,
    	hasCar: false,
-	/*
    	companyName: false,
    	position: false,
+	funFacts: false,
    	hometown: false,
    	hobbies: false,
-   	photo: false,
-   	resume: false
-	*/
+ 	photo: false,
+	resume: false
     },
     error: profile.error ? profile.error : '',
     submitSuccess: profile.submitSuccess ? profilesubmitSuccess : false
