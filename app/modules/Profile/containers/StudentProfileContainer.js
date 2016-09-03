@@ -29,6 +29,24 @@ const StudentProfileContainer = React.createClass({
     store: PropTypes.object.isRequired
   },
 
+  /** setSelectedButton
+   *  
+   *  This selects the hasCar attribute and binds to the redux store
+   *
+   */
+  function hasCarClicked(e) {
+   switch(e.target.getAttribute('data-selection')) {
+	case "0":
+	  props.updateFormField('hasCar', true, 1)
+	  return
+	case "1":
+          props.updateFormField('hasCar', false, 1)
+          return
+	default:
+	  return;
+   }
+  }
+
  /** retrieveAllLists
   *
   * This function acquires all the required lists from /api/lists/{choice}
@@ -45,7 +63,8 @@ const StudentProfileContainer = React.createClass({
 		    lists.getStudentStatus(this.context.store),
 		    lists.getEducationLevel(this.context.store),
 		    lists.getMajor(this.context.store),
-	//	    list.getGender(this.context.store),
+		    lists.getGender(this.context.store),
+		    lists.getLanguages(this.context.store),
 
 	   ])
 	    .then((resp) => resolve(true))
@@ -175,14 +194,16 @@ const StudentProfileContainer = React.createClass({
 	  graduationDate={this.props.graduationDate}
 	  major={this.props.major}
 	  majorsList={this.props.majorsList}
-	  /*
 	  gpa={this.props.gpa}
 	  personalEmail={this.props.personalEmail}
 	  gender={this.props.gender}
+	  gendersList={this.props.gendersList}
 	  sportsTeam={this.props.sportsTeam}
 	  schoolClub={this.props.schoolClub}
 	  languages={this.props.languages}
+	  languagesList={this.props.languagesList}
 	  hasCar={this.props.hasCar}
+	  /*
 	  companyName={this.props.companyName}
 	  position={this.props.position}
 	  hometown={this.props.hometown}
@@ -223,16 +244,16 @@ function mapStateToProps({user, profile}) {
     graduationDate: profile.studentProfile.graduationDate ? profile.studentProfile.graduationDate : new Date(),  
     major: profile.studentProfile.major ? profile.studentProfile.major : 0,  
     majorsList: profile.lists.majors ? profile.lists.majors : [],
-
-	    /*
     gpa: profile.studentProfile.gpa ? profile.studentProfile.gpa : '',
     personalEmail: profile.studentProfile.personalEmail ? profile.studentProfile.personalEmail : '',
-    gender: profile.studentProfile.gender ? profile.studentProfile.gender : '',
-    sportsTeam: profile.studentProfile.sportsTeam ?
-    profile.studentProfile.sporsTeam : '',
+    gender: profile.studentProfile.gender ? profile.studentProfile.gender : 'F',
+    gendersList: profile.lists.genders ? profile.lists.genders : [],
+    sportsTeam: profile.studentProfile.sportsTeam ? profile.studentProfile.sportsTeam : '',
     schoolClub: profile.studentProfile.schoolClub ? profile.studentProfile.schoolClub: '', 
-    languages: profile.studentProfile.languages ? profile.studentProfile.languages : '',
+    languages: profile.studentProfile.languages ? profile.studentProfile.languages : 0,
+    languagesList: profile.lists.languages ? profile.lists.languages : [],
     hasCar: profile.studentProfile.hasCar ? profile.studentProfile.hasCar : '',
+    /*
     companyName: profile.studentProfile.companyName ? profile.studentProfile.companyName : '',
     position: profile.studentProfile.position ? profile.studentProfile.position : '',
     hometown: profile.studentProfile.hometown ? profile.studentProfile.hometown : '',
@@ -251,14 +272,14 @@ function mapStateToProps({user, profile}) {
    	enrollmentDate: false,
    	graduationDate: false,
 	major: false,
-	/*
    	gpa: false,
    	personalEmail: false,
-   	gender: false,
+	gender: false,
    	sportsTeam: false,
    	schoolClub: false,
    	languages: false,
    	hasCar: false,
+	/*
    	companyName: false,
    	position: false,
    	hometown: false,

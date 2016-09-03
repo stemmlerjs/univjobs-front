@@ -1,8 +1,8 @@
 import React, { PropTypes } from 'react'
 import { ProfileField, StudentContainer } from 'modules/Profile'
-import { Combobox, DropdownList, DateTimePicker, Calendar} from 'react-widgets'
+import { Combobox, DropdownList, DateTimePicker, Calendar, Multiselect, SelectList} from 'react-widgets'
 import Dropzone from 'react-dropzone'
-import { pageContainer, profileField, profileHeader, container, input, nameField,  emailField, dropDown, shortDropDown, mediumDropDown, longDropDown, dropzone, dropzoneContent, inlineDropzone, btn, saveBtnContainer, saveBtnList, saveBtn, space} from '../styles/StudentProfileContainerStyles.css'
+import { pageContainer, profileField, profileHeader, container, input, shortInput, nameField,  emailField, dropDown, shortDropDown, mediumDropDown, longDropDown, dropzone, dropzoneContent, inlineDropzone, btn, saveBtnContainer, saveBtnList, saveBtn, space} from '../styles/StudentProfileContainerStyles.css'
 import ReactTooltip from 'react-tooltip'
 
 var Moment = require('moment')
@@ -159,8 +159,7 @@ export default function StudentProfile (props) {
 	  </li>
 	</StudentContainer>
 
-	/*
-	{/* GPA *
+	{/* GPA */}
 	<StudentContainer title="My GPA is" 
 	 styles={nameField}>
 	 <li>
@@ -168,8 +167,8 @@ export default function StudentProfile (props) {
 	     className={input}
 	     type="text"
 	     placeholder="GPA" 
+	     onChange={(e) => props.updateProfileField('gpa', e.target.value, true)} 
 	     value={props.gpa}
-	     onChange={value => props.updateProfileField('gpa', value, false)} 
 	     >
 	    </input>
 	 </li>
@@ -181,7 +180,7 @@ export default function StudentProfile (props) {
 	 </li>
 	</StudentContainer>
 
-	{/* PERSONAL EMAIL
+	{/* PERSONAL EMAIL*/}
 	<StudentContainer title="My personal email is" 
 	 styles={nameField}>
 	 <li>
@@ -190,7 +189,7 @@ export default function StudentProfile (props) {
 	    type="text"
 	    placeholder="Email"
 	    value={props.personalEmail}
-	    onChange={value => props.updateProfileField('personalEmail', value, false)}
+	    onChange={(e) => props.updateProfileField('personalEmail', e.target.value, true)}
 	    >
 	  </input>
 	 </li> 
@@ -202,19 +201,21 @@ export default function StudentProfile (props) {
 	 </li>
 	</StudentContainer>
 
-	{/* GENDER 
+	{/* GENDER */}
 	<StudentContainer title="I am " 
 	 styles={nameField}>
 	 <DropdownList
-	  className={dropDown}
-	  defaultValue={'Gender'}
-	  //data={props.gender}
+	  className={shortDropDown}
+	  textField="gender"
+	  valueField="id"
 	  messages={messages}
-	  onChange={value => props.updateProfileField('gender', value, false)}
+	  data={props.gendersList}
+	  onChange={value => props.updateProfileField('gender', value, true)}
+	  value={props.gender}
 	/>	
 	</StudentContainer>
 
-	{/* SPORTS
+	{/* SPORTS*/}
 	<StudentContainer title="I"
 	 styles={nameField}>
 	 <li className={saveBtnList}>
@@ -225,16 +226,16 @@ export default function StudentProfile (props) {
 	 	<p>on a sports team</p>
 	 </li>
 	 <input
-	   className={input}
+	   className={shortInput}
 	   type="text"
 	   placeholder="Type the schools sports team"
 	   value={props.sportsTeam}
-	   onChange={value => props.updateProfileField('sportsTeam', value, false)}
+	   onChange={(e) => props.updateProfileField('sportsTeam', e.target.value, true)}
 	   >
 	 </input>
 	</StudentContainer>
 
-	{/* CLUB 
+	{/* CLUB */} 
 	<StudentContainer title="I " 
 	 styles={nameField}>
 	 <li className={saveBtnList}>
@@ -245,16 +246,16 @@ export default function StudentProfile (props) {
 	 	<p>on a school club</p>
 	 </li>
 	 <input
-	   className={input}
+	   className={shortInput}
 	   type="text"
 	   placeholder="Type the school clubs names"
 	   value={props.schoolClub}
-	   onChange={value => props.updateProfileField('schoolClub', value, false)}
+	   onChange={(e)=> props.updateProfileField('schoolClub', e.target.value, true)}
 	   >
 	 </input>
 	</StudentContainer>
 
-	{/* LANGUAGE
+	{/* LANGUAGE*/}
 	<StudentContainer title="I" 
 	 styles={nameField}>
 	 <li className={saveBtnList}>
@@ -264,21 +265,24 @@ export default function StudentProfile (props) {
 	 <li className={space}>
 	 	<p>other languages</p>
 	 </li>
-	 <input
+	 <Multiselect
 	   className={input}
-	   type="text"
-	   placeholder="Type the languages you speak "
-	   value={props.language}
-	   onChange={value => props.updateProfileField('language', value, false)}
-	   >
-	 </input>
+	   textField='language'
+	   valueField='id'
+	   messages={messages}
+	   data={props.languagesList}
+	   onChange={ value => props.updateProfileField('languages', value, true)}
+	   value={props.languages}
+	   />
 	</StudentContainer>
 
-	{/* CAR 
+	{/* CAR */}
 	<StudentContainer title="I " 
 	 styles={nameField}>
 	 <li className={saveBtnList}>
-	   <button className={saveBtn}>drive</button>
+	   <button className={saveBtn} 
+	           data-selection="0"
+	   >drive</button>
 	   <button className={saveBtn}>do not drive</button>
 	 </li>
 	 <li className={space}>
