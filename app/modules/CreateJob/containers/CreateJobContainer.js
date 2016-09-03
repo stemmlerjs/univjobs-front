@@ -11,6 +11,12 @@ import { bindActionCreators } from 'redux'
 import * as createJobActionCreators from 'redux/modules/createjob/createjob'
 // ======================================
 
+// ============= MESSAGES ===============
+var ReactToastr = require("react-toastr");
+var {ToastContainer} = ReactToastr; // This is a React Element.
+var ToastMessageFactory = React.createFactory(ReactToastr.ToastMessage.animation);
+// ======================================
+
 const actionCreators = {
   ...createJobActionCreators
 }
@@ -91,6 +97,37 @@ const CreateJobContainer = React.createClass({
 
   componentWillMount() {
     this.props.closeOverlay()
+  },
+
+ /*
+  * componentWillReceiveProps
+  *
+  * When props come in, lets do the following:
+  * - check for error messages to display an error message
+  * - check for a success message to display a success message
+  *
+  * @param (Object) newProps
+  */
+
+  componentWillReceiveProps(newProps) {
+    let error = newProps.errorsExist;
+    let submitSuccess = newProps.submitSuccess;
+    
+    if(submitSuccess) {
+      this.refs.container.success(
+        "Woohoo :)",
+        "Profile successfully updated!", {
+        timeOut: 3000
+      });
+    }
+
+    if(error) {
+      this.refs.container.error(
+        error,
+        "Something went wrong while trying to submit", {
+        timeOut: 3000
+      });
+    }
   },
 
  /*
@@ -188,6 +225,11 @@ const CreateJobContainer = React.createClass({
 
           <button onClick={() => this.context.router.goBack()}>I'm sure</button>
         </SkyLight>
+
+      {/* ERROR MESSAGES */}
+        <ToastContainer ref="container"
+          toastMessageFactory={ToastMessageFactory}
+          className="toast-top-right" />
         
       </div>
     )

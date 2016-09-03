@@ -1,3 +1,4 @@
+import {validateCreateJobFields} from 'helpers/createjob'
 
 const PAGE_ERRORS_EXIST = 'PAGE_ERRORS_EXIST'
 const NEXT_PAGE = 'NEXT_PAGE'
@@ -14,11 +15,30 @@ export function updateFormField(fieldName, newValue, page) {
   }
 }
 
-// TODO: continue here
+export function pageErrorsExist(profileErrorsObj, error, page) {
+  return {
+    type: PAGE_ERRORS_EXIST,
+    profileErrorsObj,
+    error,
+    page
+  }
+}
+
 export function nextPage(currentPage, formProps) {
   return function(dispatch) {
     if(currentPage != 4) {
       validateCreateJobFields(currentPage, formProps, (errorsExist, pageErrors) => {
+        if(errorsExist) {
+
+            // DISPATCH - SAVE_PROFILE_ERROR
+            dispatch(pageErrorsExist(pageErrors, [
+              "Can't advance to next page.",
+              'Please fill in missing fields first.'
+            ], currentPage))
+
+          } else {
+            console.log("WE'RE GOOD TO CONTINUE")
+          }
 
       })
     }
@@ -154,12 +174,13 @@ function page1(state = page1InitialState, action) {
     case UPDATE_FORM_FIELD:
       return {
         ...state,
-        [action.fieldName]: action.newValue
+        [action.fieldName]: action.newValue,
+        page1PropsErrorMap: page1Errors(state.page1PropsErrorMap, action)
       }
     case PAGE_ERRORS_EXIST:
       return {
         ...state,
-        page1PropsErrorMap: page1Errors(state.page1PropsErrorMap, action)
+        page1PropsErrorMap: action.profileErrorsObj
       }
     default:
       return;
@@ -168,10 +189,10 @@ function page1(state = page1InitialState, action) {
 
 function page1Errors(state = page1PropsErrorMap, action) {
   switch(action.type) {
-    case PAGE_ERRORS_EXIST:
+    case UPDATE_FORM_FIELD:
       return {
-        ...state, 
-
+        ...state,
+        [action.fieldName]: false
       }
   }
 }

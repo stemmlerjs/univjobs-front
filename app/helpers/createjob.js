@@ -15,13 +15,14 @@ export function validateCreateJobFields(currentPage, pageProps, next) {
   }
   
   // Validate each field in it's own unique way
-  page1Errors.jobTitle = validateJobTitle(pageProps.companyName) ? false : true
-  page1Errors.industry = pageProps.industry != "" ? false : true
-  page1Errors.employeeCount = pageProps.employeeCount > 0 ? false : true
-  page1Errors.officeAddress = validateAddress(pageProps.officeAddress) && pageProps.officeAddress != "" ? false : true
-  page1Errors.officePostalCode = validatePostalCode(pageProps.officePostalCode) ? false : true 
-  page1Errors.officeCity = validateCity(pageProps.officeCity) ? false : true
-  page1Errors.logoUrl =  pageProps.logoUrl != "" ? false : true
+  page1Errors.jobTitle = validateJobTitle(pageProps.jobTitle) ? false : true
+  // page1Errors.isPayingJob = pageProps.isPayingJob != "" ? false : true
+  page1Errors.startDate = pageProps.startDate != "" ? false : true
+  page1Errors.responsibilities = pageProps.responsibilities != "" ? false : true
+  page1Errors.qualifications = pageProps.qualifications != "" ? false : true 
+  page1Errors.desiredSkills = pageProps.desiredSkills != "" ? false : true
+  page1Errors.internshipLocation =  pageProps.internshipLocation != "" ? false : true
+  page1Errors.compensation = pageProps.compensation != "" ? false : true
 
   // If an error exists in the map, then errorsExist === true
   for (var attr in page1Errors) {

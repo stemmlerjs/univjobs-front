@@ -57,7 +57,7 @@ export function validatePostalCode(postalcode) {
 }
 
 export function validateCity(city) {
-  var re = /^[a-z ,.'-]{2,30}$/i
+  let re = /^[a-z ,.'-]{2,30}$/i
   return re.test(city)
 }
 
