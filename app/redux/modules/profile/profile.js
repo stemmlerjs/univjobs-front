@@ -1,4 +1,4 @@
-import { employerProfilePUT, employerProfilePATCH, compareToSnapshot, validateEmployerProfileFields } from 'helpers/profile'
+import { employerProfilePUT, employerProfilePATCH, compareToSnapshot, validateEmployerProfileFields, validateStudentProfileFields } from 'helpers/profile'
 
 // =======================================================
 // ==================== ACTIONS ==========================
@@ -165,10 +165,67 @@ export function saveProfileSuccess() {
 
 export function submitProfileFirstTime(userTypeInt, profileInfo, user) {
   return function (dispatch) {
+	  console.log(userTypeInt, profileInfo, user)
     switch(userTypeInt) {
       case 0:
-
-        return;
+	debugger;
+	console.log("SUBMITTING STUDENT PROFILE FIRST TIME")
+	validateStudentProfileFields(profileInfo, (errorExist, profileFieldErrors) => {
+	  if(errorExist) {
+	   console.log('HERE!!!!!!') 
+	    // DISPATCH - SAVE_PROFILE_ERROR
+	    dispatch(saveProfileError(profileFieldErrors, [    "Couldn't save profile.",
+	  "Please fill in missing fields"
+	    ], true))
+	  
+	  } else {
+	   console.log('ELSE!!!!!!')
+	    // No errors, proceed to /PUT on api/me
+            var putData = {
+             // user: {
+                "user-is_a_student": true,
+                "user-is_profile_completed": true,
+                "user-email": user.email,
+                "user-first_name": profileInfo.firstName,
+                "user-last_name": profileInfo.lastName,
+                "user-is_active": true,
+                "user-date_joined": user.dateJoined,
+                "user-mobile": user.mobile,
+		  languages: profileInfo.languages,
+		  sports: profileInfo.sportsTeam,
+		  clubs: profileInfo.schoolClub,
+		  email_pref: profileInfo.emailPreferences,
+		  status: profileInfo.studentStatus,
+		  enroll_date: profileInfo.enrollmentDate,
+		  grad_date: profileInfo.graduationDate,
+		  major: profileInfo.major,
+		  GPA: profileInfo.gpa,
+		  personal_email: profileInfo.personalEmail ,
+		  gender: profileInfo.gender,
+		  has_car: profileInfo.hasCar,
+		  company: profileInfo.companyName,
+		  position: profileInfo.position,
+		  fun_fact: profileInfo.funFacts,
+		  hometown: profileInfo.hometown,
+		  hobbies: profileInfo.hobbies,
+		  photo: profileInfo.photos,
+		  resume: profileInfo.resume,
+	  }
+	    studentProfilePUT(putData)
+	     .then((res) => {
+		// DISPATCH - SAVE_PROFILE_SUCCESS
+	        dispatch(saveProfileSuccess())
+	     })
+	     .catch((err) => {
+	       // DISPATCH - SAVE_PROFILE_SUCCESS
+	        dispatch(saveProfileError({}, [
+			'HTTP Error Occurred',
+			err
+		], false))
+	     })
+	    }
+	  })
+	  return;
       case 1:
         console.log("SUBMITTING EMPLOYER PROFILE FIRST TIME")
         validateEmployerProfileFields(profileInfo, (errorsExist, profileFieldErrors) => {
@@ -237,10 +294,57 @@ export function updateProfile(userTypeInt, profileInfo, user, snapshot) {
   return function (dispatch) {
     switch(userTypeInt) {
       case 0:
-
+	/*
+	console.log("UPDATING STUDENT PROFILE")
+	validateStudentProfileFields(profileInfo, (errorExist, profileFieldErrors) => {
+	  if(errorExist) {
+	    
+	    // DISPATCH - SAVE_PROFILE_ERROR
+	    dispatch(saveProfileError(profileFieldErrors, [    "Couldn't save profile.",
+	  "Please fill in missing fields"
+	    ], false))
+	  
+	  } else {
+	    // No errors, proceed to /PUT on api/me
+            var changedData = {
+             // user: {
+             //   "user-is_a_student": true,
+             //   "user-is_profile_completed": true,
+             //   "user-email": user.email,
+             //   "user-first_name": user.firstName,
+             //   "user-last_name": user.lastName,
+             //   "user-is_active": true,
+             //   "user-date_joined": user.dateJoined,
+             //   "user-mobile": user.mobile,
+             // 	is_a_student: false,
+             // 	is_profile_completed: true, // set this flag to true so we know for next time
+		  emailPreferences: profileInfo.emailPreferences,
+		  firstName: profile.firstName,
+		  lastName:  profile.lastName,
+		  studentStatus: profile.studentStatus,
+		  schoolName: profile.schoolName,
+		  enrollmentDate: profile.enrollmentDate,
+		  graduationDate: profile.graduationDate,
+		  major: profile.major,
+		  gpa: profile.gpa,
+		  personalEmail: profile.personalEmail ,
+		  gender: profile.gender,
+		  sportsTeam: profile.sporstTeam,
+		  schoolClub: profile.schoolClub,
+		  languages: profile.languages,
+		  hasCar: profile.hasCar,
+		  companyName: profile.companyName,
+		  position: profile.position,
+		  funFacts: profile.funFacts,
+		  hometown: profile.hometown,
+		  hobbies: profile.hobbies,
+		  photo: profile.photos,
+		  resume: profile.resume,
+	  }
+	  */
         return;
       case 1:
-        console.log("UPDATING PROFILE")
+        console.log("UPDATING EMPLOYER PROFILE")
         validateEmployerProfileFields(profileInfo, (errorsExist, profileFieldErrors) => {
           if(errorsExist) {
 
@@ -495,7 +599,7 @@ const initialStudentProfileState = {
   firstName: '',
   lastName: '',
   studentStatus: '', 
-  degreeName: '',
+  educationLevel: '',
   schoolName: '',
   enrollmentDate: '',
   graduationDate: '',
@@ -525,6 +629,11 @@ function studentProfile(state = initialStudentProfileState, action) {
         [action.fieldName]: action.newValue,
         propsErrorMap: studentProfileErrors(state.propsErrorMap, action)
       }
+    case SAVE_PROFILE_ERROR:
+      return {
+        ...state,
+        propsErrorMap: action.profileErrorsObj
+      }
     default: 
       return state
   }
@@ -536,8 +645,7 @@ const initialStudentProfileErrorState = {
   firstName: false,
   lastName: false,
   studentStatus: false,
-  degreeName: false,
-  schoolName: false,
+  educationLevel: false,
   enrollmentDate: false,
   graduationDate: false,
   major: false,

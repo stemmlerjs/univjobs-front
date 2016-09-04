@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react'
 import { ProfileField, StudentContainer } from 'modules/Profile'
 import { Combobox, DropdownList, DateTimePicker, Calendar, Multiselect, SelectList} from 'react-widgets'
 import Dropzone from 'react-dropzone'
-import { pageContainer, profileField, profileHeader, container, input, shortInput, nameField,  emailField, dropDown, shortDropDown, mediumDropDown, longDropDown, dropzone, dropzoneContent, inlineDropzone, btn, saveBtnContainer, saveBtnList, saveBtnClicked, saveBtn, space} from '../styles/StudentProfileContainerStyles.css'
+import { pageContainer, profileField, profileHeader, error, container, input, shortInput, nameField,  emailField, dropDown, shortDropDown, mediumDropDown, longDropDown, dropzone, dropzoneContent, inlineDropzone, btn, saveBtnContainer, saveBtnList, saveBtnClicked, saveBtn, space} from '../styles/StudentProfileContainerStyles.css'
 import ReactTooltip from 'react-tooltip'
 
 var Moment = require('moment')
@@ -48,7 +48,7 @@ export default function StudentProfile (props) {
   */
   function onDrop(files) {
     let dropPhotoDiv = document.getElementById('dropPhotoDiv')
-
+    props.updateProfileField('photo', files[0], true)
     // Preview the image
     dropPhotoDiv.style.backgroundImage = `url('${files[0].preview}')` // blob
     dropPhotoDiv.style.backgroundSize = "cover"
@@ -61,6 +61,8 @@ export default function StudentProfile (props) {
 
   function onDropResume(files) {
     let dropResumeDiv = document.getElementById('dropResumeDiv')
+    props.updateProfileField('resume', files[0], true)
+    // Preview the image
 
     // Preview the image
     dropResumeDiv.style.borderStyle = "solid" // blob
@@ -80,7 +82,7 @@ export default function StudentProfile (props) {
 	<StudentContainer title="My email notification preferences:"> 
 	<li>
 	  <DropdownList
-	   className={mediumDropDown}
+	   className={props.propsErrorMap.emailPreferences ? mediumDropDown + ' ' + error : mediumDropDown}
 	   textField="email_pref"
 	   valueField="id"
 	   messages={messages}
@@ -95,7 +97,7 @@ export default function StudentProfile (props) {
 	<StudentContainer title="My name is">
 	 <li>
 	    <input
-	     className={input}
+	     className={props.propsErrorMap.firstName ? input + ' ' + error : input}
 	     type="text"
 	     placeholder="First name"
 	     onChange={(e)=> props.updateProfileField('firstName', e.target.value, true)}
@@ -106,7 +108,7 @@ export default function StudentProfile (props) {
  
 	 <li>
 	   <input
-	    className={input}
+	    className={props.propsErrorMap.lastName ? input + ' ' + error : input}
 	    type="text"
 	    placeholder="Last Name"
 	    onChange={(e)=> props.updateProfileField('lastName', e.target.value, true)}
@@ -122,7 +124,7 @@ export default function StudentProfile (props) {
 	 {/* STATUS */}
 	 <li>
 	  <DropdownList
-	     className={shortDropDown}
+	     className={props.propsErrorMap.studentStatus ? shortDropDown + ' ' + error : shortDropDown}
 	     textField="status"
 	     valueField="id"
 	     messages={messages}
@@ -142,7 +144,7 @@ export default function StudentProfile (props) {
 	 styles={nameField}>
 	 <li>
 	   <DropdownList
-	    className={shortDropDown}
+	    className={props.propsErrorMap.educationLevel ? shortDropDown + ' ' + error : shortDropDown}
 	    textField="edu_level"
 	    valueField="id"
 	    messages={messages}
@@ -160,7 +162,7 @@ export default function StudentProfile (props) {
 	<StudentContainer title="I enrolled in " 
 	 styles={nameField}>
 	 <DateTimePicker
-	  className={dropDown}
+	  className={props.propsErrorMap.enrollmentDate ? dropDown + ' ' + error :  dropDown}
 	  time={false}
 	  format='LL'
 	  onChange={value => props.updateProfileField('enrollmentDate', value, true)}
@@ -168,7 +170,7 @@ export default function StudentProfile (props) {
 	 />	
 	 <p>,and I will graduate in</p>
 	 <DateTimePicker
-	  className={dropDown}
+	  className={props.propsErrorMap.graduationDate ? dropDown + ' ' + error : dropDown}
 	  time={false}
 	  format='LL'
 	  onChange={value => props.updateProfileField('graduationDate', value, true)}
@@ -181,7 +183,7 @@ export default function StudentProfile (props) {
 	  styles={nameField}>
 	  <li>
 	    <DropdownList
-	      className={longDropDown}
+	      className={props.propsErrorMap.map ? longDropDown + ' ' +  error : longDropDown}
 	      textField="major"
 	      valueField="id"
 	      messages={messages}
@@ -204,7 +206,7 @@ export default function StudentProfile (props) {
 	 styles={nameField}>
 	 <li>
 	    <input
-	     className={input}
+	     className={props.propsErrorMap.gpa ? input + ' ' + error : input}
 	     type="text"
 	     placeholder="GPA" 
 	     onChange={(e) => props.updateProfileField('gpa', e.target.value, true)} 
@@ -225,7 +227,7 @@ export default function StudentProfile (props) {
 	 styles={nameField}>
 	 <li>
 	  <input
-	    className={input}
+	    className={props.propsErrorMap.personalEmail ? input + ' ' + error : input}
 	    type="text"
 	    placeholder="Email"
 	    value={props.personalEmail}
@@ -245,7 +247,7 @@ export default function StudentProfile (props) {
 	<StudentContainer title="I am " 
 	 styles={nameField}>
 	 <DropdownList
-	  className={shortDropDown}
+	  className={props.propsErrorMap.gender ? shortDropDown + ' ' + error : shortDropDown}
 	  textField="gender"
 	  valueField="id"
 	  messages={messages}
@@ -266,7 +268,7 @@ export default function StudentProfile (props) {
 	 	<p>on a sports team</p>
 	 </li>
 	 <input
-	   className={shortInput}
+	   className={props.propsErrorMap.sportsTeam ? shortInput + ' ' + error : shortInput}
 	   type="text"
 	   placeholder="Type the schools sports team"
 	   value={props.sportsTeam}
@@ -286,7 +288,7 @@ export default function StudentProfile (props) {
 	 	<p>on a school club</p>
 	 </li>
 	 <input
-	   className={shortInput}
+	   className={props.propsErrorMap.schoolClub ? shortInput + ' ' +  error : shortInput}
 	   type="text"
 	   placeholder="Type the school clubs names"
 	   value={props.schoolClub}
@@ -341,7 +343,7 @@ export default function StudentProfile (props) {
 	<StudentContainer title="I recently worked at "      styles={nameField}>
 	<li> 
          <input
-	   className={input}
+	   className={props.propsErrorMap.companyName ? input + ' ' + error : input }
 	   type="text"
 	   placeholder="Company Name"
 	   value={props.companyName}
@@ -354,7 +356,7 @@ export default function StudentProfile (props) {
 	  </li>
 	  <li>
 	   <input
-	    className={input}
+	    className={props.propsErrorMap.position ? input + ' ' + error : input}
 	    type="text"
 	    placeholder="Position"
 	    value={props.position}
@@ -368,7 +370,7 @@ export default function StudentProfile (props) {
 	<StudentContainer title="A fun fact about me is ">
 	<li>
 	 <input
-	   className={input}
+	   className={props.propsErrorMap.funFacts ? input + ' ' + error : input}
 	   type="text"
 	   placeholder="Example: I can juggles chainsaws, I can eat 60 hot dogs in 30 minutes"
 	   onChange={(e) => props.updateProfileField('funFacts', e.target.value, true)}
@@ -381,7 +383,7 @@ export default function StudentProfile (props) {
 	{/* CITY */}
 	<StudentContainer title="My hometown is">
 	 <input
-	   className={input}
+	   className={props.propsErrorMap.hometown ? input + ' ' + error : input}
 	   type="text"
 	   placeholder="City"
 	   value={props.hometown}
@@ -394,7 +396,7 @@ export default function StudentProfile (props) {
 	<StudentContainer title="My favourite hobbies are"> 
 	 <li>
 	  <input
-	   className={shortInput}
+	   className={props.propsErrorMap.hobbies ? shortInput + ' ' + error : shortInput}
 	   type="text"
 	   placeholder="Playing guitar, Making movies, etc.."
 	   onChange={(e) => props.updateProfileField('hobbies', e.target.value, true)}
@@ -406,14 +408,14 @@ export default function StudentProfile (props) {
 
       {/* PHOTO & RESUME */}
       <StudentContainer title="Take a business selfie">
-        <Dropzone id="dropPhotoDiv" className={dropzone} onDrop={onDrop} accept='image/*' multiple={false}>
+        <Dropzone id="dropPhotoDiv" className={props.propsErrorMap.photo ? dropzone + ' ' + error: dropzone} onDrop={onDrop} accept='image/*' multiple={false}>
           <div className={dropzoneContent}>
             <i id="fa-user" className={"fa fa-user fa-3x"} aria-hidden="true"></i>
             <div id="drag-dropPhoto">Upload a photo</div>
           </div>
          </Dropzone>
 	<p className={space}>,here is my resume</p>
-        <Dropzone id="dropResumeDiv" className={dropzone} onDrop={onDropResume} accept='application/pdf' multiple={false}>
+        <Dropzone id="dropResumeDiv" className={props.propsErrorMap.resume ? dropzone + ' ' + error : dropzone} onDrop={onDropResume} accept='application/pdf' multiple={false}>
           <div className={dropzoneContent}>
             <i id="fa-pdf" className={"fa fa-file-pdf-o fa-3x"} aria-hidden="true"></i>
             <div id="drag-dropResume">Upload your resume</div>

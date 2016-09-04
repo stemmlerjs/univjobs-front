@@ -147,7 +147,7 @@ const StudentProfileContainer = React.createClass({
    //If profile is NOT completed, do /PUT. All fields must be populated and valid.
    if(!this.props.isProfileCompleted) {
 	   this.context.store.dispatch(
-		profileActionCreators.submitProfileFirstTime(1, studentProps, this.props.user)
+		profileActionCreators.submitProfileFirstTime(0, studentProps, this.props.user)
 	    )
    }// else {
    	//this.context.store.dispatch(
@@ -192,13 +192,11 @@ const StudentProfileContainer = React.createClass({
 	  hometown={this.props.hometown}
 	  hobbies={this.props.hobbies}
 	  photo={this.props.photo}
-	  /*
 	  resume={this.props.resume}
-*/
+	  onSubmit={this.handleSubmit}
 	  updateProfileField={this.props.updateProfileField}
-	  submitErrorsExist={this.props.submitErrorsExist}
-	  profileErrorsMap={this.props.profileErrorsMap}
-	
+	 // submitErrorsExist={this.props.submitErrorsExist}
+	  propsErrorMap={this.props.propsErrorMap}
 	/>
 	<ToastContainer ref="container"
 	  toastMessageFactory={ToastMessageFactory}
@@ -224,8 +222,8 @@ function mapStateToProps({user, profile}) {
     /*
     schoolName: profile.studentProfile.schoolName ? profile.studentProfile.schoolName : '',
     */
-    enrollmentDate: profile.studentProfile.enrollmentDate ?  profile.studentProfile.enrollmentDate : new Date(), 
-    graduationDate: profile.studentProfile.graduationDate ? profile.studentProfile.graduationDate : new Date(),  
+    enrollmentDate: profile.studentProfile.enrollmentDate ?  profile.studentProfile.enrollmentDate : new Date, 
+    graduationDate: profile.studentProfile.graduationDate ? profile.studentProfile.graduationDate : new Date,  
     major: profile.studentProfile.major ? profile.studentProfile.major : 0,  
     majorsList: profile.lists.majors ? profile.lists.majors : [],
     gpa: profile.studentProfile.gpa ? profile.studentProfile.gpa : '',
@@ -244,6 +242,8 @@ function mapStateToProps({user, profile}) {
     hobbies: profile.studentProfile.hobbies? profile.studentProfile.hobbies: '',
     photo: profile.studentProfile.photo ? profile.studentProfile.photo : '',
     resume: profile.studentProfile.resume ? profile.studentProfile.resume : '',
+    isProfileCompleted: profile.isProfileCompleted ? profile.isProfileCompleted : '',
+
     propsErrorMap: profile.studentProfile.propsErrorMap ? profile.studentProfile.propsErrorMap : { 
 	emailPreferences: false,
 	firstName: false,

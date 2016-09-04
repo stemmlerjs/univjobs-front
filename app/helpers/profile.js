@@ -67,7 +67,6 @@ export function validateEmployerProfileFields(profileInfo, next) {
   for (var attr in profileFieldErrors) {
     if (profileFieldErrors[attr] === true) submitErrorsExist = true;
   }
-
   next(submitErrorsExist, profileFieldErrors)
 }
 
@@ -78,4 +77,69 @@ export function compareToSnapshot(oldProfile, newProfile, callback) {
     }
   }
   callback(newProfile)
+}
+
+
+
+
+export function validateStudentProfileFields(profileInfo, next) {
+  debugger;
+  let submitErrorsExist = false;
+  let profileFieldErrors = {	
+	emailPreferences: false,
+	firstName: false,
+   	lastName: false,
+  	studentStatus: false,
+	educationLevel: false,
+	/*
+   	schoolName: false,
+	*/
+   	enrollmentDate: false,
+   	graduationDate: false,
+	major: false,
+   	gpa: false,
+   	personalEmail: false,
+	gender: false,
+   	sportsTeam: false,
+   	schoolClub: false,
+   	languages: false,
+   	hasCar: false,
+   	companyName: false,
+   	position: false,
+	funFacts: false,
+   	hometown: false,
+   	hobbies: false,
+ 	photo: false,
+	resume: false
+  }
+  profileFieldErrors.emailPreferences = profileInfo.emailPreferences != "" ? false : true
+  profileFieldErrors.firstName = profileInfo.firstName != "" ? false : true
+  profileFieldErrors.lastName = profileInfo.lastName != "" ? false : true
+  profileFieldErrors.studentStatus = profileInfo.firstName != "" ? false : true
+  profileFieldErrors.studentStatus = profileInfo.studentStatus != "" ? false : true
+  profileFieldErrors.educationLevel= profileInfo.educationLevel != "" ? false : true
+  profileFieldErrors.enrollmentDate = profileInfo.enrollmentDate != "" ? false : true
+  profileFieldErrors.graduationDate = profileInfo.graduationDate != "" ? false : true
+  profileFieldErrors.major = profileInfo.major != "" ? false : true
+  profileFieldErrors.gpa = profileInfo.gpa != "" ? false : true
+  profileFieldErrors.personalEmail = profileInfo.personalEmail != "" ? false : true
+  profileFieldErrors.gender = profileInfo.gender != "" ? false : true
+  profileFieldErrors.sportsTeam = profileInfo.sportsTeam != "" ? false : true
+  profileFieldErrors.schoolClub = profileInfo.schoolClub != "" ? false : true
+  profileFieldErrors.languages = profileInfo.languages != "" ? false : true
+  profileFieldErrors.hasCar = profileInfo.hasCar != "" ? false : true
+  profileFieldErrors.companyName = profileInfo.companyName != "" ? false : true
+  profileFieldErrors.position = profileInfo.position != "" ? false : true
+  profileFieldErrors.funFacts = profileInfo.funFacts!= "" ? false : true
+  profileFieldErrors.hometown = profileInfo.hometown != "" ? false : true
+  profileFieldErrors.hobbies= profileInfo.hobbies != "" ? false : true
+  profileFieldErrors.photo = profileInfo.photo!= "" ? false : true
+  profileFieldErrors.resume = profileInfo.resume != "" ? false : true
+
+  // If an error exists in the map, then submitErrorsExist === true
+  for (var attr in profileFieldErrors) {
+    if (profileFieldErrors[attr] === true) submitErrorsExist = true;
+  }
+
+  next(submitErrorsExist, profileFieldErrors)
 }
