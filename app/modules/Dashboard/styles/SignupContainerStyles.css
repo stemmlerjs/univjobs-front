@@ -1,0 +1,53 @@
+.studentSignupPage {
+  composes: centeredPage from 'sharedStyles/styles.css';
+  background-size: cover;
+  background-image: url("https://github.com/UnivJobs/univjobs-front/blob/master/images/front/coffeelaptop.jpg?raw=true");
+}
+
+.employerSignupPage {
+  composes: centeredPage from 'sharedStyles/styles.css';
+  background-size: cover;
+  background-image: url("https://github.com/UnivJobs/univjobs-front/blob/master/images/front/meeting.jpg?raw=true");
+}
+
+.input {
+    width: 79%;
+    text-align: left;
+    padding: .5em 1em;
+    margin: 8px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    vertical-align: middle;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+        color: inherit;
+    font: inherit;
+    min-height: 37px;
+    font-size: 18px;
+}
+
+.loginBtn {
+    margin-top: 40px;
+    padding: 10px 15px 10px 15px;
+    border-radius: 3px;
+    border: 0;
+    background: #3697DB;
+    font-size: 1.0em;
+    color: white;
+    text-shadow: 1px 1px 0px rgba(0, 0, 0, .1);
+    box-shadow: 0px 3px 0px #c1c1c1;
+    cursor: pointer;
+    margin: 0 auto;
+    min-height: 37px;
+    width: 79%;
+}
+
+.errorMessage {
+  font-size:13px;
+  color: red;
+  text-align: center;
+  margin-top: 10px;
+  margin-bottom: 19px;
+}
