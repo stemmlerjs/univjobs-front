@@ -124,7 +124,8 @@ export function listRetrieved(listName, listArray) {
       }
     }
     default:
-      return state
+      // return state
+      return;
   }
 }
 

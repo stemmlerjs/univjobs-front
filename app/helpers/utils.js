@@ -68,7 +68,7 @@ export function validatePostalCode(postalcode) {
 }
 
 export function validateCity(city) {
-  var re = /^[a-z ,.'-]{2,30}$/i
+  let re = /^[a-z ,.'-]{2,30}$/i
   return re.test(city)
 }
 
@@ -97,4 +97,8 @@ export function validateLanguages(gpa) {
 // ***************** DATE ******************//
 export function toISO(date) {
   return date.getFullYear()+'-' + (date.getMonth()+1) + '-'+date.getDate();//prints expected format.
+}
+export function validateJobTitle(jobTitle) {
+  var re = /^[a-z ,.'-]{2,40}$/i
+  return re.test(jobTitle)
 }

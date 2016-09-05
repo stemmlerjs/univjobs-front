@@ -8,42 +8,42 @@ const categoryList = [{
   heading: 'One-Time Gig',
   subHeadingForEmp: 'Tasks that can be done within a 24-hour period',
   imgUrl: '',
-  url: 'post/otg'
+  type: 'otg'
 }, {
   key: 2,
   heading: 'Summer 2016',
   subHeadingForEmp: 'Jobs/Internships from May - Apr',
   imgUrl: '',
-  url: 'post/summer'
+  type: 'summer'
 }, {
   key: 3,
   heading: 'Winter Breaks',
   subHeadingForEmp: 'Jobs/Internships between school semesters',
   imgUrl: '',
-  url: 'post/winter'
+  type: 'winter'
 }, {
   key: 4,
   heading: 'Freelancing',
   subHeadingForEmp: 'Partner up with a student for a project',
   imgUrl: '',
-  url: 'post/freelance'
+  type: 'freelance'
 }, {
   key: 5,
   heading: 'Campus Rep & Brand Ambassador',
   subHeadingForEmp: 'Let students promote your product and brand',
   imgUrl: '',
-  url: 'post/rep'
+  type: 'rep'
 }, {
   key: 6,
   heading: 'Part-time work',
   subHeadingForEmp: 'Jobs/Internships while in school',
   imgUrl: '',
-  url: 'post/pt'
+  type: 'pt'
 }]
 
-const Category = function({heading, subHeading, url}) {
+const Category = function({heading, subHeading, type}) {
   return (
-    <Link to={url}>
+    <Link to={`/job/create/${type}`}>
       <div className={category}>
         <div className={categoryText}>
           <h3 className={headingStyle}>{heading}</h3>
@@ -57,12 +57,12 @@ const Category = function({heading, subHeading, url}) {
 const Categories = function(props) {
   return (
     <div className={categories}>
-      { categoryList.map(({key, heading, subHeadingForEmp, url}) => {
+      { categoryList.map(({key, heading, subHeadingForEmp, type}) => {
         return <Category
           key={key} 
           heading={heading} 
           subHeading={subHeadingForEmp} 
-          url={url}>
+          type={type}>
         </Category>
       })}
     </div>
@@ -80,6 +80,7 @@ const Title = function({subHeading}) {
 
 const CategoriesContainer = React.createClass({
   componentWillMount() {
+    // Hide the overlay on mount if coming from direct URL
     this.props.closeOverlay()
   },
   render () {

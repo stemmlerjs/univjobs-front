@@ -43,6 +43,15 @@ export default function StudentProfile (props) {
    *   *  @param String - url
    *   *  @return void
    *   */
+ const data = [ 'Once a week if new jobs are posted' ,'Everytime a new job is posted', 'Once a day if new jobs are posted'];
+
+ const stat = ['Full-time student', 'Part-time student', 'Recent graduate'];
+
+ const degree = ['Diploma', 'Associates', 'Bachelors', 'Masters', 'PHD'];
+
+ const major = ['Software Development & Network Engineering', 'Makeup'];
+
+ const gender = ['Male', 'Female'];
 
   /* 
   *   Display the profile new profile picture when the user drags and drops or selects one.

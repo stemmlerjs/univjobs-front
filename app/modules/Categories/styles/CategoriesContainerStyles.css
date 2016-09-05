@@ -22,10 +22,10 @@
 .category {
   height: 226px;
   background-color: yellow;
-  min-width: 414px;
-  width: 536px;
+  width: 26vw;
   position: relative;
   margin: 19px;
+  flex-shrink: 4;
 }
 
 .categoryText {
@@ -36,9 +36,11 @@
 .headingStyle {
   text-align: left;
   padding-left: 18px;
+  padding-right: 18px;
 }
 
 .subHeadingStyle {
   text-align: left;
   padding-left: 30px;
+  padding-right: 30px;
 }
