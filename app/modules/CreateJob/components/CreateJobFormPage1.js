@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
 import { pageContainer, input, textarea, saveBtnList, saveBtn, saveBtnContainer, selectedSaveBtn, inlineDate,
-  navSaveBtn, navBackBtn } from '../styles/CreateJobFormPageStyles.css'
+  navSaveBtn, navBackBtn, error } from '../styles/CreateJobFormPageStyles.css'
 import { FormField } from 'modules/CreateJob'
 import { Combobox, DropdownList, DateTimePicker, Calendar} from 'react-widgets'
 
@@ -31,10 +31,10 @@ export default function CreateJobFormPage1 (props) {
       {/* JOB TITLE */}
       <FormField title="Job title">
         <input 
-          className={input} 
+          className={props.page.page1PropsErrorMap.jobTitle ? input + ' ' + error : input} 
           type="text"
           placeholder="Muffin collector"
-          value={props.jobTitle}
+          value={props.page.jobTitle}
           onChange={(e) => props.updateFormField('jobTitle', e.target.value, 1)}
           >
         </input>
@@ -52,17 +52,18 @@ export default function CreateJobFormPage1 (props) {
       {/* START DATE */}
       <FormField title="Start date for job">
         <DateTimePicker
-          className={inlineDate}
+          className={props.page.page1PropsErrorMap.startDate ? error + ' ' + inlineDate : inlineDate}
           time={false}
           format='LL'
-          onChange={(date, dateStr) => props.updateFormField('startDate', dateStr, 1)}
+          value={props.page.startDate}
+          onChange={(date, dateStr) => props.updateFormField('startDate', date, 1)}
         />  
       </FormField>
 
       {/* RESPONSIBILTIES */}
       <FormField title="Responsibilities">
         <textarea rows="6" 
-          className={textarea}
+          className={props.page.page1PropsErrorMap.responsibilities ? textarea + ' ' + error : textarea}
           placeholder="Write a short blurb about the job!"
           maxLength={props.page.MAX_CHARS_responsibilities}
           value={props.page.responsibilities}
@@ -73,7 +74,7 @@ export default function CreateJobFormPage1 (props) {
 
       {/* QUALIFICATIONS */}
       <FormField title="Qualifications">
-        <textarea rows="6" className={textarea}
+        <textarea rows="6" className={props.page.page1PropsErrorMap.qualifications ? error + ' ' + textarea : textarea}
           value={props.page.qualifications}
           maxLength={props.page.MAX_CHARS_qualifications}
           onChange={(e) => props.updateFormField('qualifications', e.target.value, 1)}>
@@ -84,7 +85,7 @@ export default function CreateJobFormPage1 (props) {
       {/* DESIRED SKILLS */}
       <FormField title="Desired Skills">
         <input 
-          className={input} 
+          className={props.page.page1PropsErrorMap.desiredSkills ? error + ' ' + input : input} 
           type="text"
           placeholder="HTML, CSS, JavaScript, PHP"
           maxLength={props.page.MAX_CHARS_desiredSkills}
@@ -97,7 +98,7 @@ export default function CreateJobFormPage1 (props) {
       {/* INTERNSHIP LOCATION */}
       <FormField title="Internship Location">
         <input 
-          className={input} 
+          className={props.page.page1PropsErrorMap.internshipLocation ? error + ' ' + input : input} 
           type="text"
           placeholder="Mississauga, Ontario"
           value={props.page.internshipLocation}
@@ -118,7 +119,7 @@ export default function CreateJobFormPage1 (props) {
 
       {/* COMPENSATION */}
       <FormField title="Compensation">
-        <textarea rows="6" className={textarea}
+        <textarea rows="6" className={props.page.page1PropsErrorMap.compensation ? error + ' ' + textarea : textarea}
           value={props.page.compensation}
           maxLength={props.page.MAX_CHARS_compensation}
           onChange={(e) => props.updateFormField('compensation', e.target.value, 1)}>

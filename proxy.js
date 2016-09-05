@@ -1,6 +1,6 @@
 var express = require('express');  
 var request = require('request');
-var apiServerHost = 'http://eoymxx-univjobs-back-staging-univjobs.runnableapp.com'
+var apiServerHost = 'http://www.univjobs.ca'
 
 var app = express();  
 app.use('/', function(req, res) {  

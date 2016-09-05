@@ -6,6 +6,15 @@
   margin-bottom: 3%;
 }
 
+.pageContainerAlt {
+    width: 85%;
+    text-align: center;
+    margin: auto;
+    margin-top: 4%;
+    margin-bottom: 3%;
+    display: flex;
+}
+
 .input {
   composes: input from 'sharedStyles/styles.css';
   width: 50%;
@@ -91,4 +100,141 @@
   background-color: #535760;
   color: white;
   margin:4px;
+}
+
+.error {
+  border: solid 1px red !important;
+   /* make it glow! */
+    -webkit-box-shadow: 0px 3px 1px red;
+       -moz-box-shadow: 0px 3px 1px red;
+            box-shadow: 0px 3px 1px red; /* some variation of blue for the shadow */
+}
+
+.alignLeft {
+  text-align: left;
+}
+
+.sampleQuestionsContainer {
+  padding:10px;
+  border-radius:8px;
+  background-color: white;
+  font-size: 14px;
+}
+
+.leftDivider {
+  width: 60%;
+}
+
+.rightDivider {
+  display: flex;
+  width: 25%;
+  margin-left: 20px;
+  background-color: #D6D7D9;
+  border: solid 2px #A7A8AA;
+  flex-direction: column;
+  justify-content: center;
+  font-size: 20px;
+}
+
+.sectionHeader {
+    background-color: #53585E;
+  color: white;
+  height: 36px;
+  font-size: 17px;
+  padding-top: 16px;
+}
+
+.sectionBody {
+  background-color: #ECF0EF;
+    height: 134px;
+    border: solid 1px #BEC2C3;
+}
+
+.italics {
+  font-style: italic;
+}
+
+.specialInput {
+  background-color: #ECF0EF;
+  border: solid 1px black;
+  width: 52px;
+  height: 20px;
+  padding: 4px;
+  font-size: 16px;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.reminderContainer {
+  border: solid 1px black;
+  width: 50%;
+  margin: 0 auto;
+  padding: 30px;
+}
+
+.detailsContainer {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom:25px;
+}
+
+.detailsLeft {
+      width: 43%;
+}
+
+.detailsRight {
+  width: 35%;
+}
+
+.detailsHeaderLeft {
+  background-color: #84BBF1;
+  color: white;
+  height: 35px;
+  padding-top: 14px;
+  border: solid 1px #3598DB;
+}
+
+.detailsHeaderRight {
+  background-color: #53585E;
+  color: white;
+  height: 30px;
+  padding-top: 10px;
+}
+
+.detailsTitle {
+  margin-bottom: 40px;
+}
+
+.detailsBody {
+  background-color: #F1F2F4;
+  margin: 0 auto;
+  width: 87%;
+  padding-top: 14px;
+  padding-bottom: 12px;
+  /* margin-left: 9px; */
+  padding-left: 17px;
+  padding-right: 17px;
+
+}
+
+.jobIndustry {
+  color: #3996D9;
+  margin-top: 17px;
+  margin-bottom: 17px;
+  border: solid #84BBF1 2px;
+  display: inline-grid;
+  margin-left: 30%;
+  margin-right: 30%;
+  border-radius: 20px;
+  padding: 10px;
+}
+
+.marginTop {
+  margin-top:23px;
+}
+
+.table {
+  width:100%;
 }

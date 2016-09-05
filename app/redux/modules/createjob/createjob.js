@@ -5,6 +5,10 @@ const NEXT_PAGE = 'NEXT_PAGE'
 const PREV_PAGE = 'PREV_PAGE'
 const UPDATE_FORM_FIELD = 'UPDATE_FORM_FIELD'
 const CLEAR_FORM = 'CLEAR_FORM'
+const CREATE_JOB_SUCCESS = 'CREATE_JOB_SUCCESS'
+const CREATE_JOB_FAILURE = 'CREATE_JOB_FAILURE'
+const RETRIEVED_LIST = 'CREATE_JOB.RETRIEVED_LIST'
+const RETRIEVED_JOBTYPES = 'RETRIEVED_JOBTYPES'
 
 export function updateFormField(fieldName, newValue, page) {
   return {
@@ -24,6 +28,13 @@ export function pageErrorsExist(profileErrorsObj, error, page) {
   }
 }
 
+export function prevPage(currentPage) {
+  return {
+    type: PREV_PAGE,
+    newPage: currentPage - 1
+  }
+}
+
 export function nextPage(currentPage, formProps) {
   return function(dispatch) {
     if(currentPage != 4) {
@@ -37,9 +48,12 @@ export function nextPage(currentPage, formProps) {
             ], currentPage))
 
           } else {
-            console.log("WE'RE GOOD TO CONTINUE")
+            // Go to next page
+            dispatch({
+              type: NEXT_PAGE,
+              newPage: currentPage + 1
+            })
           }
-
       })
     }
   }
@@ -48,6 +62,27 @@ export function nextPage(currentPage, formProps) {
 export function clearForm() {
   return {
     type: CLEAR_FORM
+  }
+}
+
+export function listRetrieved(listName, listArray) {
+  switch(listName) {
+    case 'JOBTYPES': {
+      return {
+        type: RETRIEVED_LIST,
+        listType: RETRIEVED_JOBTYPES,
+        list: listArray
+      }
+    }
+    default:
+      return;
+  }
+}
+
+// TODO: CREATE NEW JOB THUNK
+export function createNewJob(props) {
+  return function(dispatch) {
+
   }
 }
 
@@ -63,7 +98,8 @@ const createJobFormInitialState = {
   page3: {},
   page4: {},
   errorsExist: false,
-  errors: ''
+  errors: '',
+  lists: {}
 }
 
 export default function createJob (state = createJobFormInitialState, action) {
@@ -103,24 +139,28 @@ export default function createJob (state = createJobFormInitialState, action) {
           return {
             ...state,
             page1: page1(state.page1, action),
+            errors: action.error,
             errorsExist: true
           }
         case 2:
           return {
             ...state,
             page2: page2(state.page2, action),
+            errors: action.error,
             errorsExist: true
           }
         case 3:
           return {
             ...state,
             page3: page3(state.page3, action),
+            errors: action.error,
             errorsExist: true
           }
         case 4:
           return {
             ...state,
             page4: page4(state.page4, action),
+            errors: action.error,
             errorsExist: true
           }
         default:
@@ -128,7 +168,29 @@ export default function createJob (state = createJobFormInitialState, action) {
       }
     case CLEAR_FORM:
       return {
-        state: createJobFormInitialState
+        currentPage: 1,
+        page1: {},
+        page2: {},
+        page3: {},
+        page4: {},
+        errorsExist: false,
+        errors: '', 
+        lists: {}
+      }
+    case NEXT_PAGE:
+      return {
+        ...state,
+        currentPage: action.newPage
+      }
+    case PREV_PAGE:
+      return {
+        ...state,
+        currentPage: action.newPage
+      }
+    case RETRIEVED_LIST:
+      return {
+        ...state,
+        lists: lists(state.lists, action)
       }
     default:
       return state
@@ -205,7 +267,41 @@ function page1Errors(state = page1PropsErrorMap, action) {
 const page2InitialState = {
   question1: '',
   question2: '',
+  MAX_CHARS_question: 150,
   page2PropsErrorMap: {}
+}
+
+function page2(state = page2InitialState, action) {
+  switch(action.type) {
+    case UPDATE_FORM_FIELD:
+      return {
+        ...state,
+        [action.fieldName]: action.newValue,
+        page2PropsErrorMap: page2Errors(state.page2PropsErrorMap, action)
+      }
+    case PAGE_ERRORS_EXIST:
+      return {
+        ...state,
+        page2PropsErrorMap: action.profileErrorsObj
+      }
+    default:
+      return;
+  }
+}
+
+const page2PropsErrorMap = {
+  question1: false,
+  question2: false,
+}
+
+function page2Errors(state = page2PropsErrorMap, action) {
+  switch(action.type) {
+    case UPDATE_FORM_FIELD:
+      return {
+        ...state,
+        [action.fieldName]: false
+      }
+  }
 }
 
 /* ===============================================================
@@ -214,7 +310,7 @@ const page2InitialState = {
 */
 
 const page3InitialState = {
-  maxApplicants: '',
+  maxApplicants: 20,
   costPerApplicant: 0,
   allowStudentsOption: {},
   applyFilters: false,
@@ -229,6 +325,38 @@ const page3InitialState = {
   page3PropsErrorMap: {}
 }
 
+function page3(state = page3InitialState, action) {
+  switch(action.type) {
+    case UPDATE_FORM_FIELD:
+      return {
+        ...state,
+        [action.fieldName]: action.newValue,
+        page3PropsErrorMap: page3Errors(state.page3PropsErrorMap, action)
+      }
+    case PAGE_ERRORS_EXIST:
+      return {
+        ...state,
+        page3PropsErrorMap: action.profileErrorsObj
+      }
+    default:
+      return;
+  }
+}
+
+const page3PropsErrorMap = {
+  maxApplicants: false
+}
+
+function page3Errors(state = page3PropsErrorMap, action) {
+  switch(action.type) {
+    case UPDATE_FORM_FIELD:
+      return {
+        ...state,
+        [action.fieldName]: false
+      }
+  }
+}
+
 /* ===============================================================
 *   PAGE 4
 * ================================================================
@@ -239,4 +367,30 @@ const page4InitialState = {
   numberOfPremiums: 0,
   promoCode: '',
   page4PropsErrorMap: {}
+}
+
+/* ===============================================================
+*   LISTS
+* ================================================================
+*/
+
+const listsInitialState = {
+  jobTypes: []
+}
+
+function lists(state = listsInitialState, action) {
+  switch(action.type) {
+    case RETRIEVED_LIST:
+      switch(action.listType) {
+        case RETRIEVED_JOBTYPES:
+          return {
+            ...state,
+            jobTypes: action.list
+          } 
+        default:
+          return state
+      }
+    default:
+      return;
+  }
 }
