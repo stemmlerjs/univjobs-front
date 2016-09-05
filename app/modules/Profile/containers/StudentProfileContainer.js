@@ -226,7 +226,7 @@ function mapStateToProps({user, profile}) {
     graduationDate: profile.studentProfile.graduationDate ? profile.studentProfile.graduationDate : new Date,  
     major: profile.studentProfile.major ? profile.studentProfile.major : 1,  
     majorsList: profile.lists.majors ? profile.lists.majors : [],
-    gpa: profile.studentProfile.gpa ? profile.studentProfile.gpa : '',
+    gpa: profile.studentProfile.gpa ? profile.studentProfile.gpa : '0',
     personalEmail: profile.studentProfile.personalEmail ? profile.studentProfile.personalEmail : '',
     gender: profile.studentProfile.gender ? profile.studentProfile.gender : 'F',
     gendersList: profile.lists.genders ? profile.lists.genders : [],

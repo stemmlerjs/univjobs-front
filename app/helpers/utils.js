@@ -20,6 +20,17 @@ export function validateEmployerEmail(email) {
   return re.test(email)
 }
 
+export function validatePersonalEmail(email) {
+  var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  
+  //If true pass validation
+  if(re.test(email) || email == '') {
+    return true
+  } else {
+    return false
+  }
+}
+
 export function validateFirstName(firstName) {
   var re = /^[a-z ,.'-]{2,20}$/i
   return re.test(firstName)
@@ -71,8 +82,18 @@ export function validateAddress(address) {
   return re.test(address)
 }
 
-
-
+/*GPA must be two numbers or empty*/
+export function validateGPA(gpa) {
+  var re = /(^[0]$)|(^\d{2}$)/
+  return re.test(gpa)
+}
+/* Languages must be empty or a number from 0 to 132
+ * FIXME: Change range of input to 0 to 132
+ * */
+export function validateLanguages(gpa) {
+  var re = /(^$)|(^\d{3}$)/
+  return re.test(gpa)
+}
 // ***************** DATE ******************//
 export function toISO(date) {
   return date.getFullYear()+'-' + (date.getMonth()+1) + '-'+date.getDate();//prints expected format.

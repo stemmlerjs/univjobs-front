@@ -1,7 +1,9 @@
 import axios from 'axios'
 import config from 'config'
 import { getAccessToken } from 'helpers/auth'
-import { validateCompanyName, validateAddress, validateCity, validatePostalCode} from 'helpers/utils'
+import { validatePersonalEmail, validateFirstName, validateLastName, 
+	validateCompanyName, validateAddress, validateCity, 
+	validatePostalCode, validateGPA, validateLanguages} from 'helpers/utils'
 
 //********************** EMPLOYER *************************//
 
@@ -140,28 +142,28 @@ export function validateStudentProfileFields(profileInfo, next) {
 	resume: false
   }
   profileFieldErrors.emailPreferences = profileInfo.emailPreferences != "" ? false : true
-  profileFieldErrors.firstName = profileInfo.firstName != "" ? false : true
-  profileFieldErrors.lastName = profileInfo.lastName != "" ? false : true
+  profileFieldErrors.firstName = validateFirstName(profileInfo.firstName) ? false : true
+  profileFieldErrors.lastName = validateLastName(profileInfo.lastName) ? false : true
   profileFieldErrors.studentStatus = profileInfo.studentStatus != "" ? false : true
   profileFieldErrors.educationLevel= profileInfo.educationLevel != "" ? false : true
   profileFieldErrors.school= profileInfo.school != "" ? false : true
   profileFieldErrors.enrollmentDate = profileInfo.enrollmentDate != "" ? false : true
   profileFieldErrors.graduationDate = profileInfo.graduationDate != "" ? false : true
   profileFieldErrors.major = profileInfo.major != "" ? false : true
-  profileFieldErrors.gpa = profileInfo.gpa != "" ? false : true
-  profileFieldErrors.personalEmail = profileInfo.personalEmail != "" ? false : true
+  profileFieldErrors.gpa = validateGPA(profileInfo.gpa) ? false : true
+  profileFieldErrors.personalEmail = validatePersonalEmail(profileInfo.personalEmail) ? false : true
   profileFieldErrors.gender = profileInfo.gender != "" ? false : true
-  profileFieldErrors.sportsTeam = profileInfo.sportsTeam != "" ? false : true
-  profileFieldErrors.schoolClub = profileInfo.schoolClub != "" ? false : true
-  profileFieldErrors.languages = profileInfo.languages != "" ? false : true
+  //profileFieldErrors.sportsTeam = profileInfo.sportsTeam != "" ? false : true
+  //profileFieldErrors.schoolClub = profileInfo.schoolClub != "" ? false : true
+  profileFieldErrors.languages = validateLanguages(profileInfo.languages) ? false : true
   profileFieldErrors.hasCar = typeof profileInfo.hasCar == "boolean" ? false : true
-  profileFieldErrors.companyName = profileInfo.companyName != "" ? false : true
-  profileFieldErrors.position = profileInfo.position != "" ? false : true
+  //profileFieldErrors.companyName = profileInfo.companyName != "" ? false : true
+  //profileFieldErrors.position = profileInfo.position != "" ? false : true
   profileFieldErrors.funFacts = profileInfo.funFacts!= "" ? false : true
   profileFieldErrors.hometown = profileInfo.hometown != "" ? false : true
   profileFieldErrors.hobbies= profileInfo.hobbies != "" ? false : true
   profileFieldErrors.photo = profileInfo.photo!= "" ? false : true
-  profileFieldErrors.resume = profileInfo.resume != "" ? false : true
+  //profileFieldErrors.resume = profileInfo.resume != "" ? false : true
 
   // If an error exists in the map, then submitErrorsExist === true
   for (var attr in profileFieldErrors) {

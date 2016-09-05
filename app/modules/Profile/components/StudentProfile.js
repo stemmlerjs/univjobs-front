@@ -4,6 +4,7 @@ import { Combobox, DropdownList, DateTimePicker, Calendar, Multiselect, SelectLi
 import Dropzone from 'react-dropzone'
 import { pageContainer, profileField, profileHeader, error, container, input, shortInput, nameField,  emailField, dropDown, shortDropDown, mediumDropDown, longDropDown, dropzone, dropzoneContent, inlineDropzone, btn, saveBtnContainer, saveBtnList, saveBtnClicked, saveBtn, space} from '../styles/StudentProfileContainerStyles.css'
 import ReactTooltip from 'react-tooltip'
+import MaskedTextInput from 'react-text-mask'
 
 var Moment = require('moment')
 var momentLocalizer = require('react-widgets/lib/localizers/moment')
@@ -208,14 +209,15 @@ export default function StudentProfile (props) {
 	<StudentContainer title="My GPA is" 
 	 styles={nameField}>
 	 <li>
-	    <input
+	    <MaskedTextInput
+	     mask={[/[0-9]/, /\d/]}
 	     className={props.propsErrorMap.gpa ? input + ' ' + error : input}
 	     type="text"
+	     guide={false}
 	     placeholder="GPA" 
 	     onChange={(e) => props.updateProfileField('gpa', e.target.value, true)} 
 	     value={props.gpa}
-	     >
-	    </input>
+	     />
 	 </li>
 	 <li>
 	   <p>or</p>
@@ -320,7 +322,7 @@ export default function StudentProfile (props) {
 	 	<p>other languages</p>
 	 </li>
 	 <Multiselect
-	   className={input}
+	   className={props.propsErrorMap.languages ? shortInput + ' ' +  error : shortInput}
 	   textField='language'
 	   valueField='id'
 	   messages={messages}
