@@ -70,3 +70,10 @@ export function validateAddress(address) {
   let re = /^[a-z0-9 ,.'-]{2,30}$/i // numbers, letters and spaces only
   return re.test(address)
 }
+
+
+
+// ***************** DATE ******************//
+export function toISO(date) {
+  return date.getFullYear()+'-' + (date.getMonth()+1) + '-'+date.getDate();//prints expected format.
+}

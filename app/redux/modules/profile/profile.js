@@ -1,4 +1,5 @@
-import { employerProfilePUT, employerProfilePATCH, compareToSnapshot, validateEmployerProfileFields, validateStudentProfileFields } from 'helpers/profile'
+import { employerProfilePUT, employerProfilePATCH, validateEmployerProfileFields, studentProfilePUT, studentProfilePATCH, validateStudentProfileFields, compareToSnapshot } from 'helpers/profile'
+import { toISO } from 'helpers/utils'
 
 // =======================================================
 // ==================== ACTIONS ==========================
@@ -168,7 +169,6 @@ export function submitProfileFirstTime(userTypeInt, profileInfo, user) {
 	  console.log(userTypeInt, profileInfo, user)
     switch(userTypeInt) {
       case 0:
-	debugger;
 	console.log("SUBMITTING STUDENT PROFILE FIRST TIME")
 	validateStudentProfileFields(profileInfo, (errorExist, profileFieldErrors) => {
 	  if(errorExist) {
@@ -179,7 +179,7 @@ export function submitProfileFirstTime(userTypeInt, profileInfo, user) {
 	    ], true))
 	  
 	  } else {
-	   console.log('ELSE!!!!!!')
+	   console.log('SUBMIT STUDENT PROFILE NO ERRORS')
 	    // No errors, proceed to /PUT on api/me
             var putData = {
              // user: {
@@ -191,16 +191,17 @@ export function submitProfileFirstTime(userTypeInt, profileInfo, user) {
                 "user-is_active": true,
                 "user-date_joined": user.dateJoined,
                 "user-mobile": user.mobile,
+		"school-name": profileInfo.school,
 		  languages: profileInfo.languages,
 		  sports: profileInfo.sportsTeam,
 		  clubs: profileInfo.schoolClub,
 		  email_pref: profileInfo.emailPreferences,
 		  status: profileInfo.studentStatus,
-		  enroll_date: profileInfo.enrollmentDate,
-		  grad_date: profileInfo.graduationDate,
+		  enroll_date: toISO(profileInfo.enrollmentDate),
+		  grad_date: toISO(profileInfo.graduationDate),
 		  major: profileInfo.major,
 		  GPA: profileInfo.gpa,
-		  personal_email: profileInfo.personalEmail ,
+		  personal_email: profileInfo.personalEmail,
 		  gender: profileInfo.gender,
 		  has_car: profileInfo.hasCar,
 		  company: profileInfo.companyName,
@@ -208,7 +209,7 @@ export function submitProfileFirstTime(userTypeInt, profileInfo, user) {
 		  fun_fact: profileInfo.funFacts,
 		  hometown: profileInfo.hometown,
 		  hobbies: profileInfo.hobbies,
-		  photo: profileInfo.photos,
+		  photo: profileInfo.photo,
 		  resume: profileInfo.resume,
 	  }
 	    studentProfilePUT(putData)
@@ -217,11 +218,11 @@ export function submitProfileFirstTime(userTypeInt, profileInfo, user) {
 	        dispatch(saveProfileSuccess())
 	     })
 	     .catch((err) => {
-	       // DISPATCH - SAVE_PROFILE_SUCCESS
+	       // DISPATCH - SAVE_PROFILE_ERROR
 	        dispatch(saveProfileError({}, [
 			'HTTP Error Occurred',
 			err
-		], false))
+		], true))
 	     })
 	    }
 	  })
@@ -294,7 +295,7 @@ export function updateProfile(userTypeInt, profileInfo, user, snapshot) {
   return function (dispatch) {
     switch(userTypeInt) {
       case 0:
-	/*
+	debugger;
 	console.log("UPDATING STUDENT PROFILE")
 	validateStudentProfileFields(profileInfo, (errorExist, profileFieldErrors) => {
 	  if(errorExist) {
@@ -302,7 +303,7 @@ export function updateProfile(userTypeInt, profileInfo, user, snapshot) {
 	    // DISPATCH - SAVE_PROFILE_ERROR
 	    dispatch(saveProfileError(profileFieldErrors, [    "Couldn't save profile.",
 	  "Please fill in missing fields"
-	    ], false))
+	    ], true))
 	  
 	  } else {
 	    // No errors, proceed to /PUT on api/me
@@ -318,30 +319,44 @@ export function updateProfile(userTypeInt, profileInfo, user, snapshot) {
              //   "user-mobile": user.mobile,
              // 	is_a_student: false,
              // 	is_profile_completed: true, // set this flag to true so we know for next time
-		  emailPreferences: profileInfo.emailPreferences,
-		  firstName: profile.firstName,
-		  lastName:  profile.lastName,
-		  studentStatus: profile.studentStatus,
-		  schoolName: profile.schoolName,
-		  enrollmentDate: profile.enrollmentDate,
-		  graduationDate: profile.graduationDate,
-		  major: profile.major,
-		  gpa: profile.gpa,
-		  personalEmail: profile.personalEmail ,
-		  gender: profile.gender,
-		  sportsTeam: profile.sporstTeam,
-		  schoolClub: profile.schoolClub,
-		  languages: profile.languages,
-		  hasCar: profile.hasCar,
-		  companyName: profile.companyName,
-		  position: profile.position,
-		  funFacts: profile.funFacts,
-		  hometown: profile.hometown,
-		  hobbies: profile.hobbies,
-		  photo: profile.photos,
-		  resume: profile.resume,
+		  languages: profileInfo.languages,
+		  sports: profileInfo.sportsTeam,
+		  clubs: profileInfo.schoolClub,
+		  email_pref: profileInfo.emailPreferences,
+		  status: profileInfo.studentStatus,
+		  enroll_date: toISO(profileInfo.enrollmentDate),
+		  grad_date: toISO(profileInfo.graduationDate),
+		  major: profileInfo.major,
+		  GPA: profileInfo.gpa,
+		  personal_email: profileInfo.personalEmail ,
+		  gender: profileInfo.gender,
+		  has_car: profileInfo.hasCar,
+		  company: profileInfo.companyName,
+		  position: profileInfo.position,
+		  fun_fact: profileInfo.funFacts,
+		  hometown: profileInfo.hometown,
+		  hobbies: profileInfo.hobbies,
+		  photo: profileInfo.photo,
+		  resume: profileInfo.resume,
 	  }
-	  */
+            compareToSnapshot(snapshot, changedData, (result) => {
+              studentProfilePATCH(result)
+                .then((res) => {
+
+                  // DISPATCH - SAVE_PROFILE_SUCCESS
+                  dispatch(saveProfileSuccess())
+                })
+                .catch((err) => {
+
+                  // DISPATCH - SAVE_PROFILE_ERROR
+                  dispatch(saveProfileError({}, [
+                     'HTTP Error Occurred',
+                     err
+                  ], false))
+		})
+	    })
+	    }
+	  })
         return;
       case 1:
         console.log("UPDATING EMPLOYER PROFILE")

@@ -3,6 +3,8 @@ import config from 'config'
 import { getAccessToken } from 'helpers/auth'
 import { validateCompanyName, validateAddress, validateCity, validatePostalCode} from 'helpers/utils'
 
+//********************** EMPLOYER *************************//
+
 export function employerProfilePUT(data) {
   let formData = new FormData();
   const accessToken = getAccessToken();
@@ -70,18 +72,45 @@ export function validateEmployerProfileFields(profileInfo, next) {
   next(submitErrorsExist, profileFieldErrors)
 }
 
-export function compareToSnapshot(oldProfile, newProfile, callback) {
-  for(var prop in newProfile) {
-    if(newProfile[prop] == oldProfile[prop]) {
-      delete newProfile[prop]
-    }
+
+
+//******************************STUDENT********************************//
+
+export function studentProfilePUT(data) {
+  let formData = new FormData();
+  const accessToken = getAccessToken();
+
+  for(let key in data) {
+    formData.append(key, data[key])
   }
-  callback(newProfile)
+
+  return axios({
+    method: 'put',
+    url: config.baseUrl + 'me/',
+    headers: {
+      "Authorization": "JWT " + accessToken
+    },
+    data: formData
+  })
 }
 
+export function studentProfilePATCH(data) {
+  let formData = new FormData();
+  const accessToken = getAccessToken();
 
+  for(let key in data) {
+    formData.append(key, data[key])
+  }
 
-
+  return axios({
+    method: 'patch',
+    url: config.baseUrl + 'me/',
+    headers: {
+      "Authorization": "JWT " + accessToken
+    },
+    data: formData
+  })
+}
 export function validateStudentProfileFields(profileInfo, next) {
   debugger;
   let submitErrorsExist = false;
@@ -91,9 +120,7 @@ export function validateStudentProfileFields(profileInfo, next) {
    	lastName: false,
   	studentStatus: false,
 	educationLevel: false,
-	/*
-   	schoolName: false,
-	*/
+   	school: false,
    	enrollmentDate: false,
    	graduationDate: false,
 	major: false,
@@ -115,9 +142,9 @@ export function validateStudentProfileFields(profileInfo, next) {
   profileFieldErrors.emailPreferences = profileInfo.emailPreferences != "" ? false : true
   profileFieldErrors.firstName = profileInfo.firstName != "" ? false : true
   profileFieldErrors.lastName = profileInfo.lastName != "" ? false : true
-  profileFieldErrors.studentStatus = profileInfo.firstName != "" ? false : true
   profileFieldErrors.studentStatus = profileInfo.studentStatus != "" ? false : true
   profileFieldErrors.educationLevel= profileInfo.educationLevel != "" ? false : true
+  profileFieldErrors.school= profileInfo.school != "" ? false : true
   profileFieldErrors.enrollmentDate = profileInfo.enrollmentDate != "" ? false : true
   profileFieldErrors.graduationDate = profileInfo.graduationDate != "" ? false : true
   profileFieldErrors.major = profileInfo.major != "" ? false : true
@@ -127,7 +154,7 @@ export function validateStudentProfileFields(profileInfo, next) {
   profileFieldErrors.sportsTeam = profileInfo.sportsTeam != "" ? false : true
   profileFieldErrors.schoolClub = profileInfo.schoolClub != "" ? false : true
   profileFieldErrors.languages = profileInfo.languages != "" ? false : true
-  profileFieldErrors.hasCar = profileInfo.hasCar != "" ? false : true
+  profileFieldErrors.hasCar = typeof profileInfo.hasCar == "boolean" ? false : true
   profileFieldErrors.companyName = profileInfo.companyName != "" ? false : true
   profileFieldErrors.position = profileInfo.position != "" ? false : true
   profileFieldErrors.funFacts = profileInfo.funFacts!= "" ? false : true
@@ -142,4 +169,22 @@ export function validateStudentProfileFields(profileInfo, next) {
   }
 
   next(submitErrorsExist, profileFieldErrors)
+}
+
+
+
+//********************* COMPARISON ********************//
+/*
+ * Will compare the old profile to the new profile to determine 
+ * wether PUT or PATCH is used.
+ * 
+ * ***************************************************/
+
+export function compareToSnapshot(oldProfile, newProfile, callback) {
+  for(var prop in newProfile) {
+    if(newProfile[prop] == oldProfile[prop]) {
+      delete newProfile[prop]
+    }
+  }
+  callback(newProfile)
 }

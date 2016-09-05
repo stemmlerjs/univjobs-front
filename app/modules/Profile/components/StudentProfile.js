@@ -154,7 +154,7 @@ export default function StudentProfile (props) {
 	   />
          </li>
 	 <li>
-	   <p>from [Insert School Name]</p>
+	   <p>from {props.school}</p>
 	 </li>
 	</StudentContainer>
 
@@ -201,7 +201,10 @@ export default function StudentProfile (props) {
 	  </li>
 	</StudentContainer>
 
-	{/* GPA */}
+	{/* GPA 
+	   Validation must be a number
+
+	*/}
 	<StudentContainer title="My GPA is" 
 	 styles={nameField}>
 	 <li>
@@ -222,7 +225,9 @@ export default function StudentProfile (props) {
 	 </li>
 	</StudentContainer>
 
-	{/* PERSONAL EMAIL*/}
+	{/* PERSONAL EMAIL
+	  Can be empty
+	*/}
 	<StudentContainer title="My personal email is" 
 	 styles={nameField}>
 	 <li>
@@ -257,7 +262,9 @@ export default function StudentProfile (props) {
 	/>	
 	</StudentContainer>
 
-	{/* SPORTS*/}
+	{/* SPORTS
+	  Can be empty
+	*/}
 	<StudentContainer title="I"
 	 styles={nameField}>
 	 <li className={saveBtnList}>
@@ -277,7 +284,10 @@ export default function StudentProfile (props) {
 	 </input>
 	</StudentContainer>
 
-	{/* CLUB */} 
+	{/* CLUB 
+           Can be empty
+	
+	*/} 
 	<StudentContainer title="I " 
 	 styles={nameField}>
 	 <li className={saveBtnList}>
@@ -297,7 +307,9 @@ export default function StudentProfile (props) {
 	 </input>
 	</StudentContainer>
 
-	{/* LANGUAGE*/}
+	{/* LANGUAGE
+	  Can be empty
+	*/}
 	<StudentContainer title="I" 
 	 styles={nameField}>
 	 <li className={saveBtnList}>
@@ -339,7 +351,9 @@ export default function StudentProfile (props) {
 	 </li>
 	</StudentContainer>
 	
-	{/* EXPERIENCE */} 
+	{/* EXPERIENCE
+	  Can be empty
+	*/} 
 	<StudentContainer title="I recently worked at "      styles={nameField}>
 	<li> 
          <input

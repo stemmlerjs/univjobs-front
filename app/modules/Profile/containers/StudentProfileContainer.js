@@ -170,9 +170,7 @@ const StudentProfileContainer = React.createClass({
       	  studentStatusList={this.props.studentStatusList}
 	  educationLevel={this.props.educationLevel}
 	  educationLevelList={this.props.educationLevelList}
-	  /*
-	  schoolName={this.props.schoolName}
-	  */
+	  school={this.props.school}
 	  enrollmentDate={this.props.enrollmentDate}
 	  graduationDate={this.props.graduationDate}
 	  major={this.props.major}
@@ -197,6 +195,7 @@ const StudentProfileContainer = React.createClass({
 	  updateProfileField={this.props.updateProfileField}
 	 // submitErrorsExist={this.props.submitErrorsExist}
 	  propsErrorMap={this.props.propsErrorMap}
+	  snapshot={this.props.snapshot}
 	/>
 	<ToastContainer ref="container"
 	  toastMessageFactory={ToastMessageFactory}
@@ -217,14 +216,15 @@ function mapStateToProps({user, profile}) {
     lastName: profile.studentProfile.lastName ? profile.studentProfile.lastName : '',
     studentStatus: profile.studentProfile.studentStatus ? profile.studentProfile.studentStatus : 1,          // DEFAULT value (String || number)
     studentStatusList: profile.lists.studentStatuses ? profile.lists.studentStatuses : [],                    // list of selected value (array)
-    educationLevel: profile.studentProfile.educationLevel ? profile.studentProfile.educationLevel : 0,
+    educationLevel: profile.studentProfile.educationLevel ? profile.studentProfile.educationLevel : 1,
     educationLevelList: profile.lists.eduLevels ? profile.lists.eduLevels : [],
-    /*
-    schoolName: profile.studentProfile.schoolName ? profile.studentProfile.schoolName : '',
-    */
+    /**
+     * Get students school from snapshot
+     * */
+    school: profile.snapshot.school ? profile.snapshot.school.name : '',
     enrollmentDate: profile.studentProfile.enrollmentDate ?  profile.studentProfile.enrollmentDate : new Date, 
     graduationDate: profile.studentProfile.graduationDate ? profile.studentProfile.graduationDate : new Date,  
-    major: profile.studentProfile.major ? profile.studentProfile.major : 0,  
+    major: profile.studentProfile.major ? profile.studentProfile.major : 1,  
     majorsList: profile.lists.majors ? profile.lists.majors : [],
     gpa: profile.studentProfile.gpa ? profile.studentProfile.gpa : '',
     personalEmail: profile.studentProfile.personalEmail ? profile.studentProfile.personalEmail : '',
@@ -250,9 +250,7 @@ function mapStateToProps({user, profile}) {
    	lastName: false,
   	studentStatus: false,
 	educationLevel: false,
-	/*
-   	schoolName: false,
-	*/
+   	school: false,
    	enrollmentDate: false,
    	graduationDate: false,
 	major: false,
@@ -272,7 +270,7 @@ function mapStateToProps({user, profile}) {
 	resume: false
     },
     error: profile.error ? profile.error : '',
-    submitSuccess: profile.submitSuccess ? profilesubmitSuccess : false
+    submitSuccess: profile.submitSuccess ? profile.submitSuccess : false
   }
 }
 
