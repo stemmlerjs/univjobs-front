@@ -24,6 +24,9 @@ export function getEmailPref(store) {
     .then((response) => {
       store.dispatch(listRetrieved('EMAIL_PREFERENCES', response.data))
 	resolve(true);
+    })
+  })
+}
 
 export function getJobTypes(store) {
   const promise = new Promise((resolve, reject) => {
@@ -95,23 +98,6 @@ export function getGender(store) {
   return promise;
 }
 
-/*
- * getSportsTeams might not be needed as a list of choices. For now, 
-export function getStudentStatus(store) {
-  const promise = new Promise((resolve, reject) => {
-    axios.get(config.baseUrl + 'list/status')
-    .then((response) => {
-      store.dispatch(listRetrieved('STUDENT_STATUSES', response.data))
-	resolve(true);
-    })
-    .catch(()=> {
-      resolve(false);
-    })
-  })
-  return promise;
-}
-*
-*/
 
 /*
  * getLanguages might have choices, but how will students be able to pick more than one?
