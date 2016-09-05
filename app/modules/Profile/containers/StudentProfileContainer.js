@@ -144,18 +144,18 @@ const StudentProfileContainer = React.createClass({
   },
 
   handleSubmit(studentProps) {
+  debugger;
    //If profile is NOT completed, do /PUT. All fields must be populated and valid.
    if(!this.props.isProfileCompleted) {
 	   this.context.store.dispatch(
 		profileActionCreators.submitProfileFirstTime(0, studentProps, this.props.user)
 	    )
-   }// else {
-   	//this.context.store.dispatch(
-	//  profileActionCreators.updateProfile(1, studentProps, this.props.user, this.props.snapshot)
-	//)
-	//console.log("Profile already completed, use PATCH")}
-   //}
-  },
+   } else {
+   	this.context.store.dispatch(
+	  profileActionCreators.updateProfile(0, studentProps, this.props.user, this.props.snapshot)
+	)
+	console.log("Profile already completed, use PATCH")}
+   },
 
   render () {
     return (
