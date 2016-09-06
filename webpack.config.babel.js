@@ -60,9 +60,9 @@ const developmentConfig = {
         target: 'https://www.univjobs.ca/',
         secure: false,
         changeOrigin: true,
-        bypass: function(req, res, proxyOptions) {
-          console.log(req)
-        }
+        // bypass: function(req, res, proxyOptions) {
+        //   console.log(req)
+        // }
       }
     }
   },
