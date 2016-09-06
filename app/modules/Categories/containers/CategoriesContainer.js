@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { PropTypes } from 'react'
 import { Link } from 'react-router'
 import { SidebarContainer } from 'modules/Main'
+import { authRedirectFilter } from 'config/routes'
 import { title, mainContainer, container, categories, category, categoryText, headingStyle, subHeadingStyle } from '../styles/CategoriesContainerStyles.css'
 
 const categoryList = [{
@@ -79,10 +80,44 @@ const Title = function({subHeading}) {
 }
 
 const CategoriesContainer = React.createClass({
+  contextTypes: {
+    router: PropTypes.object.isRequired,
+    store: PropTypes.object.isRequired,
+  },
+
   componentWillMount() {
     // Hide the overlay on mount if coming from direct URL
-    this.props.closeOverlay()
+    this.doRedirectionFilter()
+      .then(this.props.closeOverlay())
   },
+
+  /** doRedirectionFilter
+  *
+  * The redirection filter is the process that occurs each time we enter this container.
+  * Used in every higher order component and supplied with a config, it ensures that the
+  * user is redirected to the appropriate page based on their authentication status and 
+  * user type.
+  *
+  * @return (Promise)
+  *
+  */
+
+  doRedirectionFilter(){
+    const config = {
+      failureRedirect: {
+        student: '/join',         // if not logged in, go here (student)
+        employer: '/join'         // if not logged in, go here (employer)
+      },
+      restricted: {
+        to: 'EMPLOYERS',          // employers only on this route
+        redirectTo: '/profile/st' // if not an employer, redirect to the student equivalent
+      },
+      profileIncompleteRedirect: true
+    }
+
+    return authRedirectFilter(config, this.context.store, this.context.router)
+  },
+
   render () {
     return (
       <div className={mainContainer}>
