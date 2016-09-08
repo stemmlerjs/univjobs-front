@@ -144,7 +144,6 @@ const StudentProfileContainer = React.createClass({
   },
 
   handleSubmit(studentProps) {
-  debugger;
    //If profile is NOT completed, do /PUT. All fields must be populated and valid.
    if(!this.props.isProfileCompleted) {
 	   this.context.store.dispatch(

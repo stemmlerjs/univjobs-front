@@ -5,4 +5,5 @@ export EmployerProfileContainer from './Profile/containers/EmployerProfileContai
 export InitialOverlay from './Main/containers/InitialOverlay'
 export CategoriesContainer from './Categories/containers/CategoriesContainer'
 export CreateJobContainer from './CreateJob/containers/CreateJobContainer'
+export StudentDashboardContainer from './Dashboard/containers/StudentDashboardContainer'
 

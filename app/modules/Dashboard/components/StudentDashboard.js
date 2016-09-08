@@ -1,12 +1,14 @@
 import React, { PropTypes } from 'react'
 
-StudentDashboard.propTypes = {
-  /*
-   *Add things that are required
-   * */
+
+export default function StudentDashboard () {
+ console.log("Hello")
+
+   return (
+	<div>
+	 <p>Test</p>
+	</div>
+   )
 }
 
-export default function StudentDashboard({}) {
 
-
-}
