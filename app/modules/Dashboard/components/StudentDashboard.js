@@ -10,7 +10,9 @@ export default function StudentDashboard ({user, props}) {
        <div className={pageContainer}>
          <div className={cardContainer}>
 	    <div className={card}>
-	      div
+	      <div>
+	        <h1>Hello</h1>
+	      </div>
 	    </div>
 	    <div className={card}>
 	      div
