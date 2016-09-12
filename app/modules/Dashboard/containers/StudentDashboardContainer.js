@@ -1,6 +1,8 @@
 import React, { PropTypes } from 'react'
 import { SidebarContainer } from 'modules/Main'
 import { StudentDashboard } from 'modules/Dashboard'
+
+import SkyLight from 'react-skylight'
 /*
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -24,7 +26,27 @@ const StudentDashboardContainer = React.createClass({
   *
   *  Intially, we assume the user is a Student (users.isAStudent === true).
   *  This flips the switch on that.
+  *
+  handleSwitchUserType (e) {
+    e.preventDefault()
+    this.props.switchedUserType(this.props.isAStudent)
+  },
   */
+
+/**
+  * openLoginModal
+  *
+  *  Opens the Login modal. Can be triggered on either Student or Employer view.
+  *  Function is passed to the Navigation component as Props
+  *
+  * @param (Event) e - the click event
+  */
+
+  openLoginModal (e) {
+    e.preventDefault()
+    this.refs.loginModal.show()
+  },
+
   componentWillMount() {
 	this.props.closeOverlay()
   },

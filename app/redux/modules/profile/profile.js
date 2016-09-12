@@ -48,7 +48,7 @@ export function updateProfileField(fieldName, newValue, isAStudent) {
     fieldName,
     newValue,
     isAStudent
-  }
+ }
 }
 
 export function listRetrieved(listName, listArray) {

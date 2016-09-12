@@ -1,14 +1,42 @@
 import React, { PropTypes } from 'react'
+import SkyLight from 'react-skylight'
 import { pageContainer, cardContainer, card, cardHeader, 
 	jobTitleContainer, jobTitle, industryTitle,
 	tagContainer, tagList, tagElement,
 	companyContainer, companyInfoContainer, companyTitle,
 	applyButton} from '../styles/StudentDashboard.css'
 
+const styles = {
+  overlayStyles: {
+    position: 'absolute',
+    top: '0px',
+    left: '0px',
+    right: '0px',
+    bottom: '0px',
+    zIndex: 99,
+    backgroundColor: 'rgba(0,0,0,0.3)'
+  },
+  dialogStyles: {
+    height: '400px',
+    fontSize:'30px',
+    backgroundColor: '#fff',
+    borderRadius: '2px',
+    zIndex: 100,
+    padding: '15px',
+    boxShadow: '0 0 4px rgba(0,0,0,.14),0 4px 8px rgba(0,0,0,.28)',
+    position: 'absolute',
+    top: 'none',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: '537px',
+    marginLeft: '0px',
+    textAlign: 'center'
+  }
+};
 
-export default function StudentDashboard ({user, props}) {
- console.log("Hello")
+const StudentDashboard = React.createClass({
 
+  render() {
 	 //Pass user info with job info then loop to show
    return (
        <div className={pageContainer}>
@@ -57,11 +85,23 @@ export default function StudentDashboard ({user, props}) {
 		 </li>
 		</ul>
 	      </div>
-	      <input type="button" className={applyButton} value="APPLY"/>
-	    </div>
+	      <button className={applyButton} onClick={() => this.refs.studentModal.show()}>APPLY</button>
+	      <SkyLight
+	      	overlayStyles={styles.overlayStyles}
+	        dialogStyles={styles.dialogStyles}
+		closeButtonStyle={styles.closedButtonStyle}
+		hideOnOverlayClicked
+		ref="studentModal"
+		title="Test">
+	        <h3>Testing</h3> 
+          	 <button>Apply</button>
+	     </SkyLight>  
+	   </div>
 	 </div>
        </div>
-   )
-}
+       )
+  }
+})
 
+export default StudentDashboard
 
