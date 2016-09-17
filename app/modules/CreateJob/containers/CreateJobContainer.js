@@ -233,7 +233,7 @@ const CreateJobContainer = React.createClass({
         return;
       case 4:
         this.context.store.dispatch(
-          createJobActionCreators.createNewJob(this.props)
+          createJobActionCreators.createNewJob(this.props, this.props.params.jobtype)
         )
         return;
       default:
@@ -375,9 +375,12 @@ const CreateJobContainer = React.createClass({
   },
 })
 
-function mapStateToProps({createJob, profile}) {
+function mapStateToProps({createJob, profile, user}) {
   console.log(createJob, "NEW PROPS")
   return {
+    user: {
+      emailVerified: user.emailVerified ? user.emailVerified : false
+    },
     currentPage: createJob.currentPage ? createJob.currentPage : 1,
     industry: profile.employerProfile.industry ? profile.employerProfile.industry : 0,
     industryList: profile.lists.industries ? profile.lists.industries : [],

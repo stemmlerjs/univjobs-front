@@ -1,10 +1,11 @@
-import {validateCreateJobFields} from 'helpers/createjob'
+import { validateCreateJobFields, createNewJobPOST } from 'helpers/createjob'
 
 const PAGE_ERRORS_EXIST = 'PAGE_ERRORS_EXIST'
 const NEXT_PAGE = 'NEXT_PAGE'
 const PREV_PAGE = 'PREV_PAGE'
 const UPDATE_FORM_FIELD = 'UPDATE_FORM_FIELD'
 const CLEAR_FORM = 'CLEAR_FORM'
+const SUBMITTING_JOB = 'SUBMITTING_JOB'
 const CREATE_JOB_SUCCESS = 'CREATE_JOB_SUCCESS'
 const CREATE_JOB_FAILURE = 'CREATE_JOB_FAILURE'
 const RETRIEVED_LIST = 'CREATE_JOB.RETRIEVED_LIST'
@@ -79,10 +80,41 @@ export function listRetrieved(listName, listArray) {
   }
 }
 
-// TODO: CREATE NEW JOB THUNK
-export function createNewJob(props) {
-  return function(dispatch) {
+function submittingJob() {
+  return {
+    type: SUBMITTING_JOB
+  }
+}
 
+// TODO: CREATE NEW JOB THUNK
+export function createNewJob(props, jobType) {
+  return function(dispatch) {
+    //type, title, paid, start_date, responsibilties, qualification, compensation, address, city, question_1, question_2, max_participants, active, verified
+
+    /* TODO:
+      - look into isPayingJob field
+      - get the proper format for dates
+      - split internshipLocation into city and address
+    */
+     debugger;
+    createNewJobPOST(
+       jobType,
+       props.page1.jobTitle,
+       props.page1.isPayingJob,
+       props.page1.startDate,
+       props.page1.responsibilities,
+       props.page1.qualifications,
+       props.page1.compensation,
+       props.page1.internshipLocation,
+       props.page1.intershipLocation,
+       props.page2.question1,
+       props.page2.question2,
+       props.page3.maxApplicants,
+       true, // active (?)
+       props.user.emailVerified
+    )
+   
+    createNewJobPOST(props)
   }
 }
 
@@ -98,6 +130,7 @@ const createJobFormInitialState = {
   page3: {},
   page4: {},
   errorsExist: false,
+  isSubmitting: false,
   errors: '',
   lists: {}
 }
@@ -191,6 +224,21 @@ export default function createJob (state = createJobFormInitialState, action) {
       return {
         ...state,
         lists: lists(state.lists, action)
+      }
+    case SUBMITTING_JOB:
+      return {
+        ...state,
+        isSubmitting: true
+      }
+    case CREATE_JOB_FAILURE:
+      return {
+        ...state,
+        isSubmitting: false
+      }
+    case CREATE_JOB_SUCCESS:
+      return {
+        ...state,
+        isSubmitting: false
       }
     default:
       return state

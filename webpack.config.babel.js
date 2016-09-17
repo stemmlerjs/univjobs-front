@@ -57,12 +57,13 @@ const developmentConfig = {
     progress: true,
     proxy: {
       '/api/**': {
-        target: 'https://www.univjobs.ca/',
+        target: 'http://ec2-52-87-227-85.compute-1.amazonaws.com:8000/',
         secure: false,
         changeOrigin: true,
-        // bypass: function(req, res, proxyOptions) {
-        //   console.log(req)
-        // }
+        protocolRewrite: true,
+        bypass: function(req, res, proxyOptions) {
+          // console.log("RESPONSE", res)
+        }
       }
     }
   },

@@ -220,8 +220,8 @@ export function submitProfileFirstTime(userTypeInt, profileInfo, user) {
               .catch((err) => {
                 // DISPATCH - SAVE_PROFILE_ERROR
                 dispatch(saveProfileError({}, [
-                  'HTTP Error Occurred',
-                  err
+                  'HTTP Error Occurred.\n',
+                  err.message
               ], false))
 
               })
@@ -293,8 +293,8 @@ export function updateProfile(userTypeInt, profileInfo, user, snapshot) {
 
                   // DISPATCH - SAVE_PROFILE_ERROR
                   dispatch(saveProfileError({}, [
-                    'HTTP Error Occurred',
-                    err
+                    'HTTP Error Occurred.\n',
+                    err.message
                 ], false))
 
                 })
