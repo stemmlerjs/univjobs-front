@@ -4,7 +4,8 @@ import { pageContainer, cardContainer, card, cardHeader,
 	jobTitleContainer, jobTitle, industryTitle,
 	tagContainer, tagList, tagElement,
 	companyContainer, companyInfoContainer, companyTitle,
-	applyButton} from '../styles/StudentDashboard.css'
+	applyButton, cardModalContainer, cardModalHeader, jobModalTitle,
+	jobModalIndustry, cardModalBodyLeft, cardModalBodyRight} from '../styles/StudentDashboard.css'
 
 const styles = {
   overlayStyles: {
@@ -17,20 +18,10 @@ const styles = {
     backgroundColor: 'rgba(0,0,0,0.3)'
   },
   dialogStyles: {
-    height: '400px',
-    fontSize:'30px',
-    backgroundColor: '#fff',
-    borderRadius: '2px',
-    zIndex: 100,
-    padding: '15px',
-    boxShadow: '0 0 4px rgba(0,0,0,.14),0 4px 8px rgba(0,0,0,.28)',
-    position: 'absolute',
-    top: 'none',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: '537px',
-    marginLeft: '0px',
-    textAlign: 'center'
+     width: '50%',
+     height: '75%',
+     marginTop: '-300px',
+     marginLeft: '-25%',
   }
 };
 
@@ -85,16 +76,48 @@ const StudentDashboard = React.createClass({
 		 </li>
 		</ul>
 	      </div>
-	      <button className={applyButton} onClick={() => this.refs.studentModal.show()}>APPLY</button>
+	      <button className={applyButton} onClick={() => this.refs.jobModal.show()}>APPLY</button>
 	      <SkyLight
 	      	overlayStyles={styles.overlayStyles}
 	        dialogStyles={styles.dialogStyles}
 		closeButtonStyle={styles.closedButtonStyle}
 		hideOnOverlayClicked
-		ref="studentModal"
-		title="Test">
-	        <h3>Testing</h3> 
-          	 <button>Apply</button>
+		ref="jobModal"
+		>
+		<div className={cardModalContainer}>
+		  <div className={cardModalBodyLeft}>
+		     <div className={cardModalHeader}>
+		      <h2 className={jobModalTitle}>Job Title</h2>
+		      <h3 className={jobModalIndustry}>Industry Name</h3>
+		      <div>
+		    	<p>Test</p>
+		    	<p>Test</p>
+		    	<p>Test</p>
+		    	<p>Test</p>
+		    	<p>Test</p>
+		    	<p>Test</p>
+		    	<p>Test</p>
+		    	<p>Test</p>
+		    	<p>Test</p>
+		    	<p>Test</p>
+		    	<p>Test</p>
+		    	<p>Test</p>
+		    	<p>Test</p>
+		    	<p>Test</p>
+		    	<p>Test</p>
+		    	<p>Test</p>
+		    	<p>Test</p>
+		    	<p>Test</p>
+		    	<p>Test</p>
+		    	<p>Test</p>
+		    	<p>Test</p>
+		     </div>
+		    </div>
+		  </div>
+		  <div className={cardModalBodyRight}>
+		    <p>Hello</p>
+		 </div>
+		</div>
 	     </SkyLight>  
 	   </div>
 	 </div>
