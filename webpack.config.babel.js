@@ -57,7 +57,7 @@ const developmentConfig = {
     progress: true,
     proxy: {
       '/api/**': {
-        target: 'http://ec2-52-87-227-85.compute-1.amazonaws.com:8000/',
+        target: 'http://ec2-52-87-227-85.compute-1.amazonaws.com:8000',
         secure: false,
         changeOrigin: true,
         protocolRewrite: true,

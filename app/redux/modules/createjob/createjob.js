@@ -96,9 +96,19 @@ export function createNewJob(props, jobType) {
       - get the proper format for dates
       - split internshipLocation into city and address
     */
-     debugger;
+
+    let jobTypeInt = 1;
+    switch(jobType) {
+      case "summer": 
+        jobTypeInt = 1;
+        return;
+      default:
+        return;
+    }
+
+
     createNewJobPOST(
-       jobType,
+       jobTypeInt,
        props.page1.jobTitle,
        props.page1.isPayingJob,
        props.page1.startDate,
@@ -109,12 +119,16 @@ export function createNewJob(props, jobType) {
        props.page1.intershipLocation,
        props.page2.question1,
        props.page2.question2,
-       props.page3.maxApplicants,
+       Number(props.page3.maxApplicants),
        true, // active (?)
        props.user.emailVerified
     )
-   
-    createNewJobPOST(props)
+    .then((res) => {
+
+    })
+    .catch((err) => {
+      
+    })
   }
 }
 
