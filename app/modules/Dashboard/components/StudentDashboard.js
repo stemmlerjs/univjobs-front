@@ -5,7 +5,8 @@ import { pageContainer, cardContainer, card, cardHeader,
 	tagContainer, tagList, tagElement,
 	companyContainer, companyInfoContainer, companyTitle,
 	applyButton, cardModalContainer, cardModalHeader, jobModalTitle,
-	jobModalIndustry, cardModalBodyLeft, cardModalBodyRight} from '../styles/StudentDashboard.css'
+	jobModalIndustry, cardModalBodyLeft, cardModalBodyRight, cardModalScroll, cardModalFooter,
+	image, questionHeader} from '../styles/StudentDashboard.css'
 
 const styles = {
   overlayStyles: {
@@ -89,8 +90,8 @@ const StudentDashboard = React.createClass({
 		     <div className={cardModalHeader}>
 		      <h2 className={jobModalTitle}>Job Title</h2>
 		      <h3 className={jobModalIndustry}>Industry Name</h3>
-		      <div>
-		    	<p>Test</p>
+		      </div>
+		      <div className={cardModalScroll}>
 		    	<p>Test</p>
 		    	<p>Test</p>
 		    	<p>Test</p>
@@ -112,10 +113,18 @@ const StudentDashboard = React.createClass({
 		    	<p>Test</p>
 		    	<p>Test</p>
 		     </div>
+		     <div className={cardModalFooter}>
+		       <img className={image}src="https://placeholdit.imgix.net/~text?txtsize=50&txt=50%C3%9750&w=50&h=50"/>
+		     </div>
 		    </div>
-		  </div>
 		  <div className={cardModalBodyRight}>
-		    <p>Hello</p>
+		    <p className={questionHeader}>Question</p>
+		    <textarea rows="6"></textarea>
+		    <p className={questionHeader}>Question</p>
+		    <textarea rows="6"></textarea>
+		    <div>
+		     <button>heelo</button>  
+		    </div> 
 		 </div>
 		</div>
 	     </SkyLight>  
