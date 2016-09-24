@@ -1,4 +1,8 @@
 
+export function yyyymmdd(rightNow) {
+  return rightNow.toISOString().slice(0,10).replace(/-/g,"-");
+}
+
 export function validatePassword(password) {
   return password.length > 6
 }

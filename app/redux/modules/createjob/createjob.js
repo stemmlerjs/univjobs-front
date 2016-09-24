@@ -1,4 +1,5 @@
 import { validateCreateJobFields, createNewJobPOST } from 'helpers/createjob'
+import { yyyymmdd } from 'helpers/utils'
 
 const PAGE_ERRORS_EXIST = 'PAGE_ERRORS_EXIST'
 const NEXT_PAGE = 'NEXT_PAGE'
@@ -96,22 +97,19 @@ export function createNewJob(props, jobType) {
       - get the proper format for dates
       - split internshipLocation into city and address
     */
-
+    debugger;
     let jobTypeInt = 1;
     switch(jobType) {
       case "summer": 
         jobTypeInt = 1;
-        return;
-      default:
-        return;
     }
 
 
-    createNewJobPOST(
+    dispatch(createNewJobPOST(
        jobTypeInt,
        props.page1.jobTitle,
        props.page1.isPayingJob,
-       props.page1.startDate,
+       yyyymmdd(props.page1.startDate),
        props.page1.responsibilities,
        props.page1.qualifications,
        props.page1.compensation,
@@ -122,12 +120,12 @@ export function createNewJob(props, jobType) {
        Number(props.page3.maxApplicants),
        true, // active (?)
        props.user.emailVerified
-    )
+    ))
     .then((res) => {
-
+      console.log(res)
     })
     .catch((err) => {
-      
+      console.log(err)
     })
   }
 }
