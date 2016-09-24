@@ -108,7 +108,7 @@ export function createNewJob(props, jobType) {
     dispatch(createNewJobPOST(
        jobTypeInt,
        props.page1.jobTitle,
-       props.page1.isPayingJob,
+       props.page1.isPayingJob ? 1 : 0,
        yyyymmdd(props.page1.startDate),
        props.page1.responsibilities,
        props.page1.qualifications,
@@ -118,8 +118,8 @@ export function createNewJob(props, jobType) {
        props.page2.question1,
        props.page2.question2,
        Number(props.page3.maxApplicants),
-       true, // active (?)
-       props.user.emailVerified
+       1, // active (?)
+       props.user.emailVerified ? 1 : 0
     ))
     .then((res) => {
       console.log(res)

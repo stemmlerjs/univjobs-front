@@ -220,4 +220,8 @@ export function getAccessToken() {
   return cookie.load('univjobs-access-token');
 }
 
+export function getCSRFToken() {
+  return cookie.load('csrftoken');
+}
+
 

@@ -1,18 +1,19 @@
 import axios from 'axios'
 import config from 'config'
-import { getAccessToken } from 'helpers/auth'
+import { getAccessToken, getCSRFToken } from 'helpers/auth'
 import { validateJobTitle } from 'helpers/utils'
 
 export function createNewJobPOST (type, title, paid, start_date, responsibilities, qualification, compensation,
  address, city, question_1, question_2, max_participants, active, verified) {
   const accessToken = getAccessToken();
+  const csrfToken = getCSRFToken();
 
   return axios({
     method: 'post',
     url: config.baseUrl + 'job/new/',
     headers: {
       "Authorization": "JWT " + accessToken,
-      "Content-Type": "application/json"
+      'X-CSRFToken': csrfToken
     },
     data: {
       type,                   // INTEGER (0 for now?)
