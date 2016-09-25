@@ -1,10 +1,12 @@
-import {validateCreateJobFields} from 'helpers/createjob'
+import { validateCreateJobFields, createNewJobPOST } from 'helpers/createjob'
+import { yyyymmdd } from 'helpers/utils'
 
 const PAGE_ERRORS_EXIST = 'PAGE_ERRORS_EXIST'
 const NEXT_PAGE = 'NEXT_PAGE'
 const PREV_PAGE = 'PREV_PAGE'
 const UPDATE_FORM_FIELD = 'UPDATE_FORM_FIELD'
 const CLEAR_FORM = 'CLEAR_FORM'
+const SUBMITTING_JOB = 'SUBMITTING_JOB'
 const CREATE_JOB_SUCCESS = 'CREATE_JOB_SUCCESS'
 const CREATE_JOB_FAILURE = 'CREATE_JOB_FAILURE'
 const RETRIEVED_LIST = 'CREATE_JOB.RETRIEVED_LIST'
@@ -79,10 +81,52 @@ export function listRetrieved(listName, listArray) {
   }
 }
 
-// TODO: CREATE NEW JOB THUNK
-export function createNewJob(props) {
-  return function(dispatch) {
+function submittingJob() {
+  return {
+    type: SUBMITTING_JOB
+  }
+}
 
+// TODO: CREATE NEW JOB THUNK
+export function createNewJob(props, jobType) {
+  return function(dispatch) {
+    //type, title, paid, start_date, responsibilties, qualification, compensation, address, city, question_1, question_2, max_participants, active, verified
+
+    /* TODO:
+      - look into isPayingJob field
+      - get the proper format for dates
+      - split internshipLocation into city and address
+    */
+    debugger;
+    let jobTypeInt = 1;
+    switch(jobType) {
+      case "summer": 
+        jobTypeInt = 1;
+    }
+
+
+    dispatch(createNewJobPOST(
+       jobTypeInt,
+       props.page1.jobTitle,
+       props.page1.isPayingJob ? 1 : 0,
+       yyyymmdd(props.page1.startDate),
+       props.page1.responsibilities,
+       props.page1.qualifications,
+       props.page1.compensation,
+       props.page1.internshipLocation,
+       props.page1.intershipLocation,
+       props.page2.question1,
+       props.page2.question2,
+       Number(props.page3.maxApplicants),
+       1, // active (?)
+       props.user.emailVerified ? 1 : 0
+    ))
+    .then((res) => {
+      console.log(res)
+    })
+    .catch((err) => {
+      console.log(err)
+    })
   }
 }
 
@@ -98,6 +142,7 @@ const createJobFormInitialState = {
   page3: {},
   page4: {},
   errorsExist: false,
+  isSubmitting: false,
   errors: '',
   lists: {}
 }
@@ -191,6 +236,21 @@ export default function createJob (state = createJobFormInitialState, action) {
       return {
         ...state,
         lists: lists(state.lists, action)
+      }
+    case SUBMITTING_JOB:
+      return {
+        ...state,
+        isSubmitting: true
+      }
+    case CREATE_JOB_FAILURE:
+      return {
+        ...state,
+        isSubmitting: false
+      }
+    case CREATE_JOB_SUCCESS:
+      return {
+        ...state,
+        isSubmitting: false
       }
     default:
       return state
