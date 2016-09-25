@@ -33,7 +33,7 @@ const StudentDashboard = React.createClass({
 	 //Pass user info with job info then loop to show
    return (
 	<div>
-	   <Card></Card>
+	   <Card refs={this.refs}></Card>
 	      <SkyLight
 	      	overlayStyles={styles.overlayStyles}
 	        dialogStyles={styles.dialogStyles}

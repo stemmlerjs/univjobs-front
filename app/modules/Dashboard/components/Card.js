@@ -8,7 +8,7 @@ import { pageContainer, cardContainer, card, cardHeader,
 	image, questionHeader} from '../styles/StudentDashboard.css'
 
 //Accept job object which contains the proptypes.
-export default function Card() {
+export default function Card({ refs }) {
   return (
 	//Testing encapsulation
 	//NOTE: Assumption that button component might break
@@ -58,6 +58,7 @@ export default function Card() {
 		 </li>
 		</ul>
 	      </div>
+	      <button className={applyButton} onClick={() => {refs.jobModal.show()} }>APPLY</button>
 	    </div>
 	   </div> 
 	 </div>
