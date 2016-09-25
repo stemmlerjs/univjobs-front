@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-//NOTE: export Card.js then import it here
+import { Card } from 'modules/Dashboard'
 import SkyLight from 'react-skylight'
 import { pageContainer, cardContainer, card, cardHeader, 
 	jobTitleContainer, jobTitle, industryTitle,
@@ -32,6 +32,8 @@ const StudentDashboard = React.createClass({
   render() {
 	 //Pass user info with job info then loop to show
    return (
+	<div>
+	   <Card></Card>
 	      <SkyLight
 	      	overlayStyles={styles.overlayStyles}
 	        dialogStyles={styles.dialogStyles}
@@ -82,10 +84,8 @@ const StudentDashboard = React.createClass({
 		 </div>
 		</div>
 	     </SkyLight>  
-	   </div>
-	 </div>
-       </div>
-       )
+	</div>
+   )
   }
 })
 
