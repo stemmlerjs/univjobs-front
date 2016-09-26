@@ -1,4 +1,5 @@
-import { employerProfilePUT, employerProfilePATCH, compareToSnapshot, validateEmployerProfileFields } from 'helpers/profile'
+import { employerProfilePUT, employerProfilePATCH, validateEmployerProfileFields, studentProfilePUT, studentProfilePATCH, validateStudentProfileFields, compareToSnapshot } from 'helpers/profile'
+import { toISO } from 'helpers/utils'
 
 // =======================================================
 // ==================== ACTIONS ==========================
@@ -47,7 +48,7 @@ export function updateProfileField(fieldName, newValue, isAStudent) {
     fieldName,
     newValue,
     isAStudent
-  }
+ }
 }
 
 export function listRetrieved(listName, listArray) {
@@ -166,10 +167,67 @@ export function saveProfileSuccess() {
 
 export function submitProfileFirstTime(userTypeInt, profileInfo, user) {
   return function (dispatch) {
+	  console.log(userTypeInt, profileInfo, user)
     switch(userTypeInt) {
       case 0:
-
-        return;
+	console.log("SUBMITTING STUDENT PROFILE FIRST TIME")
+	validateStudentProfileFields(profileInfo, (errorExist, profileFieldErrors) => {
+	  if(errorExist) {
+	   console.log('HERE!!!!!!') 
+	    // DISPATCH - SAVE_PROFILE_ERROR
+	    dispatch(saveProfileError(profileFieldErrors, [    "Couldn't save profile.",
+	  "Please fill in missing fields"
+	    ], true))
+	  
+	  } else {
+	   console.log('SUBMIT STUDENT PROFILE NO ERRORS')
+	    // No errors, proceed to /PUT on api/me
+            var putData = {
+             // user: {
+                "user-is_a_student": true,
+                "user-is_profile_completed": true,
+                "user-email": user.email,
+                "user-first_name": profileInfo.firstName,
+                "user-last_name": profileInfo.lastName,
+                "user-is_active": true,
+                "user-date_joined": user.dateJoined,
+                "user-mobile": user.mobile,
+		"school-name": profileInfo.school,
+		  languages: profileInfo.languages,
+		  sports: profileInfo.sportsTeam,
+		  clubs: profileInfo.schoolClub,
+		  email_pref: profileInfo.emailPreferences,
+		  status: profileInfo.studentStatus,
+		  enroll_date: toISO(profileInfo.enrollmentDate),
+		  grad_date: toISO(profileInfo.graduationDate),
+		  major: profileInfo.major,
+		  GPA: profileInfo.gpa,
+		  personal_email: profileInfo.personalEmail,
+		  gender: profileInfo.gender,
+		  has_car: profileInfo.hasCar,
+		  company: profileInfo.companyName,
+		  position: profileInfo.position,
+		  fun_fact: profileInfo.funFacts,
+		  hometown: profileInfo.hometown,
+		  hobbies: profileInfo.hobbies,
+		  photo: profileInfo.photo,
+		  resume: profileInfo.resume,
+	  }
+	    studentProfilePUT(putData)
+	     .then((res) => {
+		// DISPATCH - SAVE_PROFILE_SUCCESS
+	        dispatch(saveProfileSuccess())
+	     })
+	     .catch((err) => {
+	       // DISPATCH - SAVE_PROFILE_ERROR
+	        dispatch(saveProfileError({}, [
+			'HTTP Error Occurred',
+			err
+		], true))
+	     })
+	    }
+	  })
+	  return;
       case 1:
         console.log("SUBMITTING EMPLOYER PROFILE FIRST TIME")
         validateEmployerProfileFields(profileInfo, (errorsExist, profileFieldErrors) => {
@@ -238,10 +296,71 @@ export function updateProfile(userTypeInt, profileInfo, user, snapshot) {
   return function (dispatch) {
     switch(userTypeInt) {
       case 0:
+	debugger;
+	console.log("UPDATING STUDENT PROFILE")
+	validateStudentProfileFields(profileInfo, (errorExist, profileFieldErrors) => {
+	  if(errorExist) {
+	    
+	    // DISPATCH - SAVE_PROFILE_ERROR
+	    dispatch(saveProfileError(profileFieldErrors, [    "Couldn't save profile.",
+	  "Please fill in missing fields"
+	    ], true))
+	  
+	  } else {
+	    // No errors, proceed to /PUT on api/me
+            var changedData = {
+             // user: {
+             //   "user-is_a_student": true,
+             //   "user-is_profile_completed": true,
+             //   "user-email": user.email,
+             //   "user-first_name": user.firstName,
+             //   "user-last_name": user.lastName,
+             //   "user-is_active": true,
+             //   "user-date_joined": user.dateJoined,
+             //   "user-mobile": user.mobile,
+             // 	is_a_student: false,
+             // 	is_profile_completed: true, // set this flag to true so we know for next time
+		  languages: profileInfo.languages,
+		  sports: profileInfo.sportsTeam,
+		  clubs: profileInfo.schoolClub,
+		  email_pref: profileInfo.emailPreferences,
+		  status: profileInfo.studentStatus,
+		  enroll_date: toISO(profileInfo.enrollmentDate),
+		  grad_date: toISO(profileInfo.graduationDate),
+		  major: profileInfo.major,
+		  GPA: profileInfo.gpa,
+		  personal_email: profileInfo.personalEmail ,
+		  gender: profileInfo.gender,
+		  has_car: profileInfo.hasCar,
+		  company: profileInfo.companyName,
+		  position: profileInfo.position,
+		  fun_fact: profileInfo.funFacts,
+		  hometown: profileInfo.hometown,
+		  hobbies: profileInfo.hobbies,
+		  photo: profileInfo.photo,
+		  resume: profileInfo.resume,
+	  }
+            compareToSnapshot(snapshot, changedData, (result) => {
+              studentProfilePATCH(result)
+                .then((res) => {
 
+                  // DISPATCH - SAVE_PROFILE_SUCCESS
+                  dispatch(saveProfileSuccess())
+                })
+                .catch((err) => {
+
+                  // DISPATCH - SAVE_PROFILE_ERROR
+                  dispatch(saveProfileError({}, [
+                     'HTTP Error Occurred',
+                     err
+                  ], false))
+		})
+	    })
+	    }
+	  })
         return;
       case 1:
-        console.log("UPDATING PROFILE")
+        console.log("UPDATING EMPLOYER PROFILE")
         validateEmployerProfileFields(profileInfo, (errorsExist, profileFieldErrors) => {
           if(errorsExist) {
 
@@ -324,47 +443,7 @@ const initialState = {
   error: ''
 }
 
-const initialEmployerProfileState = {
-  companyName: '',
-  industry: '',
-  website: '',
-  description: '',
-  employeeCount: '',
-  officeAddress: '',
-  officeCity: '',
-  officePostalCode: '',
-  logoUrl: '',
-  propsErrorMap: {}
-}
 
-const employerProfileErrorsInitialState = {
-  companyName: false,
-  industry: false,
-  logoUrl: false,
-  website: false,
-  description: false,
-  employeeCount: false,
-  officeAddress: false,
-  officeCity: false,
-  officePostalCode: false
-  }
-
-const initialStudentProfileState = {
-  // email,
-  // password,
-  // lastUpdated,
-  // emailPreferences,
-  // firstName,
-  // lastName,
-  // studentStatus,
-  // degreeName,
-  // schoolName,
-  // enrollmentMonth,
-  // enrollmentYear,
-  // graduationMonth,
-  // graduationYear,
-  // lastUpdated,
-}
 
 const initialListsState = {
   industries: [],
@@ -383,7 +462,10 @@ const initialListsState = {
 // ==================== REDUCERS =========================
 // =======================================================
 
-// ========= BASE PROFILE REDUCER
+/* ===================================================================
+*   PROFILE (MAIN, shared amount both employer and student)
+*  ===================================================================
+*/ 
 
 export default function profile (state = initialState, action) {
   switch(action.type) {
@@ -422,7 +504,7 @@ export default function profile (state = initialState, action) {
           isProfileCompleted: action.isProfileCompleted,
           employerProfile: employerProfile(state.employerProfile, action),
           snapshot: action.profileInfo
-        }
+         }
       }
     case SAVE_PROFILE_ERROR:
       if(action.isAStudent) {
@@ -451,7 +533,23 @@ export default function profile (state = initialState, action) {
   }
 }
 
-// =========== EMPLOYER PROFILE (SUB-REDUCER)
+/* ===================================================================
+*   EMPLOYER PROFILE REDUCERS
+*  ===================================================================
+*/ 
+
+const initialEmployerProfileState = {
+  companyName: '',
+  industry: '',
+  website: '',
+  description: '',
+  employeeCount: '',
+  officeAddress: '',
+  officeCity: '',
+  officePostalCode: '',
+  logoUrl: '',
+  propsErrorMap: {}
+}
 
 function employerProfile(state = initialEmployerProfileState, action) {
   switch(action.type) {
@@ -484,7 +582,106 @@ function employerProfile(state = initialEmployerProfileState, action) {
   }
 }
 
+const employerProfileErrorsInitialState = {
+  companyName: false,
+  industry: false,
+  logoUrl: false,
+  website: false,
+  description: false,
+  employeeCount: false,
+  officeAddress: false,
+  officeCity: false,
+  officePostalCode: false
+}
+
 function employerProfileErrors(state = employerProfileErrorsInitialState, action) {
+  switch(action.type) {
+    case UPDATE_PROFILE_FIELD:
+      return {
+        ...state,
+        [action.fieldName]: false // we do this because if the field was updated, we'll assume there isn't an error until
+                                  // the next submit
+      }
+  }
+}
+
+/* ===================================================================
+*   STUDENT PROFILE REDUCERS
+*  ===================================================================
+*/ 
+
+const initialStudentProfileState = {
+  emailPreferences: '',
+  firstName: '',
+  lastName: '',
+  studentStatus: '', 
+  educationLevel: '',
+  schoolName: '',
+  enrollmentDate: '',
+  graduationDate: '',
+  major: '',
+  gpa: '',
+  personalEmail: '',
+  gender: '',
+  sportsTeam: '',
+  schoolClub: '',
+  languages: '',
+  hasCar: '',
+  companyName: '',
+  position: '',
+  funFacts: '',
+  hometown: '',
+  hobbies: '',
+  photo: '',
+  resume: '',
+  propsErrorMap: {}
+}
+
+function studentProfile(state = initialStudentProfileState, action) {
+  switch(action.type) {
+    case UPDATE_PROFILE_FIELD: 
+      return {
+        ...state,
+        [action.fieldName]: action.newValue,
+        propsErrorMap: studentProfileErrors(state.propsErrorMap, action)
+      }
+    case SAVE_PROFILE_ERROR:
+      return {
+        ...state,
+        propsErrorMap: action.profileErrorsObj
+      }
+    default: 
+      return state
+  }
+}
+
+
+const initialStudentProfileErrorState = {
+  emailPreferences: false,
+  firstName: false,
+  lastName: false,
+  studentStatus: false,
+  educationLevel: false,
+  enrollmentDate: false,
+  graduationDate: false,
+  major: false,
+  gpa: false,
+  personalEmail: false,
+  gender: false,
+  sportsTeam: false,
+  schoolClub: false,
+  languages: false,
+  hasCar: false,
+  companyName: false,
+  position: false,
+  funFacts: false,
+  hometown: false,
+  hobbies: false,
+  photo: false,
+  resume: false,
+}
+
+function studentProfileErrors(state = initialStudentProfileErrorState, action) {
   switch(action.type) {
     case UPDATE_PROFILE_FIELD:
       return {
@@ -494,21 +691,10 @@ function employerProfileErrors(state = employerProfileErrorsInitialState, action
   }
 }
 
-// =========== STUDENT PROFILE (SUB-REDUCER)
-
-function studentProfile(state = initialEmployerProfileState, action) {
-  switch(action.type) {
-    case UPDATE_PROFILE_FIELD: 
-      return {
-        ...state,
-        [action.fieldName]: action.newValue
-      }
-    default: 
-      return state
-  }
-}
-
-// =========== LISTS (SUB-REDUCER)
+/* ===================================================================
+*   LISTS REDUCERS
+*  ===================================================================
+*/ 
 
 function lists (state = initialListsState, action) {
   switch(action.listType) {

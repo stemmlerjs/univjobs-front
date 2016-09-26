@@ -1,7 +1,11 @@
 import axios from 'axios'
 import config from 'config'
 import { getAccessToken } from 'helpers/auth'
-import { validateCompanyName, validateAddress, validateCity, validatePostalCode} from 'helpers/utils'
+import { validatePersonalEmail, validateFirstName, validateLastName, 
+	validateCompanyName, validateAddress, validateCity, 
+	validatePostalCode, validateGPA, validateLanguages} from 'helpers/utils'
+
+//********************** EMPLOYER *************************//
 
 export function employerProfilePUT(data) {
   let formData = new FormData();
@@ -67,9 +71,116 @@ export function validateEmployerProfileFields(profileInfo, next) {
   for (var attr in profileFieldErrors) {
     if (profileFieldErrors[attr] === true) submitErrorsExist = true;
   }
+  next(submitErrorsExist, profileFieldErrors)
+}
+
+
+
+//******************************STUDENT********************************//
+
+export function studentProfilePUT(data) {
+  let formData = new FormData();
+  const accessToken = getAccessToken();
+
+  for(let key in data) {
+    formData.append(key, data[key])
+  }
+
+  return axios({
+    method: 'put',
+    url: config.baseUrl + 'me/',
+    headers: {
+      "Authorization": "JWT " + accessToken
+    },
+    data: formData
+  })
+}
+
+export function studentProfilePATCH(data) {
+  let formData = new FormData();
+  const accessToken = getAccessToken();
+
+  for(let key in data) {
+    formData.append(key, data[key])
+  }
+
+  return axios({
+    method: 'patch',
+    url: config.baseUrl + 'me/',
+    headers: {
+      "Authorization": "JWT " + accessToken
+    },
+    data: formData
+  })
+}
+export function validateStudentProfileFields(profileInfo, next) {
+  debugger;
+  let submitErrorsExist = false;
+  let profileFieldErrors = {	
+	emailPreferences: false,
+	firstName: false,
+   	lastName: false,
+  	studentStatus: false,
+	educationLevel: false,
+   	school: false,
+   	enrollmentDate: false,
+   	graduationDate: false,
+	major: false,
+   	gpa: false,
+   	personalEmail: false,
+	gender: false,
+   	sportsTeam: false,
+   	schoolClub: false,
+   	languages: false,
+   	hasCar: false,
+   	companyName: false,
+   	position: false,
+	funFacts: false,
+   	hometown: false,
+   	hobbies: false,
+ 	photo: false,
+	resume: false
+  }
+  profileFieldErrors.emailPreferences = profileInfo.emailPreferences != "" ? false : true
+  profileFieldErrors.firstName = validateFirstName(profileInfo.firstName) ? false : true
+  profileFieldErrors.lastName = validateLastName(profileInfo.lastName) ? false : true
+  profileFieldErrors.studentStatus = profileInfo.studentStatus != "" ? false : true
+  profileFieldErrors.educationLevel= profileInfo.educationLevel != "" ? false : true
+  profileFieldErrors.school= profileInfo.school != "" ? false : true
+  profileFieldErrors.enrollmentDate = profileInfo.enrollmentDate != "" ? false : true
+  profileFieldErrors.graduationDate = profileInfo.graduationDate != "" ? false : true
+  profileFieldErrors.major = profileInfo.major != "" ? false : true
+  profileFieldErrors.gpa = validateGPA(profileInfo.gpa) ? false : true
+  profileFieldErrors.personalEmail = validatePersonalEmail(profileInfo.personalEmail) ? false : true
+  profileFieldErrors.gender = profileInfo.gender != "" ? false : true
+  //profileFieldErrors.sportsTeam = profileInfo.sportsTeam != "" ? false : true
+  //profileFieldErrors.schoolClub = profileInfo.schoolClub != "" ? false : true
+  profileFieldErrors.languages = validateLanguages(profileInfo.languages) ? false : true
+  profileFieldErrors.hasCar = typeof profileInfo.hasCar == "boolean" ? false : true
+  //profileFieldErrors.companyName = profileInfo.companyName != "" ? false : true
+  //profileFieldErrors.position = profileInfo.position != "" ? false : true
+  profileFieldErrors.funFacts = profileInfo.funFacts!= "" ? false : true
+  profileFieldErrors.hometown = profileInfo.hometown != "" ? false : true
+  profileFieldErrors.hobbies= profileInfo.hobbies != "" ? false : true
+  profileFieldErrors.photo = profileInfo.photo!= "" ? false : true
+  //profileFieldErrors.resume = profileInfo.resume != "" ? false : true
+
+  // If an error exists in the map, then submitErrorsExist === true
+  for (var attr in profileFieldErrors) {
+    if (profileFieldErrors[attr] === true) submitErrorsExist = true;
+  }
 
   next(submitErrorsExist, profileFieldErrors)
 }
+
+
+
+//********************* COMPARISON ********************//
+/*
+ * Will compare the old profile to the new profile to determine 
+ * wether PUT or PATCH is used.
+ * 
+ * ***************************************************/
 
 export function compareToSnapshot(oldProfile, newProfile, callback) {
   for(var prop in newProfile) {

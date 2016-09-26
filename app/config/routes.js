@@ -1,7 +1,7 @@
 
 import React from 'react'
 import { Router, Route, hashHistory, IndexRoute, browserHistory } from 'react-router'
-import { SignupContainer, StudentProfileContainer, EmployerProfileContainer, InitialOverlay, CategoriesContainer, CreateJobContainer } from 'modules'
+import { SignupContainer, StudentProfileContainer, EmployerProfileContainer, InitialOverlay, CategoriesContainer, CreateJobContainer , StudentDashboardContainer} from 'modules'
 import { checkIfAuthed } from 'helpers/auth'
 
 // Purpose of IndexRoute - if none of the routes match, we go here
@@ -15,6 +15,7 @@ export default function getRoutes() {
           <Route path='/profile/em' component={EmployerProfileContainer} />
           <Route path='/categories' component={CategoriesContainer} />
           <Route path='/job/create/:jobtype' component={CreateJobContainer} />
+	  <Route path='/dashboard/st' component={StudentDashboardContainer} />
         </Route>
     </Router>
   )

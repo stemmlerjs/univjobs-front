@@ -295,8 +295,9 @@ const CreateJobContainer = React.createClass({
     }
   },
 
-  render () {
-    const jobType = this.props.params.jobtype;
+  render () { 
+    debugger
+    const jobType = 1;
     return (
       <div className={mainContainer}>
         <SidebarContainer/>
