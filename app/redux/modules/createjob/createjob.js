@@ -87,25 +87,45 @@ function submittingJob() {
   }
 }
 
+function createJobSuccess() {
+  return {
+    type: CREATE_JOB_SUCCESS
+  }
+}
+
+function createJobFailure(errors) {
+  return {
+    type: CREATE_JOB_FAILURE,
+    errors
+  }
+}
+
 // TODO: CREATE NEW JOB THUNK
 export function createNewJob(props, jobType) {
   return function(dispatch) {
     //type, title, paid, start_date, responsibilties, qualification, compensation, address, city, question_1, question_2, max_participants, active, verified
 
-    /* TODO:
-      - look into isPayingJob field
-      - get the proper format for dates
-      - split internshipLocation into city and address
-    */
     debugger;
-    let jobTypeInt = 1;
+    let jobTypeInt;
     switch(jobType) {
       case "summer": 
         jobTypeInt = 1;
+      case "otg":
+        jobTypeInt = 0;
+      case "winter":
+        jobTypeInt = 2;
+      case "freelance":
+        jobTypeInt = 3;
+      case "rep":
+        jobTypeInt = 4;
+      case "pt":
+        jobTypeInt = 5;
     }
 
+    // ACTION: DISPATCH (SUBMITTING_JOB)
+    dispatch(submittingJob())
 
-    dispatch(createNewJobPOST(
+    createNewJobPOST(
        jobTypeInt,
        props.page1.jobTitle,
        props.page1.isPayingJob ? 1 : 0,
@@ -120,12 +140,18 @@ export function createNewJob(props, jobType) {
        Number(props.page3.maxApplicants),
        1, // active (?)
        props.user.emailVerified ? 1 : 0
-    ))
+    )
     .then((res) => {
       console.log(res)
+
+      // ACTION: DISPATCH (CREATE_JOB_SUCCESS)
+      dispatch(createJobSuccess())
     })
     .catch((err) => {
       console.log(err)
+
+      // ACTION: DISPATCH (CREATE_JOB_FAILURE)
+      dispatch(createJobFailure("Uh-oh, something went wrong. Please contact us to let us know."))
     })
   }
 }
@@ -143,6 +169,7 @@ const createJobFormInitialState = {
   page4: {},
   errorsExist: false,
   isSubmitting: false,
+  submitSuccess: false,
   errors: '',
   lists: {}
 }
@@ -245,12 +272,16 @@ export default function createJob (state = createJobFormInitialState, action) {
     case CREATE_JOB_FAILURE:
       return {
         ...state,
-        isSubmitting: false
+        isSubmitting: false,
+        submitSuccess: false,
+        errors: action.errors,
       }
     case CREATE_JOB_SUCCESS:
       return {
         ...state,
-        isSubmitting: false
+        isSubmitting: false,
+        submitSuccess: true,
+        errors: ''
       }
     default:
       return state

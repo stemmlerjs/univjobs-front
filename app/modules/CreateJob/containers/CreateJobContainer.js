@@ -131,13 +131,13 @@ const CreateJobContainer = React.createClass({
     let error = newProps.errorsExist;
     let submitSuccess = newProps.submitSuccess;
     
-    // if(submitSuccess) {
-    //   this.refs.container.success(
-    //     "Woohoo :)",
-    //     "Profile successfully updated!", {
-    //     timeOut: 3000
-    //   });
-    // }
+    if(submitSuccess) {
+      this.refs.container.success(
+        "Nice!",
+        "Job successfully submitted.", {
+        timeOut: 3000
+      });
+    }
 
     if(error) {
       this.refs.container.error(
@@ -429,7 +429,8 @@ function mapStateToProps({createJob, profile, user}) {
     },
     page4: createJob.page4 ? createJob.page4 : {},
     errorsExist: createJob.errorsExist ? createJob.errorsExist : false,
-    errors: createJob.errors ? createJob.errors : ''
+    errors: createJob.errors ? createJob.errors : '',
+    submitSuccess: createJob.submitSuccess ? createJob.submitSuccess : false
   }
 }
 
