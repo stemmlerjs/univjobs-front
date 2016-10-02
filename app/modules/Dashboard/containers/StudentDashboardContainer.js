@@ -1,19 +1,20 @@
 import React, { PropTypes } from 'react'
 import { SidebarContainer } from 'modules/Main'
 import { StudentDashboard } from 'modules/Dashboard'
-
+import { getJobs } from 'helpers/dashboard'
 import SkyLight from 'react-skylight'
-/*
+
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as userActionCreators from 'redux/modules/user/user'
+import * as dashboardActionCreators from 'redux/modules/dashboard/dashboard'
 import { authRedirectFilter } from 'config/routes'
 
 
 const actionCreators = {
   ...userActionCreators,
+  ...dashboardActionCreators
 }
-*/
 
 const StudentDashboardContainer = React.createClass({
   contextTypes: {
@@ -49,6 +50,7 @@ const StudentDashboardContainer = React.createClass({
 
   componentWillMount() {
 	this.props.closeOverlay()
+	getJobs(this.context.store)
   },
 
   render () {
@@ -61,14 +63,20 @@ const StudentDashboardContainer = React.createClass({
   },
 })
 
-export default StudentDashboardContainer
 /* The entire redux store is passed in here,
 // Return an object defining which values you want to bind to props
-function mapStateToProps({user}) {
+//
+// @params ({user}) contains BaseUser & Employer attributes
+// */
+
+function mapStateToProps({user, jobs}) {
   return {
+	isAStudent: user.isAsStudent ? true : false,
+	isProfileCompleted: user.isProfileCompleted ?true : false,
 	user: user ? user : {}
   }
 }
+
 /** 
   * mapActionCreatorsToProps
   *
@@ -76,10 +84,12 @@ function mapStateToProps({user}) {
   * and makes them available to us through THIS component's props (SignupContainer, this.props). We can then pass these to our child
   * components to use. DON'T MAKE A HABIT of doing this too deeply (drilling prop holes).
   *
-  *
+  **/
+
 function mapActionCreatorsToProps(dispatch) {
   return bindActionCreators(actionCreators, dispatch)
 }
 
 // connect(specify_what_keys_you_want_from_store, wraps_dispatch_around_action_creators)(container)
-export default connect(mapStateToProps, mapActionCreatorsToProps)(StudentDashboardContainer)*/
+
+export default connect(mapStateToProps, mapActionCreatorsToProps)(StudentDashboardContainer)

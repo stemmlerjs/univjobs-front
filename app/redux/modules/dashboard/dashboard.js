@@ -1,4 +1,4 @@
-import { getJobs } from 'helpers/studentdashboard'
+import { getJobs } from 'helpers/dashboard'
 
 /*==================================================
  *
@@ -20,22 +20,37 @@ const intialState = {
 const FETCH_JOBS = 'DASHBOARD.FETCH_JOBS'
 
 //** Dasbord List SUCCESS actions **//
-const FETCHED_JOBS = 'DASHBOARD.FETCHED_JOBS'
+const FETCHED_JOBS_SUCCESS = 'DASHBOARD.FETCHED_JOBS_SUCCESS'
 
+//** Dasbord List FAILURE actions **//
+const FETCHED_JOBS_ERROR = 'DASHBOARD.FETCHED_JOBS_ERROR'
 /*===========================================
  *  		ACTION CREATORS
  *==========================================
 */
 
 //# FIXME: 
-export function getJobList( ,jobList) {
+export function fetchJobs() {
 	return {
 		type: FETCH_JOBS,
-		listType: FETCHED_JOBS,
-		list: jobList
 	}
 }
 
+export function fetchJobsErrors(error) {
+	console.warn(error)
+	return {
+		type: FETCHED_JOBS_ERROR,
+		error: 'Error fetching jobs'
+	}
+}
+
+export function fetchJobsSuccess(jobs) {
+	console.log(jobs)
+	return {
+		type: FETCHED_JOBS_SUCCESS,
+		jobs,
+	}
+}
 /*===========================================
  *  		REDUCERS
 =============================================
@@ -52,12 +67,10 @@ const initialJobListState = {
 	address: '',
 	city: '',
 	compensation: '',
-	//NOTE: q1 & q2 will be deleted due to new tables added
-	question_1: '',
-	question_2: '',
 	max_applicants: '',
 	active: '',
 	verified: '',
+	isFetching: true,
 	propsErrorMap: {}
 }
 
@@ -66,7 +79,7 @@ export default function jobs(state= initialJobListState, action) {
 	    case FETCH_JOBS:
 	      return {
 		...state,
-		jobs: getJobs(action) 
+		jobs: getJobs(action), 
 	      }		
 
 	    default:	
