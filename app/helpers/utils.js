@@ -91,17 +91,20 @@ export function validateGPA(gpa) {
   var re = /(^[0]$)|(^\d{2}$)/
   return re.test(gpa)
 }
+
 /* Languages must be empty or a number from 0 to 132
  * FIXME: Change range of input to 0 to 132
  * */
-export function validateLanguages(gpa) {
-  var re = /(^$)|(^\d{3}$)/
-  return re.test(gpa)
+export function validateLanguages(languageList) {
+  if(languageList.length != 0) {
+    return true
+  } 
 }
 // ***************** DATE ******************//
 export function toISO(date) {
   return date.getFullYear()+'-' + (date.getMonth()+1) + '-'+date.getDate();//prints expected format.
 }
+
 export function validateJobTitle(jobTitle) {
   var re = /^[a-z ,.'-]{2,40}$/i
   return re.test(jobTitle)
