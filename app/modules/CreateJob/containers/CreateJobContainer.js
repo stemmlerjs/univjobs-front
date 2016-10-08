@@ -296,7 +296,6 @@ const CreateJobContainer = React.createClass({
   },
 
   render () { 
-    debugger
     const jobType = 1;
     return (
       <div className={mainContainer}>

@@ -46,13 +46,12 @@ function fetchJobsSuccess(jobs) {
 
 export function fetchJobs() {
 	console.log("*******Initiate Job Fetching**********") 
-	return => (dispatch) {
+	return (dispatch) =>  {
 		//ACTION: DISPATCH (FETCHING_JOBS)
 		fetchingJobs()
-			const promise = new Promise(resolve, reject) => {
+	    const promise = new Promise((resolve, reject) => {
 
-	   
-	    }
+	    })
 	
 	
 	}
@@ -101,57 +100,57 @@ const initialJobListState = {
 	propsErrorMap: {}
 }
 
-//FIXME: Might want to have the job id as the root in the api structure of the api
-//
-function job(state=initialJobListState, action) {
-  switch(action.type) {
-    case FETCHING_JOB_SUCCESS:
-      return {
-  	...state,
-	job: action.job
-	/*
-	...state,
-	//FIXME: Is there a way to pass everything without typeing too much? [action.id]: user: action.user?
-	id: action.id,
-	user: {
-		website: action.user.website,
-		logo: action.user.logo,
-		office_city: action.user.office_city,
-		employee_count: action.user.employee_count,
-		office_postal_code: action.user.office_postal_code,
-		company_name: action.user.company_name,
-		industry: action.user.industry,
-		office_address: action.user.office_address,
-		mobile: action.user.mobile,
-		description: action.user.description
-	},
-	type: action.type,
-	title: action.title,
-	paid: action.paid,
-	start_date: action.start_date,
-	responsibilities: action.responsibilities,
-	qualification: action.qualification,
-	address: action.address,
-	city: action.city,
-	compensation: action.compensation,
-	max_applicants: action.max_applicants,
-	active: action.active,
-	//TODO: Leave out jobs in the future that are unverified, might be done at the backend.
-	verified: action.verified,
-	*/
-      }//return
-  }//action
-}//job
+	//FIXME: Might want to have the job id as the root in the api structure of the api
+	//
+	function job(state=initialJobListState, action) {
+	  switch(action.type) {
+	    case FETCHING_JOB_SUCCESS:
+	      return {
+	  	...state,
+		job: action.job
+		/*
+		...state,
+		//FIXME: Is there a way to pass everything without typeing too much? [action.id]: user: action.user?
+		id: action.id,
+		user: {
+			website: action.user.website,
+			logo: action.user.logo,
+			office_city: action.user.office_city,
+			employee_count: action.user.employee_count,
+			office_postal_code: action.user.office_postal_code,
+			company_name: action.user.company_name,
+			industry: action.user.industry,
+			office_address: action.user.office_address,
+			mobile: action.user.mobile,
+			description: action.user.description
+		},
+		type: action.type,
+		title: action.title,
+		paid: action.paid,
+		start_date: action.start_date,
+		responsibilities: action.responsibilities,
+		qualification: action.qualification,
+		address: action.address,
+		city: action.city,
+		compensation: action.compensation,
+		max_applicants: action.max_applicants,
+		active: action.active,
+		//TODO: Leave out jobs in the future that are unverified, might be done at the backend.
+		verified: action.verified,
+		*/
+	      }//return
+	  }//action
+	}//job
 
-const initialState = {
-	isFetching: true,
-	error: '',
-	jobs: {}
-}
+	const initialState = {
+		isFetching: true,
+		error: '',
+		jobs: {}
+	}
 
 export default function jobs(state= initialJobListState, action) {
 	switch(action.type) {
-	    case FETCH_JOBS:
+	    case FETCHING_JOBS:
 	      return {
 		...state,
 		isFetching: true,

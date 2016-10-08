@@ -1,8 +1,9 @@
 import React, { PropTypes } from 'react'
 import { ProfileField } from 'modules/Profile'
 import { profileContainer, profileHeader, profileField, profileFieldName, profileFieldContent, input,
-  textarea, btn, dropzone, resetBtnContainer, dropzoneContent, photoIcon, saveBtnContainer, saveBtn,
+  textarea, dropzone, resetBtnContainer, dropzoneContent, photoIcon, saveBtnContainer, saveBtn,
   inlineDropzone, comboBox, city, postalcode, citypostalcoderelative, dropPoint, error, industryMargin } from '../styles/EmployerProfileStyles.css'
+import { btn } from 'sharedStyles/styles.css'
 import Dropzone from 'react-dropzone'
 import { Link } from 'react-router'
 import { Combobox } from 'react-widgets'
