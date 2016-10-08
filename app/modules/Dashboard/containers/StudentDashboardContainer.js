@@ -48,12 +48,22 @@ const StudentDashboardContainer = React.createClass({
     this.refs.loginModal.show()
   },
 
+  /* Handles the fetch of the job feed.
+   * NOTE: Might want to add listener here in the future
+   *
+   * */
+  handleFetchJobs() {
+	//Dispatch to fetch jobs
+	//
+  
+  },
+
   componentWillMount() {
 	this.props.closeOverlay()
-	getJobs(this.context.store)
   },
 
   render () {
+  console.log(this.props)
     return (
       <div>
       <SidebarContainer />
@@ -69,11 +79,40 @@ const StudentDashboardContainer = React.createClass({
 // @params ({user}) contains BaseUser & Employer attributes
 // */
 
-function mapStateToProps({user, jobs}) {
+function mapStateToProps({jobs}) {
   return {
-	isAStudent: user.isAsStudent ? true : false,
-	isProfileCompleted: user.isProfileCompleted ?true : false,
-	user: user ? user : {}
+	//isAStudent: user.isAsStudent ? true : false,
+	//isProfileCompleted: user.isProfileCompleted ?true : false,
+	//user: user ? user : {}	
+	id: jobs.id,
+	user: {
+	  website: jobs.user.website,
+	  first_name: jobs.user.first_name,
+	  logo: jobs.user.logo,
+	  office_city: jobs.user.office_city,
+	  last_name: jobs.user.last_name,
+	  employee_count: jobs.user.employee_count,
+	  office_postal_code: jobs.user.office_postal_code,
+	  company_name: jobs.user.company_name,
+	  industry: jobs.user.industry,
+	  office_address: jobs.user.office_address,
+	  mobile: jobs.user.mobile,
+	  description: jobs.user.description,
+	},
+	type: jobs.user.type,
+	title: jobs.user.title,
+	paid: jobs.user.paid,
+	start_date: jobs.user.start_date,
+	responsibilities: jobs.user.responsibilities,
+	qualification: jobs.user.qualification,
+	address: jobs.user.address,
+	city: jobs.user.city,
+	compensation: jobs.user.compensation,
+	max_applicants: jobs.user.max_applicants,
+	active: jobs.user.active,
+	verified: jobs.user.verified,
+	isFetching: false,
+	error: props.error,
   }
 }
 
