@@ -1,23 +1,12 @@
 import { getJobs } from 'helpers/dashboard'
 
-/*==================================================
- *
- *  STUDENT & EMPLOYER  DASHBOARD INITIAL STATE
- *===============================================
-*/
-const intialState = {
-  jobs: {},
-  error: ''
-}
-
-
 /*===========================================
  *  		ACTIONS 
  *==========================================
 */
 
 //** GETTER actions **//
-const FETCH_JOBS = 'DASHBOARD.FETCH_JOBS'
+const FETCHING_JOBS = 'DASHBOARD.FETCHING_JOBS'
 
 //** Dasbord List SUCCESS actions **//
 const FETCHED_JOBS_SUCCESS = 'DASHBOARD.FETCHED_JOBS_SUCCESS'
@@ -30,13 +19,15 @@ const FETCHED_JOBS_ERROR = 'DASHBOARD.FETCHED_JOBS_ERROR'
 */
 
 //# FIXME: 
-export function fetchJobs() {
+function fetchingJobs() {
+	console.log("*******fetchingJob*******")
 	return {
-		type: FETCH_JOBS,
+		type: FETCHING_JOBS,
 	}
 }
 
-export function fetchJobsErrors(error) {
+function fetchJobsErrors(error) {
+	console.log("*******fetchJobError*******")
 	console.warn(error)
 	return {
 		type: FETCHED_JOBS_ERROR,
@@ -44,13 +35,35 @@ export function fetchJobsErrors(error) {
 	}
 }
 
-export function fetchJobsSuccess(jobs) {
+function fetchJobsSuccess(jobs) {
+	console.log("*******fetchJobSuccess*******")
 	console.log(jobs)
 	return {
 		type: FETCHED_JOBS_SUCCESS,
-		jobs,
+		jobs: jobs
 	}
 }
+
+export function fetchJobs() {
+	console.log("*******Initiate Job Fetching**********") 
+	return => (dispatch) {
+		//ACTION: DISPATCH (FETCHING_JOBS)
+		fetchingJobs()
+			const promise = new Promise(resolve, reject) => {
+
+	   
+	    }
+	
+	
+	}
+
+}
+
+/*===========================================
+ *  		LISTENERS
+=============================================
+*/
+
 /*===========================================
  *  		REDUCERS
 =============================================
@@ -58,6 +71,20 @@ export function fetchJobsSuccess(jobs) {
 
 const initialJobListState = {
 	id: '',
+	user: {
+	  website: '',
+	  first_name: '',
+	  logo: '',
+	  office_city: '',
+	  last_name: '',
+	  employee_count: '',
+	  office_postal_code: '',
+	  company_name: '',
+	  industry: '',
+	  office_address: '',
+	  mobile: '',
+	  description: '',
+	},
 	type: '',
 	title: '',
 	paid: '',
@@ -70,8 +97,56 @@ const initialJobListState = {
 	max_applicants: '',
 	active: '',
 	verified: '',
-	isFetching: true,
+	isFetching: false,
 	propsErrorMap: {}
+}
+
+//FIXME: Might want to have the job id as the root in the api structure of the api
+//
+function job(state=initialJobListState, action) {
+  switch(action.type) {
+    case FETCHING_JOB_SUCCESS:
+      return {
+  	...state,
+	job: action.job
+	/*
+	...state,
+	//FIXME: Is there a way to pass everything without typeing too much? [action.id]: user: action.user?
+	id: action.id,
+	user: {
+		website: action.user.website,
+		logo: action.user.logo,
+		office_city: action.user.office_city,
+		employee_count: action.user.employee_count,
+		office_postal_code: action.user.office_postal_code,
+		company_name: action.user.company_name,
+		industry: action.user.industry,
+		office_address: action.user.office_address,
+		mobile: action.user.mobile,
+		description: action.user.description
+	},
+	type: action.type,
+	title: action.title,
+	paid: action.paid,
+	start_date: action.start_date,
+	responsibilities: action.responsibilities,
+	qualification: action.qualification,
+	address: action.address,
+	city: action.city,
+	compensation: action.compensation,
+	max_applicants: action.max_applicants,
+	active: action.active,
+	//TODO: Leave out jobs in the future that are unverified, might be done at the backend.
+	verified: action.verified,
+	*/
+      }//return
+  }//action
+}//job
+
+const initialState = {
+	isFetching: true,
+	error: '',
+	jobs: {}
 }
 
 export default function jobs(state= initialJobListState, action) {
@@ -79,9 +154,21 @@ export default function jobs(state= initialJobListState, action) {
 	    case FETCH_JOBS:
 	      return {
 		...state,
-		jobs: getJobs(action), 
+		isFetching: true,
 	      }		
-
+	    case FETCHED_JOBS_SUCCESS:
+	      return action.id === null ? {
+		      ...state,
+		      isFetching: false,
+		      error: 'No jobs found',
+	      } : {
+	      }
+	    case FETCHED_JOBS_ERROR:
+	      return {
+	      	...state,
+		isFetching: true,
+		[action.uid]: job(state[action.uid], action),
+	      }
 	    default:	
 	      return state
 	}//switch
