@@ -1,66 +1,68 @@
 import React, { PropTypes } from 'react'
-import { pageContainer, cardContainer, card, cardHeader, 
-  jobTitleContainer, jobTitle, industryTitle,
-  tagContainer, tagList, tagElement,
-  companyContainer, companyInfoContainer, companyTitle,
-  applyButton, cardModalContainer, cardModalHeader, jobModalTitle,
-  jobModalIndustry, cardModalBodyLeft, cardModalBodyRight, cardModalScroll, cardModalFooter,
-  image, questionHeader} from '../styles/StudentDashboard.css'
+import { applyButton} from '../styles/StudentDashboard.css'
+
+import { card, cardContainer, cardHeader, cardDivider, cardBody,
+  studentPic, institution, studentPicInner, studentDetails, studentName,
+  studentMajor, degreeInfo, mainInfoList, miscInfoList, bold, list, stDetail,
+  stDetailInner, flex, stDetailValue } from '../styles/StudentCardStyles.css'
 
 //Accept job object which contains the proptypes.
 export default function StudentCard({ refs, 
   // Default Student
   student = { 
-    name: 'Khalil Stemmler'
+    name: 'Khalil Stemmler',
+    school: 'Brock University'
   }
 }) {
   return (
       <div className={cardContainer}>
         <div className={card}>
-          <header className={cardHeader}>
-            <span>
-              <p>Job Type</p>
-            </span>
-          </header>
-          <div className={jobTitleContainer}>
-            <h2 className={jobTitle}>Job Title</h2>
+          <div className={cardHeader}>
+            <div className={studentPic}>
+              <div className={studentPicInner}>
+                
+              </div>
+            </div>
+            <div className={studentDetails}>
+              <div className={studentName}>Khalil Stemmler</div>
+              <div className={studentMajor}>Major: <span></span></div>
+            </div>
           </div>
-          <h3 className={industryTitle}>Software Development</h3>
-
-        <div>
-          <ul className={tagContainer}>
-            <li className={tagElement}>
-              <span>Test</span>
-            </li>
-            <li className={tagElement}>
-              <span>Test</span>
-            </li>
-            <li className={tagElement}>
-              <span>Test</span>
-            </li>
-            <li className={tagElement}>
-              <span>Test</span>
-            </li>
-          </ul>
-        </div>
-
-        <div>
-          <ul className={companyContainer}>
-           <li>
-             <img src="https://placeholdit.imgix.net/~text?txtsize=12&txt=56%C3%9756&w=56&h=56" alt="Smiley face"/>
-           </li>
-           <li>
-            <ul className={companyInfoContainer}>
-              <li><h4 className={companyTitle}>Univjobs</h4>
+          <div className={cardDivider}></div>
+          <div className={cardBody}>
+            <div className={institution}>Brock University</div>
+            <div className={degreeInfo}>Bachelors, 1st Year</div>
+          
+            <ul className={mainInfoList + ' ' + list}>
+              <li className={flex}>
+                <div className={stDetail}>
+                  <div className={stDetailInner}></div>
+                </div>
+                <div className={stDetailValue}>GPA</div>
               </li>
-              <li>
-                <a href="https://google.com">Company Info</a>
+              <li className={flex}>
+                <div className={stDetail}>
+                  <div className={stDetailInner}></div>
+                </div>
+                <div className={stDetailValue}>Sports?</div>
               </li>
-            </ul> 
-           </li>
-          </ul>
-        </div>
-        <button className={applyButton} onClick={() => {refs.jobModal.show()} }>APPLY</button>
+              <li className={flex}>
+                <div className={stDetail}>
+                  <div className={stDetailInner}></div>
+                </div>
+                <div className={stDetailValue}>Car?</div>
+              </li>
+            </ul>
+  
+            <div className={miscInfoList}>
+              <ul className={list}>
+                <li><span className={bold}>Past Job: </span>Server at Cafe Italiano</li>
+                <li><span className={bold}>Fun Fact: </span>I'm cool</li>
+                <li><span className={bold}>Hobbies: </span>Coding, music, longboarding</li>
+              </ul>
+            </div>
+          </div>
+        <button className={applyButton} onClick={() => {refs.jobModal.show()} }>INVITE TO APPLY</button>
       </div>
      </div> 
   )
