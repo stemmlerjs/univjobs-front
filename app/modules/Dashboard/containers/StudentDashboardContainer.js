@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react'
 import { SidebarContainer } from 'modules/Main'
 import { StudentDashboard } from 'modules/Dashboard'
 import SkyLight from 'react-skylight'
+import { pageContainer } from '../styles/index.css'
 
 import axios from 'axios'
 import { connect } from 'react-redux'
@@ -100,9 +101,9 @@ const StudentDashboardContainer = React.createClass({
 
   render () {
     return (
-      <div>
+      <div className={pageContainer}>
       <SidebarContainer />
-       <StudentDashboard />
+       <StudentDashboard jobs={this.props.jobs} />
       </div>
     )
   },

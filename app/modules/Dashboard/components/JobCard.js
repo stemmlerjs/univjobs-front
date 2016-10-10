@@ -9,6 +9,7 @@ import { pageContainer, cardContainer, card, cardHeader,
 
 //Accept job object which contains the proptypes.
 export default function JobCard({ refs }) {
+  console.log(refs)
   return (
 	//Testing encapsulation
 	//NOTE: Assumption that button component might break

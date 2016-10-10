@@ -120,3 +120,21 @@
   width: 156px;
   margin-left: 7px;
 }
+
+.margins {
+  margin-left: 3%;
+  margin-right: 3%;
+}
+
+.pageHeaderSection {
+  margin-bottom: 60px;
+
+}
+
+.pageTitle {
+
+}
+
+.title {
+  font-size:37px;
+}

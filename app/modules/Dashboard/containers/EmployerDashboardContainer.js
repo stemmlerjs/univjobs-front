@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import { SidebarContainer } from 'modules/Main'
 import { authRedirectFilter } from 'config/routes'
-import { pageContainer } from '../styles/EmployerDashboardContainerStyles.css'
+import { pageContainer } from '../styles/index.css'
 
 import { getStudents as getStudentsREST } from 'helpers/dashboard'
 import { EmployerDashboard } from 'modules/Dashboard'

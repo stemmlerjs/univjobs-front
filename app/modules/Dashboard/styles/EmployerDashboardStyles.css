@@ -1,15 +1,21 @@
+/*Copied to sharedStyles.css*/
 .margins {
   margin-left: 3%;
   margin-right: 3%;
 }
 
+/*Copied to sharedStyles.css*/
 .pageHeaderSection {
 
 }
+
+/*Copied to sharedStyles.css*/
 .pageTitle {
 
 }
 
+
+/*Copied to sharedStyles.css*/
 .title {
   font-size:37px;
 }
@@ -44,7 +50,10 @@
   flex-grow: 10;
 }
 
-/* Check out this hack: http://stackoverflow.com/questions/18744164/flex-box-align-last-row-to-grid
+/*NOTE: Thanks for referrencing this! 
+ * I believe it's good practice to do this!
+ * 
+ * Check out this hack: http://stackoverflow.com/questions/18744164/flex-box-align-last-row-to-grid
     Doing this to be able to align the last row to the grid.
 */
 
