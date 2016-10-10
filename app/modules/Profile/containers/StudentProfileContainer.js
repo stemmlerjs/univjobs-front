@@ -74,7 +74,7 @@ const StudentProfileContainer = React.createClass({
         employer: '/join'	// if not logged in, go here (employer)
       },
       restricted: {
-        to: 'STUDENTS',			// students only on this route
+        to: 'STUDENTS',			      // students only on this route
         redirectTo: '/profile/em'	// if not an employer, redirect to the student equivalent
       }
     }
@@ -90,9 +90,9 @@ const StudentProfileContainer = React.createClass({
   */
 
   finallyDisableOverlay() {
-	if(this.context.store.getState().application.isOverlayActive) {
-	  this.props.closeOverlay()
-	}
+  	if(this.context.store.getState().application.isOverlayActive) {
+  	  this.props.closeOverlay()
+  	}
   },
 
   /** componentWillReceiveProps
@@ -107,19 +107,19 @@ const StudentProfileContainer = React.createClass({
      let submitSuccess = newProps.submitSuccess;
      
      if(submitSuccess) {
-	this.refs.container.success(
-		"Success in StudentProfileContainer",
-		"Profile succesfully updated", {
-		   timeout: 3000
-		});
+    	this.refs.container.success(
+    		"Success in StudentProfileContainer",
+    		"Profile succesfully updated", {
+    		   timeout: 3000
+    		});
      }
      
      if(error) {
-	this.refs.container.error(
-		error,
-		"Something went kaboom!", {
-		   timeout: 3000
-		});
+    	this.refs.container.error(
+    		error,
+    		"Something went kaboom!", {
+    		   timeout: 3000
+    		});
      }
   },
 
@@ -134,9 +134,9 @@ const StudentProfileContainer = React.createClass({
    */
 
   componentWillMount() {
-	this.retrieveAllLists()
-	.then(this.doRedirectionFilter)
-	.then(this.finallyDisableOverlay)
+	  this.retrieveAllLists()
+	    .then(this.doRedirectionFilter)
+	    .then(this.finallyDisableOverlay)
   },
 
   componentWillUnmount() {

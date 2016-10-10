@@ -34,18 +34,30 @@ const StudentDashboardContainer = React.createClass({
   },
   */
 
-/**
-  * openLoginModal
+/** doRedirectionFilter
   *
-  *  Opens the Login modal. Can be triggered on either Student or Employer view.
-  *  Function is passed to the Navigation component as Props
+  * The redirection filter is the process that occurs each time we enter this container.
+  * Used in every higher order component and supplied with a config, it ensures that the
+  * user is redirected to the appropriate page based on their authentication status and 
+  * user type.
   *
-  * @param (Event) e - the click event
+  * @return (Promise)
+  *
   */
 
-  openLoginModal (e) {
-    e.preventDefault()
-    this.refs.loginModal.show()
+  doRedirectionFilter(){
+    const config = {
+      failureRedirect: {
+        student: '/join',                 // if not logged in, go here (student)
+        employer: '/join'                 // if not logged in, go here (employer)
+      },
+      restricted: {
+        to: 'STUDENTS',                   // employers only on this route
+        redirectTo: '/dashboard/em'       // if not an employer, redirect to the student equivalent
+      }
+    }
+
+    return authRedirectFilter(config, this.context.store, this.context.router)
   },
 
   /* Handles the fetch of the job feed.
@@ -59,7 +71,8 @@ const StudentDashboardContainer = React.createClass({
   },
 
   componentWillMount() {
-	this.props.closeOverlay()
+    this.doRedirectionFilter()
+      .then(this.props.closeOverlay())
   },
 
   render () {
@@ -84,35 +97,35 @@ function mapStateToProps({jobs}) {
 	//isAStudent: user.isAsStudent ? true : false,
 	//isProfileCompleted: user.isProfileCompleted ?true : false,
 	//user: user ? user : {}	
-	id: jobs.id,
-	user: {
-	  website: jobs.user.website,
-	  first_name: jobs.user.first_name,
-	  logo: jobs.user.logo,
-	  office_city: jobs.user.office_city,
-	  last_name: jobs.user.last_name,
-	  employee_count: jobs.user.employee_count,
-	  office_postal_code: jobs.user.office_postal_code,
-	  company_name: jobs.user.company_name,
-	  industry: jobs.user.industry,
-	  office_address: jobs.user.office_address,
-	  mobile: jobs.user.mobile,
-	  description: jobs.user.description,
-	},
-	type: jobs.user.type,
-	title: jobs.user.title,
-	paid: jobs.user.paid,
-	start_date: jobs.user.start_date,
-	responsibilities: jobs.user.responsibilities,
-	qualification: jobs.user.qualification,
-	address: jobs.user.address,
-	city: jobs.user.city,
-	compensation: jobs.user.compensation,
-	max_applicants: jobs.user.max_applicants,
-	active: jobs.user.active,
-	verified: jobs.user.verified,
-	isFetching: false,
-	error: props.error,
+	// id: jobs.id,
+	// user: {
+	//   website: jobs.user.website,
+	//   first_name: jobs.user.first_name,
+	//   logo: jobs.user.logo,
+	//   office_city: jobs.user.office_city,
+	//   last_name: jobs.user.last_name,
+	//   employee_count: jobs.user.employee_count,
+	//   office_postal_code: jobs.user.office_postal_code,
+	//   company_name: jobs.user.company_name,
+	//   industry: jobs.user.industry,
+	//   office_address: jobs.user.office_address,
+	//   mobile: jobs.user.mobile,
+	//   description: jobs.user.description,
+	// },
+	// type: jobs.user.type,
+	// title: jobs.user.title,
+	// paid: jobs.user.paid,
+	// start_date: jobs.user.start_date,
+	// responsibilities: jobs.user.responsibilities,
+	// qualification: jobs.user.qualification,
+	// address: jobs.user.address,
+	// city: jobs.user.city,
+	// compensation: jobs.user.compensation,
+	// max_applicants: jobs.user.max_applicants,
+	// active: jobs.user.active,
+	// verified: jobs.user.verified,
+	// isFetching: false,
+	// error: props.error,
   }
 }
 

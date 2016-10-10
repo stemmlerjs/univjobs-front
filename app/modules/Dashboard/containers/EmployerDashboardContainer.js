@@ -3,6 +3,7 @@ import { SidebarContainer } from 'modules/Main'
 import { authRedirectFilter } from 'config/routes'
 import { pageContainer } from '../styles/EmployerDashboardContainerStyles.css'
 
+import { getStudents as getStudentsREST } from 'helpers/dashboard'
 import { EmployerDashboard } from 'modules/Dashboard'
 
 // ====== REDUX AND STATE IMPORTS =======
@@ -61,6 +62,10 @@ const EmployerDashboardContainer = React.createClass({
     }
   },
 
+  getStudents() {
+    return getStudentsREST(this.context.store)
+  },
+
   /*
   * componentWillMount
   *
@@ -73,6 +78,7 @@ const EmployerDashboardContainer = React.createClass({
   componentWillMount() {
     /*  On page load, we will first get all the required lists for the screen */  
     this.doRedirectionFilter()
+      .then(this.getStudents())
       .then(this.finallyDisableOverlay)
   },
 
@@ -81,15 +87,16 @@ const EmployerDashboardContainer = React.createClass({
     return (
       <div className={pageContainer}>
         <SidebarContainer/>
-        <EmployerDashboard/>
+        <EmployerDashboard students={this.props.students}/>
       </div>
     )
   },
 })
 
-function mapStateToProps({user, profile}) {
+function mapStateToProps({user, dashboard}) {
   return {
-    user: user ? user : {}
+    user: user ? user : {},
+    students: dashboard.employerDashboard.students ? dashboard.employerDashboard.students : []
   }
 }
 

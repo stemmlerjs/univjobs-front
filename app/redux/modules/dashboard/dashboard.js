@@ -1,3 +1,213 @@
+
+// =======================================================
+// ====================== ACTIONS ========================
+// =======================================================
+
+const GET_STUDENTS = 'EMPLOYER.GET_STUDENTS'
+const GET_STUDENTS_SUCCESS = 'EMPLOYER.GET_STUDENTS_SUCCESS'
+const GET_STUDENTS_FAILURE = 'EMPLOYER.GET_STUDENTS_FAILURE'
+
+// =======================================================
+// ====================== ACTIONS ========================
+// =======================================================
+
+export function getStudentsSuccess(students) {
+	return {
+		type: GET_STUDENTS_SUCCESS,
+		students
+	}
+}
+
+export function getStudentsFailure(error) {
+	return {
+		type: GET_STUDENTS_FAILURE,
+		error
+	}
+}
+
+
+// =======================================================
+// ================== INITIAL STATE ======================
+// =======================================================
+
+const initialDashboardState = {
+	studentDashboard: {},
+	employerDashboard: {},
+	error: ''
+}
+
+const initialEmployerDashboardState = {
+	students: [],
+	searchField: '',
+	campusFilter: '',
+	gradDateFilter: ''
+}
+
+// =======================================================
+// ===================== REDUCERS ========================
+// =======================================================
+
+function employerDashboard(state = initialEmployerDashboardState, action) {
+	switch(action.type) {
+		case GET_STUDENTS_SUCCESS:
+			return {
+				...state,
+				students: action.students
+			}
+		default:
+			return state
+	}
+}
+
+export default function dashboard(state = initialDashboardState, action) {
+	switch(action.type) {
+		case GET_STUDENTS_SUCCESS:
+			return {
+				...state,
+				employerDashboard: employerDashboard(state.employerDashboard, action)
+			}
+		case GET_STUDENTS_FAILURE:
+			return {
+				...state,
+				error: action.error
+			}
+		default:
+			return state
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// =================================================================
+// =================================================================
+// ============= CHARLES's CODE ====================================
+
+
 import { getJobs } from 'helpers/dashboard'
 
 /*===========================================
@@ -142,33 +352,33 @@ const initialJobListState = {
 	  }//action
 	}//job
 
-	const initialState = {
-		isFetching: true,
-		error: '',
-		jobs: {}
-	}
+// 	const initialState = {
+// 		isFetching: true,
+// 		error: '',
+// 		jobs: {}
+// 	}
 
-export default function jobs(state= initialJobListState, action) {
-	switch(action.type) {
-	    case FETCHING_JOBS:
-	      return {
-		...state,
-		isFetching: true,
-	      }		
-	    case FETCHED_JOBS_SUCCESS:
-	      return action.id === null ? {
-		      ...state,
-		      isFetching: false,
-		      error: 'No jobs found',
-	      } : {
-	      }
-	    case FETCHED_JOBS_ERROR:
-	      return {
-	      	...state,
-		isFetching: true,
-		[action.uid]: job(state[action.uid], action),
-	      }
-	    default:	
-	      return state
-	}//switch
-}
+// export default function jobs(state= initialJobListState, action) {
+// 	switch(action.type) {
+// 	    case FETCHING_JOBS:
+// 	      return {
+// 		...state,
+// 		isFetching: true,
+// 	      }		
+// 	    case FETCHED_JOBS_SUCCESS:
+// 	      return action.id === null ? {
+// 		      ...state,
+// 		      isFetching: false,
+// 		      error: 'No jobs found',
+// 	      } : {
+// 	      }
+// 	    case FETCHED_JOBS_ERROR:
+// 	      return {
+// 	      	...state,
+// 		isFetching: true,
+// 		[action.uid]: job(state[action.uid], action),
+// 	      }
+// 	    default:	
+// 	      return state
+// 	}//switch
+// }

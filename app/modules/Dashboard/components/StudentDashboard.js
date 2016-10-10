@@ -8,6 +8,7 @@ import { pageContainer, cardContainer, card, cardHeader,
 	applyButton, cardModalContainer, cardModalHeader, jobModalTitle,
 	jobModalIndustry, cardModalBodyLeft, cardModalBodyRight, cardModalScroll, cardModalFooter,
 	image, questionHeader} from '../styles/StudentDashboard.css'
+import { JobCard } from 'modules/Dashboard'
 
 const styles = {
   overlayStyles: {

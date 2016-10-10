@@ -7,12 +7,8 @@ import { card, cardContainer, cardHeader, cardDivider, cardBody,
   stDetailInner, flex, stDetailValue } from '../styles/StudentCardStyles.css'
 
 //Accept job object which contains the proptypes.
-export default function StudentCard({ refs, 
-  // Default Student
-  student = { 
-    name: 'Khalil Stemmler',
-    school: 'Brock University'
-  }
+export default function StudentCard({ refs, belongsToClubs, educationLevel, funFact, GPA,
+  hasCar, hobbies, name, major, pastJob, photo, school, sports
 }) {
   return (
       <div className={cardContainer}>
@@ -24,13 +20,13 @@ export default function StudentCard({ refs,
               </div>
             </div>
             <div className={studentDetails}>
-              <div className={studentName}>Khalil Stemmler</div>
+              <div className={studentName}>{ name }</div>
               <div className={studentMajor}>Major: <span></span></div>
             </div>
           </div>
           <div className={cardDivider}></div>
           <div className={cardBody}>
-            <div className={institution}>Brock University</div>
+            <div className={institution}>{ school }</div>
             <div className={degreeInfo}>Bachelors, 1st Year</div>
           
             <ul className={mainInfoList + ' ' + list}>
@@ -38,7 +34,7 @@ export default function StudentCard({ refs,
                 <div className={stDetail}>
                   <div className={stDetailInner}></div>
                 </div>
-                <div className={stDetailValue}>GPA</div>
+                <div className={stDetailValue}>GPA: { GPA }</div>
               </li>
               <li className={flex}>
                 <div className={stDetail}>

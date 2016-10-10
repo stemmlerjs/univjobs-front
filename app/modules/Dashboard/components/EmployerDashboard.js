@@ -5,7 +5,7 @@ import { pageContainer, pageHeaderSection, pageTitle, title, pageFiltersAndSearc
   campusDropdown, gradDateDropdown, filtersDivider, margins, overflowFix } from '../styles/EmployerDashboardStyles.css'
 import { StudentCard } from 'modules/Dashboard'
 
-export default function EmployerDashboard (props) {
+export default function EmployerDashboard ({students}) {
   return (
     <div className={rootComponentContainer}>
       <div className={margins}>
@@ -41,22 +41,25 @@ export default function EmployerDashboard (props) {
 
           {/* MAIN (Cards list) */}
           <div className={pageMainStudentCards}>
-            <StudentCard/>
-            <StudentCard/>
-            <StudentCard/>
-            <StudentCard/>
-            <StudentCard/>
-            <StudentCard/>
-            <StudentCard/>
-            <StudentCard/>
-            <StudentCard/>
-            <StudentCard/>
-            <StudentCard/>
-            <StudentCard/>
-            <StudentCard/>
-            <StudentCard/>
-            <StudentCard/>
-            <StudentCard/>
+
+            {students.map((student) => (
+              <StudentCard 
+                key={student.user.email} 
+                belongsToClubs={student.clubs}
+                educationLevel={student.edu_level}
+                funFact={student.fun_fact}
+                GPA={student.GPA}
+                hasCar={student.has_car}
+                hobbies={student.hobbies}
+                name={student.user.first_name}
+                major={student.major}
+                pastJob={student.position}
+                photo={student.photo}
+                school={student.school.name}
+                sports={student.sports}
+              />
+            ))}
+
             <div className={overflowFix}></div>
             <div className={overflowFix}></div>
             <div className={overflowFix}></div>
@@ -67,3 +70,4 @@ export default function EmployerDashboard (props) {
     </div>
   )
 }
+
