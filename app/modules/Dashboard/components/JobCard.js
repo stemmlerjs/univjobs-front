@@ -8,8 +8,8 @@ import { pageContainer, cardContainer, card, cardHeader,
 	image, questionHeader} from '../styles/StudentDashboard.css'
 
 //Accept job object which contains the proptypes.
-export default function JobCard({ refs }) {
-  console.log(refs)
+export default function JobCard({ jobs  }) {
+  console.log(jobs)
   return (
 	//Testing encapsulation
 	//NOTE: Assumption that button component might break
@@ -21,8 +21,9 @@ export default function JobCard({ refs }) {
 	       		</span>
 	      	</header>
 		      <div className={jobTitleContainer}>
-		        <h2 className={jobTitle}>Job Title</h2>
+		        <h2 className={jobTitle}>{jobs.title}</h2>
 		      </div>
+		{/* TODO: Point to industry  */}
 	      	<h3 className={industryTitle}>Software Development</h3>
 
 	      <div>
@@ -49,10 +50,10 @@ export default function JobCard({ refs }) {
 					 </li>
 					 <li>
 					  <ul className={companyInfoContainer}>
-					    <li><h4 className={companyTitle}>Univjobs</h4>
+					    <li><h4 className={companyTitle}>{jobs.user.company_name}</h4>
 					    </li>
 					    <li>
-					      <a href="https://google.com">Company Info</a>
+					      <a href={jobs.user.website} target="_blank">Company Info</a>
 					    </li>
 					  </ul> 
 					 </li>

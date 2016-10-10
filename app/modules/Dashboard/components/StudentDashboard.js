@@ -47,7 +47,7 @@ export default function StudentDashboar ({jobs}) {
 	   */}
 	   <div>
 	    {jobs.map((job) => (
-	       <JobCard key={job.id} refs={job}/>
+	       <JobCard key={job.id} jobs={job}/>
 	    ))}
 	   </div>
 	  </div>
