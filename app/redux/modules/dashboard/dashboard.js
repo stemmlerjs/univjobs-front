@@ -86,7 +86,7 @@ function employerDashboard(state = initialEmployerDashboardState, action) {
 	}
 }
 
-function studentDashboard(state=initialStudentDashboardState, action) {
+function studentDashboard(state = initialStudentDashboardState, action) {
 	switch(action.type) {
 		case FETCHING_JOBS:
 			return {
@@ -109,6 +109,7 @@ function studentDashboard(state=initialStudentDashboardState, action) {
 			return {
 				state
 			}//switch
+	}
 }
 
 export default function dashboard(state = initialDashboardState, action) {
