@@ -3,6 +3,7 @@ import { SidebarContainer } from 'modules/Main'
 import { StudentDashboard } from 'modules/Dashboard'
 import SkyLight from 'react-skylight'
 
+import axios from 'axios'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as userActionCreators from 'redux/modules/user/user'
@@ -38,7 +39,14 @@ const StudentDashboardContainer = React.createClass({
   },
 
   retrieveJobs () {
-     this.context.store.dispatch(dashboardActionCreators.fetchJobs())
+   const promise = new Promise((resolve, reject) => {
+      axios.all([
+         getJobs(this.context.store)	
+      ])
+      .then((response) => resolve(true))
+      .catch((response) => resolve(true))
+    })
+   return promise;
   },
 
   /** doRedirectionFilter
@@ -68,10 +76,10 @@ const StudentDashboardContainer = React.createClass({
   },
 
   componentWillMount() {
-	  console.log("componentWillMount")
-	this.props.closeOverlay()
-	this.doRedirectionFilter()
+	console.log("componentWillMount")
 	this.retrieveJobs()
+	.then(this.doRedirectionFilter())
+	.then(this.props.closeOverlay())
   },
 
   componentWillUnmount() {

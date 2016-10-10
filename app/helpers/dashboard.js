@@ -5,17 +5,19 @@ import axios from 'axios'
 import config from 'config'
 import * as job from 'redux/modules/dashboard/dashboard'
 
-export function getJobs() {
+export function getJobs(store) {
  const promise = new Promise(function(resolve, reject)  {
-   console.log("****** GET JOBS CHECK *********")
+   store.dispatch(job.fetchingJobs())
     axios.get(config.baseUrl + 'job/')
      .then((response) => {
+	 store.dispatch(job.fetchedJobSuccess(response.data))
          console.log(response.data)
 	 resolve(true);
      })//respone
-   .catch(function(err) {
+   .catch((err) => {
+     store.dispatch(job.fetchedJobsError())
       console.log(err)
-      reject(false)
+      resolve(false)
    })//catch
  })//promise
  return promise;
