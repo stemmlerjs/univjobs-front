@@ -41,21 +41,6 @@
   resize: vertical;
 }
 
-.btn {
-    margin-top: 40px;
-    padding: 10px 15px 10px 15px;
-    border-radius: 3px;
-    border: 0;
-    background: #3697DB;
-    font-size: 13px;
-    color: white;
-    text-shadow: 1px 1px 0px rgba(0, 0, 0, .1);
-    cursor: pointer;
-    margin: 0 auto;
-    width: 156px;
-    margin-left: 7px;
-}
-
 .dropzone {
       width: 165px;
     height: 165px;
