@@ -1,10 +1,9 @@
 import axios from 'axios'
 import config from 'config'
-import { fetchingJobs, fetchedJobSuccess, fetchedJobsError,
-	 getStudentsSuccess, getStudentsError } from 'redux/modules/dashboard/dashboard'
+import { fetchingJobs, fetchedJobSuccess, fetchedJobsError, getStudentsSuccess, getStudentsError } from 'redux/modules/dashboard/dashboard'
 
 export function getJobs(store) {
- const promise = new Promise(function(resolve, reject)  {
+ const promise = new Promise((resolve, reject) => {
    store.dispatch(fetchingJobs())
     axios.get(config.baseUrl + 'job/')
      .then((response) => {
