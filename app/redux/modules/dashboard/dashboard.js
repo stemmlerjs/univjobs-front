@@ -1,4 +1,5 @@
 import { getJobs } from 'helpers/dashboard'
+import axios from 'axios'
 
 /*===========================================
  *  		ACTIONS 
@@ -19,25 +20,25 @@ const FETCHED_JOBS_ERROR = 'DASHBOARD.FETCHED_JOBS_ERROR'
 */
 
 //# FIXME: 
-function fetchingJobs() {
+export function fetchingJobs() {
 	console.log("*******fetchingJob*******")
 	return {
 		type: FETCHING_JOBS,
+		isFetching: true
 	}
 }
 
-function fetchJobsErrors(error) {
+export function fetchedJobErrors(err) {
 	console.log("*******fetchJobError*******")
-	console.warn(error)
+	console.log(err)
 	return {
 		type: FETCHED_JOBS_ERROR,
-		error: 'Error fetching jobs'
+		error: err
 	}
 }
 
-function fetchJobsSuccess(jobs) {
+export function fetchedJobSuccess(jobs) {
 	console.log("*******fetchJobSuccess*******")
-	console.log(jobs)
 	return {
 		type: FETCHED_JOBS_SUCCESS,
 		jobs: jobs
@@ -45,19 +46,23 @@ function fetchJobsSuccess(jobs) {
 }
 
 export function fetchJobs() {
-	console.log("*******Initiate Job Fetching**********") 
-	return => (dispatch) {
-		//ACTION: DISPATCH (FETCHING_JOBS)
-		fetchingJobs()
-			const promise = new Promise(resolve, reject) => {
-
-	   
-	    }
-	
-	
-	}
-
+   return function (dispatch) {
+	const promise = new Promise((resolve, reject) => {
+     		dispatch(fetchingJobs())
+		axios.all([
+			getJobs()
+		])
+		.then((response) => { 
+			dispatch(fetchedJobSuccess(response.data))
+		})
+		.catch((resp) => {
+		        dispatch(fetchedJobError())
+		})
+	})
+      return promise
+   }
 }
+
 
 /*===========================================
  *  		LISTENERS
@@ -101,8 +106,8 @@ const initialJobListState = {
 	propsErrorMap: {}
 }
 
-//FIXME: Might want to have the job id as the root in the api structure of the api
-//
+/*Might want to have the job id as the root in the api structure of the api
+
 function job(state=initialJobListState, action) {
   switch(action.type) {
     case FETCHING_JOB_SUCCESS:
@@ -138,10 +143,10 @@ function job(state=initialJobListState, action) {
 	active: action.active,
 	//TODO: Leave out jobs in the future that are unverified, might be done at the backend.
 	verified: action.verified,
-	*/
       }//return
   }//action
 }//job
+*/
 
 const initialState = {
 	isFetching: true,
@@ -149,25 +154,24 @@ const initialState = {
 	jobs: {}
 }
 
-export default function jobs(state= initialJobListState, action) {
+export default function jobs(state=initialState, action) {
 	switch(action.type) {
-	    case FETCH_JOBS:
+	    case FETCHING_JOBS:
 	      return {
 		...state,
 		isFetching: true,
 	      }		
 	    case FETCHED_JOBS_SUCCESS:
-	      return action.id === null ? {
+	      return {
 		      ...state,
+		      jobs: action.jobs,
 		      isFetching: false,
-		      error: 'No jobs found',
-	      } : {
 	      }
 	    case FETCHED_JOBS_ERROR:
 	      return {
-	      	...state,
-		isFetching: true,
-		[action.uid]: job(state[action.uid], action),
+		      ...state,
+		      isFetching: false,
+		      error: action.error,
 	      }
 	    default:	
 	      return state

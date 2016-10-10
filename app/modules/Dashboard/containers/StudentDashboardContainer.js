@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react'
 import { SidebarContainer } from 'modules/Main'
 import { StudentDashboard } from 'modules/Dashboard'
-import { getJobs } from 'helpers/dashboard'
 import SkyLight from 'react-skylight'
 
 import { connect } from 'react-redux'
@@ -9,6 +8,7 @@ import { bindActionCreators } from 'redux'
 import * as userActionCreators from 'redux/modules/user/user'
 import * as dashboardActionCreators from 'redux/modules/dashboard/dashboard'
 import { authRedirectFilter } from 'config/routes'
+import { getJobs } from 'helpers/dashboard'
 
 
 const actionCreators = {
@@ -22,17 +22,6 @@ const StudentDashboardContainer = React.createClass({
     store: PropTypes.object.isRequired
   },
 
-/**
-  * handleSwitchUserType
-  *
-  *  Intially, we assume the user is a Student (users.isAStudent === true).
-  *  This flips the switch on that.
-  *
-  handleSwitchUserType (e) {
-    e.preventDefault()
-    this.props.switchedUserType(this.props.isAStudent)
-  },
-  */
 
 /**
   * openLoginModal
@@ -48,22 +37,48 @@ const StudentDashboardContainer = React.createClass({
     this.refs.loginModal.show()
   },
 
-  /* Handles the fetch of the job feed.
-   * NOTE: Might want to add listener here in the future
+  retrieveJobs () {
+     this.context.store.dispatch(dashboardActionCreators.fetchJobs())
+  },
+
+  /** doRedirectionFilter
    *
-   * */
-  handleFetchJobs() {
-	//Dispatch to fetch jobs
-	//
+   * The redirection filter is the process that occurs each time we enter this container.
+   * Used in every higher order component and supplied with a config, it ensures that the
+   * user is redirected to the appropriate page based on their authentication status and 
+   * user type.
+   *
+   * @ return (Promise)
+   *
+   */
   
+  doRedirectionFilter() {
+    const config = {
+      failureRedirect: {
+	 student: '/join',	// if not logged in, go here (student)
+	 employer: '/join'      // if not logged in, go here (employer)
+      },
+      restricted: {
+         to: 'STUDENTS',		 // STUDENTS only on this route
+	 redirectTo: '/job/mylistings'   // if not an EMPLOYER, redirect to the employer equivalent 
+		 			 // This might change to employer categories
+      }
+    }
+     return authRedirectFilter(config, this.context.store, this.context.router)
   },
 
   componentWillMount() {
+	  console.log("componentWillMount")
 	this.props.closeOverlay()
+	this.doRedirectionFilter()
+	this.retrieveJobs()
+  },
+
+  componentWillUnmount() {
+    console.log("Component WillUnmount")
   },
 
   render () {
-  console.log(this.props)
     return (
       <div>
       <SidebarContainer />
@@ -79,8 +94,8 @@ const StudentDashboardContainer = React.createClass({
 // @params ({user}) contains BaseUser & Employer attributes
 // */
 
-function mapStateToProps({jobs}) {
-  return {
+function mapStateToProps({user, jobs}) {
+  return {/*
 	//isAStudent: user.isAsStudent ? true : false,
 	//isProfileCompleted: user.isProfileCompleted ?true : false,
 	//user: user ? user : {}	
@@ -112,7 +127,11 @@ function mapStateToProps({jobs}) {
 	active: jobs.user.active,
 	verified: jobs.user.verified,
 	isFetching: false,
-	error: props.error,
+	error: props.error,*/
+	  user: user ? user : {},
+	jobs: jobs ? jobs: {}
+
+
   }
 }
 

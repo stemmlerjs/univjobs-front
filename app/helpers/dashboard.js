@@ -3,14 +3,13 @@
  */
 import axios from 'axios'
 import config from 'config'
-//import { getJobList } from 'redux/modules/dashboard/dashboard'
+import * as job from 'redux/modules/dashboard/dashboard'
 
-export function getJobs(store) {
+export function getJobs() {
  const promise = new Promise(function(resolve, reject)  {
    console.log("****** GET JOBS CHECK *********")
     axios.get(config.baseUrl + 'job/')
      .then((response) => {
-       //store.dispatch(getJobList('FETCH_JOBS', response.data))
          console.log(response.data)
 	 resolve(true);
      })//respone
@@ -20,4 +19,4 @@ export function getJobs(store) {
    })//catch
  })//promise
  return promise;
-}//getJobs
+}//getJobs*/
