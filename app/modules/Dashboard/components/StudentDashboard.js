@@ -9,7 +9,7 @@ import { pageContainer, cardContainer, card, cardHeader,
 	companyContainer, companyInfoContainer, companyTitle,
 	applyButton, cardModalContainer, cardModalHeader, jobModalTitle,
 	jobModalIndustry, cardModalBodyLeft, cardModalBodyRight, cardModalScroll, cardModalFooter,
-	image, questionHeader} from '../styles/StudentDashboard.css'
+	image, questionHeader, overflowFix, pageMainJobCards} from '../styles/StudentDashboard.css'
 import { JobCard } from 'modules/Dashboard'
 
 const styles = {
@@ -45,10 +45,14 @@ export default function StudentDashboar ({jobs}) {
 	     NOTE: Reference for iterating using map
 	          https://facebook.github.io/react/docs/multiple-components.html#dynamic-children
 	   */}
-	   <div>
+	   <div className={pageMainJobCards}>
 	    {jobs.map((job) => (
 	       <JobCard key={job.id} jobs={job}/>
 	    ))}
+	    <div className={overflowFix}></div>
+	    <div className={overflowFix}></div>
+	    <div className={overflowFix}></div>
+	    <div className={overflowFix}></div>
 	   </div>
 	  </div>
 	</div>	
