@@ -24,6 +24,10 @@ const StudentDashboardContainer = React.createClass({
     store: PropTypes.object.isRequired
   },
 
+  openModal (e) {
+    e.preventDefault()
+    this.refs.jobModal.show()
+  },
 
 /** doRedirectionFilter
   *

@@ -1,6 +1,8 @@
 import React, { PropTypes } from 'react'
 import { StudentCard } from 'modules/Dashboard'
+import { JobCard, JobCardModal } from 'modules/Dashboard'
 import SkyLight from 'react-skylight'
+
 import { rootComponentContainer, margin, pageHeaderSection, 
 	pageTitle, title} from 'sharedStyles/styles.css'
 import { pageContainer, cardContainer, card, cardHeader, 
@@ -10,7 +12,6 @@ import { pageContainer, cardContainer, card, cardHeader,
 	applyButton, cardModalContainer, cardModalHeader, jobModalTitle,
 	jobModalIndustry, cardModalBodyLeft, cardModalBodyRight, cardModalScroll, cardModalFooter,
 	image, questionHeader, overflowFix, pageMainJobCards} from '../styles/StudentDashboard.css'
-import { JobCard } from 'modules/Dashboard'
 
 const styles = {
   overlayStyles: {
@@ -30,7 +31,8 @@ const styles = {
   }
 };
 
-export default function StudentDashboar ({jobs}) {
+
+export default function StudentDashboard ({jobs}) {
    //Pass user info with job info then loop to show
    return (
 	<div className={rootComponentContainer}>
@@ -47,15 +49,30 @@ export default function StudentDashboar ({jobs}) {
 	   */}
 	   <div className={pageMainJobCards}>
 	    {jobs.map((job) => (
-	       <JobCard key={job.id} jobs={job}/>
-	    ))}
+	      
+	      <div>    
+	       
+	       <JobCard key={job.id} jobs={job}>
+	         <SkyLight
+	           overlayStyles={styles.overlayStyles}
+		   dialogStyles={styles.dialogStyles}
+		   closeButtonStyle={styles.closedButtonStyle}
+		   hideOnOverlayClicked
+		   ref="jobModal"
+		 >
+		  <JobCardModal key={job.id} jobs={job}/>
+	         </SkyLight>
+		</JobCard>
+
+	    </div>
+	))}
+      </div>
 	    <div className={overflowFix}></div>
 	    <div className={overflowFix}></div>
 	    <div className={overflowFix}></div>
 	    <div className={overflowFix}></div>
 	   </div>
 	  </div>
-	</div>	
    )
 }
 

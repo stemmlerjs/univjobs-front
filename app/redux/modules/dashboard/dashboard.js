@@ -132,7 +132,7 @@ export default function dashboard(state = initialDashboardState, action) {
 		case FETCHED_JOBS_ERROR:
 			return {
 				...state,
-				error: action.error
+				studentDashboard: studentDasboard(state.studentDashboard, action)
 			}
 		default:
 			return state

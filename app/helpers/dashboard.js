@@ -1,6 +1,6 @@
 import axios from 'axios'
 import config from 'config'
-import { fetchingJobs, fetchedJobSuccess, fetchedJobsError, getStudentsSuccess, getStudentsError } from 'redux/modules/dashboard/dashboard'
+import { fetchingJobs, fetchedJobSuccess, fetchedJobError, getStudentsSuccess, getStudentsError } from 'redux/modules/dashboard/dashboard'
 
 export function getJobs(store) {
  const promise = new Promise((resolve, reject) => {
@@ -12,7 +12,7 @@ export function getJobs(store) {
 	 resolve(true);
      })//resposne
    .catch((err) => {
-     store.dispatch(fetchedJobsError('Error occured while retrieving jobs'))
+     store.dispatch(fetchedJobError('Error occured while retrieving jobs'))
       console.log(err)
       resolve(false)
    })//catch
