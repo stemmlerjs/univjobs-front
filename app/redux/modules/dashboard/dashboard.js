@@ -52,9 +52,10 @@ export function fetchedJobSuccess(jobs) {
   }
 }
 
-export function modalClicked() {
+export function modalClicked(jobId) {
    return {
-   	   type: MODAL_CLICKED
+   	   type: MODAL_CLICKED,
+	   jobId
    }
 }
 
@@ -78,7 +79,7 @@ const initialDashboardState = {
 	studentDashboard: {},
 	employerDashboard: {},
 	error: '',
-	modal: {}
+	modal: {},
 }
 
 const initialEmployerDashboardState = {
@@ -96,7 +97,8 @@ const initialStudentDashboardState = {
 
 const intialModalState = {
 	isClicked: false,
-	isOpen: false
+	isOpen: false,
+	jobId: ''
 }
 // =======================================================
 // ===================== REDUCERS ========================
@@ -145,18 +147,20 @@ function modal(state = intialModalState, action) {
 		case MODAL_CLICKED:
 			return {
 				...state,
-				isClicked: true
+				isClicked: true,
+				jobId: action.jobId,
 			}
 		case SHOW_MODAL:
 			return {
 				...state,
-				isOpen: true
+				isOpen: true,
+				jobId: action.jobId,
 			}
 		case HIDE_MODAL:
 			return {
 				...state,
 				isClicked: false,
-				isOpen: false
+				isOpen: false,
 			}
 		default:	
 			return {

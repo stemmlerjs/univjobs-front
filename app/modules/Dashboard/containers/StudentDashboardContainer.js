@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react'
 import { SidebarContainer } from 'modules/Main'
 import { StudentDashboard } from 'modules/Dashboard'
-import SkyLight from 'react-skylight'
 
 import axios from 'axios'
 import { connect } from 'react-redux'
@@ -39,6 +38,9 @@ const StudentDashboardContainer = React.createClass({
   	e.preventDefault()
 	console.log("This works!")
         console.log(id)	
+	this.context.store.dispatch(
+				actionCreators.modalClicked(id)
+	)
 	// Call dispatch(modalClicked) & showModal(id)
 	// Use reducer to supply modal state with the job id passed from modal
 	//Then make modal appear with the appropriate job info.

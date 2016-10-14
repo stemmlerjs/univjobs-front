@@ -2,7 +2,6 @@ import React, { PropTypes } from 'react'
 import { StudentCard } from 'modules/Dashboard'
 import { JobCard, JobCardModal } from 'modules/Dashboard'
 import { SkyLightStateless } from 'react-skylight'
-import { isClicked, showModal, hideModal } from 'redux/modules/dashboard/dashboard'
 
 import { rootComponentContainer, margin, pageHeaderSection, 
 	pageTitle, title} from 'sharedStyles/styles.css'
