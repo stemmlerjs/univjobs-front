@@ -55,7 +55,7 @@ export default function StudentDashboard ({jobs, onHandleClicked}) {
 	       <JobCard jobs={job}> 
 			<button 
 			     className={applyButton} 
-			     onClick={(e) => onHandleClicked(e, "FORK OFF!")}
+			     onClick={(e) => onHandleClicked(e, job.id)}
 			 >
 			  APPLY
 			</button>
