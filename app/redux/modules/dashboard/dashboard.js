@@ -10,6 +10,10 @@ const FETCHING_JOBS = 'STUDENT.FETCHING_JOBS'
 const FETCHED_JOBS_SUCCESS = 'STUDENT.FETCHED_JOBS_SUCCESS'
 const FETCHED_JOBS_ERROR = 'STUDENT.FETCHED_JOBS_FAILURE'
 
+const MODAL_CLICKED = 'MODAL_CLICKED'
+const SHOW_MODAL = 'SHOW_MODAL'
+const HIDE_MODAL = 'HIDE_MODAL'
+
 // =======================================================
 // ====================== ACTIONS ========================
 // =======================================================
@@ -48,6 +52,24 @@ export function fetchedJobSuccess(jobs) {
   }
 }
 
+export function modalClicked() {
+   return {
+   	   type: MODAL_CLICKED
+   }
+}
+
+export function showModal(jobId) {
+   return {
+   	  type: SHOW_MODAL,
+	  jobId
+   }
+}
+
+export function hideModal(jobId) {
+   return {
+          type: HIDE_MODAL
+   }
+}
 // =======================================================
 // ================== INITIAL STATE ======================
 // =======================================================
@@ -55,7 +77,8 @@ export function fetchedJobSuccess(jobs) {
 const initialDashboardState = {
 	studentDashboard: {},
 	employerDashboard: {},
-	error: ''
+	error: '',
+	modal: {}
 }
 
 const initialEmployerDashboardState = {
@@ -69,6 +92,11 @@ const initialStudentDashboardState = {
 	isFetching: false,
 	error: '',
 	jobs: []
+}
+
+const intialModalState = {
+	isClicked: false,
+	isOpen: false
 }
 // =======================================================
 // ===================== REDUCERS ========================
@@ -112,6 +140,32 @@ function studentDashboard(state = initialStudentDashboardState, action) {
 	}
 }
 
+function modal(state = intialModalState, action) {	
+	switch(action.type) {
+		case MODAL_CLICKED:
+			return {
+				...state,
+				isClicked: true
+			}
+		case SHOW_MODAL:
+			return {
+				...state,
+				isOpen: true
+			}
+		case HIDE_MODAL:
+			return {
+				...state,
+				isClicked: false,
+				isOpen: false
+			}
+		default:	
+			return {
+				state
+			}//switch
+	}
+}
+
+
 export default function dashboard(state = initialDashboardState, action) {
 	switch(action.type) {
 		case GET_STUDENTS_SUCCESS:
@@ -132,7 +186,22 @@ export default function dashboard(state = initialDashboardState, action) {
 		case FETCHED_JOBS_ERROR:
 			return {
 				...state,
-				studentDashboard: studentDasboard(state.studentDashboard, action)
+				error: action.error
+			}
+		case MODAL_CLICKED:
+			return {
+				...state,
+				modal: modal(state.modal, action)
+			}
+		case SHOW_MODAL:
+			return {
+				...state,
+				modal: modal(state.modal, action)
+			}
+		case HIDE_MODAL:
+			return {
+				...state,
+				modal: modal(state.modal, action)
 			}
 		default:
 			return state

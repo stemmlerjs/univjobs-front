@@ -2,7 +2,6 @@ import React, { PropTypes } from 'react'
 import { SidebarContainer } from 'modules/Main'
 import { StudentDashboard } from 'modules/Dashboard'
 import SkyLight from 'react-skylight'
-import { pageContainer } from '../styles/index.css'
 
 import axios from 'axios'
 import { connect } from 'react-redux'
@@ -12,6 +11,7 @@ import * as dashboardActionCreators from 'redux/modules/dashboard/dashboard'
 import { authRedirectFilter } from 'config/routes'
 import { getJobs } from 'helpers/dashboard'
 
+import { pageContainer } from '../styles/index.css'
 
 const actionCreators = {
   ...userActionCreators,
@@ -24,11 +24,29 @@ const StudentDashboardContainer = React.createClass({
     store: PropTypes.object.isRequired
   },
 
-  openModal (e) {
-    e.preventDefault()
-    this.refs.jobModal.show()
+/** handleClick
+ *
+ * This function takes in the submit event & the job id
+ * It calls a dispatch modalCliked & showModal(id)
+ * Once the store is notified, a reducer should be activated to find the appropriate job info,
+ * then supplies the modal the appropraite job info
+ * After, the modal appears to the user of the job info they pressed
+ *
+ * @param(e) - DOM event
+ * @param(id) - Number 
+*/
+  handleClick (e, id) {
+  	e.preventDefault()
+	console.log("This works!")
+        console.log(id)	
+	// Call dispatch(modalClicked) & showModal(id)
+	// Use reducer to supply modal state with the job id passed from modal
+	//Then make modal appear with the appropriate job info.
+	//
+	//  -----> NOTE: 
+	//           - Should we just pass the whole job itself?
+	//           - Should we also create a separate container for job card modal? It has it's own event
   },
-
 /** doRedirectionFilter
   *
   * The redirection filter is the process that occurs each time we enter this container.
@@ -107,7 +125,10 @@ const StudentDashboardContainer = React.createClass({
     return (
       <div className={pageContainer}>
       <SidebarContainer />
-       <StudentDashboard jobs={this.props.jobs} />
+       <StudentDashboard 
+          jobs={this.props.jobs} 
+	  onHandleClicked={this.handleClick}
+	/> 
       </div>
     )
   },
@@ -122,7 +143,8 @@ const StudentDashboardContainer = React.createClass({
 function mapStateToProps({user, dashboard}) {
   return {
 	  user: user ? user : {},
-	  jobs: dashboard.studentDashboard.jobs ? dashboard.studentDashboard.jobs : []
+	  jobs: dashboard.studentDashboard.jobs ? dashboard.studentDashboard.jobs : [],
+	  modal : dashboard.studentDashboard.jobs ? dashboard.modal : '',
   }
 }
 

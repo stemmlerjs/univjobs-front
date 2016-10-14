@@ -7,10 +7,6 @@ import { pageContainer, cardContainer, card, cardHeader,
 	jobModalIndustry, cardModalBodyLeft, cardModalBodyRight, cardModalScroll, cardModalFooter,
 	image, questionHeader} from '../styles/StudentDashboard.css'
 
-function openModal (e) {
-    e.preventDefault()
-    this.refs.jobModal.show()
-}
 //Accept job object which contains the proptypes.
 export default function JobCard({ jobs, children }) {
   console.log(jobs)
@@ -71,7 +67,6 @@ export default function JobCard({ jobs, children }) {
 		    </li>
 		 </ul>
 	      </div>
-	      <button className={applyButton} onClick={this.openModal}>APPLY</button>
                     { children }
 
 	    </div>

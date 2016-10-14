@@ -1,7 +1,8 @@
 import React, { PropTypes } from 'react'
 import { StudentCard } from 'modules/Dashboard'
 import { JobCard, JobCardModal } from 'modules/Dashboard'
-import SkyLight from 'react-skylight'
+import { SkyLightStateless } from 'react-skylight'
+import { isClicked, showModal, hideModal } from 'redux/modules/dashboard/dashboard'
 
 import { rootComponentContainer, margin, pageHeaderSection, 
 	pageTitle, title} from 'sharedStyles/styles.css'
@@ -32,7 +33,7 @@ const styles = {
 };
 
 
-export default function StudentDashboard ({jobs}) {
+export default function StudentDashboard ({jobs, onHandleClicked}) {
    //Pass user info with job info then loop to show
    return (
 	<div className={rootComponentContainer}>
@@ -50,20 +51,23 @@ export default function StudentDashboard ({jobs}) {
 	   <div className={pageMainJobCards}>
 	    {jobs.map((job) => (
 	      
-	      <div>    
-	       
-	       <JobCard key={job.id} jobs={job}>
-	         <SkyLight
-	           overlayStyles={styles.overlayStyles}
-		   dialogStyles={styles.dialogStyles}
-		   closeButtonStyle={styles.closedButtonStyle}
-		   hideOnOverlayClicked
-		   ref="jobModal"
-		 >
-		  <JobCardModal key={job.id} jobs={job}/>
-	         </SkyLight>
-		</JobCard>
+	      <div key={job.id}>    
+	       <JobCard jobs={job}> 
+			<button 
+			     className={applyButton} 
+			     onClick={(e) => onHandleClicked(e, "FORK OFF!")}
+			 >
+			  APPLY
+			</button>
 
+			{/*MODAL*/}
+			<SkyLightStateless
+				isVisible={false}
+		  		onClosedClicked={() => hideModal()}
+		  		title="A test"
+			>
+			</SkyLightStateless>
+		</JobCard>
 	    </div>
 	))}
       </div>
@@ -74,5 +78,9 @@ export default function StudentDashboard ({jobs}) {
 	   </div>
 	  </div>
    )
+}
+
+StudentDashboard.propTypes = {
+	onHandleClicked: PropTypes.func
 }
 
