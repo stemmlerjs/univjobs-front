@@ -8,8 +8,8 @@ import { pageContainer, cardContainer, card, cardHeader,
 	image, questionHeader} from '../styles/StudentDashboard.css'
 
 //Accept job object which contains the proptypes.
-export default function JobCardModal({ jobs  }) {
-  console.log(jobs)
+export default function JobCardModal({ job  }) {
+  console.log(job)
   return (
 	//Testing encapsulation
 	//NOTE: Assumption that button component might break
