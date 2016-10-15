@@ -32,7 +32,10 @@ const styles = {
 };
 
 
-export default function StudentDashboard ({jobs, onHandleClicked}) {
+//**NOTE: 
+//  Store is accessible
+
+export default function StudentDashboard ({jobs, onHandleClicked, onStore}) {
    //Pass user info with job info then loop to show
    return (
 	<div className={rootComponentContainer}>
@@ -54,14 +57,14 @@ export default function StudentDashboard ({jobs, onHandleClicked}) {
 	       <JobCard jobs={job}> 
 			<button 
 			     className={applyButton} 
-			     onClick={(e) => onHandleClicked(e, job.id)}
+			     onClick={(e) => onHandleClicked(e, job)}
 			 >
 			  APPLY
 			</button>
 
 			{/*MODAL*/}
 			<SkyLightStateless
-				isVisible={false}
+				isVisible={onStore.getState().dashboard.modal.isOpen}
 		  		onClosedClicked={() => hideModal()}
 		  		title="A test"
 			>

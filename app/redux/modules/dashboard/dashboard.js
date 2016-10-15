@@ -59,10 +59,10 @@ export function modalClicked(jobId) {
    }
 }
 
-export function showModal(jobId) {
+export function showModal(job) {
    return {
    	  type: SHOW_MODAL,
-	  jobId
+	  job
    }
 }
 
@@ -98,7 +98,8 @@ const initialStudentDashboardState = {
 const intialModalState = {
 	isClicked: false,
 	isOpen: false,
-	jobId: ''
+	jobId: '',
+	job: ''
 }
 // =======================================================
 // ===================== REDUCERS ========================
@@ -154,7 +155,7 @@ function modal(state = intialModalState, action) {
 			return {
 				...state,
 				isOpen: true,
-				jobId: action.jobId,
+				job: action.job,
 			}
 		case HIDE_MODAL:
 			return {
