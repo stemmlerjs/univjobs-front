@@ -23,7 +23,7 @@ const StudentDashboardContainer = React.createClass({
     store: PropTypes.object.isRequired
   },
 
-/** handleClick
+/** showModal
  *
  * This function takes in the submit event & the job id
  * It calls a dispatch modalCliked & showModal(id)
@@ -34,7 +34,7 @@ const StudentDashboardContainer = React.createClass({
  * @param(e) - DOM event
  * @param(id) - Number 
 */
-  handleClick (e, j) {
+  showModal (e, j) {
   	e.preventDefault()
 	debugger
 	console.log(j.id)
@@ -52,6 +52,17 @@ const StudentDashboardContainer = React.createClass({
 	//           - Should we just pass the whole job itself?
 	//           - Should we also create a separate container for job card modal? It has it's own event
   },
+
+  
+/** hideModal
+ *   This event gives the user
+  */
+
+  hideModal (e, id) {
+	this.context.store.dispatch(actionCreators.hideModal(id))
+  },
+
+
 /** doRedirectionFilter
   *
   * The redirection filter is the process that occurs each time we enter this container.
@@ -132,8 +143,9 @@ const StudentDashboardContainer = React.createClass({
       <SidebarContainer />
        <StudentDashboard 
           jobs={this.props.jobs} 
-	  onHandleClicked={this.handleClick}
-	  onStore={this.context.store}
+	  onShowModal={this.showModal}
+	  onHideModal={this.hideModal}
+	  modal={this.context.store.getState().dashboard.modal}
 	/> 
       </div>
     )

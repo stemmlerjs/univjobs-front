@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react'
 import { StudentCard } from 'modules/Dashboard'
 import { JobCard, JobCardModal } from 'modules/Dashboard'
 import { SkyLightStateless } from 'react-skylight'
+import { hideModal } from 'redux/modules/dashboard/dashboard'
 
 import { rootComponentContainer, margin, pageHeaderSection, 
 	pageTitle, title} from 'sharedStyles/styles.css'
@@ -35,8 +36,10 @@ const styles = {
 //**NOTE: 
 //  Store is accessible
 
-export default function StudentDashboard ({jobs, onHandleClicked, onStore}) {
+export default function StudentDashboard ({jobs, onShowModal, onHideModal, modal}) {
    //Pass user info with job info then loop to show
+   console.log("********STUDENDTDASHBOARD*************")
+   console.log(modal)
    return (
 	<div className={rootComponentContainer}>
 	  <div className={margin}>
@@ -57,19 +60,20 @@ export default function StudentDashboard ({jobs, onHandleClicked, onStore}) {
 	       <JobCard jobs={job}> 
 			<button 
 			     className={applyButton} 
-			     onClick={(e) => onHandleClicked(e, job)}
+			     onClick={(e) => onShowModal(e, job)}
 			 >
 			  APPLY
 			</button>
-
-			{/*MODAL*/}
-			<SkyLightStateless
-				isVisible={onStore.getState().dashboard.modal.isOpen}
-		  		onClosedClicked={() => hideModal()}
-		  		title="A test"
-			>
-			</SkyLightStateless>
 		</JobCard>
+		
+		{/*MODAL*/}
+		<SkyLightStateless
+			isVisible={modal.isOpen}
+			onCloseClicked={(e) => onHideModal(e, modal.job.id)}
+			title={modal.job ? modal.job.title : ''}
+		>
+		
+		</SkyLightStateless>
 	    </div>
 	))}
       </div>
