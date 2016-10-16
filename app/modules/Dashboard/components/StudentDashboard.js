@@ -72,6 +72,8 @@ export default function StudentDashboard ({jobs, onShowModal, onHideModal, modal
 			  APPLY
 			</button>
 		</JobCard>
+	    </div>
+	))}
 		
 		{/*MODAL*/}
 		<SkyLightStateless
@@ -116,8 +118,6 @@ export default function StudentDashboard ({jobs, onShowModal, onHideModal, modal
 
 
 		</SkyLightStateless>
-	    </div>
-	))}
       </div>
 	    <div className={overflowFix}></div>
 	    <div className={overflowFix}></div>
