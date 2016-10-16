@@ -37,7 +37,7 @@ const styles = {
 //  Store is accessible
 
 /*TODO:
- *  [] Pass proper info to job card modal
+ *  [x] Pass proper info to job card modal
  *  [] On event, pass the two answers from questions
  *  [] Create a redux lifecyle event on APPLY BUTTON
  *  [] Send to appropriate POST endpoints

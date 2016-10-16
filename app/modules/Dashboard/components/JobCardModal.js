@@ -15,13 +15,19 @@ export default function JobCardModal({ job  }) {
 	//Testing encapsulation 
 	//NOTE: Assumption that button component might break
 		<div className={cardModalContainer}>
+
+		{/* LEFT MODAL */}
 		  <div className={cardModalBodyLeft}>
+		  {/* CARD HEADER */}
 		    <div className={cardModalHeader}>
-		      <h2 className={jobModalTitle}>Job Title</h2>
+		      <h2 className={jobModalTitle}>{job.title}</h2>
+		      
+		      {/* TODO: Point to Industry Name */}
 		      <h3 className={jobModalIndustry}>Industry Name</h3>
 		    </div>
 		    
 		    <div className={cardModalScroll}>
+		       
 		    
 		    </div>
 
