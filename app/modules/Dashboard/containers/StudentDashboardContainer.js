@@ -53,11 +53,18 @@ const StudentDashboardContainer = React.createClass({
 /** hideModal
  *   This event gives the user
   */
-
   hideModal (e, id) {
 	this.context.store.dispatch(actionCreators.hideModal(id))
   },
 
+/** applyClicked
+ *  This event is pressed the button inside JobCardModal
+ *  It should passed the two answers given by the user and it's student id
+ */
+  applyClicked (e, a) {
+	e.preventDefault()
+	console.log(a)
+  },
 
 /** doRedirectionFilter
   *
@@ -141,6 +148,7 @@ const StudentDashboardContainer = React.createClass({
           jobs={this.props.jobs} 
 	  onShowModal={this.showModal}
 	  onHideModal={this.hideModal}
+	  onApplyClicked={this.applyClicked}
 	  modal={this.context.store.getState().dashboard.modal}
 	/> 
       </div>

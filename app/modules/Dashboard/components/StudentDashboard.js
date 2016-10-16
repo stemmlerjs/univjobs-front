@@ -43,7 +43,7 @@ const styles = {
  *  [] Send to appropriate POST endpoints
  *    [] Create api endpoints to receive job application & answers
  * */
-export default function StudentDashboard ({jobs, onShowModal, onHideModal, modal}) {
+export default function StudentDashboard ({jobs, onShowModal, onHideModal, onApplyClicked, modal}) {
    //Pass user info with job info then loop to show
    console.log("********STUDENDTDASHBOARD*************")
    console.log(modal)
@@ -86,7 +86,9 @@ export default function StudentDashboard ({jobs, onShowModal, onHideModal, modal
 			onCloseClicked={(e) => onHideModal(e, modal.job.id)}
 			title=""
 		>
-		  <JobCardModal job={ modal.job }/>
+		  <JobCardModal job={ modal.job } 
+			        onApplyClicked={onApplyClicked}
+		  />
 
 		</SkyLightStateless>
 	      :  ""

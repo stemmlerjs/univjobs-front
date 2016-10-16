@@ -8,7 +8,7 @@ import { pageContainer, cardContainer, card, cardHeader,
 	image, questionHeader} from '../styles/StudentDashboard.css'
 
 //Accept job object which contains the proptypes.
-export default function JobCardModal({ job  }) {
+export default function JobCardModal({ job, onApplyClicked  }) {
   console.log("**********JOB CARD MODAL************")
   console.log(job)
   return (
@@ -42,7 +42,7 @@ export default function JobCardModal({ job  }) {
 	           <textarea rows="6"></textarea>
 		   
 		   <div>
-		     <button>heelo</button>  
+		     <button onClick={(e) => onApplyClicked(e, "FORK IT!!")}>Buttooooooon</button>  
 		   </div> 
 	          </div>
 		</div>
