@@ -9,6 +9,7 @@ import { pageContainer, cardContainer, card, cardHeader,
 
 //Accept job object which contains the proptypes.
 export default function JobCard({ jobs, children }) {
+  console.log("********JOB CARD*****************")
   console.log(jobs)
   return (
 	//Testing encapsulation
@@ -16,6 +17,8 @@ export default function JobCard({ jobs, children }) {
       <div className={cardContainer}>
          <div className={card}>
 	   <header className={cardHeader}>
+
+	   {/*TODO: Point to Job Type*/}
 	     <span>
 	       <p>Job Type</p>
 	     </span>
@@ -28,6 +31,11 @@ export default function JobCard({ jobs, children }) {
 	    {/* TODO: Point to industry  */}
 	    <h3 className={industryTitle}>Software Development</h3>
 
+
+	    {/* TODO: Point to appropriate tags
+	    	      [] Need to have icons for this
+		      [] Make a loop to determine the proper tag icons 
+	    */}
 	    <div>
 	      <ul className={tagContainer}>
 	        <li className={tagElement}>
@@ -48,6 +56,7 @@ export default function JobCard({ jobs, children }) {
 	       </ul>
 	      </div>
 
+	      {/*TODO: Point to imaga within job object*/}
 	      <div>
 	        <ul className={companyContainer}>
 		   <li>

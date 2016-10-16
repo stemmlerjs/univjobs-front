@@ -9,9 +9,10 @@ import { pageContainer, cardContainer, card, cardHeader,
 
 //Accept job object which contains the proptypes.
 export default function JobCardModal({ job  }) {
+  console.log("**********JOB CARD MODAL************")
   console.log(job)
   return (
-	//Testing encapsulation
+	//Testing encapsulation 
 	//NOTE: Assumption that button component might break
 		<div className={cardModalContainer}>
 		  <div className={cardModalBodyLeft}>

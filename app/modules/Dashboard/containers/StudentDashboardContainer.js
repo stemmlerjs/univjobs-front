@@ -36,13 +36,9 @@ const StudentDashboardContainer = React.createClass({
 */
   showModal (e, j) {
   	e.preventDefault()
-	debugger
-	console.log(j.id)
+	console.log('ON SHOW MODAL')
+	console.log(j)
 	this.context.store.dispatch(actionCreators.modalClicked(j.id))
-
-	//NOTE: should this get the job info of current jobId using getState
-	//Then turn on isVisible = true in SkyLightStateless, also supply the this.getState info
-	//In theory, this would only use one modal.
 	this.context.store.dispatch(actionCreators.showModal(j))
 	// Call dispatch(modalClicked) & showModal(id)
 	// Use reducer to supply modal state with the job id passed from modal

@@ -75,49 +75,22 @@ export default function StudentDashboard ({jobs, onShowModal, onHideModal, modal
 	    </div>
 	))}
 		
-		{/*MODAL*/}
-		<SkyLightStateless
+	{/*MODAL
+	   The state of modal is checked first, 
+	   if it isOpen === true then show the modal
+	   else, return empty
+	*/}
+	{ modal.isOpen 
+	      ?	<SkyLightStateless
 			isVisible={modal.isOpen}
 			onCloseClicked={(e) => onHideModal(e, modal.job.id)}
-			title={modal.job ? modal.job.title : ''}
+			title=""
 		>
-
-		{/*JOB CARD MODAL*/}
-		<div className={cardModalContainer}>
-
-		  {/*JOB CARD BODY LEFT*/}
-		  <div className={cardModalBodyLeft}>
-		    {/*JOB CARD MODAL HEADER*/}
-		    <div className={cardModalHeader}>
-		      <h2 className={jobModalTitle}>Job Title</h2>
-		      <h3 className={jobModalIndustry}>Industry Name</h3>
-		    </div>
-		    
-		    {/*JOB CARD MODAL JOB DESCRIPTION*/}
-		    <div className={cardModalScroll}>
-		    
-		    </div>
-
-		    {/*JOB CARD MODAL FOOTER*/}
-		    <div className={cardModalFooter}>
-		      <img className={image}src="https://placeholdit.imgix.net/~text?txtsize=50&txt=50%C3%9750&w=50&h=50"/>
-		    </div>
-		 </div>
-
-		 {/*JOB CARD RIGHT MODAL BODY*/}
-		 <div className={cardModalBodyRight}>
-		   <p className={questionHeader}>Question</p>
-		   <textarea rows="6"></textarea>
-		   <p className={questionHeader}>Question</p>
-	           <textarea rows="6"></textarea>
-		   <div>
-		     <button>heelo</button>  
-		   </div> 
-		   </div>
-		</div>
-
+		  <JobCardModal job={ modal.job }/>
 
 		</SkyLightStateless>
+	      :  ""
+	}
       </div>
 	    <div className={overflowFix}></div>
 	    <div className={overflowFix}></div>
