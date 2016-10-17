@@ -9,6 +9,7 @@ import * as userActionCreators from 'redux/modules/user/user'
 import * as dashboardActionCreators from 'redux/modules/dashboard/dashboard'
 import { authRedirectFilter } from 'config/routes'
 import { getJobs } from 'helpers/dashboard'
+import { getJobTypes } from 'helpers/lists'
 
 import { pageContainer } from '../styles/index.css'
 
@@ -103,6 +104,21 @@ const StudentDashboardContainer = React.createClass({
    return promise;
   },
 
+/** retrieveAllLists 
+ *   	This function retrieves all the api endpoints needed
+ *   	to display the proper job informations
+ * 
+ */
+retrieveAllLists() {
+	return new Promise((resolve, reject) => {
+		axios.all([
+			   getJobTypes(this.context.store)
+		])
+		.then((response) => resolve(true))
+		.catch((response) => resolve(true))
+	})
+},
+
   /** doRedirectionFilter
    *
    * The redirection filter is the process that occurs each time we enter this container.
@@ -133,6 +149,7 @@ const StudentDashboardContainer = React.createClass({
 	console.log("componentWillMount")
 	this.doRedirectionFilter()
 	.then(this.retrieveJobs())
+	.then(this.retrieveAllLists())
 	.then(this.props.closeOverlay())
   },
 

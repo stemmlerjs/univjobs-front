@@ -12,8 +12,6 @@ export default function JobCardModal({ job, onApplyClicked  }) {
   console.log("**********JOB CARD MODAL************")
   console.log(job)
   return (
-	//Testing encapsulation 
-	//NOTE: Assumption that button component might break
 		<div className={cardModalContainer}>
 
 		{/* LEFT MODAL */}

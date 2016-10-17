@@ -8,12 +8,18 @@ const GET_STUDENTS_FAILURE = 'EMPLOYER.GET_STUDENTS_FAILURE'
 
 const FETCHING_JOBS = 'STUDENT.FETCHING_JOBS'
 const FETCHED_JOBS_SUCCESS = 'STUDENT.FETCHED_JOBS_SUCCESS'
-const FETCHED_JOBS_ERROR = 'STUDENT.FETCHED_JOBS_FAILURE'
+const FETCHED_JOBS_FAILURE = 'STUDENT.FETCHED_JOBS_FAILURE'
 
 const MODAL_CLICKED = 'MODAL_CLICKED'
 const SHOW_MODAL = 'SHOW_MODAL'
 const HIDE_MODAL = 'HIDE_MODAL'
 
+const FETCHING_JOB_TYPES = 'STUDENT.FETCHING_JOB_TYPES'
+const FETCHED_JOB_TYPES_SUCCESS = 'STUDENT.FETCHED_JOB_TYPES_SUCCESS'
+const FETCHED_JOB_TYPES_FAILURE = 'STUDENT.FETCHED_JOB_TYPES_FAILURE'
+
+/***************BASE LIST SUCCESS*************/
+const FETCHED_LIST = 'STUDENT.FETCHED_LIST'
 // =======================================================
 // ====================== ACTIONS ========================
 // =======================================================
@@ -40,7 +46,7 @@ export function fetchingJobs() {
 
 export function fetchedJobErrors(error) {
   return {
-	  type: FETCHED_JOBS_ERROR,
+	  type: FETCHED_JOBS_FAILURE,
 	  error
   }
 }
@@ -71,6 +77,26 @@ export function hideModal(jobId) {
           type: HIDE_MODAL
    }
 }
+
+export function fetchingJobTypes() {
+   return {
+	   type: FETCHING_JOB_TYPES
+   }
+}
+
+export function fetchList(listName, listArray) {
+	switch(listName) {
+		case 'JOB_TYPES': {
+		    return {
+			    type: FETCHED_LIST,
+		  	    listType: FETCHED_JOB_TYPES_SUCCESS,
+			    list: listArray
+		    }
+		}
+		default:
+		    return
+	}
+}//fetchList
 // =======================================================
 // ================== INITIAL STATE ======================
 // =======================================================
@@ -80,6 +106,7 @@ const initialDashboardState = {
 	employerDashboard: {},
 	error: '',
 	modal: {},
+	lists: {},
 }
 
 const initialEmployerDashboardState = {
@@ -100,6 +127,10 @@ const intialModalState = {
 	isOpen: false,
 	jobId: '',
 	job: ''
+}
+
+const initalListState = {
+	jobTypes: []
 }
 // =======================================================
 // ===================== REDUCERS ========================
@@ -130,7 +161,7 @@ function studentDashboard(state = initialStudentDashboardState, action) {
 				jobs: action.jobs,
 				isFetching: false,
 			}
-		case FETCHED_JOBS_ERROR:
+		case FETCHED_JOBS_FAILURE:
 			return {
 				...state,
 				isFetching: false,
@@ -170,6 +201,15 @@ function modal(state = intialModalState, action) {
 	}
 }
 
+function lists (state = intialListState, action) {
+	switch(action.listType) {
+	    case FETCHED_JOB_TYPES_SUCCESS:
+		return {
+		    ...state,
+		    jobTypes: action.list
+		}
+	}
+}
 
 export default function dashboard(state = initialDashboardState, action) {
 	switch(action.type) {
@@ -188,7 +228,7 @@ export default function dashboard(state = initialDashboardState, action) {
 				...state,
 				studentDashboard: studentDashboard(state.studentDashboard, action)
 			}
-		case FETCHED_JOBS_ERROR:
+		case FETCHED_JOBS_FAILURE:
 			return {
 				...state,
 				error: action.error
@@ -207,6 +247,11 @@ export default function dashboard(state = initialDashboardState, action) {
 			return {
 				...state,
 				modal: modal(state.modal, action)
+			}
+		case FETCHED_LIST: 
+			return {
+				...state,
+				lists: lists(state.lists, action)
 			}
 		default:
 			return state

@@ -2,6 +2,7 @@ import axios from 'axios'
 import config from 'config'
 import { listRetrieved } from 'redux/modules/profile/profile'
 import { listRetrieved as CREATE_JOB_listRetrived } from 'redux/modules/createjob/createjob'
+import { fetchingJobTypes, fetchList } from 'redux/modules/dashboard/dashboard'
 
 
 export function getIndustries(store) {
@@ -11,7 +12,8 @@ export function getIndustries(store) {
       store.dispatch(listRetrieved('INDUSTRIES', response.data))
       resolve(true);
     })
-    .catch(()=> {
+    .catch((error) => {
+      console.log(error)
       resolve(false);
     })
   })
@@ -25,7 +27,12 @@ export function getEmailPref(store) {
       store.dispatch(listRetrieved('EMAIL_PREFERENCES', response.data))
 	resolve(true);
     })
+    .catch((error) => {
+      console.log(error)
+      resolve(false);
+    })
   })
+    return promise
 }
 
 export function getJobTypes(store) {
@@ -35,7 +42,8 @@ export function getJobTypes(store) {
       store.dispatch(CREATE_JOB_listRetrived('JOBTYPES', response.data))
       resolve(true);
     })
-    .catch(()=> {
+    .catch((error) => {
+      console.log(error)
       resolve(false);
     })
   })
@@ -49,7 +57,8 @@ export function getStudentStatus(store) {
       store.dispatch(listRetrieved('STUDENT_STATUSES', response.data))
 	resolve(true);
     })
-    .catch(()=> {
+    .catch((error) => {
+      console.log(error)
       resolve(false);
     })
   })
@@ -63,7 +72,8 @@ export function getEducationLevel(store) {
       store.dispatch(listRetrieved('EDU_LEVELS', response.data))
 	resolve(true);
     })
-    .catch(()=> {
+    .catch((error) => {
+      console.log(error)
       resolve(false);
     })
   })
@@ -77,7 +87,8 @@ export function getMajor(store) {
       store.dispatch(listRetrieved('MAJORS', response.data))
 	resolve(true);
     })
-    .catch(()=> {
+    .catch((error) => {
+      console.log(error)
       resolve(false);
     })
   })
@@ -91,7 +102,8 @@ export function getGender(store) {
       store.dispatch(listRetrieved('GENDERS', response.data))
 	resolve(true);
     })
-    .catch(()=> {
+    .catch((error) => {
+      console.log(error)
       resolve(false);
     })
   })
@@ -110,9 +122,32 @@ export function getLanguages(store) {
       store.dispatch(listRetrieved('LANGUAGES', response.data))
 	resolve(true);
     })
-    .catch(()=> {
+    .catch((error) => {
+      console.log(error)
       resolve(false);
     })
   })
   return promise;
 }
+
+/*
+ * getJobTypes 
+ *
+ * */
+export function getJobTypes(store) {
+  return new Promise((resolve, reject) => {
+    axios.get(config.baseUrl + 'list/jobtypes')
+    .then((response) => {
+	console.log('********GETJOBTYPES FIRE!!!!!!!!!!!************')
+	console.log(response)
+	store.dispatch(fetchingJobTypes())
+	debugger
+	store.dispatch(fetchList('JOB_TYPES', response.data))
+	resolve(true);
+    })
+    .catch((error) => {
+      console.log(error)
+      resolve(false);
+    })
+  })//Promise
+}//getJobTypes
