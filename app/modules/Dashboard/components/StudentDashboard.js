@@ -43,7 +43,7 @@ const styles = {
  *  [] Send to appropriate POST endpoints
  *    [] Create api endpoints to receive job application & answers
  * */
-export default function StudentDashboard ({jobs, onShowModal, onHideModal, onApplyClicked, modal}) {
+export default function StudentDashboard ({jobs, onShowModal, onHideModal, onApplyClicked, modal, lists}) {
    //Pass user info with job info then loop to show
    console.log("********STUDENDTDASHBOARD*************")
    console.log(modal)
@@ -64,7 +64,7 @@ export default function StudentDashboard ({jobs, onShowModal, onHideModal, onApp
 	    {jobs.map((job) => (
 	      
 	      <div key={job.id}>    
-	       <JobCard jobs={job}> 
+	       <JobCard jobs={job} lists={lists}> 
 			<button 
 			     className={applyButton} 
 			     onClick={(e) => onShowModal(e, job)}

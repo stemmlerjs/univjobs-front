@@ -167,6 +167,7 @@ retrieveAllLists() {
 	  onHideModal={this.hideModal}
 	  onApplyClicked={this.applyClicked}
 	  modal={this.context.store.getState().dashboard.modal}
+	  lists={this.props.lists}
 	/> 
       </div>
     )
@@ -179,11 +180,12 @@ retrieveAllLists() {
 // @params ({user}) contains BaseUser & Employer attributes
 // */
 
-function mapStateToProps({user, dashboard}) {
+function mapStateToProps({user, dashboard, lists}) {
   return {
 	  user: user ? user : {},
 	  jobs: dashboard.studentDashboard.jobs ? dashboard.studentDashboard.jobs : [],
 	  modal : dashboard.studentDashboard.jobs ? dashboard.modal : '',
+	  lists : dashboard.lists ? dashboard.lists : '',
   }
 }
 

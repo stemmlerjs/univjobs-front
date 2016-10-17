@@ -8,9 +8,9 @@ import { pageContainer, cardContainer, card, cardHeader,
 	image, questionHeader} from '../styles/StudentDashboard.css'
 
 //Accept job object which contains the proptypes.
-export default function JobCard({ jobs, children }) {
+export default function JobCard({ jobs, children, lists}) {
   console.log("********JOB CARD*****************")
-  console.log(jobs)
+  console.log(lists)
   return (
 	//Testing encapsulation
 	//NOTE: Assumption that button component might break
@@ -18,9 +18,9 @@ export default function JobCard({ jobs, children }) {
          <div className={card}>
 	   <header className={cardHeader}>
 
-	   {/*TODO: Point to Job Type*/}
+	   {/*JOB TYPES*/}
 	     <span>
-	       <p>Job Type</p>
+	       <p>{lists.jobTypes[jobs.type].jobtype}</p>
 	     </span>
 	    </header>
 		      
