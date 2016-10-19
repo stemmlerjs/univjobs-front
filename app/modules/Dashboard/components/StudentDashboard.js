@@ -90,6 +90,7 @@ export default function StudentDashboard ({jobs, onShowModal, onHideModal,
 		>
 		  <JobCardModal job={ modal.job } 
 			        onApplyClicked={onApplyClicked}
+				industries={industries}
 		  />
 
 		</SkyLightStateless>
