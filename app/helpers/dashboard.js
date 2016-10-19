@@ -80,7 +80,6 @@ export function getIndustries(store, actionCreators) {
     .then((response) => {
 	console.log('********GET INDUSTRIES FIRE!!!!!!!!!!!************')
 	console.log(response)
-	debugger
 	store.dispatch(actionCreators.fetchList('INDUSTRIES', response.data))
 	resolve(true);
     })

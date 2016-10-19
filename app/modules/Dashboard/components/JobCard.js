@@ -21,7 +21,7 @@ export default function JobCard({ jobs, children, jobTypes, industries}) {
 
 	   {/*JOB TYPES*/}
 	     <span>
-	       <p>{''}</p>
+	       <p>{jobTypes[jobs.type].jobtype}</p>
 	     </span>
 	    </header>
 		      
@@ -30,7 +30,7 @@ export default function JobCard({ jobs, children, jobTypes, industries}) {
 	    </div>
 	    
 	    {/* TODO: Point to industry  */}
-	    <h3 className={industryTitle}>Software Development</h3>
+	    <h3 className={industryTitle}>{industries[jobs.user.industry].industry}</h3>
 
 
 	    {/* TODO: Point to appropriate tags
