@@ -8,8 +8,8 @@ import { bindActionCreators } from 'redux'
 import * as userActionCreators from 'redux/modules/user/user'
 import * as dashboardActionCreators from 'redux/modules/dashboard/dashboard'
 import { authRedirectFilter } from 'config/routes'
-import { getJobs } from 'helpers/dashboard'
-import { getJobTypes } from 'helpers/lists'
+import * as fetch from 'helpers/dashboard'
+import * as list from 'helpers/lists'
 
 import { pageContainer } from '../styles/index.css'
 
@@ -96,7 +96,7 @@ const StudentDashboardContainer = React.createClass({
   retrieveJobs () {
    const promise = new Promise((resolve, reject) => {
       axios.all([
-         getJobs(this.context.store)	
+         fetch.getJobs(this.context.store)	
       ])
       .then((response) => resolve(true))
       .catch((response) => resolve(true))
@@ -108,15 +108,25 @@ const StudentDashboardContainer = React.createClass({
  *   	This function retrieves all the api endpoints needed
  *   	to display the proper job informations
  * 
+ *
+ *        NOTE:
+ *        	The state is becomes mutable after the first list is fetched
+ * 	        For now, I will just get the info from the lists.js as a quick solution.
+ * 	        Will also refer to the specific store to be able to trace the origin of the data
+ *
+ * 	 TODO:
+ * 	 	Testing the actionCreators being passed
  */
 retrieveAllLists() {
-	return new Promise((resolve, reject) => {
+	const promise = new Promise((resolve, reject) => {
 		axios.all([
-			   getJobTypes(this.context.store)
+			  fetch.getIndustries(this.context.store, actionCreators),
+			  fetch.getJobTypes(this.context.store, actionCreators),
 		])
 		.then((response) => resolve(true))
 		.catch((response) => resolve(true))
 	})
+	return promise
 },
 
   /** doRedirectionFilter
@@ -167,7 +177,8 @@ retrieveAllLists() {
 	  onHideModal={this.hideModal}
 	  onApplyClicked={this.applyClicked}
 	  modal={this.context.store.getState().dashboard.modal}
-	  lists={this.props.lists}
+	  industries={this.props.industries}
+	  jobTypes={this.props.jobTypes}
 	/> 
       </div>
     )
@@ -180,12 +191,13 @@ retrieveAllLists() {
 // @params ({user}) contains BaseUser & Employer attributes
 // */
 
-function mapStateToProps({user, dashboard, lists}) {
+function mapStateToProps({user, dashboard}) {
   return {
 	  user: user ? user : {},
 	  jobs: dashboard.studentDashboard.jobs ? dashboard.studentDashboard.jobs : [],
 	  modal : dashboard.studentDashboard.jobs ? dashboard.modal : '',
-	  lists : dashboard.lists ? dashboard.lists : '',
+	  industries : dashboard.studentDashboard.jobs ? dashboard.lists.industries : [],
+	  jobTypes : dashboard.studentDashboard.jobs ? dashboard.lists.jobTypes : [],
   }
 }
 

@@ -14,12 +14,18 @@ const MODAL_CLICKED = 'MODAL_CLICKED'
 const SHOW_MODAL = 'SHOW_MODAL'
 const HIDE_MODAL = 'HIDE_MODAL'
 
-const FETCHING_JOB_TYPES = 'STUDENT.FETCHING_JOB_TYPES'
-const FETCHED_JOB_TYPES_SUCCESS = 'STUDENT.FETCHED_JOB_TYPES_SUCCESS'
-const FETCHED_JOB_TYPES_FAILURE = 'STUDENT.FETCHED_JOB_TYPES_FAILURE'
 
-/***************BASE LIST SUCCESS*************/
-const FETCHED_LIST = 'STUDENT.FETCHED_LIST'
+/******************** DASHBOARD List GETTER ACTIONS ******************/
+const FETCH_JOB_TYPES = 'DASHBOARD.LIST.FETCH_JOB_TYPES'
+const FETCH_INDUSTRIES = 'DASHBOARD.LIST.FETCH_INDUSTRIES'
+
+
+/******************** DASHBOARD List SUCCESS ACTIONS ******************/
+const FETCHED_LIST = 'DASHBOARD.LIST.FETCHED'
+
+const FETCHED_JOB_TYPES = 'DASHBOARD.FETCHED_JOB_TYPES'
+const FETCHED_INDUSTRIES = 'DASHBOARD.FETCHED_INDUSTRIES'
+
 // =======================================================
 // ====================== ACTIONS ========================
 // =======================================================
@@ -78,23 +84,24 @@ export function hideModal(jobId) {
    }
 }
 
-export function fetchingJobTypes() {
-   return {
-	   type: FETCHING_JOB_TYPES
-   }
-}
-
 export function fetchList(listName, listArray) {
 	switch(listName) {
+		case 'INDUSTRIES': {
+		     return {
+			     type: FETCHED_LIST,
+			     listType: FETCHED_INDUSTRIES,
+			     list: listArray
+		     }
+		}
 		case 'JOB_TYPES': {
 		    return {
 			    type: FETCHED_LIST,
-		  	    listType: FETCHED_JOB_TYPES_SUCCESS,
+		  	    listType: FETCHED_JOB_TYPES,
 			    list: listArray
 		    }
 		}
 		default:
-		    return
+		     return 
 	}
 }//fetchList
 // =======================================================
@@ -129,8 +136,9 @@ const intialModalState = {
 	job: ''
 }
 
-const initalListState = {
-	jobTypes: []
+const initialListState = {
+	jobTypes: [],
+	industries: []
 }
 // =======================================================
 // ===================== REDUCERS ========================
@@ -201,13 +209,20 @@ function modal(state = intialModalState, action) {
 	}
 }
 
-function lists (state = intialListState, action) {
+function lists (state = initialListState, action) {
 	switch(action.listType) {
-	    case FETCHED_JOB_TYPES_SUCCESS:
+	    case FETCHED_INDUSTRIES:
+		return {
+		    ...state,
+		    industries: action.list
+		}
+
+	    case FETCHED_JOB_TYPES:
 		return {
 		    ...state,
 		    jobTypes: action.list
 		}
+
 	}
 }
 

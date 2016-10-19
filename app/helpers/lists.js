@@ -2,7 +2,6 @@ import axios from 'axios'
 import config from 'config'
 import { listRetrieved } from 'redux/modules/profile/profile'
 import { listRetrieved as CREATE_JOB_listRetrived } from 'redux/modules/createjob/createjob'
-import { fetchingJobTypes, fetchList } from 'redux/modules/dashboard/dashboard'
 
 
 export function getIndustries(store) {
@@ -129,25 +128,3 @@ export function getLanguages(store) {
   })
   return promise;
 }
-
-/*
- * getJobTypes 
- *
- * */
-export function getJobTypes(store) {
-  return new Promise((resolve, reject) => {
-    axios.get(config.baseUrl + 'list/jobtypes')
-    .then((response) => {
-	console.log('********GETJOBTYPES FIRE!!!!!!!!!!!************')
-	console.log(response)
-	store.dispatch(fetchingJobTypes())
-	debugger
-	store.dispatch(fetchList('JOB_TYPES', response.data))
-	resolve(true);
-    })
-    .catch((error) => {
-      console.log(error)
-      resolve(false);
-    })
-  })//Promise
-}//getJobTypes
