@@ -45,10 +45,9 @@ const styles = {
  * */
 export default function StudentDashboard ({jobs, onShowModal, onHideModal, 
 					onApplyClicked, modal, jobTypes, 
-					industries, questions}) {
+					industries}) {
    //Pass user info with job info then loop to show
    console.log("********STUDENDTDASHBOARD*************")
-   console.log(questions)
    return (
 	<div className={rootComponentContainer}>
 	  <div className={margin}>
@@ -88,10 +87,10 @@ export default function StudentDashboard ({jobs, onShowModal, onHideModal,
 			onCloseClicked={(e) => onHideModal(e, modal.job.id)}
 			title=""
 		>
-		  <JobCardModal job={ modal.job } 
+		  <JobCardModal job={modal.job} 
+			        questions={modal.questions}
 			        onApplyClicked={onApplyClicked}
 				industries={industries}
-				questions={questions}
 		  />
 
 		</SkyLightStateless>

@@ -8,8 +8,9 @@ import { pageContainer, cardContainer, card, cardHeader,
 	image, questionHeader} from '../styles/StudentDashboard.css'
 
 //Accept job object which contains the proptypes.
-export default function JobCardModal({ job, onApplyClicked, industries }) {
+export default function JobCardModal({ job, questions, onApplyClicked, industries }) {
   console.log("**********JOB CARD MODAL************")
+  console.log(questions)
   return (
 		<div className={cardModalContainer}>
 
@@ -17,10 +18,12 @@ export default function JobCardModal({ job, onApplyClicked, industries }) {
 		  <div className={cardModalBodyLeft}>
 		  {/* CARD HEADER */}
 		    <div className={cardModalHeader}>
-		      <h2 className={jobModalTitle}>{job.title}</h2>
+		      <h2 className={jobModalTitle}>{ job ? job.title : '' }</h2>
 		      
 		      {/* TODO: Point to Industry Name */}
-		      <h3 className={jobModalIndustry}>{industries[job.user.industry].industry}</h3>
+		      <h3 className={jobModalIndustry}> {
+			      industries ? industries[job.user.industry].industry : ''
+		      }</h3>
 		    </div>
 		    
 		    <div className={cardModalScroll}>
@@ -33,9 +36,9 @@ export default function JobCardModal({ job, onApplyClicked, industries }) {
 		    </div>
 		 </div>
 		 <div className={cardModalBodyRight}>
-		   <p className={questionHeader}>Question</p>
+		   <p className={questionHeader}>{questions[0].text}</p>
 		   <textarea rows="6"></textarea>
-		   <p className={questionHeader}>Question</p>
+		   <p className={questionHeader}>{questions[1].text}</p>
 	           <textarea rows="6"></textarea>
 		   
 		   <div>
