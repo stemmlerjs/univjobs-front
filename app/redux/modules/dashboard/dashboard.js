@@ -10,6 +10,10 @@ const FETCHING_JOBS = 'STUDENT.FETCHING_JOBS'
 const FETCHED_JOBS_SUCCESS = 'STUDENT.FETCHED_JOBS_SUCCESS'
 const FETCHED_JOBS_FAILURE = 'STUDENT.FETCHED_JOBS_FAILURE'
 
+const FETCHING_QUESTIONS = 'STUDENT.FETCHING_QUESTIONS'
+const FETCHED_QUESTIONS_SUCCESS = 'STUDENT.FETCHED_QUESTIONS_SUCCESS'
+const FETCHED_QUESTIONS_FAILURE = 'STUDENT.FETCHED_QUESTIONS_FAILURE'
+
 const MODAL_CLICKED = 'MODAL_CLICKED'
 const SHOW_MODAL = 'SHOW_MODAL'
 const HIDE_MODAL = 'HIDE_MODAL'
@@ -29,6 +33,10 @@ const FETCHED_INDUSTRIES = 'DASHBOARD.FETCHED_INDUSTRIES'
 // =======================================================
 // ====================== ACTIONS ========================
 // =======================================================
+
+/*TODO: Convert word error into failure
+ *
+ * */
 
 export function getStudentsSuccess(students) {
 	return {
@@ -50,7 +58,7 @@ export function fetchingJobs() {
   }
 }
 
-export function fetchedJobErrors(error) {
+export function fetchedJobFailure(error) {
   return {
 	  type: FETCHED_JOBS_FAILURE,
 	  error
@@ -64,6 +72,26 @@ export function fetchedJobSuccess(jobs) {
   }
 }
 
+export function fetchingQuestions() {
+  return {
+	  type: FETCHING_QUESTIONS,
+  }
+}
+
+export function fetchedQuestionsSuccess(questions) {
+   return {
+	   type: FETCHED_QUESTIONS_SUCCESS,
+	   questions
+  }
+}
+
+export function fetchedQuestionsFailure(error) {
+  return {
+	  type: FETCHED_QUESTIONS_FAILURE,
+	  error
+  }
+}
+
 export function modalClicked(jobId) {
    return {
    	   type: MODAL_CLICKED,
@@ -71,10 +99,11 @@ export function modalClicked(jobId) {
    }
 }
 
-export function showModal(job) {
+export function showModal(job, questions) {
    return {
    	  type: SHOW_MODAL,
-	  job
+	  job,
+	  questions
    }
 }
 
@@ -126,7 +155,8 @@ const initialEmployerDashboardState = {
 const initialStudentDashboardState = {
 	isFetching: false,
 	error: '',
-	jobs: []
+	jobs: [],
+	questions: []
 }
 
 const intialModalState = {
@@ -175,10 +205,25 @@ function studentDashboard(state = initialStudentDashboardState, action) {
 				isFetching: false,
 				error: action.error,
 			}
-		default:	
+		case FETCHING_QUESTIONS:
 			return {
-				state
-			}//switch
+				...state,
+				isFetching: true,
+			}		
+		case FETCHED_QUESTIONS_SUCCESS:
+			return {
+				...state,
+				questions: action.questions,
+				isFetching: false,
+			}
+		case FETCHED_QUESTIONS_FAILURE:
+			return {
+				...state,
+				isFetching: false,
+				error: action.error,
+			}
+		default:	
+			return state 
 	}
 }
 
@@ -195,6 +240,7 @@ function modal(state = intialModalState, action) {
 				...state,
 				isOpen: true,
 				job: action.job,
+				questions: action.questions
 			}
 		case HIDE_MODAL:
 			return {
@@ -244,6 +290,16 @@ export default function dashboard(state = initialDashboardState, action) {
 				studentDashboard: studentDashboard(state.studentDashboard, action)
 			}
 		case FETCHED_JOBS_FAILURE:
+			return {
+				...state,
+				error: action.error
+			}
+		case FETCHED_QUESTIONS_SUCCESS:
+			return {
+				...state,
+				studentDashboard: studentDashboard(state.studentDashboard, action)
+			}
+		case FETCHED_QUESTIONS_FAILURE:
 			return {
 				...state,
 				error: action.error

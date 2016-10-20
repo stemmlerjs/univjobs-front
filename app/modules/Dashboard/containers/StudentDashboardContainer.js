@@ -24,111 +24,6 @@ const StudentDashboardContainer = React.createClass({
     store: PropTypes.object.isRequired
   },
 
-/** showModal
- *
- * This function takes in the submit event & the job id
- * It calls a dispatch modalCliked & showModal(id)
- * Once the store is notified, a reducer should be activated to find the appropriate job info,
- * then supplies the modal the appropraite job info
- * After, the modal appears to the user of the job info they pressed
- *
- * @param(e) - DOM event
- * @param(id) - Number 
-*/
-  showModal (e, j) {
-  	e.preventDefault()
-	console.log('ON SHOW MODAL')
-	console.log(j)
-	this.context.store.dispatch(actionCreators.modalClicked(j.id))
-	this.context.store.dispatch(actionCreators.showModal(j))
-	// Call dispatch(modalClicked) & showModal(id)
-	// Use reducer to supply modal state with the job id passed from modal
-	//Then make modal appear with the appropriate job info.
-	//
-	//  -----> NOTE: 
-	//           - Should we just pass the whole job itself?
-	//           - Should we also create a separate container for job card modal? It has it's own event
-  },
-
-  
-/** hideModal
- *   This event gives the user
-  */
-  hideModal (e, id) {
-	this.context.store.dispatch(actionCreators.hideModal(id))
-  },
-
-/** applyClicked
- *  This event is pressed the button inside JobCardModal
- *  It should passed the two answers given by the user and it's student id
- */
-  applyClicked (e, a) {
-	e.preventDefault()
-	console.log(a)
-  },
-
-/** doRedirectionFilter
-  *
-  * The redirection filter is the process that occurs each time we enter this container.
-  * Used in every higher order component and supplied with a config, it ensures that the
-  * user is redirected to the appropriate page based on their authentication status and 
-  * user type.
-  *
-  * @return (Promise)
-  *
-  */
-
-  doRedirectionFilter(){
-    const config = {
-      failureRedirect: {
-        student: '/join',                 // if not logged in, go here (student)
-        employer: '/join'                 // if not logged in, go here (employer)
-      },
-      restricted: {
-        to: 'STUDENTS',                   // employers only on this route
-        redirectTo: '/dashboard/em'       // if not an employer, redirect to the student equivalent
-      }
-    }
-
-    return authRedirectFilter(config, this.context.store, this.context.router)
-  },
-
-  retrieveJobs () {
-   const promise = new Promise((resolve, reject) => {
-      axios.all([
-         fetch.getJobs(this.context.store)	
-      ])
-      .then((response) => resolve(true))
-      .catch((response) => resolve(true))
-    })
-   return promise;
-  },
-
-/** retrieveAllLists 
- *   	This function retrieves all the api endpoints needed
- *   	to display the proper job informations
- * 
- *
- *        NOTE:
- *        	The state is becomes mutable after the first list is fetched
- * 	        For now, I will just get the info from the lists.js as a quick solution.
- * 	        Will also refer to the specific store to be able to trace the origin of the data
- *
- * 	 TODO:
- * 	 	Testing the actionCreators being passed
- */
-retrieveAllLists() {
-	const promise = new Promise((resolve, reject) => {
-		axios.all([
-			  fetch.getIndustries(this.context.store, actionCreators),
-			  fetch.getJobTypes(this.context.store, actionCreators),
-		])
-		.then((response) => resolve(true))
-		.catch((response) => resolve(true))
-	})
-	return promise
-},
-
   /** doRedirectionFilter
    *
    * The redirection filter is the process that occurs each time we enter this container.
@@ -155,6 +50,117 @@ retrieveAllLists() {
      return authRedirectFilter(config, this.context.store, this.context.router)
   },
 
+/**
+ * retrieveJobs
+ *	This function fetches two endpoints:
+ *	    - api/jobs
+ *	    - api/questions
+ *      Then it gives the data into the store called dashboard
+ */
+  retrieveJobs () {
+   const promise = new Promise((resolve, reject) => {
+      axios.all([
+         fetch.getJobs(this.context.store),	
+      	 fetch.getQuestions(this.context.store, actionCreators)
+      ])
+      .then((response) => resolve(true))
+      .catch((response) => resolve(true))
+    })
+   return promise;
+  },
+
+/** retrieveAllLists 
+ *   	This function retrieves all the api endpoints needed
+ *   	to display the proper job informations
+ * 
+ */
+  retrieveAllLists() {
+	const promise = new Promise((resolve, reject) => {
+		axios.all([
+			  fetch.getIndustries(this.context.store, actionCreators),
+			  fetch.getJobTypes(this.context.store, actionCreators),
+		])
+		.then((response) => resolve(true))
+		.catch((response) => resolve(true))
+	})
+	return promise
+  },
+
+/** showModal
+ *
+ * This function takes in the submit event & the job id
+ * It calls a dispatch modalCliked & showModal(id)
+ * Once the store is notified, a reducer should be activated to find the appropriate job info,
+ * then supplies the modal the appropraite job info
+ * After, the modal appears to the user of the job info they pressed
+ *
+ * @param(e) - DOM event
+ * @param(j) - Object job
+ * @param(q) - Object questions
+*/
+  showModal (e, j) {
+  	e.preventDefault()
+	console.log('ON SHOW MODAL')
+//	console.log(j)
+	this.context.store.dispatch(actionCreators.modalClicked(j.id))
+
+
+	//After modal is clicked, get the questions & match the question id with the job id
+	//Once matched, pass the questions inside the modal to supply to questions variables
+	this.context.store.dispatch(actionCreators.showModal(j, this.getQuestions()))
+  },
+
+/* getQuestions
+ * 	This function passes the function matchQuestions and uses the filter function
+ * 	on the questions array. It will return a new array that is filtered with the associated
+ * 	job ids from the questions ids
+ *
+ * */
+
+
+  getQuestions() {	
+	  return this.props.questions.filter(this.filterQuestions)
+  
+  },
+
+/** filterQuestions
+ *     This function takes two params, job id & questions object.
+ *     It returns all the questions that matches the question ids
+ *
+ *      TODO: Refactor this whole process in which the backend or front-end will handle
+ *            the fetching of questions
+ *
+ *
+ *      NOTE: 
+ *         - Should we combine the questions in with the api endpoint, the same way user & job is handled?
+ *         - Should we separate it like how I am doing it right now?
+ *         - In what way is the best approach?
+ *         - What do we want to achieve out of this?
+ *
+*/
+
+  filterQuestions(question) {
+	  debugger
+	  console.log("***********MATCHQUESTION**********")
+	  return question.job === this.context.store.getState().dashboard.modal.jobId
+  },
+  
+/** hideModal
+ *   This event gives the user
+  */
+  hideModal (e, id) {
+	this.context.store.dispatch(actionCreators.hideModal(id))
+  },
+
+/** applyClicked
+ *  This event is pressed the button inside JobCardModal
+ *  It should passed the two answers given by the user and it's student id
+ */
+  applyClicked (e, a) {
+	e.preventDefault()
+	console.log(a)
+  },
+
   componentWillMount() {
 	console.log("componentWillMount")
 	this.doRedirectionFilter()
@@ -179,6 +185,7 @@ retrieveAllLists() {
 	  modal={this.context.store.getState().dashboard.modal}
 	  industries={this.props.industries}
 	  jobTypes={this.props.jobTypes}
+	  questions={this.props.questions}
 	/> 
       </div>
     )
@@ -195,6 +202,7 @@ function mapStateToProps({user, dashboard}) {
   return {
 	  user: user ? user : {},
 	  jobs: dashboard.studentDashboard.jobs ? dashboard.studentDashboard.jobs : [],
+	  questions: dashboard.studentDashboard.jobs ? dashboard.studentDashboard.questions : [],
 	  modal : dashboard.studentDashboard.jobs ? dashboard.modal : '',
 	  industries : dashboard.studentDashboard.jobs ? dashboard.lists.industries : [],
 	  jobTypes : dashboard.studentDashboard.jobs ? dashboard.lists.jobTypes : [],

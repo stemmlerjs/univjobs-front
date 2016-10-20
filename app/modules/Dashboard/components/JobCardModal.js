@@ -10,8 +10,6 @@ import { pageContainer, cardContainer, card, cardHeader,
 //Accept job object which contains the proptypes.
 export default function JobCardModal({ job, onApplyClicked, industries }) {
   console.log("**********JOB CARD MODAL************")
-  console.log(industries)
-  console.log(job)
   return (
 		<div className={cardModalContainer}>
 

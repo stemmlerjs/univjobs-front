@@ -10,8 +10,6 @@ import { pageContainer, cardContainer, card, cardHeader,
 //Accept job object which contains the proptypes.
 export default function JobCard({ jobs, children, jobTypes, industries}) {
   console.log("********JOB CARD*****************")
-  console.log(jobTypes)
-  console.log(industries)
   return (
 	//Testing encapsulation
 	//NOTE: Assumption that button component might break
