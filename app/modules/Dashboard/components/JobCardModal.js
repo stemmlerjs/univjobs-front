@@ -11,7 +11,8 @@ import { pageContainer, cardContainer, card, cardHeader,
 
 //Accept job object which contains the proptypes.
 export default function JobCardModal({ job, questions, onApplyClicked,
-				      industries}) { 
+				      industries, answerOne, answerTwo,
+				      updateAnswerField}) { 
   console.log("**********JOB CARD MODAL************")
   console.log(questions)
   return (
@@ -40,7 +41,19 @@ export default function JobCardModal({ job, questions, onApplyClicked,
 		 </div>
 		 <div className={cardModalBodyRight}>
 		   <p className={questionHeader}>{questions[0].text}</p>
+		   <textarea
+		   	rows="6"
+			value={answerOne}
+  			onChange={(e) => updateAnswerField('answerOne', e.target.value)}
+		   >	
+		   </textarea>
 		   <p className={questionHeader}>{questions[1].text}</p>
+		   <textarea
+		   	rows="6"
+			value={answerTwo}
+  			onChange={(e) => updateAnswerField('answerTwo', e.target.value)}
+		   >	
+		   </textarea>
 		   <div>
 		     <button onClick={(e) => onApplyClicked(e, questions)}>Buttooooooon</button>  
 		   </div> 

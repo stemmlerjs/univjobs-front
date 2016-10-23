@@ -102,7 +102,6 @@ const StudentDashboardContainer = React.createClass({
 	console.log('ON SHOW MODAL')
 	this.context.store.dispatch(actionCreators.modalClicked(j.id))
 
-
 	//After modal is clicked, get the questions & match the question id with the job id
 	//Once matched, pass the questions inside the modal to supply to questions variables
 	this.context.store.dispatch(actionCreators.showModal(j, this.getQuestions()))
@@ -114,8 +113,6 @@ const StudentDashboardContainer = React.createClass({
  * 	job ids from the questions ids
  *
  * */
-
-
   getQuestions() {	
 	  debugger
 	  return this.props.questions.filter(this.filterQuestions) 
@@ -154,9 +151,8 @@ const StudentDashboardContainer = React.createClass({
  *  This event is pressed the button inside JobCardModal
  *  It should passed the two answers given by the user and it's student id
  */
-  applyClicked (e, firstAnswer, questions) {
+  applyClicked (e, questions) {
 	e.preventDefault()
-	console.log(firstAnswer)
 	console.log(questions)
 	
 	//Get all the inputs from store
@@ -195,7 +191,9 @@ const StudentDashboardContainer = React.createClass({
 	  industries={this.props.industries}
 	  jobTypes={this.props.jobTypes}
 	  questions={this.props.questions}
-	  answer={this.props.answer}
+	  answerOne={this.props.answer.answerOne}
+	  answerTwo={this.props.answer.answerTwo}
+	  updateAnswerField={this.props.updateAnswerField}
 	/> 
       </div>
     )

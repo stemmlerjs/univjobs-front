@@ -222,7 +222,7 @@ const intialAnswersState = {
 	jobId: '',
 	questionOneId: '',
 	questionTwoId: '',
-	asnwerOne: '',
+	answerOne: '',
 	answerTwo: '',
 	serverMessage: '',
 	isSubmitting: false
@@ -345,7 +345,7 @@ function answer(state = initialAnswerState, action) {
 				jobId: action.jobId,
 				questionOneId: action.questionOneId,
 				questionTwoId: action.questioneTwoId,
-				asnwerOne: action.answerOne,
+				answerOne: action.answerOne,
 				answerTwo: action.answerTwo,
 				isSubmitting: true
 			}		
