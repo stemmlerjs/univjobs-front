@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import { SidebarContainer } from 'modules/Main'
 import { StudentDashboard } from 'modules/Dashboard'
 
@@ -19,11 +19,10 @@ const actionCreators = {
 }
 
 const StudentDashboardContainer = React.createClass({
-  contextTypes: {
-    router: PropTypes.object.isRequired,
-    store: PropTypes.object.isRequired
-  },
-
+	contextTypes: {
+		router: PropTypes.object.isRequired,
+		store: PropTypes.object.isRequired
+	},
   /** doRedirectionFilter
    *
    * The redirection filter is the process that occurs each time we enter this container.
@@ -101,7 +100,6 @@ const StudentDashboardContainer = React.createClass({
   showModal (e, j) {
   	e.preventDefault()
 	console.log('ON SHOW MODAL')
-//	console.log(j)
 	this.context.store.dispatch(actionCreators.modalClicked(j.id))
 
 
@@ -119,8 +117,8 @@ const StudentDashboardContainer = React.createClass({
 
 
   getQuestions() {	
-	  return this.props.questions.filter(this.filterQuestions)
-  
+	  debugger
+	  return this.props.questions.filter(this.filterQuestions) 
   },
 
 /** filterQuestions
@@ -140,8 +138,7 @@ const StudentDashboardContainer = React.createClass({
 */
 
   filterQuestions(question) {
-	  debugger
-	  console.log("***********MATCHQUESTION**********")
+	  console.log("***********FILTER QUESTIONS**********")
 	  return question.job === this.context.store.getState().dashboard.modal.jobId
   },
   
@@ -153,12 +150,24 @@ const StudentDashboardContainer = React.createClass({
   },
 
 /** applyClicked
+ *
  *  This event is pressed the button inside JobCardModal
  *  It should passed the two answers given by the user and it's student id
  */
-  applyClicked (e, a) {
+  applyClicked (e, firstAnswer, questions) {
 	e.preventDefault()
-	console.log(a)
+	console.log(firstAnswer)
+	console.log(questions)
+	
+	//Get all the inputs from store
+	// If firstAnswer & secondAnswer is empty
+	// 	dispatch an error message using ReactToastr
+	// Else
+	// 	dispatch an actionCreator
+	// 	PUT or POST into the server
+	// 	Return a success indicator
+	// 	empty the answers values
+	//
   },
 
   componentWillMount() {
@@ -186,6 +195,7 @@ const StudentDashboardContainer = React.createClass({
 	  industries={this.props.industries}
 	  jobTypes={this.props.jobTypes}
 	  questions={this.props.questions}
+	  answer={this.props.answer}
 	/> 
       </div>
     )
@@ -206,6 +216,7 @@ function mapStateToProps({user, dashboard}) {
 	  modal : dashboard.studentDashboard.jobs ? dashboard.modal : '',
 	  industries : dashboard.studentDashboard.jobs ? dashboard.lists.industries : [],
 	  jobTypes : dashboard.studentDashboard.jobs ? dashboard.lists.jobTypes : [],
+	  answer : dashboard.studentDashboard.questions ? dashboard.answer : {},
   }
 }
 

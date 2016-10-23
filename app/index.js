@@ -5,6 +5,7 @@ import { Provider } from 'react-redux'
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux'
 import * as reducers from 'redux/modules'
 import thunk from 'redux-thunk'
+import { reducer as formReducers } from 'redux-form'
 import { initializeBodyStyles } from 'helpers/styles'
 
 // Initialize CSS Styles for BODY tag
@@ -14,8 +15,12 @@ initializeBodyStyles();
 // ================ APP ROOT REDUCERS ===================== //
 // ======================================================== //
 
-const appReducer = combineReducers(reducers)
+/* NOTE: Testing redux-form
+ * */
+reducers.form = formReducers 
 
+console.log(reducers)
+const appReducer = combineReducers(reducers)
 const rootReducer = (state, action) => {
 
   // When the Redux action LOGGING_OUT is called from anywhere,

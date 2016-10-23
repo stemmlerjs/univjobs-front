@@ -6,6 +6,12 @@ const GET_STUDENTS = 'EMPLOYER.GET_STUDENTS'
 const GET_STUDENTS_SUCCESS = 'EMPLOYER.GET_STUDENTS_SUCCESS'
 const GET_STUDENTS_FAILURE = 'EMPLOYER.GET_STUDENTS_FAILURE'
 
+
+/*NOTE: 
+ *   Might have to rename the strings passed into variables,
+ *   into a generic names, employer and student are going to be
+ *   using the jobs, questions, and answers.
+ * */
 const FETCHING_JOBS = 'STUDENT.FETCHING_JOBS'
 const FETCHED_JOBS_SUCCESS = 'STUDENT.FETCHED_JOBS_SUCCESS'
 const FETCHED_JOBS_FAILURE = 'STUDENT.FETCHED_JOBS_FAILURE'
@@ -18,6 +24,10 @@ const MODAL_CLICKED = 'MODAL_CLICKED'
 const SHOW_MODAL = 'SHOW_MODAL'
 const HIDE_MODAL = 'HIDE_MODAL'
 
+const UPDATE_ANSWER_FIELD = 'UPDATE_ANSWER_FIELD'
+const SUBMIT_ANSWERS = 'STUDENT.SUBMIT_ANSWERS'
+const SUBMIT_ANSWERS_SUCCESS = 'STUDENT.SUBMIT_SUCCESS'
+const SUBMIT_ANSWERS_FAILURE = 'STUDENT.SUBMIT_FAILURE'
 
 /******************** DASHBOARD List GETTER ACTIONS ******************/
 const FETCH_JOB_TYPES = 'DASHBOARD.LIST.FETCH_JOB_TYPES'
@@ -133,6 +143,42 @@ export function fetchList(listName, listArray) {
 		     return 
 	}
 }//fetchList
+
+export function updateAnswerField(fieldName, newValue) {
+	  return {
+		  type: UPDATE_ANSWER_FIELD,
+		  newValue, 
+		  fieldName
+	  }
+}
+/*NOTE:
+ *  Pass the questionIds with the associated answers
+ * */
+export function submitAnswers(jobId, questionOneId, questionTwoId, answerOne, answerTwo) {
+   return {
+   	   type: SUBMIT_ANSWERS,
+	   jobId,
+	   questionOneId,
+	   questionTwoId,
+	   answerOne,
+	   answerTwo
+	   
+   }
+}
+
+export function submitAnswersSuccess(serverMessage) {
+   return {
+   	  type: SUBMIT_ANSWERS_SUCCESS,
+	  serverMessage
+   }
+}
+
+export function submitAnswersFailure(error) {
+   return {
+          type: SUBMIT_ANSWERS_FAILURE,
+	  error
+   }
+}
 // =======================================================
 // ================== INITIAL STATE ======================
 // =======================================================
@@ -143,6 +189,7 @@ const initialDashboardState = {
 	error: '',
 	modal: {},
 	lists: {},
+	answer: {}
 }
 
 const initialEmployerDashboardState = {
@@ -156,7 +203,7 @@ const initialStudentDashboardState = {
 	isFetching: false,
 	error: '',
 	jobs: [],
-	questions: []
+	questions: [],
 }
 
 const intialModalState = {
@@ -169,6 +216,16 @@ const intialModalState = {
 const initialListState = {
 	jobTypes: [],
 	industries: []
+}
+
+const intialAnswersState = {
+	jobId: '',
+	questionOneId: '',
+	questionTwoId: '',
+	asnwerOne: '',
+	answerTwo: '',
+	serverMessage: '',
+	isSubmitting: false
 }
 // =======================================================
 // ===================== REDUCERS ========================
@@ -268,8 +325,48 @@ function lists (state = initialListState, action) {
 		    ...state,
 		    jobTypes: action.list
 		}
+	    default: 
+		return state
 
 	}
+}
+
+function answer(state = initialAnswerState, action) {
+	switch(action.type) {
+		case UPDATE_ANSWER_FIELD:
+			return {
+				...state,
+				[action.value]: action.newValue,
+				error: action.error
+			}
+		case SUBMIT_ANSWERS:
+			return {
+				...state,
+				jobId: action.jobId,
+				questionOneId: action.questionOneId,
+				questionTwoId: action.questioneTwoId,
+				asnwerOne: action.answerOne,
+				answerTwo: action.answerTwo,
+				isSubmitting: true
+			}		
+		case SUBMIT_ANSWERS_SUCCESS:
+			return {
+				...state,
+				serverMessage: 'SUCCESS BOOYAH!!!',
+				isSubmitting: false
+			}
+		case SUBMIT_ANSWERS_FAILURE:
+			return {
+				...state,
+				serverMessage: 'FAILURE :(',
+				isSubmitting: false,
+				error: action.error
+			}
+		default:
+			return state
+	
+	}
+
 }
 
 export default function dashboard(state = initialDashboardState, action) {
@@ -323,6 +420,26 @@ export default function dashboard(state = initialDashboardState, action) {
 			return {
 				...state,
 				lists: lists(state.lists, action)
+			}
+		case UPDATE_ANSWER_FIELD:
+			return {
+				...state,
+				answer: answer(state.answer, action)
+			}
+		case SUBMIT_ANSWERS:
+			return {
+				...state,
+				answer: answer(state.answer, action)
+			}		
+		case SUBMIT_ANSWERS_SUCCESS:
+			return {
+				...state,
+				answer: answer(state.answer, action)
+			}
+		case SUBMIT_ANSWERS_FAILURE:
+			return {
+				...state,
+				answer: answer(state.answer, action)
 			}
 		default:
 			return state

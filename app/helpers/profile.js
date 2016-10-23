@@ -114,7 +114,7 @@ export function studentProfilePATCH(data) {
   })
 }
 export function validateStudentProfileFields(profileInfo, next) {
-  debugger;
+  //debugger;
   let submitErrorsExist = false;
   let profileFieldErrors = {	
 	emailPreferences: false,

@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react'
+import { Field, reduxForm } from 'redux-form'
 import { pageContainer, cardContainer, card, cardHeader, 
 	jobTitleContainer, jobTitle, industryTitle,
 	tagContainer, tagList, tagElement,
@@ -7,8 +8,10 @@ import { pageContainer, cardContainer, card, cardHeader,
 	jobModalIndustry, cardModalBodyLeft, cardModalBodyRight, cardModalScroll, cardModalFooter,
 	image, questionHeader} from '../styles/StudentDashboard.css'
 
+
 //Accept job object which contains the proptypes.
-export default function JobCardModal({ job, questions, onApplyClicked, industries }) {
+export default function JobCardModal({ job, questions, onApplyClicked,
+				      industries}) { 
   console.log("**********JOB CARD MODAL************")
   console.log(questions)
   return (
@@ -37,12 +40,9 @@ export default function JobCardModal({ job, questions, onApplyClicked, industrie
 		 </div>
 		 <div className={cardModalBodyRight}>
 		   <p className={questionHeader}>{questions[0].text}</p>
-		   <textarea rows="6"></textarea>
 		   <p className={questionHeader}>{questions[1].text}</p>
-	           <textarea rows="6"></textarea>
-		   
 		   <div>
-		     <button onClick={(e) => onApplyClicked(e, "FORK IT!!")}>Buttooooooon</button>  
+		     <button onClick={(e) => onApplyClicked(e, questions)}>Buttooooooon</button>  
 		   </div> 
 	          </div>
 		</div>
