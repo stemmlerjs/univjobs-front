@@ -336,8 +336,7 @@ function answer(state = initialAnswerState, action) {
 		case UPDATE_ANSWER_FIELD:
 			return {
 				...state,
-				[action.value]: action.newValue,
-				error: action.error
+				[action.fieldName]: action.newValue,
 			}
 		case SUBMIT_ANSWERS:
 			return {
