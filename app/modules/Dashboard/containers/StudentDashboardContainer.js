@@ -1,17 +1,23 @@
 import React, { Component, PropTypes } from 'react'
 import { SidebarContainer } from 'modules/Main'
 import { StudentDashboard } from 'modules/Dashboard'
-
+import { pageContainer } from '../styles/index.css'
 import axios from 'axios'
+import * as list from 'helpers/lists'
+import * as fetch from 'helpers/dashboard'
+// =============REDUX STATE & IMPORTS========================== //
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as userActionCreators from 'redux/modules/user/user'
 import * as dashboardActionCreators from 'redux/modules/dashboard/dashboard'
 import { authRedirectFilter } from 'config/routes'
-import * as fetch from 'helpers/dashboard'
-import * as list from 'helpers/lists'
+// ============================================================ //
 
-import { pageContainer } from '../styles/index.css'
+// ==================MESSAGES============================== //
+var ReactToastr = require('react-toastr');
+var { ToastContainer } = ReactToastr;
+var ToastMessageFactory = React.createFactory(Reactoastr.ToastMessage.animation);
+// 
 
 const actionCreators = {
   ...userActionCreators,
@@ -114,7 +120,6 @@ const StudentDashboardContainer = React.createClass({
  *
  * */
   getQuestions() {	
-	  debugger
 	  return this.props.questions.filter(this.filterQuestions) 
   },
 
@@ -153,7 +158,6 @@ const StudentDashboardContainer = React.createClass({
  */
   applyClicked (e, questions) {
 	e.preventDefault()
-	console.log(questions)
 	
 	//Get all the inputs from store
 	// If firstAnswer & secondAnswer is empty
@@ -164,6 +168,16 @@ const StudentDashboardContainer = React.createClass({
 	// 	Return a success indicator
 	// 	empty the answers values
 	//
+	console.log("*****QUESTIONS*****")
+	console.log(questions)
+
+	console.log("*****FIRST ANSWER*****")
+	console.log(this.props.answer.answerOne)
+	console.log("*****SECOND ANSWER*****")
+	console.log(this.props.answer.answerTwo)
+
+	//if (this.context.store.getState().dashboard.answer.answerTwo && )
+	
   },
 
   componentWillMount() {

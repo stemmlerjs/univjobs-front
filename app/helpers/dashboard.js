@@ -114,3 +114,24 @@ export function getIndustries(store, actionCreators) {
   return promise
 }
 
+/*
+ * addAnswers
+ * 
+export function addAnswers(store, actionCreators) {
+	const accessToken = getAccessToken()
+	const csrfToken = getCSRFToken()
+
+	return axios({
+		method: 'post',
+		url: config.basUrl + 'job/answer',
+		headers: {
+			'Authorization': 'JWT' + accessToken,
+			'X-CSRFToken' : csrfToken
+		},
+		data: {
+			questionId,
+			studentId,
+			text
+		}
+	})
+}*/
