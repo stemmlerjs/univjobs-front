@@ -1,5 +1,6 @@
 import axios from 'axios'
 import config from 'config'
+import { getAccessToken, getCSRFToken } from 'helpers/auth'
 import { fetchingJobs, fetchedJobSuccess, fetchedJobFailure, 
 	getStudentsSuccess, getStudentsError, fetchingJobTypes,
 	fetchList, fetchIndustries, fetchingIndustries, dashboard } from 'redux/modules/dashboard/dashboard'
@@ -116,22 +117,63 @@ export function getIndustries(store, actionCreators) {
 
 /*
  * addAnswers
- * 
-export function addAnswers(store, actionCreators) {
+ *  A function that sends a POST to the database 
+ *
+ * #NOTE:
+ * 	Can axios use multiple POST?
+ */
+export function addAnswers(store, actionCreators, data) {
 	const accessToken = getAccessToken()
 	const csrfToken = getCSRFToken()
+	console.log('*****DATA*****')
+	console.log(data)
+	return new Promise((resolve, reject) => {
+		axios({
+			method: 'post',
+			url: config.baseUrl + 'job/new/answer/',
+			headers: {
+				'Authorization': 'JWT' + accessToken,
+				'X-CSRFToken' : csrfToken
+			},
+			data: data
+		})
+		.then((response) => {
+			debugger
+			console.log(response)
+			resolve(true)
+		})
+		.catch((error) => {
+			console.log(error)
+			resolve(false)
 
-	return axios({
-		method: 'post',
-		url: config.basUrl + 'job/answer',
-		headers: {
-			'Authorization': 'JWT' + accessToken,
-			'X-CSRFToken' : csrfToken
-		},
-		data: {
-			questionId,
-			studentId,
-			text
-		}
+		})
 	})
-}*/
+}
+
+export function studentApply(store, actionCreators, data) {
+	const accessToken = getAccessToken()
+	const csrfToken = getCSRFToken()
+	console.log('*****DATA*****')
+	console.log(data)
+	return new Promise((resolve, reject) => {
+		axios({
+			method: 'post',
+			url: config.baseUrl + 'job/new/student/applying/',
+			headers: {
+				'Authorization': 'JWT' + accessToken,
+				'X-CSRFToken' : csrfToken
+			},
+			data: data
+		})
+		.then((response) => {
+			debugger
+			console.log(response)
+			resolve(true)
+		})
+		.catch((error) => {
+			console.log(error)
+			resolve(false)
+
+		})
+	})
+}

@@ -14,10 +14,11 @@ import { authRedirectFilter } from 'config/routes'
 // ============================================================ //
 
 // ==================MESSAGES============================== //
+/*
 var ReactToastr = require('react-toastr');
 var { ToastContainer } = ReactToastr;
 var ToastMessageFactory = React.createFactory(Reactoastr.ToastMessage.animation);
-// 
+*/ 
 
 const actionCreators = {
   ...userActionCreators,
@@ -167,17 +168,32 @@ const StudentDashboardContainer = React.createClass({
 	// 	PUT or POST into the server
 	// 	Return a success indicator
 	// 	empty the answers values
-	//
-	console.log("*****QUESTIONS*****")
-	console.log(questions)
-
-	console.log("*****FIRST ANSWER*****")
-	console.log(this.props.answer.answerOne)
-	console.log("*****SECOND ANSWER*****")
-	console.log(this.props.answer.answerTwo)
-
-	//if (this.context.store.getState().dashboard.answer.answerTwo && )
 	
+	let dataAnswers = [
+			{
+				"question": questions[0].id,
+				"student": this.context.store.getState().user.email,
+				"text": this.props.answer.answerOne
+			},	
+			{
+				"question": questions[1].id,
+				"student": this.context.store.getState().user.email,
+				"text": this.props.answer.answerTwo
+			}	
+		
+	]
+	let dataApply = [
+			{
+				"job": this.context.store.getState().dashboard.modal.jobId,
+				"students": this.context.store.getState().user.email
+			}	
+		
+	]
+		
+		/*NOTE: Testing to see if testData data structure can be integrated with fetc.addAnswers and POST answers into the table Answer*/
+		debugger
+		fetch.studentApply(this.context.store, actionCreators, dataApply)
+		.then(fetch.addAnswers(this.context.store, actionCreators, dataAnswers))
   },
 
   componentWillMount() {
