@@ -14,11 +14,11 @@ import { authRedirectFilter } from 'config/routes'
 // ============================================================ //
 
 // ==================MESSAGES============================== //
-/*
-var ReactToastr = require('react-toastr');
-var { ToastContainer } = ReactToastr;
-var ToastMessageFactory = React.createFactory(Reactoastr.ToastMessage.animation);
-*/ 
+import ReduxToastr from 'react-redux-toastr'
+import {toastr} from 'react-redux-toastr'
+
+// ====================================== //
+
 
 const actionCreators = {
   ...userActionCreators,
@@ -168,7 +168,6 @@ const StudentDashboardContainer = React.createClass({
 	// 	PUT or POST into the server
 	// 	Return a success indicator
 	// 	empty the answers values
-	
 	let dataAnswers = [
 			{
 				"question": questions[0].id,
@@ -189,11 +188,15 @@ const StudentDashboardContainer = React.createClass({
 			}	
 		
 	]
+	if (this.props.answer.answerOne && this.props.answer.answerTwo) {
+		fetch.studentApply(this.context.store, actionCreators, dataApply)
+		then(fetch.addAnswers(this.context.store, actionCreators, dataAnswers))
+	} else {
+		toastr.error("You twat! Finish the boxes!")
+	}
+	
 		
 		/*NOTE: Testing to see if testData data structure can be integrated with fetc.addAnswers and POST answers into the table Answer*/
-		debugger
-		fetch.studentApply(this.context.store, actionCreators, dataApply)
-		.then(fetch.addAnswers(this.context.store, actionCreators, dataAnswers))
   },
 
   componentWillMount() {
@@ -225,6 +228,12 @@ const StudentDashboardContainer = React.createClass({
 	  answerTwo={this.props.answer.answerTwo}
 	  updateAnswerField={this.props.updateAnswerField}
 	/> 
+
+	<ReduxToastr
+	    timeOut={4000}
+	    newestOnTop={false}
+	    position="top-right"
+	/>
       </div>
     )
   },

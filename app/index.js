@@ -6,6 +6,7 @@ import { createStore, applyMiddleware, compose, combineReducers } from 'redux'
 import * as reducers from 'redux/modules'
 import thunk from 'redux-thunk'
 import { reducer as formReducers } from 'redux-form'
+import { reducer as toastrReducer, ReduxToastr } from 'react-redux-toastr'
 import { initializeBodyStyles } from 'helpers/styles'
 
 // Initialize CSS Styles for BODY tag
@@ -18,7 +19,7 @@ initializeBodyStyles();
 /* NOTE: Testing redux-form
  * */
 reducers.form = formReducers 
-
+reducers.toastr = toastrReducer
 console.log(reducers)
 const appReducer = combineReducers(reducers)
 const rootReducer = (state, action) => {
@@ -45,6 +46,7 @@ const store = createStore(rootReducer,
 ReactDOM.render(
   <Provider store={store}>
     { getRoutes() }
+
   </Provider>,
   document.getElementById('app')
 )
