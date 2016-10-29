@@ -126,7 +126,7 @@ export function addAnswers(store, actionCreators, data) {
 	const accessToken = getAccessToken()
 	const csrfToken = getCSRFToken()
 	console.log('*****DATA*****')
-	console.log(data)
+	store.dispatch(actionCreators.submitAnswers(data))
 	return new Promise((resolve, reject) => {
 		axios({
 			method: 'post',
@@ -140,10 +140,12 @@ export function addAnswers(store, actionCreators, data) {
 		.then((response) => {
 			debugger
 			console.log(response)
+			store.dispatch(actionCreators.submitAnswersSuccess(response))
 			resolve(true)
 		})
 		.catch((error) => {
 			console.log(error)
+			store.dispatch(actionCreators.submitAnswersSuccess(error))
 			resolve(false)
 
 		})

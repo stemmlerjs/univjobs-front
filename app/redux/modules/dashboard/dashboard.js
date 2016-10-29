@@ -154,15 +154,10 @@ export function updateAnswerField(fieldName, newValue) {
 /*NOTE:
  *  Pass the questionIds with the associated answers
  * */
-export function submitAnswers(jobId, questionOneId, questionTwoId, answerOne, answerTwo) {
+export function submitAnswers(data) {
    return {
    	   type: SUBMIT_ANSWERS,
-	   jobId,
-	   questionOneId,
-	   questionTwoId,
-	   answerOne,
-	   answerTwo
-	   
+	   ...data
    }
 }
 
@@ -351,13 +346,13 @@ function answer(state = initialAnswerState, action) {
 		case SUBMIT_ANSWERS_SUCCESS:
 			return {
 				...state,
-				serverMessage: 'SUCCESS BOOYAH!!!',
+				serverMessage: action.serverMessage,
 				isSubmitting: false
 			}
 		case SUBMIT_ANSWERS_FAILURE:
 			return {
 				...state,
-				serverMessage: 'FAILURE :(',
+				serverMessage: action.serverMessage,
 				isSubmitting: false,
 				error: action.error
 			}

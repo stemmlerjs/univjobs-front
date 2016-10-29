@@ -150,6 +150,8 @@ const StudentDashboardContainer = React.createClass({
   */
   hideModal (e, id) {
 	this.context.store.dispatch(actionCreators.hideModal(id))
+	this.context.store.getState().dashboard.answer.answerOne = ''
+	this.context.store.getState().dashboard.answer.answerTwo = ''
   },
 
 /** applyClicked
@@ -188,11 +190,25 @@ const StudentDashboardContainer = React.createClass({
 			}	
 		
 	]
+
+	/*NOTE: To take into consideration the following for refactor: 
+	 * 	- Proper handling of error response & user input error
+	 *      - Handling the job after user applies to the job
+	 *
+	 * */
 	if (this.props.answer.answerOne && this.props.answer.answerTwo) {
 		fetch.studentApply(this.context.store, actionCreators, dataApply)
-		then(fetch.addAnswers(this.context.store, actionCreators, dataAnswers))
+		.then(fetch.addAnswers(this.context.store, actionCreators, dataAnswers))
+
+		//This should check if the job apply and answer is a success,
+		//If yes, display toastr success, 
+		//Else, display toastr error
+		.then(toastr.success("Successfully applied to jobs"))
+		.then(this.context.store.dispatch(actionCreators.hideModal(0)))
+
+
 	} else {
-		toastr.error("You twat! Finish the boxes!")
+		toastr.error("✋ You need to answer the employers question if you want to get a job")
 	}
 	
 		
