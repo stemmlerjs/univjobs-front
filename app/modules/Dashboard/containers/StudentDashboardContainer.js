@@ -92,6 +92,14 @@ const StudentDashboardContainer = React.createClass({
 	return promise
   },
 
+  clearJobStore() {
+	
+	this.context.store.getState().dashboard.jobs = this.context.store.getState().dashboard.studentDashboard.jobs.filter((k) => {
+		return k.id != this.context.store.getState().dashboard.modal.jobId ? k : ''
+	
+	})
+  },
+
 /** showModal
  *
  * This function takes in the submit event & the job id
@@ -205,9 +213,16 @@ const StudentDashboardContainer = React.createClass({
 		//Else, display toastr error
 		.then(toastr.success("Successfully applied to jobs"))
 		.then(this.context.store.dispatch(actionCreators.hideModal(0)))
+		/*Refactor to just pop the job in the jobs array*/
+		.then(setTimeout(function () {
+				window.location.reload()	      
+				}, 2000)
+		     )
+
 
 
 	} else {
+		/*NOTE: Test to see if it works on other browsers and phone */
 		toastr.error("✋ You need to answer the employers question if you want to get a job")
 	}
 	
@@ -222,6 +237,7 @@ const StudentDashboardContainer = React.createClass({
 	.then(this.retrieveAllLists())
 	.then(this.props.closeOverlay())
   },
+
 
   componentWillUnmount() {
     console.log("Component WillUnmount")
