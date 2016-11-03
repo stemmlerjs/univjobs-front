@@ -26,7 +26,7 @@ export default function JobCardModal({ job, questions, onApplyClicked,
 		      
 		      {/* TODO: Point to Industry Name */}
 		      <h3 className={jobModalIndustry}> {
-			      industries ? industries[job.user.industry].industry : ''
+			      industries ? industries[job.business.industry].industry : ''
 		      }</h3>
 		    </div>
 		    

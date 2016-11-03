@@ -65,11 +65,11 @@ export default function JobCard({ jobs, children, jobTypes, industries}) {
 		   <li>
 		     <ul className={companyInfoContainer}>
 			<li>
-			  <h4 className={companyTitle}>{jobs.user.company_name}</h4>
+			  <h4 className={companyTitle}>{jobs.business.company_name}</h4>
 		        </li>
 		
 			<li>
-			  <a href={jobs.user.website} target="_blank">Company Info</a>
+			  <a href={jobs.business.website} target="_blank">Company Info</a>
 		        </li>
 		     </ul> 
 		    </li>
