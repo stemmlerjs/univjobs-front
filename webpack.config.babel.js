@@ -1,6 +1,7 @@
 import webpack from 'webpack'
 import path from 'path'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
+import BundleTracker from 'webpack-bundle-tracker'
 
 const LAUNCH_COMMAND = process.env.npm_lifecycle_event
 
@@ -72,7 +73,7 @@ const developmentConfig = {
 
 const productionConfig = {
   devtool: 'cheap-module-source-map',
-  plugins: [HTMLWebpackPluginConfig, productionPlugin]
+  plugins: [HTMLWebpackPluginConfig, productionPlugin, new BundleTracker({filename: './webpack-stats.json'})]
 }
 
 export default Object.assign({}, base, isProduction === true ? productionConfig : developmentConfig)

@@ -76,11 +76,6 @@ export function validateCity(city) {
   return re.test(city)
 }
 
-export function validateCompanyName(name) {
-  let re = /^([a-zA-Z ]){2,30}$/
-  return re.test(name)
-}
-
 export function validateAddress(address) {
   let re = /^[a-z0-9 ,.'-]{2,30}$/i // numbers, letters and spaces only
   return re.test(address)
