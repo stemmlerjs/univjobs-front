@@ -41,7 +41,7 @@ const FETCHED_JOB_TYPES = 'DASHBOARD.FETCHED_JOB_TYPES'
 const FETCHED_INDUSTRIES = 'DASHBOARD.FETCHED_INDUSTRIES'
 
 // =======================================================
-// ====================== ACTIONS ========================
+// ================== ACTIONS CREATORS ===================
 // =======================================================
 
 /*TODO: Convert word error into failure
