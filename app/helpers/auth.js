@@ -36,12 +36,16 @@ export function login (email, password) {
 
 
 export function logout(store, router) {
+  const csrfToken = getCSRFToken()
   // ACTION: DISPATCH (LOGGING_OUT)
   store.dispatch(loggingOut())
 
   axios({
     method: 'post',
-    url: config.baseUrl + 'logout/'
+    url: config.baseUrl + 'logout/',
+    headers: {
+      "X-CSRFToken": csrfToken
+    }
   })
   .then((res) => {
     // ACTION: DISPATCH (LOGGING_OUT)

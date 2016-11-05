@@ -1,4 +1,6 @@
-import { employerProfilePUT, employerProfilePATCH, validateEmployerProfileFields, studentProfilePUT, studentProfilePATCH, validateStudentProfileFields, compareToSnapshot } from 'helpers/profile'
+import { employerProfilePUT, employerProfilePATCH, validateEmployerProfileFields, 
+  studentProfilePUT, studentProfilePATCH, validateStudentProfileFields, 
+  compareToSnapshot } from 'helpers/profile'
 import { toISO } from 'helpers/utils'
 
 // =======================================================
@@ -296,18 +298,17 @@ export function updateProfile(userTypeInt, profileInfo, user, snapshot) {
   return function (dispatch) {
     switch(userTypeInt) {
       case 0:
-	debugger;
-	console.log("UPDATING STUDENT PROFILE")
-	validateStudentProfileFields(profileInfo, (errorExist, profileFieldErrors) => {
-	  if(errorExist) {
-	    
-	    // DISPATCH - SAVE_PROFILE_ERROR
-	    dispatch(saveProfileError(profileFieldErrors, [    "Couldn't save profile.",
-	  "Please fill in missing fields"
-	    ], true))
-	  
-	  } else {
-	    // No errors, proceed to /PUT on api/me
+        console.log("UPDATING STUDENT PROFILE")
+        validateStudentProfileFields(profileInfo, (errorExist, profileFieldErrors) => {
+          if(errorExist) {
+            
+            // DISPATCH - SAVE_PROFILE_ERROR
+            dispatch(saveProfileError(profileFieldErrors, [    "Couldn't save profile.",
+          "Please fill in missing fields"
+            ], true))
+          
+          } else {
+            // No errors, proceed to /PUT on api/me
             var changedData = {
              // user: {
              //   "user-is_a_student": true,
@@ -320,26 +321,26 @@ export function updateProfile(userTypeInt, profileInfo, user, snapshot) {
              //   "user-mobile": user.mobile,
              // 	is_a_student: false,
              // 	is_profile_completed: true, // set this flag to true so we know for next time
-		  languages: profileInfo.languages,
-		  sports: profileInfo.sportsTeam,
-		  clubs: profileInfo.schoolClub,
-		  email_pref: profileInfo.emailPreferences,
-		  status: profileInfo.studentStatus,
-		  enroll_date: toISO(profileInfo.enrollmentDate),
-		  grad_date: toISO(profileInfo.graduationDate),
-		  major: profileInfo.major,
-		  GPA: profileInfo.gpa,
-		  personal_email: profileInfo.personalEmail ,
-		  gender: profileInfo.gender,
-		  has_car: profileInfo.hasCar,
-		  company: profileInfo.companyName,
-		  position: profileInfo.position,
-		  fun_fact: profileInfo.funFacts,
-		  hometown: profileInfo.hometown,
-		  hobbies: profileInfo.hobbies,
-		  photo: profileInfo.photo,
-		  resume: profileInfo.resume,
-	  }
+        		  languages: profileInfo.languages,
+        		  sports: profileInfo.sportsTeam,
+        		  clubs: profileInfo.schoolClub,
+        		  email_pref: profileInfo.emailPreferences,
+        		  status: profileInfo.studentStatus,
+        		  enroll_date: toISO(profileInfo.enrollmentDate),
+        		  grad_date: toISO(profileInfo.graduationDate),
+        		  major: profileInfo.major,
+        		  GPA: profileInfo.gpa,
+        		  personal_email: profileInfo.personalEmail ,
+        		  gender: profileInfo.gender,
+        		  has_car: profileInfo.hasCar,
+        		  company: profileInfo.companyName,
+        		  position: profileInfo.position,
+        		  fun_fact: profileInfo.funFacts,
+        		  hometown: profileInfo.hometown,
+        		  hobbies: profileInfo.hobbies,
+        		  photo: profileInfo.photo,
+        		  resume: profileInfo.resume,
+        	  }
             compareToSnapshot(snapshot, changedData, (result) => {
               studentProfilePATCH(result)
                 .then((res) => {
@@ -354,10 +355,10 @@ export function updateProfile(userTypeInt, profileInfo, user, snapshot) {
                      'HTTP Error Occurred',
                      err
                   ], false))
-		})
-	    })
-	    }
-	  })
+                })
+             })
+            }
+          })
         return;
       case 1:
         console.log("UPDATING EMPLOYER PROFILE")
@@ -400,7 +401,7 @@ export function updateProfile(userTypeInt, profileInfo, user, snapshot) {
               // last_name: user.lastName,
               // email: user.email
             }
-
+            debugger;
             compareToSnapshot(snapshot, changedData, (result) => {
               employerProfilePATCH(result)
                 .then((res) => {
