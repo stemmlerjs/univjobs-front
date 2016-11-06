@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
-import { hideOverlay } from 'redux/modules/application/application'
+import { hideOverlay } from 'redux/modules/rootApplication/rootApplication'
 import animationStyles from '../styles/InitialOverlayStyles.css'
 
 const styles = {
@@ -53,9 +53,9 @@ const InitialOverlay = React.createClass({
   },
 })
 // We should have a new value on the user called 'isOverlayActive'
-function mapStateToProps({application}) {
+function mapStateToProps({rootApplication}) {
   return {
-    isOverlayActive: application.isOverlayActive ? true : false,
+    isOverlayActive: rootApplication.isOverlayActive ? true : false,
   }
 }
 

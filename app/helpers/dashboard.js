@@ -18,7 +18,7 @@ import { fetchingJobs, fetchedJobSuccess, fetchedJobFailure,
 /*
  *getJobs
  *
- *  TODO: Test out passing actionCreators
+ *  
  * */
 export function getJobs(store) {
  const promise = new Promise((resolve, reject) => {

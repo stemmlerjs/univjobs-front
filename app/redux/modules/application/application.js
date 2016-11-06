@@ -52,6 +52,25 @@ export function fetchedApplicationsFailure(error) {
   }
 }
 
+export function fetchingJobs() {
+  return {
+	  type: FETCHING_APPLICATIONS,
+  }
+}
+
+export function fetchedJobsSuccess(jobs) {
+   return {
+	   type: FETCHED_JOBS_SUCCESS,
+	   jobs
+  }
+}
+
+export function fetchedJobsFailure(error) {
+   return {
+	   type: FETCHED_JOBS_FAILURE,
+	   error
+  }
+}
 export function fetchingQuestions() {
   return {
 	  type: FETCHING_QUESTIONS,
@@ -79,7 +98,7 @@ export function modalClicked(jobId) {
    }
 }
 
-export function showModal(job, questions) {
+export function showModal(job, questions, answers) {
    return {
    	  type: SHOW_MODAL,
 	  job,
@@ -113,31 +132,72 @@ export function fetchList(listName, listArray) {
 		     return 
 	}
 }//fetchList
+
+// =======================================================
+// ================== INITIAL STATE ======================
+// =======================================================
+
+const initialApplicationsState = {
+	studentApplications: {},
+	lists: {},
+	//hired: {},
+	//invited: {},
+	error: ''
+}
+
+const initialStudentApplicationsState = {
+	jobsAppliedTo: [],
+	//questions: [],
+	//answers: [],
+	isFetching: false,
+	error: '',
+}
+
 // ================================================================== //
 // ======================= APPLICATION REDUCER ======================= //
 // ================================================================== //
-
-const HIDE_OVERLAY = 'HIDE_OVERLAY'
-
-export function hideOverlay() {
-  return {
-    type: HIDE_OVERLAY,
-
-  }
+function studentApplications(state = intialStudentApplicationsState, action) {
+	switch(action.type) {
+		case FETCHING_JOBS:
+			return {
+				...state,
+				isFetching: true,
+			}
+		case FETCHED_JOBS_SUCCESS:
+			return {
+				...state,
+				jobsAppliedTo: action.jobs,
+				isFetching: false,
+			}
+		case FETCHED_JOBS_FAILURE:
+			return {
+				...state,
+				isFetching: false,
+			}
+		default:
+			return state
+	}
 }
 
-const applicationInitialState = {
-  isOverlayActive: true,
-}
-
-export default function application (state = applicationInitialState, action) {
+export default function application(state = initialApplicationsState, action) {
   switch(action.type) {
-    case HIDE_OVERLAY:
-      return {
-        ...state,
-        isOverlayActive: false
-      }
-    default :
-      return state
+	  case FETCHING_JOBS:
+		return {
+			...state,
+			studentApplications: studentApplications(state.studentApplications, action)
+		}
+	  case FETCHED_JOBS_SUCCESS:
+		return {
+			...state,
+			studentApplications: studentApplications(state.studentApplications, action)
+		}
+	  case FETCHED_JOBS_FAILURE:
+		return {
+			...state,
+			studentApplications: studentApplications(state.studentApplications, action),
+			error: 'Error in fetching jobs, ' + action.error
+		}
+	  default :
+		return state
   }
 }

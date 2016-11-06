@@ -7,4 +7,5 @@ export CategoriesContainer from './Categories/containers/CategoriesContainer'
 export CreateJobContainer from './CreateJob/containers/CreateJobContainer'
 export StudentDashboardContainer from './Dashboard/containers/StudentDashboardContainer'
 export EmployerDashboardContainer from './Dashboard/containers/EmployerDashboardContainer'
+export ApplicationContainer from './Application/containers/ApplicationContainer'
 
