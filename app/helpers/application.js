@@ -26,3 +26,21 @@ export function getJobs(store) {
  })//promise
  return promise;
 }//getJobs*/
+
+export function getQuestions(store, actionCreators) {
+  const promise = new Promise((resolve, reject) => {
+    store.dispatch(actionCreators.fetchingQuestions())
+    axios.get(config.baseUrl + 'job/questions')
+    .then((response) => {
+	console.log('********GET QUESTIONS FIRE!!!!!!!!!!!************')
+	console.log(response)
+	store.dispatch(actionCreators.fetchedQuestionsSuccess(response.data))
+	resolve(true);
+    })
+    .catch((err) => {
+      store.dispatch(actionCreators.fetchedQuestionsFailure(err))
+      resolve(false)
+    })
+  })
+  return promise
+}

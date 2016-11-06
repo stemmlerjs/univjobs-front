@@ -67,7 +67,7 @@ const ApplicationContainer = React.createClass({
    const promise = new Promise((resolve, reject) => {
       axios.all([
          application.getJobs(this.context.store),	
-//       fetch.getQuestions(this.context.store, actionCreators)
+	 application.getQuestions(this.context.store, actionCreators)
       ])
       .then((response) => resolve(true))
       .catch((response) => resolve(true))

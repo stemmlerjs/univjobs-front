@@ -6,7 +6,6 @@ const GET_STUDENTS = 'EMPLOYER.GET_STUDENTS'
 const GET_STUDENTS_SUCCESS = 'EMPLOYER.GET_STUDENTS_SUCCESS'
 const GET_STUDENTS_FAILURE = 'EMPLOYER.GET_STUDENTS_FAILURE'
 
-
 /*NOTE: 
  *   Might have to rename the strings passed into variables,
  *   into a generic names, employer and student are going to be

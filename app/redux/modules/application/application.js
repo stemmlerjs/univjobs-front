@@ -10,9 +10,10 @@ const FETCHING_JOBS = 'FETCHING_JOBS'
 const FETCHED_JOBS_SUCCESS = 'FETCHED_JOBS_SUCCESS'
 const FETCHED_JOBS_FAILURE = 'FETCHED_JOBS_FAILURE'
 
-const FETCHING_QUESTIONS = 'STUDENT.FETCHING_QUESTIONS'
-const FETCHED_QUESTIONS_SUCCESS = 'STUDENT.FETCHED_QUESTIONS_SUCCESS'
-const FETCHED_QUESTIONS_FAILURE = 'STUDENT.FETCHED_QUESTIONS_FAILURE'
+const FETCHING_QUESTIONS = 'FETCHING_QUESTIONS'
+const FETCHED_QUESTIONS_SUCCESS = 'FETCHED_QUESTIONS_SUCCESS'
+const FETCHED_QUESTIONS_FAILURE = 'FETCHED_QUESTIONS_FAILURE'
+
 const MODAL_CLICKED = 'MODAL_CLICKED'
 const SHOW_MODAL = 'SHOW_MODAL'
 const HIDE_MODAL = 'HIDE_MODAL'
@@ -31,26 +32,6 @@ const FETCHED_INDUSTRIES = 'DASHBOARD.FETCHED_INDUSTRIES'
 // =======================================================
 // ================== ACTIONS CREATORS ===================
 // =======================================================
-
-export function fetchingApplications() {
-  return {
-	  type: FETCHING_APPLICATIONS,
-  }
-}
-
-export function fetchedApplicationsSuccess(applications) {
-   return {
-	   type: FETCHED_STUDENTS_APPLICATIONS_SUCCESS,
-	   applications
-  }
-}
-
-export function fetchedApplicationsFailure(error) {
-   return {
-	   type: FETCHED_STUDENTS_APPLICATIONS_SUCCESS,
-	   error
-  }
-}
 
 export function fetchingJobs() {
   return {
@@ -72,6 +53,25 @@ export function fetchedJobsFailure(error) {
   }
 }
 
+export function fetchingQuestions() {
+  return {
+	  type: FETCHING_QUESTIONS,
+  }
+}
+
+export function fetchedQuestionsSuccess(questions) {
+   return {
+	   type: FETCHED_QUESTIONS_SUCCESS,
+	   questions
+  }
+}
+
+export function fetchedQuestionsFailure(error) {
+  return {
+	  type: FETCHED_QUESTIONS_FAILURE,
+	  error
+  }
+}
 // =======================================================
 // ================== INITIAL STATE ======================
 // =======================================================
@@ -86,7 +86,7 @@ const initialApplicationsState = {
 
 const initialStudentApplicationsState = {
 	jobs: [],
-	//questions: [],
+	questions: [],
 	//answers: [],
 	isFetching: false,
 	error: '',
@@ -113,6 +113,23 @@ function studentApplications(state = intialStudentApplicationsState, action) {
 				...state,
 				isFetching: false,
 			}
+		case FETCHING_QUESTIONS:
+			return {
+				...state,
+				isFetching: true,
+			}		
+		case FETCHED_QUESTIONS_SUCCESS:
+			return {
+				...state,
+				questions: action.questions,
+				isFetching: false,
+			}
+		case FETCHED_QUESTIONS_FAILURE:
+			return {
+				...state,
+				isFetching: false,
+				error: action.error,
+			}
 		default:
 			return state
 	}
@@ -135,6 +152,21 @@ export default function application(state = initialApplicationsState, action) {
 			...state,
 			studentApplications: studentApplications(state.studentApplications, action),
 			error: action.error
+		}
+	  case FETCHING_QUESTIONS:
+		return {
+			...state,
+			studentApplications: studentApplications(state.studentApplications, action)
+			}
+	  case FETCHED_QUESTIONS_SUCCESS:
+		return {
+			...state,
+			studentApplications: studentApplications(state.studentApplications, action)
+		}
+	  case FETCHED_QUESTIONS_FAILURE:
+		return {
+			...state,
+			studentApplications: studentApplications(state.studentApplications, action)
 		}
 	  default :
 		return state
