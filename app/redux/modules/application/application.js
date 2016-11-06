@@ -2,13 +2,13 @@
 // ====================== ACTIONS ========================
 // =======================================================
 
-const FETCHING_APPLICATIONS = 'STUDENT.FETCHING_STUDENTS_APPLICATIONS'
+const FETCHING_APPLICATIONS = 'FETCHING_STUDENTS_APPLICATIONS'
 const FETCHED_STUDENTS_APPLICATIONS_SUCCESS = 'FETCHED_STUDENTS_APPLICATIONS_SUCCESS'
 const FETCHED_STUDENTS_APPLICATIONS_FAILURE = 'FETCHED_STUDENTS_APPLICATIONS_FAILURE'
 
-const FETCHING_JOBS = 'STUDENT.FETCHING_JOBS'
-const FETCHED_JOBS_SUCCESS = 'STUDENT.FETCHED_JOBS_SUCCESS'
-const FETCHED_JOBS_FAILURE = 'STUDENT.FETCHED_JOBS_FAILURE'
+const FETCHING_JOBS = 'FETCHING_JOBS'
+const FETCHED_JOBS_SUCCESS = 'FETCHED_JOBS_SUCCESS'
+const FETCHED_JOBS_FAILURE = 'FETCHED_JOBS_FAILURE'
 
 const FETCHING_QUESTIONS = 'STUDENT.FETCHING_QUESTIONS'
 const FETCHED_QUESTIONS_SUCCESS = 'STUDENT.FETCHED_QUESTIONS_SUCCESS'
@@ -54,7 +54,7 @@ export function fetchedApplicationsFailure(error) {
 
 export function fetchingJobs() {
   return {
-	  type: FETCHING_APPLICATIONS,
+	  type: FETCHING_JOBS,
   }
 }
 
@@ -71,67 +71,6 @@ export function fetchedJobsFailure(error) {
 	   error
   }
 }
-export function fetchingQuestions() {
-  return {
-	  type: FETCHING_QUESTIONS,
-  }
-}
-
-export function fetchedQuestionsSuccess(questions) {
-   return {
-	   type: FETCHED_QUESTIONS_SUCCESS,
-	   questions
-  }
-}
-
-export function fetchedQuestionsFailure(error) {
-  return {
-	  type: FETCHED_QUESTIONS_FAILURE,
-	  error
-  }
-}
-
-export function modalClicked(jobId) {
-   return {
-   	   type: MODAL_CLICKED,
-	   jobId
-   }
-}
-
-export function showModal(job, questions, answers) {
-   return {
-   	  type: SHOW_MODAL,
-	  job,
-	  questions
-   }
-}
-
-export function hideModal(jobId) {
-   return {
-          type: HIDE_MODAL
-   }
-}
-
-export function fetchList(listName, listArray) {
-	switch(listName) {
-		case 'INDUSTRIES': {
-		     return {
-			     type: FETCHED_LIST,
-			     listType: FETCHED_INDUSTRIES,
-			     list: listArray
-		     }
-		}
-		case 'JOB_TYPES': {
-		    return {
-			    type: FETCHED_LIST,
-		  	    listType: FETCHED_JOB_TYPES,
-			    list: listArray
-		    }
-		}
-		default:
-		     return 
-	}
-}//fetchList
 
 // =======================================================
 // ================== INITIAL STATE ======================
@@ -146,7 +85,7 @@ const initialApplicationsState = {
 }
 
 const initialStudentApplicationsState = {
-	jobsAppliedTo: [],
+	jobs: [],
 	//questions: [],
 	//answers: [],
 	isFetching: false,
@@ -166,7 +105,7 @@ function studentApplications(state = intialStudentApplicationsState, action) {
 		case FETCHED_JOBS_SUCCESS:
 			return {
 				...state,
-				jobsAppliedTo: action.jobs,
+				jobs: action.jobs,
 				isFetching: false,
 			}
 		case FETCHED_JOBS_FAILURE:
@@ -195,7 +134,7 @@ export default function application(state = initialApplicationsState, action) {
 		return {
 			...state,
 			studentApplications: studentApplications(state.studentApplications, action),
-			error: 'Error in fetching jobs, ' + action.error
+			error: action.error
 		}
 	  default :
 		return state

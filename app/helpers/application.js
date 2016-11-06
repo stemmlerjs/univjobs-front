@@ -15,12 +15,12 @@ export function getJobs(store) {
     axios.get(config.baseUrl + 'job/my_applications')
      .then((response) => {
 	console.log('*******GETJOBS IN APPLICATIONS*********')
-	 store.dispatch(fetchedJobSuccess(response.data))
+	 store.dispatch(fetchedJobsSuccess(response.data))
          console.log(response.data)
 	 resolve(true);
      })//resposne
    .catch((err) => {
-     store.dispatch(fetchedJobFailure(err))
+     store.dispatch(fetchedJobsFailure(err))
       resolve(false)
    })//catch
  })//promise
