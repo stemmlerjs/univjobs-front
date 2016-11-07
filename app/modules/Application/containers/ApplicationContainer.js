@@ -60,19 +60,9 @@ const ApplicationContainer = React.createClass({
  * retrieveJobs
  *	This function fetches two endpoints:
  *	    - api/jobs
- *	    - api/questions
- *      Then it gives the data into the store called dashboard
  */
   retrieveJobs () {
-   const promise = new Promise((resolve, reject) => {
-      axios.all([
-         application.getJobs(this.context.store),	
-	 application.getQuestions(this.context.store, actionCreators)
-      ])
-      .then((response) => resolve(true))
-      .catch((response) => resolve(true))
-    })
-   return promise;
+         application.getJobs(this.context.store, actionCreators)
   },
 
 
@@ -80,8 +70,8 @@ const ApplicationContainer = React.createClass({
 	console.log("componentWillMount")
 	this.doRedirectionFilter()
 	.then(this.retrieveJobs())
-	//.then(this.retrieveAllLists())
-	//.then(this.props.closeOverlay())
+	.then(this.props.closeOverlay())
+
   },
 
 
