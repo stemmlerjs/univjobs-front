@@ -6,7 +6,7 @@ import { fetchingJobs, fetchedJobsSuccess, fetchedJobsFailure } from 'redux/modu
 /*
  *getJobs
  *
- * NOTE: This function can be reusable,
+ * NOTE: 
  * 	 It fetches all the jobs that the student applied to
  * */
 export function getJobs(store, actionCreators) {
@@ -28,8 +28,9 @@ export function getJobs(store, actionCreators) {
  return promise;
 }//getJobs*/
 
-/* NOTE: No need to get questions. This is already in the store, dashboard
-export function getQuestions(store, actionCreators) {
+export function getQuestions(store, actionCreators, questions) {
+  console.log('In getQuestions applications')
+  console.log(questions)
   const promise = new Promise((resolve, reject) => {
     store.dispatch(actionCreators.fetchingQuestions())
     axios.get(config.baseUrl + 'job/questions')
@@ -46,4 +47,21 @@ export function getQuestions(store, actionCreators) {
   })
   return promise
 }
-*/
+  
+export function getAnswers(store, actionCreators) {
+  const promise = new Promise((resolve, reject) => {
+    store.dispatch(actionCreators.fetchingAnswers())
+    axios.get(config.baseUrl + 'job/answers')
+    .then((response) => {
+	console.log('********GET ANSWERS FIRE!!!!!!!!!!!************')
+	console.log(response)
+	store.dispatch(actionCreators.fetchedAnswersSuccess(response.data))
+	resolve(true);
+    })
+    .catch((err) => {
+      store.dispatch(actionCreators.fetchedAnswersFailure(err))
+      resolve(false)
+    })
+  })
+  return promise
+}

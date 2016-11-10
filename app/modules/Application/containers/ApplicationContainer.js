@@ -4,6 +4,7 @@ import { Application } from 'modules/Application'
 import pageContainer  from '../styles/index.css'
 import axios from 'axios'
 import * as list from 'helpers/lists'
+import * as utils from 'helpers/utils'
 import * as application from 'helpers/application'
 // =============REDUX STATE & IMPORTS========================== //
 import { connect } from 'react-redux'
@@ -57,19 +58,40 @@ const ApplicationContainer = React.createClass({
   },
 
 /**
- * retrieveJobs
- *	This function fetches two endpoints:
- *	    - api/jobs
+ * retrieveAll
+ *	This function fetches from three endpoints:
+ *		- api/job/my_applications
+ *		- api/job/questions/<job_ids>
+ *		- api/job/anwers/
+ *
+ * #NOTE: Needs better explanation
+ *	Below implementation takes advantage of promise chains.
+ *	Where api/job/my_applications is called first, once the jobs are returned
+ *	It moves to next phase of the promises and creates more promises.
+ *
+ *	Reason behind this is due other endpoints need the job id
+ *
+ * #REFERRENCE:
+ * 	https://developers.google.com/web/fundamentals/getting-started/primers/promises
  */
-  retrieveJobs () {
-         application.getJobs(this.context.store, actionCreators)
+
+  retrieveAll() {
+
+  	application.getJobs(this.context.store, actionCreators)
+	.then(() => {
+         	axios.all([
+		    application.getQuestions(this.context.store, actionCreators, utils.multipleQueryList(this.props.jobs)),
+		    application.getAnswers(this.context.store, actionCreators)
+	 	])
+	})
+	.catch((err) => { console.log(err) })
   },
 
 
   componentWillMount() {
 	console.log("componentWillMount")
 	this.doRedirectionFilter()
-	.then(this.retrieveJobs())
+	.then(this.retrieveAll())
 	.then(this.props.closeOverlay())
 
   },
@@ -83,7 +105,14 @@ const ApplicationContainer = React.createClass({
     return (
       <div className={pageContainer}>
       <SidebarContainer />
-       <Application /> 
+       <Application 
+       	  user={this.props.user}
+       	  jobs={this.props.jobs}
+
+	  /*FIXME: Create a reducer for the questions to pass to the store that is filtered*/
+       	  questions={this.props.questions}
+       	  answers={this.props.answers}
+       /> 
       </div>
     )
   },
@@ -95,9 +124,17 @@ const ApplicationContainer = React.createClass({
 // @params ({user}) contains BaseUser & Employer attributes
 // */
 
-function mapStateToProps({user}) {
+/*NOTE: Questions should also be filtered in the Dashboard. 
+ * 	At the moment we are borrowing every single question in the dashboard
+ * 	Is there a better way?
+ *
+ * 	In other words, all questions are queried in the dashboard page*/
+function mapStateToProps({user, application, dashboard}) {
   return {
 	  user: user ? user : {},
+	  jobs : application.studentApplications ? application.studentApplications.jobs : {},
+	  answers : application.studentApplications ? application.studentApplications.answers : {},
+	  questions: dashboard.studentDashboard ? dashboard.studentDashboard.questions : {}
   }
 }
 

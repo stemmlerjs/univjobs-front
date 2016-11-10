@@ -41,7 +41,7 @@ export function getJobs(store) {
 export function getQuestions(store, actionCreators) {
   const promise = new Promise((resolve, reject) => {
     store.dispatch(actionCreators.fetchingQuestions())
-    axios.get(config.baseUrl + 'job/questions')
+    axios.get(config.baseUrl + 'job/questions/')
     .then((response) => {
 	console.log('********GET QUESTIONS FIRE!!!!!!!!!!!************')
 	console.log(response)
@@ -138,7 +138,7 @@ export function addAnswers(store, actionCreators, data) {
 			data: data
 		})
 		.then((response) => {
-			debugger
+			//debugger
 			console.log(response)
 			store.dispatch(actionCreators.submitAnswersSuccess(response))
 			resolve(true)
@@ -168,7 +168,7 @@ export function studentApply(store, actionCreators, data) {
 			data: data
 		})
 		.then((response) => {
-			debugger
+			//debugger
 			console.log(response)
 			resolve(true)
 		})

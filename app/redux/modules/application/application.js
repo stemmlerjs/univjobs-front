@@ -14,6 +14,10 @@ const FETCHING_QUESTIONS = 'FETCHING_QUESTIONS'
 const FETCHED_QUESTIONS_SUCCESS = 'FETCHED_QUESTIONS_SUCCESS'
 const FETCHED_QUESTIONS_FAILURE = 'FETCHED_QUESTIONS_FAILURE'
 
+const FETCHING_ANSWERS = 'FETCHING_ANSWERS'
+const FETCHED_ANSWERS_SUCCESS = 'FETCHED_ANSWERS_SUCCESS'
+const FETCHED_ANSWERS_FAILURE = 'FETCHED_ANSWERS_FAILURE'
+
 const MODAL_CLICKED = 'MODAL_CLICKED'
 const SHOW_MODAL = 'SHOW_MODAL'
 const HIDE_MODAL = 'HIDE_MODAL'
@@ -72,6 +76,26 @@ export function fetchedQuestionsFailure(error) {
 	  error
   }
 }
+
+export function fetchingAnswers() {
+  return {
+	  type: FETCHING_ANSWERS,
+  }
+}
+
+export function fetchedAnswersSuccess(answers) {
+   return {
+	   type: FETCHED_ANSWERS_SUCCESS,
+	   answers
+  }
+}
+
+export function fetchedAnswersFailure(error) {
+  return {
+	  type: FETCHED_ANSWERS_FAILURE,
+	  error
+  }
+}
 // =======================================================
 // ================== INITIAL STATE ======================
 // =======================================================
@@ -87,7 +111,7 @@ const initialApplicationsState = {
 const initialStudentApplicationsState = {
 	jobs: [],
 	questions: [],
-	//answers: [],
+	answers: [],
 	isFetching: false,
 	error: '',
 }
@@ -117,7 +141,7 @@ function studentApplications(state = intialStudentApplicationsState, action) {
 			return {
 				...state,
 				isFetching: true,
-			}		
+			}
 		case FETCHED_QUESTIONS_SUCCESS:
 			return {
 				...state,
@@ -125,6 +149,22 @@ function studentApplications(state = intialStudentApplicationsState, action) {
 				isFetching: false,
 			}
 		case FETCHED_QUESTIONS_FAILURE:
+			return {
+				...state,
+				isFetching: false,
+			}
+		case FETCHING_ANSWERS:
+			return {
+				...state,
+				isFetching: true,
+			}		
+		case FETCHED_ANSWERS_SUCCESS:
+			return {
+				...state,
+				answers: action.answers,
+				isFetching: false,
+			}
+		case FETCHED_ANSWERS_FAILURE:
 			return {
 				...state,
 				isFetching: false,
@@ -157,7 +197,7 @@ export default function application(state = initialApplicationsState, action) {
 		return {
 			...state,
 			studentApplications: studentApplications(state.studentApplications, action)
-			}
+		}
 	  case FETCHED_QUESTIONS_SUCCESS:
 		return {
 			...state,
@@ -166,9 +206,25 @@ export default function application(state = initialApplicationsState, action) {
 	  case FETCHED_QUESTIONS_FAILURE:
 		return {
 			...state,
+			studentApplications: studentApplications(state.studentApplications, action),
+			error: action.error
+		}
+	  case FETCHING_ANSWERS:
+		return {
+			...state,
+			studentApplications: studentApplications(state.studentApplications, action)
+			}
+	  case FETCHED_ANSWERS_SUCCESS:
+		return {
+			...state,
 			studentApplications: studentApplications(state.studentApplications, action)
 		}
-	  default :
+	  case FETCHED_ANSWERS_FAILURE:
+		return {
+			...state,
+			studentApplications: studentApplications(state.studentApplications, action)
+		}
+	  default:
 		return state
   }
 }
