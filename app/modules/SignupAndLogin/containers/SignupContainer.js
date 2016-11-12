@@ -167,7 +167,7 @@ const SignupContainer = React.createClass({
     }
     authRedirectFilter(config, this.context.store, this.context.router)
       .then(() => {
-        if(this.context.store.getState().application.isOverlayActive)
+        if(this.context.store.getState().rootApplication.isOverlayActive)
         this.props.closeOverlay()
       })
   },
