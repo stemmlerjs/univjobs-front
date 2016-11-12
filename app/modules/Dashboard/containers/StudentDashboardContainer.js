@@ -182,14 +182,16 @@ const StudentDashboardContainer = React.createClass({
     let applicationInfo = {
       "job": this.context.store.getState().dashboard.modal.jobId,
       "students": this.context.store.getState().user.email,
-      "questions": [{
-        "question": questions[0].id,
+      "answers": [{
+        "question_id": questions[0].id,
         "student": this.context.store.getState().user.email,
-        "text": this.props.answer.answerOne
+        "text": this.props.answer.answerOne,
+        "job": this.context.store.getState().dashboard.modal.jobId,
       }, {  
-        "question": questions[1].id,
+        "question_id": questions[1].id,
         "student": this.context.store.getState().user.email,
-        "text": this.props.answer.answerTwo
+        "text": this.props.answer.answerTwo,
+        "job": this.context.store.getState().dashboard.modal.jobId,
       }]
     }
 
@@ -208,10 +210,10 @@ const StudentDashboardContainer = React.createClass({
   		.then(toastr.success("Successfully applied to jobs"))
   		.then(this.context.store.dispatch(actionCreators.hideModal(0)))
   		/*Refactor to just pop the job in the jobs array*/
-  		.then(setTimeout(function () {
-  			window.location.reload()	      
-  			}, 2000))
-      .catch(toastr.failure("Error while trying to apply to job. Try again later."))
+  		// .then(setTimeout(function () {
+  		// 	window.location.reload()	      
+  		// 	}, 2000))
+      .catch(toastr.error("Error while trying to apply to job. Try again later."))
 
   	} else {
   		/*NOTE: Test to see if it works on other browsers and phone */
