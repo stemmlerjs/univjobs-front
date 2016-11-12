@@ -115,67 +115,57 @@ export function getIndustries(store, actionCreators) {
   return promise
 }
 
-/*
- * addAnswers
- *  A function that sends a POST to the database 
- *
- * #NOTE:
- * 	Can axios use multiple POST?
- */
-export function addAnswers(store, actionCreators, data) {
-	const accessToken = getAccessToken()
-	const csrfToken = getCSRFToken()
-	console.log('*****DATA*****')
-	store.dispatch(actionCreators.submitAnswers(data))
-	return new Promise((resolve, reject) => {
-		axios({
-			method: 'post',
-			url: config.baseUrl + 'job/new/answer/',
-			headers: {
-				'Authorization': 'JWT' + accessToken,
-				'X-CSRFToken' : csrfToken
-			},
-			data: data
-		})
-		.then((response) => {
-			//debugger
-			console.log(response)
-			store.dispatch(actionCreators.submitAnswersSuccess(response))
-			resolve(true)
-		})
-		.catch((error) => {
-			console.log(error)
-			store.dispatch(actionCreators.submitAnswersSuccess(error))
-			resolve(false)
+// /*
+//  * addAnswers
+//  *  A function that sends a POST to the database 
+//  *
+//  * #NOTE:
+//  * 	Can axios use multiple POST?
+//  */
+// export function addAnswers(store, actionCreators, data) {
+// 	const accessToken = getAccessToken()
+// 	const csrfToken = getCSRFToken()
+// 	console.log('*****DATA*****')
 
-		})
-	})
-}
+// 	store.dispatch(actionCreators.submitAnswers(data))
+// 	return new Promise((resolve, reject) => {
+// 		axios({
+// 			method: 'post',
+// 			url: config.baseUrl + 'job/new/answer/',
+// 			headers: {
+// 				'Authorization': 'JWT' + accessToken,
+// 				'X-CSRFToken' : csrfToken
+// 			},
+// 			data: data
+// 		})
+// 		.then((response) => {
+// 			//debugger
+// 			console.log(response)
+// 			store.dispatch(actionCreators.submitAnswersSuccess(response))
+// 			resolve(true)
+// 		})
+// 		.catch((error) => {
+// 			console.log(error)
+// 			store.dispatch(actionCreators.submitAnswersSuccess(error))
+// 			resolve(false)
+
+// 		})
+// 	})
+// }
 
 export function studentApply(store, actionCreators, data) {
 	const accessToken = getAccessToken()
 	const csrfToken = getCSRFToken()
-	console.log('*****DATA*****')
-	console.log(data)
+
 	return new Promise((resolve, reject) => {
-		axios({
+		return axios({
 			method: 'post',
-			url: config.baseUrl + 'job/new/student/applying/',
+			url: config.baseUrl + 'job/new/student/apply/',
 			headers: {
 				'Authorization': 'JWT' + accessToken,
 				'X-CSRFToken' : csrfToken
 			},
 			data: data
-		})
-		.then((response) => {
-			//debugger
-			console.log(response)
-			resolve(true)
-		})
-		.catch((error) => {
-			console.log(error)
-			resolve(false)
-
 		})
 	})
 }

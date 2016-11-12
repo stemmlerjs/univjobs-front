@@ -157,9 +157,9 @@ const StudentDashboardContainer = React.createClass({
  *   This event gives the user
   */
   hideModal (e, id) {
-	this.context.store.dispatch(actionCreators.hideModal(id))
-	this.context.store.getState().dashboard.answer.answerOne = ''
-	this.context.store.getState().dashboard.answer.answerTwo = ''
+  	this.context.store.dispatch(actionCreators.hideModal(id))
+  	this.context.store.getState().dashboard.answer.answerOne = ''
+  	this.context.store.getState().dashboard.answer.answerTwo = ''
   },
 
 /** applyClicked
@@ -168,74 +168,64 @@ const StudentDashboardContainer = React.createClass({
  *  It should passed the two answers given by the user and it's student id
  */
   applyClicked (e, questions) {
-	e.preventDefault()
+	  e.preventDefault()
 	
-	//Get all the inputs from store
-	// If firstAnswer & secondAnswer is empty
-	// 	dispatch an error message using ReactToastr
-	// Else
-	// 	dispatch an actionCreator
-	// 	PUT or POST into the server
-	// 	Return a success indicator
-	// 	empty the answers values
-	let dataAnswers = [
-			{
-				"question": questions[0].id,
-				"student": this.context.store.getState().user.email,
-				"text": this.props.answer.answerOne
-			},	
-			{
-				"question": questions[1].id,
-				"student": this.context.store.getState().user.email,
-				"text": this.props.answer.answerTwo
-			}	
-		
-	]
-	let dataApply = [
-			{
-				"job": this.context.store.getState().dashboard.modal.jobId,
-				"students": this.context.store.getState().user.email
-			}	
-		
-	]
+  	//Get all the inputs from store
+  	// If firstAnswer & secondAnswer is empty
+  	// 	dispatch an error message using ReactToastr
+  	// Else
+  	// 	dispatch an actionCreator
+  	// 	PUT or POST into the server
+  	// 	Return a success indicator
+  	// 	empty the answers values
 
-	/*NOTE: To take into consideration the following for refactor: 
-	 * 	- Proper handling of error response & user input error
-	 *      - Handling the job after user applies to the job
-	 *
-	 * */
-	if (this.props.answer.answerOne && this.props.answer.answerTwo) {
-		fetch.studentApply(this.context.store, actionCreators, dataApply)
-		.then(fetch.addAnswers(this.context.store, actionCreators, dataAnswers))
+    let applicationInfo = {
+      "job": this.context.store.getState().dashboard.modal.jobId,
+      "students": this.context.store.getState().user.email,
+      "questions": [{
+        "question": questions[0].id,
+        "student": this.context.store.getState().user.email,
+        "text": this.props.answer.answerOne
+      }, {  
+        "question": questions[1].id,
+        "student": this.context.store.getState().user.email,
+        "text": this.props.answer.answerTwo
+      }]
+    }
 
-		//This should check if the job apply and answer is a success,
-		//If yes, display toastr success, 
-		//Else, display toastr error
-		.then(toastr.success("Successfully applied to jobs"))
-		.then(this.context.store.dispatch(actionCreators.hideModal(0)))
-		/*Refactor to just pop the job in the jobs array*/
-		.then(setTimeout(function () {
-				window.location.reload()	      
-				}, 2000)
-		     )
+  	/*NOTE: To take into consideration the following for refactor: 
+  	 * 	- Proper handling of error response & user input error
+  	 *      - Handling the job after user applies to the job
+  	 *
+  	 * */
+     // FIXME: 
 
+  	if (this.props.answer.answerOne && this.props.answer.answerTwo) {
+  		fetch.studentApply(this.context.store, actionCreators, applicationInfo)
+  		//This should check if the job apply and answer is a success,
+  		//If yes, display toastr success, 
+  		//Else, display toastr error
+  		.then(toastr.success("Successfully applied to jobs"))
+  		.then(this.context.store.dispatch(actionCreators.hideModal(0)))
+  		/*Refactor to just pop the job in the jobs array*/
+  		.then(setTimeout(function () {
+  			window.location.reload()	      
+  			}, 2000))
+      .catch(toastr.failure("Error while trying to apply to job. Try again later."))
 
-
-	} else {
-		/*NOTE: Test to see if it works on other browsers and phone */
-		toastr.error("✋ You need to answer the employers question if you want to get a job")
-	}
-	
-		
+  	} else {
+  		/*NOTE: Test to see if it works on other browsers and phone */
+  		toastr.error("✋ You need to answer the employers question if you want to get a job")
+  	}
 		/*NOTE: Testing to see if testData data structure can be integrated with fetc.addAnswers and POST answers into the table Answer*/
   },
 
   componentWillMount() {
-	console.log("componentWillMount")
-	this.doRedirectionFilter()
-	.then(this.retrieveJobs())
-	.then(this.retrieveAllLists())
-	.then(this.props.closeOverlay())
+  	console.log("componentWillMount")
+  	this.doRedirectionFilter()
+  	.then(this.retrieveJobs())
+  	.then(this.retrieveAllLists())
+  	.then(this.props.closeOverlay())
   },
 
 
@@ -247,26 +237,25 @@ const StudentDashboardContainer = React.createClass({
     return (
       <div className={pageContainer}>
       <SidebarContainer />
-       <StudentDashboard 
-          jobs={this.props.jobs} 
-	  onShowModal={this.showModal}
-	  onHideModal={this.hideModal}
-	  onApplyClicked={this.applyClicked}
-	  modal={this.context.store.getState().dashboard.modal}
-	  industries={this.props.industries}
-	  jobTypes={this.props.jobTypes}
-	  questions={this.props.questions}
-	  answerOne={this.props.answer.answerOne}
-	  answerTwo={this.props.answer.answerTwo}
-	  updateAnswerField={this.props.updateAnswerField}
-	/> 
+      <StudentDashboard 
+        jobs={this.props.jobs} 
+    	  onShowModal={this.showModal}
+    	  onHideModal={this.hideModal}
+    	  onApplyClicked={this.applyClicked}
+    	  modal={this.context.store.getState().dashboard.modal}
+    	  industries={this.props.industries}
+    	  jobTypes={this.props.jobTypes}
+    	  questions={this.props.questions}
+    	  answerOne={this.props.answer.answerOne}
+    	  answerTwo={this.props.answer.answerTwo}
+    	  updateAnswerField={this.props.updateAnswerField}
+	    /> 
 
-	<ReduxToastr
+	  <ReduxToastr
 	    timeOut={4000}
 	    newestOnTop={false}
-	    position="top-right"
-	/>
-      </div>
+	    position="top-right"/>
+    </div>
     )
   },
 })
