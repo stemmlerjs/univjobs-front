@@ -76,10 +76,9 @@ const ApplicationContainer = React.createClass({
  */
 
   retrieveAll() {
-
   	application.getJobs(this.context.store, actionCreators)
 	.then(() => {
-         	axios.all([
+		axios.all([
 		    application.getQuestions(this.context.store, actionCreators, utils.multipleQueryList(this.props.jobs)),
 		    application.getAnswers(this.context.store, actionCreators)
 	 	])
