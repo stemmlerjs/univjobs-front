@@ -83,6 +83,10 @@ export function validateAddress(address) {
 
 /*GPA must be two numbers or empty*/
 export function validateGPA(gpa) {
+  if (typeof gpa == "string") {
+    gpa = parseInt(gpa)
+  }
+
   var re = /(^[0]$)|(^\d{2}$)/
   return re.test(gpa)
 }

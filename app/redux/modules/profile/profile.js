@@ -184,37 +184,38 @@ export function submitProfileFirstTime(userTypeInt, profileInfo, user) {
 	  } else {
 	   console.log('SUBMIT STUDENT PROFILE NO ERRORS')
 	    // No errors, proceed to /PUT on api/me
-            var putData = {
-             // user: {
-                "user-is_a_student": true,
-                "user-is_profile_completed": true,
-                "user-email": user.email,
-                "user-first_name": profileInfo.firstName,
-                "user-last_name": profileInfo.lastName,
-                "user-is_active": true,
-                "user-date_joined": user.dateJoined,
-                "user-mobile": user.mobile,
-		"school-name": profileInfo.school,
-		  languages: profileInfo.languages,
-		  sports: profileInfo.sportsTeam,
-		  clubs: profileInfo.schoolClub,
-		  email_pref: profileInfo.emailPreferences,
-		  status: profileInfo.studentStatus,
-		  enroll_date: toISO(profileInfo.enrollmentDate),
-		  grad_date: toISO(profileInfo.graduationDate),
-		  major: profileInfo.major,
-		  GPA: profileInfo.gpa,
-		  personal_email: profileInfo.personalEmail,
-		  gender: profileInfo.gender,
-		  has_car: profileInfo.hasCar,
-		  company: profileInfo.companyName,
-		  position: profileInfo.position,
-		  fun_fact: profileInfo.funFacts,
-		  hometown: profileInfo.hometown,
-		  hobbies: profileInfo.hobbies,
-		  photo: profileInfo.photo,
-		  resume: profileInfo.resume,
-	  }
+      debugger;
+      var putData = {
+         // user: {
+        "user-is_a_student": true,
+        "user-is_profile_completed": true,
+        "user-email": user.email,
+        "user-first_name": profileInfo.firstName,
+        "user-last_name": profileInfo.lastName,
+        "user-is_active": true,
+        "user-date_joined": user.dateJoined,
+        "user-mobile": user.mobile,
+    		"school-name": profileInfo.school,
+  		  languages: profileInfo.languages,
+  		  sports: profileInfo.sportsTeam,
+  		  clubs: profileInfo.schoolClub,
+  		  email_pref: profileInfo.emailPreferences,
+  		  status: profileInfo.studentStatus,
+  		  enroll_date: toISO(profileInfo.enrollmentDate),
+  		  grad_date: toISO(profileInfo.graduationDate),
+  		  major: profileInfo.major,
+  		  GPA: profileInfo.gpa,
+  		  personal_email: profileInfo.personalEmail,
+  		  gender: profileInfo.gender.id,
+  		  has_car: profileInfo.hasCar,
+  		  company: profileInfo.companyName,
+  		  position: profileInfo.position,
+  		  fun_fact: profileInfo.funFacts,
+  		  hometown: profileInfo.hometown,
+  		  hobbies: profileInfo.hobbies,
+  		  photo: profileInfo.photo,
+  		  resume: profileInfo.resume,
+  	  }
 	    studentProfilePUT(putData)
 	     .then((res) => {
 		// DISPATCH - SAVE_PROFILE_SUCCESS
