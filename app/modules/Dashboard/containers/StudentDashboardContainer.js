@@ -183,12 +183,12 @@ const StudentDashboardContainer = React.createClass({
       "job": this.context.store.getState().dashboard.modal.jobId,
       "students": this.context.store.getState().user.email,
       "answers": [{
-        "question_id": questions[0].id,
+        "question": questions[0].id,
         "student": this.context.store.getState().user.email,
         "text": this.props.answer.answerOne,
         "job": this.context.store.getState().dashboard.modal.jobId,
       }, {  
-        "question_id": questions[1].id,
+        "question": questions[1].id,
         "student": this.context.store.getState().user.email,
         "text": this.props.answer.answerTwo,
         "job": this.context.store.getState().dashboard.modal.jobId,
