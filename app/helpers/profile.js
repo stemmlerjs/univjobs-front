@@ -1,6 +1,6 @@
 import axios from 'axios'
 import config from 'config'
-import { getAccessToken } from 'helpers/auth'
+import { getAccessToken, getCSRFToken } from 'helpers/auth'
 import { validatePersonalEmail, validateFirstName, validateLastName, 
 	validateCompanyName, validateAddress, validateCity, 
 	validatePostalCode, validateGPA, validateLanguages} from 'helpers/utils'
@@ -10,6 +10,7 @@ import { validatePersonalEmail, validateFirstName, validateLastName,
 export function employerProfilePUT(data) {
   let formData = new FormData();
   const accessToken = getAccessToken();
+  const csrfToken = getCSRFToken()
 
   for(let key in data) {
     formData.append(key, data[key])
@@ -19,7 +20,8 @@ export function employerProfilePUT(data) {
     method: 'put',
     url: config.baseUrl + 'me/',
     headers: {
-      "Authorization": "JWT " + accessToken
+      "Authorization": "JWT " + accessToken,
+      'X-CSRFToken': csrfToken
     },
     data: formData
   })
@@ -28,6 +30,7 @@ export function employerProfilePUT(data) {
 export function employerProfilePATCH(data) {
   let formData = new FormData();
   const accessToken = getAccessToken();
+  const csrfToken = getCSRFToken()
 
   for(let key in data) {
     formData.append(key, data[key])
@@ -37,7 +40,8 @@ export function employerProfilePATCH(data) {
     method: 'patch',
     url: config.baseUrl + 'me/',
     headers: {
-      "Authorization": "JWT " + accessToken
+      "Authorization": "JWT " + accessToken,
+      'X-CSRFToken': csrfToken
     },
     data: formData
   })
@@ -81,6 +85,7 @@ export function validateEmployerProfileFields(profileInfo, next) {
 export function studentProfilePUT(data) {
   let formData = new FormData();
   const accessToken = getAccessToken();
+  const csrfToken = getCSRFToken()
 
   for(let key in data) {
     formData.append(key, data[key])
@@ -99,6 +104,7 @@ export function studentProfilePUT(data) {
 export function studentProfilePATCH(data) {
   let formData = new FormData();
   const accessToken = getAccessToken();
+  const csrfToken = getCSRFToken()
 
   for(let key in data) {
     formData.append(key, data[key])
@@ -108,7 +114,8 @@ export function studentProfilePATCH(data) {
     method: 'patch',
     url: config.baseUrl + 'me/',
     headers: {
-      "Authorization": "JWT " + accessToken
+      "Authorization": "JWT " + accessToken,
+      'X-CSRFToken': csrfToken
     },
     data: formData
   })
