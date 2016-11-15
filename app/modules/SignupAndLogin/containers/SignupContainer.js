@@ -131,6 +131,7 @@ const SignupContainer = React.createClass({
 
       if(isAStudent && isProfileCompleted) {
         // Route to Student Dashboard 
+        this.context.router.replace('/dashboard/st')
 
       } else if (isAStudent && !isProfileCompleted) {
         // Route to Student Profile

@@ -1,3 +1,4 @@
+import { studentApply } from 'helpers/dashboard'
 // =======================================================
 // ====================== ACTIONS ========================
 // =======================================================
@@ -24,7 +25,7 @@ const SHOW_MODAL = 'SHOW_MODAL'
 const HIDE_MODAL = 'HIDE_MODAL'
 
 const UPDATE_ANSWER_FIELD = 'UPDATE_ANSWER_FIELD'
-const SUBMIT_ANSWERS = 'STUDENT.SUBMIT_ANSWERS'
+const SUBMITTING_ANSWERS = 'STUDENT.SUBMITTING_ANSWERS'
 const SUBMIT_ANSWERS_SUCCESS = 'STUDENT.SUBMIT_SUCCESS'
 const SUBMIT_ANSWERS_FAILURE = 'STUDENT.SUBMIT_FAILURE'
 
@@ -144,33 +145,55 @@ export function fetchList(listName, listArray) {
 }//fetchList
 
 export function updateAnswerField(fieldName, newValue) {
-	  return {
-		  type: UPDATE_ANSWER_FIELD,
-		  newValue, 
-		  fieldName
-	  }
+  return {
+	  type: UPDATE_ANSWER_FIELD,
+	  newValue, 
+	  fieldName
+  }
 }
 /*NOTE:
  *  Pass the questionIds with the associated answers
  * */
-export function submitAnswers(data) {
-   return {
-   	   type: SUBMIT_ANSWERS,
-	   ...data
-   }
+export function submitAnswers(answersData) {
+	return function(dispatch) {
+		// DISPATCH (SUBMITTING_ANSWERS)
+		debugger;
+			dispatch(submittingAnswers())
+
+			studentApply(answersData)
+				.then((response) => {
+					debugger;
+					// DISPATCH (SUBMIT_ANSWERS_SUCCESS)
+						dispatch(submitAnswersSuccess())
+
+				})
+				.catch((err) => {
+					debugger;
+					// DISPATCH (SUBMIT_ANSWERS_FAILURE)
+						dispatch(submitAnswersFailure())
+
+				})
+
+	}
+}
+
+function submittingAnswers() {
+	return {
+		type: SUBMITTING_ANSWERS
+	}
 }
 
 export function submitAnswersSuccess(serverMessage) {
    return {
    	  type: SUBMIT_ANSWERS_SUCCESS,
-	  serverMessage
+	  	serverMessage
    }
 }
 
 export function submitAnswersFailure(error) {
    return {
-          type: SUBMIT_ANSWERS_FAILURE,
-	  error
+      type: SUBMIT_ANSWERS_FAILURE,
+	  	error
    }
 }
 // =======================================================
@@ -332,14 +355,9 @@ function answer(state = initialAnswerState, action) {
 				...state,
 				[action.fieldName]: action.newValue,
 			}
-		case SUBMIT_ANSWERS:
+		case SUBMITTING_ANSWERS:
 			return {
 				...state,
-				jobId: action.jobId,
-				questionOneId: action.questionOneId,
-				questionTwoId: action.questioneTwoId,
-				answerOne: action.answerOne,
-				answerTwo: action.answerTwo,
 				isSubmitting: true
 			}		
 		case SUBMIT_ANSWERS_SUCCESS:
@@ -419,7 +437,7 @@ export default function dashboard(state = initialDashboardState, action) {
 				...state,
 				answer: answer(state.answer, action)
 			}
-		case SUBMIT_ANSWERS:
+		case SUBMITTING_ANSWERS:
 			return {
 				...state,
 				answer: answer(state.answer, action)

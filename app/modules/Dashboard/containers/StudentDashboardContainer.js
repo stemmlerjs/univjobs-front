@@ -44,12 +44,12 @@ const StudentDashboardContainer = React.createClass({
   doRedirectionFilter() {
     const config = {
       failureRedirect: {
-	 student: '/join',	// if not logged in, go here (student)
-	 employer: '/join'      // if not logged in, go here (employer)
+    	  student: '/join',	// if not logged in, go here (student)
+    	  employer: '/join'      // if not logged in, go here (employer)
       },
       restricted: {
-         to: 'STUDENTS',		 // STUDENTS only on this route
-	 redirectTo: '/job/mylistings'   // if not an EMPLOYER, redirect to the employer equivalent 
+        to: 'STUDENTS',		 // STUDENTS only on this route
+	      redirectTo: '/job/mylistings'   // if not an EMPLOYER, redirect to the employer equivalent 
 		 			 // This might change to employer categories
       }
     }
@@ -81,104 +81,99 @@ const StudentDashboardContainer = React.createClass({
  * 
  */
   retrieveAllLists() {
-	const promise = new Promise((resolve, reject) => {
-		axios.all([
-			  fetch.getIndustries(this.context.store, actionCreators),
-			  fetch.getJobTypes(this.context.store, actionCreators),
-		])
-		.then((response) => resolve(true))
-		.catch((response) => resolve(true))
-	})
-	return promise
+  	const promise = new Promise((resolve, reject) => {
+  		axios.all([
+  			  fetch.getIndustries(this.context.store, actionCreators),
+  			  fetch.getJobTypes(this.context.store, actionCreators),
+  		])
+  		.then((response) => resolve(true))
+  		.catch((response) => resolve(true))
+  	})
+  	return promise
   },
 
   clearJobStore() {
-	
-	this.context.store.getState().dashboard.jobs = this.context.store.getState().dashboard.studentDashboard.jobs.filter((k) => {
-		return k.id != this.context.store.getState().dashboard.modal.jobId ? k : ''
-	
-	})
+  	this.context.store.getState().dashboard.jobs = this.context.store.getState().dashboard.studentDashboard.jobs.filter((k) => {
+  		return k.id != this.context.store.getState().dashboard.modal.jobId ? k : ''
+  	})
   },
 
-/** showModal
- *
- * This function takes in the submit event & the job id
- * It calls a dispatch modalCliked & showModal(id)
- * Once the store is notified, a reducer should be activated to find the appropriate job info,
- * then supplies the modal the appropraite job info
- * After, the modal appears to the user of the job info they pressed
- *
- * @param(e) - DOM event
- * @param(j) - Object job
- * @param(q) - Object questions
-*/
+  /** showModal
+   *
+   * This function takes in the submit event & the job id
+   * It calls a dispatch modalCliked & showModal(id)
+   * Once the store is notified, a reducer should be activated to find the appropriate job info,
+   * then supplies the modal the appropraite job info
+   * After, the modal appears to the user of the job info they pressed
+   *
+   * @param(e) - DOM event
+   * @param(j) - Object job
+   * @param(q) - Object questions
+  */
+
   showModal (e, j) {
   	e.preventDefault()
-	console.log('ON SHOW MODAL')
-	this.context.store.dispatch(actionCreators.modalClicked(j.id))
+	  console.log('ON SHOW MODAL')
+	  this.context.store.dispatch(actionCreators.modalClicked(j.id))
 
-	//After modal is clicked, get the questions & match the question id with the job id
-	//Once matched, pass the questions inside the modal to supply to questions variables
-	this.context.store.dispatch(actionCreators.showModal(j, this.getQuestions()))
+  	//After modal is clicked, get the questions & match the question id with the job id
+  	//Once matched, pass the questions inside the modal to supply to questions variables
+  	this.context.store.dispatch(actionCreators.showModal(j, this.getQuestions()))
   },
 
-/* getQuestions
- * 	This function passes the function matchQuestions and uses the filter function
- * 	on the questions array. It will return a new array that is filtered with the associated
- * 	job ids from the questions ids
- *
- * */
+  /* getQuestions
+   * 	This function passes the function matchQuestions and uses the filter function
+   * 	on the questions array. It will return a new array that is filtered with the associated
+   * 	job ids from the questions ids
+   *
+   * 
+   */
+
   getQuestions() {	
 	  return this.props.questions.filter(this.filterQuestions) 
   },
 
-/** filterQuestions
- *     This function takes two params, job id & questions object.
- *     It returns all the questions that matches the question ids
- *
- *      TODO: Refactor this whole process in which the backend or front-end will handle
- *            the fetching of questions
- *
- *
- *      NOTE: 
- *         - Should we combine the questions in with the api endpoint, the same way user & job is handled?
- *         - Should we separate it like how I am doing it right now?
- *         - In what way is the best approach?
- *         - What do we want to achieve out of this?
- *
-*/
+  /** filterQuestions
+   *     This function takes two params, job id & questions object.
+   *     It returns all the questions that matches the question ids
+   *
+   *      TODO: Refactor this whole process in which the backend or front-end will handle
+   *            the fetching of questions
+   *
+   *
+   *      NOTE: 
+   *         - Should we combine the questions in with the api endpoint, the same way user & job is handled?
+   *         - Should we separate it like how I am doing it right now?
+   *         - In what way is the best approach?
+   *         - What do we want to achieve out of this?
+   *
+  */
 
   filterQuestions(question) {
 	  console.log("***********FILTER QUESTIONS**********")
 	  return question.job === this.context.store.getState().dashboard.modal.jobId
   },
   
-/** hideModal
- *   This event gives the user
+ /** hideModal
+  *   This event gives the user
   */
+
   hideModal (e, id) {
   	this.context.store.dispatch(actionCreators.hideModal(id))
   	this.context.store.getState().dashboard.answer.answerOne = ''
   	this.context.store.getState().dashboard.answer.answerTwo = ''
   },
 
-/** applyClicked
- *
- *  This event is pressed the button inside JobCardModal
- *  It should passed the two answers given by the user and it's student id
- */
+  /** applyClicked
+   *
+   *  This event is pressed the button inside JobCardModal
+   *  It should passed the two answers given by the user and it's student id
+   */
+
   applyClicked (e, questions) {
 	  e.preventDefault()
-	
-  	//Get all the inputs from store
-  	// If firstAnswer & secondAnswer is empty
-  	// 	dispatch an error message using ReactToastr
-  	// Else
-  	// 	dispatch an actionCreator
-  	// 	PUT or POST into the server
-  	// 	Return a success indicator
-  	// 	empty the answers values
 
+    // Create Large Object
     let applicationInfo = {
       "job": this.context.store.getState().dashboard.modal.jobId,
       "students": this.context.store.getState().user.email,
@@ -195,20 +190,14 @@ const StudentDashboardContainer = React.createClass({
       }]
     }
 
-  	/*NOTE: To take into consideration the following for refactor: 
-  	 * 	- Proper handling of error response & user input error
-  	 *      - Handling the job after user applies to the job
-  	 *
-  	 * */
-     // FIXME: 
-
+    // Given that answers fields were populated, continue
   	if (this.props.answer.answerOne && this.props.answer.answerTwo) {
-  		fetch.studentApply(this.context.store, actionCreators, applicationInfo)
-  		//This should check if the job apply and answer is a success,
-  		//If yes, display toastr success, 
-  		//Else, display toastr error
-  		.then(toastr.success("Successfully applied to jobs"))
-  		.then(this.context.store.dispatch(actionCreators.hideModal(0)))
+      debugger;
+      this.context.store.dispatch(this.props.submitAnswers(applicationInfo))
+
+  		// fetch.studentApply(this.context.store, actionCreators, applicationInfo)
+  		// .then(toastr.success("Successfully applied to jobs"))
+  		// .then(this.context.store.dispatch(actionCreators.hideModal(0)))
   		/*Refactor to just pop the job in the jobs array*/
   		// .then(setTimeout(function () {
   		// 	window.location.reload()	      
@@ -216,10 +205,8 @@ const StudentDashboardContainer = React.createClass({
       .catch(toastr.error("Error while trying to apply to job. Try again later."))
 
   	} else {
-  		/*NOTE: Test to see if it works on other browsers and phone */
   		toastr.error("✋ You need to answer the employers question if you want to get a job")
   	}
-		/*NOTE: Testing to see if testData data structure can be integrated with fetc.addAnswers and POST answers into the table Answer*/
   },
 
   componentWillMount() {
