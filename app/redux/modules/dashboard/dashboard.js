@@ -156,15 +156,17 @@ export function updateAnswerField(fieldName, newValue) {
  * */
 export function submitAnswers(answersData) {
 	return function(dispatch) {
-		// DISPATCH (SUBMITTING_ANSWERS)
-		debugger;
+		const promise = new Promise((resolve, reject) => {
+			// DISPATCH (SUBMITTING_ANSWERS)
 			dispatch(submittingAnswers())
 
 			studentApply(answersData)
 				.then((response) => {
-					debugger;
+
 					// DISPATCH (SUBMIT_ANSWERS_SUCCESS)
 						dispatch(submitAnswersSuccess())
+
+						resolve()
 
 				})
 				.catch((err) => {
@@ -172,8 +174,9 @@ export function submitAnswers(answersData) {
 					// DISPATCH (SUBMIT_ANSWERS_FAILURE)
 						dispatch(submitAnswersFailure())
 
+						reject()
 				})
-
+		})
 	}
 }
 
