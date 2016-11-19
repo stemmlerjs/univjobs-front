@@ -35,14 +35,6 @@ const styles = {
 
 //**NOTE: 
 //  Store is accessible
-
-/*TODO:
- *  [x] Pass proper info to job card modal
- *  [] On event, pass the two answers from questions
- *  [] Create a redux lifecyle event on APPLY BUTTON
- *  [] Send to appropriate POST endpoints
- *    [] Create api endpoints to receive job application & answers
- * */
 export default function StudentDashboard ({jobs, onShowModal, onHideModal, 
 					onApplyClicked, modal, jobTypes, industries, 
 					answerOne, answerTwo, updateAnswerField}) { 

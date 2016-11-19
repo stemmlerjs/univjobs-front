@@ -2,21 +2,10 @@
 // ====================== ACTIONS ========================
 // =======================================================
 
-const FETCHING_APPLICATIONS = 'FETCHING_STUDENTS_APPLICATIONS'
-const FETCHED_STUDENTS_APPLICATIONS_SUCCESS = 'FETCHED_STUDENTS_APPLICATIONS_SUCCESS'
-const FETCHED_STUDENTS_APPLICATIONS_FAILURE = 'FETCHED_STUDENTS_APPLICATIONS_FAILURE'
+const FETCHING_STUDENT_APPLICATIONS = 'FETCHING_STUDENT_APPLICATIONS'
+const FETCHED_STUDENT_APPLICATIONS_SUCCESS = 'FETCHED_STUDENT_APPLICATIONS_SUCCESS'
+const FETCHED_STUDENT_APPLICATIONS_FAILURE = 'FETCHED_STUDENT_APPLICATIONS_FAILURE'
 
-const FETCHING_JOBS = 'FETCHING_JOBS'
-const FETCHED_JOBS_SUCCESS = 'FETCHED_JOBS_SUCCESS'
-const FETCHED_JOBS_FAILURE = 'FETCHED_JOBS_FAILURE'
-
-const FETCHING_QUESTIONS = 'FETCHING_QUESTIONS'
-const FETCHED_QUESTIONS_SUCCESS = 'FETCHED_QUESTIONS_SUCCESS'
-const FETCHED_QUESTIONS_FAILURE = 'FETCHED_QUESTIONS_FAILURE'
-
-const FETCHING_ANSWERS = 'FETCHING_ANSWERS'
-const FETCHED_ANSWERS_SUCCESS = 'FETCHED_ANSWERS_SUCCESS'
-const FETCHED_ANSWERS_FAILURE = 'FETCHED_ANSWERS_FAILURE'
 
 const MODAL_CLICKED = 'MODAL_CLICKED'
 const SHOW_MODAL = 'SHOW_MODAL'
@@ -36,65 +25,45 @@ const FETCHED_INDUSTRIES = 'DASHBOARD.FETCHED_INDUSTRIES'
 // =======================================================
 // ================== ACTIONS CREATORS ===================
 // =======================================================
-
-export function fetchingJobs() {
+export function fetchingStudentApplications() {
   return {
-	  type: FETCHING_JOBS,
+	  type: FETCHING_STUDENT_APPLICATIONS,
   }
 }
 
-export function fetchedJobsSuccess(jobs) {
+export function fetchedStudentApplicationsSuccess(applications) {
    return {
-	   type: FETCHED_JOBS_SUCCESS,
-	   jobs
+	   type: FETCHED_STUDENT_APPLICATIONS_SUCCESS,
+	   applications
   }
 }
 
-export function fetchedJobsFailure(error) {
+export function fetchedStudentApplicationsFailure(error) {
    return {
-	   type: FETCHED_JOBS_FAILURE,
+	   type: FETCHED_STUDENT_APPLICATIONS_FAILURE,
 	   error
   }
 }
 
-export function fetchingQuestions() {
-  return {
-	  type: FETCHING_QUESTIONS,
-  }
-}
-
-export function fetchedQuestionsSuccess(questions) {
+export function applicationModalClicked(applicationId) {
    return {
-	   type: FETCHED_QUESTIONS_SUCCESS,
-	   questions
-  }
+   	   type: MODAL_CLICKED,
+	   applicationId
+   }
 }
 
-export function fetchedQuestionsFailure(error) {
-  return {
-	  type: FETCHED_QUESTIONS_FAILURE,
-	  error
-  }
-}
-
-export function fetchingAnswers() {
-  return {
-	  type: FETCHING_ANSWERS,
-  }
-}
-
-export function fetchedAnswersSuccess(answers) {
+export function applicationShowModal(application) {
    return {
-	   type: FETCHED_ANSWERS_SUCCESS,
-	   answers
-  }
+   	  type: SHOW_MODAL,
+	  application
+   }
 }
 
-export function fetchedAnswersFailure(error) {
-  return {
-	  type: FETCHED_ANSWERS_FAILURE,
-	  error
-  }
+export function applicationHideModal(applicationId) {
+   return {
+          type: HIDE_MODAL,
+	  applicationId
+   }
 }
 // =======================================================
 // ================== INITIAL STATE ======================
@@ -102,127 +71,109 @@ export function fetchedAnswersFailure(error) {
 
 const initialApplicationsState = {
 	studentApplications: {},
-	lists: {},
+	applicationModal: {},
 	//hired: {},
 	//invited: {},
 	error: ''
 }
 
 const initialStudentApplicationsState = {
-	jobs: [],
-	questions: [],
-	answers: [],
+	applications: [],
 	isFetching: false,
 	error: '',
 }
 
+const intialModalState = {
+	isClicked: false,
+	isOpen: false,
+	applicationId: '',
+	application: ''
+}
 // ================================================================== //
 // ======================= APPLICATION REDUCER ======================= //
 // ================================================================== //
 function studentApplications(state = intialStudentApplicationsState, action) {
 	switch(action.type) {
-		case FETCHING_JOBS:
+		case FETCHING_STUDENT_APPLICATIONS:
 			return {
 				...state,
 				isFetching: true,
 			}
-		case FETCHED_JOBS_SUCCESS:
+		case FETCHED_STUDENT_APPLICATIONS_SUCCESS:
 			return {
 				...state,
-				jobs: action.jobs,
+				applications: action.applications,
 				isFetching: false,
 			}
-		case FETCHED_JOBS_FAILURE:
-			return {
-				...state,
-				isFetching: false,
-			}
-		case FETCHING_QUESTIONS:
-			return {
-				...state,
-				isFetching: true,
-			}
-		case FETCHED_QUESTIONS_SUCCESS:
-			return {
-				...state,
-				questions: action.questions,
-				isFetching: false,
-			}
-		case FETCHED_QUESTIONS_FAILURE:
+		case FETCHED_STUDENTS_APPLICATIONS_FAILURE:
 			return {
 				...state,
 				isFetching: false,
-			}
-		case FETCHING_ANSWERS:
-			return {
-				...state,
-				isFetching: true,
-			}		
-		case FETCHED_ANSWERS_SUCCESS:
-			return {
-				...state,
-				answers: action.answers,
-				isFetching: false,
-			}
-		case FETCHED_ANSWERS_FAILURE:
-			return {
-				...state,
-				isFetching: false,
-				error: action.error,
 			}
 		default:
 			return state
 	}
 }
 
+function applicationModal(state = intialModalState, action) {	
+	switch(action.type) {
+		case MODAL_CLICKED:
+			return {
+				...state,
+				isClicked: true,
+				applicationId: action.applicationId,
+			}
+		case SHOW_MODAL:
+			return {
+				...state,
+				isOpen: true,
+				application: action.application,
+			}
+		case HIDE_MODAL:
+			return {
+				...state,
+				applicationId: action.applicationId,
+				isClicked: false,
+				isOpen: false,
+			}
+		default:	
+			return {
+				state
+			}//switch
+	}
+}
 export default function application(state = initialApplicationsState, action) {
   switch(action.type) {
-	  case FETCHING_JOBS:
+	  case FETCHING_STUDENT_APPLICATIONS:
 		return {
 			...state,
 			studentApplications: studentApplications(state.studentApplications, action)
 		}
-	  case FETCHED_JOBS_SUCCESS:
+	  case FETCHED_STUDENT_APPLICATIONS_SUCCESS:
 		return {
 			...state,
 			studentApplications: studentApplications(state.studentApplications, action)
 		}
-	  case FETCHED_JOBS_FAILURE:
+	  case FETCHED_STUDENT_APPLICATIONS_FAILURE:
 		return {
 			...state,
 			studentApplications: studentApplications(state.studentApplications, action),
 			error: action.error
 		}
-	  case FETCHING_QUESTIONS:
+	  case MODAL_CLICKED:
 		return {
 			...state,
-			studentApplications: studentApplications(state.studentApplications, action)
+			applicationModal: applicationModal(state.applicationModal, action)
 		}
-	  case FETCHED_QUESTIONS_SUCCESS:
+	  case SHOW_MODAL:
 		return {
 			...state,
-			studentApplications: studentApplications(state.studentApplications, action)
+			applicationModal: applicationModal(state.applicationModal, action)
 		}
-	  case FETCHED_QUESTIONS_FAILURE:
+	  case HIDE_MODAL:
 		return {
 			...state,
-			studentApplications: studentApplications(state.studentApplications, action),
-			error: action.error
-		}
-	  case FETCHING_ANSWERS:
-		return {
-			...state,
-			studentApplications: studentApplications(state.studentApplications, action)
-			}
-	  case FETCHED_ANSWERS_SUCCESS:
-		return {
-			...state,
-			studentApplications: studentApplications(state.studentApplications, action)
-		}
-	  case FETCHED_ANSWERS_FAILURE:
-		return {
-			...state,
-			studentApplications: studentApplications(state.studentApplications, action)
+			applicationModal: applicationModal(state.applicationModal, action)
 		}
 	  default:
 		return state

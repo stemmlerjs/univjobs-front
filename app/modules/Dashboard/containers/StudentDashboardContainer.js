@@ -113,8 +113,8 @@ const StudentDashboardContainer = React.createClass({
 
   showModal (e, j) {
   	e.preventDefault()
-	  console.log('ON SHOW MODAL')
-	  this.context.store.dispatch(actionCreators.modalClicked(j.id))
+	console.log('ON SHOW MODAL')
+	this.context.store.dispatch(actionCreators.modalClicked(j.id))
 
   	//After modal is clicked, get the questions & match the question id with the job id
   	//Once matched, pass the questions inside the modal to supply to questions variables
@@ -136,9 +136,6 @@ const StudentDashboardContainer = React.createClass({
   /** filterQuestions
    *     This function takes two params, job id & questions object.
    *     It returns all the questions that matches the question ids
-   *
-   *      TODO: Refactor this whole process in which the backend or front-end will handle
-   *            the fetching of questions
    *
    *
    *      NOTE: 
@@ -230,8 +227,8 @@ const StudentDashboardContainer = React.createClass({
         jobs={this.props.jobs} 
     	  onShowModal={this.showModal}
     	  onHideModal={this.hideModal}
-    	  onApplyClicked={this.applyClicked}
-    	  modal={this.context.store.getState().dashboard.modal}
+    	  onApplyClicked={this.applyClicked} 
+    	  modal={this.props.modal}
     	  industries={this.props.industries}
     	  jobTypes={this.props.jobTypes}
     	  questions={this.props.questions}

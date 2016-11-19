@@ -59,31 +59,33 @@ const ApplicationContainer = React.createClass({
 
 /**
  * retrieveAll
- *	This function fetches from three endpoints:
- *		- api/job/my_applications
- *		- api/job/questions/<job_ids>
- *		- api/job/anwers/
+ *	This function fetches from endpoints api/job/my_applications:
  *
- * #NOTE: Needs better explanation
- *	Below implementation takes advantage of promise chains.
- *	Where api/job/my_applications is called first, once the jobs are returned
- *	It moves to next phase of the promises and creates more promises.
  *
- *	Reason behind this is due other endpoints need the job id
  *
  * #REFERRENCE:
  * 	https://developers.google.com/web/fundamentals/getting-started/primers/promises
  */
 
   retrieveAll() {
-  	application.getJobs(this.context.store, actionCreators)
-	.then(() => {
-		axios.all([
-		    application.getQuestions(this.context.store, actionCreators, utils.multipleQueryList(this.props.jobs)),
-		    application.getAnswers(this.context.store, actionCreators)
-	 	])
-	})
-	.catch((err) => { console.log(err) })
+	axios.all([
+		application.getStudentApplications(this.context.store, actionCreators),
+		list.getIndustries(this.context.store, actionCreators),
+		list.getJobTypes(this.context.store, actionCreators),
+       ])
+  },
+
+  showModal (e, j) {
+  	e.preventDefault()
+	debugger
+	  console.log('ON SHOW MODAL')
+	  console.log(j)
+	  this.context.store.dispatch(actionCreators.applicationModalClicked(j.id))
+  	  this.context.store.dispatch(actionCreators.applicationShowModal(j))
+  },
+
+  hideModal (e, id) {
+  	this.context.store.dispatch(actionCreators.applicationHideModal(id))
   },
 
 
@@ -101,16 +103,18 @@ const ApplicationContainer = React.createClass({
   },
 
   render () {
+   //debugger
     return (
       <div className={pageContainer}>
       <SidebarContainer />
        <Application 
        	  user={this.props.user}
-       	  jobs={this.props.jobs}
-
-	  /*FIXME: Create a reducer for the questions to pass to the store that is filtered*/
-       	  questions={this.props.questions}
-       	  answers={this.props.answers}
+       	  applications={this.props.applications}
+	  industries={this.props.industries}
+	  jobTypes={this.props.jobTypes}
+	  applicationModal={this.props.applicationModal}
+	  onShowModal={this.showModal}
+	  onHideModal={this.hideModal}
        /> 
       </div>
     )
@@ -128,12 +132,13 @@ const ApplicationContainer = React.createClass({
  * 	Is there a better way?
  *
  * 	In other words, all questions are queried in the dashboard page*/
-function mapStateToProps({user, application, dashboard}) {
+function mapStateToProps({user, application, profile, createJob}) {
   return {
 	  user: user ? user : {},
-	  jobs : application.studentApplications ? application.studentApplications.jobs : {},
-	  answers : application.studentApplications ? application.studentApplications.answers : {},
-	  questions: dashboard.studentDashboard ? dashboard.studentDashboard.questions : {}
+	  applications : application.studentApplications ? application.studentApplications.applications : {},
+	  industries : profile ? profile.lists.industries : {},
+	  jobTypes : createJob ? createJob.lists.jobTypes : {},
+	  applicationModal: application.studentApplications ? application.applicationModal : '',
   }
 }
 

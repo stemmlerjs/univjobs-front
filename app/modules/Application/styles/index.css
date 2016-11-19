@@ -3,3 +3,10 @@
   width:100%;
   height:100%;
 }
+
+.pageMainJobCards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
