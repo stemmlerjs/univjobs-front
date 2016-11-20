@@ -34,13 +34,13 @@ const StudentDashboardContainer = React.createClass({
    *
    * The redirection filter is the process that occurs each time we enter this container.
    * Used in every higher order component and supplied with a config, it ensures that the
-   * user is redirected to the appropriate page based on their authentication status and 
+   * user is redirected to the appropriate page based on their authentication status and
    * user type.
    *
    * @ return (Promise)
    *
    */
-  
+
   doRedirectionFilter() {
     const config = {
       failureRedirect: {
@@ -49,7 +49,7 @@ const StudentDashboardContainer = React.createClass({
       },
       restricted: {
         to: 'STUDENTS',		 // STUDENTS only on this route
-	      redirectTo: '/job/mylistings'   // if not an EMPLOYER, redirect to the employer equivalent 
+	      redirectTo: '/job/mylistings'   // if not an EMPLOYER, redirect to the employer equivalent
 		 			 // This might change to employer categories
       }
     }
@@ -66,7 +66,7 @@ const StudentDashboardContainer = React.createClass({
   retrieveJobs () {
    const promise = new Promise((resolve, reject) => {
       axios.all([
-         fetch.getJobs(this.context.store),	
+         fetch.getJobs(this.context.store),
       	 fetch.getQuestions(this.context.store, actionCreators)
       ])
       .then((response) => resolve(true))
@@ -75,10 +75,10 @@ const StudentDashboardContainer = React.createClass({
    return promise;
   },
 
-/** retrieveAllLists 
+/** retrieveAllLists
  *   	This function retrieves all the api endpoints needed
  *   	to display the proper job informations
- * 
+ *
  */
   retrieveAllLists() {
   	const promise = new Promise((resolve, reject) => {
@@ -126,11 +126,11 @@ const StudentDashboardContainer = React.createClass({
    * 	on the questions array. It will return a new array that is filtered with the associated
    * 	job ids from the questions ids
    *
-   * 
+   *
    */
 
-  getQuestions() {	
-	  return this.props.questions.filter(this.filterQuestions) 
+  getQuestions() {
+	  return this.props.questions.filter(this.filterQuestions)
   },
 
   /** filterQuestions
@@ -138,7 +138,7 @@ const StudentDashboardContainer = React.createClass({
    *     It returns all the questions that matches the question ids
    *
    *
-   *      NOTE: 
+   *      NOTE:
    *         - Should we combine the questions in with the api endpoint, the same way user & job is handled?
    *         - Should we separate it like how I am doing it right now?
    *         - In what way is the best approach?
@@ -150,7 +150,7 @@ const StudentDashboardContainer = React.createClass({
 	  console.log("***********FILTER QUESTIONS**********")
 	  return question.job === this.context.store.getState().dashboard.modal.jobId
   },
-  
+
  /** hideModal
   *   This event gives the user
   */
@@ -179,7 +179,7 @@ const StudentDashboardContainer = React.createClass({
         "student": this.context.store.getState().user.email,
         "text": this.props.answer.answerOne,
         "job": this.context.store.getState().dashboard.modal.jobId,
-      }, {  
+      }, {
         "question": questions[1].id,
         "student": this.context.store.getState().user.email,
         "text": this.props.answer.answerTwo,
@@ -197,7 +197,7 @@ const StudentDashboardContainer = React.createClass({
   		// .then(this.context.store.dispatch(actionCreators.hideModal(0)))
   		/*Refactor to just pop the job in the jobs array*/
   		// .then(setTimeout(function () {
-  		// 	window.location.reload()	      
+  		// 	window.location.reload()
   		// 	}, 2000))
       .catch(toastr.error("Error while trying to apply to job. Try again later."))
 
@@ -223,11 +223,11 @@ const StudentDashboardContainer = React.createClass({
     return (
       <div className={pageContainer}>
       <SidebarContainer />
-      <StudentDashboard 
-        jobs={this.props.jobs} 
-    	  onShowModal={this.showModal}
+      <StudentDashboard
+        jobs={this.props.jobs}
+    	  handleCardClick={this.showModal}
     	  onHideModal={this.hideModal}
-    	  onApplyClicked={this.applyClicked} 
+    	  onApplyClicked={this.applyClicked}
     	  modal={this.props.modal}
     	  industries={this.props.industries}
     	  jobTypes={this.props.jobTypes}
@@ -235,7 +235,7 @@ const StudentDashboardContainer = React.createClass({
     	  answerOne={this.props.answer.answerOne}
     	  answerTwo={this.props.answer.answerTwo}
     	  updateAnswerField={this.props.updateAnswerField}
-	    /> 
+	    />
 
 	  <ReduxToastr
 	    timeOut={4000}
@@ -264,7 +264,7 @@ function mapStateToProps({user, dashboard}) {
   }
 }
 
-/** 
+/**
   * mapActionCreatorsToProps
   *
   * This function grabs all of the Action Creators on the object of the first parameter in the bindActionCreators function

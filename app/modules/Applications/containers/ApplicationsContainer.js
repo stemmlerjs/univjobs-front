@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import { SidebarContainer } from 'modules/Main'
-import { Application } from 'modules/Application'
+import { Applications } from 'modules/Applications'
 import pageContainer  from '../styles/index.css'
 import axios from 'axios'
 import * as list from 'helpers/lists'
@@ -26,7 +26,7 @@ const actionCreators = {
   ...applicationActionCreators,
 }
 
-const ApplicationContainer = React.createClass({
+const ApplicationsContainer = React.createClass({
 	contextTypes: {
 		router: PropTypes.object.isRequired,
 		store: PropTypes.object.isRequired
@@ -35,13 +35,13 @@ const ApplicationContainer = React.createClass({
    *
    * The redirection filter is the process that occurs each time we enter this container.
    * Used in every higher order component and supplied with a config, it ensures that the
-   * user is redirected to the appropriate page based on their authentication status and 
+   * user is redirected to the appropriate page based on their authentication status and
    * user type.
    *
    * @ return (Promise)
    *
    */
-  
+
   doRedirectionFilter() {
     const config = {
       failureRedirect: {
@@ -50,7 +50,7 @@ const ApplicationContainer = React.createClass({
       },
       restricted: {
          to: 'STUDENTS',		 // STUDENTS only on this route
-	 redirectTo: '/job/myapplicants'   // if not an EMPLOYER, redirect to the employer equivalent 
+	 redirectTo: '/job/myapplicants'   // if not an EMPLOYER, redirect to the employer equivalent
 		 			 // This might change to employer categories
       }
     }
@@ -107,15 +107,15 @@ const ApplicationContainer = React.createClass({
     return (
       <div className={pageContainer}>
       <SidebarContainer />
-       <Application 
+       <Applications
        	  user={this.props.user}
        	  applications={this.props.applications}
-	  industries={this.props.industries}
-	  jobTypes={this.props.jobTypes}
-	  applicationModal={this.props.applicationModal}
-	  onShowModal={this.showModal}
-	  onHideModal={this.hideModal}
-       /> 
+      	  industries={this.props.industries}
+      	  jobTypes={this.props.jobTypes}
+      	  applicationModal={this.props.applicationModal}
+      	  onShowModal={this.showModal}
+      	  onHideModal={this.hideModal}
+       />
       </div>
     )
   },
@@ -127,7 +127,7 @@ const ApplicationContainer = React.createClass({
 // @params ({user}) contains BaseUser & Employer attributes
 // */
 
-/*NOTE: Questions should also be filtered in the Dashboard. 
+/*NOTE: Questions should also be filtered in the Dashboard.
  * 	At the moment we are borrowing every single question in the dashboard
  * 	Is there a better way?
  *
@@ -142,7 +142,7 @@ function mapStateToProps({user, application, profile, createJob}) {
   }
 }
 
-/** 
+/**
   * mapActionCreatorsToProps
   *
   * This function grabs all of the Action Creators on the object of the first parameter in the bindActionCreators function
@@ -157,4 +157,4 @@ function mapActionCreatorsToProps(dispatch) {
 
 // connect(specify_what_keys_you_want_from_store, wraps_dispatch_around_action_creators)(container)
 
-export default connect(mapStateToProps, mapActionCreatorsToProps)(ApplicationContainer)
+export default connect(mapStateToProps, mapActionCreatorsToProps)(ApplicationsContainer)

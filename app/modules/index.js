@@ -7,5 +7,6 @@ export CategoriesContainer from './Categories/containers/CategoriesContainer'
 export CreateJobContainer from './CreateJob/containers/CreateJobContainer'
 export StudentDashboardContainer from './Dashboard/containers/StudentDashboardContainer'
 export EmployerDashboardContainer from './Dashboard/containers/EmployerDashboardContainer'
-export ApplicationContainer from './Application/containers/ApplicationContainer'
-
+export ApplicationsContainer from './Applications/containers/ApplicationsContainer'
+export GenericCard, { APPLICATIONS_CARD_TYPE, DASHBOARD_CARD_TYPE, PINNED_JOBS_CARD_TYPE } from './SharedComponents'
+export ApplicationModal from './SharedComponents'

@@ -93,11 +93,11 @@ const CreateJobContainer = React.createClass({
 
  /*
   * componentWillMount()
-  * 
+  *
   * We're using this React lifecycle method to:
   * 1) Close the Overlay when we visit the page from a direct URL
   *
-  * @void 
+  * @void
   *
   */
 
@@ -130,7 +130,7 @@ const CreateJobContainer = React.createClass({
   componentWillReceiveProps(newProps) {
     let error = newProps.errorsExist;
     let submitSuccess = newProps.submitSuccess;
-    
+
     if(submitSuccess) {
       this.refs.container.success(
         "Nice!",
@@ -162,7 +162,7 @@ const CreateJobContainer = React.createClass({
   *
   * The redirection filter is the process that occurs each time we enter this container.
   * Used in every higher order component and supplied with a config, it ensures that the
-  * user is redirected to the appropriate page based on their authentication status and 
+  * user is redirected to the appropriate page based on their authentication status and
   * user type.
   *
   * ADDITIONALLY IMPORTANT. The authRedirectFilter gets PROFILE INFO for the current user.
@@ -188,7 +188,7 @@ const CreateJobContainer = React.createClass({
 
  /*
   * userMadeChanges()
-  * 
+  *
   * Returns true if any of the default values from page1 have been altered.
   * @return boolean
   *
@@ -198,7 +198,7 @@ const CreateJobContainer = React.createClass({
     let p = this.props.page1
     // All fields on page1
     if(p.jobTitle !== "" || p.isPayingJob !== false || p.responsibilities !== ""
-      || p.qualifications !== "" || p.desiredSkills !== "" || p.internshipLocation !== "" || p.remoteWork !== false 
+      || p.qualifications !== "" || p.desiredSkills !== "" || p.internshipLocation !== "" || p.remoteWork !== false
       || p.compensation !== "") {
       return true
     } else {
@@ -208,7 +208,7 @@ const CreateJobContainer = React.createClass({
 
   /*
   * next()
-  * 
+  *
   * Advance to the next page in the form. Submit the form on Page 4 ( the last page ).
   * @void
   *
@@ -245,7 +245,7 @@ const CreateJobContainer = React.createClass({
   * handleConfirmDiscardChanges()
   *
   * Called after pressing submit to discard changes and go back to the categories
-  * screen. 
+  * screen.
   *
   * @void
   * @see Skylight component in 'this.render()' function
@@ -260,8 +260,8 @@ const CreateJobContainer = React.createClass({
 
   /*
   * goBack()
-  * 
-  * The 'Back' button. Simply goes backwards through the pages of the form. 
+  *
+  * The 'Back' button. Simply goes backwards through the pages of the form.
   * If the user is on the first page and there were changes made, they are first
   * asked if they want to discard their changes. Otherwise, they are just routed
   * back to the /categories page.
@@ -295,7 +295,7 @@ const CreateJobContainer = React.createClass({
     }
   },
 
-  render () { 
+  render () {
     const jobType = 1;
     return (
       <div className={mainContainer}>
@@ -305,8 +305,8 @@ const CreateJobContainer = React.createClass({
             case 1:
               return <div>
               <FormHeader stepNum={this.props.currentPage} totalSteps={4} headerText="Enter basic job details"/>
-              <CreateJobFormPage1 
-                page={this.props.page1} 
+              <CreateJobFormPage1
+                page={this.props.page1}
                 next={this.next}
                 back={this.goBack}
                 updateFormField={this.props.updateFormField}/>
@@ -314,8 +314,8 @@ const CreateJobContainer = React.createClass({
             case 2:
               return <div>
               <FormHeader stepNum={this.props.currentPage} totalSteps={4} headerText="Have a question for the applicant? (optional)"/>
-              <CreateJobFormPage2 
-                page={this.props.page2} 
+              <CreateJobFormPage2
+                page={this.props.page2}
                 next={this.next}
                 back={this.goBack}
                 updateFormField={this.props.updateFormField}/>
@@ -324,7 +324,7 @@ const CreateJobContainer = React.createClass({
               return <div>
               <FormHeader stepNum={this.props.currentPage} totalSteps={4} headerText="Choose which students can view your job listings"/>
               <CreateJobFormPage3
-                page={this.props.page3} 
+                page={this.props.page3}
                 next={this.next}
                 back={this.goBack}
                 updateFormField={this.props.updateFormField}/>
@@ -333,7 +333,7 @@ const CreateJobContainer = React.createClass({
               return <div>
               <FormHeader stepNum={this.props.currentPage} totalSteps={4} headerText="Review your listing"/>
               <CreateJobFormPage4
-                page={this.props.page4} 
+                page={this.props.page4}
                 next={this.next}
                 back={this.goBack}
                 jobType={jobType}
@@ -347,8 +347,8 @@ const CreateJobContainer = React.createClass({
                 updateFormField={this.props.updateFormField}/>
               </div>
             default:
-              return <CreateJobFormPage1 
-                page={this.props.page1} 
+              return <CreateJobFormPage1
+                page={this.props.page1}
                 next={this.next}
                 back={this.goBack}
                 updateFormField={this.props.updateFormField}/>
@@ -356,9 +356,9 @@ const CreateJobContainer = React.createClass({
         })()}
 
       {/* CONFIRM DISCARD MODAL*/}
-        <SkyLight 
-          hideOnOverlayClicked 
-          ref="confirmDiscard" 
+        <SkyLight
+          hideOnOverlayClicked
+          ref="confirmDiscard"
           title="Are you sure you want to discard this job?">
           All changes will be lost
 
@@ -369,7 +369,7 @@ const CreateJobContainer = React.createClass({
         <ToastContainer ref="container"
           toastMessageFactory={ToastMessageFactory}
           className="toast-top-right" />
-        
+
       </div>
     )
   },

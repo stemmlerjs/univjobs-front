@@ -1,9 +1,9 @@
 
 import React from 'react'
 import { Router, Route, hashHistory, IndexRoute, browserHistory } from 'react-router'
-import { SignupContainer, StudentProfileContainer, EmployerProfileContainer, 
-  InitialOverlay, CategoriesContainer, CreateJobContainer , StudentDashboardContainer, 
-  EmployerDashboardContainer, ApplicationContainer } from 'modules'
+import { SignupContainer, StudentProfileContainer, EmployerProfileContainer,
+  InitialOverlay, CategoriesContainer, CreateJobContainer , StudentDashboardContainer,
+  EmployerDashboardContainer, ApplicationsContainer } from 'modules'
 import { checkIfAuthed } from 'helpers/auth'
 
 // Purpose of IndexRoute - if none of the routes match, we go here
@@ -17,19 +17,19 @@ export default function getRoutes() {
           <Route path='/profile/em' component={EmployerProfileContainer} />
           <Route path='/categories' component={CategoriesContainer} />
           <Route path='/job/create/:jobtype' component={CreateJobContainer} />
-	        <Route path='/dashboard/st' component={StudentDashboardContainer} />
+	      <Route path='/dashboard/st' component={StudentDashboardContainer} />
           <Route path='/dashboard/em' component={EmployerDashboardContainer} />
-          <Route path='/myapplications/st' component={ApplicationContainer} />
+          <Route path='/myapplications/st' component={ApplicationsContainer} />
         </Route>
     </Router>
   )
 }
 
-/** 
+/**
   * authRedirectFilter
   *
   *   - This is a custom auth handler for doing page redirects based on the type of the user and their
-  *     authentication status. 
+  *     authentication status.
   *   - While we initially wanted to use react-router's onEnter, there was an issue with
   *     doing asynchronous calls inside of the associated function to determine if the user's token is in fact- valid.
   *   - To use this, we must
@@ -38,17 +38,17 @@ export default function getRoutes() {
   * @params (Object) - store : the redux store to check if the user is a student or employer
   * @params (Object) - router : react-router to perform the resulting redirect if necessary
   * @see - SignupContainer & EmployeeProfileContainer's "componentWillMount" on how to provide the config
-  * 
+  *
 
   Structure of the config object:
-    - the restricted attribute has the highest precedence on successful auth. If the user is able to authenticate, 
+    - the restricted attribute has the highest precedence on successful auth. If the user is able to authenticate,
       the restricted redirect will be taken first before the successRedirect.
     - on a failed auth, the failureRedirect will be taken
 
     {
       successRedirect: {                (depending on user type, one of these urls will be used in a redirect)
         student: '/jobs/feed',
-        employer: '/applications/feed'  
+        employer: '/applications/feed'
       },
       failureRedirect: '/join'              (this is taken upon unsuccessful authentication)
       restricted: {
@@ -62,10 +62,10 @@ export function authRedirectFilter({successRedirect, failureRedirect, restricted
 
   /*
   * isUserInRestrictedRoute()
-  * 
+  *
   * Based on if the current user is in a restricted route, the user will be redirected to a
-  * new route. 
-  * 
+  * new route.
+  *
   * @param (boolean) - isAStudent
   * @return (boolean)
   * @see {restricted}
@@ -92,10 +92,10 @@ export function authRedirectFilter({successRedirect, failureRedirect, restricted
 
  /*
   * profileIncompleteRedirectCheck()
-  * 
+  *
   * Based on if the current user is in a restricted route, the user will be redirected to a
-  * new route. 
-  *  
+  * new route.
+  *
   * @param
   * @see {restricted}
   */
@@ -151,7 +151,7 @@ export function authRedirectFilter({successRedirect, failureRedirect, restricted
           })
         }
       })
-      
+
 
       resolve()
     })
