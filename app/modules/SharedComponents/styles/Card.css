@@ -7,11 +7,11 @@
 	/* For Safari */
 	display: -webkit-flex;
 	-webkit-flex-direction: row;
-	
+
 	/* Chrome */
 	display: flex;
 	flex-direction: row;
-	
+
 	flex-wrap: wrap;
 }
 
@@ -188,13 +188,13 @@
 	width: 50%;
 }
 
-.cardModalScroll {	
+.cardModalScroll {
 	overflow: scroll;
 	height: 54vh;
 }
 
 .cardModalFooter {
-	box-shadow: 0px -2px 0px 0px rgba(0,0,0,.1) 
+	box-shadow: 0px -2px 0px 0px rgba(0,0,0,.1)
 }
 
 .image {
@@ -219,4 +219,15 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
+}
+
+.crop {
+	width: 64px;
+  height: 64px;
+  overflow: hidden;
+}
+
+.crop img {
+  width: 64px;
+  height: 64px;
 }

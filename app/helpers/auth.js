@@ -112,18 +112,23 @@ export function createStudentAccount(email, password) {
   const accessToken = getAccessToken()
   const csrfToken = getCSRFToken()
 
-  return axios({
-    method: 'post',
-    url: config.baseUrl + 'register/',
-    headers: {
-      "Authorization": "JWT " + accessToken,
-      'X-CSRFToken': csrfToken
-    },
-    data: {
-      email: email,
-      password: password
-    }
+  return axios.post(config.baseUrl + 'register/', {
+    email: email,
+    password: password
   })
+
+  // return axios({
+  //   method: 'post',
+  //   url: config.baseUrl + 'register/',
+  //   headers: {
+  //     "Authorization": "JWT " + accessToken,
+  //     'X-CSRFToken': csrfToken
+  //   },
+  //   data: {
+  //     email: email,
+  //     password: password
+  //   }
+  // })
 }
 
 /**

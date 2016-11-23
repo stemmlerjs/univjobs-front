@@ -5,7 +5,7 @@ import { pageContainer, cardContainer, card, cardHeader,
 	companyContainer, companyInfoContainer, companyTitle,
 	applyButton, cardModalContainer, cardModalHeader, jobModalTitle,
 	jobModalIndustry, cardModalBodyLeft, cardModalBodyRight, cardModalScroll, cardModalFooter,
-	image, questionHeader} from '../styles/Card.css'
+	image, questionHeader, crop} from '../styles/Card.css'
 
 GenericCard.propTypes = {
   cardType: PropTypes.string.isRequired,
@@ -59,7 +59,8 @@ export default function GenericCard({ cardType, job, jobTypes, industries, handl
                   </div>
 
                   {/* TODO: Point to industry  */}
-                  <h3 className={industryTitle}>{ industries ? industries[job.type].industry : ''}</h3>
+                  <h3 className={industryTitle}>
+                  { industries[job.business.industry].industry }</h3>
 
                   {/* TAGS */}
                   <div>
@@ -86,7 +87,9 @@ export default function GenericCard({ cardType, job, jobTypes, industries, handl
                   <div>
                     <ul className={companyContainer}>
                       <li>
-                        <img src="https://placeholdit.imgix.net/~text?txtsize=12&txt=56%C3%9756&w=56&h=56" alt="Smiley face"/>
+                        <div className={crop}>
+                          <img src="https://s3.amazonaws.com/univjobs/logo/2016/09/30/Happy+Birthday+Joey+Ramone.jpg" alt="Smiley face" />
+                        </div>
                       </li>
 
                       <li>
@@ -96,7 +99,7 @@ export default function GenericCard({ cardType, job, jobTypes, industries, handl
                           </li>
 
                           <li>
-                            <a href={ job ? job.business.website : ''} target="_blank">Company Info</a>
+                            <a href={ job ? job.business.website : ''} target="_blank">{job.business.description}</a>
                           </li>
                         </ul>
                       </li>

@@ -30,6 +30,13 @@ export function submitLoginFormSuccess() {
   }
 }
 
+export function submitLoginFormError(error) {
+  return {
+    type: SUBMIT_LOGIN_FORM_ERROR,
+    error
+  }
+}
+
 export function submitLoginForm(email, password) {
   return function(dispatch) {
 
@@ -56,8 +63,8 @@ export function submitLoginForm(email, password) {
           setAccessToken(token)
 
           // ACTION: DISPATCH (LOGIN_SUCCESS)
-          dispatch(loginSuccess(token, 
-            response.data.user.is_a_student, 
+          dispatch(loginSuccess(token,
+            response.data.user.is_a_student,
             response.data.user.is_profile_completed
           ))
 
@@ -78,12 +85,12 @@ export function submitLoginForm(email, password) {
               ))
 
               resolve({
-                isAStudent: response.data.user.is_a_student, 
+                isAStudent: response.data.user.is_a_student,
                 isProfileCompleted: response.data.user.is_profile_completed
               })
             })
         })
-        .catch((err) => { 
+        .catch((err) => {
           if(err.status === 400){
             // ACTION: DISPATCH (SUBMIT_LOGIN_FORM_ERROR)
             dispatch(submitLoginFormError('Either username or password is incorrect.'))
@@ -92,23 +99,16 @@ export function submitLoginForm(email, password) {
             dispatch(loginFailure('Either username or password is incorrect.'))
           } else {
             // ACTION: DISPATCH (SUBMIT_LOGIN_FORM_ERROR)
-            dispatch(submitLoginFormError('Network error'))
+            dispatch(submitLoginFormError("Couldn't connect to Univjobs. Please check your network connection."))
 
             // ACTION: DISPATCH (LOGIN_FAILURE)
-            dispatch(loginFailure('Network error'))
+            dispatch(loginFailure("Couldn't connect to Univjobs. Please check your network connection."))
           }
           console.log("error", err)
           reject(false)
         })
-    })  
+    })
     return promise;
-  }
-}
-
-export function submitLoginFormError(error) {
-  return {
-    type: SUBMIT_LOGIN_FORM_ERROR,
-    error
   }
 }
 
@@ -136,12 +136,12 @@ export default function loginForm (state = initialState, action) {
         ...state,
         isSubmittingForm: true
       }
-    case SUBMIT_LOGIN_FORM_SUCCESS: 
+    case SUBMIT_LOGIN_FORM_SUCCESS:
       return {
         ...state,
         isSubmittingForm: false
       }
-    case SUBMIT_LOGIN_FORM_ERROR: 
+    case SUBMIT_LOGIN_FORM_ERROR:
       return {
         ...state,
         error: action.error,

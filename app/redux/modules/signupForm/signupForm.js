@@ -106,17 +106,14 @@ export function submitStudentSignupForm(email, password) {
                   case 400:
                     errMsg = "Did you already sign up? Someone already registered with this email."
                     break
+                  case 403:
+                    errMsg = "Something went wrong here. We're working on fixing it."
+                    break
                   case 500:
                     errMsg = "Something appears to be wrong with our servers. Try back in a few minutes."
                     break
                   default:
-                    if(!err.hasOwnProperty('data')) {
-                      errMsg = "Couldn't connect to Univjobs. Please check your network connection."
-                    } else {
-                      if(err.data.email) {
-                        errMsg = errMsg + err.data.email[0]
-                      }
-                    }
+                    errMsg = "Couldn't connect to Univjobs. Please check your network connection."
                 }
 
                 // ACTION: DISPATCH (CREATING_USER_ACCOUNT_FAILURE)
@@ -221,12 +218,18 @@ export function submitEmployerSignupForm(firstName, lastName, companyName, phone
         .catch((err) => {
           let errMsg = "";
 
-          if(!err.hasOwnProperty('data')) {
-            errMsg = "Couldn't connect to Univjobs. Please check your network connection."
-          } else {
-            if(err.data.email) {
-              errMsg = errMsg + err.data.email[0]
-            }
+          switch(err.status) {
+            case 400:
+              errMsg = "Did you already sign up? Someone already registered with this email."
+              break
+            case 403:
+              errMsg = "Something went wrong here. We're working on fixing it."
+              break
+            case 500:
+              errMsg = "Something appears to be wrong with our servers. Try back in a few minutes."
+              break
+            default:
+              errMsg = "Couldn't connect to Univjobs. Please check your network connection."
           }
 
           // ACTION: DISPATCH (CREATING_USER_ACCOUNT_FAILURE)
