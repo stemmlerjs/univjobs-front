@@ -12,7 +12,7 @@ import _ from 'lodash'
   *       token included in the header of the request.
   *
   * @param (String) - email
-  * @param (String) - 
+  * @param (String) -
   */
 
 export function login (email, password) {
@@ -66,7 +66,7 @@ export function logout(store, router) {
   *   - Retrieves access token from API through a GET to /account with the
   *       token included in the header of the request.
   *
-  * @param (String) - token: the access token 
+  * @param (String) - token: the access token
   * @return (Promise) - resolved if API call is successful
   */
 
@@ -99,8 +99,8 @@ export function setAccessToken (token) {
   });
 }
 
-// 
-/** 
+//
+/**
   * Create Student Account
   *   - Makes a POST to /register to create a student account
   *   - Successful eturn response gives us our access token
@@ -109,9 +109,20 @@ export function setAccessToken (token) {
   * @param (String) - password: post-validated student password
   */
 export function createStudentAccount(email, password) {
-  return axios.post(config.baseUrl + 'register/', {
-    email: email,
-    password: password
+  const accessToken = getAccessToken()
+  const csrfToken = getCSRFToken()
+
+  return axios({
+    method: 'post',
+    url: config.baseUrl + 'register/',
+    headers: {
+      "Authorization": "JWT " + accessToken,
+      'X-CSRFToken': csrfToken
+    },
+    data: {
+      email: email,
+      password: password
+    }
   })
 }
 
@@ -123,27 +134,38 @@ export function createStudentAccount(email, password) {
   * @param (String) - firstName, lastName, companyName, mobile, email, password
   */
 export function createEmployerAccount(firstName, lastName, companyName, mobile, email, password) {
-  return axios.post(config.baseUrl + 'register/business/', {
-    email: email,
-    password: password,
-    first_name: firstName,
-    last_name: lastName,
-    company_name: companyName,
-    mobile: mobile
+  const accessToken = getAccessToken()
+  const csrfToken = getCSRFToken()
+
+  return axios({
+    method: 'post',
+    url: config.baseUrl + 'register/business/',
+    headers: {
+      "Authorization": "JWT " + accessToken,
+      'X-CSRFToken': csrfToken
+    },
+    data: {
+      email: email,
+      password: password,
+      first_name: firstName,
+      last_name: lastName,
+      company_name: companyName,
+      mobile: mobile
+    }
   })
 }
 
 /**
   * checkIfAuthed
   *
-  * @param (object) - store : 
+  * @param (object) - store :
   * @return Promise : resolved if the user is authed, rejected if not.
 */
 export function checkIfAuthed (store) {
   const promise = new Promise(function(resolve, reject) {
     console.log("******************* AUTHENTICATION CHECK *******************")
 
-    /* If the user is simply flipping through pages, we can tell if they are in fact 
+    /* If the user is simply flipping through pages, we can tell if they are in fact
       authenticated or not through the use of the state.
     */
     const stillAuthed = store.getState().user.isAuthenticated
@@ -152,7 +174,7 @@ export function checkIfAuthed (store) {
       resolve(true)
     } else {
 
-      /* If the user reloads the page, state is lost and we cannot tell if they are 
+      /* If the user reloads the page, state is lost and we cannot tell if they are
         authenticated through the use of the store. We must now check the cookie.
       */
       const accessToken = cookie.load('univjobs-access-token');
@@ -165,7 +187,7 @@ export function checkIfAuthed (store) {
         store.dispatch(loggingIn())
 
         /* We confirm if the token is still valid by attempting to make a call to
-          /account. 
+          /account.
         */
         // ACTION: DISPATCH (FETCHING_USER_INFO)
         store.dispatch(fetchingUserInfo())
@@ -177,8 +199,8 @@ export function checkIfAuthed (store) {
             // User Details
             const dateJoined = response.data.user.date_joined
             const email = response.data.user.email
-            const firstName = response.data.user.first_name 
-            const lastName = response.data.user.last_name 
+            const firstName = response.data.user.first_name
+            const lastName = response.data.user.last_name
             const mobile = response.data.user.mobile
 
             // Profile Details
@@ -211,7 +233,7 @@ export function checkIfAuthed (store) {
 
             // ACTION: DISPATCH (FETCHING_USER_INFO_FAILURE)
             store.dispatch(fetchingUserInfoFailure())
-            
+
             // ACTION: DISPATCH (LOGGING_IN_FAILURE)
             store.dispatch(loginFailure())
             reject(false)

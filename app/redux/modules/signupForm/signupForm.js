@@ -80,14 +80,14 @@ export function submitStudentSignupForm(email, password) {
                 // delete profileInfo.user;
 
                 // save access token as cookie
-                setAccessToken(token) 
+                setAccessToken(token)
 
                 // ACTION: DISPATCH (CREATING_USER_ACCOUNT_SUCCESS)
-                dispatch(userActions.createUserAccountSuccess(token)) 
+                dispatch(userActions.createUserAccountSuccess(token))
 
                 // // ACTION: DISPATCH (LOGIN_SUCCESS)
-                dispatch(userActions.loginSuccess(token, 
-                  isAStudent, 
+                dispatch(userActions.loginSuccess(token,
+                  isAStudent,
                   isProfileCompleted
                 ))
 
@@ -102,15 +102,23 @@ export function submitStudentSignupForm(email, password) {
               })
               .catch((err) => {
                 let errMsg = "";
-
-                if(!err.hasOwnProperty('data')) {
-                  errMsg = "Couldn't connect to Univjobs. Please check your network connection."
-                } else {
-                  if(err.data.email) {
-                    errMsg = errMsg + err.data.email[0]
-                  }
+                switch(err.status) {
+                  case 400:
+                    errMsg = "Did you already sign up? Someone already registered with this email."
+                    break
+                  case 500:
+                    errMsg = "Something appears to be wrong with our servers. Try back in a few minutes."
+                    break
+                  default:
+                    if(!err.hasOwnProperty('data')) {
+                      errMsg = "Couldn't connect to Univjobs. Please check your network connection."
+                    } else {
+                      if(err.data.email) {
+                        errMsg = errMsg + err.data.email[0]
+                      }
+                    }
                 }
-                
+
                 // ACTION: DISPATCH (CREATING_USER_ACCOUNT_FAILURE)
                 dispatch(userActions.createUserAccountFailure(errMsg))
 
@@ -178,7 +186,7 @@ export function submitEmployerSignupForm(firstName, lastName, companyName, phone
       dispatch(userActions.fetchingUserInfo())
 
 
-      createEmployerAccount(firstName, lastName, companyName, phone, email, password) 
+      createEmployerAccount(firstName, lastName, companyName, phone, email, password)
         .then((response) => {
 
           const token = response.data.token
@@ -190,14 +198,14 @@ export function submitEmployerSignupForm(firstName, lastName, companyName, phone
           delete profileInfo.user // delete base user {} from profile info
 
           // save access token as cookie
-          setAccessToken(token) 
+          setAccessToken(token)
 
           // ACTION: DISPATCH (CREATING_USER_ACCOUNT_SUCCESS)
           dispatch(userActions.createUserAccountSuccess(token))
 
           // ACTION: DISPATCH (LOGIN_SUCCESS)
-          dispatch(userActions.loginSuccess(token, 
-            isAStudent, 
+          dispatch(userActions.loginSuccess(token,
+            isAStudent,
             isProfileCompleted
           ))
 
@@ -233,7 +241,7 @@ export function submitEmployerSignupForm(firstName, lastName, companyName, phone
           resolve(false)
         })
     })
-    return promise; 
+    return promise;
   }
 }
 
@@ -259,7 +267,7 @@ export default function signupForm (state = initialState, action) {
         ...state,
         employerSignupForm: employerSignupForm(state.employerSignupForm, action)
       }
-    case SUBMIT_STUDENT_FORM_ERROR: 
+    case SUBMIT_STUDENT_FORM_ERROR:
       return {
         ...state,
         studentSignupForm: studentSignupForm(state.studentSignupForm, action)

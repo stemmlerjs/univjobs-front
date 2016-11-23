@@ -28,6 +28,11 @@
     font-size: 18px;
 }
 
+/* Remove the Chrome auto-complete yellow styling */
+.input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px white inset;
+}
+
 .loginBtn {
     margin-top: 40px;
     padding: 10px 15px 10px 15px;
