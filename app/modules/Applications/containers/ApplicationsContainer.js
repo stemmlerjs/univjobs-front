@@ -6,19 +6,16 @@ import axios from 'axios'
 import * as list from 'helpers/lists'
 import * as utils from 'helpers/utils'
 import * as application from 'helpers/application'
+
 // =============REDUX STATE & IMPORTS========================== //
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as userActionCreators from 'redux/modules/user/user'
 import * as applicationActionCreators from 'redux/modules/application/application'
 import { authRedirectFilter } from 'config/routes'
-// ============================================================ //
 
-// ==================MESSAGES============================== //
 import ReduxToastr from 'react-redux-toastr'
 import {toastr} from 'react-redux-toastr'
-
-// ====================================== //
 
 
 const actionCreators = {
@@ -103,10 +100,9 @@ const ApplicationsContainer = React.createClass({
   },
 
   render () {
-   //debugger
     return (
       <div className={pageContainer}>
-      <SidebarContainer />
+      <SidebarContainer isAStudent={this.props.user.isAStudent}/>
        <Applications
        	  user={this.props.user}
        	  applications={this.props.applications}

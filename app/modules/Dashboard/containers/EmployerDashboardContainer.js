@@ -86,7 +86,7 @@ const EmployerDashboardContainer = React.createClass({
     this.finallyDisableOverlay()
     return (
       <div className={pageContainer}>
-        <SidebarContainer/>
+        <SidebarContainer isAStudent={false}/>
         <EmployerDashboard students={this.props.students}/>
       </div>
     )

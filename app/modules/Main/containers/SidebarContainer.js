@@ -10,6 +10,10 @@ const SidebarContainer = React.createClass({
     router: React.PropTypes.object
   },
 
+  propTypes: {
+    isAStudent: React.PropTypes.bool.isRequired
+  },
+
   handleLogout() {
     const { store, router } = this.context;
     logout(store, router)
@@ -17,7 +21,7 @@ const SidebarContainer = React.createClass({
 
   render () {
     return (
-      <Sidebar onLogout={this.handleLogout}/>
+      <Sidebar onLogout={this.handleLogout} isAStudent={this.props.isAStudent}/>
     )
   },
 })

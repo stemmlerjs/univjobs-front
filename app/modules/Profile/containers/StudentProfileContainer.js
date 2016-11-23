@@ -159,7 +159,7 @@ const StudentProfileContainer = React.createClass({
   render () {
     return (
       <div className={pageContainer}>
-        <SidebarContainer/>
+        <SidebarContainer isAStudent={this.props.user.isAStudent}/>
         <StudentProfile
       	  emailPreferences={this.props.emailPreferences}
       	  emailPrefList={this.props.emailPrefList}
@@ -167,39 +167,37 @@ const StudentProfileContainer = React.createClass({
       	  lastName={this.props.lastName}
       	  studentStatus={this.props.studentStatus}
       	  studentStatusList={this.props.studentStatusList}
-	  educationLevel={this.props.educationLevel}
-	  educationLevelList={this.props.educationLevelList}
-	  school={this.props.school}
-	  enrollmentDate={this.props.enrollmentDate}
-	  graduationDate={this.props.graduationDate}
-	  major={this.props.major}
-	  majorsList={this.props.majorsList}
-	  gpa={this.props.gpa}
-	  personalEmail={this.props.personalEmail}
-	  gender={this.props.gender}
-	  gendersList={this.props.gendersList}
-	  sportsTeam={this.props.sportsTeam}
-	  schoolClub={this.props.schoolClub}
-	  languages={this.props.languages}
-	  languagesList={this.props.languagesList}
-	  hasCar={this.props.hasCar}
-	  companyName={this.props.companyName}
-	  position={this.props.position}
-	  funFacts={this.props.funFacts}
-	  hometown={this.props.hometown}
-	  hobbies={this.props.hobbies}
-	  photo={this.props.photo}
-	  resume={this.props.resume}
-	  onSubmit={this.handleSubmit}
-	  updateProfileField={this.props.updateProfileField}
-	 // submitErrorsExist={this.props.submitErrorsExist}
-	  propsErrorMap={this.props.propsErrorMap}
-	  snapshot={this.props.snapshot}
-	/>
-	<ToastContainer ref="container"
-	  toastMessageFactory={ToastMessageFactory}
-	  className="toast-top-right" 
-	/>
+      	  educationLevel={this.props.educationLevel}
+      	  educationLevelList={this.props.educationLevelList}
+      	  school={this.props.school}
+      	  enrollmentDate={this.props.enrollmentDate}
+      	  graduationDate={this.props.graduationDate}
+      	  major={this.props.major}
+      	  majorsList={this.props.majorsList}
+      	  gpa={this.props.gpa}
+      	  personalEmail={this.props.personalEmail}
+      	  gender={this.props.gender}
+      	  gendersList={this.props.gendersList}
+      	  sportsTeam={this.props.sportsTeam}
+      	  schoolClub={this.props.schoolClub}
+      	  languages={this.props.languages}
+      	  languagesList={this.props.languagesList}
+      	  hasCar={this.props.hasCar}
+      	  companyName={this.props.companyName}
+      	  position={this.props.position}
+      	  funFacts={this.props.funFacts}
+      	  hometown={this.props.hometown}
+      	  hobbies={this.props.hobbies}
+      	  photo={this.props.photo}
+      	  resume={this.props.resume}
+      	  onSubmit={this.handleSubmit}
+      	  updateProfileField={this.props.updateProfileField}
+      	 // submitErrorsExist={this.props.submitErrorsExist}
+      	  propsErrorMap={this.props.propsErrorMap}
+      	  snapshot={this.props.snapshot}/>
+      	<ToastContainer ref="container"
+      	  toastMessageFactory={ToastMessageFactory}
+      	  className="toast-top-right" />
       </div>
     )
   },

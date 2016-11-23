@@ -4,7 +4,6 @@ import { JobCard, JobCardModal } from 'modules/Dashboard'
 import { GenericCard, DASHBOARD_CARD_TYPE } from 'modules/SharedComponents'
 import { SkyLightStateless } from 'react-skylight'
 import { hideModal } from 'redux/modules/dashboard/dashboard'
-
 import { rootComponentContainer, margin, pageHeaderSection,
 	pageTitle, title} from 'sharedStyles/styles.css'
 import { pageContainer, cardContainer, card, cardHeader,
@@ -14,27 +13,8 @@ import { pageContainer, cardContainer, card, cardHeader,
 	applyButton, cardModalContainer, cardModalHeader, jobModalTitle,
 	jobModalIndustry, cardModalBodyLeft, cardModalBodyRight, cardModalScroll, cardModalFooter,
 	image, questionHeader, overflowFix, pageMainJobCards} from '../styles/StudentDashboard.css'
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
-  console.log("Angular ", GenericCard)
-    console.log("Angular ", DASHBOARD_CARD_TYPE)
-
-const styles = {
-  overlayStyles: {
-    position: 'absolute',
-    top: '0px',
-    left: '0px',
-    right: '0px',
-    bottom: '0px',
-    zIndex: 99,
-    backgroundColor: 'rgba(0,0,0,0.3)'
-  },
-  dialogStyles: {
-     width: '50%',
-     height: '75%',
-     marginTop: '-300px',
-     marginLeft: '-25%',
-  }
-}
 
 //**NOTE:
 //  Store is accessible
@@ -74,29 +54,7 @@ export default function StudentDashboard ({jobs, handleCardClick, onHideModal, o
   	    </div>
   	    ))}
 
-      	{/*MODAL
-      	   The state of modal is checked first,
-      	   if it isOpen === true then show the modal
-      	   else, return empty
-      	*/}
 
-  	    { modal.isOpen
-  	      ?	<SkyLightStateless
-        			isVisible={modal.isOpen}
-        			onCloseClicked={(e) => onHideModal(e, modal.job.id)}
-        			title="">
-
-      		  <JobCardModal job={modal.job}
-              questions={modal.questions}
-              onApplyClicked={onApplyClicked}
-      				industries={industries}
-      				answerOne={answerOne}
-      				answerTwo={answerTwo}
-      				updateAnswerField={updateAnswerField}/>
-
-  		    </SkyLightStateless>
-  	      :  ""
-        }
 
         </div>
   	    <div className={overflowFix}></div>
@@ -104,6 +62,38 @@ export default function StudentDashboard ({jobs, handleCardClick, onHideModal, o
   	    <div className={overflowFix}></div>
   	    <div className={overflowFix}></div>
 	    </div>
+
+        {/*MODAL
+           The state of modal is checked first,
+           if it isOpen === true then show the modal
+           else, return empty
+        */}
+
+        { modal.isOpen
+          ? <ReactCSSTransitionGroup 
+              transitionName="cardModal"
+              transitionAppear={true}
+              transitionAppearTimeout={500}
+              transitionEnter={false}
+              transitionLeave={true}
+              transitionLeaveTimeout={500}>
+              <SkyLightStateless
+                  isVisible={modal.isOpen}
+                  onCloseClicked={(e) => onHideModal(e, modal.job.id)}
+                  title="">
+
+                <JobCardModal job={modal.job}
+                  questions={modal.questions}
+                  onApplyClicked={onApplyClicked}
+                  industries={industries}
+                  answerOne={answerOne}
+                  answerTwo={answerTwo}
+                  updateAnswerField={updateAnswerField}/>
+
+              </SkyLightStateless>
+          </ReactCSSTransitionGroup>
+          :  ""
+        }
 	  </div>
    )
 }
@@ -111,4 +101,6 @@ export default function StudentDashboard ({jobs, handleCardClick, onHideModal, o
 StudentDashboard.propTypes = {
 	onHandleClicked: PropTypes.func
 }
+
+
 

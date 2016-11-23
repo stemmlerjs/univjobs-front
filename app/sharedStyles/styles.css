@@ -1,3 +1,7 @@
+.noDecoration {
+  text-decoration: none;
+}
+
 .centeredPage {
   display: flex;
   justify-content: center;

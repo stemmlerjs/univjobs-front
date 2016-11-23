@@ -20,7 +20,7 @@ initializeBodyStyles();
  * */
 reducers.form = formReducers 
 reducers.toastr = toastrReducer
-console.log(reducers)
+
 const appReducer = combineReducers(reducers)
 const rootReducer = (state, action) => {
 

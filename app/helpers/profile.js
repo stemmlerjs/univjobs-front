@@ -124,30 +124,31 @@ export function validateStudentProfileFields(profileInfo, next) {
   //debugger;
   let submitErrorsExist = false;
   let profileFieldErrors = {	
-	emailPreferences: false,
-	firstName: false,
+	  emailPreferences: false,
+	  firstName: false,
    	lastName: false,
   	studentStatus: false,
-	educationLevel: false,
+	  educationLevel: false,
    	school: false,
    	enrollmentDate: false,
    	graduationDate: false,
-	major: false,
+	  major: false,
    	gpa: false,
    	personalEmail: false,
-	gender: false,
+	  gender: false,
    	sportsTeam: false,
    	schoolClub: false,
    	languages: false,
    	hasCar: false,
    	companyName: false,
    	position: false,
-	funFacts: false,
+	  funFacts: false,
    	hometown: false,
    	hobbies: false,
- 	photo: false,
-	resume: false
+ 	  photo: false,
+	  resume: false
   }
+
   profileFieldErrors.emailPreferences = profileInfo.emailPreferences != "" ? false : true
   profileFieldErrors.firstName = validateFirstName(profileInfo.firstName) ? false : true
   profileFieldErrors.lastName = validateLastName(profileInfo.lastName) ? false : true
@@ -157,6 +158,7 @@ export function validateStudentProfileFields(profileInfo, next) {
   profileFieldErrors.enrollmentDate = profileInfo.enrollmentDate != "" ? false : true
   profileFieldErrors.graduationDate = profileInfo.graduationDate != "" ? false : true
   profileFieldErrors.major = profileInfo.major != "" ? false : true
+  debugger;
   profileFieldErrors.gpa = validateGPA(profileInfo.gpa) ? false : true
   profileFieldErrors.personalEmail = validatePersonalEmail(profileInfo.personalEmail) ? false : true
   profileFieldErrors.gender = profileInfo.gender != "" ? false : true

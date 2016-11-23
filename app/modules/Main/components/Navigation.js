@@ -4,7 +4,7 @@ import { nav, leftsideNavItems, rightsideNavItems,
   logoText, noDeco, btn, pseudoBtn, loginIcon} from '../styles/NavigationStyles.css'
 
 
-Navigation.ropTypes = {
+Navigation.propTypes = {
   isAStudent: PropTypes.bool.isRequired,
   onSwitchUserType: PropTypes.func.isRequired,
   onOpenLoginModal: PropTypes.func.isRequired
@@ -14,7 +14,7 @@ export default function Navigation ({isAStudent, onSwitchUserType, onOpenLoginMo
   return (
     <div className={nav}>
       <div className={leftsideNavItems}>
-          <Link to="/" className={noDeco}>
+          <Link to="/join" className={noDeco}>
             <span className={logoText}>UNIVJOBS</span>
           </Link>
       </div>

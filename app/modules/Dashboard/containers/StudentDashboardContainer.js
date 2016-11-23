@@ -221,8 +221,8 @@ const StudentDashboardContainer = React.createClass({
 
   render () {
     return (
-      <div className={pageContainer}>
-      <SidebarContainer />
+      <div className={pageContainer} >
+      <SidebarContainer isAStudent={true}/>
       <StudentDashboard
         jobs={this.props.jobs}
     	  handleCardClick={this.showModal}
