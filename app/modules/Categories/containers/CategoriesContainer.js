@@ -121,7 +121,7 @@ const CategoriesContainer = React.createClass({
   render () {
     return (
       <div className={mainContainer}>
-        <SidebarContainer />
+        <SidebarContainer isAStudent={false} />
         <Title subHeading="I want to post a job for..."/>
         <Categories/>
       </div>

@@ -9,6 +9,8 @@ import { reducer as formReducers } from 'redux-form'
 import { reducer as toastrReducer, ReduxToastr } from 'react-redux-toastr'
 import { initializeBodyStyles } from 'helpers/styles'
 
+window.React = React
+
 // Initialize CSS Styles for BODY tag
 initializeBodyStyles();
 
