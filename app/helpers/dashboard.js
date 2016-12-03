@@ -49,7 +49,6 @@ export function getJobs(store) {
 
  const promise = new Promise((resolve, reject) => {
    store.dispatch(fetchingJobs())
-    debugger
     axios.get(config.baseUrl + 'job/r/list/', {
       headers: {
         'Authorization': 'JWT ' + accessToken,
