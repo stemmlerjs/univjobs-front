@@ -39,6 +39,8 @@ import { fetchingJobs, fetchedJobSuccess, fetchedJobFailure,
   *
   * @param store - Object
   * @return Promise
+  *
+  * NOTE: axios url is job/r/list
   */
 
 export function getJobs(store) {
@@ -47,7 +49,8 @@ export function getJobs(store) {
 
  const promise = new Promise((resolve, reject) => {
    store.dispatch(fetchingJobs())
-    axios.get(config.baseUrl + 'job/', {
+    debugger
+    axios.get(config.baseUrl + 'job/r/list/', {
       headers: {
         'Authorization': 'JWT ' + accessToken,
         'X-CSRFToken' : csrfToken
