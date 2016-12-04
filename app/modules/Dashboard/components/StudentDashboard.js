@@ -12,7 +12,8 @@ import { pageContainer, cardContainer, card, cardHeader,
 	companyContainer, companyInfoContainer, companyTitle,
 	applyButton, cardModalContainer, cardModalHeader, jobModalTitle,
 	jobModalIndustry, cardModalBodyLeft, cardModalBodyRight, cardModalScroll, cardModalFooter,
-	image, questionHeader, overflowFix, pageMainJobCards} from '../styles/StudentDashboard.css'
+	image, questionHeader, overflowFix, pageMainJobCards,
+	buttonContainers, pinIcon} from '../styles/StudentDashboard.css'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
 
@@ -47,9 +48,12 @@ export default function StudentDashboard ({jobs, handleCardClick, onHideModal, o
                 job={job}
                 jobTypes={jobTypes}
                 industries={industries}>
+		        <div className={buttonContainers}>
+              		  <button className={pinIcon + " fa fa-thumb-tack"} aria-hidden="true"/>
       			  <button className={applyButton} onClick={(e) => handleCardClick(e, job)}>
       			    APPLY
       			  </button>
+			 </div>
   		      </GenericCard>
   	    </div>
   	    ))}

@@ -238,3 +238,22 @@
   flex-wrap: wrap;
   justify-content: space-around;
 }
+
+.buttonContainers {
+   display: flex;
+   webkit-flex-direction: row; /* Safari */
+   flex-direction: row;
+}
+
+.pinIcon {
+   background-color: #DCDCE0;
+   border-style: solid;
+   border-right: white;
+   padding: 15px 32px;
+   width: 25%;
+   text-align: center;
+   text-decoration: none;
+   display: inline-block;
+   font-size: 16px;
+   cursor: pointer;
+}
