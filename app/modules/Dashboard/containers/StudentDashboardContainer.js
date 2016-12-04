@@ -111,14 +111,25 @@ const StudentDashboardContainer = React.createClass({
    * @param(q) - Object questions
   */
 
-  showModal (e, j) {
-  	e.preventDefault()
-	console.log('ON SHOW MODAL')
+  showModal(e, j) {
+	e.preventDefault()
+        e.stopPropagation()
+	console.log('ON SHOW MODAL', this)
 	this.context.store.dispatch(actionCreators.modalClicked(j.id))
 
   	//After modal is clicked, get the questions & match the question id with the job id
   	//Once matched, pass the questions inside the modal to supply to questions variables
   	this.context.store.dispatch(actionCreators.showModal(j, this.getQuestions()))
+  },
+
+  /* pinJob 
+   *   This function pins the job, passes the student id and job id,
+   *   then the the ids are given to in the payload to transfer a request
+   * */
+  pinJob(e, job) {
+      e.preventDefault()
+      e.stopPropagation()
+      console.log("DOPE", this)
   },
 
   /* getQuestions
@@ -168,7 +179,7 @@ const StudentDashboardContainer = React.createClass({
    */
 
   applyClicked (e, questions) {
-	  e.preventDefault()
+    e.preventDefault()
 
     // Create Large Object
     let applicationInfo = {
@@ -189,8 +200,7 @@ const StudentDashboardContainer = React.createClass({
 
     // Given that answers fields were populated, continue
   	if (this.props.answer.answerOne && this.props.answer.answerTwo) {
-      debugger;
-      this.context.store.dispatch(this.props.submitAnswers(applicationInfo))
+          this.context.store.dispatch(this.props.submitAnswers(applicationInfo))
 
   		// fetch.studentApply(this.context.store, actionCreators, applicationInfo)
   		// .then(toastr.success("Successfully applied to jobs"))
@@ -199,7 +209,7 @@ const StudentDashboardContainer = React.createClass({
   		// .then(setTimeout(function () {
   		// 	window.location.reload()
   		// 	}, 2000))
-      .catch(toastr.error("Error while trying to apply to job. Try again later."))
+           .catch(toastr.error("Error while trying to apply to job. Try again later."))
 
   	} else {
   		toastr.error("✋ You need to answer the employers question if you want to get a job")
@@ -228,7 +238,8 @@ const StudentDashboardContainer = React.createClass({
     	  handleCardClick={this.showModal}
     	  onHideModal={this.hideModal}
     	  onApplyClicked={this.applyClicked}
-    	  modal={this.props.modal}
+    	  onPinJob={this.pinJob}
+	  modal={this.props.modal}
     	  industries={this.props.industries}
     	  jobTypes={this.props.jobTypes}
     	  questions={this.props.questions}

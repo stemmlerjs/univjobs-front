@@ -40,14 +40,14 @@ export default function JobCardModal({ job, questions, onApplyClicked,
 		    </div>
 		 </div>
 		 <div className={cardModalBodyRight}>
-		   <p className={questionHeader}>{questions[0].text}</p>
+		   <p className={questionHeader}>{questions ? questions[0].text : ''}</p>
 		   <textarea
 		   	rows="6"
 			value={answerOne}
   			onChange={(e) => updateAnswerField('answerOne', e.target.value)}
 		   >	
 		   </textarea>
-		   <p className={questionHeader}>{questions[1].text}</p>
+		   <p className={questionHeader}>{questions ? questions[1].text : ''}</p>
 		   <textarea
 		   	rows="6"
 			value={answerTwo}

@@ -19,7 +19,9 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
 //**NOTE:
 //  Store is accessible
-export default function StudentDashboard ({jobs, handleCardClick, onHideModal, onApplyClicked, modal, jobTypes, industries,
+export default function StudentDashboard ({jobs, handleCardClick, 
+	onHideModal, onApplyClicked, onPinJob,
+	modal, jobTypes, industries,
 	answerOne, answerTwo, updateAnswerField}) {
   console.log("Here are all the jobs", jobs)
   return (
@@ -49,7 +51,9 @@ export default function StudentDashboard ({jobs, handleCardClick, onHideModal, o
                 jobTypes={jobTypes}
                 industries={industries}>
 		        <div className={buttonContainers}>
-              		  <button className={pinIcon + " fa fa-thumb-tack"} aria-hidden="true"/>
+              		  <button className={pinIcon + " fa fa-thumb-tack"} 
+			                    aria-hidden="true" onClick={(e) => onPinJob(e, job)}>
+			  </button>
       			  <button className={applyButton} onClick={(e) => handleCardClick(e, job)}>
       			    APPLY
       			  </button>
