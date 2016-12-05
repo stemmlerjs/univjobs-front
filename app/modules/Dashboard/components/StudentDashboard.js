@@ -13,8 +13,9 @@ import { pageContainer, cardContainer, card, cardHeader,
 	applyButton, cardModalContainer, cardModalHeader, jobModalTitle,
 	jobModalIndustry, cardModalBodyLeft, cardModalBodyRight, cardModalScroll, cardModalFooter,
 	image, questionHeader, overflowFix, pageMainJobCards,
-	buttonContainers, pinIcon} from '../styles/StudentDashboard.css'
+	buttonContainers, pinIcon, fillIcon} from '../styles/StudentDashboard.css'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+import ReactTooltip from 'react-tooltip'
 
 
 //**NOTE:
@@ -51,8 +52,9 @@ export default function StudentDashboard ({jobs, handleCardClick,
                 jobTypes={jobTypes}
                 industries={industries}>
 		        <div className={buttonContainers}>
-              		  <button className={pinIcon + " fa fa-thumb-tack"} 
-			                    aria-hidden="true" onClick={(e) => onPinJob(e, job)}>
+              		  <button className={pinIcon} onClick={(e) => onPinJob(e, job)} data-tip="Pinned!">
+			    <i className={"fa fa-thumb-tack fa-lg " + fillIcon} aria-hidden="true" />
+			    <ReactTooltip place="top" type="dark" effect="float"/>
 			  </button>
       			  <button className={applyButton} onClick={(e) => handleCardClick(e, job)}>
       			    APPLY

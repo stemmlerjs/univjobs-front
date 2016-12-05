@@ -247,7 +247,7 @@
 
 .pinIcon {
    background-color: #DCDCE0;
-   border-style: solid;
+   border-style: none;
    border-right: white;
    padding: 15px 32px;
    margin-right: 2px;
@@ -258,3 +258,8 @@
    font-size: 16px;
    cursor: pointer;
 }
+
+.fillIcon {
+    color: rgb(187, 15, 35); 
+}
+
