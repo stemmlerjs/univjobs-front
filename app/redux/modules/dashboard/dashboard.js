@@ -1,4 +1,4 @@
-import { studentApply, pinAJob } from 'helpers/dashboard'
+import { studentApply, pinAJob, unPinAJob } from 'helpers/dashboard'
 // =======================================================
 // ====================== ACTIONS ========================
 // =======================================================
@@ -181,7 +181,7 @@ export function unPinClicked(job) {
  *         }
  *  NOTE: find the jobId and changed the pinned status to true in the store
  * */
-export function unPinSucess(response) {
+export function unPinSuccess(response) {
    return {
           type: UNPIN_SUCCESS,
 	  response
@@ -297,6 +297,22 @@ export function handlePinJob(job) {
     }//dispatch
 }//handlePinJob
 
+export function handleUnPinJob(job) {
+    return function(dispatch) {
+	    //ACTION: PIN_CLICKED
+	    dispatch(unPinClicked(job))
+	    return unPinAJob({'job': job.id})
+	        .then((resp) => 
+		    //ACTION: UNPIN_SUCCESS
+		    
+		    dispatch(unPinSuccess(resp))
+	        )
+	        .catch((err) => 
+		    //ACTION: UNPIN_FAILURE
+		    dispatch(unPinFailure(err))
+	        )
+    }//dispatch
+}//handlePinJob
 // =======================================================
 // ================== INITIAL STATE ======================
 // =======================================================
@@ -409,11 +425,41 @@ function studentDashboard(state = initialStudentDashboardState, action) {
 			}
 		case PIN_SUCCESS:
    			debugger
+			//Change the attribute for pinned to true locally
+			state.jobs.map((job => {
+			    if(job.id === action.response.data.job) {
+			        job.pinned = true
+			    }
+			}))
 			return {
 			    ...state,
 			    response: action.response
 			}
 		case PIN_FAILURE:
+   			debugger
+			return {
+			    ...state,
+			    error: action.errors
+			}
+		case UNPIN_CLICKED:
+   			debugger
+			return {
+			    ...state,
+			    job: action.jobs
+			}
+		case UNPIN_SUCCESS:
+   			debugger
+			//Change the attribute for pinned to true locally
+			state.jobs.map((job => {
+			    if(job.id === action.response.data.job) {
+			        job.pinned = false
+			    }
+			}))
+			return {
+			    ...state,
+			    response: action.response
+			}
+		case UNPIN_FAILURE:
    			debugger
 			return {
 			    ...state,
@@ -588,6 +634,24 @@ export default function dashboard(state = initialDashboardState, action) {
 				studentDashboard: studentDashboard(state.studentDashboard, action)
 			}
 		case PIN_FAILURE:
+   			debugger
+			return {
+			        ...state,
+				studentDashboard: studentDashboard(state.studentDashboard, action)
+			}
+		case UNPIN_CLICKED:
+   			debugger
+			return {
+			        ...state,
+				studentDashboard: studentDashboard(state.studentDashboard, action)
+			}
+		case UNPIN_SUCCESS:
+   			debugger
+			return {
+			        ...state,
+				studentDashboard: studentDashboard(state.studentDashboard, action)
+			}
+		case UNPIN_FAILURE:
    			debugger
 			return {
 			        ...state,

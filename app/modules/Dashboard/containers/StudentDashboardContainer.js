@@ -113,8 +113,6 @@ const StudentDashboardContainer = React.createClass({
 
   showModal(e, j) {
 	e.preventDefault()
-        e.stopPropagation()
-	console.log('ON SHOW MODAL', this)
 	this.context.store.dispatch(actionCreators.modalClicked(j.id))
 
   	//After modal is clicked, get the questions & match the question id with the job id
@@ -127,6 +125,7 @@ const StudentDashboardContainer = React.createClass({
    *   then the the ids are given to in the payload to transfer a request
    * */
   pinJob(e, job) {
+      debugger
       e.preventDefault()
       e.stopPropagation()
 
@@ -141,7 +140,9 @@ const StudentDashboardContainer = React.createClass({
       //Return success or fail
       if(!job.pinned) {
 	 this.props.handlePinJob(job)
-      }  
+      } else {
+         this.props.handleUnPinJob(job)
+      } 
   },
 
   /* getQuestions

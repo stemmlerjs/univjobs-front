@@ -241,9 +241,9 @@ export function studentApply(data) {
 /**
   * pinAJob
   *
-  *  Performs a POST to  /job/pin/student/ to effecively pin the job.
+  *  Performs a DELETE to  /job/pin/ to effecively pin the job.
   *  @param data - Object
-  *         keys: (store, job)
+  *         keys: (id)
   *  @return Promise
   */
 export function pinAJob(data) {
@@ -252,6 +252,29 @@ export function pinAJob(data) {
 
 		return axios({
 			method: 'post',
+			url: config.baseUrl + 'job/pin/',
+			headers: {
+				'Authorization': 'JWT ' + accessToken,
+				'X-CSRFToken' : csrfToken
+			},
+			data: data
+		})
+}
+
+/**
+  * unPinAJob
+  *
+  *  Performs a DELETE to  /job/pin/ to effecively unpin the job.
+  *  @param data - Object
+  *         keys: (id)
+  *  @return Promise
+  */
+export function unPinAJob(data) {
+	const accessToken = getAccessToken()
+	const csrfToken = getCSRFToken()
+
+		return axios({
+			method: 'delete',
 			url: config.baseUrl + 'job/pin/',
 			headers: {
 				'Authorization': 'JWT ' + accessToken,
