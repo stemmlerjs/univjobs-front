@@ -129,7 +129,19 @@ const StudentDashboardContainer = React.createClass({
   pinJob(e, job) {
       e.preventDefault()
       e.stopPropagation()
-      console.log("DOPE", this)
+
+      //Check if the pinned var is true or false
+      //If true, POST call
+      //Else, DELETE call
+      
+      //POST or DELETE
+      //Get the job_id
+      //Pass the job_id to payload
+      //Pass payload to axios post
+      //Return success or fail
+      if(!job.pinned) {
+	 this.props.handlePinJob(job)
+      }  
   },
 
   /* getQuestions
@@ -155,7 +167,7 @@ const StudentDashboardContainer = React.createClass({
    *         - In what way is the best approach?
    *         - What do we want to achieve out of this?
    *
-  */
+   */
 
   filterQuestions(question) {
 	  console.log("***********FILTER QUESTIONS**********")

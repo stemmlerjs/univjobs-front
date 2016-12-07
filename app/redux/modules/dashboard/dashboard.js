@@ -1,4 +1,4 @@
-import { studentApply } from 'helpers/dashboard'
+import { studentApply, pinAJob } from 'helpers/dashboard'
 // =======================================================
 // ====================== ACTIONS ========================
 // =======================================================
@@ -24,6 +24,14 @@ const MODAL_CLICKED = 'MODAL_CLICKED'
 const SHOW_MODAL = 'SHOW_MODAL'
 const HIDE_MODAL = 'HIDE_MODAL'
 
+const PIN_CLICKED = 'PIN_CLICKED'
+const PIN_SUCCESS = 'PIN_SUCCESS'
+const PIN_FAILURE = 'PIN_FAILURE'
+
+const UNPIN_CLICKED = 'UNPIN_CLICKED'
+const UNPIN_SUCCESS = 'UNPIN_SUCCESS'
+const UNPIN_FAILURE = 'UNPIN_FAILURE'
+
 const UPDATE_ANSWER_FIELD = 'UPDATE_ANSWER_FIELD'
 const SUBMITTING_ANSWERS = 'STUDENT.SUBMITTING_ANSWERS'
 const SUBMIT_ANSWERS_SUCCESS = 'STUDENT.SUBMIT_SUCCESS'
@@ -48,6 +56,7 @@ const FETCHED_INDUSTRIES = 'DASHBOARD.FETCHED_INDUSTRIES'
  *
  * */
 
+/**************GET STUDENTS***********************/
 export function getStudentsSuccess(students) {
 	return {
 		type: GET_STUDENTS_SUCCESS,
@@ -62,6 +71,7 @@ export function getStudentsFailure(error) {
 	}
 }
 
+/**************GET JOBS***********************/
 export function fetchingJobs() {
   return {
 	  type: FETCHING_JOBS,
@@ -82,6 +92,7 @@ export function fetchedJobSuccess(jobs) {
   }
 }
 
+/**************GET QUESTIONS**********************/
 export function fetchingQuestions() {
   return {
 	  type: FETCHING_QUESTIONS,
@@ -102,6 +113,7 @@ export function fetchedQuestionsFailure(error) {
   }
 }
 
+/**************MODALS***********************/
 export function modalClicked(jobId) {
    return {
    	   type: MODAL_CLICKED,
@@ -123,6 +135,67 @@ export function hideModal(jobId) {
    }
 }
 
+/**************PINS***********************/
+function pinClicked(job) {
+   return {
+   	  type: PIN_CLICKED,
+	  job,
+   }
+}
+
+/* Returns a success reponse
+ *  @params(response) an object containing:
+ *         { pinned: True, 
+ *           jobId: number 
+ *         }
+ *  NOTE: find the jobId and changed the pinned status to true in the store
+ * */
+function pinSuccess(response) {
+   debugger
+   return {
+          type: PIN_SUCCESS,
+	  response
+   }
+}
+
+function pinFailure(error) {
+   debugger
+   return {
+          type: PIN_FAILURE,
+	  error,
+   }
+}
+
+/**************UNPINS***********************/
+export function unPinClicked(job) {
+   return {
+   	  type: UNPIN_CLICKED,
+	  job,
+   }
+}
+
+/* Returns a success reponse
+ *  @params(response) an object containing:
+ *         { pinned: False, 
+ *           jobId: number 
+ *         }
+ *  NOTE: find the jobId and changed the pinned status to true in the store
+ * */
+export function unPinSucess(response) {
+   return {
+          type: UNPIN_SUCCESS,
+	  response
+   }
+}
+
+export function unPinFailure(error) {
+   return {
+          type: UNPIN_FAILURE,
+	  error,
+   }
+}
+
+/**********FETCHLIST**********************/
 export function fetchList(listName, listArray) {
 	switch(listName) {
 		case 'INDUSTRIES': {
@@ -144,6 +217,7 @@ export function fetchList(listName, listArray) {
 	}
 }//fetchList
 
+/**************UPDATE FIELDS***********************/
 export function updateAnswerField(fieldName, newValue) {
   return {
 	  type: UPDATE_ANSWER_FIELD,
@@ -151,6 +225,8 @@ export function updateAnswerField(fieldName, newValue) {
 	  fieldName
   }
 }
+
+/**************SUBMIT ANSWERS***********************/
 /*NOTE:
  *  Pass the questionIds with the associated answers
  * */
@@ -170,7 +246,6 @@ export function submitAnswers(answersData) {
 
 				})
 				.catch((err) => {
-					debugger;
 					// DISPATCH (SUBMIT_ANSWERS_FAILURE)
 						dispatch(submitAnswersFailure())
 
@@ -199,6 +274,29 @@ export function submitAnswersFailure(error) {
 	  	error
    }
 }
+
+// =======================================================
+// ===================== THUNK ===========================
+// =======================================================
+// REF: https://github.com/ReactjsProgram/Redux-Immutable/commit/c1b261b21150e472c6199dcda7bcb792a81678f8
+// https://online.reacttraining.com/courses/redux-and-immutablejs/lectures/946352
+export function handlePinJob(job) {
+    return function(dispatch) {
+	    //ACTION: PIN_CLICKED
+	    dispatch(pinClicked(job))
+	    return pinAJob({'job': job.id})
+	        .then((resp) => 
+		    //ACTION: PIN_SUCCESS
+		    
+		    dispatch(pinSuccess(resp))
+	        )
+	        .catch((err) => 
+		    //ACTION: PIN_FAILURE
+		    dispatch(pinFailure(err))
+	        )
+    }//dispatch
+}//handlePinJob
+
 // =======================================================
 // ================== INITIAL STATE ======================
 // =======================================================
@@ -224,6 +322,7 @@ const initialStudentDashboardState = {
 	error: '',
 	jobs: [],
 	questions: [],
+	pin: []
 }
 
 const intialModalState = {
@@ -247,6 +346,9 @@ const intialAnswersState = {
 	serverMessage: '',
 	isSubmitting: false
 }
+
+   
+
 // =======================================================
 // ===================== REDUCERS ========================
 // =======================================================
@@ -298,6 +400,24 @@ function studentDashboard(state = initialStudentDashboardState, action) {
 				...state,
 				isFetching: false,
 				error: action.error,
+			}
+		case PIN_CLICKED:
+   			debugger
+			return {
+			    ...state,
+			    job: action.jobs
+			}
+		case PIN_SUCCESS:
+   			debugger
+			return {
+			    ...state,
+			    response: action.response
+			}
+		case PIN_FAILURE:
+   			debugger
+			return {
+			    ...state,
+			    error: action.errors
 			}
 		default:	
 			return state 
@@ -454,6 +574,24 @@ export default function dashboard(state = initialDashboardState, action) {
 			return {
 				...state,
 				answer: answer(state.answer, action)
+			}
+		case PIN_CLICKED:
+   			debugger
+			return {
+			        ...state,
+				studentDashboard: studentDashboard(state.studentDashboard, action)
+			}
+		case PIN_SUCCESS:
+   			debugger
+			return {
+			        ...state,
+				studentDashboard: studentDashboard(state.studentDashboard, action)
+			}
+		case PIN_FAILURE:
+   			debugger
+			return {
+			        ...state,
+				studentDashboard: studentDashboard(state.studentDashboard, action)
 			}
 		default:
 			return state

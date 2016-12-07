@@ -237,3 +237,26 @@ export function studentApply(data) {
 		})
 	})
 }
+
+/**
+  * pinAJob
+  *
+  *  Performs a POST to  /job/pin/student/ to effecively pin the job.
+  *  @param data - Object
+  *         keys: (store, job)
+  *  @return Promise
+  */
+export function pinAJob(data) {
+	const accessToken = getAccessToken()
+	const csrfToken = getCSRFToken()
+
+		return axios({
+			method: 'post',
+			url: config.baseUrl + 'job/pin/',
+			headers: {
+				'Authorization': 'JWT ' + accessToken,
+				'X-CSRFToken' : csrfToken
+			},
+			data: data
+		})
+}
