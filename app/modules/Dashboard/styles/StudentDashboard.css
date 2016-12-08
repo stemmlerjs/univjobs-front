@@ -259,7 +259,15 @@
    cursor: pointer;
 }
 
-.fillIcon {
-    color: rgb(187, 15, 35); 
+.rotateIcon {
+
 }
 
+ .pinIcon:focus .rotateIcon {
+    -webkit-animation: spin 4s 1 linear;
+}
+
+  @keyframes spin {
+	0% {-webkit-transform: rotate(0deg);}
+	100% {-webkit-transform: rotate(360deg);}
+  }

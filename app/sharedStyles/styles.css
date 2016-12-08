@@ -311,10 +311,10 @@
     height: 0px;
   }
 
+
   .sidebarItem:hover .animationTxt7 {
     height: 18px;
   }
-
 
 .sidebarItem:nth-of-type(6) {
   border-bottom: solid #707980 1px;

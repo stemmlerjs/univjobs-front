@@ -129,6 +129,8 @@ const StudentDashboardContainer = React.createClass({
       e.preventDefault()
       e.stopPropagation()
 
+      //Figure out a way to rotate pin
+      console.log(event)
       //Check if the pinned var is true or false
       //If true, POST call
       //Else, DELETE call
