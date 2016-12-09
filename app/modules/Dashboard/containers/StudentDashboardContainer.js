@@ -239,6 +239,10 @@ const StudentDashboardContainer = React.createClass({
   	.then(this.props.closeOverlay())
   },
 
+  /*
+  shouldComponentUpdate() {
+    debugger
+  },*/
 
   componentWillUnmount() {
     console.log("Component WillUnmount")
@@ -261,6 +265,7 @@ const StudentDashboardContainer = React.createClass({
     	  answerOne={this.props.answer.answerOne}
     	  answerTwo={this.props.answer.answerTwo}
     	  updateAnswerField={this.props.updateAnswerField}
+	  pin={this.props.pin}
 	    />
 
 	  <ReduxToastr
@@ -287,6 +292,7 @@ function mapStateToProps({user, dashboard}) {
 	  industries : dashboard.studentDashboard.jobs ? dashboard.lists.industries : [],
 	  jobTypes : dashboard.studentDashboard.jobs ? dashboard.lists.jobTypes : [],
 	  answer : dashboard.studentDashboard.questions ? dashboard.answer : {},
+	  pin: dashboard.studentDashboard.response ? dashboard.studentDashboard.pin : {},
   }
 }
 

@@ -13,10 +13,9 @@ import { pageContainer, cardContainer, card, cardHeader,
 	applyButton, cardModalContainer, cardModalHeader, jobModalTitle,
 	jobModalIndustry, cardModalBodyLeft, cardModalBodyRight, cardModalScroll, cardModalFooter,
 	image, questionHeader, overflowFix, pageMainJobCards,
-	buttonContainers, pinIcon, rotateIcon} from '../styles/StudentDashboard.css'
+	buttonContainers, pinIcon, fillIcon, unFillIcon, rotateIcon} from '../styles/StudentDashboard.css'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import ReactTooltip from 'react-tooltip'
-
 
 //**NOTE:
 //  Store is accessible
@@ -24,7 +23,6 @@ export default function StudentDashboard ({jobs, handleCardClick,
 	onHideModal, onApplyClicked, onPinJob,
 	modal, jobTypes, industries,
 	answerOne, answerTwo, updateAnswerField}) {
-  console.log("Here are all the jobs", jobs)
   return (
 	<div className={rootComponentContainer}>
 	  <div className={margin}>
@@ -52,8 +50,13 @@ export default function StudentDashboard ({jobs, handleCardClick,
                 jobTypes={jobTypes}
                 industries={industries}>
 		        <div className={buttonContainers}>
-              		  <button className={pinIcon} onClick={(e) => onPinJob(e, job)} data-tip="Pinned!">
-			    <i className={rotateIcon + " fa fa-thumb-tack fa-lg"} aria-hidden="true" />
+              		  <button className={pinIcon} 
+			      onClick={(e) => onPinJob(e, job)} 
+			      data-tip="Pinned!">
+			    <i 
+			        className={job.pinned ? rotateIcon + " fa fa-thumb-tack fa-lg " + fillIcon : rotateIcon + " fa fa-thumb-tack fa-lg"} 
+			    	aria-hidden="true" 
+			    />
 			    <ReactTooltip place="top" type="dark" effect="float"/>
 			  </button>
       			  <button className={applyButton} onClick={(e) => handleCardClick(e, job)}>

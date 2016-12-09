@@ -154,6 +154,7 @@ function pinSuccess(response) {
    debugger
    return {
           type: PIN_SUCCESS,
+	  fill: {color: 'red'},
 	  response
    }
 }
@@ -184,6 +185,7 @@ export function unPinClicked(job) {
 export function unPinSuccess(response) {
    return {
           type: UNPIN_SUCCESS,
+	  fill: {color: 'none'},
 	  response
    }
 }
@@ -338,9 +340,15 @@ const initialStudentDashboardState = {
 	error: '',
 	jobs: [],
 	questions: [],
-	pin: []
+	pin: {},
 }
 
+const intialPinState = {
+	job: '',
+	response: '',
+	error: '',
+	pinColor: ''
+}
 const intialModalState = {
 	isClicked: false,
 	isOpen: false,
@@ -420,6 +428,50 @@ function studentDashboard(state = initialStudentDashboardState, action) {
 		case PIN_CLICKED:
    			debugger
 			return {
+				...state,
+				pin: pin(state, action)
+			}
+		case PIN_SUCCESS:
+   			debugger
+			return {
+				...state,
+				pin: pin(state, action)
+			}
+		case PIN_FAILURE:
+   			debugger
+			return {
+				...state,
+				pin: pin(state, action)
+			}
+		case UNPIN_CLICKED:
+   			debugger
+			return {
+				...state,
+				pin: pin(state, action)
+			}
+		case UNPIN_SUCCESS:
+   			debugger
+			return {
+				...state,
+				pin: pin(state, action)
+			}
+		case UNPIN_FAILURE:
+   			debugger
+			return {
+				...state,
+				pin: pin(state, action)
+			}
+		default:	
+			return state 
+	}
+}
+
+
+function pin(state = intialPinState, action) {	
+	switch(action.type) {
+		case PIN_CLICKED:
+   			debugger
+			return {
 			    ...state,
 			    job: action.jobs
 			}
@@ -433,7 +485,8 @@ function studentDashboard(state = initialStudentDashboardState, action) {
 			}))
 			return {
 			    ...state,
-			    response: action.response
+			    response: action.response,
+			    pinColor: action.fill,
 			}
 		case PIN_FAILURE:
    			debugger
@@ -457,7 +510,8 @@ function studentDashboard(state = initialStudentDashboardState, action) {
 			}))
 			return {
 			    ...state,
-			    response: action.response
+			    response: action.response,
+			    pinColor: action.fill,
 			}
 		case UNPIN_FAILURE:
    			debugger
@@ -466,7 +520,9 @@ function studentDashboard(state = initialStudentDashboardState, action) {
 			    error: action.errors
 			}
 		default:	
-			return state 
+			return {
+				state
+			}//switch
 	}
 }
 

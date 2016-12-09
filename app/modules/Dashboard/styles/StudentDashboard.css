@@ -259,6 +259,14 @@
    cursor: pointer;
 }
 
+.unFillIcon {
+  color: none;
+}
+
+.fillIcon {
+  color: red;
+}
+
 .rotateIcon {
 
 }
