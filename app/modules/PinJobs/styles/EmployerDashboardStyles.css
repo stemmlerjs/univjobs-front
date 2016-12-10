@@ -1,0 +1,68 @@
+/*Copied to sharedStyles.css*/
+.margins {
+  margin-left: 3%;
+  margin-right: 3%;
+}
+
+/*Copied to sharedStyles.css*/
+.pageHeaderSection {
+
+}
+
+/*Copied to sharedStyles.css*/
+.pageTitle {
+
+}
+
+
+/*Copied to sharedStyles.css*/
+.title {
+  font-size:37px;
+}
+
+.pageFiltersAndSearch {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-left: 25px;
+  margin-right: 25px;
+}
+
+.pageMainStudentCards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.input {
+  composes: input from 'sharedStyles/styles.css';
+}
+
+.campusDropdown {
+  flex-grow: 2;
+}
+
+.gradDateDropdown {
+  flex-grow: 2;
+}
+
+.filtersDivider {
+  flex-grow: 10;
+}
+
+/*NOTE: Thanks for referrencing this! 
+ * I believe it's good practice to do this!
+ * 
+ * Check out this hack: http://stackoverflow.com/questions/18744164/flex-box-align-last-row-to-grid
+    Doing this to be able to align the last row to the grid.
+*/
+
+.overflowFix {
+  list-style: none;
+  margin: 10px;
+  padding: 0px;
+  align-items: flex-start;
+  width: 300px;
+  padding-left: 15px;
+  padding-right: 15px;
+}

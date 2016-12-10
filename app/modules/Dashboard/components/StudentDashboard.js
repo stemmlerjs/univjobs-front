@@ -22,7 +22,7 @@ import ReactTooltip from 'react-tooltip'
 export default function StudentDashboard ({jobs, handleCardClick, 
 	onHideModal, onApplyClicked, onPinJob,
 	modal, jobTypes, industries,
-	answerOne, answerTwo, updateAnswerField}) {
+	answerOne, answerTwo, updateAnswerField, pin}) {
   return (
 	<div className={rootComponentContainer}>
 	  <div className={margin}>
