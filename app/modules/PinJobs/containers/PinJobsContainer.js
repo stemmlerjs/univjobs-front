@@ -2,12 +2,13 @@ import React, { Component, PropTypes } from 'react'
 import { SidebarContainer } from 'modules/Main'
 import { PinJobs } from 'modules/PinJobs'
 import { pageContainer } from '../styles/index.css'
-import axios from 'axios'
 import * as list from 'helpers/lists'
+import * as fetch from 'helpers/pinJobs'
 // =============REDUX STATE & IMPORTS========================== //
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as userActionCreators from 'redux/modules/user/user'
+import * as pinJobsActionCreators from 'redux/modules/pinJobs/pinJobs'
 import { authRedirectFilter } from 'config/routes'
 // ============================================================ //
 
@@ -19,6 +20,7 @@ import {toastr} from 'react-redux-toastr'
 
 const actionCreators = {
   ...userActionCreators,
+  ...pinJobsActionCreators
 }
 
 const PinJobsContainer = React.createClass({
@@ -54,7 +56,13 @@ const PinJobsContainer = React.createClass({
 
   componentWillMount() {
   	console.log("componentWillMount")
-  	this.props.closeOverlay()
+	debugger
+	this.doRedirectionFilter()
+	.then(this.props.handleGetPinnedJobs())
+	.then(this.props.handleGetQuestions())
+	.then(this.props.handleGetIndustries())
+	.then(this.props.handleGetJobTypes())
+	.then(this.props.closeOverlay())
   },
 
   componentWillUnmount() {
@@ -77,9 +85,10 @@ const PinJobsContainer = React.createClass({
 // @params ({user}) contains BaseUser & Employer attributes
 // */
 
-function mapStateToProps({user}) {
+function mapStateToProps({user, pinJobs}) {
   return {
 	  user: user ? user : {},
+	  pinJobs: pinJobs ? pinJobs : {}
   }
 }
 

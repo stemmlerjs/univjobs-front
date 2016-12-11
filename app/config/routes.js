@@ -19,7 +19,7 @@ export default function getRoutes() {
 	  <Route path='/dashboard/st' component={StudentDashboardContainer} />
           <Route path='/dashboard/em' component={EmployerDashboardContainer} />
           <Route path='/myapplications/st' component={ApplicationsContainer} />
-          <Route path='/mypinjobs/st' component={PinJobsContainer} />
+          <Route path='/pinnedjobs' component={PinJobsContainer} />
         </Route>
     </Router>
   )
