@@ -54,14 +54,31 @@ const PinJobsContainer = React.createClass({
      return authRedirectFilter(config, this.context.store, this.context.router)
   },
 
+  /** showModal
+   *
+   * This function takes in the submit event & the job id
+   * It calls a dispatch modalCliked & showModal(id)
+   * Once the store is notified, a reducer should be activated to find the appropriate job info,
+   * then supplies the modal the appropraite job info
+   * After, the modal appears to the user of the job info they pressed
+   *
+   * @param(e) - DOM event
+   * @param(j) - Object job
+   * @param(q) - Object questions
+  */
+
+  showModal(e, j) {
+	e.preventDefault()
+	console.log("Test")
+  },
+
   componentWillMount() {
   	console.log("componentWillMount")
-	debugger
 	this.doRedirectionFilter()
-	.then(this.props.handleGetPinnedJobs())
-	.then(this.props.handleGetQuestions())
 	.then(this.props.handleGetIndustries())
 	.then(this.props.handleGetJobTypes())
+	.then(this.props.handleGetPinnedJobs())
+	.then(this.props.handleGetQuestions())
 	.then(this.props.closeOverlay())
   },
 
@@ -73,7 +90,12 @@ const PinJobsContainer = React.createClass({
     return (
       <div className={pageContainer} >
           <SidebarContainer isAStudent={true}/>
-          <PinJobs/>
+          <PinJobs
+	      handleCardClick={this.showModal}
+	      jobs={this.props.jobs ? this.props.jobs : ''}
+	      industries={this.props.industries ? this.props.industries : ''}
+	      jobTypes={this.props.jobTypes ? this.props.jobTypes : ''}
+	  />
       </div>
     )
   },
@@ -88,7 +110,9 @@ const PinJobsContainer = React.createClass({
 function mapStateToProps({user, pinJobs}) {
   return {
 	  user: user ? user : {},
-	  pinJobs: pinJobs ? pinJobs : {}
+	  jobs: pinJobs.jobs.data ? pinJobs.jobs.data : '',
+	  industries: pinJobs.industries.data ? pinJobs.jobs.data : '',
+	  jobTypes: pinJobs.jobTypes.data ? pinJobs.jobTypes.data : ''
   }
 }
 

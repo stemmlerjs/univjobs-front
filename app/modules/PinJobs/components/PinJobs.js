@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react'
 
 /*NOTE: JobCardModal most likely can be reused*/
 import { JobCardModal } from 'modules/Dashboard'
-import { GenericCard, DASHBOARD_CARD_TYPE } from 'modules/SharedComponents'
+import { GenericCard, PINNED_JOBS_CARD_TYPE } from 'modules/SharedComponents'
 import { SkyLightStateless } from 'react-skylight'
 import { rootComponentContainer, margin, pageHeaderSection,
 	pageTitle, title} from 'sharedStyles/styles.css'
@@ -22,9 +22,37 @@ import ReactTooltip from 'react-tooltip'
 //**NOTE:
 //  Store is accessible
 //  Follow Dasboard StudentDashbaord for Job & Pin functionality and display
-export default function PinJobs () {
+export default function PinJobs ({handleCardClick, jobs, industries, jobTypes}) {
+	console.log(jobs)
   return (
-	<div>MY PINNED JOBS</div>
+	<div className={rootComponentContainer}>
+	    <div className={margin}>
+  	        {/* TITLE */}
+  	        <div className={pageHeaderSection}>
+  	    	    <div className={pageTitle}>
+  	      	        <h1 className={title}>MY PINNED JOBS</h1>
+  	             </div>
+  	         </div>
+  	   	<div className={pageMainJobCards}>
+		      {jobs ? jobs.map((job) => (
+					      <div key={job.id}>
+					          <GenericCard
+						      handleCardClick={handleCardClick}
+						      cardType={PINNED_JOBS_CARD_TYPE}
+						      job={job}
+						      jobTypes={jobTypes}
+						      industries={industries}
+						   >
+						       <div className={buttonContainers}>
+						           <button className={pinIcon}/>
+							   <button className={applyButton}/>
+						       </div>
+						   </GenericCard>
+						</div>
+					      )) : '' }
+		</div>
+	</div>
+    </div>
   )
 }
 

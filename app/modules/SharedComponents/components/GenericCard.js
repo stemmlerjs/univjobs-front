@@ -185,7 +185,72 @@ export default function GenericCard({ cardType, job, jobTypes, industries, handl
             {/* ======================= PINNED JOBS CARD ========================== */}
             {/* =================================================================== */}
 
-            return <div>PINNED JOBS CARD</div>
+            return <div onClick={(e) => handleCardClick(e, job)}>
+                <div className={card}>
+                  <header className={cardHeader}>
+                    {/*JOB TYPES*/}
+                    <span>
+                      <p>{ jobTypes ? jobTypes[job.type].jobtype : ''}</p>
+                    </span>
+                  </header>
+
+                  {/* JOB TITLE */}
+                  <div className={jobTitleContainer}>
+                    <h2 className={jobTitle}>{job ? job.title : ''}</h2>
+                  </div>
+
+                  {/* TODO: Point to industry  */}
+                  <h3 className={industryTitle}>
+                  { industries[job.business.industry].industry }</h3>
+
+                  {/* TAGS */}
+                  <div>
+                    <ul className={tagContainer}>
+                      <li className={tagElement}>
+                        <span>Test</span>
+                      </li>
+
+                      <li className={tagElement}>
+                        <span>Test</span>
+                      </li>
+
+                      <li className={tagElement}>
+                        <span>Test</span>
+                      </li>
+
+                      <li className={tagElement}>
+                        <span>Test</span>
+                      </li>
+                    </ul>
+                  </div>
+
+                  {/*TODO: Point to imaga within job object*/}
+                  <div>
+                    <ul className={companyContainer}>
+                      <li>
+                        <div className={crop}>
+                          <img src="https://s3.amazonaws.com/univjobs/logo/2016/09/30/Happy+Birthday+Joey+Ramone.jpg" alt="Smiley face" />
+                        </div>
+                      </li>
+
+                      <li>
+                        <ul className={companyInfoContainer}>
+                          <li>
+                            <h4 className={companyTitle}>{ job ? job.business.company_name : ''}</h4>
+                          </li>
+
+                          <li>
+                            <a href={ job ? job.business.website : ''} target="_blank">{job.business.description}</a>
+                          </li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </div>
+
+                { children }
+
+              </div>
+            </div>
           default:
             return <div>NO SWAG</div>
         }

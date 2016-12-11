@@ -40,8 +40,6 @@ const FETCHED_INDUSTRIES_SUCCESS = 'FETCHED_INDUSTRIES_SUCCESS'
 const FETCHED_INDUSTRIES_FAILURE = 'FETCHING_INDUSTRIES_FAILURE'
 
 const FETCHING_LIST = 'FETCHING_LIST'
-const FETCHED_LIST_SUCCESS = 'FETCHED_LIST_SUCCESS'
-const FETCHING_LIST_FAILURE = 'FETCHED_LIST_FAILURE'
 // =======================================================
 // ================== ACTIONS CREATORS ===================
 // =======================================================
@@ -119,10 +117,10 @@ export function fetchingJobTypes() {
   }
 }
 
-export function fetchedJobTypesSuccess(industries) {
+export function fetchedJobTypesSuccess(jobTypes) {
    return {
 	   type: FETCHED_JOB_TYPES_SUCCESS,
-	   industries
+	   jobTypes
   }
 }
 
@@ -184,27 +182,6 @@ export function unPinFailure(response) {
    }
 }
 
-/**********FETCHLIST**********************/
-export function fetchList(listName, listArray) {
-	switch(listName) {
-		case 'INDUSTRIES': {
-		     return {
-			     type: FETCHED_LIST,
-			     listType: FETCHED_INDUSTRIES,
-			     list: listArray
-		     }
-		}
-		case 'JOB_TYPES': {
-		    return {
-			    type: FETCHED_LIST,
-		  	    listType: FETCHED_JOB_TYPES,
-			    list: listArray
-		    }
-		}
-		default:
-		     return 
-	}
-}//fetchList
 
 /**************UPDATE FIELDS***********************/
 export function updateAnswerField(fieldName, newValue) {
@@ -371,10 +348,6 @@ const intialModalState = {
 	job: ''
 }
 
-const initialListState = {
-	jobTypes: [],
-	industries: []
-}
 
 const intialAnswersState = {
 	jobId: '',
@@ -574,24 +547,6 @@ function modal(state = intialModalState, action) {
 	}
 }
 
-function lists (state = initialListState, action) {
-	switch(action.listType) {
-	    case FETCHED_INDUSTRIES:
-		return {
-		    ...state,
-		    industries: action.list
-		}
-
-	    case FETCHED_JOB_TYPES:
-		return {
-		    ...state,
-		    jobTypes: action.list
-		}
-	    default: 
-		return state
-
-	}
-}
 function answer(state = initialAnswerState, action) {
 	switch(action.type) {
 		case UPDATE_ANSWER_FIELD:

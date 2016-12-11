@@ -253,12 +253,12 @@ const StudentDashboardContainer = React.createClass({
       <div className={pageContainer} >
       <SidebarContainer isAStudent={true}/>
       <StudentDashboard
-        jobs={this.props.jobs}
     	  handleCardClick={this.showModal}
     	  onHideModal={this.hideModal}
     	  onApplyClicked={this.applyClicked}
     	  onPinJob={this.pinJob}
 	  modal={this.props.modal}
+	  jobs={this.props.jobs}
     	  industries={this.props.industries}
     	  jobTypes={this.props.jobTypes}
     	  questions={this.props.questions}
