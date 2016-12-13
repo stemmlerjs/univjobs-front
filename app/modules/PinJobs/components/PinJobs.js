@@ -22,8 +22,10 @@ import ReactTooltip from 'react-tooltip'
 //**NOTE:
 //  Store is accessible
 //  Follow Dasboard StudentDashbaord for Job & Pin functionality and display
-export default function PinJobs ({handleCardClick, jobs, industries, jobTypes}) {
-	console.log(jobs)
+export default function PinJobs ({handleCardClick, jobs, industries, 
+				  jobTypes, questions, onPinJob,
+				  modal, onHideModal, onApplyClicked}) {
+	console.log(questions, "Questions")
   return (
 	<div className={rootComponentContainer}>
 	    <div className={margin}>
@@ -44,14 +46,54 @@ export default function PinJobs ({handleCardClick, jobs, industries, jobTypes}) 
 						      industries={industries}
 						   >
 						       <div className={buttonContainers}>
-						           <button className={pinIcon}/>
-							   <button className={applyButton}/>
+						           <button className={pinIcon}
+							       onClick={(e) => onPinJob(e, job)}
+							    >
+							        <i className={rotateIcon + " fa fa-thumb-tack fa-lg " + fillIcon} 
+							     	   aria-hidden="true"
+							     />
+							   </button>
+							   <button className={applyButton}
+							       onClick={(e) => handleCardClick(e, job)}
+							   >
+							       APPLY
+							   </button>
 						       </div>
 						   </GenericCard>
 						</div>
 					      )) : '' }
 		</div>
+  	    	    <div className={overflowFix}></div>
+  	    	    <div className={overflowFix}></div>
+  	    	    <div className={overflowFix}></div>
+  	    	    <div className={overflowFix}></div>
 	</div>
+
+        {/*MODAL
+           The state of modal is checked first,
+           if it isOpen === true then show the modal
+           else, return empty
+        */}
+        { modal.isOpen
+          ? <ReactCSSTransitionGroup 
+              transitionName="cardModal"
+              transitionAppear={true}
+              transitionAppearTimeout={500}
+              transitionEnter={false}
+              transitionLeave={true}
+              transitionLeaveTimeout={500}>
+              <SkyLightStateless
+                  isVisible={modal.isOpen}
+                  onCloseClicked={(e) => onHideModal(e, modal.job.id)}
+                  title=""
+	      >
+
+
+              </SkyLightStateless>
+          </ReactCSSTransitionGroup>
+          :  ""
+        }
+
     </div>
   )
 }

@@ -20,6 +20,7 @@ const FETCHED_QUESTIONS_FAILURE = 'FETCHED_QUESTIONS_FAILURE'
 const MODAL_CLICKED = 'MODAL_CLICKED'
 const SHOW_MODAL = 'SHOW_MODAL'
 const HIDE_MODAL = 'HIDE_MODAL'
+const MODAL_FAILURE = 'HIDE_MODAL'
 
 const UNPIN_CLICKED = 'UNPIN_CLICKED'
 const UNPIN_SUCCESS = 'UNPIN_SUCCESS'
@@ -146,7 +147,7 @@ export function showModal(job, questions) {
    }
 }
 
-export function hideModal(jobId) {
+export function hideModal() {
    return {
           type: HIDE_MODAL
    }
@@ -318,7 +319,8 @@ export function handleUnPinJob(job) {
 		    dispatch(unPinFailure(err))
 	        )
     }//dispatch
-}//handlePinJob
+}//handleUnPinJob
+
 // =======================================================
 // ================== INITIAL STATE ======================
 // =======================================================
@@ -344,8 +346,9 @@ const intialPinState = {
 const intialModalState = {
 	isClicked: false,
 	isOpen: false,
+	job: '',
 	jobId: '',
-	job: ''
+	questions: '' 
 }
 
 
@@ -525,7 +528,7 @@ function modal(state = intialModalState, action) {
 			return {
 				...state,
 				isClicked: true,
-				jobId: action.jobId,
+				job: action.job,
 			}
 		case SHOW_MODAL:
 			return {
@@ -535,6 +538,12 @@ function modal(state = intialModalState, action) {
 				questions: action.questions
 			}
 		case HIDE_MODAL:
+			return {
+				...state,
+				isClicked: false,
+				isOpen: false,
+			}
+		case MODAL_FAILURE:
 			return {
 				...state,
 				isClicked: false,
