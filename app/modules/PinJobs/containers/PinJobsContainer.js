@@ -131,13 +131,14 @@ const PinJobsContainer = React.createClass({
 
   filterQuestions(question) {
 	  console.log("***********FILTER QUESTIONS**********")
-	  return question.job === this.context.store.getState().dashboard.modal.jobId
+		  debugger
+	  return question.job === this.context.store.getState().pinJobs.modal.jobId
   },
 
   hideModal (e, id) {
   	this.context.store.dispatch(actionCreators.hideModal(id))
-  	this.context.store.getState().dashboard.answer.answerOne = ''
-  	this.context.store.getState().dashboard.answer.answerTwo = ''
+  	this.context.store.getState().pinJobs.answer.answerOne = ''
+  	this.context.store.getState().pinJobs.answer.answerTwo = ''
   },
   /** applyClicked
    *
@@ -147,21 +148,21 @@ const PinJobsContainer = React.createClass({
 
   applyClicked (e, questions) {
     e.preventDefault()
-    console.log(questions)
+    console.log("Apply Clicked")
     /* Create Large Object
     let applicationInfo = {
-      "job": this.context.store.getState().dashboard.modal.jobId,
+      "job": this.context.store.getState().pinJobs.modal.jobId,
       "students": this.context.store.getState().user.email,
       "answers": [{
         "question": questions[0].id,
         "student": this.context.store.getState().user.email,
         "text": this.props.answer.answerOne,
-        "job": this.context.store.getState().dashboard.modal.jobId,
+        "job": this.context.store.getState().pinJobs.modal.jobId,
       }, {
         "question": questions[1].id,
         "student": this.context.store.getState().user.email,
         "text": this.props.answer.answerTwo,
-        "job": this.context.store.getState().dashboard.modal.jobId,
+        "job": this.context.store.getState().pinJobs.modal.jobId,
       }]
     }
 
@@ -211,6 +212,7 @@ const PinJobsContainer = React.createClass({
 	      industries={this.props.industries ? this.props.industries : ''}
 	      jobTypes={this.props.jobTypes ? this.props.jobTypes : ''}
 	      questions={this.props.questions ? this.props.questions : ''}
+	      answer={this.props.answer ? this.props.answer : ''}
 	  />
       </div>
     )
@@ -230,6 +232,7 @@ function mapStateToProps({user, pinJobs}) {
 	  industries: pinJobs.industries.data ? pinJobs.industries.data : '',
 	  jobTypes: pinJobs.jobTypes.data ? pinJobs.jobTypes.data : '',
 	  questions: pinJobs.questions.data ? pinJobs.questions.data : '',
+	  answer: pinJobs.questions.data ? pinJobs.answers : '',
 	  modal: pinJobs.modal ? pinJobs.modal : ''
   }
 }

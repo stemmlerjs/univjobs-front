@@ -358,7 +358,7 @@ const intialAnswersState = {
 	questionTwoId: '',
 	answerOne: '',
 	answerTwo: '',
-	serverMessage: '',
+	response: '',
 	isSubmitting: false
 }
 
@@ -528,7 +528,7 @@ function modal(state = intialModalState, action) {
 			return {
 				...state,
 				isClicked: true,
-				job: action.job,
+				jobId: action.jobId,
 			}
 		case SHOW_MODAL:
 			return {
@@ -538,12 +538,6 @@ function modal(state = intialModalState, action) {
 				questions: action.questions
 			}
 		case HIDE_MODAL:
-			return {
-				...state,
-				isClicked: false,
-				isOpen: false,
-			}
-		case MODAL_FAILURE:
 			return {
 				...state,
 				isClicked: false,
@@ -564,22 +558,24 @@ function answer(state = initialAnswerState, action) {
 				[action.fieldName]: action.newValue,
 			}
 		case SUBMITTING_ANSWERS:
+			debugger
 			return {
 				...state,
 				isSubmitting: true
 			}		
 		case SUBMIT_ANSWERS_SUCCESS:
+			debugger
 			return {
 				...state,
-				serverMessage: action.serverMessage,
+				response: action.response,
 				isSubmitting: false
 			}
 		case SUBMIT_ANSWERS_FAILURE:
+			debugger
 			return {
 				...state,
-				serverMessage: action.serverMessage,
+				response: action.response,
 				isSubmitting: false,
-				error: action.error
 			}
 		default:
 			return state

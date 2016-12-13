@@ -24,8 +24,9 @@ import ReactTooltip from 'react-tooltip'
 //  Follow Dasboard StudentDashbaord for Job & Pin functionality and display
 export default function PinJobs ({handleCardClick, jobs, industries, 
 				  jobTypes, questions, onPinJob,
-				  modal, onHideModal, onApplyClicked}) {
-	console.log(questions, "Questions")
+				  modal, onHideModal, onApplyClicked,
+				  answer}) {
+	console.log(modal, "Modal")
   return (
 	<div className={rootComponentContainer}>
 	    <div className={margin}>
@@ -88,6 +89,11 @@ export default function PinJobs ({handleCardClick, jobs, industries,
                   title=""
 	      >
 
+                <JobCardModal job={modal.job}
+                  questions={modal.questions}
+                  onApplyClicked={onApplyClicked}
+                  industries={industries}
+		  />
 
               </SkyLightStateless>
           </ReactCSSTransitionGroup>
