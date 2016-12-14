@@ -1,4 +1,5 @@
-import { getPinnedJobs, getQuestions, getJobTypes, getIndustries } from 'helpers/pinJobs'
+import { getPinnedJobs, getQuestions, getJobTypes, 
+	getIndustries, studentApply } from 'helpers/pinJobs'
 // =======================================================
 // ====================== ACTIONS ========================
 // =======================================================
@@ -48,8 +49,6 @@ const FETCHING_LIST = 'FETCHING_LIST'
 /*TODO: Convert word error into failure
  *
  * */
-
-
 /**************GET JOBS***********************/
 export function fetchingPinnedJobs() {
   return {
@@ -289,21 +288,22 @@ export function handleGetJobTypes() {
 }//handlePinJob
 
 //TODO: Refactor
-export function submitAnswers(answersData) {
+export function handleSubmitAnswers(answersData) {
     return function(dispatch) {
 	// DISPATCH (SUBMITTING_ANSWERS)
 	dispatch(submittingAnswers())
-		return studentApply(answersData)
-		.then((response) => {
-			// DISPATCH (SUBMIT_ANSWERS_SUCCESS)
-			dispatch(submitAnswersSuccess())
-		})
-		.catch((err) => {
-			// DISPATCH (SUBMIT_ANSWERS_FAILURE)
-			dispatch(submitAnswersFailure())
-		})
+	return studentApply(answersData)
+	    .then((response) => {
+		// DISPATCH (SUBMIT_ANSWERS_SUCCESS)
+		dispatch(submitAnswersSuccess(response))
+	    })
+	    .catch((err) => {
+		// DISPATCH (SUBMIT_ANSWERS_FAILURE)
+		dispatch(submitAnswersFailure(err))
+	    })
     }
 }
+
 export function handleUnPinJob(job) {
     return function(dispatch) {
 	    //ACTION: PIN_CLICKED
@@ -449,16 +449,19 @@ export default function pinJobs(state = initialPinJobsState, action) {
 				answer: answer(state.answer, action)
 			}
 		case SUBMITTING_ANSWERS:
+			debugger
 			return {
 				...state,
 				answer: answer(state.answer, action)
 			}		
 		case SUBMIT_ANSWERS_SUCCESS:
+			debugger
 			return {
 				...state,
 				answer: answer(state.answer, action)
 			}
 		case SUBMIT_ANSWERS_FAILURE:
+			debugger
 			return {
 				...state,
 				answer: answer(state.answer, action),

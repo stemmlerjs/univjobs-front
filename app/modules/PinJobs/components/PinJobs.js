@@ -20,13 +20,14 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import ReactTooltip from 'react-tooltip'
 
 //**NOTE:
+//  TODO: Sort alphabetize & function alphabetize
 //  Store is accessible
 //  Follow Dasboard StudentDashbaord for Job & Pin functionality and display
 export default function PinJobs ({handleCardClick, jobs, industries, 
 				  jobTypes, questions, onPinJob,
 				  modal, onHideModal, onApplyClicked,
-				  answer}) {
-	console.log(modal, "Modal")
+				  answerOne, answerTwo, updateAnswerField}) {
+	console.log(updateAnswerField, "UodateAnswerField")
   return (
 	<div className={rootComponentContainer}>
 	    <div className={margin}>
@@ -89,12 +90,20 @@ export default function PinJobs ({handleCardClick, jobs, industries,
                   title=""
 	      >
 
+	      {/*
+	      	TODO: 
+		   - [x] Add updateAnswerField
+		   - [ ] Make applyButtonWork
+		   - [ ] Delete the pinned jobs in db
+	      */}
                 <JobCardModal job={modal.job}
                   questions={modal.questions}
                   onApplyClicked={onApplyClicked}
                   industries={industries}
-		  />
-
+                  answerOne={answerOne}
+                  answerTwo={answerTwo}
+                  updateAnswerField={updateAnswerField}
+		/>
               </SkyLightStateless>
           </ReactCSSTransitionGroup>
           :  ""

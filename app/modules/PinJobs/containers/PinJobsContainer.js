@@ -149,7 +149,8 @@ const PinJobsContainer = React.createClass({
   applyClicked (e, questions) {
     e.preventDefault()
     console.log("Apply Clicked")
-    /* Create Large Object
+
+    /* Create Large Object */
     let applicationInfo = {
       "job": this.context.store.getState().pinJobs.modal.jobId,
       "students": this.context.store.getState().user.email,
@@ -168,20 +169,16 @@ const PinJobsContainer = React.createClass({
 
     // Given that answers fields were populated, continue
   	if (this.props.answer.answerOne && this.props.answer.answerTwo) {
-          this.context.store.dispatch(this.props.submitAnswers(applicationInfo))
-
-  		// fetch.studentApply(this.context.store, actionCreators, applicationInfo)
-  		// .then(toastr.success("Successfully applied to jobs"))
-  		// .then(this.context.store.dispatch(actionCreators.hideModal(0)))
-  		/*Refactor to just pop the job in the jobs array
-  		// .then(setTimeout(function () {
-  		// 	window.location.reload()
-  		// }, 2000))
+		this.props.handleSubmitAnswers(applicationInfo)
+  		 .then(toastr.success("Successfully applied to jobs"))
+  		 .then(this.context.store.dispatch(actionCreators.hideModal(0)))
+  		 .then(setTimeout(function () {
+  			window.location.reload()
+  		  }, 2000))
            .catch(toastr.error("Error while trying to apply to job. Try again later."))
-
   	} else {
   		toastr.error("✋ You need to answer the employers question if you want to get a job")
-  	}*/
+  	}
   },
 
   componentWillMount() {
@@ -207,12 +204,14 @@ const PinJobsContainer = React.createClass({
     	      onHideModal={this.hideModal}
 	      onPinJob={this.pinJob}
     	      onApplyClicked={this.applyClicked}
+    	      updateAnswerField={this.props.updateAnswerField}
 	      modal={this.props.modal}
 	      jobs={this.props.jobs ? this.props.jobs : ''}
 	      industries={this.props.industries ? this.props.industries : ''}
 	      jobTypes={this.props.jobTypes ? this.props.jobTypes : ''}
 	      questions={this.props.questions ? this.props.questions : ''}
-	      answer={this.props.answer ? this.props.answer : ''}
+	      answerOne={this.props.answer.answerOne}
+	      answerTwo={this.props.answer.answerTwo} 
 	  />
       </div>
     )
@@ -232,7 +231,7 @@ function mapStateToProps({user, pinJobs}) {
 	  industries: pinJobs.industries.data ? pinJobs.industries.data : '',
 	  jobTypes: pinJobs.jobTypes.data ? pinJobs.jobTypes.data : '',
 	  questions: pinJobs.questions.data ? pinJobs.questions.data : '',
-	  answer: pinJobs.questions.data ? pinJobs.answers : '',
+	  answer: pinJobs.questions.data ? pinJobs.answer : '',
 	  modal: pinJobs.modal ? pinJobs.modal : ''
   }
 }
