@@ -173,7 +173,6 @@ const PinJobsContainer = React.createClass({
   		 .then(this.context.store.dispatch(actionCreators.hideModal(0)))
 		 //TODO: Replace with a Celebration GIF 
   		 .then(toastr.success("Successfully applied to jobs"))
-           .catch(toastr.error("Error while trying to apply to job. Try again later."))
   	} else {
   		toastr.error("✋ You need to answer the employers question if you want to get a job")
   	}

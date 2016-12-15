@@ -211,10 +211,10 @@ export function submitAnswersSuccess(response) {
    }
 }
 
-export function submitAnswersFailure(response) {
+export function submitAnswersFailure(error) {
    return {
         type: SUBMIT_ANSWERS_FAILURE,
-        response
+        error
    }
 }
 
@@ -288,7 +288,6 @@ export function handleGetJobTypes() {
     }//dispatch
 }//handlePinJob
 
-//TODO: Refactor
 export function handleSubmitAnswers(answersData) {
     return function(dispatch) {
 	// DISPATCH (SUBMITTING_ANSWERS)
@@ -338,13 +337,13 @@ const initialPinJobsState = {
 	error: '',
 }
 
-const intialPinState = {
+const initialPinState = {
 	job: '',
 	response: '',
 	error: '',
 	pinColor: ''
 }
-const intialModalState = {
+const initialModalState = {
 	isClicked: false,
 	isOpen: false,
 	job: '',
@@ -353,14 +352,15 @@ const intialModalState = {
 }
 
 
-const intialAnswersState = {
+const initialAnswerState = {
 	jobId: '',
 	questionOneId: '',
 	questionTwoId: '',
 	answerOne: '',
 	answerTwo: '',
 	response: '',
-	isSubmitting: false
+	isSubmitting: false,
+	error: ''
 }
 
    
@@ -464,7 +464,7 @@ export default function pinJobs(state = initialPinJobsState, action) {
 			 * 	- Database delete of the job pinned automatically
 			 * 	  In NewJobApplicantView
 			 **/
-			let index = state.jobs.data.findIndex(() => state.modal.jobId)
+			let index = state.jobs.data.findIndex((job) => job.id === state.modal.jobId)
 			index != -1 ? state.jobs.data.splice(index, 1) : ''  
 			return {
 				...state,
@@ -501,7 +501,7 @@ export default function pinJobs(state = initialPinJobsState, action) {
 	}
 }
 
-function pin(state = intialPinState, action) {	
+function pin(state = initialPinState, action) {	
 	switch(action.type) {
 		case UNPIN_CLICKED:
    			debugger
@@ -535,7 +535,7 @@ function pin(state = intialPinState, action) {
 	}
 }
 
-function modal(state = intialModalState, action) {	
+function modal(state = initialModalState, action) {	
 	switch(action.type) {
 		case MODAL_CLICKED:
 			return {
@@ -578,8 +578,6 @@ function answer(state = initialAnswerState, action) {
 			}		
 		case SUBMIT_ANSWERS_SUCCESS:
 			debugger
-
-
 			return {
 				...state,
 				response: action.response,
@@ -589,7 +587,7 @@ function answer(state = initialAnswerState, action) {
 			debugger
 			return {
 				...state,
-				response: action.response,
+				error: action.error,
 				isSubmitting: false,
 			}
 		default:

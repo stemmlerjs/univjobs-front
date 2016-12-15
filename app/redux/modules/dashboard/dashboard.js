@@ -33,9 +33,9 @@ const UNPIN_SUCCESS = 'UNPIN_SUCCESS'
 const UNPIN_FAILURE = 'UNPIN_FAILURE'
 
 const UPDATE_ANSWER_FIELD = 'UPDATE_ANSWER_FIELD'
-const SUBMITTING_ANSWERS = 'STUDENT.SUBMITTING_ANSWERS'
-const SUBMIT_ANSWERS_SUCCESS = 'STUDENT.SUBMIT_SUCCESS'
-const SUBMIT_ANSWERS_FAILURE = 'STUDENT.SUBMIT_FAILURE'
+const DASHBOARD_SUBMITTING_ANSWERS = 'DASHBOARD_SUBMITTING_ANSWERS'
+const DASHBOARD_SUBMIT_ANSWERS_SUCCESS = 'DASHBOARD_SUBMIT_ANSWERS_SUCCESS'
+const DASHBOARD_SUBMIT_ANSWERS_FAILURE = 'DASHBOARD_SUBMIT_ANSWERS_FAILURE'
 
 /******************** DASHBOARD List GETTER ACTIONS ******************/
 const FETCH_JOB_TYPES = 'DASHBOARD.LIST.FETCH_JOB_TYPES'
@@ -232,48 +232,24 @@ export function updateAnswerField(fieldName, newValue) {
 /*NOTE:
  *  Pass the questionIds with the associated answers
  * */
-export function submitAnswers(answersData) {
-	return function(dispatch) {
-		const promise = new Promise((resolve, reject) => {
-			// DISPATCH (SUBMITTING_ANSWERS)
-			dispatch(submittingAnswers())
 
-			studentApply(answersData)
-				.then((response) => {
-
-					// DISPATCH (SUBMIT_ANSWERS_SUCCESS)
-						dispatch(submitAnswersSuccess())
-
-						resolve()
-
-				})
-				.catch((err) => {
-					// DISPATCH (SUBMIT_ANSWERS_FAILURE)
-						dispatch(submitAnswersFailure())
-
-						reject()
-				})
-		})
-	}
-}
-
-function submittingAnswers() {
+function dashboardSubmittingAnswers() {
 	return {
-		type: SUBMITTING_ANSWERS
+		type: DASHBOARD_SUBMITTING_ANSWERS
 	}
 }
 
-export function submitAnswersSuccess(serverMessage) {
+export function dashboardSubmitAnswersSuccess(response) {
    return {
-   	  type: SUBMIT_ANSWERS_SUCCESS,
-	  	serverMessage
+   	  type: DASHBOARD_SUBMIT_ANSWERS_SUCCESS,
+	  response
    }
 }
 
-export function submitAnswersFailure(error) {
+export function dashboardSubmitAnswersFailure(error) {
    return {
-      type: SUBMIT_ANSWERS_FAILURE,
-	  	error
+      type: DASHBOARD_SUBMIT_ANSWERS_FAILURE,
+      error
    }
 }
 
@@ -315,6 +291,23 @@ export function handleUnPinJob(job) {
 	        )
     }//dispatch
 }//handlePinJob
+
+export function handleSubmitAnswers(answersData) {
+    return function(dispatch) {
+	// DISPATCH (SUBMITTING_ANSWERS)
+	debugger
+	dispatch(dashboardSubmittingAnswers())
+	return studentApply(answersData)
+	    .then((response) => {
+		// DISPATCH (SUBMIT_ANSWERS_SUCCESS)
+		dispatch(dashboardSubmitAnswersSuccess(response))
+	    })
+	    .catch((err) => {
+		// DISPATCH (SUBMIT_ANSWERS_FAILURE)
+		dispatch(dashboardSubmitAnswersFailure(err))
+	    })
+    }
+}
 // =======================================================
 // ================== INITIAL STATE ======================
 // =======================================================
@@ -361,14 +354,15 @@ const initialListState = {
 	industries: []
 }
 
-const intialAnswersState = {
+const intialAnswerState = {
 	jobId: '',
 	questionOneId: '',
 	questionTwoId: '',
 	answerOne: '',
 	answerTwo: '',
-	serverMessage: '',
-	isSubmitting: false
+	response: '',
+	isSubmitting: false,
+	error: '',
 }
 
    
@@ -580,23 +574,22 @@ function answer(state = initialAnswerState, action) {
 				...state,
 				[action.fieldName]: action.newValue,
 			}
-		case SUBMITTING_ANSWERS:
+		case DASHBOARD_SUBMITTING_ANSWERS:
 			return {
 				...state,
 				isSubmitting: true
 			}		
-		case SUBMIT_ANSWERS_SUCCESS:
+		case DASHBOARD_SUBMIT_ANSWERS_SUCCESS:
 			return {
 				...state,
-				serverMessage: action.serverMessage,
+				resopnse: action.response,
 				isSubmitting: false
 			}
-		case SUBMIT_ANSWERS_FAILURE:
+		case DASHBOARD_SUBMIT_ANSWERS_FAILURE:
 			return {
 				...state,
-				serverMessage: action.serverMessage,
+				error: action.error,
 				isSubmitting: false,
-				error: action.error
 			}
 		default:
 			return state
@@ -662,20 +655,26 @@ export default function dashboard(state = initialDashboardState, action) {
 				...state,
 				answer: answer(state.answer, action)
 			}
-		case SUBMITTING_ANSWERS:
+		case DASHBOARD_SUBMITTING_ANSWERS:
+			debugger
 			return {
 				...state,
 				answer: answer(state.answer, action)
 			}		
-		case SUBMIT_ANSWERS_SUCCESS:
+		case DASHBOARD_SUBMIT_ANSWERS_SUCCESS:
+			debugger
+			let index = state.studentDashboard.jobs.findIndex((job) => job.id === state.modal.jobId)
+			index != -1 ? state.studentDashboard.jobs.splice(index, 1) : ''  
 			return {
 				...state,
 				answer: answer(state.answer, action)
 			}
-		case SUBMIT_ANSWERS_FAILURE:
+		case DASHBOARD_SUBMIT_ANSWERS_FAILURE:
+			debugger
 			return {
 				...state,
-				answer: answer(state.answer, action)
+				answer: answer(state.answer, action),
+				error: action.error
 			}
 		case PIN_CLICKED:
    			debugger

@@ -125,12 +125,10 @@ const StudentDashboardContainer = React.createClass({
    *   then the the ids are given to in the payload to transfer a request
    * */
   pinJob(e, job) {
-      debugger
+      //debugger
       e.preventDefault()
       e.stopPropagation()
 
-      //Figure out a way to rotate pin
-      console.log(event)
       //Check if the pinned var is true or false
       //If true, POST call
       //Else, DELETE call
@@ -215,17 +213,9 @@ const StudentDashboardContainer = React.createClass({
 
     // Given that answers fields were populated, continue
   	if (this.props.answer.answerOne && this.props.answer.answerTwo) {
-          this.context.store.dispatch(this.props.submitAnswers(applicationInfo))
-
-  		// fetch.studentApply(this.context.store, actionCreators, applicationInfo)
-  		// .then(toastr.success("Successfully applied to jobs"))
-  		// .then(this.context.store.dispatch(actionCreators.hideModal(0)))
-  		/*Refactor to just pop the job in the jobs array*/
-  		// .then(setTimeout(function () {
-  		// 	window.location.reload()
-  		// 	}, 2000))
-           .catch(toastr.error("Error while trying to apply to job. Try again later."))
-
+		this.props.handleSubmitAnswers(applicationInfo)
+  		.then(this.context.store.dispatch(actionCreators.hideModal(0)))
+		.then(toastr.success("Successfully applied to jobs"))
   	} else {
   		toastr.error("✋ You need to answer the employers question if you want to get a job")
   	}

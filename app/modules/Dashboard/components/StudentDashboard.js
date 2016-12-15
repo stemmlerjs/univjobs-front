@@ -66,15 +66,12 @@ export default function StudentDashboard ({jobs, handleCardClick,
   		      </GenericCard>
   	    </div>
   	    ))}
-
-
-
         </div>
   	    <div className={overflowFix}></div>
   	    <div className={overflowFix}></div>
   	    <div className={overflowFix}></div>
   	    <div className={overflowFix}></div>
-	    </div>
+       </div>
 
         {/*MODAL
            The state of modal is checked first,

@@ -225,16 +225,14 @@ export function studentApply(data) {
 	const accessToken = getAccessToken()
 	const csrfToken = getCSRFToken()
 
-	return new Promise((resolve, reject) => {
-		return axios({
-			method: 'post',
-			url: config.baseUrl + 'job/new/student/apply/',
-			headers: {
-				'Authorization': 'JWT ' + accessToken,
-				'X-CSRFToken' : csrfToken
-			},
+	return axios({
+		method: 'post',
+		url: config.baseUrl + 'job/new/student/apply/',
+		headers: {
+			'Authorization': 'JWT ' + accessToken,
+			'X-CSRFToken' : csrfToken
+		},
 			data: data
-		})
 	})
 }
 
