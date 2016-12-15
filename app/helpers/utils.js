@@ -112,3 +112,13 @@ export function validateJobTitle(jobTitle) {
   var re = /^[a-z ,.'-]{2,40}$/i
   return re.test(jobTitle)
 }
+
+
+/* Used to find the index of the jobId in an array
+ * Is pair with Array object.findIndexOf(findJobId)
+ * 
+ * Reference: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/findIndex
+ * */
+export function findJobId(id, jobId) {
+    return id === jobId
+}

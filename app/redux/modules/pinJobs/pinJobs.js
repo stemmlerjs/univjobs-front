@@ -1,5 +1,6 @@
 import { getPinnedJobs, getQuestions, getJobTypes, 
 	getIndustries, studentApply } from 'helpers/pinJobs'
+import { findJobId } from 'helpers/utils' 
 // =======================================================
 // ====================== ACTIONS ========================
 // =======================================================
@@ -456,6 +457,15 @@ export default function pinJobs(state = initialPinJobsState, action) {
 			}		
 		case SUBMIT_ANSWERS_SUCCESS:
 			debugger
+			/*TODO: Not working index return is undefined
+			 * The following sequence will happen once this scope is executed
+			 * 	- Find & return jobIds index
+			 * 	- Delete job in store
+			 * 	- Database delete of the job pinned automatically
+			 * 	  In NewJobApplicantView
+			 **/
+			let index = state.jobs.data.findIndex(() => state.modal.jobId)
+			index != -1 ? state.jobs.data.splice(index, 1) : ''  
 			return {
 				...state,
 				answer: answer(state.answer, action)
@@ -568,6 +578,8 @@ function answer(state = initialAnswerState, action) {
 			}		
 		case SUBMIT_ANSWERS_SUCCESS:
 			debugger
+
+
 			return {
 				...state,
 				response: action.response,
