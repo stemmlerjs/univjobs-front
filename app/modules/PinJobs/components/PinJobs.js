@@ -27,7 +27,6 @@ export default function PinJobs ({handleCardClick, jobs, industries,
 				  jobTypes, questions, onPinJob,
 				  modal, onHideModal, onApplyClicked,
 				  answerOne, answerTwo, updateAnswerField}) {
-	console.log(updateAnswerField, "UodateAnswerField")
   return (
 	<div className={rootComponentContainer}>
 	    <div className={margin}>

@@ -43,68 +43,20 @@ import { fetchingJobs, fetchedJobSuccess, fetchedJobFailure,
   * NOTE: axios url is job/r/list
   */
 
-export function getJobs(store) {
-  const accessToken = getAccessToken()
-  const csrfToken = getCSRFToken()
+export function getJobs() {
+    const accessToken = getAccessToken()
+    const csrfToken = getCSRFToken()
 
- const promise = new Promise((resolve, reject) => {
-   store.dispatch(fetchingJobs())
-    axios.get(config.baseUrl + 'job/r/list/', {
-      headers: {
-        'Authorization': 'JWT ' + accessToken,
-        'X-CSRFToken' : csrfToken
-      }
-    })
-     .then((response) => {
-    	  console.log('*******GETJOBS*********')
-    	  store.dispatch(fetchedJobSuccess(response.data))
-        console.log(response.data)
-    	  resolve(true);
-     })
-    .catch((err) => {
-      store.dispatch(fetchedJobFailure(err))
-      resolve(false)
-   })
- })
- return promise;
+	return axios({
+		method: 'get',
+		url: config.baseUrl + 'job/r/list/',
+		headers: {
+			'Authorization': 'JWT ' + accessToken,
+			'X-CSRFToken' : csrfToken
+		}
+	})
 }
 
-/**
-  * getQuestions 
-  *
-  * Gets all questions via /api/student/
-  *
-  * @param store - Object
-  * @param actionCreators - Object
-  * @return Promise
-  */
-
-export function getQuestions(store, actionCreators) {
-  const accessToken = getAccessToken()
-  const csrfToken = getCSRFToken()
-
-  const promise = new Promise((resolve, reject) => {
-    // DISPATCH (FETCHING_QUESTIONS)
-    store.dispatch(actionCreators.fetchingQuestions())
-    axios.get(config.baseUrl + 'job/questions/', {
-      headers: {
-        'Authorization': 'JWT ' + accessToken,
-        'X-CSRFToken' : csrfToken
-      }
-    })
-    .then((response) => {
-      // DISPATCH (FETCHING_QUESTIONS_SUCCESS)
-    	store.dispatch(actionCreators.fetchedQuestionsSuccess(response.data))
-    	resolve(true);
-    })
-    .catch((err) => {
-      // DISPATCH (FETCHING_QUESTIONS_FAILURE)
-      store.dispatch(actionCreators.fetchedQuestionsFailure(err))
-      resolve(false)
-    })
-  })
-  return promise
-}
 
 /**
   * getStudents 
@@ -118,63 +70,32 @@ export function getQuestions(store, actionCreators) {
 export function getStudents(store) {
   const accessToken = getAccessToken()
   const csrfToken = getCSRFToken()
-
-  const promise = new Promise((resolve, reject) => {
-    axios.get(config.baseUrl + 'student/', {
-      headers: {
-        'Authorization': 'JWT ' + accessToken,
-        'X-CSRFToken' : csrfToken
-      }
-    })
-    .then((response) => {
-      // DISPATCH - GET_STUDENT_SUCCESS
-      store.dispatch(getStudentsSuccess(response.data))
-      resolve(true)
-    })
-    .catch((err) => {
-      console.log(err)
-      // DISPATCH - GET_STUDENT_FAILURE
-      store.dispatch(getStudentsFailure(err))
-      resolve(true)
-    })
-  })
   
-  return promise
+  return axios({
+		method: 'get',
+		url: config.baseUrl + 'student/',
+		headers: {
+			'Authorization': 'JWT ' + accessToken,
+			'X-CSRFToken' : csrfToken
+		}
+	})
 }
 
 /**
   * getJobTypes 
-  *
-  * Gets all job types via /api/list/jobtypes
-  *
-  * @param store - Object
-  * @param actionCreators - Object
-  * @return Promise
   */
+export function getJobTypes() {
+    const accessToken = getAccessToken()
+    const csrfToken = getCSRFToken()
 
-export function getJobTypes(store, actionCreators) {
-  const accessToken = getAccessToken()
-  const csrfToken = getCSRFToken()
-
-  const promise =  new Promise((resolve, reject) => {
-    axios.get(config.baseUrl + 'list/jobtypes', {
-      headers: {
-        'Authorization': 'JWT ' + accessToken,
-        'X-CSRFToken' : csrfToken
-      }
-    })
-    .then((response) => {
-    	console.log('********GETJOBTYPES FIRE!!!!!!!!!!!************')
-    	console.log(response)
-    	store.dispatch(actionCreators.fetchList('JOB_TYPES', response.data))
-    	resolve(true);
-    })
-    .catch(() => {
-      resolve(false)
-    })
-  })
-
-  return promise
+    return axios({
+	    method: 'get',
+		url: config.baseUrl + 'list/jobtypes',
+		headers: {
+			'Authorization': 'JWT ' + accessToken,
+			'X-CSRFToken' : csrfToken
+		}
+	})
 }
 
 
@@ -188,28 +109,18 @@ export function getJobTypes(store, actionCreators) {
   * @return Promise
   */
 
-export function getIndustries(store, actionCreators) {
-  const accessToken = getAccessToken()
-  const csrfToken = getCSRFToken()
+export function getIndustries(){
+    const accessToken = getAccessToken()
+    const csrfToken = getCSRFToken()
 
-  const promise = new Promise((resolve, reject) => {
-    axios.get(config.baseUrl + 'list/industries', {
-      headers: {
-        'Authorization': 'JWT ' + accessToken,
-        'X-CSRFToken' : csrfToken
-      }
-    })
-    .then((response) => {
-    	console.log('********GET INDUSTRIES FIRE!!!!!!!!!!!************')
-    	console.log(response)
-    	store.dispatch(actionCreators.fetchList('INDUSTRIES', response.data))
-    	resolve(true);
-    })
-    .catch(() => {
-      resolve(false)
-    })
-  })
-  return promise
+    return axios({
+	    method: 'get',
+		url: config.baseUrl + 'list/industries',
+		headers: {
+			'Authorization': 'JWT ' + accessToken,
+			'X-CSRFToken' : csrfToken
+		}
+	})
 }
 
 /**

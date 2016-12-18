@@ -57,29 +57,23 @@ const StudentDashboardContainer = React.createClass({
   },
 
 /**
- * retrieveJobs
- *	This function fetches two endpoints:
- *	    - api/jobs
- *	    - api/questions
- *      Then it gives the data into the store called dashboard
- */
-  retrieveJobs () {
-   const promise = new Promise((resolve, reject) => {
-      axios.all([
-         fetch.getJobs(this.context.store),
-      	 fetch.getQuestions(this.context.store, actionCreators)
-      ])
-      .then((response) => resolve(true))
-      .catch((response) => resolve(true))
-    })
-   return promise;
-  },
+ * FIXME: All jobs can return questions associated with it, do the following:
+ *  - [ ] Make a redux-thunk out of getJobs by:
+ *    - [ ] Decouple getQuestions and place it in dashboard modules
+ *    - [ ] Make the dashboard work without the questions
+ *  - [ ] Remove fetch.getQuestions
+ *
+ * TEST NOTES:
+ *      Situation: Returned jobs as normal, even when jobs & questions where combined and serialized
+ *      Task: Refer to FIXME
+ *      Analysis
+ *
 
 /** retrieveAllLists
  *   	This function retrieves all the api endpoints needed
  *   	to display the proper job informations
  *
- */
+ 
   retrieveAllLists() {
   	const promise = new Promise((resolve, reject) => {
   		axios.all([
@@ -91,6 +85,7 @@ const StudentDashboardContainer = React.createClass({
   	})
   	return promise
   },
+*/
 
   clearJobStore() {
   	this.context.store.getState().dashboard.jobs = this.context.store.getState().dashboard.studentDashboard.jobs.filter((k) => {
@@ -117,7 +112,7 @@ const StudentDashboardContainer = React.createClass({
 
   	//After modal is clicked, get the questions & match the question id with the job id
   	//Once matched, pass the questions inside the modal to supply to questions variables
-  	this.context.store.dispatch(actionCreators.showModal(j, this.getQuestions()))
+  	this.context.store.dispatch(actionCreators.showModal(j, j.questions))
   },
 
   /* pinJob 
@@ -139,46 +134,16 @@ const StudentDashboardContainer = React.createClass({
       //Pass payload to axios post
       //Return success or fail
       if(!job.pinned) {
-	 this.props.handlePinJob(job)
+          this.props.handlePinJob(job)
       } else {
          this.props.handleUnPinJob(job)
       } 
   },
 
-  /* getQuestions
-   * 	This function passes the function matchQuestions and uses the filter function
-   * 	on the questions array. It will return a new array that is filtered with the associated
-   * 	job ids from the questions ids
-   *
-   *
-   */
-
-  getQuestions() {
-	  return this.props.questions.filter(this.filterQuestions)
-  },
-
-  /** filterQuestions
-   *     This function takes two params, job id & questions object.
-   *     It returns all the questions that matches the question ids
-   *
-   *
-   *      NOTE:
-   *         - Should we combine the questions in with the api endpoint, the same way user & job is handled?
-   *         - Should we separate it like how I am doing it right now?
-   *         - In what way is the best approach?
-   *         - What do we want to achieve out of this?
-   *
-   */
-
-  filterQuestions(question) {
-	  console.log("***********FILTER QUESTIONS**********")
-	  return question.job === this.context.store.getState().dashboard.modal.jobId
-  },
 
  /** hideModal
   *   This event gives the user
   */
-
   hideModal (e, id) {
   	this.context.store.dispatch(actionCreators.hideModal(id))
   	this.context.store.getState().dashboard.answer.answerOne = ''
@@ -223,9 +188,11 @@ const StudentDashboardContainer = React.createClass({
 
   componentWillMount() {
   	console.log("componentWillMount")
+    debugger
   	this.doRedirectionFilter()
-  	.then(this.retrieveJobs())
-  	.then(this.retrieveAllLists())
+    .then(this.props.handleGetJobs())
+    .then(this.props.handleGetIndustries())
+    .then(this.props.handleGetJobTypes())
   	.then(this.props.closeOverlay())
   },
 
@@ -247,15 +214,14 @@ const StudentDashboardContainer = React.createClass({
     	  onHideModal={this.hideModal}
     	  onApplyClicked={this.applyClicked}
     	  onPinJob={this.pinJob}
-	  modal={this.props.modal}
-	  jobs={this.props.jobs}
-    	  industries={this.props.industries}
-    	  jobTypes={this.props.jobTypes}
-    	  questions={this.props.questions}
+          modal={this.props.modal}
+          jobs={this.props.jobs ? this.props.jobs : ''}
+    	  industries={this.props.industries ? this.props.industries : []}
+    	  jobTypes={this.props.jobTypes ? this.props.jobTypes : []}
     	  answerOne={this.props.answer.answerOne}
     	  answerTwo={this.props.answer.answerTwo}
     	  updateAnswerField={this.props.updateAnswerField}
-	  pin={this.props.pin}
+          pin={this.props.pin}
 	    />
 
 	  <ReduxToastr
@@ -276,12 +242,11 @@ const StudentDashboardContainer = React.createClass({
 function mapStateToProps({user, dashboard}) {
   return {
 	  user: user ? user : {},
-	  jobs: dashboard.studentDashboard.jobs ? dashboard.studentDashboard.jobs : [],
-	  questions: dashboard.studentDashboard.jobs ? dashboard.studentDashboard.questions : [],
+	  jobs: dashboard.studentDashboard.jobs ? dashboard.studentDashboard.jobs.data : '',
 	  modal : dashboard.studentDashboard.jobs ? dashboard.modal : '',
-	  industries : dashboard.studentDashboard.jobs ? dashboard.lists.industries : [],
-	  jobTypes : dashboard.studentDashboard.jobs ? dashboard.lists.jobTypes : [],
-	  answer : dashboard.studentDashboard.questions ? dashboard.answer : {},
+	  industries : dashboard.industries ? dashboard.industries.data : '',
+	  jobTypes : dashboard.jobTypes ? dashboard.jobTypes.data : '',
+	  answer : dashboard.studentDashboard.jobs ? dashboard.answer : {},
 	  pin: dashboard.studentDashboard.response ? dashboard.studentDashboard.pin : {},
   }
 }

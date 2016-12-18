@@ -7,7 +7,7 @@ import { getAccessToken, getCSRFToken } from 'helpers/auth'
  *
 
 /**
-  * getJobs 
+  * getPinnedJobs 
   *
   * Get all jobs
   *
@@ -17,7 +17,7 @@ import { getAccessToken, getCSRFToken } from 'helpers/auth'
   * NOTE: axios url is job/r/pin/
   */
 
-export function getPinnedJobs(data) {
+export function getPinnedJobs() {
 	const accessToken = getAccessToken()
 	const csrfToken = getCSRFToken()
 

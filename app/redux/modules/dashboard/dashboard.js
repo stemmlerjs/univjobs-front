@@ -1,4 +1,4 @@
-import { studentApply, pinAJob, unPinAJob } from 'helpers/dashboard'
+import { getJobs, getIndustries, getJobTypes, pinJob, studentApply, unPinAJob } from 'helpers/dashboard'
 // =======================================================
 // ====================== ACTIONS ========================
 // =======================================================
@@ -12,13 +12,18 @@ const GET_STUDENTS_FAILURE = 'EMPLOYER.GET_STUDENTS_FAILURE'
  *   into a generic names, employer and student are going to be
  *   using the jobs, questions, and answers.
  * */
-const FETCHING_JOBS = 'STUDENT.FETCHING_JOBS'
-const FETCHED_JOBS_SUCCESS = 'STUDENT.FETCHED_JOBS_SUCCESS'
-const FETCHED_JOBS_FAILURE = 'STUDENT.FETCHED_JOBS_FAILURE'
+const DASHBOARD_FETCHING_JOBS = 'DASHBOARD_FETCHING_JOBS'
+const DASHBOARD_FETCHED_JOBS_SUCCESS = 'DASHBOARD_FETCHED_JOBS_SUCCESS'
+const DASHBOARD_FETCHED_JOBS_FAILURE = 'DASHBOARD_FETCHED_JOBS_FAILURE'
 
-const FETCHING_QUESTIONS = 'STUDENT.FETCHING_QUESTIONS'
-const FETCHED_QUESTIONS_SUCCESS = 'STUDENT.FETCHED_QUESTIONS_SUCCESS'
-const FETCHED_QUESTIONS_FAILURE = 'STUDENT.FETCHED_QUESTIONS_FAILURE'
+
+const DASHBOARD_FETCHING_JOB_TYPES = 'DASHBOARD_FETCHING_JOB_TYPES'
+const DASHBOARD_FETCHED_JOB_TYPES_SUCCESS = 'DASHBOARD_FETCHED_JOB_TYPES_SUCCESS'
+const DASHBOARD_FETCHED_JOB_TYPES_FAILURE = 'DASHBOARD_FETCHED_JOB_TYPES_FAILURE'
+
+const DASHBOARD_FETCHING_INDUSTRIES = 'DASHBOARD_FETCHING_INDUSTRIES'
+const DASHBOARD_FETCHED_INDUSTRIES_SUCCESS = 'DASHBOARD_FETCHED_INDUSTRIES_SUCCESS'
+const DASHBOARD_FETCHED_INDUSTRIES_FAILURE = 'DASHBOARD_FETCHING_INDUSTRIES_FAILURE'
 
 const MODAL_CLICKED = 'MODAL_CLICKED'
 const SHOW_MODAL = 'SHOW_MODAL'
@@ -36,17 +41,6 @@ const UPDATE_ANSWER_FIELD = 'UPDATE_ANSWER_FIELD'
 const DASHBOARD_SUBMITTING_ANSWERS = 'DASHBOARD_SUBMITTING_ANSWERS'
 const DASHBOARD_SUBMIT_ANSWERS_SUCCESS = 'DASHBOARD_SUBMIT_ANSWERS_SUCCESS'
 const DASHBOARD_SUBMIT_ANSWERS_FAILURE = 'DASHBOARD_SUBMIT_ANSWERS_FAILURE'
-
-/******************** DASHBOARD List GETTER ACTIONS ******************/
-const FETCH_JOB_TYPES = 'DASHBOARD.LIST.FETCH_JOB_TYPES'
-const FETCH_INDUSTRIES = 'DASHBOARD.LIST.FETCH_INDUSTRIES'
-
-
-/******************** DASHBOARD List SUCCESS ACTIONS ******************/
-const FETCHED_LIST = 'DASHBOARD.LIST.FETCHED'
-
-const FETCHED_JOB_TYPES = 'DASHBOARD.FETCHED_JOB_TYPES'
-const FETCHED_INDUSTRIES = 'DASHBOARD.FETCHED_INDUSTRIES'
 
 // =======================================================
 // ================== ACTIONS CREATORS ===================
@@ -72,47 +66,66 @@ export function getStudentsFailure(error) {
 }
 
 /**************GET JOBS***********************/
-export function fetchingJobs() {
+export function dashboardFetchingJobs() {
   return {
-	  type: FETCHING_JOBS,
+	  type: DASHBOARD_FETCHING_JOBS,
   }
 }
 
-export function fetchedJobFailure(error) {
-  return {
-	  type: FETCHED_JOBS_FAILURE,
-	  error
-  }
-}
-
-export function fetchedJobSuccess(jobs) {
+export function dashboardFetchedJobsSuccess(jobs) {
    return {
-	   type: FETCHED_JOBS_SUCCESS,
+	   type: DASHBOARD_FETCHED_JOBS_SUCCESS,
 	   jobs
   }
 }
 
-/**************GET QUESTIONS**********************/
-export function fetchingQuestions() {
+export function dashboardFetchedJobsFailure(error) {
   return {
-	  type: FETCHING_QUESTIONS,
+	  type: DASHBOARD_FETCHED_JOBS_FAILURE,
+	  error
+  }
+}
+/***************INDUSTRIES***************/
+export function dashboardFetchingIndustries() {
+  return {
+	  type: DASHBOARD_FETCHING_INDUSTRIES,
   }
 }
 
-export function fetchedQuestionsSuccess(questions) {
+export function dashboardFetchedIndustriesSuccess(industries) {
    return {
-	   type: FETCHED_QUESTIONS_SUCCESS,
-	   questions
+	   type: DASHBOARD_FETCHED_INDUSTRIES_SUCCESS,
+	   industries
   }
 }
 
-export function fetchedQuestionsFailure(error) {
+export function dashboardFetchedIndustriesFailure(error) {
   return {
-	  type: FETCHED_QUESTIONS_FAILURE,
+	  type: DASHBOARD_FETCHED_INDUSTRIES_FAILURE,
 	  error
   }
 }
 
+/***************JOB TYPES***************/
+export function dashboardFetchingJobTypes() {
+  return {
+	  type: DASHBOARD_FETCHING_JOB_TYPES,
+  }
+}
+
+export function dashboardFetchedJobTypesSuccess(jobTypes) {
+   return {
+	   type: DASHBOARD_FETCHED_JOB_TYPES_SUCCESS,
+	   jobTypes
+  }
+}
+
+export function dashboardFetchedJobTypesFailure(error) {
+  return {
+	  type: DASHBOARD_FETCHED_JOB_TYPES_FAILURE,
+	  error
+  }
+}
 /**************MODALS***********************/
 export function modalClicked(jobId) {
    return {
@@ -153,9 +166,9 @@ function pinClicked(job) {
 function pinSuccess(response) {
    debugger
    return {
-          type: PIN_SUCCESS,
-	  fill: {color: 'red'},
-	  response
+       type: PIN_SUCCESS,
+       fill: {color: 'red'},
+       response
    }
 }
 
@@ -163,7 +176,7 @@ function pinFailure(error) {
    debugger
    return {
           type: PIN_FAILURE,
-	  error,
+          error,
    }
 }
 
@@ -196,28 +209,6 @@ export function unPinFailure(error) {
 	  error,
    }
 }
-
-/**********FETCHLIST**********************/
-export function fetchList(listName, listArray) {
-	switch(listName) {
-		case 'INDUSTRIES': {
-		     return {
-			     type: FETCHED_LIST,
-			     listType: FETCHED_INDUSTRIES,
-			     list: listArray
-		     }
-		}
-		case 'JOB_TYPES': {
-		    return {
-			    type: FETCHED_LIST,
-		  	    listType: FETCHED_JOB_TYPES,
-			    list: listArray
-		    }
-		}
-		default:
-		     return 
-	}
-}//fetchList
 
 /**************UPDATE FIELDS***********************/
 export function updateAnswerField(fieldName, newValue) {
@@ -258,6 +249,54 @@ export function dashboardSubmitAnswersFailure(error) {
 // =======================================================
 // REF: https://github.com/ReactjsProgram/Redux-Immutable/commit/c1b261b21150e472c6199dcda7bcb792a81678f8
 // https://online.reacttraining.com/courses/redux-and-immutablejs/lectures/946352
+export function handleGetJobs() {
+    return function(dispatch) {
+	    //ACTION: FETCHING_PINNED_JOBS 
+	    dispatch(dashboardFetchingJobs())
+	    return getJobs()
+	        .then((resp) => 
+		        //ACTION: DASHBOARD_FETCHED_JOBS_SUCCESS
+		        dispatch(dashboardFetchedJobsSuccess(resp))
+	        )
+	        .catch((err) => 
+		        //ACTION: FETCHED_PINNED_JOBS_FAILURE
+		        dispatch(dashboardFetchedJobsFailure(err))
+	        )
+    }//dispatch
+}//handleGetJobs
+
+export function handleGetIndustries() {
+    return function(dispatch) {
+	    //ACTION: FETCHING_INDUSTRIES
+	    dispatch(dashboardFetchingIndustries)
+	    return getIndustries()
+	        .then((resp) => 
+		    //ACTION: FETCHED_INDUSTRIES_SUCCESS
+		    dispatch(dashboardFetchedIndustriesSuccess(resp))
+	        )
+	        .catch((err) => 
+		    //ACTION: FETCHED_QUESTIONS_FAILURE
+		    dispatch(dashboardFetchedIndustriesFailure(err))
+	        )
+    }//dispatch
+}//handleGetIndustries
+
+export function handleGetJobTypes() {
+    return function(dispatch) {
+	    //ACTION: FETCHING_INDUSTRIES
+	    dispatch(dashboardFetchingJobTypes)
+	    return getJobTypes()
+	        .then((resp) => 
+		    //ACTION: FETCHED_INDUSTRIES_SUCCESS
+		    dispatch(dashboardFetchedJobTypesSuccess(resp))
+	        )
+	        .catch((err) => 
+		    //ACTION: FETCHED_QUESTIONS_FAILURE
+		    dispatch(dashboardFetchedJobTypesFailure(err))
+	        )
+    }//dispatch
+}//handleGetIndustries
+
 export function handlePinJob(job) {
     return function(dispatch) {
 	    //ACTION: PIN_CLICKED
@@ -315,9 +354,10 @@ export function handleSubmitAnswers(answersData) {
 const initialDashboardState = {
 	studentDashboard: {},
 	employerDashboard: {},
+    jobTypes: [],
+    industries: [],
 	error: '',
 	modal: {},
-	lists: {},
 	answer: {}
 }
 
@@ -347,11 +387,6 @@ const intialModalState = {
 	isOpen: false,
 	jobId: '',
 	job: ''
-}
-
-const initialListState = {
-	jobTypes: [],
-	industries: []
 }
 
 const intialAnswerState = {
@@ -385,35 +420,18 @@ function employerDashboard(state = initialEmployerDashboardState, action) {
 
 function studentDashboard(state = initialStudentDashboardState, action) {
 	switch(action.type) {
-		case FETCHING_JOBS:
+		case DASHBOARD_FETCHING_JOBS:
 			return {
 				...state,
 				isFetching: true,
 			}		
-		case FETCHED_JOBS_SUCCESS:
+		case DASHBOARD_FETCHED_JOBS_SUCCESS:
 			return {
 				...state,
 				jobs: action.jobs,
 				isFetching: false,
 			}
-		case FETCHED_JOBS_FAILURE:
-			return {
-				...state,
-				isFetching: false,
-				error: action.error,
-			}
-		case FETCHING_QUESTIONS:
-			return {
-				...state,
-				isFetching: true,
-			}		
-		case FETCHED_QUESTIONS_SUCCESS:
-			return {
-				...state,
-				questions: action.questions,
-				isFetching: false,
-			}
-		case FETCHED_QUESTIONS_FAILURE:
+		case DASHBOARD_FETCHED_JOBS_FAILURE:
 			return {
 				...state,
 				isFetching: false,
@@ -548,25 +566,6 @@ function modal(state = intialModalState, action) {
 	}
 }
 
-function lists (state = initialListState, action) {
-	switch(action.listType) {
-	    case FETCHED_INDUSTRIES:
-		return {
-		    ...state,
-		    industries: action.list
-		}
-
-	    case FETCHED_JOB_TYPES:
-		return {
-		    ...state,
-		    jobTypes: action.list
-		}
-	    default: 
-		return state
-
-	}
-}
-
 function answer(state = initialAnswerState, action) {
 	switch(action.type) {
 		case UPDATE_ANSWER_FIELD:
@@ -600,32 +599,55 @@ function answer(state = initialAnswerState, action) {
 
 export default function dashboard(state = initialDashboardState, action) {
 	switch(action.type) {
+		case DASHBOARD_FETCHING_JOBS:
+			return {
+				...state,
+				studentDashboard: studentDashboard(state.studentDashboard, action)
+			}
+		case DASHBOARD_FETCHED_JOBS_SUCCESS:
+			return {
+				...state,
+				studentDashboard: studentDashboard(state.studentDashboard, action)
+			}
+		case DASHBOARD_FETCHED_JOBS_FAILURE:
+			return {
+				...state,
+				error: action.error
+			}
+		case DASHBOARD_FETCHING_INDUSTRIES:
+			return {
+				...state,
+			}
+		case DASHBOARD_FETCHED_INDUSTRIES_SUCCESS:
+			return {
+				...state,
+				industries: action.industries
+			}
+		case DASHBOARD_FETCHED_INDUSTRIES_FAILURE:
+			return {
+				...state,
+				error: action.error
+			}
+		case DASHBOARD_FETCHING_JOB_TYPES:
+			return {
+				...state,
+			}
+		case DASHBOARD_FETCHED_JOB_TYPES_SUCCESS:
+			return {
+				...state,
+				jobTypes: action.jobTypes
+			}
+		case DASHBOARD_FETCHED_JOB_TYPES_FAILURE:
+			return {
+				...state,
+				jobTypes: action.jobTypes
+			}
 		case GET_STUDENTS_SUCCESS:
 			return {
 				...state,
 				employerDashboard: employerDashboard(state.employerDashboard, action)
 			}
 		case GET_STUDENTS_FAILURE:
-			return {
-				...state,
-				error: action.error
-			}
-		case FETCHED_JOBS_SUCCESS:
-			return {
-				...state,
-				studentDashboard: studentDashboard(state.studentDashboard, action)
-			}
-		case FETCHED_JOBS_FAILURE:
-			return {
-				...state,
-				error: action.error
-			}
-		case FETCHED_QUESTIONS_SUCCESS:
-			return {
-				...state,
-				studentDashboard: studentDashboard(state.studentDashboard, action)
-			}
-		case FETCHED_QUESTIONS_FAILURE:
 			return {
 				...state,
 				error: action.error
@@ -644,11 +666,6 @@ export default function dashboard(state = initialDashboardState, action) {
 			return {
 				...state,
 				modal: modal(state.modal, action)
-			}
-		case FETCHED_LIST: 
-			return {
-				...state,
-				lists: lists(state.lists, action)
 			}
 		case UPDATE_ANSWER_FIELD:
 			return {

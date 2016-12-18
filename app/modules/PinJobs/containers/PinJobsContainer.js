@@ -197,19 +197,19 @@ const PinJobsContainer = React.createClass({
       <div className={pageContainer} >
           <SidebarContainer isAStudent={true}/>
           <PinJobs
-	      handleCardClick={this.showModal}
-    	      onHideModal={this.hideModal}
-	      onPinJob={this.pinJob}
-    	      onApplyClicked={this.applyClicked}
-    	      updateAnswerField={this.props.updateAnswerField}
-	      modal={this.props.modal}
-	      jobs={this.props.jobs ? this.props.jobs : ''}
-	      industries={this.props.industries ? this.props.industries : ''}
-	      jobTypes={this.props.jobTypes ? this.props.jobTypes : ''}
-	      questions={this.props.questions ? this.props.questions : ''}
-	      answerOne={this.props.answer.answerOne}
-	      answerTwo={this.props.answer.answerTwo} 
-	  />
+                handleCardClick={this.showModal}
+    	        onHideModal={this.hideModal}
+	            onPinJob={this.pinJob}
+    	        onApplyClicked={this.applyClicked}
+    	        updateAnswerField={this.props.updateAnswerField}
+	            modal={this.props.modal}
+	            jobs={this.props.jobs ? this.props.jobs : ''}
+	            industries={this.props.industries ? this.props.industries : ''}
+	            jobTypes={this.props.jobTypes ? this.props.jobTypes : ''}
+	            questions={this.props.questions ? this.props.questions : ''}
+	            answerOne={this.props.answer.answerOne}
+	            answerTwo={this.props.answer.answerTwo} 
+	      />
       </div>
     )
   },

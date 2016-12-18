@@ -34,6 +34,7 @@ export const DASHBOARD_CARD_TYPE = 'DASHBOARD_CARD_TYPE'
 export const PINNED_JOBS_CARD_TYPE = 'PINNED_JOBS'
 
 export default function GenericCard({ cardType, job, jobTypes, industries, handleCardClick, children }) {
+    debugger
   return (
     <div className={cardContainer}>
       {(() => {
@@ -49,7 +50,7 @@ export default function GenericCard({ cardType, job, jobTypes, industries, handl
                   <header className={cardHeader}>
                     {/*JOB TYPES*/}
                     <span>
-                      <p>{ jobTypes ? jobTypes[job.type].jobtype : ''}</p>
+                      <p>{ jobTypes.length > 0 ? jobTypes[job.type].jobtype : '' }</p>
                     </span>
                   </header>
 
@@ -60,7 +61,7 @@ export default function GenericCard({ cardType, job, jobTypes, industries, handl
 
                   {/* TODO: Point to industry  */}
                   <h3 className={industryTitle}>
-                  { industries[job.business.industry].industry }</h3>
+                  { industries.length > 0 ? industries[job.business.industry].industry : '' }</h3>
 
                   {/* TAGS */}
                   <div>
@@ -121,7 +122,7 @@ export default function GenericCard({ cardType, job, jobTypes, industries, handl
                   <header className={cardHeader}>
                     {/*JOB TYPES*/}
                     <span>
-                      <p>{ jobTypes ? jobTypes[job.type].jobtype : ''}</p>
+                      <p>{ jobTypes > 0 ? jobTypes[job.type].jobtype : ''}</p>
                     </span>
                   </header>
 
@@ -131,7 +132,7 @@ export default function GenericCard({ cardType, job, jobTypes, industries, handl
                   </div>
 
                   {/* TODO: Point to industry  */}
-                  <h3 className={industryTitle}>{ industries ? industries[job.type].industry : ''}</h3>
+                  <h3 className={industryTitle}>{ industries.length > 0 ? industries[job.type].industry : ''}</h3>
 
                   {/* TAGS */}
                   <div>
@@ -190,7 +191,7 @@ export default function GenericCard({ cardType, job, jobTypes, industries, handl
                   <header className={cardHeader}>
                     {/*JOB TYPES*/}
                     <span>
-                      <p>{ jobTypes ? jobTypes[job.type].jobtype : ''}</p>
+                      <p>{ jobTypes > 0 ? jobTypes[job.type].jobtype : ''}</p>
                     </span>
                   </header>
 
@@ -201,7 +202,7 @@ export default function GenericCard({ cardType, job, jobTypes, industries, handl
 
                   {/* TODO: Point to industry  */}
                   <h3 className={industryTitle}>
-                  { industries[job.business.industry].industry }</h3>
+                  { industries > 0 ? industries[job.business.industry].industry : ''}</h3>
 
                   {/* TAGS */}
                   <div>
