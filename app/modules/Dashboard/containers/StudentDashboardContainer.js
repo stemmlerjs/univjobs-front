@@ -56,37 +56,6 @@ const StudentDashboardContainer = React.createClass({
      return authRedirectFilter(config, this.context.store, this.context.router)
   },
 
-/**
- * FIXME: All jobs can return questions associated with it, do the following:
- *  - [ ] Make a redux-thunk out of getJobs by:
- *    - [ ] Decouple getQuestions and place it in dashboard modules
- *    - [ ] Make the dashboard work without the questions
- *  - [ ] Remove fetch.getQuestions
- *
- * TEST NOTES:
- *      Situation: Returned jobs as normal, even when jobs & questions where combined and serialized
- *      Task: Refer to FIXME
- *      Analysis
- *
-
-/** retrieveAllLists
- *   	This function retrieves all the api endpoints needed
- *   	to display the proper job informations
- *
- 
-  retrieveAllLists() {
-  	const promise = new Promise((resolve, reject) => {
-  		axios.all([
-  			  fetch.getIndustries(this.context.store, actionCreators),
-  			  fetch.getJobTypes(this.context.store, actionCreators),
-  		])
-  		.then((response) => resolve(true))
-  		.catch((response) => resolve(true))
-  	})
-  	return promise
-  },
-*/
-
   clearJobStore() {
   	this.context.store.getState().dashboard.jobs = this.context.store.getState().dashboard.studentDashboard.jobs.filter((k) => {
   		return k.id != this.context.store.getState().dashboard.modal.jobId ? k : ''
@@ -107,12 +76,9 @@ const StudentDashboardContainer = React.createClass({
   */
 
   showModal(e, j) {
-	e.preventDefault()
-	this.context.store.dispatch(actionCreators.modalClicked(j.id))
-
-  	//After modal is clicked, get the questions & match the question id with the job id
-  	//Once matched, pass the questions inside the modal to supply to questions variables
-  	this.context.store.dispatch(actionCreators.showModal(j, j.questions))
+      e.preventDefault()
+      this.context.store.dispatch(actionCreators.dashboardModalClicked(j.id))
+      this.context.store.dispatch(actionCreators.dashboardShowModal(j, j.questions))
   },
 
   /* pinJob 
@@ -124,15 +90,6 @@ const StudentDashboardContainer = React.createClass({
       e.preventDefault()
       e.stopPropagation()
 
-      //Check if the pinned var is true or false
-      //If true, POST call
-      //Else, DELETE call
-      
-      //POST or DELETE
-      //Get the job_id
-      //Pass the job_id to payload
-      //Pass payload to axios post
-      //Return success or fail
       if(!job.pinned) {
           this.props.handlePinJob(job)
       } else {
@@ -145,9 +102,9 @@ const StudentDashboardContainer = React.createClass({
   *   This event gives the user
   */
   hideModal (e, id) {
-  	this.context.store.dispatch(actionCreators.hideModal(id))
-  	this.context.store.getState().dashboard.answer.answerOne = ''
-  	this.context.store.getState().dashboard.answer.answerTwo = ''
+      this.context.store.dispatch(actionCreators.dashboardHideModal(id))
+      this.context.store.getState().dashboard.answer.answerOne = ''
+      this.context.store.getState().dashboard.answer.answerTwo = ''
   },
 
   /** applyClicked
@@ -179,7 +136,12 @@ const StudentDashboardContainer = React.createClass({
     // Given that answers fields were populated, continue
   	if (this.props.answer.answerOne && this.props.answer.answerTwo) {
 		this.props.handleSubmitAnswers(applicationInfo)
-  		.then(this.context.store.dispatch(actionCreators.hideModal(0)))
+  		.then(this.context.store.dispatch(actionCreators.dashboardHideModal(0)))
+
+        /*TODO: ADD CELEBRATORY GIF 
+         *
+         * NOTE: Future addition would be to give tips while they wait for the job
+         * */
 		.then(toastr.success("Successfully applied to jobs"))
   	} else {
   		toastr.error("✋ You need to answer the employers question if you want to get a job")
@@ -188,18 +150,12 @@ const StudentDashboardContainer = React.createClass({
 
   componentWillMount() {
   	console.log("componentWillMount")
-    debugger
   	this.doRedirectionFilter()
     .then(this.props.handleGetJobs())
     .then(this.props.handleGetIndustries())
     .then(this.props.handleGetJobTypes())
   	.then(this.props.closeOverlay())
   },
-
-  /*
-  shouldComponentUpdate() {
-    debugger
-  },*/
 
   componentWillUnmount() {
     console.log("Component WillUnmount")
@@ -220,7 +176,7 @@ const StudentDashboardContainer = React.createClass({
     	  jobTypes={this.props.jobTypes ? this.props.jobTypes : []}
     	  answerOne={this.props.answer.answerOne}
     	  answerTwo={this.props.answer.answerTwo}
-    	  updateAnswerField={this.props.updateAnswerField}
+    	  updateAnswerField={this.props.dashboardUpdateAnswerField}
           pin={this.props.pin}
 	    />
 

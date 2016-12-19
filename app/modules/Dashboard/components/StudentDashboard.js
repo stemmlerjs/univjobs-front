@@ -25,7 +25,6 @@ export default function StudentDashboard ({jobs, handleCardClick,
 	answerOne, answerTwo, updateAnswerField, 
     pin
 }) {
-    console.log(jobTypes)
         return (
             <div className={rootComponentContainer}>
 	            <div className={margin}>
