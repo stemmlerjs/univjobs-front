@@ -19,14 +19,10 @@ import { pageContainer, cardContainer, card, cardHeader,
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import ReactTooltip from 'react-tooltip'
 
-//**NOTE:
-//  TODO: Sort alphabetize & function alphabetize
-//  Store is accessible
-//  Follow Dasboard StudentDashbaord for Job & Pin functionality and display
 export default function PinJobs ({handleCardClick, jobs, industries, 
-				  jobTypes, questions, onPinJob,
-				  modal, onHideModal, onApplyClicked,
-				  answerOne, answerTwo, updateAnswerField}) {
+				  jobTypes, onPinJob, modal, onHideModal, onApplyClicked,
+				  answerOne, answerTwo, updateAnswerField
+}) {
   return (
 	<div className={rootComponentContainer}>
 	    <div className={margin}>
@@ -47,18 +43,22 @@ export default function PinJobs ({handleCardClick, jobs, industries,
 						      industries={industries}
 						   >
 						       <div className={buttonContainers}>
-						           <button className={pinIcon}
-							       onClick={(e) => onPinJob(e, job)}
-							    >
-							        <i className={rotateIcon + " fa fa-thumb-tack fa-lg " + fillIcon} 
-							     	   aria-hidden="true"
-							     />
-							   </button>
-							   <button className={applyButton}
-							       onClick={(e) => handleCardClick(e, job)}
-							   >
-							       APPLY
-							   </button>
+						           <button 
+                                        className={pinIcon}
+							            onClick={(e) => onPinJob(e, job)}
+			                            data-tip={job.pinned ? "Unpin job?" : "Pin job?" }
+			                        >
+                                        <i 
+			                                className={job.pinned ? rotateIcon + " fa fa-thumb-tack fa-lg " + fillIcon : rotateIcon + " fa fa-thumb-tack fa-lg"} 
+			    	                        aria-hidden="true" 
+			                            />
+			                            <ReactTooltip place="top" type="dark" effect="float"/>
+                                    </button>
+							        <button className={applyButton}
+							            onClick={(e) => handleCardClick(e, job)}
+							        >
+							            APPLY
+							        </button>
 						       </div>
 						   </GenericCard>
 						</div>

@@ -1,5 +1,4 @@
-import { getPinnedJobs, getQuestions, getJobTypes, 
-	getIndustries, studentApply } from 'helpers/pinJobs'
+import { getPinnedJobs, getJobTypes, getIndustries, studentApply, unPinAJob } from 'helpers/pinJobs'
 import { findJobId } from 'helpers/utils' 
 // =======================================================
 // ====================== ACTIONS ========================
@@ -13,36 +12,30 @@ import { findJobId } from 'helpers/utils'
  * */
 const FETCHING_PINNED_JOBS = 'FETCHING_PINNED_JOBS'
 const FETCHED_PINNED_JOBS_SUCCESS = 'FETCHED_PINNED_JOBS_SUCCESS'
-const FETCHED_PINNED_JOBS_FAILURE = 'FETCHED.PINNED_JOBS_FAILURE'
+const FETCHED_PINNED_JOBS_FAILURE = 'FETCHED_PINNED_JOBS_FAILURE'
 
-const FETCHING_QUESTIONS = 'FETCHING_QUESTIONS'
-const FETCHED_QUESTIONS_SUCCESS = 'FETCHED_QUESTIONS_SUCCESS'
-const FETCHED_QUESTIONS_FAILURE = 'FETCHED_QUESTIONS_FAILURE'
+const PINJOBS_MODAL_CLICKED = 'PINJOBS_MODAL_CLICKED'
+const PINJOBS_SHOW_MODAL = 'PINJOBS_SHOW_MODAL'
+const PINJOBS_HIDE_MODAL = 'PINJOBS_HIDE_MODAL'
 
-const MODAL_CLICKED = 'MODAL_CLICKED'
-const SHOW_MODAL = 'SHOW_MODAL'
-const HIDE_MODAL = 'HIDE_MODAL'
-const MODAL_FAILURE = 'HIDE_MODAL'
+const PINJOBS_UNPIN_CLICKED = 'PINJOBS_UNPIN_CLICKED'
+const PINJOBS_UNPIN_SUCCESS = 'PINJOBS_UNPIN_SUCCESS'
+const PINJOBS_UNPIN_FAILURE = 'PINJOBS_UNPIN_FAILURE'
 
-const UNPIN_CLICKED = 'UNPIN_CLICKED'
-const UNPIN_SUCCESS = 'UNPIN_SUCCESS'
-const UNPIN_FAILURE = 'UNPIN_FAILURE'
+const PINJOBS_UPDATE_ANSWER_FIELD = 'PINJOBS_UPDATE_ANSWER_FIELD'
 
-const UPDATE_ANSWER_FIELD = 'UPDATE_ANSWER_FIELD'
+const PINJOBS_SUBMITTING_ANSWERS = 'PINJOBS_SUBMITTING_ANSWERS'
+const PINJOBS_SUBMIT_ANSWERS_SUCCESS = 'PINJOBS_SUBMIT_ANSWERS_SUCCESS'
+const PINJOBS_SUBMIT_ANSWERS_FAILURE = 'PINJOBS_SUBMIT_ANSWERS_FAILURE'
 
-const SUBMITTING_ANSWERS = 'SUBMITTING_ANSWERS'
-const SUBMIT_ANSWERS_SUCCESS = 'SUBMIT_ANSWERS_SUCCESS'
-const SUBMIT_ANSWERS_FAILURE = 'SUBMIT_ANSWERS_FAILURE'
+const PINJOBS_FETCHING_JOB_TYPES = 'PINJOBS_FETCHING_JOB_TYPES'
+const PINJOBS_FETCHED_JOB_TYPES_SUCCESS = 'PINJOBS_FETCHED_JOB_TYPES_SUCCESS'
+const PINJOBS_FETCHED_JOB_TYPES_FAILURE = 'PINJOBS_FETCHED_JOB_TYPES_FAILURE'
 
-const FETCHING_JOB_TYPES = 'FETCHING_JOB_TYPES'
-const FETCHED_JOB_TYPES_SUCCESS = 'FETCHED_JOB_TYPES_SUCCESS'
-const FETCHED_JOB_TYPES_FAILURE = 'FETCHED_JOB_TYPES_FAILURE'
+const PINJOBS_FETCHING_INDUSTRIES = 'PINJOBS_FETCHING_INDUSTRIES'
+const PINJOBS_FETCHED_INDUSTRIES_SUCCESS = 'PINJOBS_FETCHED_INDUSTRIES_SUCCESS'
+const PINJOBS_FETCHED_INDUSTRIES_FAILURE = 'PINJOBS_FETCHING_INDUSTRIES_FAILURE'
 
-const FETCHING_INDUSTRIES = 'FETCHING_INDUSTRIES'
-const FETCHED_INDUSTRIES_SUCCESS = 'FETCHED_INDUSTRIES_SUCCESS'
-const FETCHED_INDUSTRIES_FAILURE = 'FETCHING_INDUSTRIES_FAILURE'
-
-const FETCHING_LIST = 'FETCHING_LIST'
 // =======================================================
 // ================== ACTIONS CREATORS ===================
 // =======================================================
@@ -70,93 +63,72 @@ export function fetchedPinnedJobsFailure(error) {
 	  error
   }
 }
-/**************GET QUESTIONS**********************/
-export function fetchingQuestions() {
-  return {
-	  type: FETCHING_QUESTIONS,
-  }
-}
-
-export function fetchedQuestionsSuccess(questions) {
-   return {
-	   type: FETCHED_QUESTIONS_SUCCESS,
-	   questions
-  }
-}
-
-export function fetchedQuestionsFailure(error) {
-  return {
-	  type: FETCHED_QUESTIONS_FAILURE,
-	  error
-  }
-}
 
 /***************INDUSTRIES***************/
-export function fetchingIndustries() {
+export function pinJobsFetchingIndustries() {
   return {
-	  type: FETCHING_INDUSTRIES,
+	  type: PINJOBS_FETCHING_INDUSTRIES,
   }
 }
 
-export function fetchedIndustriesSuccess(industries) {
+export function pinJobsFetchedIndustriesSuccess(industries) {
    return {
-	   type: FETCHED_INDUSTRIES_SUCCESS,
+	   type: PINJOBS_FETCHED_INDUSTRIES_SUCCESS,
 	   industries
   }
 }
 
-export function fetchedIndustriesFailure(error) {
+export function pinJobsFetchedIndustriesFailure(error) {
   return {
-	  type: FETCHED_INDUSTRIES_FAILURE,
+	  type: PINJOBS_FETCHED_INDUSTRIES_FAILURE,
 	  error
   }
 }
 /***************JOB TYPES***************/
-export function fetchingJobTypes() {
+export function pinJobsFetchingJobTypes() {
   return {
-	  type: FETCHING_JOB_TYPES,
+	  type: PINJOBS_FETCHING_JOB_TYPES,
   }
 }
 
-export function fetchedJobTypesSuccess(jobTypes) {
+export function pinJobsFetchedJobTypesSuccess(jobTypes) {
    return {
-	   type: FETCHED_JOB_TYPES_SUCCESS,
+	   type: PINJOBS_FETCHED_JOB_TYPES_SUCCESS,
 	   jobTypes
   }
 }
 
-export function fetchedJobTypesFailure(error) {
+export function pinJobsFetchedJobTypesFailure(error) {
   return {
-	  type: FETCHED_JOB_TYPES_FAILURE,
+	  type: PINJOBS_FETCHED_JOB_TYPES_FAILURE,
 	  error
   }
 }
 /**************MODALS***********************/
-export function modalClicked(jobId) {
+export function pinJobsModalClicked(jobId) {
    return {
-   	   type: MODAL_CLICKED,
+   	   type: PINJOBS_MODAL_CLICKED,
 	   jobId
    }
 }
 
-export function showModal(job, questions) {
+export function pinJobsShowModal(job) {
    return {
-   	  type: SHOW_MODAL,
+   	  type: PINJOBS_SHOW_MODAL,
 	  job,
-	  questions
    }
 }
 
-export function hideModal() {
+export function pinJobsHideModal() {
    return {
-          type: HIDE_MODAL
+          type: PINJOBS_HIDE_MODAL
    }
 }
 
 /**************UNPINS***********************/
-export function unPinClicked(job) {
+export function pinJobsUnPinClicked(job) {
    return {
-   	  type: UNPIN_CLICKED,
+   	  type: PINJOBS_UNPIN_CLICKED,
 	  job,
    }
 }
@@ -168,26 +140,26 @@ export function unPinClicked(job) {
  *         }
  *  NOTE: find the jobId and changed the pinned status to true in the store
  * */
-export function unPinSuccess(response) {
+export function pinJobsUnPinSuccess(response) {
    return {
-          type: UNPIN_SUCCESS,
-	  fill: {color: 'none'},
-	  response
+        type: PINJOBS_UNPIN_SUCCESS,
+        fill: {color: 'none'},
+	    response
    }
 }
 
-export function unPinFailure(response) {
+export function pinJobsUnPinFailure(error) {
    return {
-          type: UNPIN_FAILURE,
-	  error,
+        type: PINJOBS_UNPIN_FAILURE,
+	    error,
    }
 }
 
 
 /**************UPDATE FIELDS***********************/
-export function updateAnswerField(fieldName, newValue) {
+export function pinJobsUpdateAnswerField(fieldName, newValue) {
   return {
-	  type: UPDATE_ANSWER_FIELD,
+	  type: PINJOBS_UPDATE_ANSWER_FIELD,
 	  newValue, 
 	  fieldName
   }
@@ -198,22 +170,22 @@ export function updateAnswerField(fieldName, newValue) {
  *  Pass the questionIds with the associated answers
  * */
 
-function submittingAnswers() {
+function pinJobsSubmittingAnswers() {
     return {
-	type: SUBMITTING_ANSWERS
+	    type: PINJOBS_SUBMITTING_ANSWERS
     }
 }
 
-export function submitAnswersSuccess(response) {
+export function pinJobsSubmitAnswersSuccess(response) {
    return {
-	type: SUBMIT_ANSWERS_SUCCESS,
-	response
+	    type: PINJOBS_SUBMIT_ANSWERS_SUCCESS,
+	    response
    }
 }
 
-export function submitAnswersFailure(error) {
+export function pinJobsSubmitAnswersFailure(error) {
    return {
-        type: SUBMIT_ANSWERS_FAILURE,
+        type: PINJOBS_SUBMIT_ANSWERS_FAILURE,
         error
    }
 }
@@ -240,50 +212,28 @@ export function handleGetPinnedJobs() {
     }//dispatch
 }//handleGetPinnedJobs
 
-export function handleGetQuestions() {
-    return function(dispatch) {
-	    //ACTION: FETCHING_QUESTIONS
-	    dispatch(fetchingQuestions())
-	    return getQuestions()
-	        .then((resp) => 
-		    //ACTION: FETCHED_QUESTIONS_SUCCESS
-		    dispatch(fetchedQuestionsSuccess(resp))
-	        )
-	        .catch((err) => 
-		    //ACTION: FETCHED_QUESTIONS_FAILURE
-		    dispatch(fetchedQuestionsFailure(err))
-	        )
-    }//dispatch
-}//handlePinJob
-
 export function handleGetIndustries() {
     return function(dispatch) {
-	    //ACTION: FETCHING_INDUSTRIES
-	    dispatch(fetchingIndustries)
+	        dispatch(pinJobsFetchingIndustries)
 	    return getIndustries()
 	        .then((resp) => 
-		    //ACTION: FETCHED_INDUSTRIES_SUCCESS
-		    dispatch(fetchedIndustriesSuccess(resp))
+		        dispatch(pinJobsFetchedIndustriesSuccess(resp))
 	        )
 	        .catch((err) => 
-		    //ACTION: FETCHED_QUESTIONS_FAILURE
-		    dispatch(fetchedIndustriesFailure(err))
+		        dispatch(pinJobsFetchedIndustriesFailure(err))
 	        )
     }//dispatch
 }//handlePinJob
 
 export function handleGetJobTypes() {
     return function(dispatch) {
-	    //ACTION: FETCHING_JOB_TYPES
-	    dispatch(fetchingJobTypes)
+	    dispatch(pinJobsFetchingJobTypes)
 	    return getJobTypes()
 	        .then((resp) => 
-		    //ACTION: FETCHED_JOB_TYPES_SUCCESS
-		    dispatch(fetchedJobTypesSuccess(resp))
+		        dispatch(pinJobsFetchedJobTypesSuccess(resp))
 	        )
 	        .catch((err) => 
-		    //ACTION: FETCHED_JOB_TYPES_FAILURE
-		    dispatch(fetchedJobTypesFailure(err))
+		        dispatch(pinJobsFetchedJobTypesFailure(err))
 	        )
     }//dispatch
 }//handlePinJob
@@ -291,15 +241,13 @@ export function handleGetJobTypes() {
 export function handleSubmitAnswers(answersData) {
     return function(dispatch) {
 	// DISPATCH (SUBMITTING_ANSWERS)
-	dispatch(submittingAnswers())
+	dispatch(pinJobsSubmittingAnswers())
 	return studentApply(answersData)
 	    .then((response) => {
-		// DISPATCH (SUBMIT_ANSWERS_SUCCESS)
-		dispatch(submitAnswersSuccess(response))
+	    	dispatch(pinJobsSubmitAnswersSuccess(response))
 	    })
 	    .catch((err) => {
-		// DISPATCH (SUBMIT_ANSWERS_FAILURE)
-		dispatch(submitAnswersFailure(err))
+		    dispatch(pinJobsSubmitAnswersFailure(err))
 	    })
     }
 }
@@ -307,16 +255,13 @@ export function handleSubmitAnswers(answersData) {
 export function handleUnPinJob(job) {
     return function(dispatch) {
 	    //ACTION: PIN_CLICKED
-	    dispatch(unPinClicked(job))
+	    dispatch(pinJobsUnPinClicked(job))
 	    return unPinAJob({'job': job.id})
 	        .then((resp) => 
-		    //ACTION: UNPIN_SUCCESS
-		    
-		    dispatch(unPinSuccess(resp))
+		        dispatch(pinJobsUnPinSuccess(resp))
 	        )
 	        .catch((err) => 
-		    //ACTION: UNPIN_FAILURE
-		    dispatch(unPinFailure(err))
+		        dispatch(pinJobsUnPinFailure(err))
 	        )
     }//dispatch
 }//handleUnPinJob
@@ -348,7 +293,6 @@ const initialModalState = {
 	isOpen: false,
 	job: '',
 	jobId: '',
-	questions: '' 
 }
 
 
@@ -387,109 +331,103 @@ export default function pinJobs(state = initialPinJobsState, action) {
 				...state,
 				error: action.error,
 			}
-		case FETCHING_QUESTIONS:
-			return {
-				...state,
-			}		
-		case FETCHED_QUESTIONS_SUCCESS:
-			return {
-				...state,
-				questions: action.questions,
-			}
-		case FETCHED_QUESTIONS_FAILURE:
-			return {
-				...state,
-				error: action.error,
-			}
-		case FETCHING_INDUSTRIES:
+		case PINJOBS_FETCHING_INDUSTRIES:
 			return {
 				...state,
 			}
-		case FETCHED_INDUSTRIES_SUCCESS:
+		case PINJOBS_FETCHED_INDUSTRIES_SUCCESS:
 			return {
 				...state,
 				industries: action.industries
 			}
-		case FETCHED_INDUSTRIES_FAILURE:
+		case PINJOBS_FETCHED_INDUSTRIES_FAILURE:
 			return {
 				...state,
 				error: action.error
 			}
-		case FETCHING_JOB_TYPES:
+		case PINJOBS_FETCHING_JOB_TYPES:
 			return {
 				...state,
 			}
-		case FETCHED_JOB_TYPES_SUCCESS:
-			return {
-				...state,
-				jobTypes: action.jobTypes
-			}
-		case FETCHED_JOB_TYPES_FAILURE:
+		case PINJOBS_FETCHED_JOB_TYPES_SUCCESS:
 			return {
 				...state,
 				jobTypes: action.jobTypes
 			}
-		case MODAL_CLICKED:
+		case PINJOBS_FETCHED_JOB_TYPES_FAILURE:
+			return {
+				...state,
+				jobTypes: action.jobTypes
+			}
+		case PINJOBS_MODAL_CLICKED:
 			return {
 				...state,
 				modal: modal(state.modal, action)
 			}
-		case SHOW_MODAL:
+		case PINJOBS_SHOW_MODAL:
 			return {
 				...state,
 				modal: modal(state.modal, action)
 			}
-		case HIDE_MODAL:
+		case PINJOBS_HIDE_MODAL:
 			return {
 				...state,
 				modal: modal(state.modal, action)
 			}
-		case UPDATE_ANSWER_FIELD:
+		case PINJOBS_UPDATE_ANSWER_FIELD:
 			return {
 				...state,
 				answer: answer(state.answer, action)
 			}
-		case SUBMITTING_ANSWERS:
+		case PINJOBS_SUBMITTING_ANSWERS:
 			debugger
 			return {
 				...state,
 				answer: answer(state.answer, action)
 			}		
-		case SUBMIT_ANSWERS_SUCCESS:
+		case PINJOBS_SUBMIT_ANSWERS_SUCCESS:
 			debugger
-			/*TODO: Not working index return is undefined
-			 * The following sequence will happen once this scope is executed
-			 * 	- Find & return jobIds index
-			 * 	- Delete job in store
-			 * 	- Database delete of the job pinned automatically
-			 * 	  In NewJobApplicantView
-			 **/
+            /* Find the position of job applied to
+             * Delete the instance of job in the state
+             * */
 			let index = state.jobs.data.findIndex((job) => job.id === state.modal.jobId)
 			index != -1 ? state.jobs.data.splice(index, 1) : ''  
 			return {
 				...state,
 				answer: answer(state.answer, action)
 			}
-		case SUBMIT_ANSWERS_FAILURE:
+		case PINJOBS_SUBMIT_ANSWERS_FAILURE:
 			debugger
 			return {
 				...state,
 				answer: answer(state.answer, action),
 				error: action.error
 			}
-		case UNPIN_CLICKED:
+		case PINJOBS_UNPIN_CLICKED:
    			debugger
 			return {
 				...state,
 				pin: pin(state.pin, action)
 			}
-		case UNPIN_SUCCESS:
+		case PINJOBS_UNPIN_SUCCESS:
    			debugger
+			//Change the attribute for pinned to true locally
+            //Then delete it in pinnedJobs 
+			state.jobs.data.map((job => {
+			    if(job.id === action.response.data.job) {
+			        job.pinned = false
+			    }
+			}))
+            /* Find the position of job applied to
+             * Delete the instance of job in the state
+             * */
+			let element = state.jobs.data.findIndex((job) => job.id === action.response.data.job)
+			element != -1 ? state.jobs.data.splice(element, 1) : ''  
 			return {
 				...state,
 				pin: pin(state.pin, action)
 			}
-		case UNPIN_FAILURE:
+		case PINJOBS_UNPIN_FAILURE:
    			debugger
 			return {
 				...state,
@@ -503,26 +441,20 @@ export default function pinJobs(state = initialPinJobsState, action) {
 
 function pin(state = initialPinState, action) {	
 	switch(action.type) {
-		case UNPIN_CLICKED:
+		case PINJOBS_UNPIN_CLICKED:
    			debugger
 			return {
 			    ...state,
 			    job: action.jobs
 			}
-		case UNPIN_SUCCESS:
+		case PINJOBS_UNPIN_SUCCESS:
    			debugger
-			//Change the attribute for pinned to true locally
-			state.jobs.map((job => {
-			    if(job.id === action.response.data.job) {
-			        job.pinned = false
-			    }
-			}))
 			return {
 			    ...state,
 			    response: action.response,
 			    pinColor: action.fill,
 			}
-		case UNPIN_FAILURE:
+		case PINJOBS_UNPIN_FAILURE:
    			debugger
 			return {
 			    ...state,
@@ -537,20 +469,19 @@ function pin(state = initialPinState, action) {
 
 function modal(state = initialModalState, action) {	
 	switch(action.type) {
-		case MODAL_CLICKED:
+		case PINJOBS_MODAL_CLICKED:
 			return {
 				...state,
 				isClicked: true,
 				jobId: action.jobId,
 			}
-		case SHOW_MODAL:
+		case PINJOBS_SHOW_MODAL:
 			return {
 				...state,
 				isOpen: true,
 				job: action.job,
-				questions: action.questions
 			}
-		case HIDE_MODAL:
+		case PINJOBS_HIDE_MODAL:
 			return {
 				...state,
 				isClicked: false,
@@ -565,25 +496,25 @@ function modal(state = initialModalState, action) {
 
 function answer(state = initialAnswerState, action) {
 	switch(action.type) {
-		case UPDATE_ANSWER_FIELD:
+		case PINJOBS_UPDATE_ANSWER_FIELD:
 			return {
 				...state,
 				[action.fieldName]: action.newValue,
 			}
-		case SUBMITTING_ANSWERS:
+		case PINJOBS_SUBMITTING_ANSWERS:
 			debugger
 			return {
 				...state,
 				isSubmitting: true
 			}		
-		case SUBMIT_ANSWERS_SUCCESS:
+		case PINJOBS_SUBMIT_ANSWERS_SUCCESS:
 			debugger
 			return {
 				...state,
 				response: action.response,
 				isSubmitting: false
 			}
-		case SUBMIT_ANSWERS_FAILURE:
+		case PINJOBS_SUBMIT_ANSWERS_FAILURE:
 			debugger
 			return {
 				...state,

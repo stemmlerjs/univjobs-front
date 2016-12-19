@@ -54,7 +54,7 @@ export default function StudentDashboard ({jobs, handleCardClick,
                                     <button 
                                         className={pinIcon} 
 			                            onClick={(e) => onPinJob(e, job)} 
-			                            data-tip="Pinned!"
+			                            data-tip={job.pinned ? "Unpin job?" : "Pin job?" }
                                     >
 			                            <i 
 			                                className={job.pinned ? rotateIcon + " fa fa-thumb-tack fa-lg " + fillIcon : rotateIcon + " fa fa-thumb-tack fa-lg"} 

@@ -62,24 +62,8 @@ const PinJobsContainer = React.createClass({
       //debugger
       e.preventDefault()
       e.stopPropagation()
+      this.props.handleUnPinJob(job)
 
-      //Figure out a way to rotate pin
-      console.log(job)
-      //Check if the pinned var is true or false
-      //If true, POST call
-      //Else, DELETE call
-      
-      //POST or DELETE
-      //Get the job_id
-      //Pass the job_id to payload
-      //Pass payload to axios post
-      //Return success or fail
-      /*
-      if(!job.pinned) {
-	 this.props.handlePinJob(job)
-      } else {
-         this.props.handleUnPinJob(job)
-      } */
   },
   /** showModal
    *
@@ -93,52 +77,18 @@ const PinJobsContainer = React.createClass({
    * @param(j) - Object job
    * @param(q) - Object questions
   */
-
-//FIXME: Button is being called twice
+  
   showModal(e, j) {
-	e.preventDefault()
-	this.context.store.dispatch(actionCreators.modalClicked(j.id))
-
-  	//After modal is clicked, get the questions & match the question id with the job id
-  	//Once matched, pass the questions inside the modal to supply to questions variables
-  	this.context.store.dispatch(actionCreators.showModal(j, this.getQuestions()))
+      e.preventDefault()
+      this.context.store.dispatch(actionCreators.pinJobsModalClicked(j.id))
+  	  this.context.store.dispatch(actionCreators.pinJobsShowModal(j))
   },
 
-  /* getQuestions
-   * 	This function passes the function matchQuestions and uses the filter function
-   * 	on the questions array. It will return a new array that is filtered with the associated
-   * 	job ids from the questions ids
-   *
-   *
-   */
-
-  getQuestions() {
-	  return this.props.questions.filter(this.filterQuestions)
-  },
-
-  /** filterQuestions
-   *     This function takes two params, job id & questions object.
-   *     It returns all the questions that matches the question ids
-   *
-   *
-   *      NOTE:
-   *         - Should we combine the questions in with the api endpoint, the same way user & job is handled?
-   *         - Should we separate it like how I am doing it right now?
-   *         - In what way is the best approach?
-   *         - What do we want to achieve out of this?
-   *
-   */
-
-  filterQuestions(question) {
-	  console.log("***********FILTER QUESTIONS**********")
-		  debugger
-	  return question.job === this.context.store.getState().pinJobs.modal.jobId
-  },
 
   hideModal (e, id) {
-  	this.context.store.dispatch(actionCreators.hideModal(id))
-  	this.context.store.getState().pinJobs.answer.answerOne = ''
-  	this.context.store.getState().pinJobs.answer.answerTwo = ''
+      this.context.store.dispatch(actionCreators.pinJobsHideModal(id))
+      this.context.store.getState().pinJobs.answer.answerOne = ''
+  	  this.context.store.getState().pinJobs.answer.answerTwo = ''
   },
   /** applyClicked
    *
@@ -148,8 +98,8 @@ const PinJobsContainer = React.createClass({
 
   applyClicked (e, questions) {
     e.preventDefault()
-    console.log("Apply Clicked")
 
+        debugger
     /* Create Large Object */
     let applicationInfo = {
       "job": this.context.store.getState().pinJobs.modal.jobId,
@@ -170,7 +120,7 @@ const PinJobsContainer = React.createClass({
     // Given that answers fields were populated, continue
   	if (this.props.answer.answerOne && this.props.answer.answerTwo) {
 		this.props.handleSubmitAnswers(applicationInfo)
-  		 .then(this.context.store.dispatch(actionCreators.hideModal(0)))
+  		 .then(this.context.store.dispatch(actionCreators.pinJobsHideModal(0)))
 		 //TODO: Replace with a Celebration GIF 
   		 .then(toastr.success("Successfully applied to jobs"))
   	} else {
@@ -184,7 +134,6 @@ const PinJobsContainer = React.createClass({
 	.then(this.props.handleGetIndustries())
 	.then(this.props.handleGetJobTypes())
 	.then(this.props.handleGetPinnedJobs())
-	.then(this.props.handleGetQuestions())
 	.then(this.props.closeOverlay())
   },
 
@@ -201,12 +150,11 @@ const PinJobsContainer = React.createClass({
     	        onHideModal={this.hideModal}
 	            onPinJob={this.pinJob}
     	        onApplyClicked={this.applyClicked}
-    	        updateAnswerField={this.props.updateAnswerField}
+    	        updateAnswerField={this.props.pinJobsUpdateAnswerField}
 	            modal={this.props.modal}
 	            jobs={this.props.jobs ? this.props.jobs : ''}
 	            industries={this.props.industries ? this.props.industries : ''}
 	            jobTypes={this.props.jobTypes ? this.props.jobTypes : ''}
-	            questions={this.props.questions ? this.props.questions : ''}
 	            answerOne={this.props.answer.answerOne}
 	            answerTwo={this.props.answer.answerTwo} 
 	      />
@@ -227,8 +175,7 @@ function mapStateToProps({user, pinJobs}) {
 	  jobs: pinJobs.jobs.data ? pinJobs.jobs.data : '',
 	  industries: pinJobs.industries.data ? pinJobs.industries.data : '',
 	  jobTypes: pinJobs.jobTypes.data ? pinJobs.jobTypes.data : '',
-	  questions: pinJobs.questions.data ? pinJobs.questions.data : '',
-	  answer: pinJobs.questions.data ? pinJobs.answer : '',
+	  answer: pinJobs.jobs ? pinJobs.answer : {},
 	  modal: pinJobs.modal ? pinJobs.modal : ''
   }
 }

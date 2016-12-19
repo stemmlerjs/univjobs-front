@@ -138,13 +138,13 @@ export function unPinAJob(data) {
 	const accessToken = getAccessToken()
 	const csrfToken = getCSRFToken()
 
-		return axios({
-			method: 'delete',
-			url: config.baseUrl + 'job/pin/',
-			headers: {
-				'Authorization': 'JWT ' + accessToken,
-				'X-CSRFToken' : csrfToken
-			},
-			data: data
-		})
+	return axios({
+		method: 'delete',
+		url: config.baseUrl + 'job/pin/',
+		headers: {
+			'Authorization': 'JWT ' + accessToken,
+			'X-CSRFToken' : csrfToken
+		},
+        data: data
+	})
 }
