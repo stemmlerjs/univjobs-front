@@ -56,7 +56,7 @@ const EmployerProfileContainer = React.createClass({
   *
   * The redirection filter is the process that occurs each time we enter this container.
   * Used in every higher order component and supplied with a config, it ensures that the
-  * user is redirected to the appropriate page based on their authentication status and 
+  * user is redirected to the appropriate page based on their authentication status and
   * user type.
   *
   * @return (Promise)
@@ -85,7 +85,9 @@ const EmployerProfileContainer = React.createClass({
   */
 
   finallyDisableOverlay() {
-    if(this.context.store.getState().application.isOverlayActive){
+    console.log("Let's disable the overlay")
+    console.log(this.context.store.getState())
+    if(this.context.store.getState().rootApplication.isOverlayActive){
       this.props.closeOverlay()
     }
   },
@@ -103,7 +105,7 @@ const EmployerProfileContainer = React.createClass({
   componentWillReceiveProps(newProps) {
     let error = newProps.error;
     let submitSuccess = newProps.submitSuccess;
-    
+
     if(submitSuccess) {
       this.refs.container.success(
         "Woohoo :)",
@@ -125,17 +127,20 @@ const EmployerProfileContainer = React.createClass({
   * componentWillMount
   *
   * When the actual DOM is loaded, lets get all the lists required
-  * then do the redirection filter (if required) and then 
+  * then do the redirection filter (if required) and then
   * close the overlay
   *
   * @param (Object) newProps
   */
 
   componentWillMount() {
-    /*  On page load, we will first get all the required lists for the screen */  
+    /*  On page load, we will first get all the required lists for the screen */
     this.retrieveAllLists()
-      .then(this.doRedirectionFilter) 
+      .then(this.doRedirectionFilter)
       .then(this.finallyDisableOverlay)
+      .catch((err) => {
+        console.log("[componentWillMount]: Employer Profile - Error occurred", err)
+      })
   },
 
   handleSubmit(empProps) {
@@ -156,8 +161,8 @@ const EmployerProfileContainer = React.createClass({
   render () {
     return (
       <div className={pageContainer}>
-        <SidebarContainer/>
-        <EmployerProfile 
+        <SidebarContainer isAStudent={false}/>
+        <EmployerProfile
           companyName={this.props.companyName}
           industry={this.props.industry}
           industryList={this.props.industryList}

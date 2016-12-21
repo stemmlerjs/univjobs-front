@@ -1,8 +1,8 @@
 import axios from 'axios'
 import config from 'config'
 import { getAccessToken, getCSRFToken } from 'helpers/auth'
-import { validatePersonalEmail, validateFirstName, validateLastName, 
-	validateCompanyName, validateAddress, validateCity, 
+import { validatePersonalEmail, validateFirstName, validateLastName,
+	validateCompanyName, validateAddress, validateCity,
 	validatePostalCode, validateGPA, validateLanguages} from 'helpers/utils'
 
 //********************** EMPLOYER *************************//
@@ -47,6 +47,14 @@ export function employerProfilePATCH(data) {
   })
 }
 
+/**
+  * validateEmployerProfileFields
+  *   - Attempts to validate all form fields before the employer submits their profile.
+  *
+  * @param (String) - email
+  * @param (String) -
+  */
+
 export function validateEmployerProfileFields(profileInfo, next) {
   let submitErrorsExist = false;
   let profileFieldErrors = {
@@ -60,14 +68,13 @@ export function validateEmployerProfileFields(profileInfo, next) {
     officeCity: false,
     officePostalCode: false
   }
-  
+  debugger;
   // Validate each field in it's own unique way
   profileFieldErrors.companyName = validateCompanyName(profileInfo.companyName) ? false : true
-  //profileFieldErrors.industry = typeof profileInfo.industry == "object" || typeof profileInfo.industry == "number" ? false : true
   profileFieldErrors.industry = profileInfo.industry != "" ? false : true
   profileFieldErrors.employeeCount = profileInfo.employeeCount > 0 ? false : true
   profileFieldErrors.officeAddress = validateAddress(profileInfo.officeAddress) && profileInfo.officeAddress != "" ? false : true
-  profileFieldErrors.officePostalCode = validatePostalCode(profileInfo.officePostalCode) ? false : true 
+  profileFieldErrors.officePostalCode = validatePostalCode(profileInfo.officePostalCode) ? false : true
   profileFieldErrors.officeCity = validateCity(profileInfo.officeCity) ? false : true
   profileFieldErrors.logoUrl =  profileInfo.logoUrl != "" ? false : true
 
@@ -123,7 +130,7 @@ export function studentProfilePATCH(data) {
 export function validateStudentProfileFields(profileInfo, next) {
   //debugger;
   let submitErrorsExist = false;
-  let profileFieldErrors = {	
+  let profileFieldErrors = {
 	  emailPreferences: false,
 	  firstName: false,
    	lastName: false,
@@ -186,9 +193,9 @@ export function validateStudentProfileFields(profileInfo, next) {
 
 //********************* COMPARISON ********************//
 /*
- * Will compare the old profile to the new profile to determine 
+ * Will compare the old profile to the new profile to determine
  * wether PUT or PATCH is used.
- * 
+ *
  * ***************************************************/
 
 export function compareToSnapshot(oldProfile, newProfile, callback) {

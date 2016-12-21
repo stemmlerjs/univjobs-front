@@ -41,7 +41,7 @@ const base = {
       { test: /\.less$/, loader: 'style-loader!css-loader!less-loader'},
       { test: /\.gif$/, loader: 'url-loader?mimetype=image/png' },
       { test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: "url-loader?limit=10000&mimetype=application/font-woff" },
-      { test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: "file-loader?[name].[ext]" }      
+      { test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: "file-loader?[name].[ext]" }
     ]
   },
   resolve: {
@@ -58,9 +58,10 @@ const developmentConfig = {
     progress: true,
     proxy: {
       '/api/**': {
-	/*FIXME: Uncomment below when going to test server */
-        /*target: 'http://ec2-52-87-227-85.compute-1.amazonaws.com:8000',*/
-	target: 'http://127.0.0.1:8000/',
+	    /*FIXME: Uncomment below when going to test server */
+        //target: 'http://ec2-52-87-227-85.compute-1.amazonaws.com:8000',
+	    // target: 'http://127.0.0.1:8000/',
+        target: 'http://192.168.0.19:8000/',   // Khalil's local server
         secure: false,
         changeOrigin: true,
         protocolRewrite: true,
