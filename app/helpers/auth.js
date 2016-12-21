@@ -146,7 +146,11 @@ export function createEmployerAccount(firstName, lastName, companyName, mobile, 
     method: 'post',
     url: config.baseUrl + 'register/business/',
     headers: {
-      "Authorization": "JWT " + accessToken,
+    //  Fix: Error decoding token occurs when we include the 'authorization' header here.
+    //       At this point, there would be no token anyways. It's not necessary.
+    //       https://github.com/UnivJobs/univjobs-front/issues/19
+    //
+    //  "Authorization": "JWT " + accessToken,
       'X-CSRFToken': csrfToken
     },
     data: {
