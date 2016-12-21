@@ -13,7 +13,7 @@ export function validatePassword(password) {
 
 export function validateStudentEmail(email, callback) {
   var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  
+
   if(!re.test(email)){
     callback(false, "Please enter your school email address.")
   } else if (!/@sheridancollege.ca\s*$/.test(email)) {
@@ -30,7 +30,7 @@ export function validateEmployerEmail(email) {
 
 export function validatePersonalEmail(email) {
   var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  
+
   //If true pass validation
   if(re.test(email) || email == '') {
     return true
@@ -63,7 +63,7 @@ export function detectEnterPress(event, callback) {
   let keyCode = event.keyCode || event.charCode;
   if(keyCode === 13) {
     callback()
-  } 
+  }
 }
 
 export function validatePostalCode(postalcode) {
@@ -95,30 +95,36 @@ export function validateGPA(gpa) {
   return re.test(gpa)
 }
 
+export function validateJobTitle(jobTitle) {
+  var re = /^[a-z ,.'-]{2,40}$/i
+  return re.test(jobTitle)
+}
+
+export function validateWebURL(value){
+  return /^(https?|ftp):\/\/(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:)*@)?(((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?)(:\d*)?)(\/((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)?(\?((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(\#((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?$/i.test(value);
+}
+
 /* Languages must be empty or a number from 0 to 132
  * FIXME: Change range of input to 0 to 132
  * */
 export function validateLanguages(languageList) {
   if(languageList.length != 0) {
     return true
-  } 
+  }
 }
 // ***************** DATE ******************//
 export function toISO(date) {
   return date.getFullYear()+'-' + (date.getMonth()+1) + '-'+date.getDate();//prints expected format.
 }
 
-export function validateJobTitle(jobTitle) {
-  var re = /^[a-z ,.'-]{2,40}$/i
-  return re.test(jobTitle)
-}
 
 
 /* Used to find the index of the jobId in an array
  * Is pair with Array object.findIndexOf(findJobId)
- * 
+ *
  * Reference: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/findIndex
  * */
 export function findJobId(id, jobId) {
     return id === jobId
 }
+

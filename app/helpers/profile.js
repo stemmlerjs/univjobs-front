@@ -3,7 +3,8 @@ import config from 'config'
 import { getAccessToken, getCSRFToken } from 'helpers/auth'
 import { validatePersonalEmail, validateFirstName, validateLastName,
 	validateCompanyName, validateAddress, validateCity,
-	validatePostalCode, validateGPA, validateLanguages} from 'helpers/utils'
+	validatePostalCode, validateGPA, validateLanguages,
+    validateWebURL } from 'helpers/utils'
 
 //********************** EMPLOYER *************************//
 
@@ -51,8 +52,8 @@ export function employerProfilePATCH(data) {
   * validateEmployerProfileFields
   *   - Attempts to validate all form fields before the employer submits their profile.
   *
-  * @param (String) - email
-  * @param (String) -
+  * @param (Object) - profile info
+  * @param (Function) - callback
   */
 
 export function validateEmployerProfileFields(profileInfo, next) {
@@ -68,7 +69,7 @@ export function validateEmployerProfileFields(profileInfo, next) {
     officeCity: false,
     officePostalCode: false
   }
-  debugger;
+
   // Validate each field in it's own unique way
   profileFieldErrors.companyName = validateCompanyName(profileInfo.companyName) ? false : true
   profileFieldErrors.industry = profileInfo.industry != "" ? false : true
@@ -77,11 +78,13 @@ export function validateEmployerProfileFields(profileInfo, next) {
   profileFieldErrors.officePostalCode = validatePostalCode(profileInfo.officePostalCode) ? false : true
   profileFieldErrors.officeCity = validateCity(profileInfo.officeCity) ? false : true
   profileFieldErrors.logoUrl =  profileInfo.logoUrl != "" ? false : true
+  profileFieldErrors.website = validateWebURL(profileInfo.website) ? false : true
 
   // If an error exists in the map, then submitErrorsExist === true
   for (var attr in profileFieldErrors) {
     if (profileFieldErrors[attr] === true) submitErrorsExist = true;
   }
+
   next(submitErrorsExist, profileFieldErrors)
 }
 

@@ -85,8 +85,6 @@ const EmployerProfileContainer = React.createClass({
   */
 
   finallyDisableOverlay() {
-    console.log("Let's disable the overlay")
-    console.log(this.context.store.getState())
     if(this.context.store.getState().rootApplication.isOverlayActive){
       this.props.closeOverlay()
     }
@@ -177,6 +175,11 @@ const EmployerProfileContainer = React.createClass({
           onSubmit={this.handleSubmit}
           submitErrorsExist={this.props.submitErrorsExist}
           profileErrorsMap={this.props.profileErrorsMap}
+          email={this.props.user.email}
+          firstName={this.props.user.firstName}
+          lastName={this.props.user.lastName}
+          dateJoined={this.props.user.dateJoined}
+          mobile={this.props.user.mobile}
         />
         <ToastContainer ref="container"
           toastMessageFactory={ToastMessageFactory}

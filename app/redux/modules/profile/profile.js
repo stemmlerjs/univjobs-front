@@ -175,18 +175,18 @@ export function submitProfileFirstTime(userTypeInt, profileInfo, user) {
     	console.log("SUBMITTING STUDENT PROFILE FIRST TIME")
     	validateStudentProfileFields(profileInfo, (errorExist, profileFieldErrors) => {
     	  if(errorExist) {
-    	   console.log('HERE!!!!!!')
+
     	    // DISPATCH - SAVE_PROFILE_ERROR
-    	    dispatch(saveProfileError(profileFieldErrors, [    "Couldn't save profile.",
-    	  "Please fill in missing fields"
+    	    dispatch(saveProfileError(profileFieldErrors, [
+            "Couldn't save profile.",
+    	      "Please fill in missing fields"
     	    ], true))
 
     	  } else {
     	   console.log('SUBMIT STUDENT PROFILE NO ERRORS')
     	    // No errors, proceed to /PUT on api/me
-          debugger;
+
           var putData = {
-             // user: {
             "user-is_a_student": true,
             "user-is_profile_completed": true,
             "user-email": user.email,
@@ -231,8 +231,14 @@ export function submitProfileFirstTime(userTypeInt, profileInfo, user) {
     	    }
     	  })
     	  return;
+
+      // ===================================================== //
+      // ========== EMPLOYER ================================= //
+      // ===================================================== //
+
       case 1:
         console.log("SUBMITTING EMPLOYER PROFILE FIRST TIME")
+
         validateEmployerProfileFields(profileInfo, (errorsExist, profileFieldErrors) => {
           if(errorsExist) {
 
@@ -243,19 +249,17 @@ export function submitProfileFirstTime(userTypeInt, profileInfo, user) {
             ], false))
 
           } else {
-            debugger;
+
             // No errors, proceed to /PUT on api/me
             var putData = {
-             // user: {
-                "user-is_a_student": false,
-                "user-is_profile_completed": true,
-                "user-email": user.email,
-                "user-first_name": user.firstName,
-                "user-last_name": user.lastName,
-                "user-is_active": true,
-                "user-date_joined": user.dateJoined,
-                "user-mobile": user.mobile,
-              // },
+              "user-is_a_student": false,
+              "user-is_profile_completed": true,
+              "user-email": user.email,
+              "user-first_name": user.firstName,
+              "user-last_name": user.lastName,
+              "user-is_active": true,
+              "user-date_joined": user.dateJoined,
+              "user-mobile": user.mobile,
               is_a_student: false,
               is_profile_completed: true, // set this flag to true so we know for next time
               company_name: profileInfo.companyName,
