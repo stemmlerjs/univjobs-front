@@ -1,0 +1,9 @@
+{
+	"libs": ["browser", "jquery", "underscore"],
+	"loadEagerly": ["./app/**/*.js","./node_modules/*/*.js"],
+	"dontLoad": ["node_modules"],
+	"plugins": {
+		"node": {},
+		"es_modules": {}
+	}
+}
