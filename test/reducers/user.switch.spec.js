@@ -1,6 +1,6 @@
-import test from 'ava';
-import reducer, { switchedToStudent, switchedToEmployer } from 'redux/modules/user/user';
-import { reducerTest } from 'redux-ava';
+import test from 'ava'
+import reducer, { switchedToStudent, switchedToEmployer, switchedUserType } from 'redux/modules/user/user'
+import { reducerTest } from 'redux-ava'
 
 test('Switch to student', reducerTest(
   reducer,
@@ -10,7 +10,7 @@ test('Switch to student', reducerTest(
         isAStudent: true,
         isCreatingAccount: false
     }
-));
+))
 
 test('Switch to employer', reducerTest(
     reducer,
@@ -20,5 +20,4 @@ test('Switch to employer', reducerTest(
         isAStudent: false,
         isCreatingAccount: false
     }
-));
-
+))
