@@ -17,5 +17,6 @@ test('switchedUserType action', t => {
     store.dispatch(switchedUserType(false))
     // console.log(store.getActions());
     t.deepEqual(store.getActions(), expectedActions)
+    resolve()
   })
 })
