@@ -21,3 +21,4 @@ test('Switch to employer', reducerTest(
         isCreatingAccount: false
     }
 ))
+
