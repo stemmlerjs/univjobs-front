@@ -1,3 +1,5 @@
+export Footer from './components/Footer'
 export Navigation from './components/Navigation'
+export RegularNav from './components/RegularNav'
 export Sidebar from './components/Sidebar'
 export SidebarContainer from './containers/SidebarContainer'

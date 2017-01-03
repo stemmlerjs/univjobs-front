@@ -8,6 +8,29 @@ import { validatePersonalEmail, validateFirstName, validateLastName,
 
 //********************** EMPLOYER *************************//
 
+/**
+  * Get User Info
+  *   - Retrieves access token from API through a GET to /account with the
+  *       token included in the header of the request.
+  *
+  * @param (String) - token: the access token
+  * @return (Promise) - resolved if API call is successful
+  */
+
+export function getUserInfo() {
+    const accessToken = getAccessToken()
+    const csrfToken = getCSRFToken()
+
+	return axios({
+		method: 'get',
+		url: config.baseUrl + 'me/',
+		headers: {
+			'Authorization': 'JWT ' + accessToken,
+			'X-CSRFToken' : csrfToken
+		}
+	})
+}
+
 export function employerProfilePUT(data) {
   let formData = new FormData();
   const accessToken = getAccessToken();

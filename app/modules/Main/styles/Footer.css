@@ -1,0 +1,40 @@
+.flexFooter {
+    background-color: #2A2D34;
+    display: flex;
+    flex-direction: column;
+    min-height: 15vh;
+    justify-content: center;
+    align-content: center;
+    text-align: center;
+}
+
+.flexFooterRow {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    text-align: center;
+    color: white;
+}
+
+.flexMediaItems {
+   margin: 0px 20px 0px 0px; 
+   cursor: not-allowed;
+}
+
+.header {
+    color: white;
+    font-size: 1.6em;
+    font-family: "Open Sans",sans-serif;
+    margin: 0;
+}
+
+.link {
+    text-decoration: none;
+    margin: 0;
+    color: #229AD6; 
+}
+
+.spacer {
+    min-height: 8vh;
+}
+

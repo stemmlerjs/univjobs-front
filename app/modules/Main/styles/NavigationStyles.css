@@ -11,12 +11,7 @@
     left: 0;
     right: 0;
 /*    border-bottom: solid white 1px;*/
-
     z-index: 1;
-
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
-    -webkit-box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
-    -moz-box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
 }
 
 .leftsideNavItems {
@@ -30,7 +25,7 @@
     align-items: center;
 }
 
-.rightsideNavItems > button {
+.rightsideNavItems > a, button {
     margin-left: 20px;
 }
 
@@ -43,15 +38,35 @@
     width:100%;*/
     padding: 10px 15px 10px 15px;
     border-radius: 6px;
-    border: 0;
-    background: white;
+    border-style: solid;
+    border-color: white;
+    background-color: transparent;
     font-size: 1.0em;
-    color: #52A7FA;
-    text-shadow: 1px 1px 0px rgba(0, 0, 0, .1);
-    box-shadow: 0px 3px 0px #c1c1c1;
+    color: white;
     cursor: pointer;
 }
 
+.btnBlue {
+    padding: 10px 15px 10px 15px;
+    border-radius: 6px;
+    border-style: solid;
+    border-color: #229AD6;
+    background-color: #229AD6;
+    font-size: 1.0em;
+    color: black;
+    cursor: pointer;
+}
+
+.btnBabyBlue {
+    padding: 10px 15px 10px 15px;
+    border-radius: 6px;
+    border-style: solid;
+    border-color: #3697DB;
+    background-color: #3697DB;
+    font-size: 1.0em;
+    color: black;
+    cursor: pointer;
+}
 .btn:active {
     top: 3px;
     box-shadow: none;
