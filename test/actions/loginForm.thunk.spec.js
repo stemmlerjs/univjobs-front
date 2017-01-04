@@ -19,9 +19,9 @@ test.afterEach(t => {
     t.context.store.clearActions()
     nock.cleanAll()
 });
+test.todo('')
 
-test.todo('test')
-// test.cb('submitLoginForm success action', async t => {
+// test.cb('submitLoginForm success action', t => {
 //     t.plan(3)
 
 //     var result = nock(config.baseUrl)
@@ -29,26 +29,30 @@ test.todo('test')
 //         .reply(200, {
 //             token: 'testToken',
 //             user: {
-//                 is_a_student: true,
+//                 is_a_student: false,
 //                 is_profile_completed: false
 //             }
 //         })
 
 //     const expectedActions = [{
-//         type: 'DASHBOARD_SUBMITTING_ANSWERS'
+//         type: 'SUBMIT_LOGIN_FORM'
 //     },{
-//         type: 'DASHBOARD_SUBMIT_ANSWERS_SUCCESS'
+//         type: 'LOGGING_IN'
+//     },{
+//         type: 'LOGIN_SUCCESS'
 //     }]
 
-//     await t.context.store.dispatch(submitLoginForm('juliosueiras@gmail.com', 'test'))
+//     t.context.store.dispatch(submitLoginForm('juliosueiras@gmail.com', 'test')).then(() => {
+//         t.deepEqual(t.context.store.getActions()[0].type, expectedActions[0].type)
+//         t.deepEqual(t.context.store.getActions()[1].type, expectedActions[1].type)
+//         // t.deepEqual(t.context.store.getActions()[1].type, expectedActions[1].type)
+//         // t.deepEqual(t.context.store.getActions()[1].response.status, 200)
+//         t.end()
+//     })
 
-//     t.deepEqual(t.context.store.getActions()[0], expectedActions[0])
-//     t.deepEqual(t.context.store.getActions()[1].type, expectedActions[1].type)
-//     t.deepEqual(t.context.store.getActions()[1].response.status, 200)
-//     t.end()
 // })
 
-// test.cb('submitLoginForm failure action', async t => {
+// test.cb('submitLoginForm failure action', t => {
 //     t.plan(3)
 
 //     var result = nock(config.baseUrl)
@@ -61,10 +65,11 @@ test.todo('test')
 //         type: 'DASHBOARD_SUBMIT_ANSWERS_FAILURE'
 //     }]
 
-//     await t.context.store.dispatch(submitLoginForm('juliosueiras@gmail.com', 'test'))
+//     t.context.store.dispatch(submitLoginForm('juliosueiras@gmail.com', 'test')).then(() => {
+//         t.deepEqual(t.context.store.getActions()[0], expectedActions[0])
+//         t.deepEqual(t.context.store.getActions()[1].type, expectedActions[1].type)
+//         t.deepEqual(t.context.store.getActions()[1].error.status, 404)
+//         t.end()
+//     })
 
-//     t.deepEqual(t.context.store.getActions()[0], expectedActions[0])
-//     t.deepEqual(t.context.store.getActions()[1].type, expectedActions[1].type)
-//     t.deepEqual(t.context.store.getActions()[1].error.status, 404)
-//     t.end()
 // })
