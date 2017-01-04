@@ -33,7 +33,7 @@ const Footer = () => (
         </div>
         <div className={spacer}></div>
         <div className={flexFooterRow}> 
-            <Link className={link} to={`join`}>
+            <Link className={link} to={`about-us`}>
                 About
             </Link>
             &nbsp;

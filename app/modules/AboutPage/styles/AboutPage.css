@@ -1,0 +1,110 @@
+/*NOTE: A great way to center things*/
+.flexContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-size: cover;
+    background-image: url(http://i.imgur.com/9XHl18c.gif);
+}
+
+.header {
+  text-align: center;
+  font-size: 40px;
+  font-weight: 600;
+  color: white;
+}
+
+.subHeader {
+  text-align: center;
+  font-size: 30px;
+  font-weight: 500;
+  color: white;
+}
+
+.marginReduce {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+/*--------------------------Contact Form ----------------------------*/
+.contactForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    background-color: white;
+}
+
+.headerContactForm {
+    text-align: center;
+    font-size: 60px;
+    font-weight: 600;
+    color: black;
+}
+
+.userInfoContainer {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.userInfoItem {
+    margin: 5px;
+}
+
+.input {
+    composes: input from 'sharedStyles/styles.css';
+    width: 275px;
+}
+
+.dropdown {
+    text-align: left;
+    width: 275px;
+    margin: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background: #D3D3D3;
+}
+
+.textAreaContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.textAreaItem {
+    margin: 5px;
+    text-align: left;
+}
+
+/*TODO: Resize for mobile*/
+textarea {
+    border: 1px thin #ccc;
+    border-color: #ccc;
+    box-shadow: 0 0 1px #ccc;
+    min-width: 124vh;
+    min-height: 50vh;
+    color: inherit;
+    font: inherit;
+}
+
+.btn {
+    margin-top: 40px;
+    padding: 10px 15px 10px 15px;
+    border-radius: 3px;
+    border: 0;
+    background: #3697DB;
+    font-size: 13px;
+    color: white;
+    text-shadow: 1px 1px 0px rgba(0, 0, 0, .1);
+    cursor: pointer;
+    margin: 0 auto;
+    width: 156px;
+    background-color: #55B1E2;
+}

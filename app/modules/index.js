@@ -10,5 +10,6 @@ export EmployerDashboardContainer from './Dashboard/containers/EmployerDashboard
 export ApplicationsContainer from './Applications/containers/ApplicationsContainer'
 export PinJobsContainer from './PinJobs/containers/PinJobsContainer'
 export ContactPageContainer from './ContactPage/containers/ContactPageContainer'
+export AboutPageContainer from './AboutPage/containers/AboutPageContainer'
 export GenericCard, { APPLICATIONS_CARD_TYPE, DASHBOARD_CARD_TYPE, PINNED_JOBS_CARD_TYPE } from './SharedComponents'
 export ApplicationModal from './SharedComponents'
