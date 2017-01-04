@@ -25,7 +25,7 @@ test.afterEach(t => {
     nock.cleanAll()
 });
 
-test('handleSubmitAnswers success action', async t => {
+test.cb('handleSubmitAnswers success action', t => {
     t.plan(3)
 
     var result = nock(config.baseUrl)
@@ -38,15 +38,16 @@ test('handleSubmitAnswers success action', async t => {
         type: 'DASHBOARD_SUBMIT_ANSWERS_SUCCESS'
     }]
 
-    await t.context.store.dispatch(handleSubmitAnswers(t.context.data))
-
-    t.deepEqual(t.context.store.getActions()[0], expectedActions[0])
-    t.deepEqual(t.context.store.getActions()[1].type, expectedActions[1].type)
-    t.deepEqual(t.context.store.getActions()[1].response.status, 200)
+    t.context.store.dispatch(handleSubmitAnswers(t.context.data)).then(() => {
+        t.deepEqual(t.context.store.getActions()[0], expectedActions[0])
+        t.deepEqual(t.context.store.getActions()[1].type, expectedActions[1].type)
+        t.deepEqual(t.context.store.getActions()[1].response.status, 200)
+        t.end()
+    })
 })
 
 
-test('handleSubmitAnswers failure action', async t => {
+test.cb('handleSubmitAnswers failure action', t => {
     var result = nock(config.baseUrl)
         .post('/job/new/student/apply/')
         .reply(404, {})
@@ -57,15 +58,17 @@ test('handleSubmitAnswers failure action', async t => {
         type: 'DASHBOARD_SUBMIT_ANSWERS_FAILURE'
     }]
 
-    await t.context.store.dispatch(handleSubmitAnswers(t.context.data))
+    t.context.store.dispatch(handleSubmitAnswers(t.context.data)).then(() => {
+        t.deepEqual(t.context.store.getActions()[0], expectedActions[0])
+        t.deepEqual(t.context.store.getActions()[1].type, expectedActions[1].type)
+        t.deepEqual(t.context.store.getActions()[1].error.status, 404)
+        t.end()
+    })
 
-    t.deepEqual(t.context.store.getActions()[0], expectedActions[0])
-    t.deepEqual(t.context.store.getActions()[1].type, expectedActions[1].type)
-    t.deepEqual(t.context.store.getActions()[1].error.status, 404)
 })
 
 
-test('handlePinJob success action', async t => {
+test.cb('handlePinJob success action', t => {
     t.plan(3)
 
     var result = nock(config.baseUrl)
@@ -78,14 +81,16 @@ test('handlePinJob success action', async t => {
         type: 'DASHBOARD_PIN_SUCCESS'
     }]
 
-    await t.context.store.dispatch(handlePinJob({ id: '1' }))
+    t.context.store.dispatch(handlePinJob({ id: '1' })).then(() => {
+        t.deepEqual(t.context.store.getActions()[0].type, expectedActions[0].type)
+        t.deepEqual(t.context.store.getActions()[1].type, expectedActions[1].type)
+        t.deepEqual(t.context.store.getActions()[1].response.status, 200)
+        t.end()
+    })
 
-    t.deepEqual(t.context.store.getActions()[0].type, expectedActions[0].type)
-    t.deepEqual(t.context.store.getActions()[1].type, expectedActions[1].type)
-    t.deepEqual(t.context.store.getActions()[1].response.status, 200)
 })
 
-test('handlePinJob failure action', async t => {
+test.cb('handlePinJob failure action', t => {
     t.plan(3)
 
     var result = nock(config.baseUrl)
@@ -98,14 +103,16 @@ test('handlePinJob failure action', async t => {
         type: 'DASHBOARD_PIN_FAILURE'
     }]
 
-    await t.context.store.dispatch(handlePinJob({ id: '1' }))
+    t.context.store.dispatch(handlePinJob({ id: '1' })).then(() => {
+        t.deepEqual(t.context.store.getActions()[0].type, expectedActions[0].type)
+        t.deepEqual(t.context.store.getActions()[1].type, expectedActions[1].type)
+        t.deepEqual(t.context.store.getActions()[1].error.status, 404)
+        t.end()
+    })
 
-    t.deepEqual(t.context.store.getActions()[0].type, expectedActions[0].type)
-    t.deepEqual(t.context.store.getActions()[1].type, expectedActions[1].type)
-    t.deepEqual(t.context.store.getActions()[1].error.status, 404)
 })
 
-test('handleUnPinJob success action', async t => {
+test.cb('handleUnPinJob success action', t => {
     t.plan(3)
 
     var result = nock(config.baseUrl)
@@ -118,14 +125,16 @@ test('handleUnPinJob success action', async t => {
         type: 'DASHBOARD_UNPIN_SUCCESS'
     }]
 
-    await t.context.store.dispatch(handleUnPinJob({ id: '1' }))
+    t.context.store.dispatch(handleUnPinJob({ id: '1' })).then(() => {
+        t.deepEqual(t.context.store.getActions()[0].type, expectedActions[0].type)
+        t.deepEqual(t.context.store.getActions()[1].type, expectedActions[1].type)
+        t.deepEqual(t.context.store.getActions()[1].response.status, 200)
+        t.end()
+    })
 
-    t.deepEqual(t.context.store.getActions()[0].type, expectedActions[0].type)
-    t.deepEqual(t.context.store.getActions()[1].type, expectedActions[1].type)
-    t.deepEqual(t.context.store.getActions()[1].response.status, 200)
 })
 
-test('handleUnPinJob failure action', async t => {
+test.cb('handleUnPinJob failure action', t => {
     t.plan(3)
 
     var result = nock(config.baseUrl)
@@ -138,15 +147,17 @@ test('handleUnPinJob failure action', async t => {
         type: 'DASHBOARD_UNPIN_FAILURE'
     }]
 
-    await t.context.store.dispatch(handleUnPinJob({ id: '1' }))
+    t.context.store.dispatch(handleUnPinJob({ id: '1' })).then(() => {
+        t.deepEqual(t.context.store.getActions()[0].type, expectedActions[0].type)
+        t.deepEqual(t.context.store.getActions()[1].type, expectedActions[1].type)
+        t.deepEqual(t.context.store.getActions()[1].error.status, 404)
+        t.end()
+    })
 
-    t.deepEqual(t.context.store.getActions()[0].type, expectedActions[0].type)
-    t.deepEqual(t.context.store.getActions()[1].type, expectedActions[1].type)
-    t.deepEqual(t.context.store.getActions()[1].error.status, 404)
 })
 
 
-test('handleGetJobs success action', async t => {
+test.cb('handleGetJobs success action', t => {
     t.plan(3)
 
     var result = nock(config.baseUrl)
@@ -159,14 +170,16 @@ test('handleGetJobs success action', async t => {
         type: 'DASHBOARD_FETCHED_JOBS_SUCCESS'
     }]
 
-    await t.context.store.dispatch(handleGetJobs())
+    t.context.store.dispatch(handleGetJobs()).then(() => {
+        t.deepEqual(t.context.store.getActions()[0].type, expectedActions[0].type)
+        t.deepEqual(t.context.store.getActions()[1].type, expectedActions[1].type)
+        t.deepEqual(t.context.store.getActions()[1].jobs.status, 200)
+        t.end()
+    })
 
-    t.deepEqual(t.context.store.getActions()[0].type, expectedActions[0].type)
-    t.deepEqual(t.context.store.getActions()[1].type, expectedActions[1].type)
-    t.deepEqual(t.context.store.getActions()[1].jobs.status, 200)
 })
 
-test('handleGetJobs failure action', async t => {
+test.cb('handleGetJobs failure action', t => {
     t.plan(3)
 
     var result = nock(config.baseUrl)
@@ -179,14 +192,16 @@ test('handleGetJobs failure action', async t => {
         type: 'DASHBOARD_FETCHED_JOBS_FAILURE'
     }]
 
-    await t.context.store.dispatch(handleGetJobs())
+    t.context.store.dispatch(handleGetJobs()).then(() => {
+        t.deepEqual(t.context.store.getActions()[0].type, expectedActions[0].type)
+        t.deepEqual(t.context.store.getActions()[1].type, expectedActions[1].type)
+        t.deepEqual(t.context.store.getActions()[1].error.status, 404)
+        t.end()
+    })
 
-    t.deepEqual(t.context.store.getActions()[0].type, expectedActions[0].type)
-    t.deepEqual(t.context.store.getActions()[1].type, expectedActions[1].type)
-    t.deepEqual(t.context.store.getActions()[1].error.status, 404)
 })
 
-test('handleGetIndustries success action', async t => {
+test.cb('handleGetIndustries success action', t => {
     t.plan(2)
 
     var result = nock(config.baseUrl)
@@ -197,13 +212,15 @@ test('handleGetIndustries success action', async t => {
         type: 'DASHBOARD_FETCHED_INDUSTRIES_SUCCESS'
     }]
 
-    await t.context.store.dispatch(handleGetIndustries())
+    t.context.store.dispatch(handleGetIndustries()).then(() => {
+        t.deepEqual(t.context.store.getActions()[0].type, expectedActions[0].type)
+        t.deepEqual(t.context.store.getActions()[0].industries.status, 200)
+        t.end()
+    })
 
-    t.deepEqual(t.context.store.getActions()[0].type, expectedActions[0].type)
-    t.deepEqual(t.context.store.getActions()[0].industries.status, 200)
 })
 
-test('handleGetIndustries failure action', async t => {
+test.cb('handleGetIndustries failure action', t => {
     t.plan(2)
 
     var result = nock(config.baseUrl)
@@ -214,13 +231,15 @@ test('handleGetIndustries failure action', async t => {
         type: 'DASHBOARD_FETCHING_INDUSTRIES_FAILURE'
     }]
 
-    await t.context.store.dispatch(handleGetIndustries())
+    t.context.store.dispatch(handleGetIndustries()).then(() => {
+        t.deepEqual(t.context.store.getActions()[0].type, expectedActions[0].type)
+        t.deepEqual(t.context.store.getActions()[0].error.status, 404)
+        t.end()
+    })
 
-    t.deepEqual(t.context.store.getActions()[0].type, expectedActions[0].type)
-    t.deepEqual(t.context.store.getActions()[0].error.status, 404)
 })
 
-test('handleGetJobTypes success action', async t => {
+test.cb('handleGetJobTypes success action', t => {
     t.plan(2)
 
     var result = nock(config.baseUrl)
@@ -231,13 +250,15 @@ test('handleGetJobTypes success action', async t => {
         type: 'DASHBOARD_FETCHED_JOB_TYPES_SUCCESS'
     }]
 
-    await t.context.store.dispatch(handleGetJobTypes())
+    t.context.store.dispatch(handleGetJobTypes()).then(() => {
+        t.deepEqual(t.context.store.getActions()[0].type, expectedActions[0].type)
+        t.deepEqual(t.context.store.getActions()[0].jobTypes.status, 200)
+        t.end()
+    })
 
-    t.deepEqual(t.context.store.getActions()[0].type, expectedActions[0].type)
-    t.deepEqual(t.context.store.getActions()[0].jobTypes.status, 200)
 })
 
-test('handleGetJobTypes failure action', async t => {
+test.cb('handleGetJobTypes failure action', t => {
     t.plan(2)
 
     var result = nock(config.baseUrl)
@@ -248,8 +269,10 @@ test('handleGetJobTypes failure action', async t => {
         type: 'DASHBOARD_FETCHED_JOB_TYPES_FAILURE'
     }]
 
-    await t.context.store.dispatch(handleGetJobTypes())
+    t.context.store.dispatch(handleGetJobTypes()).then(() => {
+        t.deepEqual(t.context.store.getActions()[0].type, expectedActions[0].type)
+        t.deepEqual(t.context.store.getActions()[0].error.status, 404)
+        t.end()
+    })
 
-    t.deepEqual(t.context.store.getActions()[0].type, expectedActions[0].type)
-    t.deepEqual(t.context.store.getActions()[0].error.status, 404)
 })
