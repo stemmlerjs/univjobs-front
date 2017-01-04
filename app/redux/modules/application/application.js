@@ -105,7 +105,7 @@ function studentApplications(state = intialStudentApplicationsState, action) {
 				applications: action.applications,
 				isFetching: false,
 			}
-		case FETCHED_STUDENTS_APPLICATIONS_FAILURE:
+		case FETCHED_STUDENT_APPLICATIONS_FAILURE:
 			return {
 				...state,
 				isFetching: false,
@@ -115,7 +115,7 @@ function studentApplications(state = intialStudentApplicationsState, action) {
 	}
 }
 
-function applicationModal(state = intialModalState, action) {	
+function applicationModal(state = intialModalState, action) {
 	switch(action.type) {
 		case MODAL_CLICKED:
 			return {
@@ -136,7 +136,7 @@ function applicationModal(state = intialModalState, action) {
 				isClicked: false,
 				isOpen: false,
 			}
-		default:	
+		default:
 			return {
 				state
 			}//switch

@@ -14,24 +14,3 @@ test('getStudentsFailure action', actionTest(getStudentsFailure, [], {
     type: 'EMPLOYER.GET_STUDENTS_FAILURE',
     error: []
 }))
-
-
-// dashboardFetchingJobs
-// dashboardFetchedJobsSuccess
-// dashboardFetchedJobsFailure
-// dashboardFetchingIndustries
-// dashboardFetchedIndustriesSuccess
-// dashboardFetchedIndustriesFailure
-// dashboardFetchingJobTypes
-// dashboardFetchedJobTypesSuccess
-// dashboardFetchedJobTypesFailure
-// dashboardModalClicked
-// dashboardShowModal
-// dashboardHideModal
-// dashboardUnPinClicked
-// dashboardUnPinSuccess
-// dashboardUnPinFailure
-// dashboardUpdateAnswerField
-// dashboardSubmittingAnswers
-// dashboardSubmitAnswersSuccess
-// dashboardSubmitAnswersFailure

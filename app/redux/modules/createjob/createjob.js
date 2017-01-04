@@ -15,7 +15,7 @@ const RETRIEVED_JOBTYPES = 'RETRIEVED_JOBTYPES'
 export function updateFormField(fieldName, newValue, page) {
   return {
     type: UPDATE_FORM_FIELD,
-    newValue, 
+    newValue,
     fieldName,
     page
   }
@@ -105,10 +105,9 @@ export function createNewJob(props, jobType) {
   return function(dispatch) {
     //type, title, paid, start_date, responsibilties, qualification, compensation, address, city, question_1, question_2, max_participants, active, verified
 
-    debugger;
     let jobTypeInt;
     switch(jobType) {
-      case "summer": 
+      case "summer":
         jobTypeInt = 1;
       case "otg":
         jobTypeInt = 0;
@@ -125,7 +124,7 @@ export function createNewJob(props, jobType) {
     // ACTION: DISPATCH (SUBMITTING_JOB)
     dispatch(submittingJob())
 
-    createNewJobPOST(
+    return createNewJobPOST(
        jobTypeInt,
        props.page1.jobTitle,
        props.page1.isPayingJob ? 1 : 0,
@@ -142,13 +141,13 @@ export function createNewJob(props, jobType) {
        props.user.emailVerified ? 1 : 0
     )
     .then((res) => {
-      console.log(res)
+      // console.log(res)
 
       // ACTION: DISPATCH (CREATE_JOB_SUCCESS)
       dispatch(createJobSuccess())
     })
     .catch((err) => {
-      console.log(err)
+      // console.log(err)
 
       // ACTION: DISPATCH (CREATE_JOB_FAILURE)
       dispatch(createJobFailure("Uh-oh, something went wrong. Please contact us to let us know."))
@@ -246,7 +245,7 @@ export default function createJob (state = createJobFormInitialState, action) {
         page3: {},
         page4: {},
         errorsExist: false,
-        errors: '', 
+        errors: '',
         lists: {}
       }
     case NEXT_PAGE:
@@ -477,7 +476,7 @@ function lists(state = listsInitialState, action) {
           return {
             ...state,
             jobTypes: action.list
-          } 
+          }
         default:
           return state
       }

@@ -8,14 +8,17 @@ test('switchedToStudent action', actionTest(switchedToStudent, { type: 'SWITCHED
 test('switchedToEmployer action', actionTest(switchedToEmployer, { type: 'SWITCHED_TO_USER_TYPE_EMPLOYER' }))
 
 
-test('switchedUserType action', t => {
-  return new Promise((resolve, reject) => {
+test('switchedUserType action', async t => {
     const mockStore = configureStore([thunkMiddleware])
-    const store = mockStore({ data: [] })
-    const expectedActions = [{ type: 'SWITCHED_TO_USER_TYPE_EMPLOYER' }]
+    const store = mockStore({})
 
+    const expectedActionsStoE = [{ type: 'SWITCHED_TO_USER_TYPE_EMPLOYER' }]
+    store.dispatch(switchedUserType(true))
+    t.deepEqual(store.getActions(), expectedActionsStoE)
+
+    store.clearActions()
+
+    const expectedActionsEtoS = [{ type: 'SWITCHED_TO_USER_TYPE_STUDENT' }]
     store.dispatch(switchedUserType(false))
-    // console.log(store.getActions());
-    t.deepEqual(store.getActions(), expectedActions)
-  })
+    t.deepEqual(store.getActions(), expectedActionsEtoS)
 })

@@ -1,4 +1,4 @@
-import { getJobs, getIndustries, getJobTypes, pinAJob, 
+import { getJobs, getIndustries, getJobTypes, pinAJob,
     studentApply, unPinAJob } from 'helpers/dashboard'
 // =======================================================
 // ====================== ACTIONS ========================
@@ -8,7 +8,7 @@ const GET_STUDENTS = 'EMPLOYER.GET_STUDENTS'
 const GET_STUDENTS_SUCCESS = 'EMPLOYER.GET_STUDENTS_SUCCESS'
 const GET_STUDENTS_FAILURE = 'EMPLOYER.GET_STUDENTS_FAILURE'
 
-/*NOTE: 
+/*NOTE:
  *   Might have to rename the strings passed into variables,
  *   into a generic names, employer and student are going to be
  *   using the jobs, questions, and answers.
@@ -158,8 +158,8 @@ function dashboardPinClicked(job) {
 
 /* Returns a success reponse
  *  @params(response) an object containing:
- *         { pinned: True, 
- *           jobId: number 
+ *         { pinned: True,
+ *           jobId: number
  *         }
  *  NOTE: find the jobId and changed the pinned status to true in the store
  * */
@@ -190,8 +190,8 @@ export function dashboardUnPinClicked(job) {
 
 /* Returns a success reponse
  *  @params(response) an object containing:
- *         { pinned: False, 
- *           jobId: number 
+ *         { pinned: False,
+ *           jobId: number
  *         }
  *  NOTE: find the jobId and changed the pinned status to true in the store
  * */
@@ -214,7 +214,7 @@ export function dashboardUnPinFailure(error) {
 export function dashboardUpdateAnswerField(fieldName, newValue) {
   return {
 	    type: DASHBOARD_UPDATE_ANSWER_FIELD,
-	    newValue, 
+	    newValue,
 	    fieldName
   }
 }
@@ -226,7 +226,7 @@ export function dashboardUpdateAnswerField(fieldName, newValue) {
 
 function dashboardSubmittingAnswers() {
 	return {
-		type: DASHBOARD_SUBMITTING_ANSWERS
+        type: DASHBOARD_SUBMITTING_ANSWERS
 	}
 }
 
@@ -251,14 +251,14 @@ export function dashboardSubmitAnswersFailure(error) {
 // https://online.reacttraining.com/courses/redux-and-immutablejs/lectures/946352
 export function handleGetJobs() {
     return function(dispatch) {
-	    //ACTION: FETCHING_PINNED_JOBS 
+	    //ACTION: FETCHING_PINNED_JOBS
 	    dispatch(dashboardFetchingJobs())
 	    return getJobs()
-	        .then((resp) => 
+	        .then((resp) =>
 		        //ACTION: DASHBOARD_FETCHED_JOBS_SUCCESS
 		        dispatch(dashboardFetchedJobsSuccess(resp))
 	        )
-	        .catch((err) => 
+	        .catch((err) =>
 		        //ACTION: FETCHED_PINNED_JOBS_FAILURE
 		        dispatch(dashboardFetchedJobsFailure(err))
 	        )
@@ -270,11 +270,11 @@ export function handleGetIndustries() {
 	    //ACTION: FETCHING_INDUSTRIES
 	    dispatch(dashboardFetchingIndustries)
 	    return getIndustries()
-	        .then((resp) => 
+	        .then((resp) =>
 		    //ACTION: FETCHED_INDUSTRIES_SUCCESS
 		    dispatch(dashboardFetchedIndustriesSuccess(resp))
 	        )
-	        .catch((err) => 
+	        .catch((err) =>
 		    //ACTION: FETCHED_QUESTIONS_FAILURE
 		    dispatch(dashboardFetchedIndustriesFailure(err))
 	        )
@@ -286,11 +286,11 @@ export function handleGetJobTypes() {
 	    //ACTION: FETCHING_INDUSTRIES
 	    dispatch(dashboardFetchingJobTypes)
 	    return getJobTypes()
-	        .then((resp) => 
+	        .then((resp) =>
 		    //ACTION: FETCHED_INDUSTRIES_SUCCESS
 		    dispatch(dashboardFetchedJobTypesSuccess(resp))
 	        )
-	        .catch((err) => 
+	        .catch((err) =>
 		    //ACTION: FETCHED_QUESTIONS_FAILURE
 		    dispatch(dashboardFetchedJobTypesFailure(err))
 	        )
@@ -302,10 +302,10 @@ export function handlePinJob(job) {
 	    //ACTION: PIN_CLICKED
 	    dispatch(dashboardPinClicked(job))
 	    return pinAJob({'job': job.id})
-	        .then((resp) => 
+	        .then((resp) =>
 		        dispatch(dashboardPinSuccess(resp))
 	        )
-	        .catch((err) => 
+	        .catch((err) =>
 		        dispatch(dashboardPinFailure(err))
 	        )
     }//dispatch
@@ -316,10 +316,10 @@ export function handleUnPinJob(job) {
 	    //ACTION: PIN_CLICKED
 	    dispatch(dashboardUnPinClicked(job))
 	    return unPinAJob({'job': job.id})
-	        .then((resp) => 
+	        .then((resp) =>
 		        dispatch(dashboardUnPinSuccess(resp))
 	        )
-	        .catch((err) => 
+	        .catch((err) =>
 		        dispatch(dashboardUnPinFailure(err))
 	        )
     }//dispatch
@@ -391,7 +391,7 @@ const intialAnswerState = {
 	error: '',
 }
 
-   
+
 
 // =======================================================
 // ===================== REDUCERS ========================
@@ -415,7 +415,7 @@ function studentDashboard(state = initialStudentDashboardState, action) {
 			return {
 				...state,
 				isFetching: true,
-			}		
+			}
 		case DASHBOARD_FETCHED_JOBS_SUCCESS:
 			return {
 				...state,
@@ -464,13 +464,13 @@ function studentDashboard(state = initialStudentDashboardState, action) {
 				...state,
 				pin: pin(state, action)
 			}
-		default:	
-			return state 
+		default:
+			return state
 	}
 }
 
 
-function pin(state = intialPinState, action) {	
+function pin(state = intialPinState, action) {
 	switch(action.type) {
 		case DASHBOARD_PIN_CLICKED:
    			debugger
@@ -522,14 +522,14 @@ function pin(state = intialPinState, action) {
 			    ...state,
 			    error: action.errors
 			}
-		default:	
+		default:
 			return {
 				state
 			}//switch
 	}
 }
 
-function modal(state = intialModalState, action) {	
+function modal(state = intialModalState, action) {
 	switch(action.type) {
 		case DASHBOARD_MODAL_CLICKED:
 			return {
@@ -549,7 +549,7 @@ function modal(state = intialModalState, action) {
 				isClicked: false,
 				isOpen: false,
 			}
-		default:	
+		default:
 			return {
 				state
 			}//switch
@@ -567,7 +567,7 @@ function answer(state = initialAnswerState, action) {
 			return {
 				...state,
 				isSubmitting: true
-			}		
+			}
 		case DASHBOARD_SUBMIT_ANSWERS_SUCCESS:
 			return {
 				...state,
@@ -582,7 +582,7 @@ function answer(state = initialAnswerState, action) {
 			}
 		default:
 			return state
-	
+
 	}
 
 }
@@ -667,15 +667,15 @@ export default function dashboard(state = initialDashboardState, action) {
 			return {
 				...state,
 				answer: answer(state.answer, action)
-			}		
+			}
 		case DASHBOARD_SUBMIT_ANSWERS_SUCCESS:
 			debugger
             /*  - Find the position of the job in the state array which was applied to
              *  - Delete the job in the state after finding the job
-             *  
+             *
              * */
 			let index = state.studentDashboard.jobs.data.findIndex((job) => job.id === state.modal.jobId)
-			index != -1 ? state.studentDashboard.jobs.data.splice(index, 1) : ''  
+			index != -1 ? state.studentDashboard.jobs.data.splice(index, 1) : ''
 			return {
 				...state,
 				answer: answer(state.answer, action)
