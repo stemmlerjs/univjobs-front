@@ -1,7 +1,7 @@
 import React from 'react'
 import { DropdownList } from 'react-widgets'
 
-import { flexContainer, flexRowContainer, flexRowItem,
+import { blackBackGround,flexContainer, flexRowContainer, flexRowItem,
          fontLighter, header, headerContactForm, input, 
          marginReduce, paragraphContainer, paragraphItem,
          regularFlexContainer, subHeader, topMarginReduce }from '../styles/AboutPage.css'
@@ -26,7 +26,7 @@ const AboutPage = () => (
                     Now, they can.
                 </div>
             </div>
-            <div className={regularFlexContainer}>
+            <div className={regularFlexContainer + ' ' + blackBackGround}>
                 <div className={subHeader}>
                     <h1 className={fontLighter + ' ' + topMarginReduce}>How It Works</h1>
                 </div>
