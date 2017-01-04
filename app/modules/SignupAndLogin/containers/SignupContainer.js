@@ -8,11 +8,11 @@ import { authRedirectFilter } from 'config/routes'
 import SkyLight from 'react-skylight'
 import { detectEnterPress } from 'helpers/utils'
 
-import { studentSignupPage, employerSignupPage, input, errorMessage, loginBtn } from '../styles/SignupContainerStyles.css'
+import { input, errorMessage, loginBtn } from '../styles/SignupContainerStyles.css'
 
 import StudentSignup from '../components/StudentSignup'
 import EmployerSignup from '../components/EmployerSignup'
-import { Navigation } from 'modules/Main'
+import { Navigation, Footer } from 'modules/Main'
 
 /*  Using the spread operator, we combine all of the action creators from users()
 */
@@ -205,27 +205,30 @@ const SignupContainer = React.createClass({
             closeButtonStyle={styles.closeButtonStyle}
             hideOnOverlayClicked 
             ref="loginModal" 
-            title="Log in">
+            title="Log in"
+        >
             <div>
               <input className={input} 
                 onChange={(e) => this.props.updateLoginForm('email', e.target.value)}
                 type="text"
                 onKeyUp={(e) => detectEnterPress(e, this.submitOnEnter)} 
-                placeholder="Email"/>
-              <input className={input} 
-                onChange={(e) => this.props.updateLoginForm('password', e.target.value)}
-                type="password" 
-                onKeyUp={(e) => detectEnterPress(e, this.submitOnEnter)} 
-                placeholder="Password"/>
+                placeholder="Email"
+               />
+                <input className={input} 
+                    onChange={(e) => this.props.updateLoginForm('password', e.target.value)}
+                    type="password" 
+                    onKeyUp={(e) => detectEnterPress(e, this.submitOnEnter)} 
+                    placeholder="Password"
+                />
             </div>
             <div className={errorMessage}>
               { this.props.loginFormErrorText }
             </div>
-          <button className={loginBtn} onClick={this.handleLoginAttempt}>Next</button>
+              <button className={loginBtn} onClick={this.handleLoginAttempt}>Next</button>
           </SkyLight>
 
           { this.props.isAStudent === true ?
-            <div className={studentSignupPage}>
+            <div> 
               <StudentSignup  
                 emailText={this.props.studentEmail}
                 passwordText={this.props.studentPassword}
@@ -235,7 +238,7 @@ const SignupContainer = React.createClass({
                 router={this.context.router}/>
             </div>
             :
-            <div className={employerSignupPage}>
+            <div>
               <EmployerSignup 
                 submitSignupForm={this.props.submitEmployerSignupForm}
                 updateEmployerSignupForm={this.props.updateEmployerForm}
@@ -249,6 +252,7 @@ const SignupContainer = React.createClass({
                 router={this.context.router}/>
             </div>
           }
+        <Footer />
       </div>
     )
   },

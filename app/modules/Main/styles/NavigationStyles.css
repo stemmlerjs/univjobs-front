@@ -1,36 +1,12 @@
 .nav {
     display: flex;
+    flex-direction: row;
     justify-content: space-between;
     background-color: #52A7FA;
     color: #100C27;
-    height: 63px;
-    padding-left: 80px;
-    padding-right: 80px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-/*    border-bottom: solid white 1px;*/
-    z-index: 1;
-}
-
-.leftsideNavItems {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.rightsideNavItems {
-    display: flex;
+    height: 10vh;
+    padding: 1vh 2vw;
     align-items: center;
-}
-
-.rightsideNavItems > a, button {
-    margin-left: 20px;
-}
-
-.rightsideNavItems > div {
-  margin-left: 20px;
 }
 
 .btn {

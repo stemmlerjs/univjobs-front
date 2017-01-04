@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import { Link } from 'react-router'
-import { nav, leftsideNavItems, rightsideNavItems, 
-  logoText, noDeco, btn, btnBlue, pseudoBtn, loginIcon} from '../styles/NavigationStyles.css'
+import { nav, logoText, noDeco, btn, 
+        btnBlue, pseudoBtn, loginIcon} from '../styles/NavigationStyles.css'
 
 /*
  *  * NOTE: Testing ES6 stateless function
@@ -9,12 +9,12 @@ import { nav, leftsideNavItems, rightsideNavItems,
 */
 const RegularNav = () => (
         <div className={nav}>
-            <div className={leftsideNavItems}>
+            <div>
                 <Link to="/join" className={noDeco}>
                     <span className={logoText}>UNIVJOBS</span>
                 </Link>
             </div>
-            <div className={rightsideNavItems}>
+            <div>
                 <Link to="/join" className={`${btn} ${noDeco}` }>
                     <span>SIGNUP</span>
                 </Link>

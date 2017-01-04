@@ -1,7 +1,8 @@
 import React, { PropTypes } from 'react'
 import SkyLight from 'react-skylight'
 
-import { centeredContainer, header, subHeader, modalContent, errorMessage, btn, input } from '../styles/EmployerSignupStyles.css'
+import { Footer } from 'modules/Main'
+import { employerCenteredContainer, header, subHeader, modalContent, errorMessage, btn, input } from '../styles/EmployerSignupStyles.css'
 
 const styles = {
   overlayStyles: {
@@ -61,60 +62,79 @@ const EmployerSignup = React.createClass({
     } 
 
     return (
-      <div className={centeredContainer}>
-        <div className={header}>
-          HIRE STUDENTS
-        </div>
-        <div className={subHeader}>
-          Post jobs for students at any Canadian college/university
-        </div>
-          <button className={btn} onClick={() => this.refs.employerModal.show()}>Employers - Post a job now</button>
-          <SkyLight 
-            overlayStyles={styles.overlayStyles} 
-            dialogStyles={styles.dialogStyles}
-            closeButtonStyle={styles.closeButtonStyle}
-            hideOnOverlayClicked 
-            ref="employerModal" 
-            title="Hey there!">
-            <div className={modalContent}>
-              <h3>Sign up below to get started</h3>
-              <input className={input} 
-                value={firstNameText}
-                onChange={(e) => updateEmployerSignupForm('firstName', e.target.value)}
-                type="text" 
-                placeholder="First Name"/>
-              <input className={input} 
-                value={lastNameText}
-                onChange={(e) => updateEmployerSignupForm('lastName', e.target.value)}
-                type="text" 
-                placeholder="Last Name"/>
-              <input className={input} 
-                value={companyNameText}
-                onChange={(e) => updateEmployerSignupForm('companyName', e.target.value)}
-                type="text" 
-                placeholder="Company"/>
-              <input className={input} 
-                value={phoneText}
-                onChange={(e) => updateEmployerSignupForm('phone', e.target.value)}
-                type="text" 
-                placeholder="Phone #"/>
-              <input className={input} 
-                value={emailText}
-                onChange={(e) => updateEmployerSignupForm('email', e.target.value)}
-                type="email" 
-                placeholder="Email"/>
-              <input className={input} 
-                value={passwordText}
-                onChange={(e) => updateEmployerSignupForm('password', e.target.value)}
-                type="password" 
-                placeholder="Password"/>
+        <div>
+            <div className={employerCenteredContainer}>
+                <div className={header}>
+                    HIRE STUDENTS
+                </div>
+                <div className={subHeader}>
+                    Post jobs for students at any Canadian college/university
+                </div>
+                <button 
+                    className={btn} 
+                    onClick={() => this.refs.employerModal.show()}
+                >
+                    Employers - Post a job now
+                </button>
+                <SkyLight 
+                    overlayStyles={styles.overlayStyles} 
+                    dialogStyles={styles.dialogStyles}
+                    closeButtonStyle={styles.closeButtonStyle}
+                    hideOnOverlayClicked 
+                    ref="employerModal" 
+                    title="Hey there!"
+                >
+                    <div className={modalContent}>
+                        <h3>Sign up below to get started</h3>
+                        <input className={input} 
+                                value={firstNameText}
+                                onChange={(e) => updateEmployerSignupForm('firstName', e.target.value)}
+                                type="text" 
+                                placeholder="First Name"
+                        />
+                        <input className={input} 
+                                value={lastNameText}
+                                onChange={(e) => updateEmployerSignupForm('lastName', e.target.value)}
+                                type="text" 
+                                placeholder="Last Name"
+                        />
+                        <input className={input} 
+                                value={companyNameText}
+                                onChange={(e) => updateEmployerSignupForm('companyName', e.target.value)}
+                                type="text" 
+                                placeholder="Company"
+                        />
+                        <input className={input} 
+                                value={phoneText}
+                                onChange={(e) => updateEmployerSignupForm('phone', e.target.value)}
+                                type="text" 
+                                placeholder="Phone #"
+                        />
+                        <input className={input} 
+                                value={emailText}
+                                onChange={(e) => updateEmployerSignupForm('email', e.target.value)}
+                                type="email" 
+                                placeholder="Email"
+                        />
+                        <input className={input} 
+                                value={passwordText}
+                                onChange={(e) => updateEmployerSignupForm('password', e.target.value)}
+                                type="password" 
+                                placeholder="Password"
+                        />
+                    </div>
+                    <div className={errorMessage}>
+                      { error }
+                    </div>
+                    <button 
+                        className={btn} 
+                        onClick={handleUserSubmit}
+                    >
+                        Sign up
+                    </button>
+                </SkyLight>
+              </div>
             </div>
-            <div className={errorMessage}>
-              { error }
-            </div>
-          <button className={btn} onClick={handleUserSubmit}>Sign up</button>
-        </SkyLight>
-      </div>
     )
   }
 })

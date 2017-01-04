@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-import { centeredContainer, header, subHeader, btn, btnContainer,
+import { studentCenteredContainer, header, subHeader, btn, btnContainer,
  input, inputContainer, errorMessage } from '../styles/StudentSignupStyles.css'
 
 StudentSignup.propTypes = {
@@ -28,31 +28,34 @@ export default function StudentSignup ({submitSignupForm, updateStudentSignupFor
   }
 
   return (
-    <div className={centeredContainer}>
-      <div className={header}>
-        GET HIRED
-      </div>
-      <div className={subHeader}>
-        Connect to part time work and internships
-      </div>
-      <div className={inputContainer}>
-        <input className={input} 
-          value={emailText}
-          onChange={(e) => updateStudentSignupForm('email', e.target.value)}
-          type="email" 
-          placeholder="Email"/>
-        <input className={input} 
-          value={passwordText}
-          onChange={(e) => updateStudentSignupForm('password', e.target.value)}
-          type="password" 
-          placeholder="Password"/>
-      </div>
-      <div className={errorMessage}>
-        { error }
-      </div>
-      <button className={btn} onClick={handleUserSubmit}>Sign me up</button>
+      <div>
+        <div className={studentCenteredContainer}>
+            <div className={header}>
+                GET HIRED
+            </div>
+            <div className={subHeader}>
+                Connect to part time work and internships
+            </div>
+            <div className={inputContainer}>
+                <input className={input} 
+                        value={emailText}
+                        onChange={(e) => updateStudentSignupForm('email', e.target.value)}
+                        type="email" 
+                        placeholder="Email"
+                />
+                <input className={input} 
+                        value={passwordText}
+                        onChange={(e) => updateStudentSignupForm('password', e.target.value)}
+                        type="password" 
+                        placeholder="Password"
+                />
+            </div>
+            <div className={errorMessage}>
+                { error }
+            </div>
+            <button className={btn} onClick={handleUserSubmit}>Sign me up</button>
+        </div>
     </div>
   )
 }
-
 //      

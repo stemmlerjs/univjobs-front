@@ -1,10 +1,14 @@
-.centeredContainer {
-  width: 65%;
-  height: 60%;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
+/*FIXME: studentCenteredContainer & employeredCenteredCOntainer has similar strucure eexcept for background-image*/
+.studentCenteredContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-size: cover;
+    background-image: url("https://github.com/UnivJobs/univjobs-front/blob/master/images/front/coffeelaptop.jpg?raw=true");
 }
+
 
 .header {
   text-align: center;
@@ -25,7 +29,6 @@
     background: #3697DB;
     font-size: 1.0em;
     color: white;
-    text-shadow: 1px 1px 0px rgba(0, 0, 0, .1);
     cursor: pointer;
     margin: 0 auto;
     min-height: 37px;

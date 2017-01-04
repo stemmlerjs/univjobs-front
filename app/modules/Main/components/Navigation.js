@@ -11,25 +11,49 @@ Navigation.propTypes = {
 
 export default function Navigation ({isAStudent, onSwitchUserType, onOpenLoginModal}) {
   return (
+
     <div className={nav}>
-      <div className={leftsideNavItems}>
-          <Link to="/join" className={noDeco}>
+        <Link to="/join" className={noDeco}>
             <span className={logoText}>UNIVJOBS</span>
-          </Link>
-      </div>
+        </Link>
 
       { isAStudent === true ? 
-        
-        <div className={rightsideNavItems}>
-          <div><i className={'fa fa-user login-icon' + ' ' + loginIcon} aria-hidden="true"></i></div>
-          <div className={ `${pseudoBtn} ${btnBabyBlue}` }onClick={onOpenLoginModal}>LOGIN</div>
-          <button onClick={onSwitchUserType} className={btn}>EMPLOYER</button>
-        </div>
+          <div className={nav}>
+              <div>
+                  <i 
+                    className={'fa fa-user login-icon' + ' ' + loginIcon} 
+                    aria-hidden="true"
+                  >
+                  </i>
+              </div>
+              <div className={ `${pseudoBtn} ${btnBabyBlue}` }
+                    onClick={onOpenLoginModal}
+               >
+                    LOGIN
+              </div>
+              <button onClick={onSwitchUserType} 
+                    className={btn}
+              >
+                  EMPLOYER
+              </button>
+          </div>
         : 
-        <div className={rightsideNavItems}>
-          <div><i className={'fa fa-user login-icon' + ' ' + loginIcon} aria-hidden="true"></i></div>
-          <div className={ `${pseudoBtn} ${btnBabyBlue}` }onClick={onOpenLoginModal}>LOGIN</div>
-          <button onClick={onSwitchUserType} className={btn}>STUDENT</button>
+        <div className={nav}>
+          <div>
+              <i className={'fa fa-user login-icon' + ' ' + loginIcon} 
+                aria-hidden="true">
+              </i>
+          </div>
+          <div className={ `${pseudoBtn} ${btnBabyBlue}` }
+                onClick={onOpenLoginModal}
+           >
+              LOGIN
+          </div>
+          <button onClick={onSwitchUserType} 
+                  className={btn}
+          >
+              STUDENT
+          </button>
         </div>
       }
     </div>
