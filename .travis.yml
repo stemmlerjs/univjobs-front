@@ -12,3 +12,8 @@ script:
 
 after_script:
   - npm run coverage
+
+
+addons:
+        code_climate:
+                repo_token: bd399b00903daed4c1917a70daa7d22c69c366d3eb00b7800c9c4010feb72721
