@@ -1,62 +1,48 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import { Link } from 'react-router'
-
-// =============REDUX STATE & IMPORTS========================== //
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-import * as userActionCreators from 'redux/modules/user/user'
-import { authRedirectFilter } from 'config/routes'
 
 // ============= OTHER IMPORTS========================== //
 import { ContactPage } from 'modules/ContactPage'
 import { Footer, RegularNav } from 'modules/Main'
-
 import { contactPage } from '../styles/ContactPage.css'
+import { sendMessage } from 'helpers/contact'
 
-const actionCreators = {
-      ...userActionCreators,
-}
+/*NOTE: Using ES6 class, please see:
+ *  https://toddmotto.com/react-create-class-versus-component/
+ *
+ *  This uses 'class expressions', please see:
+ *  https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/class
+ *
+ * */
+class ContactPageContainer extends React.Component {
+    constructor(props) {
+        super(props)
+    }
 
-
-const ContactPageContainer = React.createClass({
-    contextTypes: {
-        router: PropTypes.object.isRequired,
-        store: PropTypes.object.isRequired
-    },
+    handleSendMessage(e) {
+        e.preventDefault()
+        console.log('Yo')
+        sendMessage()
+    }
     componentWillMount() {
         // Hide the overlay on mount if coming from direct URL
         this.props.closeOverlay()
-    },
+    }
     render () {
         return (
             <div>
                <RegularNav />
-               <ContactPage /> 
+               <ContactPage
+                    onHandleSendMessage={(e) => this.handleSendMessage(e)}      
+                /> 
                <Footer />
              </div>
         )
-    },
-})
-    function mapStateToProps({user}) {
-        return {
-            user: user ? user : {},
-        }
     }
-    
-    /**
-     *   * mapActionCreatorsToProps
-     *     *
-     *      * This function grabs all of the Action Creators on the object of the first parameter in the bindActionCreators function
-     *         * and makes them available to us through THIS component's props (SignupContainer, this.props). We can then pass these to our child
-     *           * components to use. DON'T MAKE A HABIT of doing this too deeply (drilling prop holes).
-     *             *
-     *               **/
+}
 
-    function mapActionCreatorsToProps(dispatch) {
-          return bindActionCreators(actionCreators, dispatch)
-    }
-
-    // connect(specify_what_keys_you_want_from_store, wraps_dispatch_around_action_creators)(container)
-    //
+ContactPageContainer.propTypes = {
+    router: React.PropTypes.string
+}
         
-export default connect(mapStateToProps, mapActionCreatorsToProps)(ContactPageContainer)
+export default ContactPageContainer

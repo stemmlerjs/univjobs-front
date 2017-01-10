@@ -15,7 +15,8 @@ import { btn, centeredContainer, contactForm, dropdown,
 */
 const userInfo = ['I am an employer', 'I am a student', 'I work at a college', 'I have a general inquiry']
 
-const ContactPage = () => (
+const ContactPage = ({onHandleSendMessage}) => (
+
         <div>
             <div className={flexContainer}>
                 <div className={header}>
@@ -58,7 +59,13 @@ const ContactPage = () => (
                     <div className={textAreaItem}>
                         <textarea placeholder="What's on your mind?"/>
                     </div>
-                    <button className={btn}>Submit</button>
+                    <button 
+                        className={btn}
+                        type="submit"
+                        onClick={onHandleSendMessage}
+                    >
+                        Submit
+                    </button>
                 </div>
             </div>
         </div>
