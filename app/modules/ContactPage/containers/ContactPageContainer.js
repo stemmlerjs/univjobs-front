@@ -80,14 +80,17 @@ class ContactPageContainer extends React.Component {
             }
             sendMessage(data)
             .then((response) => {
-                if(response.success) {
-                    toastr.success(response.message)
+                if(response.status == 201) {
+                    toastr.success(response.data.message)
                 } else {
-                    toastr.error(response.error)
+                    toastr.error(response.data)
                 }
             })
             .catch((err) => {
-                toastr.error(err)
+                toastr.error('Error found, please directly email us at univjobscanada@gmail.com')
+                toastr.error('Sorry for the inconvenience')
+
+                //TODO: Since we don't know an error occurred here, we need a notification 
             })
         } else {
             toastr.error('Please fill out everything before sending')
