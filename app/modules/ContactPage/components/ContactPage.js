@@ -15,7 +15,7 @@ import { btn, centeredContainer, contactForm, dropdown,
 */
 const userInfo = ['I am an employer', 'I am a student', 'I work at a college', 'I have a general inquiry']
 
-const ContactPage = ({onHandleSendMessage}) => (
+const ContactPage = (props) => (
 
         <div>
             <div className={flexContainer}>
@@ -38,6 +38,8 @@ const ContactPage = ({onHandleSendMessage}) => (
                             className={dropdown}
                             defaultValue={'I am an employer'}
                             data={userInfo}
+                            value={props.senderType}
+                            onChange={props.onHandleSenderType}
                         />
                     </div>
                     <div className={userInfoItem}>
@@ -45,6 +47,8 @@ const ContactPage = ({onHandleSendMessage}) => (
                             className={input}
                             type="text"
                             placeholder="What do your friends call you?"
+                            value={props.senderName}
+                            onChange={props.onHandleSenderName}
                         />
                     </div>
                     <div className={userInfoItem}>
@@ -52,17 +56,23 @@ const ContactPage = ({onHandleSendMessage}) => (
                             className={input}
                             type="text"
                             placeholder="Where can we email you back?"
+                            value={props.senderEmail}
+                            onChange={props.onHandleSenderEmail}
                         />
                     </div>
                 </div>
                 <div className={textAreaContainer}>
                     <div className={textAreaItem}>
-                        <textarea placeholder="What's on your mind?"/>
+                        <textarea 
+                            placeholder="What's on your mind?"
+                            value={props.senderMessage}
+                            onChange={props.onHandleSenderMessage}
+                        />
                     </div>
                     <button 
                         className={btn}
                         type="submit"
-                        onClick={onHandleSendMessage}
+                        onClick={props.onHandleSendMessage}
                     >
                         Submit
                     </button>

@@ -12,14 +12,8 @@ import config from 'config'
  *      @params(String) - userMessage
  *
  * */
-const data = {
-    userType: 'employer',
-    userName: 'charles',
-    userEmail: 'test@gmail.com',
-    userMessage: 'hello world'
-} 
 
-export function sendMessage() {
+export function sendMessage(data) {
     /*Pseudocode
      *  - get all the data
      *  - pass all the to an object called 'data'
