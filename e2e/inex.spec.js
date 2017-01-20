@@ -1,7 +1,13 @@
-Feature("Hello World");
+Feature("Student SignUp");
 
-Scenario("Testing test", (I) => {
-    I.amOnPage("/#/join*");
+Before((I) => {
+    I.amOnPage('/#/join');
 });
+
+Scenario('Test Student SignUp', (I) => {
+    I.fillField('student[email]', 'charlesjavelona@gmail.com');
+    I.fillField('student[password]', 'testingpassword');
+});
+
 
 

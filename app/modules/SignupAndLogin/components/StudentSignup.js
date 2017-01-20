@@ -38,12 +38,15 @@ export default function StudentSignup ({submitSignupForm, updateStudentSignupFor
             </div>
             <div className={inputContainer}>
                 <input className={input} 
+                        name="student[email]"
                         value={emailText}
                         onChange={(e) => updateStudentSignupForm('email', e.target.value)}
                         type="email" 
                         placeholder="Email"
                 />
                 <input className={input} 
+                        name="student[password]"
+                        value={emailText}
                         value={passwordText}
                         onChange={(e) => updateStudentSignupForm('password', e.target.value)}
                         type="password" 
