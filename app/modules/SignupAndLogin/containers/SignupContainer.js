@@ -6,6 +6,7 @@ import * as signupFormActionCreators from 'redux/modules/signupForm/signupForm'
 import * as loginFormActionCreators from 'redux/modules/loginForm/loginForm'
 import { authRedirectFilter } from 'config/routes'
 import SkyLight from 'react-skylight'
+import { getAccessToken } from 'helpers/auth'
 import { detectEnterPress } from 'helpers/utils'
 
 import { input, errorMessage, loginBtn } from '../styles/SignupContainerStyles.css'
@@ -110,6 +111,21 @@ const SignupContainer = React.createClass({
     this.refs.loginModal.show()
   },
 
+/**
+  * handleSignupAttempt
+  *
+  *  Passes signup credentials through client-side validation before attempting to
+  *  use email and password to create & authenticate to the server.
+  *
+  * @param (Event) e - the click event
+  */
+    handleSignupAttempt(e) {
+        e.preventDefault() 
+        this.props.submitStudentSignupForm(
+            this.props.studentEmail,
+            this.props.studentPassword
+        )
+    },
 /**
   * handleLoginAttempt
   *
@@ -234,6 +250,7 @@ const SignupContainer = React.createClass({
                 passwordText={this.props.studentPassword}
                 updateStudentSignupForm={this.props.updateStudentForm}
                 submitSignupForm={this.props.submitStudentSignupForm}
+                onSubmitSignup={(e) => this.handleSignupAttempt(e)}
                 error={this.props.studentFormError}
                 router={this.context.router}/>
             </div>

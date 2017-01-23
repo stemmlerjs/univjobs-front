@@ -19,14 +19,11 @@ import { validatePersonalEmail, validateFirstName, validateLastName,
 
 export function getUserInfo() {
     const accessToken = getAccessToken()
-    const csrfToken = getCSRFToken()
-
 	return axios({
 		method: 'get',
 		url: config.baseUrl + 'me/',
 		headers: {
 			'Authorization': 'JWT ' + accessToken,
-			'X-CSRFToken' : csrfToken
 		}
 	})
 }

@@ -11,7 +11,7 @@ StudentSignup.propTypes = {
   router: PropTypes.object.isRequired
 }
 
-export default function StudentSignup ({submitSignupForm, updateStudentSignupForm, emailText, passwordText, error, router}) {
+export default function StudentSignup ({submitSignupForm, updateStudentSignupForm, onSubmitSignup, emailText, passwordText, error, router}) {
   function handleUserSubmit(e) {
     e.preventDefault();
 
@@ -56,7 +56,7 @@ export default function StudentSignup ({submitSignupForm, updateStudentSignupFor
             <div className={errorMessage}>
                 { error }
             </div>
-            <button className={btn} onClick={handleUserSubmit}>Sign me up</button>
+            <button className={btn} onClick={onSubmitSignup}>Sign me up</button>
         </div>
     </div>
   )

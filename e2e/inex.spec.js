@@ -16,7 +16,6 @@ Scenario('Test Student SignUp', (I) => {
     I.fillField('student[email]', 'javelonc@sheridancollege.ca');
     I.fillField('student[password]', 'testing');
     I.click('Sign me up');
-    I.see('First Name');
 
 });
 

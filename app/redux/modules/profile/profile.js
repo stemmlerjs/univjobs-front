@@ -1,6 +1,6 @@
 import { employerProfilePUT, employerProfilePATCH, validateEmployerProfileFields,
   studentProfilePUT, studentProfilePATCH, validateStudentProfileFields,
-  compareToSnapshot } from 'helpers/profile'
+  compareToSnapshot, getUserInfo } from 'helpers/profile'
 import { toISO } from 'helpers/utils'
 
 // =======================================================
@@ -38,7 +38,9 @@ const UPDATE_PROFILE_FIELD = 'PROFILE.UPDATE_PROFILE_FIELD'
 const SAVE_PROFILE_ERROR = 'PROFILE.SAVE_PROFILE_ERROR'
 const SAVE_PROFILE_SUCCESS = 'PROFILE.SAVE_PROFILE_SUCCESS'
 
-const FETCHING_PROFILE_INFO_SUCCESS = 'PROFILE.FETCHING_INFO_SUCCESS'
+const FETCHING_PROFILE_INFO = 'PROFILE.FETCHING_INFO'
+const FETCHED_PROFILE_INFO_SUCCESS = 'PROFILE.FETCHED_INFO_SUCCESS'
+const FETCHED_PROFILE_INFO_FAILURE = 'PROFILE.FETCHED_INFO_FAILURE'
 
 // =======================================================
 // ================== ACTION CREATORS ====================
@@ -131,12 +133,25 @@ export function listRetrieved(listName, listArray) {
   }
 }
 
-export function fetchingProfileInfoSuccess (isProfileCompleted, profileInfo, isAStudent) {
+export function fetchingProfileInfo() {
+    return {
+        type: FETCHING_PROFILE_INFO
+    }
+}
+
+export function fetchedProfileInfoSuccess (isProfileCompleted, profileInfo, isAStudent) {
   return {
-    type: FETCHING_PROFILE_INFO_SUCCESS,
+    type: FETCHED_PROFILE_INFO_SUCCESS,
     isProfileCompleted,
     profileInfo,
     isAStudent
+  }
+}
+
+export function fetchedProfileInfoFailure (error) {
+  return {
+    type: FETCHED_PROFILE_INFO_FAILURE,
+    error
   }
 }
 
@@ -155,6 +170,27 @@ export function saveProfileSuccess() {
   }
 }
 
+// =======================================================
+// ===================== THUNK ===========================
+// =======================================================
+// REF: https://github.com/ReactjsProgram/Redux-Immutable/commit/c1b261b21150e472c6199dcda7bcb792a81678f8
+// https://online.reacttraining.com/courses/redux-and-immutablejs/lectures/946352
+//
+//
+//NOTE: Refer to signupform redux line 78, passing dispatch
+export function handleGetUserProfile(dispatch) {
+    return function(dispatch) {
+        //ACTION: FETCHING_USER_PROFILE 
+        dispatch(fetchingProfileInfo())
+        return getUserInfo()
+            .then((resp) => 
+                console.log(resp)
+            )
+            .catch((err) => 
+                console.log(err)
+            )
+    }
+}
 /*
 * submitProfileFirstTime
 *
@@ -407,7 +443,7 @@ export function updateProfile(userTypeInt, profileInfo, user, snapshot) {
               // last_name: user.lastName,
               // email: user.email
             }
-            debugger;
+            //debugger;
             compareToSnapshot(snapshot, changedData, (result) => {
               employerProfilePATCH(result)
                 .then((res) => {
@@ -497,7 +533,11 @@ export default function profile (state = initialState, action) {
         ...state,
         lists: lists(state.lists, action)
       }
-    case FETCHING_PROFILE_INFO_SUCCESS:
+    case FETCHING_PROFILE_INFO:
+        return {
+            ...state,
+        }
+    case FETCHED_PROFILE_INFO_SUCCESS:
       if(action.isAStudent) {
         return {
           ...state,
@@ -513,6 +553,11 @@ export default function profile (state = initialState, action) {
           snapshot: action.profileInfo
          }
       }
+    case FETCHED_PROFILE_INFO_FAILURE:
+          return {
+            ...state,
+            error
+          }
     case SAVE_PROFILE_ERROR:
       if(action.isAStudent) {
         return {
@@ -566,7 +611,7 @@ function employerProfile(state = initialEmployerProfileState, action) {
         [action.fieldName]: action.newValue,
         propsErrorMap: employerProfileErrors(state.propsErrorMap, action)
       }
-    case FETCHING_PROFILE_INFO_SUCCESS:
+    case FETCHED_PROFILE_INFO_SUCCESS:
       return {
         ...state,
           companyName: action.profileInfo.company_name,

@@ -1,9 +1,11 @@
 import { validateFirstName, validateLastName, validateCompanyName,
   validatePhoneNumber, validateStudentEmail, validateEmployerEmail, validatePassword } from 'helpers/utils'
-import { createStudentAccount, createEmployerAccount, setAccessToken, getAccessToken } from 'helpers/auth'
+import { createStudentAccount, createEmployerAccount, setAccessToken, 
+        errorMsg, getAccessToken } from 'helpers/auth'
+import { getUserInfo } from 'helpers/profile'
 import * as userActions from '../user/user'
 import * as profileActions from '../profile/profile'
-import { fetchingProfileInfoSuccess } from 'redux/modules/profile/profile'
+import { fetchingProfileInfoSuccess, handleGetUserProfile } from 'redux/modules/profile/profile'
 import _ from 'lodash'
 
 
@@ -47,93 +49,46 @@ export function submitEmployerFormError(error) {
 
 export function submitStudentSignupForm(email, password) {
   return function(dispatch) {
-    const promise = new Promise((resolve, reject) => {
       // Do form validation
       validateStudentEmail(email, (success, message) => {
         // EMAIL IS NOT VALID
         if(!success) {
           dispatch(submitStudentFormError(message))
-          resolve(false)
-
         // EMAIL IS VALID
         } else {
           // Validate Password
           if(!validatePassword(password)) {
             dispatch(submitStudentFormError('Please enter a password with length greater than 6 characters'))
-            resolve(false)
           } else {
             // EMAIL AND PASSWORD VALID
             // ACTION: DISPATCH (CREATING_USER_ACCOUNT)
             dispatch(userActions.creatingUserAccount())
 
-            // ACTION: DISPATCH (FETCHING_USER_INFO)
-            dispatch(userActions.fetchingUserInfo())
-            createStudentAccount(email, password)
+            return createStudentAccount(email, password)
               .then((response) => {
-
                 const token = response.data.token
-                const userInfo = response.data.user
-                const isAStudent = response.data.user.is_a_student
-                const isProfileCompleted = response.data.user.is_profile_completed
+                const success = response.data.success
 
-                let profileInfo = _.cloneDeep(response.data.user)
-                // delete profileInfo.user;
-
-                // save access token as cookie
                 setAccessToken(token)
-
-                // ACTION: DISPATCH (CREATING_USER_ACCOUNT_SUCCESS)
                 dispatch(userActions.createUserAccountSuccess(token))
-
-                // // ACTION: DISPATCH (LOGIN_SUCCESS)
-                dispatch(userActions.loginSuccess(token,
-                  isAStudent,
-                  isProfileCompleted
-                ))
-
-                // //ACTION: PROFILE - DISPATCH (FETCHING_PROFILE_INFO_SUCCESS)
-                dispatch(profileActions.fetchingProfileInfoSuccess(
-                  isProfileCompleted,
-                  profileInfo,
-                  isAStudent
-                ))
-
-                resolve(true)
               })
               .catch((err) => {
-                let errMsg = "";
-                switch(err.status) {
-                  case 400:
-                    errMsg = "Did you already sign up? Someone already registered with this email."
-                    break
-                  case 403:
-                    errMsg = "Something went wrong here. We're working on fixing it."
-                    break
-                  case 500:
-                    errMsg = "Something appears to be wrong with our servers. Try back in a few minutes."
-                    break
-                  default:
-                    errMsg = "Couldn't connect to Univjobs. Please check your network connection."
-                }
-
                 // ACTION: DISPATCH (CREATING_USER_ACCOUNT_FAILURE)
-                dispatch(userActions.createUserAccountFailure(errMsg))
-
-                // ACTION: DISPATCH (FETCHING_USER_INFO_FAILURE)
-                dispatch(userActions.fetchingUserInfoFailure())
-
-                // ACTION: DISPATCH (SUBMIT_STUDENT_FORM_ERROR)
-                dispatch(submitStudentFormError(errMsg))
-
-                resolve(false)
+                dispatch(userActions.createUserAccountFailure(errorMsg(err)))
               })
-          }
-        }
+              .then(() => 
+                dispatch(profileActions.fetchingProfileInfo)
+              )
+              .then(() =>
+                getUserInfo()
+                    .then((resp) => console.log(token))
+                    .catch((err) => console.log(err))
+              )
+          }//else => email pass is good
+        }// email is valid
       }) // End of validateStudentEmail
-    })
-    return promise;
-  }
-}
+    }//dispatch
+  }//submitStudentSignupForm
 
 export function submitEmployerSignupForm(firstName, lastName, companyName, phone, email, password) {
   return function(dispatch) {
@@ -185,8 +140,8 @@ export function submitEmployerSignupForm(firstName, lastName, companyName, phone
 
       createEmployerAccount(firstName, lastName, companyName, phone, email, password)
         .then((response) => {
+          setAccessToken(response.data.token)
 
-          const token = response.data.token
           const userInfo = response.data.user
           const isAStudent = response.data.user.user.is_a_student
           const isProfileCompleted = response.data.user.user.is_profile_completed
@@ -195,7 +150,6 @@ export function submitEmployerSignupForm(firstName, lastName, companyName, phone
           delete profileInfo.user // delete base user {} from profile info
 
           // save access token as cookie
-          setAccessToken(token)
 
           // ACTION: DISPATCH (CREATING_USER_ACCOUNT_SUCCESS)
           dispatch(userActions.createUserAccountSuccess(token))
