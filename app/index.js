@@ -5,6 +5,7 @@ import { Provider } from 'react-redux'
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux'
 import * as reducers from 'redux/modules'
 import thunk from 'redux-thunk'
+import createLogger from 'redux-logger'
 import { reducer as formReducers } from 'redux-form'
 import { reducer as toastrReducer, ReduxToastr } from 'react-redux-toastr'
 import { initializeBodyStyles } from 'helpers/styles'
@@ -20,7 +21,7 @@ initializeBodyStyles();
 
 /* NOTE: Testing redux-form
  * */
-reducers.form = formReducers 
+reducers.form = formReducers
 reducers.toastr = toastrReducer
 
 const appReducer = combineReducers(reducers)
@@ -34,13 +35,14 @@ const rootReducer = (state, action) => {
     state = undefined
   }
 
-  // Return the appReducer 
+  // Return the appReducer
 
   return appReducer(state, action)
 }
 
-const store = createStore(rootReducer, 
-  compose(applyMiddleware(thunk),
+const logger = createLogger();
+const store = createStore(rootReducer,
+  compose(applyMiddleware(thunk, logger),
   window.devToolsExtension ? window.devToolsExtension() : (f) => f
 ));
 

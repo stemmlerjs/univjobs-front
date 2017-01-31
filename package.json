@@ -50,6 +50,7 @@
     "react-widgets": "^3.4.4",
     "redux": "^3.5.2",
     "redux-form": "^5.3.3",
+    "redux-logger": "^2.7.4",
     "redux-thunk": "^2.1.0",
     "request": "^2.73.0"
   },
