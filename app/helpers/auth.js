@@ -73,7 +73,7 @@ export function logout(store, router) {
 export function getUserInfo(token) {
   const requestConfig = {
     headers: {
-      'authorization': 'JWT ' + token
+      'authorization':  token
     }
   }
   return axios.get(config.baseUrl + 'me/', requestConfig)
@@ -110,7 +110,6 @@ export function setAccessToken (token) {
   */
 export function createStudentAccount(email, password) {
   const accessToken = getAccessToken()
-  const csrfToken = getCSRFToken()
 
   return axios.post(config.baseUrl + 'register/', {
     email: email,
@@ -138,7 +137,7 @@ export function createEmployerAccount(firstName, lastName, companyName, mobile, 
     //       At this point, there would be no token anyways. It's not necessary.
     //       https://github.com/UnivJobs/univjobs-front/issues/19
     //
-    //  "Authorization": "JWT " + accessToken,
+    //  "Authorization":  accessToken,
       'X-CSRFToken': csrfToken
     },
     data: {

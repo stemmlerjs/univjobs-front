@@ -12,7 +12,7 @@ export function createNewJobPOST (type, title, paid, start_date, responsibilitie
     method: 'post',
     url: config.baseUrl + 'job/new/',
     headers: {
-      "Authorization": "JWT " + accessToken,
+      "Authorization":  accessToken,
       'X-CSRFToken': csrfToken
     },
     data: {

@@ -23,7 +23,7 @@ export function getUserInfo() {
 		method: 'get',
 		url: config.baseUrl + 'me/',
 		headers: {
-			'Authorization': 'JWT ' + accessToken,
+			'Authorization':  accessToken,
 		}
 	})
 }
@@ -41,7 +41,7 @@ export function employerProfilePUT(data) {
     method: 'put',
     url: config.baseUrl + 'me/',
     headers: {
-      "Authorization": "JWT " + accessToken,
+      "Authorization":  accessToken,
       'X-CSRFToken': csrfToken
     },
     data: formData
@@ -61,7 +61,7 @@ export function employerProfilePATCH(data) {
     method: 'patch',
     url: config.baseUrl + 'me/',
     headers: {
-      "Authorization": "JWT " + accessToken,
+      "Authorization":  accessToken,
       'X-CSRFToken': csrfToken
     },
     data: formData
@@ -125,7 +125,7 @@ export function studentProfilePUT(data) {
     method: 'put',
     url: config.baseUrl + 'me/',
     headers: {
-      "Authorization": "JWT " + accessToken
+      "Authorization":  accessToken
     },
     data: formData
   })
@@ -144,7 +144,7 @@ export function studentProfilePATCH(data) {
     method: 'patch',
     url: config.baseUrl + 'me/',
     headers: {
-      "Authorization": "JWT " + accessToken,
+      "Authorization":  accessToken,
       'X-CSRFToken': csrfToken
     },
     data: formData

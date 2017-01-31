@@ -25,7 +25,7 @@ export function getPinnedJobs() {
 		method: 'get',
 		url: config.baseUrl + 'job/r/pins/',
 		headers: {
-			'Authorization': 'JWT ' + accessToken,
+			'Authorization':  accessToken,
 			'X-CSRFToken' : csrfToken
 		}
 	})
@@ -51,7 +51,7 @@ export function getQuestions() {
 		method: 'get',
 		url: config.baseUrl + 'job/questions/',
 		headers: {
-			'Authorization': 'JWT ' + accessToken,
+			'Authorization':  accessToken,
 			'X-CSRFToken' : csrfToken
 		},
 	})
@@ -71,7 +71,7 @@ export function getJobTypes() {
 		method: 'get',
 		url: config.baseUrl + 'list/jobtypes/',
 		headers: {
-			'Authorization': 'JWT ' + accessToken,
+			'Authorization':  accessToken,
 			'X-CSRFToken' : csrfToken
 		},
 	})
@@ -95,7 +95,7 @@ export function getIndustries() {
 		method: 'get',
 		url: config.baseUrl + 'list/industries/',
 		headers: {
-			'Authorization': 'JWT ' + accessToken,
+			'Authorization':  accessToken,
 			'X-CSRFToken' : csrfToken
 		},
 	})
@@ -118,7 +118,7 @@ export function studentApply(data) {
 		method: 'post',
 		url: config.baseUrl + 'job/new/student/apply/',
 		headers: {
-			'Authorization': 'JWT ' + accessToken,
+			'Authorization':  accessToken,
 			'X-CSRFToken' : csrfToken
 		},
 			data: data
@@ -142,7 +142,7 @@ export function unPinAJob(data) {
 		method: 'delete',
 		url: config.baseUrl + 'job/pin/',
 		headers: {
-			'Authorization': 'JWT ' + accessToken,
+			'Authorization':  accessToken,
 			'X-CSRFToken' : csrfToken
 		},
         data: data

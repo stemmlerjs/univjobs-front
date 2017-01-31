@@ -49,6 +49,7 @@ export function submitEmployerFormError(error) {
 
 export function submitStudentSignupForm(email, password) {
   return function(dispatch) {
+
       // Do form validation
       validateStudentEmail(email, (success, message) => {
         // EMAIL IS NOT VALID
@@ -64,26 +65,40 @@ export function submitStudentSignupForm(email, password) {
             // ACTION: DISPATCH (CREATING_USER_ACCOUNT)
             dispatch(userActions.creatingUserAccount())
 
-            return createStudentAccount(email, password)
+            createStudentAccount(email, password)
               .then((response) => {
                 const token = response.data.token
                 const success = response.data.success
 
                 setAccessToken(token)
                 dispatch(userActions.createUserAccountSuccess(token))
-              })
-              .catch((err) => {
-                // ACTION: DISPATCH (CREATING_USER_ACCOUNT_FAILURE)
-                dispatch(userActions.createUserAccountFailure(errorMsg(err)))
-              })
-              .then(() => 
                 dispatch(profileActions.fetchingProfileInfo)
-              )
-              .then(() =>
-                getUserInfo()
-                    .then((resp) => console.log(token))
-                    .catch((err) => console.log(err))
-              )
+              })
+              .then(getUserInfo) 
+              .then((resp) => {
+                  return new Promise((resolve, reject) => {
+                    let profileInfo = _.cloneDeep(resp.data.student)
+                    // delete profileInfo.user
+                        
+                    //login users
+                    dispatch(
+                        userActions.loginSuccess(getAccessToken(), 
+                                                resp.data.student.is_a_student,
+                                                resp.data.student.is_a_profile_complete
+                        ))    
+                    //ACTION: PROFILE - DISPATCH (FETCHING_PROFILE_INFO_SUCCESS)
+                    dispatch(profileActions.fetchedProfileInfoSuccess(
+                                                            resp.data.student.is_a_profile_complete,
+                                                            profileInfo,
+                                                            resp.data.student.is_a_student
+                    ))
+                    resolve(resp)
+                  })
+                })//
+                .catch((err) => {
+                    // ACTION: DISPATCH (CREATING_USER_ACCOUNT_FAILURE)
+                    dispatch(userActions.createUserAccountFailure(errorMsg(err)))
+                })
           }//else => email pass is good
         }// email is valid
       }) // End of validateStudentEmail

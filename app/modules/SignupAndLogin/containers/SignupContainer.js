@@ -125,6 +125,10 @@ const SignupContainer = React.createClass({
             this.props.studentEmail,
             this.props.studentPassword
         )
+
+        //Return boolean
+        //  If true, then getInfo
+        //  Else, do nothing
     },
 /**
   * handleLoginAttempt
@@ -188,6 +192,7 @@ const SignupContainer = React.createClass({
         this.props.closeOverlay()
       })
   },
+
 
   /**
   * submitOnEnter
