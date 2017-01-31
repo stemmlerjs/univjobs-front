@@ -50,7 +50,7 @@ const styles = {
     top: '50%'
   }
 };
-    
+
 
 const actionCreators = {
   ...userActionCreators,
@@ -120,11 +120,42 @@ const SignupContainer = React.createClass({
   * @param (Event) e - the click event
   */
     handleSignupAttempt(e) {
-        e.preventDefault() 
+        e.preventDefault()
         this.props.submitStudentSignupForm(
             this.props.studentEmail,
             this.props.studentPassword
         )
+        .then(() => {
+
+          var isAStudent = this.props.isAStudent
+          // get isProfileComplete
+
+          alert("success! let's redirect")
+
+          if(isAStudent && isProfileCompleted) {
+            // Route to Student Dashboard
+            this.context.router.replace('/dashboard/st')
+
+          } else if (isAStudent && !isProfileCompleted) {
+            // Route to Student Profile
+            this.context.router.replace('/profile/st')
+
+          } else if (!isAStudent && isProfileCompleted) {
+            // Route to employer dashboard
+            this.context.router.replace('/categories')
+
+          } else if (!isAStudent && !isProfileCompleted) {
+            // Route to Employer Profile
+            this.context.router.replace('/profile/em')
+
+          }
+
+        })
+        .catch(() => {
+
+          alert("error :(")
+
+        })
 
         //Return boolean
         //  If true, then getInfo
@@ -150,7 +181,7 @@ const SignupContainer = React.createClass({
       //TODO: Implement this as a tiny module (function) to put inside of authRedirectionFilter
 
       if(isAStudent && isProfileCompleted) {
-        // Route to Student Dashboard 
+        // Route to Student Dashboard
         this.context.router.replace('/dashboard/st')
 
       } else if (isAStudent && !isProfileCompleted) {
@@ -197,7 +228,7 @@ const SignupContainer = React.createClass({
   /**
   * submitOnEnter
   *
-  * Hooks into the reusable detectEnterPress() function and fires off a submit when 
+  * Hooks into the reusable detectEnterPress() function and fires off a submit when
   * enter is pressed while the login modal is open AND email and password are not null
   * AND email or password is focused.
   *
@@ -214,31 +245,31 @@ const SignupContainer = React.createClass({
   render () {
     return (
       <div>
-        <Navigation 
-          onSwitchUserType={this.handleSwitchUserType} 
-          isAStudent={this.props.isAStudent} 
+        <Navigation
+          onSwitchUserType={this.handleSwitchUserType}
+          isAStudent={this.props.isAStudent}
           onOpenLoginModal={this.openLoginModal}
         />
 
-        <SkyLight 
-            overlayStyles={styles.overlayStyles} 
+        <SkyLight
+            overlayStyles={styles.overlayStyles}
             dialogStyles={styles.dialogStyles}
             closeButtonStyle={styles.closeButtonStyle}
-            hideOnOverlayClicked 
-            ref="loginModal" 
+            hideOnOverlayClicked
+            ref="loginModal"
             title="Log in"
         >
             <div>
-              <input className={input} 
+              <input className={input}
                 onChange={(e) => this.props.updateLoginForm('email', e.target.value)}
                 type="text"
-                onKeyUp={(e) => detectEnterPress(e, this.submitOnEnter)} 
+                onKeyUp={(e) => detectEnterPress(e, this.submitOnEnter)}
                 placeholder="Email"
                />
-                <input className={input} 
+                <input className={input}
                     onChange={(e) => this.props.updateLoginForm('password', e.target.value)}
-                    type="password" 
-                    onKeyUp={(e) => detectEnterPress(e, this.submitOnEnter)} 
+                    type="password"
+                    onKeyUp={(e) => detectEnterPress(e, this.submitOnEnter)}
                     placeholder="Password"
                 />
             </div>
@@ -249,8 +280,8 @@ const SignupContainer = React.createClass({
           </SkyLight>
 
           { this.props.isAStudent === true ?
-            <div> 
-              <StudentSignup  
+            <div>
+              <StudentSignup
                 emailText={this.props.studentEmail}
                 passwordText={this.props.studentPassword}
                 updateStudentSignupForm={this.props.updateStudentForm}
@@ -261,7 +292,7 @@ const SignupContainer = React.createClass({
             </div>
             :
             <div>
-              <EmployerSignup 
+              <EmployerSignup
                 submitSignupForm={this.props.submitEmployerSignupForm}
                 updateEmployerSignupForm={this.props.updateEmployerForm}
                 firstNameText={this.props.employerFirstName}
@@ -285,6 +316,7 @@ const SignupContainer = React.createClass({
 function mapStateToProps({user, signupForm, loginForm}) {
   return {
     isAStudent: user.isAStudent ? true : false,
+    isProfileCompleted: user.isProfileCompleted ? true : false,
     studentEmail: signupForm.studentSignupForm.email ? signupForm.studentSignupForm.email : '',
     studentPassword: signupForm.studentSignupForm.password ? signupForm.studentSignupForm.password : '',
     studentFormError: signupForm.studentSignupForm.error ? signupForm.studentSignupForm.error : '',
@@ -301,7 +333,7 @@ function mapStateToProps({user, signupForm, loginForm}) {
   }
 }
 
-/** 
+/**
   * mapActionCreatorsToProps
   *
   * This function grabs all of the Action Creators on the object of the first parameter in the bindActionCreators function

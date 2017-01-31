@@ -1,6 +1,6 @@
 import { validateFirstName, validateLastName, validateCompanyName,
   validatePhoneNumber, validateStudentEmail, validateEmployerEmail, validatePassword } from 'helpers/utils'
-import { createStudentAccount, createEmployerAccount, setAccessToken, 
+import { createStudentAccount, createEmployerAccount, setAccessToken,
         errorMsg, getAccessToken } from 'helpers/auth'
 import { getUserInfo } from 'helpers/profile'
 import * as userActions from '../user/user'
@@ -50,60 +50,78 @@ export function submitEmployerFormError(error) {
 export function submitStudentSignupForm(email, password) {
   return function(dispatch) {
 
+    return new Promise((MAIN_RESOLVE, MAIN_REJECT) => {
       // Do form validation
-      validateStudentEmail(email, (success, message) => {
-        // EMAIL IS NOT VALID
-        if(!success) {
-          dispatch(submitStudentFormError(message))
-        // EMAIL IS VALID
-        } else {
-          // Validate Password
-          if(!validatePassword(password)) {
-            dispatch(submitStudentFormError('Please enter a password with length greater than 6 characters'))
+        validateStudentEmail(email, (success, message) => {
+          // EMAIL IS NOT VALID
+          if(!success) {
+
+            // Set error
+            dispatch(submitStudentFormError(message))
+            MAIN_REJECT()
+
           } else {
-            // EMAIL AND PASSWORD VALID
-            // ACTION: DISPATCH (CREATING_USER_ACCOUNT)
-            dispatch(userActions.creatingUserAccount())
 
-            createStudentAccount(email, password)
-              .then((response) => {
-                const token = response.data.token
-                const success = response.data.success
+           /* If the email is valid, we then need to go ahead and
+            * validate the password.
+            */
 
-                setAccessToken(token)
-                dispatch(userActions.createUserAccountSuccess(token))
-                dispatch(profileActions.fetchingProfileInfo)
-              })
-              .then(getUserInfo) 
-              .then((resp) => {
-                  return new Promise((resolve, reject) => {
+            if(!validatePassword(password)) {
+
+              // Set error
+              dispatch(submitStudentFormError('Please enter a password with length greater than 6 characters'))
+              MAIN_REJECT()
+
+            } else {
+
+             /* If the email and password were valid, we can then
+              * go ahead and create the user account.
+              */
+
+              dispatch(userActions.creatingUserAccount())
+
+              createStudentAccount(email, password)
+                .then((response) => {
+                  const token = response.data.token
+                  const success = response.data.success
+
+                  setAccessToken(token)
+                  dispatch(userActions.createUserAccountSuccess(token))
+                  dispatch(profileActions.fetchingProfileInfo)
+                })
+                .then(getUserInfo)
+                .then((resp) => {
                     let profileInfo = _.cloneDeep(resp.data.student)
                     // delete profileInfo.user
-                        
+
                     //login users
                     dispatch(
-                        userActions.loginSuccess(getAccessToken(), 
+                        userActions.loginSuccess(getAccessToken(),
                                                 resp.data.student.is_a_student,
                                                 resp.data.student.is_a_profile_complete
-                        ))    
+                        ))
                     //ACTION: PROFILE - DISPATCH (FETCHING_PROFILE_INFO_SUCCESS)
                     dispatch(profileActions.fetchedProfileInfoSuccess(
                                                             resp.data.student.is_a_profile_complete,
                                                             profileInfo,
                                                             resp.data.student.is_a_student
                     ))
-                    resolve(resp)
+
+                    MAIN_RESOLVE()
+
                   })
-                })//
-                .catch((err) => {
+                  .catch((err) => {
                     // ACTION: DISPATCH (CREATING_USER_ACCOUNT_FAILURE)
                     dispatch(userActions.createUserAccountFailure(errorMsg(err)))
-                })
-          }//else => email pass is good
-        }// email is valid
-      }) // End of validateStudentEmail
-    }//dispatch
-  }//submitStudentSignupForm
+                    MAIN_REJECT()
+                  })
+            } //else => email pass is good
+          } // email is valid
+        }) // End of validateStudentEmail
+
+      })
+    }   //dispatch
+  } //submitStudentSignupForm
 
 export function submitEmployerSignupForm(firstName, lastName, companyName, phone, email, password) {
   return function(dispatch) {
