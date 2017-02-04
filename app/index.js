@@ -5,7 +5,7 @@ import { Provider } from 'react-redux'
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux'
 import * as reducers from 'redux/modules'
 import thunk from 'redux-thunk'
-import createLogger from 'redux-logger'
+//import createLogger from 'redux-logger'
 import { reducer as formReducers } from 'redux-form'
 import { reducer as toastrReducer, ReduxToastr } from 'react-redux-toastr'
 import { initializeBodyStyles } from 'helpers/styles'
@@ -40,9 +40,9 @@ const rootReducer = (state, action) => {
   return appReducer(state, action)
 }
 
-const logger = createLogger();
+//const logger = createLogger();
 const store = createStore(rootReducer,
-  compose(applyMiddleware(thunk, logger),
+  compose(applyMiddleware(thunk),
   window.devToolsExtension ? window.devToolsExtension() : (f) => f
 ));
 

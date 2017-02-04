@@ -1,23 +1,37 @@
+var faker = require('faker');
+
+var email = ''
+
 Feature("Student SignUp");
 
 Before((I) => {
     I.amOnPage('/#/join');
 });
 
-Scenario('Test Non Student SignUp', (I) => {
+Scenario('Wrong email for student signup', (I) => {
     I.fillField('student[email]', 'charlesjavelona@gmail.com');
     I.fillField('student[password]', 'testingpassword');
     I.click('Sign me up');
     I.see("Sorry, we are only currently available to Sheridan College students. Please contact us @ theunivjobs@gmail.com if you'd like us to extend access to your institution."); 
 });
 
-/*TODO: Make a random name and password generator */
-Scenario('Test Student SignUp', (I) => {
-    I.fillField('student[email]', 'javelonc@sheridancollege.ca');
+Scenario('Student signup', (I) => {
+    email = faker.name.firstName();
+    I.fillField('student[email]', `${email}@sheridancollege.ca`);
     I.fillField('student[password]', 'testing');
     I.click('Sign me up');
-
+    I.see('Complete your profile so we can find you a job today!');
 });
+
+Scenario('Email duplicate', (I) => {
+    I.fillField('student[email]', `${email}@sheridancollege.ca`);
+    I.fillField('student[password]', 'testing');
+    I.fillField('student[password]', 'testing');
+    I.click('Sign me up');
+    I.see('Email already registered, try another one');
+});
+
+
 
 
 

@@ -15,6 +15,11 @@ import StudentSignup from '../components/StudentSignup'
 import EmployerSignup from '../components/EmployerSignup'
 import { Navigation, Footer } from 'modules/Main'
 
+// ==================MESSAGES============================== //
+import ReduxToastr from 'react-redux-toastr'
+import {toastr} from 'react-redux-toastr'
+
+
 /*  Using the spread operator, we combine all of the action creators from users()
 */
 
@@ -125,41 +130,28 @@ const SignupContainer = React.createClass({
             this.props.studentEmail,
             this.props.studentPassword
         )
-        .then(() => {
-
-          var isAStudent = this.props.isAStudent
-          // get isProfileComplete
-
-          alert("success! let's redirect")
-
-          if(isAStudent && isProfileCompleted) {
+        .then((resp) => {
+          if(this.props.isAStudent && this.props.isProfileCompleted) {
             // Route to Student Dashboard
             this.context.router.replace('/dashboard/st')
 
-          } else if (isAStudent && !isProfileCompleted) {
+          } else if (this.props.isAStudent && !this.props.isProfileCompleted) {
             // Route to Student Profile
             this.context.router.replace('/profile/st')
 
-          } else if (!isAStudent && isProfileCompleted) {
+          } else if (!this.props.isAStudent && this.props.isProfileCompleted) {
             // Route to employer dashboard
             this.context.router.replace('/categories')
 
-          } else if (!isAStudent && !isProfileCompleted) {
+          } else if (!this.props.isAStudent && !this.props.isProfileCompleted) {
             // Route to Employer Profile
             this.context.router.replace('/profile/em')
 
           }
-
         })
         .catch(() => {
-
-          alert("error :(")
-
+            toastr.error("Email already registered, try another one")
         })
-
-        //Return boolean
-        //  If true, then getInfo
-        //  Else, do nothing
     },
 /**
   * handleLoginAttempt
@@ -306,6 +298,11 @@ const SignupContainer = React.createClass({
             </div>
           }
         <Footer />
+        <ReduxToastr
+            timeOut={4000}
+            newestOnTop={false}
+            position="top-right"
+        />
       </div>
     )
   },

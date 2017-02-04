@@ -265,6 +265,9 @@ export function errorMsg(err) {
       case 403:
         errMsg = "Something went wrong here. We're working on fixing it."
         break
+      case 409:
+        errMsg = "This email is already registered, please try another one."
+        break
       case 500:
         errMsg = "Something appears to be wrong with our servers. Try back in a few minutes."
         break
