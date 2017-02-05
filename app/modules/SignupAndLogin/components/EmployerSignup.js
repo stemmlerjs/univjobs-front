@@ -87,36 +87,45 @@ const EmployerSignup = React.createClass({
                     <div className={modalContent}>
                         <h3>Sign up below to get started</h3>
                         <input className={input} 
+                                name="employer[firstname]"
                                 value={firstNameText}
                                 onChange={(e) => updateEmployerSignupForm('firstName', e.target.value)}
                                 type="text" 
                                 placeholder="First Name"
                         />
                         <input className={input} 
+                                name="employer[lastname]"
                                 value={lastNameText}
                                 onChange={(e) => updateEmployerSignupForm('lastName', e.target.value)}
                                 type="text" 
                                 placeholder="Last Name"
                         />
                         <input className={input} 
+                                name="employer[companyName]"
                                 value={companyNameText}
                                 onChange={(e) => updateEmployerSignupForm('companyName', e.target.value)}
                                 type="text" 
                                 placeholder="Company"
                         />
                         <input className={input} 
+                                name="employer[phone]"
+                                value={companyNameText}
                                 value={phoneText}
                                 onChange={(e) => updateEmployerSignupForm('phone', e.target.value)}
                                 type="text" 
                                 placeholder="Phone #"
                         />
                         <input className={input} 
+                                name="employer[email]"
+                                value={companyNameText}
                                 value={emailText}
                                 onChange={(e) => updateEmployerSignupForm('email', e.target.value)}
                                 type="email" 
                                 placeholder="Email"
                         />
                         <input className={input} 
+                                name="employer[password]"
+                                value={companyNameText}
                                 value={passwordText}
                                 onChange={(e) => updateEmployerSignupForm('password', e.target.value)}
                                 type="password" 

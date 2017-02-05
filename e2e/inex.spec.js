@@ -26,7 +26,6 @@ Scenario('Student signup', (I) => {
 Scenario('Email duplicate', (I) => {
     I.fillField('student[email]', `${email}@sheridancollege.ca`);
     I.fillField('student[password]', 'testing');
-    I.fillField('student[password]', 'testing');
     I.click('Sign me up');
     I.see('This email is already registered, please try another one');
 });

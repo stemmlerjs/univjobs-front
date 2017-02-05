@@ -9,6 +9,9 @@ Before((I) => {
 });
 
 
-Scenario('Employer', (I) => {
+Scenario('Employer signup', (I) => {
     I.click('EMPLOYER');
+    I.see('HIRE STUDENTS');
+    I.click('Employers - Post a job now');
+    I.fillField('employer[firstname]', 'test');
 });
