@@ -112,6 +112,7 @@ export function submitStudentSignupForm(email, password) {
                   })
                   .catch((err) => {
                     // ACTION: DISPATCH (CREATING_USER_ACCOUNT_FAILURE)
+                    dispatch(submitStudentFormError(errorMsg(err)))
                     dispatch(userActions.createUserAccountFailure(errorMsg(err)))
                     MAIN_REJECT()
                   })

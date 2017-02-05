@@ -28,7 +28,7 @@ Scenario('Email duplicate', (I) => {
     I.fillField('student[password]', 'testing');
     I.fillField('student[password]', 'testing');
     I.click('Sign me up');
-    I.see('Email already registered, try another one');
+    I.see('This email is already registered, please try another one');
 });
 
 

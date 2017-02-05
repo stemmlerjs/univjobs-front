@@ -150,7 +150,10 @@ const SignupContainer = React.createClass({
           }
         })
         .catch(() => {
-            toastr.error("Email already registered, try another one")
+            //Error will be outputed from signupForm.error
+            //Check redux signupForm
+            //TODO: Change the error to red
+            
         })
     },
 /**
