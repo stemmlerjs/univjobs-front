@@ -124,7 +124,7 @@ const SignupContainer = React.createClass({
   *
   * @param (Event) e - the click event
   *
-  * TODO: Change to only /profile/em 
+  * TODO: Hide console log in prod
   */
     handleStudentSignup(e) {
         e.preventDefault()
@@ -132,31 +132,11 @@ const SignupContainer = React.createClass({
             this.props.studentEmail,
             this.props.studentPassword
         )
-        .then((resp) => {
-          if(this.props.isAStudent && this.props.isProfileCompleted) {
-            // Route to Student Dashboard
-            this.context.router.replace('/dashboard/st')
-
-          } else if (this.props.isAStudent && !this.props.isProfileCompleted) {
-            // Route to Student Profile
-            this.context.router.replace('/profile/st')
-
-          } else if (!this.props.isAStudent && this.props.isProfileCompleted) {
-            // Route to employer dashboard
-            this.context.router.replace('/categories')
-
-          } else if (!this.props.isAStudent && !this.props.isProfileCompleted) {
-            // Route to Employer Profile
-            this.context.router.replace('/profile/em')
-
-          }
-        })
-        .catch(() => {
-            //Error will be outputed from signupForm.error
-            //Check redux signupForm
-            //TODO: Change the error to red
-            
-        })
+        .then((actionResult) => {
+            if(actionResult) {
+                this.context.router.replace('/profile/st')
+          } 
+        }).catch((err) => console.log(err))
     },
 
 /**
@@ -166,6 +146,7 @@ const SignupContainer = React.createClass({
   *  use email and password to create & authenticate to the server.
   *
   * @param (Event) e - the click event
+  * TODO: Hide console log in prod
   */
     handleEmployerSignup(e) {
         e.preventDefault()
@@ -175,7 +156,8 @@ const SignupContainer = React.createClass({
                                             this.props.employerPhone, 
                                             this.props.employerEmail, 
                                             this.props.employerPassword
-        ).then((actionResult) => {
+        )
+        .then((actionResult) => {
             if(actionResult) {
                 this.context.router.replace('/profile/em')
           } 
@@ -188,6 +170,7 @@ const SignupContainer = React.createClass({
   *  use email and password to authenticate to the server.
   *
   * @param (Event) e - the click event
+  * TODO: Hide console log in prod
   */
 
 

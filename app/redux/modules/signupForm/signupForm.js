@@ -49,8 +49,7 @@ export function submitEmployerFormError(error) {
 
 export function submitStudentSignupForm(email, password) {
   return function(dispatch) {
-
-    return new Promise((MAIN_RESOLVE, MAIN_REJECT) => {
+    const promise = new Promise((resolve, reject) => {
       // Do form validation
         validateStudentEmail(email, (success, message) => {
           // EMAIL IS NOT VALID
@@ -98,7 +97,7 @@ export function submitStudentSignupForm(email, password) {
                     dispatch(
                         userActions.loginSuccess(getAccessToken(),
                                                 resp.data.student.is_a_student,
-                                                resp.data.student.is_a_profile_complete
+                                                resp.data.student.is_profile_complete
                         ))
                     //ACTION: PROFILE - DISPATCH (FETCHING_PROFILE_INFO_SUCCESS)
                     dispatch(profileActions.fetchedProfileInfoSuccess(
@@ -107,20 +106,22 @@ export function submitStudentSignupForm(email, password) {
                                                             resp.data.student.is_a_student
                     ))
 
-                    MAIN_RESOLVE()
+                    resolve(true)
 
                   })
                   .catch((err) => {
                     // ACTION: DISPATCH (CREATING_USER_ACCOUNT_FAILURE)
                     dispatch(submitStudentFormError(errorMsg(err)))
                     dispatch(userActions.createUserAccountFailure(errorMsg(err)))
-                    MAIN_REJECT()
+                    dispatch(submitStudentFormError(errorMsg(err)))
+                    reject(false)
                   })
             } //else => email pass is good
           } // email is valid
         }) // End of validateStudentEmail
 
       })
+    return promise;
     }   //dispatch
   } //submitStudentSignupForm
 
@@ -177,24 +178,9 @@ export function submitEmployerSignupForm(firstName, lastName, companyName, phone
             const token = response.data.token
             setAccessToken(token)
             dispatch(userActions.createUserAccountSuccess(token))
-
-/*
-          const userInfo = response.data.user
-          const isAStudent = response.data.user.user.is_a_student
-          const isProfileCompleted = response.data.user.user.is_profile_completed
-
-          let profileInfo = _.cloneDeep(response.data.user);
-          delete profileInfo.user // delete base user {} from profile info
-*/
-          // save access token as cookie
-
-          // ACTION: DISPATCH (CREATING_USER_ACCOUNT_SUCCESS)
-
-
         })
         .then(getUserInfo)
         .then((resp) => {
-            console.log(resp)
             let profileInfo = _.cloneDeep(resp.data.employer)
             
             //login user
