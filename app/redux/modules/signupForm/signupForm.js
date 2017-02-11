@@ -102,7 +102,7 @@ export function submitStudentSignupForm(email, password) {
                         ))
                     //ACTION: PROFILE - DISPATCH (FETCHING_PROFILE_INFO_SUCCESS)
                     dispatch(profileActions.fetchedProfileInfoSuccess(
-                                                            resp.data.student.is_a_profile_complete,
+                                                            resp.data.student.is_profile_complete,
                                                             profileInfo,
                                                             resp.data.student.is_a_student
                     ))
@@ -174,61 +174,51 @@ export function submitEmployerSignupForm(firstName, lastName, companyName, phone
 
       createEmployerAccount(firstName, lastName, companyName, phone, email, password)
         .then((response) => {
-          setAccessToken(response.data.token)
+            const token = response.data.token
+            setAccessToken(token)
+            dispatch(userActions.createUserAccountSuccess(token))
 
+/*
           const userInfo = response.data.user
           const isAStudent = response.data.user.user.is_a_student
           const isProfileCompleted = response.data.user.user.is_profile_completed
 
           let profileInfo = _.cloneDeep(response.data.user);
           delete profileInfo.user // delete base user {} from profile info
-
+*/
           // save access token as cookie
 
           // ACTION: DISPATCH (CREATING_USER_ACCOUNT_SUCCESS)
-          dispatch(userActions.createUserAccountSuccess(token))
 
-          // ACTION: DISPATCH (LOGIN_SUCCESS)
-          dispatch(userActions.loginSuccess(token,
-            isAStudent,
-            isProfileCompleted
-          ))
 
-          //ACTION: PROFILE - DISPATCH (FETCHING_PROFILE_INFO_SUCCESS)
-          dispatch(profileActions.fetchingProfileInfoSuccess(
-            isProfileCompleted,
-            profileInfo,
-            isAStudent
-          ))
-
-          resolve(true)
+        })
+        .then(getUserInfo)
+        .then((resp) => {
+            console.log(resp)
+            let profileInfo = _.cloneDeep(resp.data.employer)
+            
+            //login user
+            dispatch(
+                userActions.loginSuccess(getAccessToken(),
+                                         resp.data.employer.is_a_student,
+                                         resp.data.employer.is_profile_complete 
+                ))
+            //ACTION: PROFILE - DISPATCH (FETCHING_PROFILE_INFO_SUCCESS)
+                dispatch(profileActions.fetchedProfileInfoSuccess(
+                                                            resp.data.employer.is_profile_complete,
+                                                            profileInfo,
+                                                            resp.data.employer.is_a_student
+                ))
+            resolve(true)
         })
         .catch((err) => {
-          let errMsg = "";
-
-          switch(err.status) {
-            case 400:
-              errMsg = "Did you already sign up? Someone already registered with this email."
-              break
-            case 403:
-              errMsg = "Something went wrong here. We're working on fixing it."
-              break
-            case 500:
-              errMsg = "Something appears to be wrong with our servers. Try back in a few minutes."
-              break
-            default:
-              errMsg = "Couldn't connect to Univjobs. Please check your network connection."
-          }
 
           // ACTION: DISPATCH (CREATING_USER_ACCOUNT_FAILURE)
-          dispatch(userActions.createUserAccountFailure(errMsg))
-
+          dispatch(userActions.createUserAccountFailure(errorMsg(err)))
           // ACTION: DISPATCH (FETCHING_USER_INFO_FAILURE)
           dispatch(userActions.fetchingUserInfoFailure())
-
           // ACTION: DISPATCH (SUBMIT_STUDENT_FORM_ERROR)
-          dispatch(submitEmployerFormError(errMsg))
-
+          dispatch(submitEmployerFormError(errorMsg(err)))
           resolve(false)
         })
     })

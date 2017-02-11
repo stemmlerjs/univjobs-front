@@ -12,20 +12,6 @@ StudentSignup.propTypes = {
 }
 
 export default function StudentSignup ({submitSignupForm, updateStudentSignupForm, onSubmitSignup, emailText, passwordText, error, router}) {
-  function handleUserSubmit(e) {
-    e.preventDefault();
-
-    // SUBMIT FORM DATA TO CREATE USER
-    submitSignupForm(emailText, passwordText)
-      // If good, move to profile page for Students
-      .then((success) => {
-        if(success) {
-          router.push('/profile/st')
-        } 
-      })
-      // If error, print out the error
-      .catch((err) => console.log(err))
-  }
 
   return (
       <div>

@@ -117,14 +117,16 @@ const SignupContainer = React.createClass({
   },
 
 /**
-  * handleSignupAttempt
+  * handleStudentSignup
   *
   *  Passes signup credentials through client-side validation before attempting to
   *  use email and password to create & authenticate to the server.
   *
   * @param (Event) e - the click event
+  *
+  * TODO: Change to only /profile/em 
   */
-    handleSignupAttempt(e) {
+    handleStudentSignup(e) {
         e.preventDefault()
         this.props.submitStudentSignupForm(
             this.props.studentEmail,
@@ -155,6 +157,29 @@ const SignupContainer = React.createClass({
             //TODO: Change the error to red
             
         })
+    },
+
+/**
+  * handleEmployerSignup
+  *
+  *  Passes signup credentials through client-side validation before attempting to
+  *  use email and password to create & authenticate to the server.
+  *
+  * @param (Event) e - the click event
+  */
+    handleEmployerSignup(e) {
+        e.preventDefault()
+        this.props.submitEmployerSignupForm(this.props.employerFirstName, 
+                                            this.props.employerLastName, 
+                                            this.props.employerCompanyName, 
+                                            this.props.employerPhone, 
+                                            this.props.employerEmail, 
+                                            this.props.employerPassword
+        ).then((actionResult) => {
+            if(actionResult) {
+                this.context.router.replace('/profile/em')
+          } 
+        }).catch((err) => console.log(err))
     },
 /**
   * handleLoginAttempt
@@ -281,14 +306,14 @@ const SignupContainer = React.createClass({
                 passwordText={this.props.studentPassword}
                 updateStudentSignupForm={this.props.updateStudentForm}
                 submitSignupForm={this.props.submitStudentSignupForm}
-                onSubmitSignup={(e) => this.handleSignupAttempt(e)}
+                onSubmitSignup={(e) => this.handleStudentSignup(e)}
                 error={this.props.studentFormError}
                 router={this.context.router}/>
             </div>
             :
             <div>
               <EmployerSignup
-                submitSignupForm={this.props.submitEmployerSignupForm}
+                onSubmitSignup={(e) => this.handleEmployerSignup(e)}
                 updateEmployerSignupForm={this.props.updateEmployerForm}
                 firstNameText={this.props.employerFirstName}
                 lastNameText={this.props.employerLastName}

@@ -42,24 +42,15 @@ const EmployerSignup = React.createClass({
     passwordText: PropTypes.string.isRequired,
     error: PropTypes.string.isRequired,
     router: PropTypes.object.isRequired,
-    submitSignupForm: PropTypes.func.isRequired,
+    onSubmitSignup: PropTypes.func.isRequired,
     updateEmployerSignupForm: PropTypes.func.isRequired
   },
 
   render() {
     // Props
-    const {submitSignupForm, updateEmployerSignupForm, firstNameText, lastNameText, companyNameText, phoneText, 
+    const {onSubmitSignup, updateEmployerSignupForm, firstNameText, lastNameText, companyNameText, phoneText, 
       emailText, passwordText, error, router} = this.props
 
-    function handleUserSubmit(e) {
-      e.preventDefault();
-      submitSignupForm(firstNameText, lastNameText, companyNameText, phoneText, emailText, passwordText)
-        .then((actionResult) => {
-          if(actionResult) {
-            router.push('/profile/em')
-          } 
-        }).catch((err) => console.log(err))
-    } 
 
     return (
         <div>
@@ -137,7 +128,7 @@ const EmployerSignup = React.createClass({
                     </div>
                     <button 
                         className={btn} 
-                        onClick={handleUserSubmit}
+                        onClick={onSubmitSignup}
                     >
                         Sign up
                     </button>
