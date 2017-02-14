@@ -180,7 +180,6 @@ const SignupContainer = React.createClass({
       this.props.loginFormEmailText,
       this.props.loginFormPasswordText
     )
-    /*
     .then(({isAStudent, isProfileCompleted}) => {
       //TODO: Implement this as a tiny module (function) to put inside of authRedirectionFilter
 
@@ -206,7 +205,6 @@ const SignupContainer = React.createClass({
     .catch((err) => {
       console.log("Could not login", err)
     })
-      */
   },
 
 /**

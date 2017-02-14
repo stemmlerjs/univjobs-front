@@ -1,5 +1,5 @@
 import { validateEmployerEmail, validatePassword } from 'helpers/utils'
-import { login, setAccessToken, errorMsg } from 'helpers/auth'
+import { login, setAccessToken, errorMsg, getAccessToken } from 'helpers/auth'
 import { getUserInfo } from 'helpers/profile'
 import { loggingIn, loginSuccess, loginFailure } from 'redux/modules/user/user'
 import { fetchingProfileInfoSuccess } from 'redux/modules/profile/profile'
@@ -63,35 +63,37 @@ export function submitLoginForm(email, password) {
 
           var token = response.data.token
           setAccessToken(token)
-          dispatch(profileActions.fetchingProfileInfo)
+          dispatch(profileActions.fetchingProfileInfo())
           // ACTION: DISPATCH (LOGIN_SUCCESS)
-            debugger
          })
         .then(getUserInfo)
-        .then((resp) => {
-            console.log(resp)
-            debugger
-            dispatch(loginSuccess(token,
-                res.data.user.is_a_student,
-                res.data.user.is_profile_completed
+        .then((response) => {
+            let user = response.data.student ? response.data.student : response.data.employer
+            const isAStudent = user.is_a_student
+            const isProfileCompleted = user.is_profile_complete
+            let profileInfo = _.cloneDeep(response.data);
+
+            //NOTE: @khalil Why do we need to delete profileInfo?
+            delete profileInfo.student ? profileInfo.student : profileInfo.employer
+            
+            dispatch(loginSuccess(
+                getAccessToken(),
+                isAStudent,
+                isProfileCompleted
             ))
             /* GET PROFILE INFO */
 
-              const isAStudent = res.data.user.is_a_student
-              const isProfileCompleted = res.data.user.is_profile_completed
-              let profileInfo = _.cloneDeep(res.data);
-              delete profileInfo.user
 
               //ACTION: PROFILE - DISPATCH (FETCHING_PROFILE_INFO_SUCCESS)
-              dispatch(fetchingProfileInfoSuccess(
+              dispatch(profileActions.fetchedProfileInfoSuccess(
                 isProfileCompleted,
                 profileInfo,
                 isAStudent
               ))
 
               resolve({
-                isAStudent: response.data.user.is_a_student,
-                isProfileCompleted: response.data.user.is_profile_completed
+                  isAStudent,
+                  isProfileCompleted
               })
         })
         .catch((err) => {
