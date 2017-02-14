@@ -73,8 +73,8 @@ export function submitLoginForm(email, password) {
             const isProfileCompleted = user.is_profile_complete
             let profileInfo = _.cloneDeep(response.data);
 
-            //NOTE: @khalil Why do we need to delete profileInfo?
-            delete profileInfo.student ? profileInfo.student : profileInfo.employer
+            //TODO: discuss with @khalil Why do we need to delete profileInfo?
+            //delete profileInfo.student ? profileInfo.student : profileInfo.employer
             
             dispatch(loginSuccess(
                 getAccessToken(),
