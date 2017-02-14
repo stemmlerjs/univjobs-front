@@ -180,9 +180,11 @@ const SignupContainer = React.createClass({
       this.props.loginFormEmailText,
       this.props.loginFormPasswordText
     )
+    /*
     .then(({isAStudent, isProfileCompleted}) => {
       //TODO: Implement this as a tiny module (function) to put inside of authRedirectionFilter
 
+      console.log("Here in login")
       if(isAStudent && isProfileCompleted) {
         // Route to Student Dashboard
         this.context.router.replace('/dashboard/st')
@@ -204,6 +206,7 @@ const SignupContainer = React.createClass({
     .catch((err) => {
       console.log("Could not login", err)
     })
+      */
   },
 
 /**

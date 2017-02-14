@@ -1,7 +1,9 @@
 import { validateEmployerEmail, validatePassword } from 'helpers/utils'
-import { login, setAccessToken, getUserInfo } from 'helpers/auth'
+import { login, setAccessToken, errorMsg } from 'helpers/auth'
+import { getUserInfo } from 'helpers/profile'
 import { loggingIn, loginSuccess, loginFailure } from 'redux/modules/user/user'
 import { fetchingProfileInfoSuccess } from 'redux/modules/profile/profile'
+import * as profileActions from '../profile/profile'
 import _ from 'lodash'
 
 const UPDATE_LOGIN_FORM = 'UPDATE_LOGIN_FORM'
@@ -61,16 +63,19 @@ export function submitLoginForm(email, password) {
 
           var token = response.data.token
           setAccessToken(token)
-
+          dispatch(profileActions.fetchingProfileInfo)
           // ACTION: DISPATCH (LOGIN_SUCCESS)
-          dispatch(loginSuccess(token,
-            response.data.user.is_a_student,
-            response.data.user.is_profile_completed
-          ))
-
-          /* GET PROFILE INFO */
-          getUserInfo(token)
-            .then((res) => {
+            debugger
+         })
+        .then(getUserInfo)
+        .then((resp) => {
+            console.log(resp)
+            debugger
+            dispatch(loginSuccess(token,
+                res.data.user.is_a_student,
+                res.data.user.is_profile_completed
+            ))
+            /* GET PROFILE INFO */
 
               const isAStudent = res.data.user.is_a_student
               const isProfileCompleted = res.data.user.is_profile_completed
@@ -88,7 +93,6 @@ export function submitLoginForm(email, password) {
                 isAStudent: response.data.user.is_a_student,
                 isProfileCompleted: response.data.user.is_profile_completed
               })
-            })
         })
         .catch((err) => {
           if(err.status === 400){
