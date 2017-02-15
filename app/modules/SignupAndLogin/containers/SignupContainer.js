@@ -265,12 +265,14 @@ const SignupContainer = React.createClass({
         >
             <div>
               <input className={input}
+                name="login[email]"
                 onChange={(e) => this.props.updateLoginForm('email', e.target.value)}
                 type="text"
                 onKeyUp={(e) => detectEnterPress(e, this.submitOnEnter)}
                 placeholder="Email"
                />
                 <input className={input}
+                    name="login[password]"
                     onChange={(e) => this.props.updateLoginForm('password', e.target.value)}
                     type="password"
                     onKeyUp={(e) => detectEnterPress(e, this.submitOnEnter)}

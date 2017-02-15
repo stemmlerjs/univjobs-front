@@ -26,11 +26,11 @@ export default function Navigation ({isAStudent, onSwitchUserType, onOpenLoginMo
                   >
                   </i>
               </div>
-              <div className={ `${pseudoBtn} ${btnBabyBlue}` }
+              <button className={ `${pseudoBtn} ${btnBabyBlue}` }
                     onClick={onOpenLoginModal}
                >
                     LOGIN
-              </div>
+              </button>
               <button onClick={onSwitchUserType} 
                     className={btn}
               >
