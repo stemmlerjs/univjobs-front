@@ -3,13 +3,13 @@ import { authRedirectFilter } from 'config/routes'
 import { StudentProfile } from 'modules/Profile' 
 import { SidebarContainer } from 'modules/Main' 
 import { pageContainer } from '../styles/StudentProfileContainerStyles.css' 
-import * as lists from 'helpers/lists' 
 import axios from 'axios' 
 // ========= REDUX AND STATE IMPORTS ========== //
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as userActionCreators from 'redux/modules/user/user'
 import * as profileActionCreators from 'redux/modules/profile/profile'
+import * as listActionCreators from 'redux/modules/list/list'
 // ============================================ //
 
 // ============== MESSAGES =================== //
@@ -19,6 +19,7 @@ var ToastMessageFactory = React.createFactory(ReactToastr.ToastMessage.animation
 // ========================================== //
 
 const actionCreators = {
+    ...listActionCreators,
 	...profileActionCreators,
 	...userActionCreators
 }
@@ -40,20 +41,6 @@ const StudentProfileContainer = React.createClass({
   */
 
   retrieveAllLists() {
-   const promise = new Promise((resolve, reject) => {
-	   axios.all([
-		    lists.getEmailPref(this.context.store),
-		    lists.getStudentStatus(this.context.store),
-		    lists.getEducationLevel(this.context.store),
-		    lists.getMajor(this.context.store),
-		    lists.getGender(this.context.store),
-		    lists.getLanguages(this.context.store),
-
-	   ])
-	    .then((resp) => resolve(true))
-	    .catch((resp) => resolve(true))
-	})
-	return promise;
   },
 
   /** doRedirectionFilter

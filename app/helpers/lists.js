@@ -1,37 +1,30 @@
 import axios from 'axios'
 import config from 'config'
+import { getAccessToken, getCSRFToken } from 'helpers/auth'
 import { listRetrieved } from 'redux/modules/profile/profile'
 import { listRetrieved as CREATE_JOB_listRetrived } from 'redux/modules/createjob/createjob'
 
 
 export function getIndustries(store) {
-  const promise = new Promise((resolve, reject) => {
-    axios.get(config.baseUrl + 'list/industries')
-    .then((response) => {
-      store.dispatch(listRetrieved('INDUSTRIES', response.data))
-      resolve(true);
-    })
-    .catch((error) => {
-      console.log(error)
-      resolve(false);
-    })
-  })
-  return promise;
+    const accessToken = getAccessToken()
+	return axios({
+		method: 'get',
+		url: config.baseUrl + 'list/industries',
+		headers: {
+			'Authorization':  accessToken,
+		}
+	})
 }
 
 export function getEmailPref(store) {
-  const promise = new Promise((resolve, reject) => {
-    axios.get(config.baseUrl + 'list/emailpref')
-    .then((response) => {
-      store.dispatch(listRetrieved('EMAIL_PREFERENCES', response.data))
-	resolve(true);
-    })
-    .catch((error) => {
-      console.log(error)
-      resolve(false);
-    })
-  })
-    return promise
+    const accessToken = getAccessToken()
+	return axios({
+		method: 'get',
+		url: config.baseUrl + 'list/emailpref',
+		headers: {
+			'Authorization':  accessToken,
+		}
+	}).then((resp) => { console.log(resp) })
 }
 
 export function getJobTypes(store) {
