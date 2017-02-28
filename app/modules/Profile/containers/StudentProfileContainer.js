@@ -121,10 +121,14 @@ const StudentProfileContainer = React.createClass({
    */
 
   componentWillMount() {
-	  this.retrieveAllLists()
+	  /*this.retrieveAllLists()
 	    .then(this.doRedirectionFilter)
 	    .then(this.finallyDisableOverlay)
-  },
+       */
+
+      this.doRedirectionFilter()
+      .then(this.finallyDisplayOverlay)
+    },
 
   componentWillUnmount() {
     console.log("wait, no we have to check")
@@ -190,11 +194,11 @@ const StudentProfileContainer = React.createClass({
   },
 })
 
-function mapStateToProps({user, profile}) {
+function mapStateToProps({user, profile, list}) {
   return {
     user: user ? user : {},
     snapshot: profile.snapshot ? profile.snapshot : {},
-    emailPreferences: profile.studentProfile.emailPreferences ? profile.studentProfile.emailPreferences : 2,  // DEFAULT value (string || number)
+    emailPreferences: list.emailPreferences ? list.emailPreferences : 2,  // DEFAULT value (string || number)
     emailPrefList: profile.lists.emailPreferences ? profile.lists.emailPreferences : [],                      // list of selected value (array)
     firstName: profile.studentProfile.firstName ? profile.studentProfile.firstName : '',
     lastName: profile.studentProfile.lastName ? profile.studentProfile.lastName : '',

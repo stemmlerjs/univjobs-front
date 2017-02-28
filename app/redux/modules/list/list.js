@@ -249,10 +249,12 @@ export function handleGetEmailPref(dispatch) {
         dispatch(fetchingEmailPreferences())
         return retrieve.getEmailPref()
             .then((resp) => 
-                dispatch(fetchedEmailPreferencesSuccess(resp.data.emailPrefs))
+                console.log("Works")
+               // dispatch(fetchedEmailPreferencesSuccess(resp.data.emailPrefs))
             )
             .catch((err) => 
-                dispatch(fetchedEmailPreferencesFailure(err))
+                console.log("Does not Work")
+                //dispatch(fetchedEmailPreferencesFailure(err))
             )
     }
 }
@@ -261,7 +263,7 @@ export function handleGetEmailPref(dispatch) {
 // ================== INITIAL STATE ======================
 // =======================================================
 
-const initialListsState = {
+const initialState = {
   cities: [],
   genders: [],
   industries: [],
@@ -278,7 +280,7 @@ const initialListsState = {
 // ==================== REDUCERS =========================
 // =======================================================
 
-function lists (state = initialListsState, action) {
+export default function list (state = initialState, action) {
   switch(action.listType) {
     case LIST_FETCHING_INDUSTRIES:
       return {
@@ -294,122 +296,133 @@ function lists (state = initialListsState, action) {
         ...state,
         error: action.error
       }
-    case FETCHING_EMAIL_PREFERENCES:
+    case LIST_FETCHING_EMAIL_PREFERENCES:
       return {
         ...state,
       }
-    case FETCHED_EMAIL_PREFERENCES_SUCCESS:
+    case LIST_FETCHED_EMAIL_PREFERENCES_SUCCESS:
       return {
         ...state,
-        emailPreferences: action.list
+        emailPreferences: action.list.emailPreferences
       }
-    case FETCHED_EMAIL_PREFERENCES_FAILURE:
+    case LIST_FETCHED_EMAIL_PREFERENCES_FAILURE:
       return {
         ...state,
         error
       }
-    case FETCHING_STUDENT_STATUSES:
+    case LIST_FETCHING_STUDENT_STATUSES:
       return {
         ...state,
       }
-    case FETCHED_STUDENT_STATUSES_SUCCESS:
+    case LIST_FETCHED_STUDENT_STATUSES_SUCCESS:
       return {
         ...state,
         studentStatuses: action.list
       }
-    case FETCHED_STUDENT_STATUSES_FAILURE:
+    case LIST_FETCHED_STUDENT_STATUSES_FAILURE:
       return {
         ...state,
         error
       }
-    case FETCHING_EDU_LEVELS:
+    case LIST_FETCHING_EDU_LEVELS:
       return {
         ...state,
       }
-    case FETCHED_EDU_LEVELS_SUCCESS:
+    case LIST_FETCHED_EDU_LEVELS_SUCCESS:
       return {
         ...state,
         eduLevels: action.list
       }
-    case FETCHED_EDU_LEVELS_FAILURE:
+    case LIST_FETCHED_EDU_LEVELS_FAILURE:
       return {
         ...state,
         error
       }
-    case FETCHING_MAJORS:
+    case LIST_FETCHING_MAJORS:
       return {
         ...state,
       }
-    case FETHCED_MAJORS_SUCCESS:
-      return {
-        ...state,
-        majors: action.list
-      }
-    case FETHCED_MAJORS_FAILURE:
+    case LIST_FETCHED_MAJORS_SUCCESS:
       return {
         ...state,
         majors: action.list
       }
-    case FETCHING_GENDERS:
+    case LIST_FETCHED_MAJORS_FAILURE:
+      return {
+        ...state,
+        majors: action.list
+      }
+    case LIST_FETCHING_GENDERS:
       return {
         ...state,
       }
-    case FETCHED_GENDERS_SUCCESS:
+    case LIST_FETCHED_GENDERS_SUCCESS:
       return {
         ...state,
         genders: action.list
       }
-    case FETCHED_GENDERS_FAILURES:
+    case LIST_FETCHED_GENDERS_FAILURE:
       return {
         ...state,
         errors
       }
-    case FETCHING_SPORTSTEAMS:
+    case LIST_FETCHING_SPORTSTEAMS:
       return {
         ...state,
       }
-    case FETCHED_SPORTSTEAMS_SUCCESS:
+    case LIST_FETCHED_SPORTSTEAMS_SUCCESS:
       return {
         ...state,
         sportsTeams: action.list
       }
-    case FETCHED_SPORTSTEAMS_FAILURE:
+    case LIST_FETCHED_SPORTSTEAMS_FAILURE:
       return {
         ...state,
         error
       }
-    case FETCHING_SCHOOL_CLUBS:
+    case LIST_FETCHING_SCHOOL_CLUBS:
       return {
         ...state
       }
-    case FETCHED_SCHOOL_CLUBS_SUCCESS:
+    case LIST_FETCHED_SCHOOL_CLUBS_SUCCESS:
       return {
         ...state,
         schoolClubs: action.list
       }
-    case FETCHED_SCHOOL_CLUBS_FAILURE:
+    case LIST_FETCHED_SCHOOL_CLUBS_FAILURE:
       return {
         ...state,
         error
       }
-    case FETCHING_LANGUAGES:
+    case LIST_FETCHING_LANGUAGES:
       return {
         ...state,
       }
-    case FETCHED_LANGUAGES_SUCCSS:
+    case LIST_FETCHED_LANGUAGES_SUCCESS:
       return {
         ...state,
         languages: action.list
       }
-    case FETCHED_LANGUAGES_FAILURE:
+    case LIST_FETCHED_LANGUAGES_FAILURE:
       return {
         ...state,
         error
       }
-    case RETRIEVED_CITIES:
+    case LIST_FETCHING_CITIES:
+      return {
+        ...state,
+      }
+    case LIST_FETCHED_CITIES_SUCCESS:
       return {
         ...state,
         cities: action.list
       }
+    case LIST_FETCHED_CITIES_FAILURE:
+      return {
+        ...state,
+        error
+      }
+    default :
+      return state
   }
 }

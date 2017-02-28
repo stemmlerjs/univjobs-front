@@ -16,7 +16,7 @@ export function getIndustries(store) {
 	})
 }
 
-export function getEmailPref(store) {
+export function getEmailPref() {
     const accessToken = getAccessToken()
 	return axios({
 		method: 'get',
@@ -24,7 +24,7 @@ export function getEmailPref(store) {
 		headers: {
 			'Authorization':  accessToken,
 		}
-	}).then((resp) => { console.log(resp) })
+	})
 }
 
 export function getJobTypes(store) {
