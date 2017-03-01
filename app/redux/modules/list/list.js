@@ -83,21 +83,21 @@ export function fetchedEduLevelsFailure(error) {
   }
 }
 
-export function fetchingEmailPref() {
+export function fetchingEmailPreferences() {
     return {
-        type: LIST_FETCHING_EMAIL_PREF
+        type: LIST_FETCHING_EMAIL_PREFERENCES
     }
 }
-export function fetchedEmailPrefSuccess(emailPref) {
+export function fetchedEmailPreferencesSuccess(emailPreferences) {
   return {
-    type: LIST_FETCHED_EMAIL_PREF_SUCCESS,
-    emailPref
+    type: LIST_FETCHED_EMAIL_PREFERENCES_SUCCESS,
+    emailPreferences
   }
 }
 
-export function fetchedEmailPrefFailure(error) {
+export function fetchedEmailPreferencesFailure(error) {
   return {
-    type: LIST_FETCHED_EMAIL_PREF_FAILURE,
+    type: LIST_FETCHED_EMAIL_PREFERENCES_FAILURE,
     error
   }
 }
@@ -249,12 +249,10 @@ export function handleGetEmailPref(dispatch) {
         dispatch(fetchingEmailPreferences())
         return retrieve.getEmailPref()
             .then((resp) => 
-                console.log("Works")
-               // dispatch(fetchedEmailPreferencesSuccess(resp.data.emailPrefs))
+               dispatch(fetchedEmailPreferencesSuccess(resp.data.emailPrefs))
             )
             .catch((err) => 
-                console.log("Does not Work")
-                //dispatch(fetchedEmailPreferencesFailure(err))
+                dispatch(fetchedEmailPreferencesFailure(err))
             )
     }
 }
@@ -274,6 +272,7 @@ const initialState = {
   studentStatuses: [],
   sportsTeams: [],
   schoolClubs: [],
+  error: ''
 }
 
 // =======================================================
@@ -281,7 +280,7 @@ const initialState = {
 // =======================================================
 
 export default function list (state = initialState, action) {
-  switch(action.listType) {
+  switch(action.type) {
     case LIST_FETCHING_INDUSTRIES:
       return {
         ...state,
@@ -303,12 +302,12 @@ export default function list (state = initialState, action) {
     case LIST_FETCHED_EMAIL_PREFERENCES_SUCCESS:
       return {
         ...state,
-        emailPreferences: action.list.emailPreferences
+        emailPreferences: action.emailPreferences
       }
     case LIST_FETCHED_EMAIL_PREFERENCES_FAILURE:
       return {
         ...state,
-        error
+        error: action.error
       }
     case LIST_FETCHING_STUDENT_STATUSES:
       return {

@@ -12,7 +12,6 @@ var momentLocalizer = require('react-widgets/lib/localizers/moment')
 momentLocalizer(Moment)
 
 export default function StudentProfile (props) {
- console.log(props)
  const messages = {
     emptyFilter: "Can't find your industry? Let us know at theunivjobs@gmail.com."
  }

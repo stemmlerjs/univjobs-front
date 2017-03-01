@@ -41,6 +41,12 @@ const StudentProfileContainer = React.createClass({
   */
 
   retrieveAllLists() {
+    const promise = new Promise((resolve, reject) => {
+        this.props.handleGetEmailPref()
+          .then((resp) => resolve(true))
+          .catch((resp) => resolve(true))
+    })
+      return promise
   },
 
   /** doRedirectionFilter
@@ -121,13 +127,10 @@ const StudentProfileContainer = React.createClass({
    */
 
   componentWillMount() {
-	  /*this.retrieveAllLists()
+	  this.retrieveAllLists()
 	    .then(this.doRedirectionFilter)
 	    .then(this.finallyDisableOverlay)
-       */
 
-      this.doRedirectionFilter()
-      .then(this.finallyDisplayOverlay)
     },
 
   componentWillUnmount() {
@@ -198,8 +201,8 @@ function mapStateToProps({user, profile, list}) {
   return {
     user: user ? user : {},
     snapshot: profile.snapshot ? profile.snapshot : {},
-    emailPreferences: list.emailPreferences ? list.emailPreferences : 2,  // DEFAULT value (string || number)
-    emailPrefList: profile.lists.emailPreferences ? profile.lists.emailPreferences : [],                      // list of selected value (array)
+    emailPreferences: profile.studentProfile.emailPreferences ? profile.studentProfile.emailPreferences : 2,  // DEFAULT value (string || number)
+    emailPrefList: list.emailPreferences ? list.emailPreferences : [],                      // list of selected value (array)
     firstName: profile.studentProfile.firstName ? profile.studentProfile.firstName : '',
     lastName: profile.studentProfile.lastName ? profile.studentProfile.lastName : '',
     studentStatus: profile.studentProfile.studentStatus ? profile.studentProfile.studentStatus : 1,          // DEFAULT value (String || number)
