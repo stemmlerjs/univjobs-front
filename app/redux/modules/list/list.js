@@ -16,7 +16,7 @@ const LIST_FETCHING_GENDERS = 'LIST.FETCHING_GENDERS'
 const LIST_FETCHING_LANGUAGES = 'LIST.FETCHING_LANGUAGES'
 const LIST_FETCHING_MAJORS = 'LIST.FETCHING_MAJORS'
 const LIST_FETCHING_SCHOOL_CLUBS = 'LIST.FETCHING_SCHOOL_CLUBS'
-const LIST_FETCHING_STUDENT_STATUSES = 'LIST.FETCHING_STUDENT_STATUSES'
+const LIST_FETCHING_STUDENT_STATUS = 'LIST.FETCHING_STUDENT_STATUS'
 const LIST_FETCHING_SPORTSTEAMS = 'LIST.FETCHING_SPORTSTEAMS'
 
 // ********** Profile List SUCCESS actions **************
@@ -30,7 +30,7 @@ const LIST_FETCHED_LANGUAGES_SUCCESS = 'LIST.FETCHED_LANGUAGES_SUCCESS'
 const LIST_FETCHED_MAJORS_SUCCESS = 'LIST.FETCHED_MAJORS_SUCCESS'
 const LIST_FETCHED_SCHOOL_CLUBS_SUCCESS = 'LIST.FETCHED_SCHOOL_CLUBS_SUCCESS'
 const LIST_FETCHED_SPORTSTEAMS_SUCCESS = 'LIST.FETCHED_SPORTSTEAMS_SUCCESS'
-const LIST_FETCHED_STUDENT_STATUSES_SUCCESS = 'LIST.FETCHED_STUDENT_STATUSES_SUCCESS'
+const LIST_FETCHED_STUDENT_STATUS_SUCCESS = 'LIST.FETCHED_STUDENT_STATUS_SUCCESS'
 
 // ********** Profile List FAILURE actions **************
 const LIST_FETCHED_CITIES_FAILURE = 'LIST.FETCHED_CITIES_FAILURE'
@@ -41,7 +41,7 @@ const LIST_FETCHED_GENDERS_FAILURE = 'LIST.FETCHED_GENDERS_FAILURE'
 const LIST_FETCHED_LANGUAGES_FAILURE = 'LIST.FETCHED_LANGUAGES_FAILURE'
 const LIST_FETCHED_MAJORS_FAILURE = 'LIST.FETCHED_MAJORS_FAILURE'
 const LIST_FETCHED_SCHOOL_CLUBS_FAILURE = 'LIST.FETCHED_SCHOOL_CLUBS_FAILURE'
-const LIST_FETCHED_STUDENT_STATUSES_FAILURE = 'LIST.FETCHED_STUDENT_STATUSES_FAILURE'
+const LIST_FETCHED_STUDENT_STATUS_FAILURE = 'LIST.FETCHED_STUDENT_STATUS_FAILURE'
 const LIST_FETCHED_SPORTSTEAMS_FAILURE = 'LIST.FETCHED_SPORTSTEAMS_FAILURE'
 
 export function fetchingCity() {
@@ -69,10 +69,10 @@ export function fetchingEduLevels() {
     }
 }
 
-export function fetchedEduLevelsSuccess(edu) {
+export function fetchedEduLevelsSuccess(educationLevels) {
   return {
     type: LIST_FETCHED_EDU_LEVELS_SUCCESS,
-    edu
+    educationLevels
   }
 }
 
@@ -245,7 +245,6 @@ export function fetchedSportsTeamFailure(error) {
 //NOTE: Refer to signupform redux line 78, passing dispatch
 export function handleGetEmailPref(dispatch) {
     return function(dispatch) {
-        //ACTION: FETCHING_USER_PROFILE 
         dispatch(fetchingEmailPreferences())
         return retrieve.getEmailPref()
             .then((resp) => 
@@ -257,6 +256,61 @@ export function handleGetEmailPref(dispatch) {
     }
 }
 
+//NOTE: Refer to signupform redux line 78, passing dispatch
+export function handleGetStudentStatus(dispatch) {
+    return function(dispatch) {
+        dispatch(fetchingStudentStatus())
+        return retrieve.getStudentStatus()
+            .then((resp) => 
+               dispatch(fetchedStudentStatusSuccess(resp.data.status))
+            )
+            .catch((err) => 
+               dispatch(fetchedStudentStatusFailure(err))
+            )
+    }
+}
+
+//NOTE: Refer to signupform redux line 78, passing dispatch
+export function handleGetEduLevels(dispatch) {
+    return function(dispatch) {
+        dispatch(fetchingEduLevels())
+        return retrieve.getEducationLevels()
+            .then((resp) => 
+               dispatch(fetchedEduLevelsSuccess(resp.data.eduLevels))
+            )
+            .catch((err) => 
+               dispatch(fetchedEduLevelsFailure(err))
+            )
+    }
+}
+
+//NOTE: Refer to signupform redux line 78, passing dispatch
+export function handleGetMajors(dispatch) {
+    return function(dispatch) {
+        dispatch(fetchingMajors())
+        return retrieve.getMajors()
+            .then((resp) => 
+               dispatch(fetchedMajorsSuccess(resp.data.majors))
+            )
+            .catch((err) => 
+               dispatch(fetchedMajorsFailure(err))
+            )
+    }
+}
+
+//NOTE: Refer to signupform redux line 78, passing dispatch
+export function handleGetGenders(dispatch) {
+    return function(dispatch) {
+        dispatch(fetchingGenders())
+        return retrieve.getGenders()
+            .then((resp) => 
+               dispatch(fetchedGendersSuccess(resp.data.genders))
+            )
+            .catch((err) => 
+               dispatch(fetchedGendersFailure(err))
+            )
+    }
+}
 // =======================================================
 // ================== INITIAL STATE ======================
 // =======================================================
@@ -265,11 +319,11 @@ const initialState = {
   cities: [],
   genders: [],
   industries: [],
-  eduLevels: [],
+  educationLevels: [],
   emailPreferences: [],
   languages: [],
   majors: [],
-  studentStatuses: [],
+  studentStatus: [],
   sportsTeams: [],
   schoolClubs: [],
   error: ''
@@ -309,19 +363,19 @@ export default function list (state = initialState, action) {
         ...state,
         error: action.error
       }
-    case LIST_FETCHING_STUDENT_STATUSES:
+    case LIST_FETCHING_STUDENT_STATUS:
       return {
         ...state,
       }
-    case LIST_FETCHED_STUDENT_STATUSES_SUCCESS:
+    case LIST_FETCHED_STUDENT_STATUS_SUCCESS:
       return {
         ...state,
-        studentStatuses: action.list
+        studentStatus: action.studentStatus
       }
-    case LIST_FETCHED_STUDENT_STATUSES_FAILURE:
+    case LIST_FETCHED_STUDENT_STATUS_FAILURE:
       return {
         ...state,
-        error
+        error: action.error
       }
     case LIST_FETCHING_EDU_LEVELS:
       return {
@@ -330,7 +384,7 @@ export default function list (state = initialState, action) {
     case LIST_FETCHED_EDU_LEVELS_SUCCESS:
       return {
         ...state,
-        eduLevels: action.list
+        educationLevels: action.educationLevels
       }
     case LIST_FETCHED_EDU_LEVELS_FAILURE:
       return {
@@ -344,12 +398,12 @@ export default function list (state = initialState, action) {
     case LIST_FETCHED_MAJORS_SUCCESS:
       return {
         ...state,
-        majors: action.list
+        majors: action.majors
       }
     case LIST_FETCHED_MAJORS_FAILURE:
       return {
         ...state,
-        majors: action.list
+        error: action.error
       }
     case LIST_FETCHING_GENDERS:
       return {
@@ -358,12 +412,12 @@ export default function list (state = initialState, action) {
     case LIST_FETCHED_GENDERS_SUCCESS:
       return {
         ...state,
-        genders: action.list
+        genders: action.genders
       }
     case LIST_FETCHED_GENDERS_FAILURE:
       return {
         ...state,
-        errors
+        error: action.error
       }
     case LIST_FETCHING_SPORTSTEAMS:
       return {

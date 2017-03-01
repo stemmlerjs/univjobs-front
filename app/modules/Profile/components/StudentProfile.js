@@ -12,6 +12,7 @@ var momentLocalizer = require('react-widgets/lib/localizers/moment')
 momentLocalizer(Moment)
 
 export default function StudentProfile (props) {
+ console.log(props.emailPrefList)
  const messages = {
     emptyFilter: "Can't find your industry? Let us know at theunivjobs@gmail.com."
  }
@@ -45,7 +46,7 @@ export default function StudentProfile (props) {
    *   *  @param String - url
    *   *  @return void
    *   */
- const data = [ 'Once a week if new jobs are posted' ,'Everytime a new job is posted', 'Once a day if new jobs are posted'];
+ const data = [ 'Once a week if new jobs are posted' ,'Everytime a new job is posted', 'Once a day if new jobs are posted', 'No thanks, I will check myself'];
 
  const stat = ['Full-time student', 'Part-time student', 'Recent graduate'];
 

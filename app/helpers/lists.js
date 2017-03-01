@@ -27,81 +27,49 @@ export function getEmailPref() {
 	})
 }
 
-export function getJobTypes(store) {
-  const promise = new Promise((resolve, reject) => {
-    axios.get(config.baseUrl + 'list/jobtypes')
-    .then((response) => {
-      store.dispatch(CREATE_JOB_listRetrived('JOBTYPES', response.data))
-      resolve(true);
-    })
-    .catch((error) => {
-      console.log(error)
-      resolve(false);
-    })
-  })
-  return promise;
+export function getStudentStatus() {
+    const accessToken = getAccessToken()
+	return axios({
+		method: 'get',
+		url: config.baseUrl + 'list/ststatus',
+		headers: {
+			'Authorization':  accessToken,
+		}
+	})
 }
 
-export function getStudentStatus(store) {
-  const promise = new Promise((resolve, reject) => {
-    axios.get(config.baseUrl + 'list/status')
-    .then((response) => {
-      store.dispatch(listRetrieved('STUDENT_STATUSES', response.data))
-	resolve(true);
-    })
-    .catch((error) => {
-      console.log(error)
-      resolve(false);
-    })
-  })
-  return promise;
+export function getEducationLevels() {
+    const accessToken = getAccessToken()
+	return axios({
+		method: 'get',
+		url: config.baseUrl + 'list/edu',
+		headers: {
+			'Authorization':  accessToken,
+		}
+	})
 }
 
-export function getEducationLevel(store) {
-  const promise = new Promise((resolve, reject) => {
-    axios.get(config.baseUrl + 'list/edulevels')
-    .then((response) => {
-      store.dispatch(listRetrieved('EDU_LEVELS', response.data))
-	resolve(true);
-    })
-    .catch((error) => {
-      console.log(error)
-      resolve(false);
-    })
-  })
-  return promise;
+export function getMajors() {
+    const accessToken = getAccessToken()
+	return axios({
+		method: 'get',
+		url: config.baseUrl + 'list/major',
+		headers: {
+			'Authorization':  accessToken,
+		}
+	})
 }
 
-export function getMajor(store) {
-  const promise = new Promise((resolve, reject) => {
-    axios.get(config.baseUrl + 'list/majors')
-    .then((response) =>{
-      store.dispatch(listRetrieved('MAJORS', response.data))
-	resolve(true);
-    })
-    .catch((error) => {
-      console.log(error)
-      resolve(false);
-    })
-  })
-  return promise;
+export function getGenders() {
+    const accessToken = getAccessToken()
+	return axios({
+		method: 'get',
+		url: config.baseUrl + 'list/gender',
+		headers: {
+			'Authorization':  accessToken,
+		}
+	})
 }
-
-export function getGender(store) {
-  const promise = new Promise((resolve, reject) => {
-    axios.get(config.baseUrl + 'list/gender')
-    .then((response) => {
-      store.dispatch(listRetrieved('GENDERS', response.data))
-	resolve(true);
-    })
-    .catch((error) => {
-      console.log(error)
-      resolve(false);
-    })
-  })
-  return promise;
-}
-
 
 /*
  * getLanguages might have choices, but how will students be able to pick more than one?

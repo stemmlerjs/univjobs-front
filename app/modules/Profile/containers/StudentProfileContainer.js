@@ -43,6 +43,10 @@ const StudentProfileContainer = React.createClass({
   retrieveAllLists() {
     const promise = new Promise((resolve, reject) => {
         this.props.handleGetEmailPref()
+        this.props.handleGetStudentStatus()
+        this.props.handleGetEduLevels()
+        this.props.handleGetMajors()
+        this.props.handleGetGenders()
           .then((resp) => resolve(true))
           .catch((resp) => resolve(true))
     })
@@ -206,9 +210,9 @@ function mapStateToProps({user, profile, list}) {
     firstName: profile.studentProfile.firstName ? profile.studentProfile.firstName : '',
     lastName: profile.studentProfile.lastName ? profile.studentProfile.lastName : '',
     studentStatus: profile.studentProfile.studentStatus ? profile.studentProfile.studentStatus : 1,          // DEFAULT value (String || number)
-    studentStatusList: profile.lists.studentStatuses ? profile.lists.studentStatuses : [],                    // list of selected value (array)
+    studentStatusList: list.studentStatus ? list.studentStatus : [],                    // list of selected value (array)
     educationLevel: profile.studentProfile.educationLevel ? profile.studentProfile.educationLevel : 1,
-    educationLevelList: profile.lists.eduLevels ? profile.lists.eduLevels : [],
+    educationLevelList: list.educationLevels ? list.educationLevels : [],
     /**
      * Get students school from snapshot
      * */
@@ -216,11 +220,11 @@ function mapStateToProps({user, profile, list}) {
     enrollmentDate: profile.studentProfile.enrollmentDate ?  profile.studentProfile.enrollmentDate : new Date, 
     graduationDate: profile.studentProfile.graduationDate ? profile.studentProfile.graduationDate : new Date,  
     major: profile.studentProfile.major ? profile.studentProfile.major : 1,  
-    majorsList: profile.lists.majors ? profile.lists.majors : [],
+    majorsList: list.majors ? list.majors : [],
     gpa: profile.studentProfile.gpa ? profile.studentProfile.gpa : '0',
     personalEmail: profile.studentProfile.personalEmail ? profile.studentProfile.personalEmail : '',
     gender: profile.studentProfile.gender ? profile.studentProfile.gender : 'F',
-    gendersList: profile.lists.genders ? profile.lists.genders : [],
+    gendersList: list.genders ? list.genders : [],
     sportsTeam: profile.studentProfile.sportsTeam ? profile.studentProfile.sportsTeam : '',
     schoolClub: profile.studentProfile.schoolClub ? profile.studentProfile.schoolClub: '', 
     languages: profile.studentProfile.languages ? profile.studentProfile.languages : [],
