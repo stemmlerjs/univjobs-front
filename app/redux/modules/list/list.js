@@ -17,7 +17,7 @@ const LIST_FETCHING_LANGUAGES = 'LIST.FETCHING_LANGUAGES'
 const LIST_FETCHING_MAJORS = 'LIST.FETCHING_MAJORS'
 const LIST_FETCHING_SCHOOL_CLUBS = 'LIST.FETCHING_SCHOOL_CLUBS'
 const LIST_FETCHING_STUDENT_STATUS = 'LIST.FETCHING_STUDENT_STATUS'
-const LIST_FETCHING_SPORTSTEAMS = 'LIST.FETCHING_SPORTSTEAMS'
+const LIST_FETCHING_SPORTS = 'LIST.FETCHING_SPORTS'
 
 // ********** Profile List SUCCESS actions **************
 const FETCHED_LIST = 'FETCHED_LIST'
@@ -29,7 +29,7 @@ const LIST_FETCHED_GENDERS_SUCCESS = 'LIST.FETCHED_GENDERS_SUCCESS'
 const LIST_FETCHED_LANGUAGES_SUCCESS = 'LIST.FETCHED_LANGUAGES_SUCCESS'
 const LIST_FETCHED_MAJORS_SUCCESS = 'LIST.FETCHED_MAJORS_SUCCESS'
 const LIST_FETCHED_SCHOOL_CLUBS_SUCCESS = 'LIST.FETCHED_SCHOOL_CLUBS_SUCCESS'
-const LIST_FETCHED_SPORTSTEAMS_SUCCESS = 'LIST.FETCHED_SPORTSTEAMS_SUCCESS'
+const LIST_FETCHED_SPORTS_SUCCESS = 'LIST.FETCHED_SPORTS_SUCCESS'
 const LIST_FETCHED_STUDENT_STATUS_SUCCESS = 'LIST.FETCHED_STUDENT_STATUS_SUCCESS'
 
 // ********** Profile List FAILURE actions **************
@@ -42,7 +42,7 @@ const LIST_FETCHED_LANGUAGES_FAILURE = 'LIST.FETCHED_LANGUAGES_FAILURE'
 const LIST_FETCHED_MAJORS_FAILURE = 'LIST.FETCHED_MAJORS_FAILURE'
 const LIST_FETCHED_SCHOOL_CLUBS_FAILURE = 'LIST.FETCHED_SCHOOL_CLUBS_FAILURE'
 const LIST_FETCHED_STUDENT_STATUS_FAILURE = 'LIST.FETCHED_STUDENT_STATUS_FAILURE'
-const LIST_FETCHED_SPORTSTEAMS_FAILURE = 'LIST.FETCHED_SPORTSTEAMS_FAILURE'
+const LIST_FETCHED_SPORTS_FAILURE = 'LIST.FETCHED_SPORTS_FAILURE'
 
 export function fetchingCity() {
     return {
@@ -216,21 +216,21 @@ export function fetchedStudentStatusFailure(error) {
   }
 }
 
-export function fetchingSportsTeams() {
+export function fetchingSports() {
     return {
-        type: LIST_FETCHING_SPORTS_TEAMS
+        type: LIST_FETCHING_SPORTS
     }
 }
-export function fetchedSportsTeamSuccess(sportsTeam) {
+export function fetchedSportsSuccess(sportsTeam) {
   return {
-    type: LIST_FETCHED_SPORTS_TEAM_SUCCESS,
+    type: LIST_FETCHED_SPORTS__SUCCESS,
     sportsTeam
   }
 }
 
-export function fetchedSportsTeamFailure(error) {
+export function fetchedSportsFailure(error) {
   return {
-    type: LIST_FETCHED_SPORTS_TEAM_FAILURE,
+    type: LIST_FETCHED_SPORTS_FAILURE,
     error
   }
 }
@@ -308,6 +308,33 @@ export function handleGetGenders(dispatch) {
             )
             .catch((err) => 
                dispatch(fetchedGendersFailure(err))
+            )
+    }
+}
+//NOTE: Refer to signupform redux line 78, passing dispatch
+export function handleGetSports(dispatch) {
+    return function(dispatch) {
+        dispatch(fetchingSports())
+        return retrieve.getSportsChoice()
+            .then((resp) => 
+               dispatch(fetchedSportsSuccess(resp.data.sports))
+            )
+            .catch((err) => 
+               dispatch(fetchedSportsFailure(err))
+            )
+    }
+}
+
+//NOTE: Refer to signupform redux line 78, passing dispatch
+export function handleGetLanguages(dispatch) {
+    return function(dispatch) {
+        dispatch(fetchingLanguages())
+        return retrieve.getLanguages()
+            .then((resp) => 
+               dispatch(fetchedLanguagesSuccess(resp.data.languages))
+            )
+            .catch((err) => 
+               dispatch(fetchedLanguagesFailure(err))
             )
     }
 }
@@ -419,19 +446,19 @@ export default function list (state = initialState, action) {
         ...state,
         error: action.error
       }
-    case LIST_FETCHING_SPORTSTEAMS:
+    case LIST_FETCHING_SPORTS:
       return {
         ...state,
       }
-    case LIST_FETCHED_SPORTSTEAMS_SUCCESS:
+    case LIST_FETCHED_SPORTS_SUCCESS:
       return {
         ...state,
-        sportsTeams: action.list
+        sports: action.sports
       }
-    case LIST_FETCHED_SPORTSTEAMS_FAILURE:
+    case LIST_FETCHED_SPORTS_FAILURE:
       return {
         ...state,
-        error
+        error: action.error
       }
     case LIST_FETCHING_SCHOOL_CLUBS:
       return {
@@ -454,12 +481,12 @@ export default function list (state = initialState, action) {
     case LIST_FETCHED_LANGUAGES_SUCCESS:
       return {
         ...state,
-        languages: action.list
+        languages: action.languages
       }
     case LIST_FETCHED_LANGUAGES_FAILURE:
       return {
         ...state,
-        error
+        error: action.error
       }
     case LIST_FETCHING_CITIES:
       return {

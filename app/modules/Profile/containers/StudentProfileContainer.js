@@ -47,6 +47,7 @@ const StudentProfileContainer = React.createClass({
         this.props.handleGetEduLevels()
         this.props.handleGetMajors()
         this.props.handleGetGenders()
+        this.props.handleGetLanguages()
           .then((resp) => resolve(true))
           .catch((resp) => resolve(true))
     })
@@ -228,7 +229,7 @@ function mapStateToProps({user, profile, list}) {
     sportsTeam: profile.studentProfile.sportsTeam ? profile.studentProfile.sportsTeam : '',
     schoolClub: profile.studentProfile.schoolClub ? profile.studentProfile.schoolClub: '', 
     languages: profile.studentProfile.languages ? profile.studentProfile.languages : [],
-    languagesList: profile.lists.languages ? profile.lists.languages : [],
+    languagesList: list.languages ? list.languages : [],
     hasCar: profile.studentProfile.hasCar ? profile.studentProfile.hasCar : false,
     companyName: profile.studentProfile.companyName ? profile.studentProfile.companyName : '',
     position: profile.studentProfile.position ? profile.studentProfile.position : '',

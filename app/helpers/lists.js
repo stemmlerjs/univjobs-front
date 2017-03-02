@@ -71,21 +71,24 @@ export function getGenders() {
 	})
 }
 
-/*
- * getLanguages might have choices, but how will students be able to pick more than one?
- *
- * */
-export function getLanguages(store) {
-  const promise = new Promise((resolve, reject) => {
-    axios.get(config.baseUrl + 'list/languages')
-    .then((response) => {
-      store.dispatch(listRetrieved('LANGUAGES', response.data))
-	resolve(true);
-    })
-    .catch((error) => {
-      console.log(error)
-      resolve(false);
-    })
-  })
-  return promise;
+export function getSportsChoice() {
+    const accessToken = getAccessToken()
+	return axios({
+		method: 'get',
+		url: config.baseUrl + 'list/sport',
+		headers: {
+			'Authorization':  accessToken,
+		}
+	})
+}
+
+export function getLanguages() {
+    const accessToken = getAccessToken()
+	return axios({
+		method: 'get',
+		url: config.baseUrl + 'list/language',
+		headers: {
+			'Authorization':  accessToken,
+		}
+	})
 }
