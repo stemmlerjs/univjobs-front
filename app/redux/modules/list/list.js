@@ -34,7 +34,7 @@ const LIST_FETCHED_STUDENT_STATUS_SUCCESS = 'LIST.FETCHED_STUDENT_STATUS_SUCCESS
 
 // ********** Profile List FAILURE actions **************
 const LIST_FETCHED_CITIES_FAILURE = 'LIST.FETCHED_CITIES_FAILURE'
-const LIST_FETCHED_EDU_LEVELS_FAILURE = '.LIST.FETCHED_EDU_LEVELS_FAILURE'
+const LIST_FETCHED_EDU_LEVELS_FAILURE = 'LIST.FETCHED_EDU_LEVELS_FAILURE'
 const LIST_FETCHED_EMAIL_PREFERENCES_FAILURE = 'LIST.FETCHED_EMAIL_PREFERENCES_FAILURE'
 const LIST_FETCHED_INDUSTRIES_FAILURE = 'LIST.FETCHED_INDUSTRIES_FAILURE'
 const LIST_FETCHED_GENDERS_FAILURE = 'LIST.FETCHED_GENDERS_FAILURE'
@@ -221,10 +221,10 @@ export function fetchingSports() {
         type: LIST_FETCHING_SPORTS
     }
 }
-export function fetchedSportsSuccess(sportsTeam) {
+export function fetchedSportsSuccess(sports) {
   return {
-    type: LIST_FETCHED_SPORTS__SUCCESS,
-    sportsTeam
+    type: LIST_FETCHED_SPORTS_SUCCESS,
+    sports
   }
 }
 
@@ -311,19 +311,6 @@ export function handleGetGenders(dispatch) {
             )
     }
 }
-//NOTE: Refer to signupform redux line 78, passing dispatch
-export function handleGetSports(dispatch) {
-    return function(dispatch) {
-        dispatch(fetchingSports())
-        return retrieve.getSportsChoice()
-            .then((resp) => 
-               dispatch(fetchedSportsSuccess(resp.data.sports))
-            )
-            .catch((err) => 
-               dispatch(fetchedSportsFailure(err))
-            )
-    }
-}
 
 //NOTE: Refer to signupform redux line 78, passing dispatch
 export function handleGetLanguages(dispatch) {
@@ -334,7 +321,34 @@ export function handleGetLanguages(dispatch) {
                dispatch(fetchedLanguagesSuccess(resp.data.languages))
             )
             .catch((err) => 
-               dispatch(fetchedLanguagesFailure(err))
+               dispatch(fetchedLanguagessFailure(err))
+            )
+    }
+}
+
+//NOTE: Refer to signupform redux line 78, passing dispatch
+export function handleGetSports(dispatch) {
+    return function(dispatch) {
+        dispatch(fetchingSports())
+        return retrieve.getSports()
+            .then((resp) => 
+               dispatch(fetchedSportsSuccess(resp.data.sports))
+            )
+            .catch((err) => 
+               dispatch(fetchedSportsFailure(err))
+            )
+    }
+}
+
+export function handleGetClubs(dispatch) {
+    return function(dispatch) {
+        dispatch(fetchingSchoolClubs())
+        return retrieve.getClubs()
+            .then((resp) => 
+               dispatch(fetchedSchoolClubsSuccess(resp.data.clubs))
+            )
+            .catch((err) => 
+               dispatch(fetchedSchoolClubsFailure(err))
             )
     }
 }
@@ -351,7 +365,7 @@ const initialState = {
   languages: [],
   majors: [],
   studentStatus: [],
-  sportsTeams: [],
+  sports: [],
   schoolClubs: [],
   error: ''
 }
@@ -467,7 +481,7 @@ export default function list (state = initialState, action) {
     case LIST_FETCHED_SCHOOL_CLUBS_SUCCESS:
       return {
         ...state,
-        schoolClubs: action.list
+        schoolClubs: action.schoolClubs
       }
     case LIST_FETCHED_SCHOOL_CLUBS_FAILURE:
       return {

@@ -71,22 +71,34 @@ export function getGenders() {
 	})
 }
 
-export function getSportsChoice() {
-    const accessToken = getAccessToken()
-	return axios({
-		method: 'get',
-		url: config.baseUrl + 'list/sport',
-		headers: {
-			'Authorization':  accessToken,
-		}
-	})
-}
 
 export function getLanguages() {
     const accessToken = getAccessToken()
 	return axios({
 		method: 'get',
 		url: config.baseUrl + 'list/language',
+		headers: {
+			'Authorization':  accessToken,
+		}
+	})
+}
+
+export function getSports() {
+    const accessToken = getAccessToken()
+	return axios({
+		method: 'get',
+		url: config.baseUrl + 'list/sports',
+		headers: {
+			'Authorization':  accessToken,
+		}
+	})
+}
+
+export function getClubs() {
+    const accessToken = getAccessToken()
+	return axios({
+		method: 'get',
+		url: config.baseUrl + 'list/club',
 		headers: {
 			'Authorization':  accessToken,
 		}

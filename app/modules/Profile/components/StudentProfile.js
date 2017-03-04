@@ -12,7 +12,7 @@ var momentLocalizer = require('react-widgets/lib/localizers/moment')
 momentLocalizer(Moment)
 
 export default function StudentProfile (props) {
- console.log(props.emailPrefList)
+ //console.log(props)
  const messages = {
     emptyFilter: "Can't find your industry? Let us know at theunivjobs@gmail.com."
  }
@@ -348,6 +348,7 @@ export default function StudentProfile (props) {
 			   className={props.propsErrorMap.languages ? shortInput + ' ' +  error : shortInput}
 			   textField='language'
 			   valueField='id'
+               placeholder='English, French'
 			   messages={messages}
 			   data={props.languagesList}
 			   onChange={ value => props.updateProfileField('languages', value, true)}
@@ -383,7 +384,7 @@ export default function StudentProfile (props) {
 			*/} 
 			<StudentContainer title="I recently worked at "      styles={nameField}>
 			<li> 
-		         <input
+		        <input
 			   className={props.propsErrorMap.companyName ? input + ' ' + error : input }
 			   type="text"
 			   placeholder="Company Name"
