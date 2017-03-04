@@ -180,7 +180,9 @@ const StudentProfileContainer = React.createClass({
       	  gender={this.props.gender}
       	  gendersList={this.props.gendersList}
       	  sportsTeam={this.props.sportsTeam}
+          sportsList={this.props.sportsList}
       	  schoolClub={this.props.schoolClub}
+          schoolClubList={this.props.schoolClubList}
       	  languages={this.props.languages}
       	  languagesList={this.props.languagesList}
       	  hasCar={this.props.hasCar}
@@ -226,11 +228,11 @@ function mapStateToProps({user, profile, list}) {
     majorsList: list.majors ? list.majors : [],
     gpa: profile.studentProfile.gpa ? profile.studentProfile.gpa : '0',
     personalEmail: profile.studentProfile.personalEmail ? profile.studentProfile.personalEmail : '',
-    gender: profile.studentProfile.gender ? profile.studentProfile.gender : 'F',
+    gender: profile.studentProfile.gender ? profile.studentProfile.gender : [],
     gendersList: list.genders ? list.genders : [],
-    sportsTeam: profile.studentProfile.sportsTeam ? profile.studentProfile.sportsTeam : '',
+    sportsTeam: profile.studentProfile.sportsTeam ? profile.studentProfile.sportsTeam : [],
     sportsList: list.sports ? list.sports : [],
-    schoolClub: profile.studentProfile.schoolClub ? profile.studentProfile.schoolClub: '', 
+    schoolClub: profile.studentProfile.schoolClub ? profile.studentProfile.schoolClub: [], 
     schoolClubList: list.schoolClubs ? list.schoolClubs : [],
     languages: profile.studentProfile.languages ? profile.studentProfile.languages : [],
     languagesList: list.languages ? list.languages : [],

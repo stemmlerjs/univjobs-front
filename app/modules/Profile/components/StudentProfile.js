@@ -38,23 +38,6 @@ export default function StudentProfile (props) {
 	  }
   }
   
-  /* 
-   *   *  placePhoto()
-   *   * 
-   *   *  Actually places the photo from the url specified onto the element.
-   *   *  @param <element> - element
-   *   *  @param String - url
-   *   *  @return void
-   *   */
- const data = [ 'Once a week if new jobs are posted' ,'Everytime a new job is posted', 'Once a day if new jobs are posted', 'No thanks, I will check myself'];
-
- const stat = ['Full-time student', 'Part-time student', 'Recent graduate'];
-
- const degree = ['Diploma', 'Associates', 'Bachelors', 'Masters', 'PHD'];
-
- const major = ['Software Development & Network Engineering', 'Makeup'];
-
- const gender = ['Male', 'Female'];
 
   /* 
   *   Display the profile new profile picture when the user drags and drops or selects one.
@@ -96,12 +79,12 @@ export default function StudentProfile (props) {
 			<li>
 			  <DropdownList
 			   className={props.propsErrorMap.emailPreferences ? mediumDropDown + ' ' + error : mediumDropDown}
-			   textField="email_pref"
-			   valueField="id"
-			   messages={messages}
+			   valueField="id" textField="description"
 			   data={props.emailPrefList}
-			   onChange={value => props.updateProfileField('emailPreferences', value, true)}
 			   value={props.emailPreferences}
+               defaultValue={1}
+			   messages={messages}
+			   onChange={value => props.updateProfileField('emailPreferences', value, true)}
 			 />
 			</li>
 			</StudentContainer>
@@ -138,12 +121,12 @@ export default function StudentProfile (props) {
 			 <li>
 			  <DropdownList
 			     className={props.propsErrorMap.studentStatus ? shortDropDown + ' ' + error : shortDropDown}
-			     textField="status"
-			     valueField="id"
+			     valueField="id" textField="status_text"
 			     messages={messages}
 			     data={props.studentStatusList}
-			     onChange={value => props.updateProfileField('studentStatus', value, true)}
 			     value={props.studentStatus}
+                 defaultValue={1}
+			     onChange={value => props.updateProfileField('studentStatus', value, true)}
 		 	    />
 			 </li> 
 			 <li>
@@ -158,12 +141,12 @@ export default function StudentProfile (props) {
 			 <li>
 			   <DropdownList
 			    className={props.propsErrorMap.educationLevel ? shortDropDown + ' ' + error : shortDropDown}
-			    textField="edu_level"
-			    valueField="id"
+			    valueField="id" textField="description"
 			    messages={messages}
 			    data={props.educationLevelList}
-			    onChange={value => props.updateProfileField('educationLevel', value, true)}
 			    value={props.educationLevel}
+                defaultValue={1}
+			    onChange={value => props.updateProfileField('educationLevel', value, true)}
 			   />
 		         </li>
 			 <li>
@@ -197,12 +180,12 @@ export default function StudentProfile (props) {
 			  <li>
 			    <DropdownList
 			      className={props.propsErrorMap.map ? longDropDown + ' ' +  error : longDropDown}
-			      textField="major"
-			      valueField="id"
+			      valueField="id" textField="major_text"
 			      messages={messages}
 			      data={props.majorsList}
-			      onChange={value => props.updateProfileField('major', value, true)}
 			      value={props.major}
+                  defaultValue={1}
+			      onChange={value => props.updateProfileField('major', value, true)}
 			     />
 			  </li>
 			  <li>
@@ -268,12 +251,12 @@ export default function StudentProfile (props) {
 			 styles={nameField}>
 			 <DropdownList
 			  className={props.propsErrorMap.gender ? shortDropDown + ' ' + error : shortDropDown}
-			  textField="gender"
-			  valueField="id"
+			  valueField="id" textField="gender_description"
 			  messages={messages}
 			  data={props.gendersList}
-			  onChange={value => props.updateProfileField('gender', value, true)}
 			  value={props.gender}
+              defaultValue={1}
+			  onChange={value => props.updateProfileField('gender', value, true)}
 			/>	
 			</StudentContainer>
 
@@ -289,14 +272,17 @@ export default function StudentProfile (props) {
 			 <li className={space}>
 			 	<p>on a sports team</p>
 			 </li>
-			 <input
-			   className={props.propsErrorMap.sportsTeam ? shortInput + ' ' + error : shortInput}
-			   type="text"
-			   placeholder="Type the schools sports team"
-			   value={props.sportsTeam}
-			   onChange={(e) => props.updateProfileField('sportsTeam', e.target.value, true)}
-			   >
-			 </input>
+             <li>
+			    <Multiselect
+                   className={props.propsErrorMap.sportsTeam? shortInput + ' ' +  error : shortInput}
+                   valueField='id' textField='sport'
+                   placeholder='Basketball, Hockey'
+                   messages={messages}
+                   data={props.sportsList}
+                   value={props.sportsTeam}
+                   onChange={ value => props.updateProfileField('sportsTeam', value, true)}
+                   />
+             </li>
 			</StudentContainer>
 
 			{/* CLUB 
@@ -311,14 +297,17 @@ export default function StudentProfile (props) {
 			 <li className={space}>
 			 	<p>on a school club</p>
 			 </li>
-			 <input
-			   className={props.propsErrorMap.schoolClub ? shortInput + ' ' +  error : shortInput}
-			   type="text"
-			   placeholder="Type the school clubs names"
+            <li>
+			 <Multiselect
+			   className={props.propsErrorMap.schoolClub? shortInput + ' ' +  error : shortInput}
+			   valueField='id' textField='club_name'
+               placeholder='Toastmaster, Enactus'
+			   messages={messages}
+			   data={props.schoolClubList}
 			   value={props.schoolClub}
-			   onChange={(e)=> props.updateProfileField('schoolClub', e.target.value, true)}
-			   >
-			 </input>
+			   onChange={ value => props.updateProfileField('schoolClub', value, true)}
+			   />
+            </li>
 			</StudentContainer>
 
 			{/* LANGUAGE
