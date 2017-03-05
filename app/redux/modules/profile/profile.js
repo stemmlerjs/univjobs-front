@@ -7,36 +7,13 @@ import { toISO } from 'helpers/utils'
 // ==================== ACTIONS ==========================
 // =======================================================
 
-// ********** Profile List GETTER actions **************
-const GET_INDUSTRIES = 'PROFILE.LIST.GET_INDUSTRIES'
-const GET_EMAIL_PREFERENCES = 'PROFILE.LIST.GET_EMAIL_PREFERENCES'
-const GET_STUDENT_STATUSES = 'PROFILE.LIST.GET_STUDENT_STATUSES'
-const GET_EDU_LEVELS = 'PROFILE.LIST.GET_EDU_LEVELS'
-const GET_MAJORS = 'PROFILE.LIST.GET_MAJORS'
-const GET_GENDERS = 'PROFILE.LIST.GET_GENDERS'
-const GET_SPORTSTEAMS = 'PROFILE.LIST.GET_SPORTSTEAMS'
-const GET_SCHOOL_CLUBS = 'PROFILE.LIST.GET_SCHOOL_CLUBS'
-const GET_LANGUAGES = 'PROFILE.LIST.GET_LANGUAGES'
-const GET_CITIES = 'PROFILE.LIST.GET_CITIES'
-
-// ********** Profile List SUCCESS actions **************
-const RETRIEVED_LIST = 'PROFILE.RETRIEVED_LIST'
-
-const RETRIEVED_INDUSTRIES = 'PROFILE.LIST.RETRIEVED_INDUSTRIES'
-const RETRIEVED_EMAIL_PREFERENCES = 'PROFILE.LIST.RETRIEVED_EMAIL_PREFERENCES'
-const RETRIEVED_STUDENT_STATUSES = 'PROFILE.LIST.RETRIEVED_STUDENT_STATUSES'
-const RETRIEVED_EDU_LEVELS = 'PROFILE.LIST.RETRIEVED_EDU_LEVELS'
-const RETRIEVED_MAJORS = 'PROFILE.LIST.RETRIEVED_MAJORS'
-const RETRIEVED_GENDERS = 'PROFILE.LIST.RETRIEVED_GENDERS'
-const RETRIEVED_SPORTSTEAMS = 'PROFILE.LIST.RETRIEVED_SPORTSTEAMS'
-const RETRIEVED_SCHOOL_CLUBS = 'PROFILE.LIST.RETRIEVED_SCHOOL_CLUBS'
-const RETRIEVED_LANGUAGES = 'PROFILE.LIST.RETRIEVED_LANGUAGES'
-const RETRIEVED_CITIES = 'PROFILE.LIST.RETRIEVED_CITIES'
 
 // ********** Base form actions **************
 const UPDATE_PROFILE_FIELD = 'PROFILE.UPDATE_PROFILE_FIELD'
-const SAVE_PROFILE_ERROR = 'PROFILE.SAVE_PROFILE_ERROR'
-const SAVE_PROFILE_SUCCESS = 'PROFILE.SAVE_PROFILE_SUCCESS'
+
+const SAVING_PROFILE_INFO = 'PROFILE.SAVING_PROFILE_INFO'
+const SAVED_PROFILE_INFO_SUCCESS = 'PROFILE.SAVED_PROFILE_INFO_SUCCESS'
+const SAVED_PROFILE_INFO_FAILURE = 'PROFILE.SAVED_PROFILE_INFO_FAILURE'
 
 const FETCHING_PROFILE_INFO = 'PROFILE.FETCHING_INFO'
 const FETCHED_PROFILE_INFO_SUCCESS = 'PROFILE.FETCHED_INFO_SUCCESS'
@@ -53,84 +30,6 @@ export function updateProfileField(fieldName, newValue, isAStudent) {
     newValue,
     isAStudent
  }
-}
-
-export function listRetrieved(listName, listArray) {
-  switch(listName) {
-    case 'INDUSTRIES': {
-      return {
-        type: RETRIEVED_LIST,
-        listType: RETRIEVED_INDUSTRIES,
-        list: listArray
-      }
-    }
-    case 'EMAIL_PREFERENCES': {
-      return {
-        type: RETRIEVED_LIST,
-        listType: RETRIEVED_EMAIL_PREFERENCES,
-        list: listArray
-      }
-    }
-    case 'STUDENT_STATUSES': {
-      return {
-        type: RETRIEVED_LIST,
-        listType: RETRIEVED_STUDENT_STATUSES,
-        list: listArray
-      }
-    }
-    case 'EDU_LEVELS': {
-      return {
-        type: RETRIEVED_LIST,
-        listType: RETRIEVED_EDU_LEVELS,
-        list: listArray
-      }
-    }
-    case 'MAJORS': {
-      return {
-        type: RETRIEVED_LIST,
-        listType: RETRIEVED_MAJORS,
-        list: listArray
-      }
-    }
-    case 'GENDERS': {
-      return {
-        type: RETRIEVED_LIST,
-        listType: RETRIEVED_GENDERS,
-        list: listArray
-      }
-    }
-    case 'SPORTS_TEAMS': {
-      return {
-        type: RETRIEVED_LIST,
-        listType: RETRIEVED_SPORTSTEAMS,
-        list: listArray
-      }
-    }
-    case 'SCHOOL_CLUBS': {
-      return {
-        type: RETRIEVED_LIST,
-        listType: RETRIEVED_SCHOOL_CLUBS,
-        list: listArray
-      }
-    }
-    case 'LANGUAGES': {
-      return {
-        type: RETRIEVED_LIST,
-        listType: RETRIEVED_LANGUAGES,
-        list: listArray
-      }
-    }
-    case 'CITIES': {
-      return {
-        type: RETRIEVED_LIST,
-        listType: RETRIEVED_CITIES,
-        list: listArray
-      }
-    }
-    default:
-      // return state
-      return;
-  }
 }
 
 export function fetchingProfileInfo() {
@@ -155,18 +54,26 @@ export function fetchedProfileInfoFailure (error) {
   }
 }
 
-export function saveProfileError(profileErrorsObj, error, isAStudent) {
+export function savingProfileInfo() {
+    return {
+        type: SAVING_PROFILE_INFO
+    }
+}
+
+/*NOTE: Should this have an input
+ *
+ * */
+export function savedProfileSucces() {
   return {
-    type: SAVE_PROFILE_ERROR,
+    type: SAVED_PROFILE_INFO_SUCCESS
+  }
+}
+export function savedProfileFailure(profileErrorsObj, error, isAStudent) {
+  return {
+    type: SAVED_PROFILE_INFO_FAILURE,
     isAStudent,
     error,
     profileErrorsObj
-  }
-}
-
-export function saveProfileSuccess() {
-  return {
-    type: SAVE_PROFILE_SUCCESS
   }
 }
 
@@ -202,18 +109,19 @@ export function handleGetUserProfile(dispatch) {
 * @param user (Object) - data to PUT
 *
 */
-
 export function submitProfileFirstTime(userTypeInt, profileInfo, user) {
   return function (dispatch) {
 	  console.log(userTypeInt, profileInfo, user)
+    dispatch(savingProfileInfo())
     switch(userTypeInt) {
       case 0:
     	console.log("SUBMITTING STUDENT PROFILE FIRST TIME")
+        
     	validateStudentProfileFields(profileInfo, (errorExist, profileFieldErrors) => {
     	  if(errorExist) {
 
     	    // DISPATCH - SAVE_PROFILE_ERROR
-    	    dispatch(saveProfileError(profileFieldErrors, [
+    	    dispatch(savedProfileFailure(profileFieldErrors, [
             "Couldn't save profile.",
     	      "Please fill in missing fields"
     	    ], true))
@@ -231,7 +139,7 @@ export function submitProfileFirstTime(userTypeInt, profileInfo, user) {
             "user-is_active": true,
             "user-date_joined": user.dateJoined,
             "user-mobile": user.mobile,
-        		"school-name": profileInfo.school,
+        		"school-name": profileInfo.name,
       		  languages: profileInfo.languages,
       		  sports: profileInfo.sportsTeam,
       		  clubs: profileInfo.schoolClub,
@@ -255,11 +163,11 @@ export function submitProfileFirstTime(userTypeInt, profileInfo, user) {
     	    studentProfilePUT(putData)
     	     .then((res) => {
     		// DISPATCH - SAVE_PROFILE_SUCCESS
-    	        dispatch(saveProfileSuccess())
+    	        dispatch(savedProfileSuccess())
     	     })
     	     .catch((err) => {
     	       // DISPATCH - SAVE_PROFILE_ERROR
-    	        dispatch(saveProfileError({}, [
+    	        dispatch(savedProfileFailure({}, [
     			'HTTP Error Occurred',
     			err
     		], true))
@@ -279,7 +187,7 @@ export function submitProfileFirstTime(userTypeInt, profileInfo, user) {
           if(errorsExist) {
 
             // DISPATCH - SAVE_PROFILE_ERROR
-            dispatch(saveProfileError(profileFieldErrors, [
+            dispatch(saveProfileFailure(profileFieldErrors, [
               "Couldn't save profile.",
               'Please fill in missing fields'
             ], false))
@@ -317,11 +225,11 @@ export function submitProfileFirstTime(userTypeInt, profileInfo, user) {
             .then((res) => {
 
                 // DISPATCH - SAVE_PROFILE_SUCCESS
-                dispatch(saveProfileSuccess())
+                dispatch(savedProfileSuccess())
               })
               .catch((err) => {
                 // DISPATCH - SAVE_PROFILE_ERROR
-                dispatch(saveProfileError({}, [
+                dispatch(saveProfileFailure({}, [
                   'HTTP Error Occurred.\n',
                   err.message
               ], false))
@@ -345,7 +253,7 @@ export function updateProfile(userTypeInt, profileInfo, user, snapshot) {
           if(errorExist) {
 
             // DISPATCH - SAVE_PROFILE_ERROR
-            dispatch(saveProfileError(profileFieldErrors, [    "Couldn't save profile.",
+            dispatch(savedProfileFailure(profileFieldErrors, [    "Couldn't save profile.",
           "Please fill in missing fields"
             ], true))
 
@@ -388,12 +296,12 @@ export function updateProfile(userTypeInt, profileInfo, user, snapshot) {
                 .then((res) => {
 
                   // DISPATCH - SAVE_PROFILE_SUCCESS
-                  dispatch(saveProfileSuccess())
+                  dispatch(savedProfileSuccess())
                 })
                 .catch((err) => {
 
                   // DISPATCH - SAVE_PROFILE_ERROR
-                  dispatch(saveProfileError({}, [
+                  dispatch(savedProfileFailure({}, [
                      'HTTP Error Occurred',
                      err
                   ], false))
@@ -408,7 +316,7 @@ export function updateProfile(userTypeInt, profileInfo, user, snapshot) {
           if(errorsExist) {
 
             // DISPATCH - SAVE_PROFILE_ERROR
-            dispatch(saveProfileError(profileFieldErrors, [
+            dispatch(savedProfileFailure(profileFieldErrors, [
               "Couldn't save profile.\n",
               'Please fill in missing fields'
             ], false))
@@ -454,7 +362,7 @@ export function updateProfile(userTypeInt, profileInfo, user, snapshot) {
                 .catch((err) => {
 
                   // DISPATCH - SAVE_PROFILE_ERROR
-                  dispatch(saveProfileError({}, [
+                  dispatch(savedProfileFailure({}, [
                     'HTTP Error Occurred.\n',
                     err.message
                 ], false))
@@ -478,7 +386,6 @@ const initialState = {
   employerProfile: {},
   studentProfile: {},
   snapshot: {},
-  lists: {},
   isSubmittingForm: false,
   isProfileCompleted: false,
   submitErrorsExist: false,
@@ -487,19 +394,6 @@ const initialState = {
 }
 
 
-
-const initialListsState = {
-  industries: [],
-  emailPreferences: [],
-  studentStatuses: [],
-  eduLevels: [],
-  majors: [],
-  genders: [],
-  sportsTeams: [],
-  schoolClubs: [],
-  languages: [],
-  cities: []
-}
 
 // =======================================================
 // ==================== REDUCERS =========================
@@ -528,11 +422,6 @@ export default function profile (state = initialState, action) {
           error: ''
         }
       }
-    case RETRIEVED_LIST:
-      return {
-        ...state,
-        lists: lists(state.lists, action)
-      }
     case FETCHING_PROFILE_INFO:
         return {
             ...state,
@@ -558,7 +447,7 @@ export default function profile (state = initialState, action) {
             ...state,
             error
           }
-    case SAVE_PROFILE_ERROR:
+    case SAVED_PROFILE_INFO_FAILURE:
       if(action.isAStudent) {
         return {
           ...state,
@@ -574,7 +463,7 @@ export default function profile (state = initialState, action) {
           employerProfile: employerProfile(state.employerProfile, action)
         }
       }
-    case SAVE_PROFILE_SUCCESS:
+    case SAVED_PROFILE_INFO_SUCCESS:
       return {
         ...state,
         submitSuccess: true,
@@ -697,7 +586,7 @@ function studentProfile(state = initialStudentProfileState, action) {
         [action.fieldName]: action.newValue,
         propsErrorMap: studentProfileErrors(state.propsErrorMap, action)
       }
-    case SAVE_PROFILE_ERROR:
+    case SAVED_PROFILE_INFO_FAILURE:
       return {
         ...state,
         propsErrorMap: action.profileErrorsObj
@@ -739,75 +628,6 @@ function studentProfileErrors(state = initialStudentProfileErrorState, action) {
       return {
         ...state,
         [action.fieldName]: false
-      }
-  }
-}
-
-/* ===================================================================
-*   LISTS REDUCERS
-*  ===================================================================
-*/
-
-function lists (state = initialListsState, action) {
-  switch(action.listType) {
-    case RETRIEVED_INDUSTRIES:
-      return {
-        ...state,
-        industries: action.list
-      }
-
-    case RETRIEVED_EMAIL_PREFERENCES:
-      return {
-        ...state,
-        emailPreferences: action.list
-      }
-
-    case RETRIEVED_STUDENT_STATUSES:
-      return {
-        ...state,
-        studentStatuses: action.list
-      }
-
-    case RETRIEVED_EDU_LEVELS:
-      return {
-        ...state,
-        eduLevels: action.list
-      }
-
-    case RETRIEVED_MAJORS:
-      return {
-        ...state,
-        majors: action.list
-      }
-
-    case RETRIEVED_GENDERS:
-      return {
-        ...state,
-        genders: action.list
-      }
-
-    case RETRIEVED_SPORTSTEAMS:
-      return {
-        ...state,
-        sportsTeams: action.list
-      }
-
-    case RETRIEVED_SCHOOL_CLUBS:
-      return {
-        ...state,
-        schoolClubs: action.list
-      }
-
-    case RETRIEVED_LANGUAGES:
-      return {
-        ...state,
-        languages: action.list
-      }
-
-    case RETRIEVED_CITIES:
-      return {
-        ...state,
-        cities: action.list
       }
   }
 }

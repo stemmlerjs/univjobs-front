@@ -113,7 +113,7 @@ const StudentProfileContainer = React.createClass({
     		   timeout: 3000
     		});
      }
-     
+    
      if(error) {
     	this.refs.container.error(
     		error,
@@ -170,7 +170,7 @@ const StudentProfileContainer = React.createClass({
       	  studentStatusList={this.props.studentStatusList}
       	  educationLevel={this.props.educationLevel}
       	  educationLevelList={this.props.educationLevelList}
-      	  school={this.props.school}
+      	  school={this.props.school ? this.props.school.name : ''}
       	  enrollmentDate={this.props.enrollmentDate}
       	  graduationDate={this.props.graduationDate}
       	  major={this.props.major}
@@ -221,14 +221,14 @@ function mapStateToProps({user, profile, list}) {
     /**
      * Get students school from snapshot
      * */
-    school: profile.snapshot.school ? profile.snapshot.school.name : '',
+    school: profile.studentProfile ? profile.snapshot.student : '',
     enrollmentDate: profile.studentProfile.enrollmentDate ?  profile.studentProfile.enrollmentDate : new Date, 
     graduationDate: profile.studentProfile.graduationDate ? profile.studentProfile.graduationDate : new Date,  
     major: profile.studentProfile.major ? profile.studentProfile.major : 1,  
     majorsList: list.majors ? list.majors : [],
     gpa: profile.studentProfile.gpa ? profile.studentProfile.gpa : '0',
     personalEmail: profile.studentProfile.personalEmail ? profile.studentProfile.personalEmail : '',
-    gender: profile.studentProfile.gender ? profile.studentProfile.gender : [],
+    gender: profile.studentProfile.gender ? profile.studentProfile.gender : 'Undisclosed',
     gendersList: list.genders ? list.genders : [],
     sportsTeam: profile.studentProfile.sportsTeam ? profile.studentProfile.sportsTeam : [],
     sportsList: list.sports ? list.sports : [],
