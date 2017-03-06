@@ -115,10 +115,14 @@ export function validateEmployerProfileFields(profileInfo, next) {
 export function studentProfilePUT(data) {
   let formData = new FormData();
   const accessToken = getAccessToken();
-  const csrfToken = getCSRFToken()
 
   for(let key in data) {
-    formData.append(key, data[key])
+    debugger
+    //Ternary boolean checks if key is photo for backend upload of profilePic
+    formData.append(
+        key === 'photo' ? 'profilepicture' : key, 
+        data[key === 'photo' ? 'profilepicture' : key]
+    )
   }
 
   return axios({
