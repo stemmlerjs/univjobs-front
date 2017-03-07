@@ -1,7 +1,7 @@
 import { employerProfilePUT, employerProfilePATCH, validateEmployerProfileFields,
   studentProfilePUT, studentProfilePATCH, validateStudentProfileFields,
   compareToSnapshot, getUserInfo } from 'helpers/profile'
-import { toISO } from 'helpers/utils'
+import { toISO, hasCarBoolean } from 'helpers/utils'
 
 // =======================================================
 // ==================== ACTIONS ==========================
@@ -111,7 +111,7 @@ export function handleGetUserProfile(dispatch) {
 */
 export function submitProfileFirstTime(userTypeInt, profileInfo, user) {
   return function (dispatch) {
-	  console.log(userTypeInt, profileInfo, user)
+	console.log(userTypeInt, profileInfo, user)
     dispatch(savingProfileInfo())
     switch(userTypeInt) {
       case 0:
@@ -129,7 +129,6 @@ export function submitProfileFirstTime(userTypeInt, profileInfo, user) {
     	  } else {
     	   console.log('SUBMIT STUDENT PROFILE NO ERRORS')
     	    // No errors, proceed to /PUT on api/me
-
           var putData = {
               "is_a_student": true,
               "is_profile_completed": true,
@@ -143,16 +142,16 @@ export function submitProfileFirstTime(userTypeInt, profileInfo, user) {
       		  languages: profileInfo.languages,
       		  sports: profileInfo.sportsTeam,
       		  clubs: profileInfo.schoolClub,
-              edu: profileInfo.educationLevel,
-      		  email_pref: profileInfo.emailPreferences,
+              edu: profileInfo.educationLevel.id,
+      		  email_pref: profileInfo.emailPreferences.id,
       		  status: profileInfo.studentStatus.id,
       		  enroll_date: toISO(profileInfo.enrollmentDate),
       		  grad_date: toISO(profileInfo.graduationDate),
-      		  major: profileInfo.major,
+      		  major: profileInfo.major.id,
       		  GPA: profileInfo.gpa,
       		  personal_email: profileInfo.personalEmail,
       		  gender: profileInfo.gender.id,
-      		  has_car: profileInfo.hasCar,
+      		  has_car: hasCarBoolean(profileInfo.hasCar),
       		  company: profileInfo.companyName,
       		  position: profileInfo.position,
       		  fun_fact: profileInfo.funFacts,
@@ -161,6 +160,7 @@ export function submitProfileFirstTime(userTypeInt, profileInfo, user) {
       		  photo: profileInfo.photo,
       		  resume: profileInfo.resume,
       	  }
+          debugger
     	    studentProfilePUT(putData)
     	     .then((res) => {
     		// DISPATCH - SAVE_PROFILE_SUCCESS

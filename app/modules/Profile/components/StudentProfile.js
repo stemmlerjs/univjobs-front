@@ -94,6 +94,7 @@ export default function StudentProfile (props) {
 			 <li>
 			    <input
 			     className={props.propsErrorMap.firstName ? input + ' ' + error : input}
+                 name="student[firstname]"
 			     type="text"
 			     placeholder="First name"
 			     onChange={(e)=> props.updateProfileField('firstName', e.target.value, true)}
@@ -105,6 +106,7 @@ export default function StudentProfile (props) {
 			 <li>
 			   <input
 			    className={props.propsErrorMap.lastName ? input + ' ' + error : input}
+                 name="student[lastname]"
 			    type="text"
 			    placeholder="Last Name"
 			    onChange={(e)=> props.updateProfileField('lastName', e.target.value, true)}
