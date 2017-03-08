@@ -119,7 +119,7 @@ export default function EmployerProfile (props) {
       <ProfileField title="Industry" styles={industryMargin}>
         <Combobox
           className={props.profileErrorsMap.industry ? comboBox + ' ' + error : comboBox}
-          textField="industry"
+          textField="industry_text"
           valueField="id"
           filter="contains"
           data={props.industryList}

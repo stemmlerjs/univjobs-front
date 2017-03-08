@@ -1,17 +1,18 @@
 
 import React, { PropTypes } from 'react'
+import { authRedirectFilter } from 'config/routes'
 import { SidebarContainer } from 'modules/Main'
 import { EmployerProfile } from 'modules/Profile'
 import { pageContainer } from '../styles/EmployerProfileContainerStyles.css'
-import { authRedirectFilter } from 'config/routes'
-import * as lists from 'helpers/lists'
 import axios from 'axios'
+import * as lists from 'helpers/lists'
 
 // ====== REDUX AND STATE IMPORTS =======
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as userActionCreators from 'redux/modules/user/user'
 import * as profileActionCreators from 'redux/modules/profile/profile'
+import * as listActionCreators from 'redux/modules/list/list'
 // ======================================
 
 // ============= MESSAGES ===============
@@ -21,6 +22,7 @@ var ToastMessageFactory = React.createFactory(ReactToastr.ToastMessage.animation
 // ======================================
 
 const actionCreators = {
+  ...listActionCreators,
   ...profileActionCreators,
   ...userActionCreators
 }
@@ -42,13 +44,11 @@ const EmployerProfileContainer = React.createClass({
 
   retrieveAllLists() {
     const promise = new Promise((resolve, reject) => {
-      axios.all([
-        lists.getIndustries(this.context.store)
-      ])
-      .then((resp) => resolve(true))
-      .catch((resp) => resolve(true))
+        this.props.handleGetIndustries()
+          .then((resp) => resolve(true))
+          .catch((resp) => resolve(true))
     })
-    return promise;
+      return promise
   },
 
 
@@ -189,13 +189,13 @@ const EmployerProfileContainer = React.createClass({
   }
 })
 
-function mapStateToProps({user, profile}) {
+function mapStateToProps({user, profile, list}) {
   return {
     user: user ? user : {},
     snapshot: profile.snapshot ? profile.snapshot : {},
     companyName: profile.employerProfile.companyName ? profile.employerProfile.companyName : '',
     industry: profile.employerProfile.industry ? profile.employerProfile.industry : '',
-    industryList: profile.lists.industries ? profile.lists.industries : [],
+    industryList: list.industries ? list.industries : [],
     website: profile.employerProfile.website ? profile.employerProfile.website : '',
     description: profile.employerProfile.description ? profile.employerProfile.description : '',
     employeeCount: profile.employerProfile.employeeCount ? profile.employerProfile.employeeCount : '',

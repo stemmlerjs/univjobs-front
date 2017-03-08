@@ -256,7 +256,19 @@ export function handleGetEmailPref(dispatch) {
     }
 }
 
-//NOTE: Refer to signupform redux line 78, passing dispatch
+export function handleGetIndustries(dispatch) {
+    return function(dispatch) {
+        dispatch(fetchingIndustries())
+        return retrieve.getIndustries()
+            .then((resp) => 
+               dispatch(fetchedIndustriesSuccess(resp.data.industries))
+            )
+            .catch((err) => 
+               dispatch(fetchedIndustriesFailure(err))
+            )
+    }
+}
+
 export function handleGetStudentStatus(dispatch) {
     return function(dispatch) {
         dispatch(fetchingStudentStatus())
@@ -270,7 +282,6 @@ export function handleGetStudentStatus(dispatch) {
     }
 }
 
-//NOTE: Refer to signupform redux line 78, passing dispatch
 export function handleGetEduLevels(dispatch) {
     return function(dispatch) {
         dispatch(fetchingEduLevels())
@@ -284,7 +295,6 @@ export function handleGetEduLevels(dispatch) {
     }
 }
 
-//NOTE: Refer to signupform redux line 78, passing dispatch
 export function handleGetMajors(dispatch) {
     return function(dispatch) {
         dispatch(fetchingMajors())
@@ -298,7 +308,6 @@ export function handleGetMajors(dispatch) {
     }
 }
 
-//NOTE: Refer to signupform redux line 78, passing dispatch
 export function handleGetGenders(dispatch) {
     return function(dispatch) {
         dispatch(fetchingGenders())
@@ -312,7 +321,6 @@ export function handleGetGenders(dispatch) {
     }
 }
 
-//NOTE: Refer to signupform redux line 78, passing dispatch
 export function handleGetLanguages(dispatch) {
     return function(dispatch) {
         dispatch(fetchingLanguages())
@@ -326,7 +334,6 @@ export function handleGetLanguages(dispatch) {
     }
 }
 
-//NOTE: Refer to signupform redux line 78, passing dispatch
 export function handleGetSports(dispatch) {
     return function(dispatch) {
         dispatch(fetchingSports())
@@ -383,7 +390,7 @@ export default function list (state = initialState, action) {
     case LIST_FETCHED_INDUSTRIES_SUCCESS:
       return {
         ...state,
-        industries: action.list
+        industries: action.industries
       }
     case LIST_FETCHED_INDUSTRIES_FAILURE:
       return {

@@ -128,6 +128,10 @@ export function findJobId(id, jobId) {
     return id === jobId
 }
 
+
+/* Returns a either a number or boolean or null
+ *
+ * */
 export function hasCarBoolean(input) {
     let temp;
     

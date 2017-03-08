@@ -5,11 +5,11 @@ import { listRetrieved } from 'redux/modules/profile/profile'
 import { listRetrieved as CREATE_JOB_listRetrived } from 'redux/modules/createjob/createjob'
 
 
-export function getIndustries(store) {
+export function getIndustries() {
     const accessToken = getAccessToken()
 	return axios({
 		method: 'get',
-		url: config.baseUrl + 'list/industries',
+		url: config.baseUrl + 'list/industry',
 		headers: {
 			'Authorization':  accessToken,
 		}
