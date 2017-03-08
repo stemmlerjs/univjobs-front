@@ -188,7 +188,7 @@ export function submitProfileFirstTime(userTypeInt, profileInfo, user) {
           if(errorsExist) {
 
             // DISPATCH - SAVE_PROFILE_ERROR
-            dispatch(saveProfileFailure(profileFieldErrors, [
+            dispatch(savedProfileFailure(profileFieldErrors, [
               "Couldn't save profile.",
               'Please fill in missing fields'
             ], false))
@@ -225,12 +225,12 @@ export function submitProfileFirstTime(userTypeInt, profileInfo, user) {
             employerProfilePUT(putData)
             .then((res) => {
 
-                // DISPATCH - SAVE_PROFILE_SUCCESS
+                // DISPATCH - SAVED_PROFILE_SUCCESS
                 dispatch(savedProfileSuccess())
               })
               .catch((err) => {
-                // DISPATCH - SAVE_PROFILE_ERROR
-                dispatch(saveProfileFailure({}, [
+                // DISPATCH - SAVED_PROFILE_ERROR
+                dispatch(savedProfileFailure({}, [
                   'HTTP Error Occurred.\n',
                   err.message
               ], false))
@@ -358,7 +358,7 @@ export function updateProfile(userTypeInt, profileInfo, user, snapshot) {
                 .then((res) => {
 
                   // DISPATCH - SAVE_PROFILE_SUCCESS
-                  dispatch(saveProfileSuccess())
+                  dispatch(savedProfileSuccess())
                 })
                 .catch((err) => {
 
@@ -514,7 +514,7 @@ function employerProfile(state = initialEmployerProfileState, action) {
           officePostalCode: action.profileInfo.office_postal_code,
           logoUrl: action.profileInfo.logo
       }
-    case SAVE_PROFILE_ERROR:
+    case SAVED_PROFILE_INFO_FAILURE:
       return {
         ...state,
         propsErrorMap: action.profileErrorsObj
