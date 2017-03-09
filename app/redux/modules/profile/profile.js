@@ -160,7 +160,6 @@ export function submitProfileFirstTime(userTypeInt, profileInfo, user) {
       		  photo: profileInfo.photo,
       		  resume: profileInfo.resume,
       	  }
-          debugger
     	    studentProfilePUT(putData)
     	     .then((res) => {
     		// DISPATCH - SAVE_PROFILE_SUCCESS

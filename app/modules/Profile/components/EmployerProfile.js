@@ -148,6 +148,7 @@ export default function EmployerProfile (props) {
           className={props.profileErrorsMap.website ? input + ' ' + error : input}
           value={props.website}
           onChange={(e) => props.updateProfileField('website', e.target.value, false)}
+          placeholder="https://example.com"          
           type="text">
         </input>
       </ProfileField>

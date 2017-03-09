@@ -17,7 +17,7 @@ export default function getRoutes() {
           <Route path='/profile/em' component={EmployerProfileContainer} />
           <Route path='/categories' component={CategoriesContainer} />
           <Route path='/job/create/:jobtype' component={CreateJobContainer} />
-	  <Route path='/dashboard/st' component={StudentDashboardContainer} />
+	      <Route path='/dashboard/st' component={StudentDashboardContainer} />
           <Route path='/dashboard/em' component={EmployerDashboardContainer} />
           <Route path='/myapplications/st' component={ApplicationsContainer} />
           <Route path='/pinnedjobs' component={PinJobsContainer} />
