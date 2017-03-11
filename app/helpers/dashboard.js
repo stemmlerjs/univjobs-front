@@ -43,18 +43,18 @@ import { fetchingJobs, fetchedJobSuccess, fetchedJobFailure,
   * NOTE: axios url is job/r/list
   */
 
-export function getJobs() {
+export function getJobs(userId) {
     const accessToken = getAccessToken()
-    const csrfToken = getCSRFToken()
+  //  const csrfToken = getCSRFToken()
 
 	return axios({
 		method: 'get',
 		url: config.baseUrl + 'job/r/list/',
 		headers: {
-			'Authorization':  accessToken,
-			'X-CSRFToken' : csrfToken
+			'Authorization':  accessToken
 		}
 	})
+	data: userId
 }
 
 

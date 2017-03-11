@@ -3,7 +3,7 @@ import { Router, Route, hashHistory, IndexRoute, browserHistory } from 'react-ro
 import { ApplicationsContainer, CategoriesContainer, CreateJobContainer, ContactPageContainer, 
          EmployerProfileContainer, EmployerDashboardContainer, InitialOverlay,
         SignupContainer, StudentDashboardContainer, StudentProfileContainer,
-        AboutPageContainer, PinJobsContainer, MyListings } from 'modules'
+        AboutPageContainer, PinJobsContainer, MyListingsContainer } from 'modules'
 import { checkIfAuthed } from 'helpers/auth'
 
 // Purpose of IndexRoute - if none of the routes match, we go here
@@ -21,7 +21,7 @@ export default function getRoutes() {
           <Route path='/dashboard/em' component={EmployerDashboardContainer} />
           <Route path='/myapplications/st' component={ApplicationsContainer} />
           <Route path='/pinnedjobs' component={PinJobsContainer} />
-          <Route path='/mylistings' component={MyListings} />
+          <Route path='/mylistings/em' component={MyListingsContainer} />
           <Route path='contact-us' component={ContactPageContainer} />
           <Route path='about-us' component={AboutPageContainer} />
         </Route>

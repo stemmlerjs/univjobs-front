@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import { SidebarContainer } from 'modules/Main'
-import { StudentDashboard } from 'modules/Dashboard'
+import { MyListings } from 'modules/MyListings'
 import { pageContainer } from '../styles/index.css'
 import axios from 'axios'
 import * as list from 'helpers/lists'
@@ -9,7 +9,7 @@ import * as fetch from 'helpers/dashboard'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as userActionCreators from 'redux/modules/user/user'
-import * as dashboardActionCreators from 'redux/modules/dashboard/dashboard'
+import * as jobActionCreators from 'redux/modules/job/job'
 import { authRedirectFilter } from 'config/routes'
 // ============================================================ //
 
@@ -22,7 +22,7 @@ import {toastr} from 'react-redux-toastr'
 
 const actionCreators = {
   ...userActionCreators,
-  ...dashboardActionCreators
+  ...jobActionCreators
 }
 
 const MyListingsContainer = React.createClass({
@@ -48,8 +48,8 @@ const MyListingsContainer = React.createClass({
     	  employer: '/join'      // if not logged in, go here (employer)
       },
       restricted: {
-        to: 'STUDENTS',		 // STUDENTS only on this route
-	      redirectTo: '/job/mylistings'   // if not an EMPLOYER, redirect to the employer equivalent
+        to: 'EMPLOYERS',		 // STUDENTS only on this route
+	      redirectTo: '/mylistings/em'   // if not an EMPLOYER, redirect to the employer equivalent
 		 			 // This might change to employer categories
       }
     }
@@ -58,6 +58,9 @@ const MyListingsContainer = React.createClass({
 
 
   componentWillMount() {
+      this.doRedirectionFilter()
+        .then(this.props.handleGetJobs(this.props.profile.snapshot.employer.employer_base_id))
+  	    .then(this.props.closeOverlay())
   },
 
   componentWillUnmount() {
@@ -67,7 +70,8 @@ const MyListingsContainer = React.createClass({
   render () {
     return (
       <div className={pageContainer} >
-      <SidebarContainer isAStudent={true}/>
+        <SidebarContainer isAStudent={false}/>
+        <MyListings/>
     </div>
     )
   },
@@ -79,9 +83,11 @@ const MyListingsContainer = React.createClass({
 // @params ({user}) contains BaseUser & Employer attributes
 // */
 
-function mapStateToProps({user}) {
+function mapStateToProps({user, job, profile}) {
   return {
 	  user: user ? user : {},
+      job: job ? job : [],
+      profile: profile ? profile : [],
   }
 }
 
@@ -100,4 +106,4 @@ function mapActionCreatorsToProps(dispatch) {
 
 // connect(specify_what_keys_you_want_from_store, wraps_dispatch_around_action_creators)(container)
 
-export default connect(mapStateToProps, mapActionCreatorsToProps)(StudentDashboardContainer)
+export default connect(mapStateToProps, mapActionCreatorsToProps)(MyListingsContainer)

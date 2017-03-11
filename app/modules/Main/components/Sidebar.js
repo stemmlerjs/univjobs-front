@@ -52,8 +52,8 @@ export default function SideBar ({onLogout, isAStudent}) {
             </Link>
           : <Link to="/myapplicants/em" className={noDecoration}>
               <div className={sidebarItem}>
-                <i className={animationItem3 + " fa fa-address-book"} aria-hidden="true"></i>
-                <div className={animationTxt3}>My Applications</div>
+                <i className={animationItem3 + " fa fa-address-card-o"} aria-hidden="true"></i>
+                <div className={animationTxt3}>My Applicants</div>
               </div>
             </Link>
         }
@@ -66,9 +66,9 @@ export default function SideBar ({onLogout, isAStudent}) {
               <div className={animationTxt5}>My Pinned Jobs</div>
             </div>
           </Link>
-        : <Link to="/mylistings" className={noDecoration}>
+        : <Link to="/mylistings/em" className={noDecoration}>
             <div className={sidebarItem}>
-              <i className={animationItem5 + " fa fa-thumb-tack"} aria-hidden="true"></i>
+              <i className={animationItem5 + " fa fa-file-text-o"} aria-hidden="true"></i>
               <div className={animationTxt5}>My Listings</div>
             </div>
           </Link>

@@ -13,4 +13,4 @@ export StudentProfileContainer from './Profile/containers/StudentProfileContaine
 export StudentDashboardContainer from './Dashboard/containers/StudentDashboardContainer'
 export PinJobsContainer from './PinJobs/containers/PinJobsContainer'
 export GenericCard, { APPLICATIONS_CARD_TYPE, DASHBOARD_CARD_TYPE, PINNED_JOBS_CARD_TYPE } from './SharedComponents'
-export MyListings from './MyListings/components/MyListings'
+export MyListingsContainer from './MyListings/containers/MyListingsContainer'
