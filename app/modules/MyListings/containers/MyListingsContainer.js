@@ -3,13 +3,13 @@ import { SidebarContainer } from 'modules/Main'
 import { MyListings } from 'modules/MyListings'
 import { pageContainer } from '../styles/index.css'
 import axios from 'axios'
-import * as list from 'helpers/lists'
 import * as fetch from 'helpers/dashboard'
 // =============REDUX STATE & IMPORTS========================== //
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as userActionCreators from 'redux/modules/user/user'
 import * as jobActionCreators from 'redux/modules/job/job'
+import * as listActionCreators from 'redux/modules/list/list'
 import { authRedirectFilter } from 'config/routes'
 // ============================================================ //
 
@@ -21,8 +21,9 @@ import {toastr} from 'react-redux-toastr'
 
 
 const actionCreators = {
+  ...jobActionCreators,
+  ...listActionCreators,
   ...userActionCreators,
-  ...jobActionCreators
 }
 
 const MyListingsContainer = React.createClass({
@@ -56,12 +57,34 @@ const MyListingsContainer = React.createClass({
      return authRedirectFilter(config, this.context.store, this.context.router)
   },
 
+  /** showModal
+   *
+   * This function takes in the submit event & the job id
+   * It calls a dispatch modalCliked & showModal(id)
+   * Once the store is notified, a reducer should be activated to find the appropriate job info,
+   * then supplies the modal the appropraite job info
+   * After, the modal appears to the user of the job info they pressed
+   *
+   * @param(e) - DOM event
+   * @param(j) - Object job
+   * @param(q) - Object questions
+  */
+    //showModal(e, j)
+  showModal(e, j) {
+      e.preventDefault()
+      //this.context.store.dispatch(actionCreators.dashboardModalClicked(j.id))
+      //this.context.store.dispatch(actionCreators.dashboardShowModal(j, j.questions))
+  },
+
 
   componentWillMount() {
       this.doRedirectionFilter()
         .then(this.props.handleGetJobs(this.props.profile.snapshot.employer.employer_base_id))
+        .then(this.props.handleGetIndustries())
+        .then(this.props.handleGetJobTypes())
   	    .then(this.props.closeOverlay())
   },
+
 
   componentWillUnmount() {
     console.log("Component WillUnmount")
@@ -71,7 +94,13 @@ const MyListingsContainer = React.createClass({
     return (
       <div className={pageContainer} >
         <SidebarContainer isAStudent={false}/>
-        <MyListings/>
+        <MyListings
+            handleCardClick={this.showModal}
+            jobs={this.props.job ? this.props.job : ''}
+            industries={this.props.industryList}
+    	    jobTypes={this.props.jobTypes}
+            profile={this.props.profile}
+        />
     </div>
     )
   },
@@ -83,11 +112,14 @@ const MyListingsContainer = React.createClass({
 // @params ({user}) contains BaseUser & Employer attributes
 // */
 
-function mapStateToProps({user, job, profile}) {
+function mapStateToProps({user, job, list, profile}) {
   return {
 	  user: user ? user : {},
-      job: job ? job : [],
+      job: job ? job.employerJobs.jobs : [],
       profile: profile ? profile : [],
+      industryList: list.industries ? list.industries : [],
+      jobTypes: list.jobTypes ? list.jobTypes : [],
+
   }
 }
 

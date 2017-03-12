@@ -104,3 +104,14 @@ export function getClubs() {
 		}
 	})
 }
+
+export function getJobTypes() {
+    const accessToken = getAccessToken()
+	return axios({
+		method: 'get',
+		url: config.baseUrl + 'list/jobtype',
+		headers: {
+			'Authorization':  accessToken,
+		}
+	})
+}

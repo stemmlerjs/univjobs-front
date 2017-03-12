@@ -79,7 +79,7 @@ export function handleGetJobs(userId) {
 	    dispatch(fetchingJobs())
 	    return getJobs(userId)
 	        .then((resp) => 
-		        dispatch(fetchedJobsSuccess(resp))
+		        dispatch(fetchedJobsSuccess(resp.data.jobs))
 	        )
 	        .catch((err) => 
 		        dispatch(fetchedJobsFailure(err))

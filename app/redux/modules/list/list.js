@@ -18,6 +18,7 @@ const LIST_FETCHING_MAJORS = 'LIST.FETCHING_MAJORS'
 const LIST_FETCHING_SCHOOL_CLUBS = 'LIST.FETCHING_SCHOOL_CLUBS'
 const LIST_FETCHING_STUDENT_STATUS = 'LIST.FETCHING_STUDENT_STATUS'
 const LIST_FETCHING_SPORTS = 'LIST.FETCHING_SPORTS'
+const LIST_FETCHING_JOB_TYPES = 'LIST.FETCHING_JOB_TYPES'
 
 // ********** Profile List SUCCESS actions **************
 const FETCHED_LIST = 'FETCHED_LIST'
@@ -31,6 +32,8 @@ const LIST_FETCHED_MAJORS_SUCCESS = 'LIST.FETCHED_MAJORS_SUCCESS'
 const LIST_FETCHED_SCHOOL_CLUBS_SUCCESS = 'LIST.FETCHED_SCHOOL_CLUBS_SUCCESS'
 const LIST_FETCHED_SPORTS_SUCCESS = 'LIST.FETCHED_SPORTS_SUCCESS'
 const LIST_FETCHED_STUDENT_STATUS_SUCCESS = 'LIST.FETCHED_STUDENT_STATUS_SUCCESS'
+const LIST_FETCHED_JOB_TYPES_SUCCESS = 'LIST.FETCHED_JOB_TYPES_SUCCESS'
+
 
 // ********** Profile List FAILURE actions **************
 const LIST_FETCHED_CITIES_FAILURE = 'LIST.FETCHED_CITIES_FAILURE'
@@ -43,6 +46,7 @@ const LIST_FETCHED_MAJORS_FAILURE = 'LIST.FETCHED_MAJORS_FAILURE'
 const LIST_FETCHED_SCHOOL_CLUBS_FAILURE = 'LIST.FETCHED_SCHOOL_CLUBS_FAILURE'
 const LIST_FETCHED_STUDENT_STATUS_FAILURE = 'LIST.FETCHED_STUDENT_STATUS_FAILURE'
 const LIST_FETCHED_SPORTS_FAILURE = 'LIST.FETCHED_SPORTS_FAILURE'
+const LIST_FETCHED_JOB_TYPES_FAILURE = 'LIST.FETCHED_JOB_TYPES_FAILURE'
 
 export function fetchingCity() {
     return {
@@ -235,6 +239,25 @@ export function fetchedSportsFailure(error) {
   }
 }
 
+export function fetchingJobTypes() {
+    return {
+        type: LIST_FETCHING_JOB_TYPES
+    }
+}
+export function fetchedJobTypesSuccess(jobTypes) {
+  return {
+    type: LIST_FETCHED_JOB_TYPES_SUCCESS,
+    jobTypes
+  }
+}
+
+export function fetchedJobTypesFailure(error) {
+  return {
+    type: LIST_FETCHED_JOB_TYPES_FAILURE,
+    error
+  }
+}
+
 // =======================================================
 // ===================== THUNK ===========================
 // =======================================================
@@ -359,6 +382,19 @@ export function handleGetClubs(dispatch) {
             )
     }
 }
+
+export function handleGetJobTypes(dispatch) {
+    return function(dispatch) {
+        dispatch(fetchingJobTypes())
+        return retrieve.getJobTypes()
+            .then((resp) => 
+                dispatch(fetchedJobTypesSuccess(resp.data.jobTypes))
+            )
+            .catch((err) => 
+               dispatch(fetchedJobTypesFailure(err))
+            )
+    }
+}
 // =======================================================
 // ================== INITIAL STATE ======================
 // =======================================================
@@ -374,6 +410,7 @@ const initialState = {
   studentStatus: [],
   sports: [],
   schoolClubs: [],
+  jobTypes: [],
   error: ''
 }
 
@@ -522,6 +559,20 @@ export default function list (state = initialState, action) {
       return {
         ...state,
         error
+      }
+    case LIST_FETCHING_JOB_TYPES:
+      return {
+        ...state,
+      }
+    case LIST_FETCHED_JOB_TYPES_SUCCESS:
+      return {
+        ...state,
+        jobTypes: action.jobTypes
+      }
+    case LIST_FETCHED_JOB_TYPES_FAILURE:
+      return {
+        ...state,
+        error: action.error
       }
     default :
       return state

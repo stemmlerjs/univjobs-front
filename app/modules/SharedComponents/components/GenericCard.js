@@ -33,7 +33,7 @@ export const APPLICATIONS_CARD_TYPE = 'APPLICATIONS_CARD'
 export const DASHBOARD_CARD_TYPE = 'DASHBOARD_CARD_TYPE'
 export const PINNED_JOBS_CARD_TYPE = 'PINNED_JOBS'
 
-export default function GenericCard({ cardType, job, jobTypes, industries, handleCardClick, children }) {
+export default function GenericCard({ cardType, job, jobTypes, industries, profile, handleCardClick, children }) {
     debugger
   return (
     <div className={cardContainer}>
@@ -50,7 +50,7 @@ export default function GenericCard({ cardType, job, jobTypes, industries, handl
                   <header className={cardHeader}>
                     {/*JOB TYPES*/}
                     <span>
-                      <p>{ jobTypes.length > 0 ? jobTypes[job.type].jobtype : '' }</p>
+                      <p>{ jobTypes.length > 0 ? jobTypes[job.type].description : '' }</p>
                     </span>
                   </header>
 
@@ -61,7 +61,7 @@ export default function GenericCard({ cardType, job, jobTypes, industries, handl
 
                   {/* TODO: Point to industry  */}
                   <h3 className={industryTitle}>
-                  { industries.length > 0 ? industries[job.business.industry].industry : '' }</h3>
+                  { industries.length > 0 ? industries[profile.snapshot.employer.industry].industry_text : '' }</h3>
 
                   {/* TAGS */}
                   <div>
@@ -96,11 +96,11 @@ export default function GenericCard({ cardType, job, jobTypes, industries, handl
                       <li>
                         <ul className={companyInfoContainer}>
                           <li>
-                            <h4 className={companyTitle}>{ job ? job.business.company_name : ''}</h4>
+                            <h4 className={companyTitle}>{ job ? profile.snapshot.employer.company_name : ''}</h4>
                           </li>
 
                           <li>
-                            <a href={ job ? job.business.website : ''} target="_blank">{job.business.description}</a>
+                            <a href={ job ? profile.snapshot.employer.website : ''} target="_blank">{profile.snapshot.employer.description}</a>
                           </li>
                         </ul>
                       </li>

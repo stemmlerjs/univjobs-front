@@ -19,7 +19,11 @@ import ReactTooltip from 'react-tooltip'
 
 //**NOTE:
 //  Store is accessible
-const MyListings = () => (
+export default function MyListings ({jobs, handleCardClick, industries, jobTypes, profile}) {
+    //console.log(jobs)
+    console.log(industries)
+    console.log(jobTypes)
+    return (
             <div className={rootComponentContainer}>
 	            <div className={margin}>
 
@@ -29,12 +33,41 @@ const MyListings = () => (
   	                    <h1 className={title}>MY LISTINGS</h1>
   	                </div>
   	            </div>
+        
+  	            {/*MAIN (Cards List)
+  	                NOTE: Reference for iterating using map
+  	                https://facebook.github.io/react/docs/multiple-components.html#dynamic-children
+                */}
+
+  	            <div className={pageMainJobCards}>
+                    { jobs.length > 0 ? jobs.map((job) => (
+                        <div key={job.job_id}>
+  		                    <GenericCard
+                                handleCardClick={handleCardClick}
+                                cardType={DASHBOARD_CARD_TYPE}
+                                job={job}
+                                jobTypes={jobTypes}
+                                industries={industries}
+                                profile={profile}>
+		                        <div className={buttonContainers}>
+      			                    <button>
+      			                        APPLY
+      			                    </button>
+                                </div>
+                            </GenericCard>
+                         </div>
+                    )) : ''} 
                </div>
+  	            <div className={overflowFix}></div>
+  	            <div className={overflowFix}></div>
+  	            <div className={overflowFix}></div>
+  	            <div className={overflowFix}></div>
             </div>
-)
+          </div>
+    )
+}
 
-export default MyListings
-
+MyListings.propTypes = {}
 
 
 
