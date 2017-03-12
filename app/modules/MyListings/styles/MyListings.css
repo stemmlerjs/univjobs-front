@@ -163,6 +163,19 @@
 	cursor: pointer;
 }
 
+.editButton {
+	background-color: green;
+	border: none;
+	color: white;
+        padding: 15px 32px;
+	width: 100%;
+        text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+	cursor: pointer;
+}
+
 .cardModalContainer {
 	display: flex;
 	flex-direction: row;

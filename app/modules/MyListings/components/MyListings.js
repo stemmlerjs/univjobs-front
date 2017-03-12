@@ -10,7 +10,7 @@ import { pageContainer, cardContainer, card, cardHeader,
 	jobTitleContainer, jobTitle, industryTitle,
 	tagContainer, tagList, tagElement,
 	companyContainer, companyInfoContainer, companyTitle,
-	applyButton, cardModalContainer, cardModalHeader, jobModalTitle,
+	applyButton, editButton,cardModalContainer, cardModalHeader, jobModalTitle,
 	jobModalIndustry, cardModalBodyLeft, cardModalBodyRight, cardModalScroll, cardModalFooter,
 	image, questionHeader, overflowFix, pageMainJobCards,
 	buttonContainers, pinIcon, fillIcon, unFillIcon, rotateIcon} from '../styles/MyListings.css'
@@ -50,8 +50,8 @@ export default function MyListings ({jobs, handleCardClick, industries, jobTypes
                                 industries={industries}
                                 profile={profile}>
 		                        <div className={buttonContainers}>
-      			                    <button>
-      			                        APPLY
+      			                    <button className={applyButton} onClick={(e) => handleCardClick(e, job)}>
+      			                        EDIT SETTINGS  ⬇
       			                    </button>
                                 </div>
                             </GenericCard>
