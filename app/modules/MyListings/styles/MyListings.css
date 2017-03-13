@@ -153,24 +153,22 @@
 .applyButton {
 	background-color: #229AD6;
 	border: none;
-	color: white;
-        padding: 15px 32px;
+    padding: 15px 32px;
 	width: 100%;
-        text-align: center;
-	text-decoration: none;
+    text-align: center;
+	text-decoration: white;
 	display: inline-block;
 	font-size: 16px;
 	cursor: pointer;
 }
 
 .editButton {
-	background-color: green;
+	background-color: #229AD6;
 	border: none;
-	color: white;
-        padding: 15px 32px;
+    padding: 15px 32px;
 	width: 100%;
-        text-align: center;
-	text-decoration: none;
+    text-align: center;
+	text-decoration: white;
 	display: inline-block;
 	font-size: 16px;
 	cursor: pointer;

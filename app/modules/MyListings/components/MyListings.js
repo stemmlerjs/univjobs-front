@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react'
+import { DropdownList } from 'react-widgets'
 import { StudentCard } from 'modules/Dashboard'
 import { JobCard, JobCardModal } from 'modules/Dashboard'
 import { GenericCard, DASHBOARD_CARD_TYPE } from 'modules/SharedComponents'
@@ -17,12 +18,18 @@ import { pageContainer, cardContainer, card, cardHeader,
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import ReactTooltip from 'react-tooltip'
 
+
+const dataButtons = [
+        'MAX APPLICANTS',
+        'EDIT LISTINGS',
+]
+
 //**NOTE:
 //  Store is accessible
 export default function MyListings ({jobs, handleCardClick, industries, jobTypes, profile}) {
     //console.log(jobs)
-    console.log(industries)
-    console.log(jobTypes)
+    //console.log(industries)
+    //console.log(jobTypes)
     return (
             <div className={rootComponentContainer}>
 	            <div className={margin}>
@@ -50,9 +57,11 @@ export default function MyListings ({jobs, handleCardClick, industries, jobTypes
                                 industries={industries}
                                 profile={profile}>
 		                        <div className={buttonContainers}>
-      			                    <button className={applyButton} onClick={(e) => handleCardClick(e, job)}>
-      			                        EDIT SETTINGS  ⬇
-      			                    </button>
+                                    <DropdownList
+                                        className={applyButton}
+                                        data={dataButtons}
+                                        defaultValue={'EDIT SETTINGS'}
+                                    />
                                 </div>
                             </GenericCard>
                          </div>
