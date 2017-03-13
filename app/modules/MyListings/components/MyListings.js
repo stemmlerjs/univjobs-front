@@ -11,7 +11,7 @@ import { pageContainer, cardContainer, card, cardHeader,
 	jobTitleContainer, jobTitle, industryTitle,
 	tagContainer, tagList, tagElement,
 	companyContainer, companyInfoContainer, companyTitle,
-	applyButton, editButton,cardModalContainer, cardModalHeader, jobModalTitle,
+	maxButton, editButton,cardModalContainer, cardModalHeader, jobModalTitle,
 	jobModalIndustry, cardModalBodyLeft, cardModalBodyRight, cardModalScroll, cardModalFooter,
 	image, questionHeader, overflowFix, pageMainJobCards,
 	buttonContainers, pinIcon, fillIcon, unFillIcon, rotateIcon} from '../styles/MyListings.css'
@@ -19,9 +19,12 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import ReactTooltip from 'react-tooltip'
 
 
-const dataButtons = [
-        'MAX APPLICANTS',
-        'EDIT LISTINGS',
+const data = [
+    { 
+        'id': 0, 'button_name': 'EDIT SETTINGS ⬇',
+        'id': 1, 'button_name': 'MAX APPLICANTS',
+        'id': 2, 'button_name': 'EDIT LISTINGS',
+    }
 ]
 
 //**NOTE:
@@ -57,11 +60,12 @@ export default function MyListings ({jobs, handleCardClick, industries, jobTypes
                                 industries={industries}
                                 profile={profile}>
 		                        <div className={buttonContainers}>
-                                    <DropdownList
-                                        className={applyButton}
-                                        data={dataButtons}
-                                        defaultValue={'EDIT SETTINGS'}
-                                    />
+      			                    <button className={maxButton} onClick={(e) => handleCardClick(e, job)}>
+      			                        MAX APPLICANTS
+      			                      </button>
+      			                    <button className={editButton} onClick={(e) => handleCardClick(e, job)}>
+      			                        EDIT LISTING
+      			                      </button>
                                 </div>
                             </GenericCard>
                          </div>

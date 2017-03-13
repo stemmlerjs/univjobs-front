@@ -150,13 +150,14 @@
 	font-size: 16px;
 }
 
-.applyButton {
+.maxButton {
 	background-color: #229AD6;
-	border: none;
+    border: none;
     padding: 15px 32px;
 	width: 100%;
     text-align: center;
-	text-decoration: white;
+	text-decoration: none;
+    color: white;
 	display: inline-block;
 	font-size: 16px;
 	cursor: pointer;
@@ -164,11 +165,13 @@
 
 .editButton {
 	background-color: #229AD6;
-	border: none;
+	margin-left: 1px;
+    border: none;
     padding: 15px 32px;
 	width: 100%;
     text-align: center;
-	text-decoration: white;
+	text-decoration: none;
+    color: white;
 	display: inline-block;
 	font-size: 16px;
 	cursor: pointer;
