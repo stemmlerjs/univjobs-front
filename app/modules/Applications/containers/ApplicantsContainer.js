@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import { SidebarContainer } from 'modules/Main'
-import { Applicants } from 'modules/Applications'
+import { Applicants, NavTab } from 'modules/Applications'
 import pageContainer  from '../styles/index.css'
 import axios from 'axios'
 import * as list from 'helpers/lists'
@@ -99,6 +99,7 @@ const ApplicantsContainer = React.createClass({
     console.log("Component WillUnmount")
   },
 
+ //NavTab in Applicants component
   render () {
     return (
       <div className={pageContainer}>

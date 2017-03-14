@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react'
 import { SkyLightStateless } from 'react-skylight'
+import { NavTab } from 'modules/Applications'
 import { GenericCard, ApplicationModal, APPLICATIONS_CARD_TYPE } from '../../SharedComponents'
 import { rootComponentContainer, margin, pageHeaderSection,
   pageTitle, title, crossHair } from 'sharedStyles/styles.css'
@@ -13,9 +14,10 @@ export default function Applicants ({}) {
 
     {/* TITLE */}
      <div className={pageHeaderSection}>
-      <div className={pageTitle}>
-       <h1 className={title}>MY APPLICANTS</h1>
-      </div>
+        <div className={pageTitle}>
+            <h1 className={title}>MY APPLICANTS</h1>
+        </div>
+        <NavTab/>
      </div>
 
      {/*MAIN (Cards List)
