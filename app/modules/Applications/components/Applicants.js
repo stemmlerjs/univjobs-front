@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import { SkyLightStateless } from 'react-skylight'
 import { NavTab } from 'modules/Applications'
-import { GenericCard, ApplicationModal, APPLICATIONS_CARD_TYPE } from '../../SharedComponents'
+import { GenericCard, ApplicationModal, APPLICATIONS_CARD_TYPE, StudentCard } from '../../SharedComponents'
 import { rootComponentContainer, margin, pageHeaderSection,
   pageTitle, title, crossHair } from 'sharedStyles/styles.css'
 import { pageMainJobCards } from '../styles/index.css'
@@ -26,6 +26,7 @@ export default function Applicants ({}) {
      */}
 
       <div className={pageMainJobCards}>
+          <StudentCard/>
       </div>
 
       </div>
