@@ -2,12 +2,13 @@ import React, { PropTypes } from 'react'
 import { pageContainer, cardContainer, card, cardHeaderContainer,
     cardHeaderItem, cardHeaderItemText, cardHeaderItemImage, 
     cardHeaderItemIcon, studentMajor, studentMajorItem, 
-    studentMajorData, studentNameTitle, 
-    width, jobTitleContainer, jobTitle, industryTitle, tagContainer, tagList, tagElement,
+    studentMajorData, studentNameTitle, width, schoolNameContainer, 
+    schoolTitle, headerDivider, industryTitle, 
+    tagContainer, tagList, tagElement,
 	companyContainer, companyInfoContainer, companyTitle,
 	applyButton, cardModalContainer, cardModalHeader, jobModalTitle,
 	jobModalIndustry, cardModalBodyLeft, cardModalBodyRight, cardModalScroll, cardModalFooter,
-	image, questionHeader, crop} from '../styles/Card.css'
+	image, questionHeader, crop} from '../styles/StudentCard.css'
 
 /*
 StudentCard.propTypes = {
@@ -41,6 +42,12 @@ const StudentCard = () => (
                     </div>
             </div>
           </header>
+
+          <div className={headerDivider}></div>
+
+          <div className={schoolNameContainer}>
+               <span className={schoolTitle}>Sheridan College</span> 
+          </div>
         </div>
     </div>
 )
