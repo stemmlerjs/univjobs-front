@@ -3,8 +3,8 @@ import { pageContainer, cardContainer, card, cardHeaderContainer,
     cardHeaderItem, cardHeaderItemText, cardHeaderItemImage, 
     cardHeaderItemIcon, studentMajor, studentMajorItem, 
     studentMajorData, studentNameTitle, width, schoolNameContainer, 
-    schoolTitle, headerDivider, industryTitle, 
-    tagContainer, tagList, tagElement,
+    schoolTitle, headerDivider, classYearContainer, 
+    classYearItem, tagList, tagElement,
 	companyContainer, companyInfoContainer, companyTitle,
 	applyButton, cardModalContainer, cardModalHeader, jobModalTitle,
 	jobModalIndustry, cardModalBodyLeft, cardModalBodyRight, cardModalScroll, cardModalFooter,
@@ -47,6 +47,9 @@ const StudentCard = () => (
 
           <div className={schoolNameContainer}>
                <span className={schoolTitle}>Sheridan College</span> 
+          </div>
+          <div className={classYearContainer}>
+            <h3 className={classYearItem}>Bachelor's, Class of 2019</h3>
           </div>
         </div>
     </div>
