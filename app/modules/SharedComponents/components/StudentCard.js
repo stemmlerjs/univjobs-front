@@ -3,11 +3,13 @@ import { pageContainer, cardContainer, card, cardHeaderContainer,
     cardHeaderItem, cardHeaderItemText, cardHeaderItemImage, 
     cardHeaderItemIcon, studentMajor, studentMajorItem, 
     studentMajorData, studentNameTitle, width, schoolNameContainer, 
-    schoolTitle, headerDivider, classYearContainer, 
+    schoolTitle,  headerDivider, classYearContainer, 
     classYearItem, tagContainer, tagItems, firstTagItems,
-	icon, iconName, companyContainer, companyInfoContainer, companyTitle,
-	applyButton, cardModalContainer, cardModalHeader, jobModalTitle,
-	jobModalIndustry, cardModalBodyLeft, cardModalBodyRight, cardModalScroll, cardModalFooter,
+	tagIcon, iconName, studentInfoContainer, studentInfoItem,
+    studentIcon, studentInfo, pastJobsContainer, 
+    pastJobsItems, pastJobsLabel, pastJobsInfo,
+    buttonsContainer, buttonItems, buttonIcons, cardModalContainer, 
+    cardModalHeader, jobModalTitle, jobModalIndustry, cardModalBodyLeft, cardModalBodyRight, cardModalScroll, cardModalFooter,
 	image, questionHeader, crop} from '../styles/StudentCard.css'
 
 /*
@@ -54,22 +56,54 @@ const StudentCard = () => (
         
          <div className={tagContainer}>
             <span className={firstTagItems}>
-                <i className={"fa fa-car " + icon } aria-hidden="true"></i>
+                <i className={"fa fa-car " + tagIcon } aria-hidden="true"></i>
                 <span className={iconName}>Yes</span>
             </span>
             <span className={tagItems}>
-                <i className={"fa fa-futbol-o " + icon } aria-hidden="true"></i>
+                <i className={"fa fa-futbol-o " + tagIcon } aria-hidden="true"></i>
                 <span className={iconName}>No</span>
             </span>
             <span className={tagItems}>
-                <i className={"fa fa-paint-brush " + icon } aria-hidden="true"></i>
+                <i className={"fa fa-paint-brush " + tagIcon } aria-hidden="true"></i>
                 <span className={iconName}>Yes</span>
             </span>
             <span className={tagItems}>
-                <i className={"fa fa-clipboard " + icon } aria-hidden="true"></i>
+                <i className={"fa fa-clipboard " + tagIcon } aria-hidden="true"></i>
                 <span className={iconName}>C+</span>
             </span>
          </div>
+
+        <div className={studentInfoContainer}>
+            <span className={studentInfoItem}>
+                <i className={"fa fa-envelope " + studentIcon } aria-hidden="true"></i>
+                <span className={studentInfo}>javelonc@sheridancollege.ca</span>
+            </span>
+            <span className={studentInfoItem}>
+                <i className={"fa fa-clipboard " + studentIcon } aria-hidden="true"></i>
+                <span className={studentInfo}>647-779-8525</span>
+            </span>
+            <span className={studentInfoItem}> 
+                <i className={"fa fa-check " + studentIcon } aria-hidden="true"></i>
+                <span className={studentInfo}>04/03/2017</span>
+            </span>
+        </div>
+
+        <div className={pastJobsContainer}>
+            <div className={pastJobsItems}>
+                <span className={pastJobsLabel}>Past Job:</span>
+                <span className={pastJobsInfo}>Line Cook at Jack Astors Grill</span>
+            </div>
+        </div>
+        <div className={buttonsContainer}>
+                <button className={buttonItems}>
+                    <i className={"fa fa-file-pdf-o " + buttonIcons} aria-hidden="true"></i>
+                    Resume
+                </button>
+                <button className={buttonItems}>
+                    <i className={"fa fa-thumbs-o-up " + buttonIcons} aria-hidden="true"></i>
+                    Hire
+                </button>
+        </div>
         </div>
     </div>
 )

@@ -5,6 +5,7 @@ import { pageContainer, pageHeaderSection, pageTitle, title, pageFiltersAndSearc
   campusDropdown, gradDateDropdown, filtersDivider, margins, overflowFix } from '../styles/EmployerDashboardStyles.css'
 import { StudentCard } from 'modules/Dashboard'
 
+
 export default function EmployerDashboard ({students}) {
   return (
     <div className={rootComponentContainer}>
@@ -16,28 +17,27 @@ export default function EmployerDashboard ({students}) {
             <h1 className={title}>SEARCH STUDENTS</h1>
           </div>
 
-          {/* FILTERS */}
-          <div className={pageFiltersAndSearch}>
-            <input className={input}
-              placeholder="Search students">
+      {/* FILTERS */}
+      <div className={pageFiltersAndSearch}>
+           <input className={input}
+                placeholder="Search students">
             </input>
-
-            <DropdownList
-              className={campusDropdown}
-              textField="email_pref"
-              valueField="id"
-            />
-
-            <div className={filtersDivider}></div>
-
-            <DropdownList
-              className={gradDateDropdown}
-              textField="email_pref"
-              valueField="id"
-            />
-
-            <button className={btn}>Filter</button>
-          </div>
+          
+          <DropdownList
+            className={campusDropdown}
+            textField="email_pref"
+            valueField="id"
+           />
+          
+          <div className={filtersDivider}></div>
+          
+          <DropdownList
+            className={gradDateDropdown}
+            textField="email_pref"
+            valueField="id"
+          />
+          <button className={btn}>Filter</button>
+        </div>
 
           {/* MAIN (Cards list) */}
           <div className={pageMainStudentCards}>
