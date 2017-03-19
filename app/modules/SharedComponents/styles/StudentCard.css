@@ -1,0 +1,302 @@
+/*TODO: Refine
+ *         - Find all css names that are repeated
+ *         - Place all repeated css in index.css in this folder
+ *
+ * */
+.pageContainer {
+	width: 1000px;
+	text-align: center;
+	margin: auto;
+	margin-top: 4%;
+	margin-bottom: 3%;
+	/* For Safari */
+	display: -webkit-flex;
+	-webkit-flex-direction: row;
+
+	/* Chrome */
+	display: flex;
+	flex-direction: row;
+
+	flex-wrap: wrap;
+}
+
+
+.cardContainer {
+	list-style: none;
+	margin: 10px;
+	padding: 0px;
+	align-items: flex-start;
+	width: 350px;
+	padding-left: 15px;
+	padding-right: 15px;
+}
+
+.card {
+	/*display: block;*/
+	/*text-align: center;*/
+	width: 100%;
+	color: #6a7180;
+	background: #fff;
+	border-top-left-radius: 3px;
+	border-top-right-radius: 3px;
+	border-top: 4px solid #55B1E2;
+	-webkit-box-shadow: 3px 3px 7px rgba(0,0,0,0.3);
+	box-shadow: 3px 3px 7px rgba(0,0,0,0.3);
+}
+
+.cardHeaderContainer{
+	padding-top: .09px;
+	padding-bottom: .09px;
+    display: flex;
+}
+
+.cardHeaderItem {
+    display: flex !important;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-left: 2px;
+}
+
+.cardHeaderItemText {
+    margin-right: 10px;
+}
+
+.cardHeaderItemIcon {
+    margin-top: 5px;
+    margin-right: 5px;
+    font-weight: 200;
+    font-size: 11px;
+}
+
+.width {
+    margin-right: 0px;
+}
+
+.cardHeaderItemImage {
+    /*
+     * Contains image of student
+     * */
+}
+
+.studentMajor {
+    text-align: left;
+    font-size: 11px;
+}
+
+.studentMajorItem {
+    margin-top: 0px;
+    width: 220px;
+}
+
+.studentMajorData {
+    font-weight: 200;
+}
+
+
+.studentNameTitle {
+    font-size: 13px;
+    font-weight: 550;
+    text-transform: uppercase;
+    color: black;
+    margin-bottom: 5px;
+    text-align: left;
+}
+
+.schoolNameContainer {
+    display: flex;
+	height: 20px;
+    color: white;
+    font-size: 11px;
+    align-items: flex-start;
+}
+
+.schoolTitle {
+	line-height: 1.25;
+    background-color: #55B1E2;
+    width: 50%;
+    border-top-right-radius: 1px;
+    border-bottom-right-radius: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+
+}
+
+.headerDivider {
+    width: 100%;
+    height: 1px;
+    background-color: #E8E8E8;
+    margin-bottom: 10px;
+}
+
+.classYearContainer {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.classYearItem {
+    font-size: 16px;
+    font-weight: 200;
+    width: 70%;
+    text-align: left;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left: 10px;
+    color: black;
+}
+
+.tagContainer {
+	display: flex;
+	width: 100%;
+}
+
+.firstTagItems {
+    background-color: #F7F7F7;
+    border: 2px solid #F7F7F7;
+    width: 18%;
+    height: 22px;
+    margin-left: 15px;
+}
+
+.tagItems {
+    background-color: #F7F7F7;
+    border: 2px solid #F7F7F7;
+    width: 18%;
+    height: 22px;
+    margin-left: 10px;
+}
+
+.icon {
+    color: #55b1e2;
+    font-size: 13px;
+}
+
+.iconName {
+    margin-left: 5px;
+    font-size: 12px;
+}
+
+.companyContainer {
+	display: flex;
+	flex-direction: row;
+	list-style: none;
+	width: 100%;
+	flex-wrap: wrap;
+	padding: 20px;
+	height: 50px;
+	clear: both;
+	cursor: default;
+}
+
+.companyInfoContainer {
+	list-style: none;
+	text-align: left;
+	padding-left: 20px;
+}
+
+.companyTitle {
+	display: inline-block;
+	vertical-align: top;
+	margin: 7px 0 0;
+	font-size: 16px;
+}
+
+.applyButton {
+	background-color: #229AD6;
+	border: none;
+	color: white;
+        padding: 15px 32px;
+	width: 100%;
+        text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+	cursor: pointer;
+}
+
+.cardModalContainer {
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+	height: 85%;
+	flex-wrap: wrap;
+	align-items: flex-start;
+}
+
+.cardModalHeader {
+	height: 80px;
+	box-shadow: 0 3px 2px -2px rgba(0,0,0,.1);
+	cursor: default;
+	text-align: center;
+}
+
+.jobModalTitle {
+	font-size: 16px;
+}
+
+.jobModalIndustry {
+	color: #229AD6;
+	padding: 8px 20px;
+	background: #FFF;
+	line-height: 1;
+	border: 1px solid rgba(34, 154, 214, .25);
+	border-radius: 11px;
+	font-size: 11px;
+	text-transform: uppercase;
+	font-weight: 600;
+	margin: 0 0 20px;
+	display: inline-block;
+}
+
+
+.cardModalBodyLeft {
+	width: 50%;
+}
+
+.cardModalBodyRight {
+	width: 50%;
+}
+
+.cardModalScroll {
+	overflow: scroll;
+	height: 54vh;
+}
+
+.cardModalFooter {
+	box-shadow: 0px -2px 0px 0px rgba(0,0,0,.1)
+}
+
+.image {
+	padding-top: 2.5px;
+}
+
+.questionHeader {
+	font-size: 13px;
+}
+
+.overflowFix {
+  list-style: none;
+  margin: 10px;
+  padding: 0px;
+  align-items: flex-start;
+  width: 300px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.pageMainJobCards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.crop {
+  width: 64px;
+  height: 64px;
+  overflow: hidden;
+  margin: 10px 10px 10px 10px;
+}
+
+.crop img {
+  width: 64px;
+  height: 64px;
+}

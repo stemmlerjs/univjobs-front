@@ -4,8 +4,8 @@ import { pageContainer, cardContainer, card, cardHeaderContainer,
     cardHeaderItemIcon, studentMajor, studentMajorItem, 
     studentMajorData, studentNameTitle, width, schoolNameContainer, 
     schoolTitle, headerDivider, classYearContainer, 
-    classYearItem, tagList, tagElement,
-	companyContainer, companyInfoContainer, companyTitle,
+    classYearItem, tagContainer, tagItems, firstTagItems,
+	icon, iconName, companyContainer, companyInfoContainer, companyTitle,
 	applyButton, cardModalContainer, cardModalHeader, jobModalTitle,
 	jobModalIndustry, cardModalBodyLeft, cardModalBodyRight, cardModalScroll, cardModalFooter,
 	image, questionHeader, crop} from '../styles/StudentCard.css'
@@ -36,7 +36,7 @@ const StudentCard = () => (
                     </div>
                     <div className={width}></div>
                     <div className={cardHeaderItemIcon}>
-                        <i className={"fa fa-refresh fa-2x"} aria-hidden="true"></i>
+                        <i className={"fa fa-refresh fa-2x fa-rotate-90"} aria-hidden="true"></i>
                         <br/>
                         College<br/>Info
                     </div>
@@ -51,6 +51,25 @@ const StudentCard = () => (
           <div className={classYearContainer}>
             <h3 className={classYearItem}>Bachelor's, Class of 2019</h3>
           </div>
+        
+         <div className={tagContainer}>
+            <span className={firstTagItems}>
+                <i className={"fa fa-car " + icon } aria-hidden="true"></i>
+                <span className={iconName}>Yes</span>
+            </span>
+            <span className={tagItems}>
+                <i className={"fa fa-futbol-o " + icon } aria-hidden="true"></i>
+                <span className={iconName}>No</span>
+            </span>
+            <span className={tagItems}>
+                <i className={"fa fa-paint-brush " + icon } aria-hidden="true"></i>
+                <span className={iconName}>Yes</span>
+            </span>
+            <span className={tagItems}>
+                <i className={"fa fa-clipboard " + icon } aria-hidden="true"></i>
+                <span className={iconName}>C+</span>
+            </span>
+         </div>
         </div>
     </div>
 )
