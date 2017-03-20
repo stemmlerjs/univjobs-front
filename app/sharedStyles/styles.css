@@ -319,8 +319,10 @@
 .sidebarItem:nth-of-type(6) {
   border-bottom: solid #707980 1px;
 }
+
 .profileImg {
-  width: 66px;
+    width: 75%;
+    height: 75%;
 }
 
 /*** MAIN CONTENT CONTAINER ***/
