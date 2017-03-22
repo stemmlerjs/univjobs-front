@@ -35,10 +35,8 @@
   width: 50%;
 }
 
-.textarea {
-  composes: input from 'sharedStyles/styles.css';
-  width: 50%;
-  resize: vertical;
+.textArea {
+  text-align: left;
 }
 
 .dropzone {

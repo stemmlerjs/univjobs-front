@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import { ProfileField } from 'modules/Profile'
 import { profileContainer, profileHeader, profileField, profileFieldName, profileFieldContent, input,
-  textarea, dropzone, resetBtnContainer, dropzoneContent, photoIcon, saveBtnContainer, saveBtn,
+  textArea, dropzone, resetBtnContainer, dropzoneContent, photoIcon, saveBtnContainer, saveBtn,
   inlineDropzone, comboBox, city, postalcode, citypostalcoderelative, dropPoint, error, industryMargin } from '../styles/EmployerProfileStyles.css'
 import { btn } from 'sharedStyles/styles.css'
 import Dropzone from 'react-dropzone'
@@ -155,7 +155,7 @@ export default function EmployerProfile (props) {
 
     {/* DESCRIPTION */}
       <ProfileField title="Who we are">
-        <textarea rows="6" className={textarea}
+        <textarea rows="6" className={textArea}
           value={props.description}
           onChange={(e) => props.updateProfileField('description', e.target.value, false)}>
         </textarea>

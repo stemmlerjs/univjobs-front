@@ -15,6 +15,7 @@ import CreateJobFormPage4 from '../components/CreateJobFormPage4'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as createJobActionCreators from 'redux/modules/createjob/createjob'
+import * as listActionCreators from 'redux/modules/list/list'
 // ======================================
 
 // ============= MESSAGES ===============
@@ -24,7 +25,8 @@ var ToastMessageFactory = React.createFactory(ReactToastr.ToastMessage.animation
 // ======================================
 
 const actionCreators = {
-  ...createJobActionCreators
+  ...createJobActionCreators,
+  ...listActionCreators,
 }
 
 /* =============================================================
@@ -375,7 +377,7 @@ const CreateJobContainer = React.createClass({
   },
 })
 
-function mapStateToProps({createJob, profile, user}) {
+function mapStateToProps({createJob, profile, user, list}) {
   console.log(createJob, "NEW PROPS")
   return {
     user: {
@@ -383,7 +385,7 @@ function mapStateToProps({createJob, profile, user}) {
     },
     currentPage: createJob.currentPage ? createJob.currentPage : 1,
     industry: profile.employerProfile.industry ? profile.employerProfile.industry : 0,
-    industryList: profile.lists.industries ? profile.lists.industries : [],
+    industryList: list.industries ? list.industries : [],
     companyName: profile.employerProfile.companyName ? profile.employerProfile.companyName : '',
     logoUrl: profile.employerProfile.logoUrl ? profile.employerProfile.logoUrl : '',
     page1: {
