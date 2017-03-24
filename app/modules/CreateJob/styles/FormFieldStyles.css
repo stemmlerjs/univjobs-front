@@ -1,16 +1,23 @@
+.fieldContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: flext-start;
+    margin-top: 8.5px;
+    margin-bottom: 8.5px;
+}
+
 .formFieldName {
-  width: 21%;
+  width: 14.5%;
   height: 20px;
-  font-size: 18px;
+  font-size: 16px;
   color: #52575D;
   padding: 15px;
-  display:inline-block;
   font-weight:bold;
+  text-align: left;
 }
 
 .formFieldContent {
-  width: 75%;
-  display:inline;
+
 }
 
 .flexContainer {

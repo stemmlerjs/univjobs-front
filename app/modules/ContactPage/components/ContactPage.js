@@ -4,7 +4,7 @@ import { DropdownList } from 'react-widgets'
 import { btn, centeredContainer, contactForm, dropdown,
          flexContainer, header, headerContactForm,
          input, subHeader, userInfoContainer, 
-        userInfoItem, textAreaContainer, textAreaItem } from '../styles/ContactPage.css'
+        userInfoItem, textArea, textAreaContainer, textAreaItem } from '../styles/ContactPage.css'
 
 /*
  *  * NOTE: Testing ES6 stateless function
@@ -64,6 +64,7 @@ const ContactPage = (props) => (
                 <div className={textAreaContainer}>
                     <div className={textAreaItem}>
                         <textarea 
+                            className={textArea}
                             placeholder="What's on your mind?"
                             value={props.senderMessage}
                             onChange={props.onHandleSenderMessage}

@@ -1,9 +1,10 @@
 .pageContainer {
-  width: 75%;
-  text-align:center;
+  display: flex;
+  flex-direction: column;
   margin: auto;
   margin-top: 4%;
   margin-bottom: 3%;
+  margin-left: 20%;
 }
 
 .pageContainerAlt {
@@ -17,12 +18,12 @@
 
 .input {
   composes: input from 'sharedStyles/styles.css';
-  width: 50%;
+  width: 36vw;
 }
 
-.textarea {
+.textArea {
   composes: input from 'sharedStyles/styles.css';
-  width: 50%;
+  width: 35vw;
   resize: vertical;
 }
 
@@ -35,15 +36,13 @@
 }
 
 .saveBtnList {
-  padding-left: 20px;
   padding-top: 8.5px;
-  display: inline-block;
+  margin-left: 10px;
 }
 
 .saveBtn:active {
 /*  margin-left: 25%;
   margin-top: 21px;
-  padding: 10px 15px 10px 15px;
   border-radius: 3px;
   border: 0;
   background: #3697DB;
@@ -71,9 +70,8 @@
 }
 
 .saveBtn {
-  margin-left: 25%;
-  margin-top: 21px;
   padding: 10px 15px 10px 15px;
+  margin-top: 21px;
   border-radius: 3px;
   border: 0;
   background: white;
@@ -86,8 +84,10 @@
 }
 
 .inlineDate {
-  display: inline-block;
-  width: 50%;
+  margin-top: 8.5px;
+  margin-bottom: 8.5px;
+  width: 35vw;
+  margin-left: 10px;
 }
 
 .navSaveBtn {

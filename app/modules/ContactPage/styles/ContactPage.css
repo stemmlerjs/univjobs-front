@@ -79,7 +79,7 @@
 }
 
 /*TODO: Resize for mobile*/
-textarea {
+.textArea {
     border: 1px thin #ccc;
     border-color: #ccc;
     box-shadow: 0 0 1px #ccc;

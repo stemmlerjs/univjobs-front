@@ -1,10 +1,9 @@
 .mainContainer {
   background-color: #DDDEE0;
-  position: absolute;
   top: 0px;
   bottom: 0px;
   right: 0px;
-  left: 87px;
+  height: 100%;
 }
 
 .circle {

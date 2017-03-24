@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-import { pageContainer, input, textarea, saveBtnList, saveBtn, saveBtnContainer, selectedSaveBtn, inlineDate,
+import { pageContainer, input, textArea, saveBtnList, saveBtn, saveBtnContainer, selectedSaveBtn, inlineDate,
   navSaveBtn, navBackBtn, error } from '../styles/CreateJobFormPageStyles.css'
 import { FormField } from 'modules/CreateJob'
 import { Combobox, DropdownList, DateTimePicker, Calendar} from 'react-widgets'
@@ -8,6 +8,8 @@ import { Combobox, DropdownList, DateTimePicker, Calendar} from 'react-widgets'
 export default function CreateJobFormPage1 (props) {
   console.log(props)
   /*
+   * TODO: 
+   *  [] Put this function to the container
   * setSelectedButton()
   * 
   * This selects the isPayingJob button and binds it to the redux store.
@@ -33,7 +35,7 @@ export default function CreateJobFormPage1 (props) {
         <input 
           className={props.page.page1PropsErrorMap.jobTitle ? input + ' ' + error : input} 
           type="text"
-          placeholder="Muffin collector"
+          placeholder="Social media associate"
           value={props.page.jobTitle}
           onChange={(e) => props.updateFormField('jobTitle', e.target.value, 1)}
           >
@@ -43,10 +45,10 @@ export default function CreateJobFormPage1 (props) {
 
       {/* IS PAYING JOB */}
       <FormField title="Is it a paying job?">
-        <li className={saveBtnList}>
+        <div className={saveBtnList}>
          <button className={props.page.isPayingJob ? selectedSaveBtn : saveBtn} data-selection="0" onClick={setSelectedPayingJobButton}>Yes</button>
          <button className={props.page.isPayingJob === false ? selectedSaveBtn : saveBtn} data-selection="1" onClick={setSelectedPayingJobButton}>No</button>
-       </li>
+       </div>
       </FormField>
 
       {/* START DATE */}
@@ -63,8 +65,8 @@ export default function CreateJobFormPage1 (props) {
       {/* RESPONSIBILTIES */}
       <FormField title="Responsibilities">
         <textarea rows="6" 
-          className={props.page.page1PropsErrorMap.responsibilities ? textarea + ' ' + error : textarea}
-          placeholder="Write a short blurb about the job!"
+          className={props.page.page1PropsErrorMap.responsibilities ? textArea + ' ' + error : textArea}
+          placeholder="Write a short blurb about the job! &#10;&#8203; &#10;Warning! To ensure safety of the students. A job post will not be approved if the application contains any URLS or email alias. All students should apply through UnivJobs"
           maxLength={props.page.MAX_CHARS_responsibilities}
           value={props.page.responsibilities}
           onChange={(e) => props.updateFormField('responsibilities', e.target.value, 1)}>
@@ -74,7 +76,8 @@ export default function CreateJobFormPage1 (props) {
 
       {/* QUALIFICATIONS */}
       <FormField title="Qualifications">
-        <textarea rows="6" className={props.page.page1PropsErrorMap.qualifications ? error + ' ' + textarea : textarea}
+        <textarea rows="6" className={props.page.page1PropsErrorMap.qualifications ? error + ' ' + textArea : textArea}
+          placeholder="Warning! To ensure safety of the students. A job post will not be approved if the application contains any URLS or email alias. All students should apply through UnivJobs"
           value={props.page.qualifications}
           maxLength={props.page.MAX_CHARS_qualifications}
           onChange={(e) => props.updateFormField('qualifications', e.target.value, 1)}>
@@ -87,7 +90,7 @@ export default function CreateJobFormPage1 (props) {
         <input 
           className={props.page.page1PropsErrorMap.desiredSkills ? error + ' ' + input : input} 
           type="text"
-          placeholder="HTML, CSS, JavaScript, PHP"
+          placeholder="Photoshop, Javascript, etc..."
           maxLength={props.page.MAX_CHARS_desiredSkills}
           value={props.page.desiredSkills}
           onChange={(e) => props.updateFormField('desiredSkills', e.target.value, 1)}>
@@ -107,19 +110,34 @@ export default function CreateJobFormPage1 (props) {
         </input>
       </FormField>
 
-      {/* REMOTE WORK*/}
-      <FormField title="">
-        Remote work?
-        <input 
-          type="checkbox"
-          onClick={(e) => props.updateFormField('remoteWork', e.target.checked, 1)}>
-        </input>
+      {/* REMOTE WORK
+        TODO:
+          [] Change into buttons
+          [] Make function to update attribut remoteWork
+          [] Attach to redux
+      
+      
+      */}
+      <FormField title="Remote Work?"> 
+        <div className={saveBtnList}>
+         <button className={props.page.isPayingJob ? selectedSaveBtn : saveBtn} data-selection="0" onClick={setSelectedPayingJobButton}>Yes</button>
+         <button className={props.page.isPayingJob === false ? selectedSaveBtn : saveBtn} data-selection="1" onClick={setSelectedPayingJobButton}>No</button>
+       </div>
+          {
+              /*
+            <input 
+              type="checkbox"
+              onClick={(e) => props.updateFormField('remoteWork', e.target.checked, 1)}>
+            </input>
+          */
+          }
       </FormField>
 
 
       {/* COMPENSATION */}
       <FormField title="Compensation">
-        <textarea rows="6" className={props.page.page1PropsErrorMap.compensation ? error + ' ' + textarea : textarea}
+        <textarea rows="6" className={props.page.page1PropsErrorMap.compensation ? error + ' ' + textArea : textArea}
+          placeholder="In-house training, mentorship from CEO etc.. "
           value={props.page.compensation}
           maxLength={props.page.MAX_CHARS_compensation}
           onChange={(e) => props.updateFormField('compensation', e.target.value, 1)}>

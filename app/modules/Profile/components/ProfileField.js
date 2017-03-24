@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-import { profileFieldName, profileFieldContent } from '../styles/ProfileFieldStyles.css'
+import { flexContainer, profileFieldName, profileFieldContent } from '../styles/ProfileFieldStyles.css'
 
 ProfileField.propTypes = {
   title: PropTypes.string.isRequired
@@ -7,7 +7,7 @@ ProfileField.propTypes = {
 
 export default function ProfileField ({title, styles, children}) {
   return (
-    <div className={styles}>
+    <div className={flexContainer}>
       <div className={profileFieldName}>{ title }</div>
       <div className={profileFieldContent}>
         { children }

@@ -13,7 +13,7 @@
 }
 
 .flexContainer {
-	list-style: none;
+    display: flex;
 	margin: 0px;
 	padding: 0px;
 	align-items: flex-start;
