@@ -92,7 +92,6 @@ const CreateJobContainer = React.createClass({
     store: PropTypes.object.isRequired,
   },
 
-
  /*
   * componentWillMount()
   *
@@ -104,10 +103,10 @@ const CreateJobContainer = React.createClass({
   */
 
   componentWillMount() {
-    this.doRedirectionFilter()
-      .then(lists.getIndustries(this.context.store))
-      .then(lists.getJobTypes(this.context.store))
-      .then(this.props.closeOverlay())
+      this.doRedirectionFilter()
+        .then(this.props.handleGetIndustries())
+        .then(this.props.handleGetJobTypes())
+  	    .then(this.props.closeOverlay())
   },
 
   componentDidMount() {

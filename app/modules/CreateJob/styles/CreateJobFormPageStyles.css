@@ -8,12 +8,23 @@
 }
 
 .pageContainerAlt {
-    width: 85%;
+    width: 100%;
     text-align: center;
     margin: auto;
     margin-top: 4%;
     margin-bottom: 3%;
     display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.lastPageContainer {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  margin-top: 4%;
+  margin-bottom: 3%;
+  margin-left: 5%;
 }
 
 .input {
@@ -28,11 +39,10 @@
 }
 
 .saveBtnContainer {
-  width: 100%;
-  display:inline-block;
-  text-align:center;
-  margin-left:13%;
-  margin-top:18px;
+  display: flex;
+  margin-top:10px;
+  justify-content: flex-start;
+  margin-left: 20%;
 }
 
 .saveBtnList {
@@ -111,18 +121,24 @@
 }
 
 .alignLeft {
-  text-align: left;
+  margin-top: 0;
 }
 
 .sampleQuestionsContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 70%;
   padding:10px;
   border-radius:8px;
   background-color: white;
   font-size: 14px;
+  text-align: left;
 }
 
 .leftDivider {
   width: 60%;
+  margin-left: 10%
 }
 
 .rightDivider {
@@ -176,7 +192,8 @@
 
 .detailsContainer {
   display: flex;
-  justify-content: space-between;
+  flex-direction: row;
+  justify-content: center;
   margin-bottom:25px;
 }
 

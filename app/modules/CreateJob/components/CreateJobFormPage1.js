@@ -51,7 +51,11 @@ export default function CreateJobFormPage1 (props) {
        </div>
       </FormField>
 
-      {/* START DATE */}
+      {/* START DATE
+        TODO: Implement ASAP one day
+     
+     
+      */}
       <FormField title="Start date for job">
         <DateTimePicker
           className={props.page.page1PropsErrorMap.startDate ? error + ' ' + inlineDate : inlineDate}
@@ -145,8 +149,10 @@ export default function CreateJobFormPage1 (props) {
         {props.page.MAX_CHARS_compensation - props.page.compensation.length + " characters left"}
       </FormField>
 
-      <button onClick={(e) => props.back(props)} className={saveBtn + " " + navBackBtn}>Back</button>
-      <button onClick={(e) => props.next(props)} className={saveBtn + " " + navSaveBtn}>Save</button>
+      <div className={saveBtnContainer}>
+          <button onClick={(e) => props.back(props)} className={saveBtn + " " + navBackBtn}>Back</button>
+          <button onClick={(e) => props.next(props)} className={saveBtn + " " + navSaveBtn}>Save</button>
+      </div>
 
     </div>
   )

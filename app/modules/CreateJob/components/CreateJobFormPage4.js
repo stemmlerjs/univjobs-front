@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-import { pageContainer, input, textarea, saveBtnList, saveBtn, saveBtnContainer, selectedSaveBtn, inlineDate,
+import { lastPageContainer, input, textarea, saveBtnList, saveBtn, saveBtnContainer, selectedSaveBtn, inlineDate,
   navSaveBtn, navBackBtn, error, leftDivider, rightDivider, sectionHeader, sectionBody, italics, specialInput, reminderContainer,
   bold, detailsContainer, detailsLeft, detailsRight, detailsHeaderLeft, detailsTitle, detailsBody, jobIndustry, detailsHeaderRight,
   marginTop, table } from '../styles/CreateJobFormPageStyles.css'
@@ -9,7 +9,7 @@ import { Combobox, DropdownList, DateTimePicker, Calendar} from 'react-widgets'
 export default function CreateJobFormPage4 (props) {
   console.log("PAGE 4 Props", props)
   return (
-    <div className={pageContainer}>
+    <div className={lastPageContainer}>
 
       {/* REMINDER CONTAINER */}
       <div className={reminderContainer}>
