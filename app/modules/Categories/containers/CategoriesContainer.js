@@ -5,6 +5,10 @@ import { Title } from 'modules/SharedComponents'
 import { authRedirectFilter } from 'config/routes'
 import { title, mainContainer, container, categories, category, categoryText, headingStyle, subHeadingStyle} from '../styles/CategoriesContainerStyles.css'
 
+/*TODO: Refactor if needed
+ *
+ *NOTE:
+ * Inline styles are done, any suggestions?*/
 const divStyle = {
     oneTimeGig: {
         backgroundImage: `url(https://cloud.githubusercontent.com/assets/7959179/25368698/68f216e4-294c-11e7-9d76-a410cdf59610.jpg)`,
