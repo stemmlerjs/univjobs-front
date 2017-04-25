@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
 import { SkyLightStateless } from 'react-skylight'
-import { GenericCard, ApplicationModal, APPLICATIONS_CARD_TYPE } from '../../SharedComponents'
+import { GenericCard, ApplicationModal, APPLICATIONS_CARD_TYPE, Title } from '../../SharedComponents'
 import { rootComponentContainer, margin, pageHeaderSection,
   pageTitle, title, crossHair } from 'sharedStyles/styles.css'
 import { pageMainJobCards } from '../styles/index.css'
@@ -12,11 +12,10 @@ export default function Applications ({user, applications, industries, jobTypes,
     <div className={margin}>
 
     {/* TITLE */}
-     <div className={pageHeaderSection}>
-      <div className={pageTitle}>
-       <h1 className={title}>MY APPLICATIONS</h1>
-      </div>
-     </div>
+    <Title 
+      titleName="MY APPLICANTS"
+      subHeading="Click on a student to get more in-depth look at their profile and view their applicantion."
+    />
 
      {/*MAIN (Cards List)
        NOTE: Reference for iterating using map

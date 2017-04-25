@@ -198,11 +198,14 @@
 }
 
 .detailsLeft {
-      width: 43%;
+      width: 40%;
+      margin: .5%;
+
 }
 
 .detailsRight {
-  width: 35%;
+  width: 40%;
+      margin: .5%;
 }
 
 .detailsHeaderLeft {

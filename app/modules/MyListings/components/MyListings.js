@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react'
 import { DropdownList } from 'react-widgets'
 import { StudentCard } from 'modules/Dashboard'
 import { JobCard, JobCardModal } from 'modules/Dashboard'
-import { GenericCard, DASHBOARD_CARD_TYPE } from 'modules/SharedComponents'
+import { GenericCard, DASHBOARD_CARD_TYPE, Title } from 'modules/SharedComponents'
 import { SkyLightStateless } from 'react-skylight'
 import { hideModal } from 'redux/modules/dashboard/dashboard'
 import { rootComponentContainer, margin, pageHeaderSection,
@@ -38,11 +38,10 @@ export default function MyListings ({jobs, handleCardClick, industries, jobTypes
 	            <div className={margin}>
 
   	            {/* TITLE */}
-  	            <div className={pageHeaderSection}>
-  	                <div className={pageTitle}>
-  	                    <h1 className={title}>MY LISTINGS</h1>
-  	                </div>
-  	            </div>
+                <Title 
+                    titleName="MY LISTINGS"
+                    subHeading="Once an applicant applies to your listing, you can no longer edit."
+                />
         
   	            {/*MAIN (Cards List)
   	                NOTE: Reference for iterating using map

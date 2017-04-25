@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react'
 import { Link } from 'react-router'
 import { SidebarContainer } from 'modules/Main'
+import { Title } from 'modules/SharedComponents'
 import { authRedirectFilter } from 'config/routes'
 import { title, mainContainer, container, categories, category, categoryText, headingStyle, subHeadingStyle } from '../styles/CategoriesContainerStyles.css'
 
@@ -70,14 +71,6 @@ const Categories = function(props) {
   )
 }
 
-const Title = function({subHeading}) {
-  return (
-    <div className={title}>
-      <h1>PICK A JOB TYPE YOU WANT</h1>
-      <p>{subHeading}</p>
-    </div>
-  )
-}
 
 const CategoriesContainer = React.createClass({
   contextTypes: {
@@ -122,7 +115,10 @@ const CategoriesContainer = React.createClass({
     return (
       <div className={mainContainer}>
         <SidebarContainer isAStudent={false} />
-        <Title subHeading="I want to post a job for..."/>
+        <Title 
+            titleName="PICK A JOB TYPE YOU WANT"
+            subHeading="I want to post a job for..."
+        />
         <Categories/>
       </div>
     )
