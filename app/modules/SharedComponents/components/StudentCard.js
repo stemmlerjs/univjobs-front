@@ -22,7 +22,7 @@ StudentCard.propTypes = {
 }
 */
 
-const StudentCard = () => (
+const StudentCard = ({isInviting}) => (
     <div className={cardContainer}>
         <div className={card}>
           <header className={cardHeaderContainer}>
@@ -94,16 +94,23 @@ const StudentCard = () => (
                 <span className={pastJobsInfo}>Line Cook at Jack Astors Grill</span>
             </div>
         </div>
-        <div className={buttonsContainer}>
-                <button className={buttonItems}>
-                    <i className={"fa fa-file-pdf-o " + buttonIcons} aria-hidden="true"></i>
-                    Resume
-                </button>
-                <button className={buttonItems}>
-                    <i className={"fa fa-thumbs-o-up " + buttonIcons} aria-hidden="true"></i>
-                    Hire
-                </button>
-        </div>
+
+            {/*Student invited or hired? */}    
+            { isInviting ? 
+                <div className={buttonsContainer}>
+                </div>
+
+                :<div className={buttonsContainer}>
+                    <button className={buttonItems}>
+                        <i className={"fa fa-file-pdf-o " + buttonIcons} aria-hidden="true"></i>
+                            Resume
+                    </button>
+                    <button className={buttonItems}>
+                        <i className={"fa fa-thumbs-o-up " + buttonIcons} aria-hidden="true"></i>
+                            Hire
+                    </button>
+                </div>
+            }
         </div>
     </div>
 )

@@ -61,19 +61,18 @@ export default function EmployerDashboard ({students}) {
               />
             ))}
 */}
-          <StudentCard />
-          <StudentCard />
-          <StudentCard />
-          <StudentCard />
-          <StudentCard />
-          <StudentCard />
-          <StudentCard />
-          <StudentCard />
+          <StudentCard isInviting={true}/>
+          <StudentCard isInviting={true}/>
+          <StudentCard isInviting={true}/>
+          <StudentCard isInviting={true}/>
+          <StudentCard isInviting={true}/>
+          <StudentCard isInviting={true}/>
+          <StudentCard isInviting={true}/>
+          <StudentCard isInviting={true}/>
             <div className={overflowFix}></div>
             <div className={overflowFix}></div>
             <div className={overflowFix}></div>
             <div className={overflowFix}></div>
-          </div>
         </div>
       </div>
     </div>
