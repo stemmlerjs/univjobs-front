@@ -86,6 +86,10 @@ const categoryList = [{
   type: 'pt'
 }]
 
+/*TODO: Refactor, rendering too slow
+ *
+ * */
+
 const Category = function({heading, subHeading, type, backgroundImage}) {
       if(type == 'otg') {
           return (

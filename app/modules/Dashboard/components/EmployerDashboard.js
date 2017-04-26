@@ -1,23 +1,24 @@
 import React, { PropTypes } from 'react'
-import { rootComponentContainer, btn } from 'sharedStyles/styles.css'
 import { DropdownList } from 'react-widgets'
+import { StudentCard, Title } from 'modules/SharedComponents'
+import { rootComponentContainer, btn } from 'sharedStyles/styles.css'
+import { container } from 'sharedStyles/cardContainer.css'
 import { pageContainer, pageHeaderSection, pageTitle, title, pageFiltersAndSearch, pageMainStudentCards, input,
   campusDropdown, gradDateDropdown, filtersDivider, margins, overflowFix } from '../styles/EmployerDashboardStyles.css'
-import { StudentCard } from 'modules/Dashboard'
 
 
 export default function EmployerDashboard ({students}) {
   return (
     <div className={rootComponentContainer}>
-      <div className={margins}>
         <div className={pageHeaderSection}>
 
           {/* TITLE */}
-          <div className={pageTitle}>
-            <h1 className={title}>SEARCH STUDENTS</h1>
-          </div>
+          <Title 
+            titleName="SEARCH STUDENTS"
+            subHeading="In the future, you can invite students to apply to the jobs you posted."
+          />
 
-      {/* FILTERS */}
+      {/* FILTERS 
       <div className={pageFiltersAndSearch}>
            <input className={input}
                 placeholder="Search students">
@@ -38,10 +39,10 @@ export default function EmployerDashboard ({students}) {
           />
           <button className={btn}>Filter</button>
         </div>
-
+*/}
           {/* MAIN (Cards list) */}
-          <div className={pageMainStudentCards}>
-
+          <div className={container}>
+          {/*
             {students.map((student) => (
               <StudentCard 
                 key={student.user.email} 
@@ -59,7 +60,15 @@ export default function EmployerDashboard ({students}) {
                 sports={student.sports}
               />
             ))}
-
+*/}
+          <StudentCard />
+          <StudentCard />
+          <StudentCard />
+          <StudentCard />
+          <StudentCard />
+          <StudentCard />
+          <StudentCard />
+          <StudentCard />
             <div className={overflowFix}></div>
             <div className={overflowFix}></div>
             <div className={overflowFix}></div>
