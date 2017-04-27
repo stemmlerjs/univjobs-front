@@ -16,8 +16,8 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
 // ================CSS IMPORTS============================== //
 import { flexibleCardContainer } from 'sharedStyles/cardContainer.css'
-import { rootComponentContainer, margin, pageHeaderSection,
-  pageTitle, title, crossHair } from 'sharedStyles/styles.css'
+import { rootComponentContainer, margins, title, 
+        crossHair } from 'sharedStyles/styles.css'
 
 
 /*TODO: Define the required typechecking variables
@@ -38,7 +38,7 @@ Applications.propTypes = {
 export default function Applications ({user, applications, industries, jobTypes, applicationModal, onShowModal, onHideModal}) {
   return (
   <div className={rootComponentContainer}>
-    <div className={margin}>
+    <div className={margins}>
 
     {/* TITLE */}
     <Title 

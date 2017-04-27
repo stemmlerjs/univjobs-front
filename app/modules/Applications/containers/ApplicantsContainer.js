@@ -1,26 +1,44 @@
+/*ApplicatntsContainer
+ *
+ *The container logic that renders all jobs students applied to
+ * */
+
+// ==============REACT BUILTIN========================= //
 import React, { Component, PropTypes } from 'react'
+
+// ==============MADE COMPONENTS========================= //
 import { SidebarContainer } from 'modules/Main'
 import { Applicants, NavTab } from 'modules/Applications'
-import pageContainer  from '../styles/index.css'
+
+// ==============THIRD PARTY IMPORTS========================= //
 import axios from 'axios'
-import * as list from 'helpers/lists'
-import * as utils from 'helpers/utils'
+import ReduxToastr from 'react-redux-toastr'
+import {toastr} from 'react-redux-toastr'
 
 // =============REDUX STATE & IMPORTS========================== //
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as userActionCreators from 'redux/modules/user/user'
+import * as list from 'helpers/lists'
+import * as utils from 'helpers/utils'
+
+
+// =============EXTRA IMPORTS========================== //
 import { authRedirectFilter } from 'config/routes'
 
-import ReduxToastr from 'react-redux-toastr'
-import {toastr} from 'react-redux-toastr'
+// ==============CSS IMPORTS============================= //
+import pageContainer  from 'sharedStyles/sharedContainerStyles.css'
 
-
-const actionCreators = {
-  ...userActionCreators,
-}
 
 const ApplicantsContainer = React.createClass({
+
+    /*TODO: Define the required typechecking variables
+    *
+    * */
+    propTypes: {
+	    user: PropTypes.object 
+    
+    },
 	contextTypes: {
 		router: PropTypes.object.isRequired,
 		store: PropTypes.object.isRequired
@@ -85,7 +103,6 @@ const ApplicantsContainer = React.createClass({
   	this.context.store.dispatch(actionCreators.applicationHideModal(id))
   },
 
-
   componentWillMount() {
 	console.log("componentWillMount")
 	this.doRedirectionFilter()
@@ -93,7 +110,6 @@ const ApplicantsContainer = React.createClass({
 	.then(this.props.closeOverlay())
 
   },
-
 
   componentWillUnmount() {
     console.log("Component WillUnmount")
@@ -137,7 +153,9 @@ function mapStateToProps({user}) {
   **/
 
 function mapActionCreatorsToProps(dispatch) {
-  return bindActionCreators(actionCreators, dispatch)
+  return bindActionCreators({
+      ...userActionCreators,
+  }, dispatch)
 }
 
 // connect(specify_what_keys_you_want_from_store, wraps_dispatch_around_action_creators)(container)

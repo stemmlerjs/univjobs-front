@@ -1,0 +1,43 @@
+/*NOTE:
+ *
+ * Most of the classes in here are commonly used throughtout most components
+ *
+ * */
+
+
+/*NOTE:
+ *
+    root component container should be used in the enclosing div
+    for any react functional stateless component because it perfectly takes
+    up the other real-estate on the page given that there is a sidebar (with a
+    width of 87 pixels).
+*/
+.rootComponentContainer {
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    left: 87px;
+    right: 0px;
+}
+
+.margins {
+    margin-left: 2%;
+    margin-right: 2%;
+}
+
+
+/*AKA pageHeaderSection*/
+.marginBottom {
+  margin-bottom: 60px;
+}
+
+.title {
+  font-size:37px;
+}
+
+.crossHair {
+	/*Adds a crosshair icon when hovering a tag*/
+	cursor: pointer;
+}
+
+

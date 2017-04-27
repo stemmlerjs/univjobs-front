@@ -20,6 +20,10 @@
   font-size:37px;
 }
 
+/*Check Application/styles 
+ *might be the same
+ * */
+
 .pageFiltersAndSearch {
   display: flex;
   flex-direction: row;

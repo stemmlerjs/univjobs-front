@@ -3,7 +3,6 @@ import React, { PropTypes } from 'react'
 import { authRedirectFilter } from 'config/routes'
 import { SidebarContainer } from 'modules/Main'
 import { EmployerProfile } from 'modules/Profile'
-import { pageContainer } from '../styles/EmployerProfileContainerStyles.css'
 import axios from 'axios'
 import * as lists from 'helpers/lists'
 
@@ -20,6 +19,8 @@ var ReactToastr = require("react-toastr");
 var {ToastContainer} = ReactToastr; // This is a React Element.
 var ToastMessageFactory = React.createFactory(ReactToastr.ToastMessage.animation);
 // ======================================
+
+import { pageContainer } from 'sharedStyles/sharedContainerStyles.css'
 
 const actionCreators = {
   ...listActionCreators,

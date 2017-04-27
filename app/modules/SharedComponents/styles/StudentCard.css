@@ -20,6 +20,9 @@
 }
 
 
+/*Layout for the cards
+ * TODO: Maybe put it in cardContinaer
+ * */
 .cardContainer {
 	list-style: none;
 	margin-top: 20px;
@@ -27,8 +30,8 @@
 	padding: 0px;
 	align-items: flex-start;
 	width: 350px;
-	padding-left: 15px;
-	padding-right: 15px;
+	padding-left: 10px;
+	padding-right: 10px;
 }
 
 .card {

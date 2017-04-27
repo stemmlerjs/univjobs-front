@@ -9,10 +9,8 @@ import React, { Component, PropTypes } from 'react'
 // ==============MADE COMPONENTS========================= //
 import { SidebarContainer } from 'modules/Main'
 import { Applications } from 'modules/Applications'
-import { authRedirectFilter } from 'config/routes'
 
 // ==============THIRD PARTY IMPORTS========================= //
-import pageContainer  from '../styles/index.css'
 import axios from 'axios'
 import ReduxToastr from 'react-redux-toastr'
 import {toastr} from 'react-redux-toastr'
@@ -25,6 +23,12 @@ import * as applicationActionCreators from 'redux/modules/application/applicatio
 import * as list from 'helpers/lists'
 import * as utils from 'helpers/utils'
 import * as application from 'helpers/application'
+
+// =============EXTRA IMPORTS========================== //
+import { authRedirectFilter } from 'config/routes'
+
+// ==============CSS IMPORTS============================= //
+import pageContainer  from 'sharedStyles/sharedContainerStyles.css'
 
 
 const ApplicationsContainer = React.createClass({
