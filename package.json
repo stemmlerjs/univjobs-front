@@ -8,6 +8,7 @@
     "proxy": "nodemon proxy.js",
     "production": "webpack -p",
     "test": "mocha --compilers js:babel-register --require babel-polyfill --recursive app/tests",
+    "e2eTest": "codeceptjs run --verbose",
     "lint": "eslint app/.; exit 0",
     "fix": "eslint --fix app/.; exit 0"
   },

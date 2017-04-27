@@ -1,10 +1,39 @@
+/*Applications
+ *
+ * This components is to display the students who applied to the current job posting being viewed by the employer
+ *
+ * */
+
+// ==============REACT BUILTIN========================= //
 import React, { PropTypes } from 'react'
-import { SkyLightStateless } from 'react-skylight'
+
+// ==============MADE COMPONENTS========================= //
 import { GenericCard, ApplicationModal, APPLICATIONS_CARD_TYPE, Title } from '../../SharedComponents'
+
+// ==============THIRD PARTY IMPORTS========================= //
+import { SkyLightStateless } from 'react-skylight'
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+
+// ================CSS IMPORTS============================== //
+import { flexibleCardContainer } from 'sharedStyles/cardContainer.css'
 import { rootComponentContainer, margin, pageHeaderSection,
   pageTitle, title, crossHair } from 'sharedStyles/styles.css'
-import { pageMainJobCards } from '../styles/index.css'
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+
+
+/*TODO: Define the required typechecking variables
+ *
+ * */
+Applications.propTypes = {
+	    user: PropTypes.object.isRequired, 
+        applications : PropTypes.object,
+        industries : PropTypes.object,
+        jobTypes : PropTypes.object, 
+        applicationModal: PropTypes.object,
+      	onShowModal: PropTypes.func,
+      	onHideModal: PropTypes.func,
+        cardType: PropTypes.string,
+        handleCardClick: PropTypes.func
+}
 
 export default function Applications ({user, applications, industries, jobTypes, applicationModal, onShowModal, onHideModal}) {
   return (
@@ -22,14 +51,14 @@ export default function Applications ({user, applications, industries, jobTypes,
             https://facebook.github.io/react/docs/multiple-components.html#dynamic-children
      */}
 
-     <div className={pageMainJobCards}>
+     <div className={flexibleCardContainer}>
       { applications ? applications.map((application) => (
           <div className={application ? crossHair : ''}
                key={application.id}>
             <GenericCard
               cardType={APPLICATIONS_CARD_TYPE}
               job={application}
-            	jobTypes={jobTypes}
+              jobTypes={jobTypes}
               industries={industries}
               handleCardClick={onShowModal}>
               <button/>
@@ -64,5 +93,6 @@ export default function Applications ({user, applications, industries, jobTypes,
     </div>
 
    )
+
 }
 

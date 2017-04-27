@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react'
 import { DropdownList } from 'react-widgets'
 import { StudentCard, Title } from 'modules/SharedComponents'
 import { rootComponentContainer, btn } from 'sharedStyles/styles.css'
-import { container } from 'sharedStyles/cardContainer.css'
+import { flexibleCardContainer } from 'sharedStyles/cardContainer.css'
 import { pageContainer, pageHeaderSection, pageTitle, title, pageFiltersAndSearch, pageMainStudentCards, input,
   campusDropdown, gradDateDropdown, filtersDivider, margins, overflowFix } from '../styles/EmployerDashboardStyles.css'
 
@@ -41,7 +41,7 @@ export default function EmployerDashboard ({students}) {
         </div>
 */}
           {/* MAIN (Cards list) */}
-          <div className={container}>
+          <div className={flexibleCardContainer}>
           {/*
             {students.map((student) => (
               <StudentCard 

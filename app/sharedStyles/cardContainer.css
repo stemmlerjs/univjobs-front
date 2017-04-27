@@ -3,7 +3,7 @@
  *This css class enables 3 * 3 cards to show up per row
  * */
 
-.container {
+.flexibleCardContainer {
 	width: 100%;
 	text-align: center;
 	margin: auto;

@@ -1,14 +1,29 @@
+// ==============REACT BUILTIN========================= //
 import React, { PropTypes } from 'react'
-import { SkyLightStateless } from 'react-skylight'
-import { Combobox } from 'react-widgets'
+
+// ==============MADE COMPONENTS========================= //
 import { NavTab } from 'modules/Applications'
 import { GenericCard, ApplicationModal, APPLICATIONS_CARD_TYPE, StudentCard, Title } from '../../SharedComponents'
-import { rootComponentContainer, margin, pageHeaderSection,
-  pageTitle, title, crossHair } from 'sharedStyles/styles.css'
-import { pageMainJobCards, pageFiltersAndSearch } from '../styles/index.css'
+
+// ==============THIRD PARTY IMPORTS========================= //
+import { SkyLightStateless } from 'react-skylight'
+import { Combobox } from 'react-widgets'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
+
+// ================CSS IMPORTS============================== //
+import { rootComponentContainer, margin, pageHeaderSection,
+  pageTitle, title, crossHair } from 'sharedStyles/styles.css'
+import { flexibleCardContainer } from 'sharedStyles/cardContainer.css'
+import { pageFiltersAndSearch } from '../styles/index.css'
+
 const data = ['Job1', 'Job2', 'Job3']
+
+Applicants.propTypes = {
+    //Insert typechecking variables
+
+}
+
 
 export default function Applicants ({}) {
   return (
@@ -32,7 +47,7 @@ export default function Applicants ({}) {
             https://facebook.github.io/react/docs/multiple-components.html#dynamic-children
      */}
 
-      <div className={pageMainJobCards}>
+      <div className={flexibleCardContainer}>
           <StudentCard/>
           <StudentCard/>
           <StudentCard/>

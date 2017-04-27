@@ -1,29 +1,47 @@
+/*ApplicationsContainer
+ *
+ *The container logic that renders all student applications for a particular job posting from an employer
+ * */
+
+// ==============REACT BUILTIN========================= //
 import React, { Component, PropTypes } from 'react'
+
+// ==============MADE COMPONENTS========================= //
 import { SidebarContainer } from 'modules/Main'
 import { Applications } from 'modules/Applications'
+import { authRedirectFilter } from 'config/routes'
+
+// ==============THIRD PARTY IMPORTS========================= //
 import pageContainer  from '../styles/index.css'
 import axios from 'axios'
-import * as list from 'helpers/lists'
-import * as utils from 'helpers/utils'
-import * as application from 'helpers/application'
+import ReduxToastr from 'react-redux-toastr'
+import {toastr} from 'react-redux-toastr'
 
 // =============REDUX STATE & IMPORTS========================== //
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as userActionCreators from 'redux/modules/user/user'
 import * as applicationActionCreators from 'redux/modules/application/application'
-import { authRedirectFilter } from 'config/routes'
+import * as list from 'helpers/lists'
+import * as utils from 'helpers/utils'
+import * as application from 'helpers/application'
 
-import ReduxToastr from 'react-redux-toastr'
-import {toastr} from 'react-redux-toastr'
-
-
-const actionCreators = {
-  ...userActionCreators,
-  ...applicationActionCreators,
-}
 
 const ApplicationsContainer = React.createClass({
+
+    /*TODO: Define the required typechecking variables
+    *
+    * */
+    propTypes: {
+        //Insert typechecking variables
+	    user: PropTypes.object, 
+        applications : PropTypes.object,
+        industries : PropTypes.object,
+        jobTypes : PropTypes.object, 
+        applicationModal: PropTypes.object,
+      	onShowModal: PropTypes.func,
+      	onHideModal: PropTypes.func
+    },
 	contextTypes: {
 		router: PropTypes.object.isRequired,
 		store: PropTypes.object.isRequired
@@ -74,7 +92,7 @@ const ApplicationsContainer = React.createClass({
 
   showModal (e, j) {
   	e.preventDefault()
-	debugger
+	//debugger
 	  console.log('ON SHOW MODAL')
 	  console.log(j)
 	  this.context.store.dispatch(actionCreators.applicationModalClicked(j.id))
@@ -85,7 +103,6 @@ const ApplicationsContainer = React.createClass({
   	this.context.store.dispatch(actionCreators.applicationHideModal(id))
   },
 
-
   componentWillMount() {
 	console.log("componentWillMount")
 	this.doRedirectionFilter()
@@ -93,7 +110,6 @@ const ApplicationsContainer = React.createClass({
 	.then(this.props.closeOverlay())
 
   },
-
 
   componentWillUnmount() {
     console.log("Component WillUnmount")
@@ -148,7 +164,10 @@ function mapStateToProps({user, application, profile, createJob}) {
   **/
 
 function mapActionCreatorsToProps(dispatch) {
-  return bindActionCreators(actionCreators, dispatch)
+  return bindActionCreators({
+    ...userActionCreators,
+    ...applicationActionCreators,
+  }, dispatch)
 }
 
 // connect(specify_what_keys_you_want_from_store, wraps_dispatch_around_action_creators)(container)
