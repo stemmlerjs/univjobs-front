@@ -8,7 +8,7 @@ import { bindActionCreators } from 'redux'
 
 // ============= OTHER IMPORTS========================== //
 import { ContactPage } from 'modules/ContactPage'
-import { Footer, RegularNav } from 'modules/Main'
+import { Footer, RegularNav } from 'modules/SharedComponents'
 import { contactPage } from '../styles/ContactPage.css'
 import { sendMessage } from 'helpers/contact'
 // ==================MESSAGES============================== //

@@ -1,6 +1,10 @@
-import React from 'react'
+// =============REACT BULTINS========================== //
+import React, { PropTypes } from 'react'
+
+// ==============THIRD-PARTY COMPONENTS================ //
 import { DropdownList } from 'react-widgets'
 
+// ==============CSS IMPORTS=========================== //
 import { blackBackGround,flexContainer, flexRowContainer, flexRowItem,
          fontLighter, header, headerContactForm, input, 
          marginReduce, paragraphContainer, paragraphItem,
@@ -83,5 +87,18 @@ const AboutPage = () => (
         </div>
 
 )
+
+
+/*AboutPage.propTypes
+ * 
+ * Insert all the typechecking variables
+ *
+ * */
+
+AboutPage.propTypes = {
+
+
+}
+
 
 export default AboutPage

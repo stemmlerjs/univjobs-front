@@ -1,0 +1,21 @@
+/*cardContainer
+ *
+ *This css class enables 3 * 3 cards to show up per row
+ * */
+
+.container {
+	width: 100%;
+	text-align: center;
+	margin: auto;
+	margin-top: 4%;
+	margin-bottom: 3%;
+	/* For Safari */
+	display: -webkit-flex;
+	-webkit-flex-direction: row;
+	
+	/* Chrome */
+	display: flex;
+	flex-direction: row;
+	
+	flex-wrap: wrap;
+}

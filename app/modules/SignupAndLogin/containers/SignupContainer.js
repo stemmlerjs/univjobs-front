@@ -13,7 +13,7 @@ import { input, errorMessage, loginBtn } from '../styles/SignupContainerStyles.c
 
 import StudentSignup from '../components/StudentSignup'
 import EmployerSignup from '../components/EmployerSignup'
-import { Navigation, Footer } from 'modules/Main'
+import { Navigation, Footer } from 'modules/SharedComponents'
 
 // ==================MESSAGES============================== //
 import ReduxToastr from 'react-redux-toastr'

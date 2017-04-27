@@ -1,5 +1,10 @@
+// =============REACT BULTINS========================== //
 import React, { PropTypes } from 'react'
 import { Link } from 'react-router'
+
+// ============= MADE COMPONENTS========================== //
+import { AboutPage } from 'modules/AboutPage'
+import { Footer, RegularNav } from 'modules/SharedComponents'
 
 // =============REDUX STATE & IMPORTS========================== //
 import { connect } from 'react-redux'
@@ -7,17 +12,12 @@ import { bindActionCreators } from 'redux'
 import * as userActionCreators from 'redux/modules/user/user'
 import { authRedirectFilter } from 'config/routes'
 
-// ============= OTHER IMPORTS========================== //
-import { AboutPage } from 'modules/AboutPage'
-import { Footer, RegularNav } from 'modules/Main'
-
-
-const actionCreators = {
-      ...userActionCreators,
-}
-
 
 const AboutPageContainer = React.createClass({
+    propTypes: {
+        //Insert variables with data types for typechecking  
+    
+    },
     contextTypes: {
         router: PropTypes.object.isRequired,
         store: PropTypes.object.isRequired
@@ -52,7 +52,7 @@ const AboutPageContainer = React.createClass({
      *               **/
 
     function mapActionCreatorsToProps(dispatch) {
-          return bindActionCreators(actionCreators, dispatch)
+          return bindActionCreators({}, dispatch)
     }
 
     // connect(specify_what_keys_you_want_from_store, wraps_dispatch_around_action_creators)(container)
