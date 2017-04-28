@@ -1,33 +1,32 @@
-
+// ==============REACT BUILTIN========================= //
 import React, { PropTypes } from 'react'
-import { mainContainer, circle, selectedCircle } from '../styles/CreateJobContainerStyles.css'
-import { SidebarContainer } from 'modules/Main'
-import SkyLight from 'react-skylight'
-import { authRedirectFilter } from 'config/routes'
-import * as lists from 'helpers/lists'
 
+// ==============MADE COMPONENTS========================= //
+import { SidebarContainer } from 'modules/Main'
 import CreateJobFormPage1 from '../components/CreateJobFormPage1'
 import CreateJobFormPage2 from '../components/CreateJobFormPage2'
 import CreateJobFormPage3 from '../components/CreateJobFormPage3'
 import CreateJobFormPage4 from '../components/CreateJobFormPage4'
+
+// ==============THIRD PARTY IMPORTS========================= //
+import SkyLight from 'react-skylight'
+
+// ================CSS IMPORTS============================== //
+import { mainContainer, circle, selectedCircle } from '../styles/CreateJobContainerStyles.css'
 
 // ====== REDUX AND STATE IMPORTS =======
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as createJobActionCreators from 'redux/modules/createjob/createjob'
 import * as listActionCreators from 'redux/modules/list/list'
-// ======================================
+import { authRedirectFilter } from 'config/routes'
+import * as lists from 'helpers/lists'
 
 // ============= MESSAGES ===============
 var ReactToastr = require("react-toastr");
 var {ToastContainer} = ReactToastr; // This is a React Element.
 var ToastMessageFactory = React.createFactory(ReactToastr.ToastMessage.animation);
-// ======================================
 
-const actionCreators = {
-  ...createJobActionCreators,
-  ...listActionCreators,
-}
 
 /* =============================================================
 * Circles Components
@@ -87,6 +86,44 @@ const FormHeader = function({stepNum, totalSteps, headerText}) {
 */
 
 const CreateJobContainer = React.createClass({
+  propTypes: {
+      user: PropTypes.object,
+      emailVerified: PropTypes.bool, 
+      currentPage: PropTypes.number,
+      industry: PropTypes.number,
+      industryList: PropTypes.array,
+      companyName: PropTypes.string,
+      logoUrl: PropTypes.string,
+      page1: PropTypes.object,
+      jobTitle: PropTypes.string,
+      isPayingJob: PropTypes.bool,
+      //startDate assumes that is a number, not a string
+      startDate: PropTypes.number,
+      responsibilities: PropTypes.string,
+      qualifications: PropTypes.string,
+      desiredSkills: PropTypes.string,
+      internshipLocation: PropTypes.string,
+      remoteWork: PropTypes.bool,
+      compensation: PropTypes.string,
+      MAX_CHARS_responsibilities: PropTypes.number,
+      MAX_CHARS_qualifications: PropTypes.number,
+      MAX_CHARS_desiredSkills: PropTypes.number,
+      MAX_CHARS_compensation: PropTypes.number,
+      page1PropsErrorMap: PropTypes.object,
+      page2: PropTypes.object,
+      question1: PropTypes.string,
+      question2: PropTypes.string,
+      MAX_CHARS_question: PropTypes.number,
+      page2PropsErrorMap: PropTypes.object,
+      page3: PropTypes.object,
+      maxApplicants: PropTypes.number,
+      page3PropsErrorMap: PropTypes.object,
+      page4: PropTypes.object,
+      errorExist: PropTypes.bool,
+      errors: PropTypes.string,
+      submitSucess: PropTypes.bool
+  },
+
   contextTypes: {
     router: PropTypes.object.isRequired,
     store: PropTypes.object.isRequired,
@@ -101,7 +138,6 @@ const CreateJobContainer = React.createClass({
   * @void
   *
   */
-
   componentWillMount() {
       this.doRedirectionFilter()
         .then(this.props.handleGetIndustries())
@@ -377,7 +413,7 @@ const CreateJobContainer = React.createClass({
 })
 
 function mapStateToProps({createJob, profile, user, list}) {
-  console.log(createJob, "NEW PROPS")
+  //console.log(createJob, "NEW PROPS")
   return {
     user: {
       emailVerified: user.emailVerified ? user.emailVerified : false
@@ -437,7 +473,10 @@ function mapStateToProps({createJob, profile, user, list}) {
 
 
 function mapActionCreatorsToProps(dispatch) {
-  return bindActionCreators(actionCreators, dispatch)
+  return bindActionCreators({
+      ...createJobActionCreators,
+      ...listActionCreators,
+  }, dispatch)
 }
 
 export default connect(mapStateToProps, mapActionCreatorsToProps)(CreateJobContainer)

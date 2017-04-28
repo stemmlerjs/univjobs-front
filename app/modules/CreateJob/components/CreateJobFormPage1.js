@@ -1,12 +1,21 @@
+// ==============REACT BUILTIN========================= //
 import React, { PropTypes } from 'react'
-import { pageContainer, input, textArea, saveBtnList, saveBtn, saveBtnContainer, selectedSaveBtn, inlineDate,
-  navSaveBtn, navBackBtn, error } from '../styles/CreateJobFormPageStyles.css'
+
+// ==============MADE COMPONENTS========================= //
 import { FormField } from 'modules/CreateJob'
+
+// ==============THIRD PARTY IMPORTS========================= //
 import { Combobox, DropdownList, DateTimePicker, Calendar} from 'react-widgets'
+
+// ================CSS IMPORTS============================== //
+import { pageContainer, input, textArea, 
+        saveBtnList, saveBtn, saveBtnContainer, 
+        selectedSaveBtn, inlineDate, navSaveBtn, 
+        navBackBtn, error } from '../styles/CreateJobFormPageStyles.css'
 
 
 export default function CreateJobFormPage1 (props) {
-  console.log(props)
+//  console.log(props)
   /*
    * TODO: 
    *  [] Put this function to the container

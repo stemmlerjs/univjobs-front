@@ -1,13 +1,25 @@
+// ==============REACT BUILTIN========================= //
 import React, { PropTypes } from 'react'
-import { lastPageContainer, input, textarea, saveBtnList, saveBtn, saveBtnContainer, selectedSaveBtn, inlineDate,
-  navSaveBtn, navBackBtn, error, leftDivider, rightDivider, sectionHeader, sectionBody, italics, specialInput, reminderContainer,
-  bold, detailsContainer, detailsLeft, detailsRight, detailsHeaderLeft, detailsTitle, detailsBody, jobIndustry, detailsHeaderRight,
-  marginTop, table } from '../styles/CreateJobFormPageStyles.css'
+
+// ==============MADE COMPONENTS========================= //
 import { FormField } from 'modules/CreateJob'
+
+// ==============THIRD PARTY IMPORTS========================= //
 import { Combobox, DropdownList, DateTimePicker, Calendar} from 'react-widgets'
 
+// ================CSS IMPORTS============================== //
+import { lastPageContainer, input, textarea, 
+        saveBtnList, saveBtn, saveBtnContainer, 
+        selectedSaveBtn, inlineDate, navSaveBtn, 
+        navBackBtn, error, leftDivider, 
+        rightDivider, sectionHeader, sectionBody, 
+        italics, specialInput, reminderContainer, bold, 
+        detailsContainer, detailsLeft, detailsRight, 
+        detailsHeaderLeft, detailsTitle, detailsBody, 
+        jobIndustry, detailsHeaderRight, marginTop, table } from '../styles/CreateJobFormPageStyles.css'
+
 export default function CreateJobFormPage4 (props) {
-  console.log("PAGE 4 Props", props)
+//  console.log("PAGE 4 Props", props)
   return (
     <div className={lastPageContainer}>
 

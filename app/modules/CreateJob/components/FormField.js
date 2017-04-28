@@ -1,4 +1,7 @@
+// ==============REACT BUILTIN========================= //
 import React, { PropTypes } from 'react'
+
+// ================CSS IMPORTS============================== //
 import { fieldContainer, formFieldName, formFieldContent } from '../styles/FormFieldStyles.css'
 
 ProfileField.propTypes = {
