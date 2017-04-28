@@ -1,6 +1,10 @@
+// ==============REACT BUILTINS================ //
 import React from 'react'
+
+// ==============THIRD PARTY IMPORTS========== //
 import { DropdownList } from 'react-widgets'
 
+// ==============CSS IMPORTS========== //
 import { btn, centeredContainer, contactForm, dropdown,
          flexContainer, header, headerContactForm,
          input, subHeader, userInfoContainer, 

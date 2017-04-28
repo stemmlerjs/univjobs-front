@@ -1,6 +1,5 @@
 // ===============REACT BUILTIN======================//
 import React, { PropTypes } from 'react'
-import { Link } from 'react-router'
 
 // ===============MADE COMPONENTS======================//
 import { Title } from 'modules/SharedComponents'
@@ -101,6 +100,10 @@ const categoryList = [{
 
 
 const CategoriesContainer = React.createClass({
+  propTypes: {
+    categoryList: PropTypes.object.isRequired
+  },
+
   contextTypes: {
     router: PropTypes.object.isRequired,
     store: PropTypes.object.isRequired,
@@ -156,4 +159,5 @@ const CategoriesContainer = React.createClass({
     )
   },
 })
+
 export default CategoriesContainer

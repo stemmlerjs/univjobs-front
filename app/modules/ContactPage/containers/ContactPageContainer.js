@@ -4,21 +4,19 @@ import { Link } from 'react-router'
 // =============REDUX STATE & IMPORTS========================== //
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-// ============================================================ //
 
 // ============= OTHER IMPORTS========================== //
 import { ContactPage } from 'modules/ContactPage'
 import { Footer, RegularNav } from 'modules/SharedComponents'
 import { contactPage } from '../styles/ContactPage.css'
 import { sendMessage } from 'helpers/contact'
+
 // ==================MESSAGES============================== //
 import ReduxToastr from 'react-redux-toastr'
 import {toastr} from 'react-redux-toastr'
 
 // ====================================== //
 
-const actionCreators = {
-}
 
 /*NOTE: Using ES6 class, please see:
  *  https://toddmotto.com/react-create-class-versus-component/
@@ -151,7 +149,7 @@ function mapStateToProps({}) {
   **/
 
 function mapActionCreatorsToProps(dispatch) {
-  return bindActionCreators(actionCreators, dispatch)
+  return bindActionCreators({}, dispatch)
 }
 
 // connect(specify_what_keys_you_want_from_store, wraps_dispatch_around_action_creators)(container)

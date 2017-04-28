@@ -21,7 +21,6 @@ const Categories = function(categoryObject) {
   return (
     <div className={categories}>
       { categoryObject.categoryObject.map(({key, heading, subHeadingForEmp, divStyle, type}) => {
-          console.log(key, heading, subHeadingForEmp, divStyle, type)
          return  <Category
           key={key} 
           heading={heading} 

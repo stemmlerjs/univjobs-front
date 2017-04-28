@@ -46,6 +46,7 @@ const ApplicationsContainer = React.createClass({
       	onShowModal: PropTypes.func,
       	onHideModal: PropTypes.func
     },
+
 	contextTypes: {
 		router: PropTypes.object.isRequired,
 		store: PropTypes.object.isRequired

@@ -87,7 +87,6 @@ const Category = function({heading, subHeading, divStyle, type}) {
 /*Insert typechecking variables
  *
  * */
-const Category = function({heading, subHeading, divStyle, type}) {
 Category.propTypes = {
     heading: PropTypes.string.isRequired,
     subHeading: PropTypes.string.isRequired,
