@@ -20,7 +20,7 @@ import config from 'config'
   * - ks
   */
 
-EmployerProfile.PropTypes = {
+EmployerProfile.propTypes = {
   email: PropTypes.string.isRequired,
   firstName: PropTypes.string.isRequired,
   lastName: PropTypes.string.isRequired,
@@ -48,8 +48,7 @@ export default function EmployerProfile (props) {
   *  @param String - url
   *  @return void
   */
-
-  function placePhoto(element, url) {
+function placePhoto(element, url) {
     // Update the LOGO div with the profile picture
     element.style.backgroundImage = url
     element.style.backgroundRepeat= "no-repeat";

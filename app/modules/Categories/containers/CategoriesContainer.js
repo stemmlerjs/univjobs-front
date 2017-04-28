@@ -1,14 +1,22 @@
+// ===============REACT BUILTIN======================//
 import React, { PropTypes } from 'react'
 import { Link } from 'react-router'
-import { SidebarContainer } from 'modules/Main'
+
+// ===============MADE COMPONENTS======================//
 import { Title } from 'modules/SharedComponents'
+import { SidebarContainer } from 'modules/Main'
+import { Categories } from 'modules/Categories'
+
+// ==============REDUX & OTHER IMPORTS================//
 import { authRedirectFilter } from 'config/routes'
-import { title, mainContainer, container, categories, category, categoryText, headingStyle, subHeadingStyle} from '../styles/CategoriesContainerStyles.css'
+
+// ===============CSS IMPORTS======================//
+import { mainContainer } from '../styles/CategoriesContainerStyles.css'
 
 /*TODO: Refactor if needed
  *
  *NOTE:
- * Inline styles are done, any suggestions?*/
+ * Inline styles and categoryList are defined here to follow the convention of containers are the source of data and business logic, any suggestions?*/
 const divStyle = {
     oneTimeGig: {
         backgroundImage: `url(https://cloud.githubusercontent.com/assets/7959179/25368698/68f216e4-294c-11e7-9d76-a410cdf59610.jpg)`,
@@ -48,6 +56,11 @@ const divStyle = {
     },
 }
 
+/*categoryList
+ *
+ * An array object that per each element contains data for the job categories
+ *
+ * */
 const categoryList = [{
   key: 1,
   heading: 'One-Time Gig',
@@ -85,99 +98,6 @@ const categoryList = [{
   divStyle,
   type: 'pt'
 }]
-
-/*TODO: Refactor, rendering too slow
- *
- * */
-
-const Category = function({heading, subHeading, type, backgroundImage}) {
-      if(type == 'otg') {
-          return (
-          <Link to={`/job/create/${type}`}>
-                  <div className={category} style={divStyle.oneTimeGig}>
-                        <div className={categoryText}>
-                            <h3 className={headingStyle}>{heading}</h3>
-                            <p className={subHeadingStyle}>{subHeading}</p>
-                        </div>
-                  </div>
-                </Link>
-          )
-     } else if(type == 'summer') {
-         return (
-            <Link to={`/job/create/${type}`}>
-                  <div className={category} style={divStyle.summer}>
-                        <div className={categoryText}>
-                            <h3 className={headingStyle}>{heading}</h3>
-                            <p className={subHeadingStyle}>{subHeading}</p>
-                        </div>
-                  </div>
-                </Link>
-         )
-     } else if(type == 'winter') {
-         return (
-            <Link to={`/job/create/${type}`}>
-                  <div className={category} style={divStyle.winter}>
-                        <div className={categoryText}>
-                            <h3 className={headingStyle}>{heading}</h3>
-                            <p className={subHeadingStyle}>{subHeading}</p>
-                        </div>
-                  </div>
-                </Link>
-         )
-     } else if(type == 'freelance') {
-         return (
-            <Link to={`/job/create/${type}`}>
-                  <div className={category} style={divStyle.freelance}>
-                        <div className={categoryText}>
-                            <h3 className={headingStyle}>{heading}</h3>
-                            <p className={subHeadingStyle}>{subHeading}</p>
-                        </div>
-                  </div>
-                </Link>
-         )
-     } else if(type == 'rep') {
-         return (
-            <Link to={`/job/create/${type}`}>
-                  <div className={category} style={divStyle.rep}>
-                        <div className={categoryText}>
-                            <h3 className={headingStyle}>{heading}</h3>
-                            <p className={subHeadingStyle}>{subHeading}</p>
-                        </div>
-                  </div>
-                </Link>
-         )
-     } else if(type == 'pt') {
-         return (
-            <Link to={`/job/create/${type}`}>
-                  <div className={category} style={divStyle.partTime}>
-                        <div className={categoryText}>
-                            <h3 className={headingStyle}>{heading}</h3>
-                            <p className={subHeadingStyle}>{subHeading}</p>
-                        </div>
-                  </div>
-                </Link>
-         )
-    } else {
-        return (
-            <div>Error</div>
-        )
-    }
-}
-
-const Categories = function(props) {
-  return (
-    <div className={categories}>
-      { categoryList.map(({key, heading, subHeadingForEmp, type}) => {
-        return <Category
-          key={key} 
-          heading={heading} 
-          subHeading={subHeadingForEmp} 
-          type={type}>
-        </Category>
-      })}
-    </div>
-  )
-}
 
 
 const CategoriesContainer = React.createClass({
@@ -222,12 +142,16 @@ const CategoriesContainer = React.createClass({
   render () {
     return (
       <div className={mainContainer}>
-        <SidebarContainer isAStudent={false} />
+        <SidebarContainer 
+            isAStudent={false} 
+        />
         <Title 
             titleName="PICK A JOB TYPE YOU WANT"
             subHeading="I want to post a job for..."
         />
-        <Categories/>
+        <Categories 
+            categoryObject={categoryList}
+        />
       </div>
     )
   },

@@ -1,16 +1,34 @@
-import React from 'react'
+// ===============REACT BUILTINS======================//
+import React, { PropTypes } from 'react'
+
+// ===============MADE COMPONENTS======================//
+import { Category } from 'modules/Categories' 
+
+// ===============CSS IMPORTS======================//
 import { categories, category } from '../styles/CategoriesContainerStyles.css'
 
-const Categories = function(props) {
+
+
+/*Categories
+ *
+ * The page that will be rendered to the page to show all the job types
+ *
+ *
+ * TODO: Fixed flexible layout, texts are not changing with the category images
+ * */
+const Categories = function(categoryObject) {
+    debugger
   return (
     <div className={categories}>
-      { categoryList.map(({key, heading, subHeadingForEmp, url}) => {
-        return 
-        <Category className={category}
+      { categoryObject.categoryObject.map(({key, heading, subHeadingForEmp, divStyle, type}) => {
+          console.log(key, heading, subHeadingForEmp, divStyle, type)
+         return  <Category
           key={key} 
           heading={heading} 
-          subHeading={subHeadingForEmp} 
-          url={url}/>
+          subHeading={subHeadingForEmp}
+          divStyle={divStyle} 
+          type={type}>
+        </Category>
       })}
     </div>
   )
