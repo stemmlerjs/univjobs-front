@@ -1,15 +1,17 @@
+// ===============REACT BUILTINS======================== //
 import React, { Component, PropTypes } from 'react'
 import { Link } from 'react-router'
-
-// =============REDUX STATE & IMPORTS========================== //
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
 
 // ============= OTHER IMPORTS========================== //
 import { ContactPage } from 'modules/ContactPage'
 import { Footer, RegularNav } from 'modules/SharedComponents'
-import { contactPage } from '../styles/ContactPage.css'
+
+// ============= OTHER IMPORTS========================== //
 import { sendMessage } from 'helpers/contact'
+
+// =============REDUX STATE & IMPORTS========================== //
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 
 // ==================MESSAGES============================== //
 import ReduxToastr from 'react-redux-toastr'
