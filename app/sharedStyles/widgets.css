@@ -1,0 +1,61 @@
+/*widgets.css
+ *
+ * Contains consistent styles for react-widgets, inputs.
+ * Basically, anything that are a parent object of: 
+ *  - buttons
+ *  - inputs
+ * */
+
+/*=============================BUTTONS================================*/
+.crossHair {
+    cursor: pointer;
+}
+    
+.btn {
+  margin-top: 40px;
+  padding: 10px 15px 10px 15px;
+  border-radius: 3px;
+  border: 0;
+  background: #3697DB;
+  font-size: 13px;
+  color: white;
+  text-shadow: 1px 1px 0px rgba(0, 0, 0, .1);
+  cursor: pointer;
+  margin: 0 auto;
+  width: 156px;
+  margin-left: 7px;
+}
+     
+
+
+
+/*=============================INPUTS================================*/
+.input {
+    text-align: left;
+    padding: .5em 1em;
+    margin: 8px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    vertical-align: middle;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+        color: inherit;
+    font: inherit;
+}
+
+
+
+/*=====================COMBO BUTTON & INPUTS===================*/
+/*comboBox
+ *
+ * Search and dropdown button
+ * */
+.pageFiltersAndSearch { 
+    display: flex;
+    flex-direction: row;  
+    align-items: center; 
+    margin-left: 25px; 
+    margin-right: 25px;
+}

@@ -384,10 +384,6 @@
   font-size:37px;
 }
 
-.crossHair {
-	/*Adds a crosshair icon when hovering a tag*/
-	cursor: pointer;
-}
 
   /* Keyframes */
   @keyframes shake {

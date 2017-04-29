@@ -21,8 +21,8 @@
 }
 
 .margins {
-    margin-left: 2%;
-    margin-right: 2%;
+    margin-left: 3%;
+    margin-right: 3%;
 }
 
 
@@ -31,13 +31,26 @@
   margin-bottom: 60px;
 }
 
+/*NOTE: Maybe modularize this to text.css*/
 .title {
   font-size:37px;
 }
 
-.crossHair {
-	/*Adds a crosshair icon when hovering a tag*/
-	cursor: pointer;
-}
 
+/*NOTE: Thanks for referrencing this! 
+ * I believe it's good practice to do this!
+ * 
+ * Check out this hack: http://stackoverflow.com/questions/18744164/flex-box-align-last-row-to-grid
+    Doing this to be able to align the last row to the grid.
+*/
+
+.overflowFix {
+  list-style: none;
+  margin: 10px;
+  padding: 0px;
+  align-items: flex-start;
+  width: 300px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
 

@@ -12,8 +12,10 @@ import { pageContainer, cardContainer, card, cardHeader,
 	companyContainer, companyInfoContainer, companyTitle,
 	applyButton, cardModalContainer, cardModalHeader, jobModalTitle,
 	jobModalIndustry, cardModalBodyLeft, cardModalBodyRight, cardModalScroll, cardModalFooter,
-	image, questionHeader, overflowFix, pageMainJobCards,
+	image, questionHeader, pageMainJobCards,
 	buttonContainers, pinIcon, fillIcon, unFillIcon, rotateIcon} from '../styles/StudentDashboard.css'
+
+import { overflowFix } from 'sharedStyles/sharedComponentStyles.css'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import ReactTooltip from 'react-tooltip'
 

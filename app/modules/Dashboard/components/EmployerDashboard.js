@@ -1,16 +1,28 @@
+/*EmployerDashboard
+ *
+ * This component is to display numerous student cards for each school,
+ * where employers can start 
+ *
+ * */
+// ==============REACT BUILTIN========================= //
 import React, { PropTypes } from 'react'
-import { DropdownList } from 'react-widgets'
+
+// ==============MADE COMPONENTS========================= //
 import { StudentCard, Title } from 'modules/SharedComponents'
-import { rootComponentContainer, btn } from 'sharedStyles/styles.css'
+
+// ==============THIRD PARTY IMPORTS========================= //
+import { DropdownList } from 'react-widgets'
+
+// ================CSS IMPORTS============================== //
+import { rootComponentContainer, title, margins, overflowFix } from 'sharedStyles/sharedComponentStyles.css'
+import { btn, input, pageFiltersAndSearch } from 'sharedStyles/widgets.css'
 import { flexibleCardContainer } from 'sharedStyles/cardContainer.css'
-import { pageContainer, pageHeaderSection, pageTitle, title, pageFiltersAndSearch, pageMainStudentCards, input,
-  campusDropdown, gradDateDropdown, filtersDivider, margins, overflowFix } from '../styles/EmployerDashboardStyles.css'
+import { campusDropdown, gradDateDropdown, filtersDivider} from '../styles/EmployerDashboardStyles.css'
 
 
 export default function EmployerDashboard ({students}) {
   return (
     <div className={rootComponentContainer}>
-        <div className={pageHeaderSection}>
 
           {/* TITLE */}
           <Title 
@@ -73,7 +85,6 @@ export default function EmployerDashboard ({students}) {
             <div className={overflowFix}></div>
             <div className={overflowFix}></div>
             <div className={overflowFix}></div>
-        </div>
       </div>
     </div>
   )

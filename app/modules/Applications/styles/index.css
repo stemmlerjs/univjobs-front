@@ -13,12 +13,5 @@
    min-height: 37px;
 }
 
-.pageFiltersAndSearch {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  margin-left: 25px;
-  margin-right: 25px;
-}
 
 

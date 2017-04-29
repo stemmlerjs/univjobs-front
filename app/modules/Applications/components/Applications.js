@@ -16,8 +16,8 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
 // ================CSS IMPORTS============================== //
 import { flexibleCardContainer } from 'sharedStyles/cardContainer.css'
-import { rootComponentContainer, margins, title, 
-        crossHair } from 'sharedStyles/styles.css'
+import { rootComponentContainer, margins, title } from 'sharedStyles/sharedComponentStyles.css'
+import { crossHair } from 'sharedStyles/widgets.css'
 
 
 /*TODO: Define the required typechecking variables

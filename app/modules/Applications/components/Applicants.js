@@ -2,7 +2,6 @@
 import React, { PropTypes } from 'react'
 
 // ==============MADE COMPONENTS========================= //
-import { NavTab } from 'modules/Applications'
 import { GenericCard, ApplicationModal, APPLICATIONS_CARD_TYPE, StudentCard, Title } from '../../SharedComponents'
 
 // ==============THIRD PARTY IMPORTS========================= //
@@ -12,10 +11,9 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
 
 // ================CSS IMPORTS============================== //
-import { rootComponentContainer, margins, title, 
-        crossHair } from 'sharedStyles/styles.css'
+import { rootComponentContainer, margins, title, } from 'sharedStyles/sharedComponentStyles.css'
+import { pageFiltersAndSearch } from 'sharedStyles/widgets.css'
 import { flexibleCardContainer } from 'sharedStyles/cardContainer.css'
-import { pageFiltersAndSearch } from '../styles/index.css'
 
 const data = ['Job1', 'Job2', 'Job3']
 
