@@ -1,8 +1,25 @@
+/*Sidebar
+ *
+ * This components is to display a bar on the left side with numerous buttons 
+ *
+ * */
+
+// ==============REACT BUILTIN========================= //
 import React, { PropTypes } from 'react'
-import { sidebar, sidebarLogo, sidebarItemsContainer, sidebarItem, profileImg, noDecoration, animateItem1, profileTxt, animateLine1,
-  animationItem2, animationLine2, animationTxt2, animationItem3, animationTxt3, animationItem4, animationTxt4, 
-  animationItem5, animationTxt5, animationItem6, animationTxt6, animationItem7, animationTxt7, animationItem8, animationTxt8 } from 'sharedStyles/styles.css'
+
+// ==============THIRD PARTY IMPORTS========================= //
 import { Link } from 'react-router'
+
+// ================CSS IMPORTS============================== //
+import { sidebar, sidebarLogo, sidebarItemsContainer, 
+        sidebarItem, profileImg, noDecoration, 
+        animateItem1, profileTxt, animateLine1,
+        animationItem2, animationLine2, animationTxt2, 
+        animationItem3, animationTxt3, 
+        animationItem4, animationTxt4, animationItem5, 
+        animationTxt5, animationItem6, animationTxt6, 
+        animationItem7, animationTxt7, animationItem8, 
+        animationTxt8 } from 'sharedStyles/sidebar.css'
 
 export default function SideBar ({onLogout, isAStudent}) {
   return (

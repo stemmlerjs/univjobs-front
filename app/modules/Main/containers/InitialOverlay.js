@@ -1,7 +1,20 @@
+/*InitialOverlay
+ *
+ * This components is to display the students who applied to the current job posting being viewed by the employer
+ *
+ * */
+
+// ==============REACT BUILTIN========================= //
 import React, { PropTypes } from 'react'
-import { connect } from 'react-redux'
+
+// ==============THIRD PARTY IMPORTS========================= //
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+
+// =============REDUX STATE & IMPORTS========================= //
+import { connect } from 'react-redux'
 import { hideOverlay } from 'redux/modules/rootApplication/rootApplication'
+
+// ================CSS IMPORTS============================== //
 import animationStyles from '../styles/InitialOverlayStyles.css'
 
 const styles = {
