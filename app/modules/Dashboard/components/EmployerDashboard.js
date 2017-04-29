@@ -1,7 +1,7 @@
 /*EmployerDashboard
  *
  * This component is to display numerous student cards for each school,
- * where employers can start 
+ * where employers can start inviting students to apply to a job posting they listed. 
  *
  * */
 // ==============REACT BUILTIN========================= //

@@ -1,31 +1,40 @@
+// ==============REACT BUILTIN========================= //
 import React, { Component, PropTypes } from 'react'
+
+// ==============MADE COMPONENTS========================= //
 import { SidebarContainer } from 'modules/Main'
 import { StudentDashboard } from 'modules/Dashboard'
-import { pageContainer } from '../styles/index.css'
-import axios from 'axios'
-import * as list from 'helpers/lists'
-import * as fetch from 'helpers/dashboard'
+
+// ==============THIRD PARTY IMPORTS========================= //
+
 // =============REDUX STATE & IMPORTS========================== //
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as userActionCreators from 'redux/modules/user/user'
 import * as dashboardActionCreators from 'redux/modules/dashboard/dashboard'
+import * as list from 'helpers/lists'
+import * as fetch from 'helpers/dashboard'
 import { authRedirectFilter } from 'config/routes'
-// ============================================================ //
 
 // ==================MESSAGES============================== //
 import ReduxToastr from 'react-redux-toastr'
 import {toastr} from 'react-redux-toastr'
 
-// ====================================== //
+// ================CSS IMPORTS============================== //
+import { pageContainer } from 'sharedStyles/sharedContainerStyles.css'
 
-
-const actionCreators = {
-  ...userActionCreators,
-  ...dashboardActionCreators
-}
 
 const StudentDashboardContainer = React.createClass({
+    propTypes: {
+	  user: PropTypes.object, 
+	  jobs: PropTypes.array, 
+	  modal : PropTypes.object, 
+	  industries : PropTypes.array,
+	  jobTypes : PropTypes.object, 
+	  answer : PropTypes.object, 
+	  pin: PropTypes.object
+    },
+
 	contextTypes: {
 		router: PropTypes.object.isRequired,
 		store: PropTypes.object.isRequired
@@ -217,7 +226,11 @@ function mapStateToProps({user, dashboard}) {
   **/
 
 function mapActionCreatorsToProps(dispatch) {
-  return bindActionCreators(actionCreators, dispatch)
+  return bindActionCreators({
+    ...userActionCreators,
+    ...dashboardActionCreators
+  
+  }, dispatch)
 }
 
 // connect(specify_what_keys_you_want_from_store, wraps_dispatch_around_action_creators)(container)

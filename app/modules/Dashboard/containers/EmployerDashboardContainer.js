@@ -1,24 +1,28 @@
+// ==============REACT BUILTIN========================= //
 import React, { PropTypes } from 'react'
-import { SidebarContainer } from 'modules/Main'
-import { authRedirectFilter } from 'config/routes'
-import { pageContainer } from '../styles/index.css'
 
-import { getStudents as getStudentsREST } from 'helpers/dashboard'
+// ==============MADE COMPONENTS========================= //
+import { SidebarContainer } from 'modules/Main'
 import { EmployerDashboard } from 'modules/Dashboard'
+
+// ==============THIRD PARTY IMPORTS========================= //
 
 // ====== REDUX AND STATE IMPORTS =======
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-// import * as userActionCreators from 'redux/modules/user/user'
-// import * as profileActionCreators from 'redux/modules/profile/profile'
-// ======================================
+import { getStudents as getStudentsREST } from 'helpers/dashboard'
+import { authRedirectFilter } from 'config/routes'
 
-const actionCreators = {
-  // ...profileActionCreators,
-  // ...userActionCreators
-}
+// ================CSS IMPORTS============================== //
+import { pageContainer } from 'sharedStyles/sharedContainerStyles.css'
+
 
 const EmployerDashboardContainer = React.createClass({
+  propTypes: {
+    user: PropTypes.object, 
+    students: PropTypes.object 
+  },
+
   contextTypes: {
     router: PropTypes.object.isRequired,
     store: PropTypes.object.isRequired,
@@ -101,7 +105,7 @@ function mapStateToProps({user, dashboard}) {
 }
 
 function mapActionCreatorsToProps(dispatch) {
-  return bindActionCreators(actionCreators, dispatch)
+  return bindActionCreators({}, dispatch)
 }
 
 export default connect(mapStateToProps, mapActionCreatorsToProps)(EmployerDashboardContainer)

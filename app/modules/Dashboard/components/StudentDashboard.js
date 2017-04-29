@@ -1,23 +1,27 @@
+
+/*StudentDashboard
+ *
+ * This component is to display numerous job cards for each employer,
+ * where students can start applying to jobs employers listed.
+ *
+ * */
+
+// ==============REACT BUILTIN========================= //
 import React, { PropTypes } from 'react'
+
+// ==============MADE COMPONENTS========================= //
 import { StudentCard } from 'modules/Dashboard'
 import { JobCard, JobCardModal } from 'modules/Dashboard'
-import { GenericCard, DASHBOARD_CARD_TYPE } from 'modules/SharedComponents'
-import { SkyLightStateless } from 'react-skylight'
-import { hideModal } from 'redux/modules/dashboard/dashboard'
-import { rootComponentContainer, margin, pageHeaderSection,
-	pageTitle, title} from 'sharedStyles/styles.css'
-import { pageContainer, cardContainer, card, cardHeader,
-	jobTitleContainer, jobTitle, industryTitle,
-	tagContainer, tagList, tagElement,
-	companyContainer, companyInfoContainer, companyTitle,
-	applyButton, cardModalContainer, cardModalHeader, jobModalTitle,
-	jobModalIndustry, cardModalBodyLeft, cardModalBodyRight, cardModalScroll, cardModalFooter,
-	image, questionHeader, pageMainJobCards,
-	buttonContainers, pinIcon, fillIcon, unFillIcon, rotateIcon} from '../styles/StudentDashboard.css'
+import { GenericCard, DASHBOARD_CARD_TYPE, Title } from 'modules/SharedComponents'
 
+// ==============THIRD PARTY IMPORTS========================= //
+import { SkyLightStateless } from 'react-skylight'
+import ReactTooltip from 'react-tooltip'
+
+// ================CSS IMPORTS============================== //
+import { rootComponentContainer, margins } from 'sharedStyles/sharedComponentStyles.css'
 import { overflowFix } from 'sharedStyles/sharedComponentStyles.css'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
-import ReactTooltip from 'react-tooltip'
 
 //**NOTE:
 //  Store is accessible
@@ -29,14 +33,13 @@ export default function StudentDashboard ({jobs, handleCardClick,
 }) {
         return (
             <div className={rootComponentContainer}>
-	            <div className={margin}>
+	            <div className={margins}>
 
-  	            {/* TITLE */}
-  	            <div className={pageHeaderSection}>
-  	                <div className={pageTitle}>
-  	                    <h1 className={title}>LET'S GET YOU HIRED!</h1>
-  	                </div>
-  	            </div>
+                {/* TITLE */}
+                <Title 
+                    titleName="LET'S GET YOU HIRED"
+                    subHeading="Apply to a job now, so we can help you land one!"
+                />
 
   	            {/*MAIN (Cards List)
   	                NOTE: Reference for iterating using map
