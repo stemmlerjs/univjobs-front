@@ -1,5 +1,16 @@
+/*Footer
+ *
+ * This components is to display the Footer bar for anything that does not need a token 
+ *
+ * */
+
+// ==============REACT BUILTIN========================= //
 import React, { PropTypes } from 'react'
+
+// ==============THIRD PARTY IMPORTS========================= //
 import { Link } from 'react-router'
+
+// ================CSS IMPORTS============================== //
 import { flexFooter, flexFooterRow, flexMediaItems, header, 
          icon, link, spacer } from '../styles/Footer.css'
 

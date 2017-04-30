@@ -1,4 +1,18 @@
+/*StudentCard
+ *
+ * This components is to display the card from students for employers to hire or invite
+ *
+ *
+ *
+ *
+ * NOTE: This might be the same as Application Generic Card
+ * TODO: Check if the Application Generic Card is the same
+ * */
+
+// ==============REACT BUILTIN========================= //
 import React, { PropTypes } from 'react'
+
+// ================CSS IMPORTS============================== //
 import { pageContainer, cardContainer, card, cardHeaderContainer,
     cardHeaderItem, cardHeaderItemText, cardHeaderItemImage, 
     cardHeaderItemIcon, studentMajor, studentMajorItem, 

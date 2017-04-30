@@ -1,0 +1,8 @@
+.error {
+    border: solid 1px red !important;
+    /* make it glow! */
+        -webkit-box-shadow: 0px 3px 1px red;
+        -moz-box-shadow: 0px 3px 1px red;
+        box-shadow: 0px 3px 1px red; /* some variation of blue
+    for the shadow */
+}

@@ -1,5 +1,16 @@
+
+/*RegularNav
+ *
+ * This components is to display the Nav bar for anything that does not need a token 
+ *
+ * */
+// ==============REACT BUILTIN========================= //
 import React, { PropTypes } from 'react'
+
+// ==============THIRD PARTY IMPORTS========================= //
 import { Link } from 'react-router'
+
+// ================CSS IMPORTS============================== //
 import { nav, logoText, noDeco, btn, 
         btnBlue, pseudoBtn, loginIcon} from '../styles/NavigationStyles.css'
 

@@ -1,10 +1,20 @@
+
+// ================REACT BUILTIN============================== //
 import React, { PropTypes } from 'react'
-import { pageHeaderSection, pageTitle, title } from 'sharedStyles/styles.css' 
+
+// ================CSS IMPORTS============================== //
+import { marginBottom, title } from 'sharedStyles/sharedComponentStyles.css' 
+
+Title.propTypes = {
+    titleName: PropTypes.string,
+    subHeading: PropTypes.string
+}
+
 
 const Title = ({titleName, subHeading, children}) => {
   return (
        <div className={pageHeaderSection}>
-           <div className={pageTitle}>
+           <div>
              <h1 className={title}>{titleName}</h1>
              <p>{subHeading}</p>
            </div>

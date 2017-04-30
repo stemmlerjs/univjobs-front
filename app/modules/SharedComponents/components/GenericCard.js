@@ -1,4 +1,7 @@
+// ================REACT BUILTINS============================== //
 import React, { PropTypes } from 'react'
+
+// ================CSS IMPORTS============================== //
 import { pageContainer, cardContainer, card, cardHeader,
 	jobTitleContainer, jobTitle, industryTitle,
 	tagContainer, tagList, tagElement,
