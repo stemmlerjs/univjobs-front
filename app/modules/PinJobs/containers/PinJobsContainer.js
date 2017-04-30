@@ -1,27 +1,28 @@
+// ==============REACT BUILTIN========================= //
 import React, { Component, PropTypes } from 'react'
+
+// ==============MADE COMPONENTS========================= //
 import { SidebarContainer } from 'modules/Main'
 import { PinJobs } from 'modules/PinJobs'
-import { pageContainer } from '../styles/index.css'
-import * as list from 'helpers/lists'
-import * as fetch from 'helpers/pinJobs'
+
+// ==============THIRD PARTY IMPORTS========================= //
+import ReduxToastr from 'react-redux-toastr'
+import {toastr} from 'react-redux-toastr'
+
 // =============REDUX STATE & IMPORTS========================== //
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as userActionCreators from 'redux/modules/user/user'
 import * as pinJobsActionCreators from 'redux/modules/pinJobs/pinJobs'
+import * as list from 'helpers/lists'
+import * as fetch from 'helpers/pinJobs'
+
+// =======================OTHER IMPORTS============================== //
 import { authRedirectFilter } from 'config/routes'
-// ============================================================ //
 
-// ==================MESSAGES============================== //
-import ReduxToastr from 'react-redux-toastr'
-import {toastr} from 'react-redux-toastr'
-// ====================================== //
+// ==============CSS IMPORTS============================= 
+import { pageContainer } from 'sharedStyles/sharedContainerStyles.css'
 
-
-const actionCreators = {
-  ...userActionCreators,
-  ...pinJobsActionCreators
-}
 
 const PinJobsContainer = React.createClass({
 	contextTypes: {
@@ -190,7 +191,11 @@ function mapStateToProps({user, pinJobs}) {
   **/
 
 function mapActionCreatorsToProps(dispatch) {
-  return bindActionCreators(actionCreators, dispatch)
+  return bindActionCreators({
+    ...userActionCreators,
+    ...pinJobsActionCreators
+  
+  }, dispatch)
 }
 
 // connect(specify_what_keys_you_want_from_store, wraps_dispatch_around_action_creators)(container)

@@ -1,24 +1,32 @@
-import React, { PropTypes } from 'react'
-import { DropdownList } from 'react-widgets'
-import { StudentCard } from 'modules/Dashboard'
-import { JobCard, JobCardModal } from 'modules/Dashboard'
-import { GenericCard, DASHBOARD_CARD_TYPE, Title } from 'modules/SharedComponents'
-import { SkyLightStateless } from 'react-skylight'
-import { hideModal } from 'redux/modules/dashboard/dashboard'
-import { rootComponentContainer, margin, pageHeaderSection,
-	pageTitle, title} from 'sharedStyles/styles.css'
-import { pageContainer, cardContainer, card, cardHeader,
-	jobTitleContainer, jobTitle, industryTitle,
-	tagContainer, tagList, tagElement,
-	companyContainer, companyInfoContainer, companyTitle,
-	maxButton, editButton,cardModalContainer, cardModalHeader, jobModalTitle,
-	jobModalIndustry, cardModalBodyLeft, cardModalBodyRight, cardModalScroll, cardModalFooter,
-	image, questionHeader, pageMainJobCards,
-	buttonContainers, pinIcon, fillIcon, unFillIcon, rotateIcon} from '../styles/MyListings.css'
+/*MyListings
+ *
+ * This component is to show employers all the jobs they listed.
+ * It is also where they can edit the posting they have. 
+ *
+ * */
 
-import { overflowFix } from 'sharedStyles/sharedComponentStyles.css'
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+// ==============REACT BUILTIN========================= //
+import React, { PropTypes } from 'react'
+
+// ==============MADE COMPONENTS========================= //
+import { GenericCard, DASHBOARD_CARD_TYPE, Title } from 'modules/SharedComponents'
+
+// ==============THIRD PARTY IMPORTS========================= //
+import { DropdownList } from 'react-widgets'
+import { SkyLightStateless } from 'react-skylight'
 import ReactTooltip from 'react-tooltip'
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+
+// ================CSS IMPORTS============================== //
+import { rootComponentContainer, margins } from 'sharedStyles/sharedComponentStyles.css'
+
+/*TODO: Test pageMainJobCards in other card renders
+ *
+ * */
+import { pageMainJobCards, buttonContainers } from '../styles/MyListings.css'
+import { maxButton, editButton } from 'sharedStyles/widgets.css'
+import { overflowFix } from 'sharedStyles/sharedComponentStyles.css'
+
 
 
 const data = [
@@ -37,7 +45,7 @@ export default function MyListings ({jobs, handleCardClick, industries, jobTypes
     //console.log(jobTypes)
     return (
             <div className={rootComponentContainer}>
-	            <div className={margin}>
+	            <div className={margins}>
 
   	            {/* TITLE */}
                 <Title 
@@ -81,7 +89,12 @@ export default function MyListings ({jobs, handleCardClick, industries, jobTypes
     )
 }
 
-MyListings.propTypes = {}
 
+MyListings.propTypes = {
+    jobs: PropTypes.array.isRequired,
+    handleCardClick: PropTypes.func.isRequired,
+    industries: PropTypes.array.isRequired,
+    profile: PropTypes.object.isRequired
+}
 
 

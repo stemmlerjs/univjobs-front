@@ -1,30 +1,28 @@
+// ==============REACT BUILTIN========================= //
 import React, { Component, PropTypes } from 'react'
+
+// ==============MADE COMPONENTS========================= //
 import { SidebarContainer } from 'modules/Main'
 import { MyListings } from 'modules/MyListings'
-import { pageContainer } from '../styles/index.css'
+
+// ==============THIRD PARTY IMPORTS========================= //
 import axios from 'axios'
-import * as fetch from 'helpers/dashboard'
+import ReduxToastr from 'react-redux-toastr'
+import {toastr} from 'react-redux-toastr'
+
 // =============REDUX STATE & IMPORTS========================== //
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as userActionCreators from 'redux/modules/user/user'
 import * as jobActionCreators from 'redux/modules/job/job'
 import * as listActionCreators from 'redux/modules/list/list'
+import * as fetch from 'helpers/dashboard'
+
+// ==================OTHER IMPORTS============================== //
 import { authRedirectFilter } from 'config/routes'
-// ============================================================ //
 
-// ==================MESSAGES============================== //
-import ReduxToastr from 'react-redux-toastr'
-import {toastr} from 'react-redux-toastr'
-
-// ====================================== //
-
-
-const actionCreators = {
-  ...jobActionCreators,
-  ...listActionCreators,
-  ...userActionCreators,
-}
+// ==============CSS IMPORTS============================= //
+import { pageContainer } from 'sharedStyles/sharedContainerStyles.css'
 
 const MyListingsContainer = React.createClass({
 	contextTypes: {
@@ -133,7 +131,11 @@ function mapStateToProps({user, job, list, profile}) {
   **/
 
 function mapActionCreatorsToProps(dispatch) {
-  return bindActionCreators(actionCreators, dispatch)
+  return bindActionCreators({
+    ...jobActionCreators,
+    ...listActionCreators,
+    ...userActionCreators,
+  }, dispatch)
 }
 
 // connect(specify_what_keys_you_want_from_store, wraps_dispatch_around_action_creators)(container)

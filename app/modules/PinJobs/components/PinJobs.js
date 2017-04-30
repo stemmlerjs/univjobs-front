@@ -1,25 +1,27 @@
+/*Applications
+ *
+ * This components is to display the jobs pinned by the students
+ *
+ * */
+// ==============REACT BUILTIN========================= //
 import React, { PropTypes } from 'react'
 
+// ==============MADE COMPONENTS========================= //
 /*NOTE: JobCardModal most likely can be reused*/
-import { JobCardModal } from 'modules/Dashboard'
-import { GenericCard, PINNED_JOBS_CARD_TYPE } from 'modules/SharedComponents'
+import { JobCardModal, GenericCard, PINNED_JOBS_CARD_TYPE, Title } from 'modules/SharedComponents'
+
+// ==============THIRD PARTY IMPORTS========================= //
 import { SkyLightStateless } from 'react-skylight'
-import { rootComponentContainer, margin, pageHeaderSection,
-	pageTitle, title} from 'sharedStyles/styles.css'
-
-/*NOTE: styles/StudentDashboard.css can be reused */
-import { pageContainer, cardContainer, card, cardHeader,
-	jobTitleContainer, jobTitle, industryTitle,
-	tagContainer, tagList, tagElement,
-	companyContainer, companyInfoContainer, companyTitle,
-	applyButton, cardModalContainer, cardModalHeader, jobModalTitle,
-	jobModalIndustry, cardModalBodyLeft, cardModalBodyRight, cardModalScroll, cardModalFooter,
-	image, questionHeader, pageMainJobCards,
-	buttonContainers, pinIcon, fillIcon, unFillIcon, rotateIcon} from '../styles/StudentDashboard.css'
-import { overflowFix } from 'sharedStyles/sharedComponentStyles.css'
-
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import ReactTooltip from 'react-tooltip'
+
+// ================CSS IMPORTS============================== //
+/*NOTE: styles/StudentDashboard.css can be reused */
+import { rootComponentContainer, margins, title } from 'sharedStyles/sharedComponentStyles.css'
+import { pageMainJobCards } from 'sharedStyles/jobCard.css'
+import { pinIcon, fillIcon, unFillIcon, rotateIcon } from 'sharedStyles/pinCards.css'
+import { buttonContainers } from 'sharedStyles/widgets.css'
+import { overflowFix } from 'sharedStyles/sharedComponentStyles.css'
 
 export default function PinJobs ({handleCardClick, jobs, industries, 
 				  jobTypes, onPinJob, modal, onHideModal, onApplyClicked,
@@ -27,88 +29,89 @@ export default function PinJobs ({handleCardClick, jobs, industries,
 }) {
   return (
 	<div className={rootComponentContainer}>
-	    <div className={margin}>
-  	        {/* TITLE */}
-  	        <div className={pageHeaderSection}>
-  	    	    <div className={pageTitle}>
-  	      	        <h1 className={title}>MY PINNED JOBS</h1>
-  	             </div>
-  	         </div>
-  	   	<div className={pageMainJobCards}>
-		      {jobs ? jobs.map((job) => (
-					      <div key={job.id}>
-					          <GenericCard
-						      handleCardClick={handleCardClick}
-						      cardType={PINNED_JOBS_CARD_TYPE}
-						      job={job}
-						      jobTypes={jobTypes}
-						      industries={industries}
-						   >
-						       <div className={buttonContainers}>
-						           <button 
-                                        className={pinIcon}
-							            onClick={(e) => onPinJob(e, job)}
-			                            data-tip={job.pinned ? "Unpin job?" : "Pin job?" }
-			                        >
-                                        <i 
-			                                className={job.pinned ? rotateIcon + " fa fa-thumb-tack fa-lg " + fillIcon : rotateIcon + " fa fa-thumb-tack fa-lg"} 
-			    	                        aria-hidden="true" 
-			                            />
-			                            <ReactTooltip place="top" type="dark" effect="float"/>
-                                    </button>
-							        <button className={applyButton}
-							            onClick={(e) => handleCardClick(e, job)}
-							        >
-							            APPLY
-							        </button>
-						       </div>
-						   </GenericCard>
-						</div>
-					      )) : '' }
-		</div>
-  	    	    <div className={overflowFix}></div>
-  	    	    <div className={overflowFix}></div>
-  	    	    <div className={overflowFix}></div>
-  	    	    <div className={overflowFix}></div>
-	</div>
+	    <div className={margins}>
+        
+            {/* TITLE */}
+            <Title 
+                titleName="MY PINNED JOBS"
+                subHeading="This is where all the job you pinned are displayed"
+            />
 
-        {/*MODAL
-           The state of modal is checked first,
-           if it isOpen === true then show the modal
-           else, return empty
-        */}
-        { modal.isOpen
-          ? <ReactCSSTransitionGroup 
-              transitionName="cardModal"
-              transitionAppear={true}
-              transitionAppearTimeout={500}
-              transitionEnter={false}
-              transitionLeave={true}
-              transitionLeaveTimeout={500}>
-              <SkyLightStateless
-                  isVisible={modal.isOpen}
-                  onCloseClicked={(e) => onHideModal(e, modal.job.id)}
-                  title=""
-	      >
+            <div className={pageMainJobCards}>
+                  {jobs ? jobs.map((job) => (
+                              <div key={job.id}>
+                                  <GenericCard
+                                  handleCardClick={handleCardClick}
+                                  cardType={PINNED_JOBS_CARD_TYPE}
+                                  job={job}
+                                  jobTypes={jobTypes}
+                                  industries={industries}
+                               >
+                                   <div className={buttonContainers}>
+                                       <button 
+                                            className={pinIcon}
+                                            onClick={(e) => onPinJob(e, job)}
+                                            data-tip={job.pinned ? "Unpin job?" : "Pin job?" }
+                                        >
+                                            <i 
+                                                className={job.pinned ? rotateIcon + " fa fa-thumb-tack fa-lg " + fillIcon : rotateIcon + " fa fa-thumb-tack fa-lg"} 
+                                                aria-hidden="true" 
+                                            />
+                                            <ReactTooltip place="top" type="dark" effect="float"/>
+                                        </button>
+                                        <button className={applyButton}
+                                            onClick={(e) => handleCardClick(e, job)}
+                                        >
+                                            APPLY
+                                        </button>
+                                   </div>
+                               </GenericCard>
+                            </div>
+                              )) : '' }
+            </div>
+                    <div className={overflowFix}></div>
+                    <div className={overflowFix}></div>
+                    <div className={overflowFix}></div>
+                    <div className={overflowFix}></div>
+        </div>
 
-	      {/*
-	      	TODO: 
-		   - [x] Add updateAnswerField
-		   - [ ] Make applyButtonWork
-		   - [ ] Delete the pinned jobs in db
-	      */}
-                <JobCardModal job={modal.job}
-                  questions={modal.questions}
-                  onApplyClicked={onApplyClicked}
-                  industries={industries}
-                  answerOne={answerOne}
-                  answerTwo={answerTwo}
-                  updateAnswerField={updateAnswerField}
-		/>
-              </SkyLightStateless>
-          </ReactCSSTransitionGroup>
-          :  ""
-        }
+            {/*MODAL
+               The state of modal is checked first,
+               if it isOpen === true then show the modal
+               else, return empty
+            */}
+            { modal.isOpen
+              ? <ReactCSSTransitionGroup 
+                  transitionName="cardModal"
+                  transitionAppear={true}
+                  transitionAppearTimeout={500}
+                  transitionEnter={false}
+                  transitionLeave={true}
+                  transitionLeaveTimeout={500}>
+                  <SkyLightStateless
+                      isVisible={modal.isOpen}
+                      onCloseClicked={(e) => onHideModal(e, modal.job.id)}
+                      title=""
+              >
+
+              {/*
+                TODO: 
+               - [x] Add updateAnswerField
+               - [ ] Make applyButtonWork
+               - [ ] Delete the pinned jobs in db
+              */}
+                    <JobCardModal job={modal.job}
+                      questions={modal.questions}
+                      onApplyClicked={onApplyClicked}
+                      industries={industries}
+                      answerOne={answerOne}
+                      answerTwo={answerTwo}
+                      updateAnswerField={updateAnswerField}
+            />
+                  </SkyLightStateless>
+              </ReactCSSTransitionGroup>
+              :  ""
+            }
 
     </div>
   )

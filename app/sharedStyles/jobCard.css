@@ -1,3 +1,10 @@
+/*Check studentDashboard.css, it's repeating*/
+.pageMainJobCards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
 .enter {
   opacity: 0.01;
 }
@@ -238,98 +245,5 @@
 }
 
 
-.pageMainJobCards {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-}
 
-.buttonContainers {
-   display: flex;
-   webkit-flex-direction: row; /* Safari */
-   flex-direction: row;
-}
 
-.pinIcon {
-   background-color: #DCDCE0;
-   border-style: none;
-   border-right: white;
-   padding: 15px 32px;
-   margin-right: 2px;
-   width: 25%;
-   text-align: center;
-   text-decoration: none;
-   display: inline-block;
-   font-size: 16px;
-   cursor: pointer;
-}
-
-.unFillIcon {
-  color: none;
-}
-
-.fillIcon {
-  color: red;
-}
-
-.rotateIcon {
-
-}
-
-/*Ref for color pulse
- * https://codepen.io/danest/pen/GxfqB/
- *https://css-tricks.com/almanac/properties/a/animation/
- * */
- .pinIcon:focus .rotateIcon {
-    -webkit-animation: spin 4s 1 linear;
-}
-
-  @keyframes spin {
-	0% {-webkit-transform: rotate(0deg);}
-	100% {-webkit-transform: rotate(360deg);}
-  }
-
-  @-moz-keyframes pulse {
-	0% {
-	    -moz-transform: scale(0);
-	    opacity: 0.0;
-	}
-	25% {
-	    -moz-transform: scale(0);
-	    opacity: 0.1;
-	}
-	50% {
-	    -moz-transform: scale(0.1);
-	    opacity: 0.3;
-	}
-	75% {
-	    -moz-transform: scale(0.5);
-	    opacity: 0.5;
-	}
-	100% {
-	    -moz-transform: scale(1);
-	    opacity: 0.0;
-	}
-}
-@-webkit-keyframes "pulse" {
-	0% {
-            -webkit-transform: scale(0);
-            opacity: 0.0;
-        }
-	25% {
-	     -webkit-transform: scale(0);
-	     opacity: 0.1;
-	}
-	50% {
-             -webkit-transform: scale(0.1);
-	     opacity: 0.3;
-	}
-	75% {
-	     -webkit-transform: scale(0.5);
-	     opacity: 0.5;
-	}
-	100% {
-	      -webkit-transform: scale(1);
-	      opacity: 0.0;
-	}
-}

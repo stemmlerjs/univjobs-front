@@ -28,7 +28,7 @@ import * as application from 'helpers/application'
 import { authRedirectFilter } from 'config/routes'
 
 // ==============CSS IMPORTS============================= //
-import pageContainer  from 'sharedStyles/sharedContainerStyles.css'
+import { pageContainer }  from 'sharedStyles/sharedContainerStyles.css'
 
 
 const ApplicationsContainer = React.createClass({
