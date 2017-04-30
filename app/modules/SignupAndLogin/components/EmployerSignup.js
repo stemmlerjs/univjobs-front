@@ -1,7 +1,13 @@
+// ==============REACT BUILTIN========================= //
 import React, { PropTypes } from 'react'
+
+// ==============THIRD PARTY IMPORTS========================= //
 import SkyLight from 'react-skylight'
 
+// ==============MADE COMPONENTS========================= //
 import { Footer } from 'modules/SharedComponents'
+
+// ================CSS IMPORTS============================== //
 import { employerCenteredContainer, header, subHeader, modalContent, errorMessage, btn, input } from '../styles/EmployerSignupStyles.css'
 
 const styles = {

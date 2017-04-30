@@ -1,27 +1,31 @@
+// ==============REACT BUILTIN========================= //
 import React, { PropTypes } from 'react'
+
+// ==============MADE COMPONENTS========================= //
+import StudentSignup from '../components/StudentSignup'
+import EmployerSignup from '../components/EmployerSignup'
+import { Navigation, Footer } from 'modules/SharedComponents'
+
+// ==============THIRD PARTY IMPORTS========================= //
+import SkyLight from 'react-skylight'
+import {toastr} from 'react-redux-toastr'
+import ReduxToastr from 'react-redux-toastr'
+
+// =============REDUX & IMPORTS============================= //
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as userActionCreators from 'redux/modules/user/user'
 import * as signupFormActionCreators from 'redux/modules/signupForm/signupForm'
 import * as loginFormActionCreators from 'redux/modules/loginForm/loginForm'
+
+// ===========OTHER IMPORTS============================== //
 import { authRedirectFilter } from 'config/routes'
-import SkyLight from 'react-skylight'
 import { getAccessToken } from 'helpers/auth'
 import { detectEnterPress } from 'helpers/utils'
 
+// ================CSS IMPORTS============================== //
 import { input, errorMessage, loginBtn } from '../styles/SignupContainerStyles.css'
 
-import StudentSignup from '../components/StudentSignup'
-import EmployerSignup from '../components/EmployerSignup'
-import { Navigation, Footer } from 'modules/SharedComponents'
-
-// ==================MESSAGES============================== //
-import ReduxToastr from 'react-redux-toastr'
-import {toastr} from 'react-redux-toastr'
-
-
-/*  Using the spread operator, we combine all of the action creators from users()
-*/
 
 const styles = {
   overlayStyles: {
@@ -58,9 +62,6 @@ const styles = {
 
 
 const actionCreators = {
-  ...userActionCreators,
-  ...signupFormActionCreators,
-  ...loginFormActionCreators
 }
 
 const SignupContainer = React.createClass({
@@ -354,7 +355,11 @@ function mapStateToProps({user, signupForm, loginForm}) {
   */
 
 function mapActionCreatorsToProps(dispatch) {
-  return bindActionCreators(actionCreators, dispatch)
+  return bindActionCreators({
+      ...userActionCreators,
+      ...signupFormActionCreators,
+      ...loginFormActionCreators
+  }, dispatch)
 }
 
 // connect(specify_what_keys_you_want_from_store, wraps_dispatch_around_action_creators)(container)

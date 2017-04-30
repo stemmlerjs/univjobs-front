@@ -1,4 +1,7 @@
+// ==============REACT BUILTIN========================= //
 import React, { PropTypes } from 'react'
+
+// ================CSS IMPORTS============================== //
 import { studentCenteredContainer, header, subHeader, btn, btnContainer,
  input, inputContainer, errorMessage } from '../styles/StudentSignupStyles.css'
 
