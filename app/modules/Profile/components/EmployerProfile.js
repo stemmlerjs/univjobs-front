@@ -1,16 +1,30 @@
+/*EmployerProfile
+ *
+ * This components is the form to create or update employers profile 
+ *
+ * */
+// ==============REACT BUILTIN========================= //
 import React, { PropTypes } from 'react'
+
+// ==============MADE COMPONENTS========================= //
 import { ProfileField } from 'modules/Profile'
-import { profileContainer, profileHeader, profileField, profileFieldName, profileFieldContent, input,
-  textArea, dropzone, resetBtnContainer, dropzoneContent, photoIcon, saveBtnContainer, saveBtn,
-  inlineDropzone, comboBox, city, postalcode, citypostalcoderelative, dropPoint, error, industryMargin } from '../styles/EmployerProfileStyles.css'
-import { btn } from 'sharedStyles/styles.css'
+
+
+// ==============THIRD PARTY IMPORTS========================= //
+import MaskedTextInput from 'react-text-mask'
 import Dropzone from 'react-dropzone'
 import { Link } from 'react-router'
 import { Combobox } from 'react-widgets'
 import 'react-widgets/lib/less/react-widgets.less'
-import MaskedTextInput from 'react-text-mask'
 import _ from 'lodash'
 import config from 'config'
+
+
+// ================CSS IMPORTS============================== //
+import { profileContainer, profileHeader, profileField, profileFieldName, profileFieldContent, input,
+  textArea, dropzone, resetBtnContainer, dropzoneContent, photoIcon, saveBtnContainer, saveBtn,
+  inlineDropzone, comboBox, city, postalcode, citypostalcoderelative, dropPoint, error, industryMargin } from '../styles/EmployerProfileStyles.css'
+import { btn } from 'sharedStyles/widgets.css'
 
 /**
   * I'm including these as propTypes because I notice that there is some sort of inconsistency

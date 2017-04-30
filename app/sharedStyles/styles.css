@@ -41,8 +41,6 @@
 }
 
 
-
-
 /*** MAIN CONTENT CONTAINER ***/
 
 .container {
@@ -55,140 +53,9 @@
   left: 87px;
 }
 
-/* rootComponentContainer
-      This root component container should be used in the enclosing div
-      for any react functional stateless component because it perfectly takes
-      up the other real-estate on the page given that there is a sidebar (with a 
-      width of 87 pixels).
-*/
-.rootComponentContainer {
-  position: absolute;
-  top: 0px;
-  bottom: 0px;
-  left: 87px;
-  right: 0px;
-}
-
-.btn {
-  margin-top: 40px;
-  padding: 10px 15px 10px 15px;
-  border-radius: 3px;
-  border: 0;
-  background: #3697DB;
-  font-size: 13px;
-  color: white;
-  text-shadow: 1px 1px 0px rgba(0, 0, 0, .1);
-  cursor: pointer;
-  margin: 0 auto;
-  width: 156px;
-  margin-left: 7px;
-}
-
-.margins {
-  margin-left: 2%;
-  margin-right: 2%;
-}
-
-.pageHeaderSection {
-  margin-bottom: 60px;
-
-}
 
 
-.title {
-  font-size:37px;
-}
 
 
-  /* Keyframes */
-  @keyframes shake {
-    10%, 90% {
-      transform: translate3d(-1px, 0, 0);
-    }
-    
-    20%, 80% {
-      transform: translate3d(2px, 0, 0);
-    }
 
-    30%, 50%, 70% {
-      transform: translate3d(-4px, 0, 0);
-    }
-
-    40%, 60% {
-      transform: translate3d(4px, 0, 0);
-    }
-  }
-
-  @keyframes kick {
-    10% {
-      transform: rotate(25deg);
-      transform: translate3d(-4px, 0, 0);
-    }
-    40% {
-      transform: rotate(60deg);
-    }
-    60% {
-      transform: rotate(-25deg);
-    }
-    80% {
-      transform: rotate(-60deg);
-      transform: translate3d(4px, 0, 0);
-    }
-    100% {
-      transform: rotate(0deg);
-    }
-  }
-
-  @keyframes spin {
-    20% {
-      transform: rotate(70deg);
-    }
-    40% {
-      transform: rotate(140deg);
-    }
-    60% {
-      transform: rotate(210deg);
-    }
-    80% {
-      transform: rotate(280deg);
-    }
-    90% {
-      transform: rotate(360deg);
-    }
-    100% {
-      transform: rotate(330deg);
-    }
-  }
-
-  @keyframes pin {
-    70% {
-      transform: translate3d(0, -28px, 0);
-    }
-    100% {
-      transform: translate3d(0, -16px, 0);
-    }
-  }
-
-  @keyframes pulse {
-    0% {
-      color: white;
-    }
-    100% {
-      color: #52a7fa;
-    }
-  }
-
-  @keyframes shimmy {
-    35% {
-      transform: translate3d(-5px, 0, 0);
-    }
-
-    75% {
-      transform: translate3d(5px, 0, 0);
-    }
-
-    100% {
-      transform: translate3d(0px, 0, 0);
-    }
-  }
 

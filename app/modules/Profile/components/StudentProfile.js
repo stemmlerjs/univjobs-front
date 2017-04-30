@@ -1,11 +1,30 @@
+/*StudentProfile
+ *
+ * This components is to display the form to create the student profile 
+ *
+ * */
+
+// ==============REACT BUILTIN========================= //
 import React, { PropTypes } from 'react'
-import { ProfileField, StudentContainer } from 'modules/Profile'
+
+// ==============MADE COMPONENTS========================= //
+import { ProfileField, StudentProfileField } from 'modules/Profile'
 import { Combobox, DropdownList, DateTimePicker, Calendar, Multiselect, SelectList} from 'react-widgets'
 import Dropzone from 'react-dropzone'
-import { pageContainer, profileField, profileHeader, error, container, input, shortInput, nameField,  emailField, dropDown, shortDropDown, mediumDropDown, longDropDown, dropzone, dropzoneContent, inlineDropzone, btn, saveBtnContainer, saveBtnList, saveBtnClicked, saveBtn, space} from '../styles/StudentProfileContainerStyles.css'
+
+// ==============THIRD PARTY IMPORTS========================= //
 import ReactTooltip from 'react-tooltip'
 import MaskedTextInput from 'react-text-mask'
 
+// ================CSS IMPORTS============================== //
+import { pageContainer, profileField, profileHeader, container, shortInput, nameField,  emailField, dropDown, shortDropDown, mediumDropDown, longDropDown, dropzone, dropzoneContent, inlineDropzone, btn, saveBtnContainer, saveBtnList, saveBtnClicked, saveBtn, space} from '../styles/StudentProfileContainerStyles.css'
+import { error } from 'sharedStyles/error.css' 
+import { input } from 'sharedStyles/widgets.css'
+
+
+/*NOTE: moment is to format the time 
+ *
+ * */
 var Moment = require('moment')
 var momentLocalizer = require('react-widgets/lib/localizers/moment')
 
@@ -75,7 +94,7 @@ export default function StudentProfile (props) {
     	<div className={profileHeader}>Complete your profile so we can find you a job today!</div>
 
 			{/* EMAIL NOTIFICATIONS */}
-			<StudentContainer title="My email notification preferences:"> 
+			<StudentProfileField title="My email notification preferences:"> 
 			<li>
 			  <DropdownList
 			   className={props.propsErrorMap.emailPreferences ? mediumDropDown + ' ' + error : mediumDropDown}
@@ -87,10 +106,10 @@ export default function StudentProfile (props) {
 			   onChange={value => props.updateProfileField('emailPreferences', value, true)}
 			 />
 			</li>
-			</StudentContainer>
+			</StudentProfileField>
 
 			{/*FIRST NAME, LAST NAME*, STATUS */}
-			<StudentContainer title="My name is">
+			<StudentProfileField title="My name is">
 			 <li>
 			    <input
 			     className={props.propsErrorMap.firstName ? input + ' ' + error : input}
@@ -134,11 +153,11 @@ export default function StudentProfile (props) {
 			 <li>
 			    <p>student.</p>
 			 </li>
-			</StudentContainer>
+			</StudentProfileField>
 
 			{/* DEGREE */}
 
-			<StudentContainer title="I am pursuing a " 
+			<StudentProfileField title="I am pursuing a " 
 			 styles={nameField}>
 			 <li>
 			   <DropdownList
@@ -154,10 +173,10 @@ export default function StudentProfile (props) {
 			 <li>
 			   <p>from {props.school}</p>
 			 </li>
-			</StudentContainer>
+			</StudentProfileField>
 
 			{/* START DATE & END DATE*/}
-			<StudentContainer title="I enrolled in " 
+			<StudentProfileField title="I enrolled in " 
 			 styles={nameField}>
 			 <DateTimePicker
 			  className={props.propsErrorMap.enrollmentDate ? dropDown + ' ' + error :  dropDown}
@@ -174,10 +193,10 @@ export default function StudentProfile (props) {
 			  onChange={value => props.updateProfileField('graduationDate', value, true)}
 			  value={props.graduationDate}
 			/>	
-			</StudentContainer>
+			</StudentProfileField>
 
 			{/* MAJOR */}
-			<StudentContainer title="I am studying"
+			<StudentProfileField title="I am studying"
 			  styles={nameField}>
 			  <li>
 			    <DropdownList
@@ -197,13 +216,13 @@ export default function StudentProfile (props) {
 				effect="float"
 			    />
 			  </li>
-			</StudentContainer>
+			</StudentProfileField>
 
 			{/* GPA 
 			   Validation must be a number
 
 			*/}
-			<StudentContainer title="My GPA is" 
+			<StudentProfileField title="My GPA is" 
 			 styles={nameField}>
 			 <li>
 			    <input
@@ -223,12 +242,12 @@ export default function StudentProfile (props) {
 			 <li className={saveBtnList}>
 			   <button className={saveBtn}>I do not have a GPA</button>
 			 </li>
-			</StudentContainer>
+			</StudentProfileField>
 
 			{/* PERSONAL EMAIL
 			  Can be empty
 			*/}
-			<StudentContainer title="My personal email is" 
+			<StudentProfileField title="My personal email is" 
 			 styles={nameField}>
 			 <li>
 			  <input
@@ -246,10 +265,10 @@ export default function StudentProfile (props) {
 			 <li className={saveBtnList}>
 			   <button className={saveBtn}>I prefer school email</button>
 			 </li>
-			</StudentContainer>
+			</StudentProfileField>
 
 			{/* GENDER */}
-			<StudentContainer title="I am " 
+			<StudentProfileField title="I am " 
 			 styles={nameField}>
 			 <DropdownList
 			  className={props.propsErrorMap.gender ? shortDropDown + ' ' + error : shortDropDown}
@@ -259,12 +278,12 @@ export default function StudentProfile (props) {
 			  value={props.gender}
 			  onChange={value => props.updateProfileField('gender', value, true)}
 			/>	
-			</StudentContainer>
+			</StudentProfileField>
 
 			{/* SPORTS
 			  Can be empty
 			*/}
-			<StudentContainer title="I"
+			<StudentProfileField title="I"
 			 styles={nameField}>
 			 <li className={saveBtnList}>
 			   <button className={saveBtn}>play</button>
@@ -284,12 +303,12 @@ export default function StudentProfile (props) {
                    onChange={ value => props.updateProfileField('sportsTeam', value, true)}
                    />
              </li>
-			</StudentContainer>
+			</StudentProfileField>
 
 			{/* CLUB 
 		    Can be empty
 			*/} 
-			<StudentContainer title="I " 
+			<StudentProfileField title="I " 
 			 styles={nameField}>
 			 <li className={saveBtnList}>
 			   <button className={props.schoolClub != "" ? saveBtnClicked : saveBtn}>am</button>
@@ -309,12 +328,12 @@ export default function StudentProfile (props) {
 			   onChange={ value => props.updateProfileField('schoolClub', value, true)}
 			   />
             </li>
-			</StudentContainer>
+			</StudentProfileField>
 
 			{/* LANGUAGE
 			  Can be empty
 			*/}
-			<StudentContainer title="I" 
+			<StudentProfileField title="I" 
 			 styles={nameField}>
 			 <li className={saveBtnList}>
 
@@ -344,10 +363,10 @@ export default function StudentProfile (props) {
 			   onChange={ value => props.updateProfileField('languages', value, true)}
 			   value={props.languages}
 			   />
-			</StudentContainer>
+			</StudentProfileField>
 
 			{/* CAR */}
-			<StudentContainer title="I " styles={nameField}>
+			<StudentProfileField title="I " styles={nameField}>
 			 <li className={saveBtnList}>
 			   <button className={props.hasCar ? saveBtnClicked : saveBtn} 
 				   data-selection="0"
@@ -367,12 +386,12 @@ export default function StudentProfile (props) {
 			 <li className={space}>
 			 	<p>a car on campus.</p>
 			 </li>
-			</StudentContainer>
+			</StudentProfileField>
 			
 			{/* EXPERIENCE
 			  Can be empty
 			*/} 
-			<StudentContainer title="I recently worked at "      styles={nameField}>
+			<StudentProfileField title="I recently worked at "      styles={nameField}>
 			<li> 
 		        <input
 			   className={props.propsErrorMap.companyName ? input + ' ' + error : input }
@@ -396,10 +415,10 @@ export default function StudentProfile (props) {
 			   >
 			 </input>
 			 </li>
-			</StudentContainer>
+			</StudentProfileField>
 
 			{/* FUN FACTS */}
-			<StudentContainer title="A fun fact about me is ">
+			<StudentProfileField title="A fun fact about me is ">
 			<li>
 			 <input
 			   className={props.propsErrorMap.funFacts ? input + ' ' + error : input}
@@ -410,10 +429,10 @@ export default function StudentProfile (props) {
 			  >
 			 </input>
 			 </li>
-			</StudentContainer>
+			</StudentProfileField>
 
 			{/* CITY */}
-			<StudentContainer title="My hometown is">
+			<StudentProfileField title="My hometown is">
 			 <input
 			   className={props.propsErrorMap.hometown ? input + ' ' + error : input}
 			   type="text"
@@ -422,10 +441,10 @@ export default function StudentProfile (props) {
 			   onChange={(e) => props.updateProfileField('hometown', e.target.value, true)}
 			   >
 			 </input>
-			</StudentContainer>
+			</StudentProfileField>
 
 			{/* HOBBIES */}
-			<StudentContainer title="My favourite hobbies are"> 
+			<StudentProfileField title="My favourite hobbies are"> 
 			 <li>
 			  <input
 			   className={props.propsErrorMap.hobbies ? shortInput + ' ' + error : shortInput}
@@ -436,10 +455,10 @@ export default function StudentProfile (props) {
 			   >
 			  </input>
 			 </li>
-			</StudentContainer>
+			</StudentProfileField>
 
 		      {/* PHOTO & RESUME */}
-		      <StudentContainer title="Take a business selfie">
+		      <StudentProfileField title="Take a business selfie">
 		        <Dropzone id="dropPhotoDiv" className={props.propsErrorMap.photo ? dropzone + ' ' + error: dropzone} onDrop={onDrop} accept='image/*' multiple={false}>
 		          <div className={dropzoneContent}>
 		            <i id="fa-user" className={"fa fa-user fa-3x"} aria-hidden="true"></i>
@@ -453,9 +472,9 @@ export default function StudentProfile (props) {
             <div id="drag-dropResume">Upload your resume</div>
           </div>
         </Dropzone>
-      </StudentContainer>
+      </StudentProfileField>
     {/* ======== SAVE BUTTON ======== */}
-      <div className={profileField}>
+      <div>
         <div className={saveBtnContainer}>
           <button onClick={(e) => props.onSubmit(props)} className={saveBtn}>Save</button>
         </div>

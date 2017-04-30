@@ -1,4 +1,13 @@
+/*ProfileField
+ *
+ * This components is the input field from the form 
+ *
+ * */
+
+// ==============REACT BUILTIN========================= //
 import React, { PropTypes } from 'react'
+
+// ================CSS IMPORTS============================== //
 import { flexContainer, profileFieldName, profileFieldContent } from '../styles/ProfileFieldStyles.css'
 
 ProfileField.propTypes = {

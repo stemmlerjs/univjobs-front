@@ -25,6 +25,15 @@ import { pageContainer } from 'sharedStyles/sharedContainerStyles.css'
 
 
 const PinJobsContainer = React.createClass({
+    propTypes: {
+	  user: PropTypes.object, 
+	  jobs: PropTypes.array, 
+	  industries : PropTypes.array,
+	  jobTypes : PropTypes.object, 
+	  answer : PropTypes.object, 
+	  modal : PropTypes.object, 
+    },
+
 	contextTypes: {
 		router: PropTypes.object.isRequired,
 		store: PropTypes.object.isRequired
