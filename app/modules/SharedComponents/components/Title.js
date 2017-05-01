@@ -5,10 +5,6 @@ import React, { PropTypes } from 'react'
 // ================CSS IMPORTS============================== //
 import { marginBottom, title } from 'sharedStyles/sharedComponentStyles.css' 
 
-Title.propTypes = {
-    titleName: PropTypes.string,
-    subHeading: PropTypes.string
-}
 
 
 const Title = ({titleName, subHeading, children}) => {
@@ -22,6 +18,11 @@ const Title = ({titleName, subHeading, children}) => {
 
         </div>
   )
+}
+
+Title.propTypes = {
+    titleName: PropTypes.string,
+    subHeading: PropTypes.string
 }
 
 export default Title
