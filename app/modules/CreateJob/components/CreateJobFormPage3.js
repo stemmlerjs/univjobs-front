@@ -27,7 +27,7 @@ export default function CreateJobFormPage3 (props) {
             <input type="text" 
               className={props.page.page3PropsErrorMap.maxApplicants ? specialInput + ' ' + error : specialInput}
               value={props.page.maxApplicants}
-              onChange={(e) => prmps.updateFormField('maxApplicants', e.target.value, 3)}/>
+              onChange={(e) => props.updateFormField('maxApplicants', e.target.value, 3)}/>
               <span className={italics}> (Minimum 20) </span>
             <p className={italics}>This job posting will be removed once you receive the number of resumes you desire.</p>
           </div>

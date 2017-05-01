@@ -1,6 +1,6 @@
 /*ApplicatntsContainer
  *
- *The container logic that renders all jobs students applied to
+ *The container logic that renders all students that applied to a job
  * */
 
 // ==============REACT BUILTIN========================= //

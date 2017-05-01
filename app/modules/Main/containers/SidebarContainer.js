@@ -9,7 +9,7 @@ import { logout } from 'helpers/auth'
 
 const SidebarContainer = React.createClass({
   propTypes: {
-    isAStudent: React.PropTypes.bool.isRequired
+    isAStudent: React.PropTypes.number.isRequired
   },
 
   // <Provider> implicitly does .childContextTypes and passes down the store object to all components.

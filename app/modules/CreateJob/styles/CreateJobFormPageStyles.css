@@ -205,7 +205,7 @@
 
 .detailsRight {
   width: 40%;
-      margin: .5%;
+  margin: .5%;
 }
 
 .detailsHeaderLeft {
@@ -218,6 +218,7 @@
 
 .detailsHeaderRight {
   background-color: #53585E;
+  width: 20vw;
   color: white;
   height: 30px;
   padding-top: 10px;

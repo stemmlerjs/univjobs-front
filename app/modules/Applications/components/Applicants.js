@@ -1,3 +1,7 @@
+/*Applicants
+ *
+ * Students who applied to a particular job
+ * */
 // ==============REACT BUILTIN========================= //
 import React, { PropTypes } from 'react'
 

@@ -65,7 +65,7 @@ const StudentCard = ({isInviting}) => (
                <span className={schoolTitle}>Sheridan College</span> 
           </div>
           <div className={classYearContainer}>
-            <h3 className={classYearItem}>Bachelor's, Class of 2019</h3>
+            <h3 className={classYearItem}>Bachelor's, Grad Class of 2019</h3>
           </div>
         
          <div className={tagContainer}>

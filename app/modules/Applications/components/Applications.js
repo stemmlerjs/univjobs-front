@@ -1,6 +1,6 @@
 /*Applications
  *
- * This components is to display the students who applied to the current job posting being viewed by the employer
+ * This components is to display the applications that the students applied to, to a particular job 
  *
  * */
 
