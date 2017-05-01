@@ -168,7 +168,8 @@ function placePhoto(element, url) {
 
     {/* DESCRIPTION */}
       <ProfileField title="Who we are">
-        <textarea rows="6" className={textArea}
+        <textarea rows="4" cols="50" className={textArea}
+          placeholder="Explain the company mission and what it does in a nice brief summary"
           value={props.description}
           onChange={(e) => props.updateProfileField('description', e.target.value, false)}>
         </textarea>

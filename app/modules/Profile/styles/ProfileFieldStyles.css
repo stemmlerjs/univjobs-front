@@ -1,5 +1,5 @@
 .profileFieldName {
-  width: 21%;
+  width: 25%;
   height: 20px;
   font-size: 18px;
   color: #52575D;
@@ -17,6 +17,9 @@
 	margin: 0px;
 	padding: 0px;
 	align-items: flex-start;
+    list-style-type: none;
+
+
 
 	/* For Safari */
 	display: -webkit-flex;
