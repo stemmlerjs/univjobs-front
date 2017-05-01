@@ -9,7 +9,7 @@ import { marginBottom, title } from 'sharedStyles/sharedComponentStyles.css'
 
 const Title = ({titleName, subHeading, children}) => {
   return (
-       <div className={pageHeaderSection}>
+       <div className={marginBottom}>
            <div>
              <h1 className={title}>{titleName}</h1>
              <p>{subHeading}</p>
