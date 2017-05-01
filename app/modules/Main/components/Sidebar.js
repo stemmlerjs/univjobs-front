@@ -14,7 +14,7 @@ import { Link } from 'react-router'
 import { sidebar, sidebarLogo, sidebarItemsContainer, 
         sidebarItem, profileImg, noDecoration, 
         animateItem1, profileTxt, animateLine1,
-        animationItem2, animationLine2, animationTxt2, 
+        animationItem2, animateLine2, animationTxt2, 
         animationItem3, animationTxt3, 
         animationItem4, animationTxt4, animationItem5, 
         animationTxt5, animationItem6, animationTxt6, 
@@ -47,15 +47,15 @@ export default function SideBar ({onLogout, isAStudent}) {
           ? <Link to="/dashboard/st" className={noDecoration}>
               <div className={sidebarItem}>
                 <i className={animationItem2 + " fa fa-search"} aria-hidden="true"></i>
-                <div className={animationLine2}></div>
                 <div className={animationTxt2}>Dashboard</div>
+                <div className={animateLine2}></div>
               </div>
             </Link>
           : <Link to="/dashboard/em" className={noDecoration}>
               <div className={sidebarItem}>
                 <i className={animationItem2 + " fa fa-search"} aria-hidden="true"></i>
-                <div className={animationLine2}></div>
                 <div className={animationTxt2}>Dashboard</div>
+                <div className={animateLine2}></div>
               </div>
             </Link>
         }
@@ -65,12 +65,14 @@ export default function SideBar ({onLogout, isAStudent}) {
               <div className={sidebarItem}>
                 <i className={animationItem3 + " fa fa-file-text"} aria-hidden="true"></i>
                 <div className={animationTxt3}>My Applications</div>
+                <div className={animateLine2}></div>
               </div>
             </Link>
           : <Link to="/myapplicants/em" className={noDecoration}>
               <div className={sidebarItem}>
                 <i className={animationItem3 + " fa fa-address-card-o"} aria-hidden="true"></i>
                 <div className={animationTxt3}>My Applicants</div>
+                <div className={animateLine2}></div>
               </div>
             </Link>
         }
@@ -81,12 +83,14 @@ export default function SideBar ({onLogout, isAStudent}) {
             <div className={sidebarItem}>
               <i className={animationItem5 + " fa fa-thumb-tack"} aria-hidden="true"></i>
               <div className={animationTxt5}>My Pinned Jobs</div>
+              <div className={animateLine2}></div>
             </div>
           </Link>
         : <Link to="/mylistings/em" className={noDecoration}>
             <div className={sidebarItem}>
               <i className={animationItem5 + " fa fa-file-text-o"} aria-hidden="true"></i>
               <div className={animationTxt5}>My Listings</div>
+              <div className={animateLine2}></div>
             </div>
           </Link>
       }
@@ -97,12 +101,14 @@ export default function SideBar ({onLogout, isAStudent}) {
             <div className={sidebarItem}>
               <i className={animationItem7 + " fa fa-envelope"} aria-hidden="true"></i>
               <div className={animationTxt7}>Invitations</div>
+              <div className={animateLine2}></div>
             </div>
           </Link>
         : <Link to="/categories" className={noDecoration}>
             <div className={sidebarItem}>
               <i className={animationItem7 + " fa fa-plus"} aria-hidden="true"></i>
               <div className={animationTxt7}>New Listing</div>
+              <div className={animateLine2}></div>
             </div>
           </Link>
       }
@@ -111,6 +117,7 @@ export default function SideBar ({onLogout, isAStudent}) {
           <div className={sidebarItem}>
             <i className={animationItem4 + " fa fa-cog"} aria-hidden="true"></i>
             <div className={animationTxt4}>Settings</div>
+            <div className={animateLine2}></div>
           </div>
         </Link>
 
@@ -120,6 +127,7 @@ export default function SideBar ({onLogout, isAStudent}) {
         <div className={sidebarItem} onClick={onLogout}>
           <i className={animationItem6 + " fa fa-power-off"} aria-hidden="true"></i>
           <div className={animationTxt6}>Logout</div>
+          <div className={animateLine2}></div>
         </div>
       </div>
     </div>

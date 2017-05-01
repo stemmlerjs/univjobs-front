@@ -101,7 +101,7 @@ const categoryList = [{
 
 const CategoriesContainer = React.createClass({
   propTypes: {
-    categoryList: PropTypes.object.isRequired
+      //Insert propTypes for typeChecking
   },
 
   contextTypes: {

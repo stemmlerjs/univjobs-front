@@ -122,17 +122,18 @@
     padding-bottom: 30px;
   }
 
-  .animationLine2 {
-    transition: 0.2s ease;
-    width:0px;
-    height: 2px;
+  .animateLine2 {
+    height:2px;
     background-color: #52A7FA;
-    position: relative;
-    margin-top: 16px;
+    width:80px;
+    left: -84px;
+    transition: 0.3s ease;
+    position:absolute;
+    margin-top: 39px;
   }
 
-  .sidebarItem:hover .animationLine2 {
-    width: 31px;
+  .sidebarItem:hover .animateLine2 {
+    left: 3px;
   }
 
   .animationTxt2 {
@@ -172,6 +173,16 @@
   .sidebarItem:hover .animationTxt3 {
     width: 87px;
   }
+
+  .animationLine3 {
+    transition: 0.2s ease;
+    width:0px;
+    height: 2px;
+    background-color: #52A7FA;
+    position: relative;
+    margin-top: 16px;
+  }
+
 
   /* 4) Settings */
 
