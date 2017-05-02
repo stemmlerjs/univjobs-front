@@ -11,7 +11,7 @@ import { Link } from 'react-router'
 
 // ================CSS IMPORTS============================== //
 import { nav, leftsideNavItems, rightsideNavItems, 
-  logoText, noDeco, btn, btnBabyBlue, pseudoBtn, loginIcon} from '../styles/NavigationStyles.css'
+  logoText, noDeco, btn, btnBabyBlue, pseudoBtn, loginIcon, navItem } from '../styles/NavigationStyles.css'
 
 Navigation.propTypes = {
   isAStudent: PropTypes.bool.isRequired,
@@ -29,38 +29,38 @@ export default function Navigation ({isAStudent, onSwitchUserType, onOpenLoginMo
 
       { isAStudent === true ? 
           <div className={nav}>
-              <div>
+              <div className={navItem}>
                   <i 
                     className={'fa fa-user login-icon' + ' ' + loginIcon} 
                     aria-hidden="true"
                   >
                   </i>
               </div>
-              <button className={ `${pseudoBtn} ${btnBabyBlue}` }
+              <button className={ `${pseudoBtn} ${btnBabyBlue} ${navItem}` }
                     onClick={onOpenLoginModal}
                >
                     LOGIN
               </button>
               <button onClick={onSwitchUserType} 
-                    className={btn}
+                    className={btn + ' ' + navItem}
               >
                   EMPLOYER
               </button>
           </div>
         : 
         <div className={nav}>
-          <div>
+          <div className={navItem}>
               <i className={'fa fa-user login-icon' + ' ' + loginIcon} 
                 aria-hidden="true">
               </i>
           </div>
-          <div className={ `${pseudoBtn} ${btnBabyBlue}` }
+          <div className={ `${pseudoBtn} ${btnBabyBlue} ${navItem}` }
                 onClick={onOpenLoginModal}
            >
               LOGIN
           </div>
           <button onClick={onSwitchUserType} 
-                  className={btn}
+                  className={btn + ' ' + navItem}
           >
               STUDENT
           </button>

@@ -2,14 +2,14 @@
 import React, { PropTypes } from 'react'
 
 // ==============MADE COMPONENTS========================= //
-import { Sidebar } from 'modules/Main'
+import { Sidebar, JobSidebar } from 'modules/Main'
 
 // ==============OTHER IMPORTS========================= //
 import { logout } from 'helpers/auth'
 
 const SidebarContainer = React.createClass({
   propTypes: {
-    isAStudent: React.PropTypes.number.isRequired
+    isAStudent: React.PropTypes.bool
   },
 
   // <Provider> implicitly does .childContextTypes and passes down the store object to all components.
@@ -31,8 +31,12 @@ const SidebarContainer = React.createClass({
   },
 
   render () {
+    console.log(JobSidebar)
     return (
-      <Sidebar onLogout={this.handleLogout} isAStudent={this.props.isAStudent}/>
+      <div>
+        <Sidebar onLogout={this.handleLogout} isAStudent={this.props.isAStudent}/>
+        <JobSidebar/>
+      </div>
     )
   },
 })

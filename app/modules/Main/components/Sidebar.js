@@ -4,10 +4,10 @@
  *
  * */
 
-// ==============REACT BUILTIN========================= //
+// =================== REACT BUILTIN ========================= //
 import React, { PropTypes } from 'react'
 
-// ==============THIRD PARTY IMPORTS========================= //
+// ============== THIRD PARTY IMPORTS ====================== //
 import { Link } from 'react-router'
 
 // ================CSS IMPORTS============================== //

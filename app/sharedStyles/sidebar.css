@@ -146,7 +146,7 @@
 
   .sidebarItem:hover .animationTxt2 {
     transition: 0.3s ease;
-    height: 15px;
+    height: 20px;
   }
 
   /* 3) Applications Animation */
@@ -281,7 +281,7 @@
 
 
   .sidebarItem:hover .animationTxt7 {
-    height: 18px;
+    height: 22px;
   }
 
 .sidebarItem:nth-of-type(6) {

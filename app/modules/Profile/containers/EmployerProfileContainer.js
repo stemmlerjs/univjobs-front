@@ -5,6 +5,7 @@ import { SidebarContainer } from 'modules/Main'
 import { EmployerProfile } from 'modules/Profile'
 import axios from 'axios'
 import * as lists from 'helpers/lists'
+import { Title } from 'modules/SharedComponents'
 
 // ====== REDUX AND STATE IMPORTS =======
 import { connect } from 'react-redux'
@@ -12,6 +13,7 @@ import { bindActionCreators } from 'redux'
 import * as userActionCreators from 'redux/modules/user/user'
 import * as profileActionCreators from 'redux/modules/profile/profile'
 import * as listActionCreators from 'redux/modules/list/list'
+
 // ======================================
 
 // ============= MESSAGES ===============
@@ -161,6 +163,10 @@ const EmployerProfileContainer = React.createClass({
     return (
       <div className={pageContainer}>
         <SidebarContainer isAStudent={false}/>
+        <Title 
+            titleName="My business profile"
+            subHeading=""
+        />
         <EmployerProfile
           companyName={this.props.companyName}
           industry={this.props.industry}

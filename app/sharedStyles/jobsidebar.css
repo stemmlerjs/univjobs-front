@@ -1,0 +1,18 @@
+
+.jobsidebar {
+    position: fixed;
+    top: 0px;
+    bottom: 0px;
+    left: 88px;
+    width: 87px;
+    background-color: #414A51;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    z-index: 29;
+    box-shadow: 2px 3px 4px #736e68;
+}
+
+.hideJobsidebar {
+    left:-10px;
+}

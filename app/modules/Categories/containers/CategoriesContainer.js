@@ -18,37 +18,37 @@ import { mainContainer } from '../styles/CategoriesContainerStyles.css'
  * Inline styles and categoryList are defined here to follow the convention of containers are the source of data and business logic, any suggestions?*/
 const divStyle = {
     oneTimeGig: {
-        backgroundImage: `url(https://cloud.githubusercontent.com/assets/7959179/25368698/68f216e4-294c-11e7-9d76-a410cdf59610.jpg)`,
+        backgroundImage: `https://github.com/UnivJobs/univjobs-front/blob/e2e/app/assets/images/jobtypes/jobtype_33.png?raw=true`,
         backgroundRepeat:`no-repeat`,
         backgroundSize:`contain`,
         backgroundPosition:`center`,
     },
     summer: {
-        backgroundImage: `url(https://cloud.githubusercontent.com/assets/7959179/25403039/e4e5ed4e-29c8-11e7-85c1-ccba51fc5db6.jpg)`,
+        backgroundImage: `https://github.com/UnivJobs/univjobs-front/blob/e2e/app/assets/images/jobtypes/jobtype_44.png?raw=true`,
         backgroundRepeat:`no-repeat`,
         backgroundSize:`contain`,
         backgroundPosition:`center`,
     },
     winter: {
-        backgroundImage: `url(https://cloud.githubusercontent.com/assets/7959179/25409431/e2d66fda-29df-11e7-97b5-0745e5d542dc.jpg)`,
+        backgroundImage: `https://github.com/UnivJobs/univjobs-front/blob/e2e/app/assets/images/jobtypes/jobtype_11.png?raw=true`,
         backgroundRepeat:`no-repeat`,
         backgroundSize:`contain`,
         backgroundPosition:`center`,
     },
     freelance: {
-        backgroundImage: `url(https://cloud.githubusercontent.com/assets/7959179/25409744/37557c94-29e1-11e7-982a-a67070e2a0fa.jpg)`,
+        backgroundImage: `https://github.com/UnivJobs/univjobs-front/blob/e2e/app/assets/images/jobtypes/jobtype_22.png?raw=true`,
         backgroundRepeat:`no-repeat`,
         backgroundSize:`contain`,
         backgroundPosition:`center`,
     },
     rep: {
-        backgroundImage: `url(https://cloud.githubusercontent.com/assets/7959179/25410028/9366af84-29e2-11e7-8010-adb462e85ce3.jpg)`,
+        backgroundImage: `https://github.com/UnivJobs/univjobs-front/blob/e2e/app/assets/images/jobtypes/jobtype_55.png?raw=true`,
         backgroundRepeat:`no-repeat`,
         backgroundSize:`contain`,
         backgroundPosition:`center`,
     },
     partTime: {
-        backgroundImage: `url(https://cloud.githubusercontent.com/assets/7959179/25410140/13010ac8-29e3-11e7-9df3-953d304e5359.jpg)`,
+        backgroundImage: `https://github.com/UnivJobs/univjobs-front/blob/e2e/app/assets/images/jobtypes/jobtype_66.png?raw=true`,
         backgroundRepeat:`no-repeat`,
         backgroundSize:`contain`,
         backgroundPosition:`center`,
@@ -149,8 +149,8 @@ const CategoriesContainer = React.createClass({
             isAStudent={false} 
         />
         <Title 
-            titleName="PICK A JOB TYPE YOU WANT"
-            subHeading="I want to post a job for..."
+            titleName="I want to post a job for..."
+            subHeading=""
         />
         <Categories 
             categoryObject={categoryList}

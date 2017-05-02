@@ -115,7 +115,6 @@ function placePhoto(element, url) {
 
   return (
     <div className={profileContainer}>
-      <div className={profileHeader}>MY BUSINESS PROFILE</div>
 
       {/* COMPANY NAME */}
       <ProfileField title="Company Name">

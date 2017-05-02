@@ -42,7 +42,7 @@ export default function Applications ({user, applications, industries, jobTypes,
 
     {/* TITLE */}
     <Title 
-      titleName="MY APPLICANTS"
+      titleName="My applicants"
       subHeading="Click on a student to get more in-depth look at their profile and view their applicantion."
     />
 

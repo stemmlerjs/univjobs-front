@@ -26,7 +26,7 @@ export default function EmployerDashboard ({students}) {
 
           {/* TITLE */}
           <Title 
-            titleName="SEARCH STUDENTS"
+            titleName="Search students"
             subHeading="In the future, you can invite students to apply to the jobs you posted."
           />
 
@@ -81,12 +81,19 @@ export default function EmployerDashboard ({students}) {
           <StudentCard isInviting={true}/>
           <StudentCard isInviting={true}/>
           <StudentCard isInviting={true}/>
-            <div className={overflowFix}></div>
-            <div className={overflowFix}></div>
-            <div className={overflowFix}></div>
-            <div className={overflowFix}></div>
+          <StudentCard isInviting={true}/> 
       </div>
     </div>
   )
 }
+
+/*
+* TODO:
+* when we hook this up to display actual students again,
+* we need to do some math and sometimes add a couple of these.
+* 
+*   <div className={overflowFix}></div>
+*
+*/
+
 

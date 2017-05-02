@@ -37,7 +37,7 @@ export default function StudentDashboard ({jobs, handleCardClick,
 
                 {/* TITLE */}
                 <Title 
-                    titleName="LET'S GET YOU HIRED"
+                    titleName="Let's get you hired"
                     subHeading="Apply to a job now, so we can help you land one!"
                 />
 
@@ -75,10 +75,10 @@ export default function StudentDashboard ({jobs, handleCardClick,
   	                    </div>
   	                )) : '' }
                 </div>
-  	            <div className={overflowFix}></div>
-  	            <div className={overflowFix}></div>
-  	            <div className={overflowFix}></div>
-  	            <div className={overflowFix}></div>
+  	            // <div className={overflowFix}></div>
+  	            // <div className={overflowFix}></div>
+  	            // <div className={overflowFix}></div>
+  	            // <div className={overflowFix}></div>
             </div>
 
             {/*MODAL

@@ -34,15 +34,10 @@ export default function Applicants ({}) {
 
     {/* TITLE */}
      <Title
-          titleName='MY APPLICANTS'
+          titleName='My applicants'
           subHeading='Click on a student to get more in-depth look at their profile and view their application.'>
      </Title>
-     <div className={pageFiltersAndSearch}>
-        <Combobox
-            data={data}
-            defaultValue={data[0]}
-        />
-     </div>
+     
 
      {/*MAIN (Cards List)
        NOTE: Reference for iterating using map
