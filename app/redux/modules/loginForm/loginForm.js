@@ -97,19 +97,39 @@ export function submitLoginForm(email, password) {
               })
         })
         .catch((err) => {
-          if(err.status === 400){
-            // ACTION: DISPATCH (SUBMIT_LOGIN_FORM_ERROR)
-            dispatch(submitLoginFormError('Either username or password is incorrect.'))
+          console.log(err.status)
 
-            // ACTION: DISPATCH (LOGIN_FAILURE)
-            dispatch(loginFailure('Either username or password is incorrect.'))
-          } else {
-            // ACTION: DISPATCH (SUBMIT_LOGIN_FORM_ERROR)
-            dispatch(submitLoginFormError("Couldn't connect to Univjobs. Please check your network connection."))
+          switch (err.status) {
+            case 400: 
+              // ACTION: DISPATCH (SUBMIT_LOGIN_FORM_ERROR)
+              dispatch(submitLoginFormError('Either username or password is incorrect.'))
 
-            // ACTION: DISPATCH (LOGIN_FAILURE)
-            dispatch(loginFailure("Couldn't connect to Univjobs. Please check your network connection."))
+              // ACTION: DISPATCH (LOGIN_FAILURE)
+              dispatch(loginFailure('Either username or password is incorrect.'))
+              break;
+            case 401: 
+              // ACTION: DISPATCH (SUBMIT_LOGIN_FORM_ERROR)
+              dispatch(submitLoginFormError('Either username or password is incorrect.'))
+
+              // ACTION: DISPATCH (LOGIN_FAILURE)
+              dispatch(loginFailure('Either username or password is incorrect.'))
+              break;
+            case 404: 
+              // ACTION: DISPATCH (SUBMIT_LOGIN_FORM_ERROR)
+              dispatch(submitLoginFormError("Can't find this user. Are you sure you signed up?"))
+
+              // ACTION: DISPATCH (LOGIN_FAILURE)
+              dispatch(loginFailure("Can't find this user. Are you sure you signed up?"))
+              break;
+            default: 
+              // ACTION: DISPATCH (SUBMIT_LOGIN_FORM_ERROR)
+              dispatch(submitLoginFormError("Couldn't connect to Univjobs. Please check your network connection."))
+
+              // ACTION: DISPATCH (LOGIN_FAILURE)
+              dispatch(loginFailure("Couldn't connect to Univjobs. Please check your network connection."))
+              break;
           }
+
           console.log("error", err)
           reject(false)
         })

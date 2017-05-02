@@ -25,3 +25,7 @@
 .appear.appearActive {
   opacity: 1;
 }
+
+.noDecoration {
+  text-decoration: none;
+}

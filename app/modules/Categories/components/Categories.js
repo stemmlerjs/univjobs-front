@@ -17,7 +17,6 @@ import { categories, category } from '../styles/CategoriesContainerStyles.css'
  * TODO: Fixed flexible layout, texts are not changing with the category images
  * */
 const Categories = function(categoryObject) {
-    debugger
   return (
     <div className={categories}>
       { categoryObject.categoryObject.map(({key, heading, subHeadingForEmp, divStyle, type}) => {

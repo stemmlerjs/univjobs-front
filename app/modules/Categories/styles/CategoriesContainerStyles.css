@@ -21,16 +21,34 @@
 
 .category {
   height: 226px;
-  width: 26vw;
+  width: 338px;
   position: relative;
   margin: 19px;
   flex-shrink: 4;
   color: white;
+  overflow:hidden;
 }
 
 .categoryText {
-  position:absolute;
-  bottom:0px;
+        position: absolute;
+    height: 119px;
+    top: 106px;
+}
+
+.categoryOpacity {
+  height: 100%;
+  background-color: saddlebrown;
+  position: absolute;
+  width: 100%;
+  background-color: rgba(175,74,45,0.3);
+}
+
+.categoryOpacity:hover {
+  opacity: 0;
+}
+
+.categoryOpacity:hover + div {
+  color: black;
 }
 
 .headingStyle {

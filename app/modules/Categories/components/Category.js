@@ -4,7 +4,7 @@ import { Link } from 'react-router'
 
 
 // ===============CSS IMPORTS======================//
-import { category, categoryText, headingStyle, subHeadingStyle} from '../styles/CategoriesContainerStyles.css'
+import { category, categoryText, categoryOpacity, headingStyle, subHeadingStyle} from '../styles/CategoriesContainerStyles.css'
 
 /*Category
  *
@@ -15,6 +15,7 @@ const Category = function({heading, subHeading, divStyle, type}) {
           return (
           <Link to={`/job/create/${type}`}>
                   <div className={category} style={divStyle.oneTimeGig}>
+                        <div className={categoryOpacity}></div>
                         <div className={categoryText}>
                             <h3 className={headingStyle}>{heading}</h3>
                             <p className={subHeadingStyle}>{subHeading}</p>
@@ -26,6 +27,7 @@ const Category = function({heading, subHeading, divStyle, type}) {
          return (
             <Link to={`/job/create/${type}`}>
                   <div className={category} style={divStyle.summer}>
+                        <div className={categoryOpacity}></div>
                         <div className={categoryText}>
                             <h3 className={headingStyle}>{heading}</h3>
                             <p className={subHeadingStyle}>{subHeading}</p>
@@ -37,6 +39,7 @@ const Category = function({heading, subHeading, divStyle, type}) {
          return (
             <Link to={`/job/create/${type}`}>
                   <div className={category} style={divStyle.winter}>
+                        <div className={categoryOpacity}></div>
                         <div className={categoryText}>
                             <h3 className={headingStyle}>{heading}</h3>
                             <p className={subHeadingStyle}>{subHeading}</p>
@@ -48,6 +51,7 @@ const Category = function({heading, subHeading, divStyle, type}) {
          return (
             <Link to={`/job/create/${type}`}>
                   <div className={category} style={divStyle.freelance}>
+                        <div className={categoryOpacity}></div>
                         <div className={categoryText}>
                             <h3 className={headingStyle}>{heading}</h3>
                             <p className={subHeadingStyle}>{subHeading}</p>
@@ -59,6 +63,7 @@ const Category = function({heading, subHeading, divStyle, type}) {
          return (
             <Link to={`/job/create/${type}`}>
                   <div className={category} style={divStyle.rep}>
+                        <div className={categoryOpacity}></div>
                         <div className={categoryText}>
                             <h3 className={headingStyle}>{heading}</h3>
                             <p className={subHeadingStyle}>{subHeading}</p>
@@ -70,6 +75,7 @@ const Category = function({heading, subHeading, divStyle, type}) {
          return (
             <Link to={`/job/create/${type}`}>
                   <div className={category} style={divStyle.partTime}>
+                        <div className={categoryOpacity}></div>
                         <div className={categoryText}>
                             <h3 className={headingStyle}>{heading}</h3>
                             <p className={subHeadingStyle}>{subHeading}</p>

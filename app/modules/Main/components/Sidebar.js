@@ -86,13 +86,7 @@ export default function SideBar ({onLogout, isAStudent}) {
               <div className={animateLine2}></div>
             </div>
           </Link>
-        : <Link to="/mylistings/em" className={noDecoration}>
-            <div className={sidebarItem}>
-              <i className={animationItem5 + " fa fa-file-text-o"} aria-hidden="true"></i>
-              <div className={animationTxt5}>My Listings</div>
-              <div className={animateLine2}></div>
-            </div>
-          </Link>
+        : <span></span>
       }
 
       {/* INVITATIONS / POST A LISTING */}
