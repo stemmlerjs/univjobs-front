@@ -113,6 +113,29 @@ function placePhoto(element, url) {
   }
 
 
+//  /*
+//   * Initialize drag and drop event handlers
+//   */
+
+//   var beingDraggedOver = false;
+
+//   function onDragOver () {
+//     if (!beingDraggedOver) {
+//       beingDraggedOver = true;
+//       console.log("BEING DRAGGED OVER")
+//     }
+//   }
+
+//   function onDragLeave () {
+//     beingDraggedOver = false;
+//     console.log("NO LONGER BEING DRAGGED OVER")
+//   }
+
+//   document.getElementById('drop').ondragover = onDragOver
+//   document.getElementById('drop').ondragleave = onDragLeave
+
+console.log(props)
+
   return (
     <div className={profileContainer}>
 
@@ -144,7 +167,7 @@ function placePhoto(element, url) {
     {/* LOGO */}
       <ProfileField title="Logo">
         <Dropzone id="dropPhotoDiv" className={props.profileErrorsMap.logoUrl ? dropzone + ' ' + error : dropzone} onDrop={onDrop} accept='image/*' multiple={false}>
-          <div className={dropzoneContent}>
+          <div onDragOver={props.onDragOver} onDragLeave={props.onDragLeave} className={dropzoneContent}>
             <i id="fa-camera" className={"fa fa-camera " + photoIcon} aria-hidden="true"></i>
             <div id="drag-drop">Drag and drop</div>
           </div>

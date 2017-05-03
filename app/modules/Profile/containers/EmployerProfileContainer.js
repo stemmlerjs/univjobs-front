@@ -14,13 +14,16 @@ import * as userActionCreators from 'redux/modules/user/user'
 import * as profileActionCreators from 'redux/modules/profile/profile'
 import * as listActionCreators from 'redux/modules/list/list'
 
-// ======================================
-
 // ============= MESSAGES ===============
 var ReactToastr = require("react-toastr");
 var {ToastContainer} = ReactToastr; // This is a React Element.
 var ToastMessageFactory = React.createFactory(ReactToastr.ToastMessage.animation);
 // ======================================
+
+
+// =============== OTHER ================
+
+var beingDraggedOver = false;
 
 import { pageContainer } from 'sharedStyles/sharedContainerStyles.css'
 
@@ -159,6 +162,30 @@ const EmployerProfileContainer = React.createClass({
     }
   },
 
+  /*
+  * onDragOver
+  * 
+  * On the drag over of the profile picture, we conditionally style it to smooth it out.
+  */
+
+  onDragOver () {
+    if (!beingDraggedOver) {
+      beingDraggedOver = true;
+      document.getElementById('dropPhotoDiv').classList.add('profilePictureDragDrop')
+    }
+  },
+
+  /*
+  * onDragLeave
+  * 
+  * On the drag over of the profile picture, we conditionally style it to smooth it out.
+  */
+
+  onDragLeave () {
+    beingDraggedOver = false;
+    document.getElementById('dropPhotoDiv').classList.remove('profilePictureDragDrop')
+  },
+
   render () {
     return (
       <div className={pageContainer}>
@@ -187,6 +214,8 @@ const EmployerProfileContainer = React.createClass({
           lastName={this.props.user.lastName}
           dateJoined={this.props.user.dateJoined}
           mobile={this.props.user.mobile}
+          onDragOver={this.onDragOver}
+          onDragLeave={this.onDragLeave}
         />
         <ToastContainer ref="container"
           toastMessageFactory={ToastMessageFactory}
