@@ -63,7 +63,7 @@ export function savingProfileInfo() {
 /*NOTE: Should this have an input
  *
  * */
-export function savedProfileSucces() {
+export function savedProfileSuccess() {
   return {
     type: SAVED_PROFILE_INFO_SUCCESS
   }
@@ -130,14 +130,14 @@ export function submitProfileFirstTime(userTypeInt, profileInfo, user) {
     	   console.log('SUBMIT STUDENT PROFILE NO ERRORS')
     	    // No errors, proceed to /PUT on api/me
           var putData = {
-              "is_a_student": true,
-              "is_profile_completed": true,
-              "email": user.email,
-              "first_name": profileInfo.firstName,
-              "last_name": profileInfo.lastName,
-              "is_active": true,
-              "date_joined": user.dateJoined,
-              "mobile": user.mobile,
+            "is_a_student": true,
+            "is_profile_completed": true,
+            "email": user.email,
+            "first_name": profileInfo.firstName,
+            "last_name": profileInfo.lastName,
+            "is_active": true,
+            "date_joined": user.dateJoined,
+            "mobile": user.mobile,
         	  "schoolName": profileInfo.school,
       		  languages: profileInfo.languages,
       		  sports: profileInfo.sportsTeam,
@@ -247,6 +247,14 @@ export function submitProfileFirstTime(userTypeInt, profileInfo, user) {
 export function updateProfile(userTypeInt, profileInfo, user, snapshot) {
   return function (dispatch) {
     switch(userTypeInt) {
+
+     /*
+      * Case 0 is for students.
+      * 
+      * This section updates the user's profile with the required student
+      * fields.
+      */
+
       case 0:
         console.log("UPDATING STUDENT PROFILE")
         validateStudentProfileFields(profileInfo, (errorExist, profileFieldErrors) => {
@@ -310,10 +318,34 @@ export function updateProfile(userTypeInt, profileInfo, user, snapshot) {
             }
           })
         return;
+
+     /*
+      * Case 1 is for employers.
+      * 
+      * This section updates the user's profile with the required employer
+      * fields.
+      */
+
       case 1:
         console.log("UPDATING EMPLOYER PROFILE")
+
+        /* First, validate all of the employer fields.
+        */
+
         validateEmployerProfileFields(profileInfo, (errorsExist, profileFieldErrors) => {
+
+         /* After a pass through each of the fields, we will know if 
+          * an error exists.
+          */
+
           if(errorsExist) {
+
+            /*
+            * Display an error message using the ToastContainer
+            * if an error occurred.
+            *
+            * TODO: Show a different error based on error types.
+            */
 
             // DISPATCH - SAVE_PROFILE_ERROR
             dispatch(savedProfileFailure(profileFieldErrors, [
@@ -322,21 +354,12 @@ export function updateProfile(userTypeInt, profileInfo, user, snapshot) {
             ], false))
 
           } else {
-            // No errors, proceed to /PATCH on api/me
+
+           /*
+            * No errors, proceed to /PATCH on api/me.
+            */
 
             var changedData = {
-             // user: {
-              //"user-is_a_student": false,           // doesn't change
-              //   "user-is_profile_completed": true,
-              //   "user-email": user.email,
-              //   "user-first_name": user.firstName,
-              //   "user-last_name": user.lastName,
-              //   "user-is_active": true,
-              //   //"user-date_joined": user.dateJoined,  // doesn't change
-              //   "user-mobile": user.mobile,
-              // // },
-              //is_a_student: false,                  // doesn't change
-              // is_profile_completed: true, // set this flag to true so we know for next time
               company_name: profileInfo.companyName,
               logo: profileInfo.logoUrl,
               office_location: profileInfo.officeAddress,
@@ -346,13 +369,18 @@ export function updateProfile(userTypeInt, profileInfo, user, snapshot) {
               website: profileInfo.website,
               employee_count: profileInfo.employeeCount,
               industry: profileInfo.industry.id ? profileInfo.industry.id : profileInfo.industry,
-              // date_joined: user.dateJoined,
-              // first_name: user.firstName,
-              // last_name: user.lastName,
-              // email: user.email
             }
-            //debugger;
+
+           /*
+            * Figure out what fields need to be updated.
+            */
+
             compareToSnapshot(snapshot, changedData, (result) => {
+
+             /*
+              * Perform the HTTP request.
+              */
+
               employerProfilePATCH(result)
                 .then((res) => {
 
@@ -511,7 +539,7 @@ function employerProfile(state = initialEmployerProfileState, action) {
           officeAddress: action.profileInfo.office_address,
           officeCity: action.profileInfo.office_city,
           officePostalCode: action.profileInfo.office_postal_code,
-          logoUrl: action.profileInfo.logo
+          logoUrl: action.profileInfo.logo_url
       }
     case SAVED_PROFILE_INFO_FAILURE:
       return {

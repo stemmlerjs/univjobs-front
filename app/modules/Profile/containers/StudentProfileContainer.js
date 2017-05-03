@@ -138,11 +138,12 @@ const StudentProfileContainer = React.createClass({
 	    .then(this.doRedirectionFilter)
 	    .then(this.finallyDisableOverlay)
 
-    },
+  },
 
   componentWillUnmount() {
     console.log("wait, no we have to check")
   },
+
 
   handleSubmit(studentProps) {
    //If profile is NOT completed, do /PUT. All fields must be populated and valid.

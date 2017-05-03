@@ -192,8 +192,7 @@ const EmployerProfileContainer = React.createClass({
         <SidebarContainer isAStudent={false}/>
         <Title 
             titleName="My business profile"
-            subHeading=""
-        />
+            subHeading=""/>
         <EmployerProfile
           companyName={this.props.companyName}
           industry={this.props.industry}
@@ -212,8 +211,8 @@ const EmployerProfileContainer = React.createClass({
           email={this.props.user.email}
           firstName={this.props.user.firstName}
           lastName={this.props.user.lastName}
-          dateJoined={this.props.user.dateJoined}
-          mobile={this.props.user.mobile}
+          dateJoined={new Date(this.props.user.dateJoined)}
+          mobile={Number(this.props.user.mobile)}
           onDragOver={this.onDragOver}
           onDragLeave={this.onDragLeave}
         />

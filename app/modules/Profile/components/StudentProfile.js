@@ -457,14 +457,14 @@ export default function StudentProfile (props) {
 			 </li>
 			</StudentProfileField>
 
-		      {/* PHOTO & RESUME */}
-		      <StudentProfileField title="Take a business selfie">
-		        <Dropzone id="dropPhotoDiv" className={props.propsErrorMap.photo ? dropzone + ' ' + error: dropzone} onDrop={onDrop} accept='image/*' multiple={false}>
-		          <div className={dropzoneContent}>
-		            <i id="fa-user" className={"fa fa-user fa-3x"} aria-hidden="true"></i>
-		            <div id="drag-dropPhoto">Upload a photo</div>
-		          </div>
-		         </Dropzone>
+			{/* PHOTO & RESUME */}
+			<StudentProfileField title="Take a business selfie">
+				<Dropzone id="dropPhotoDiv" className={props.propsErrorMap.photo ? dropzone + ' ' + error: dropzone} onDrop={onDrop} accept='image/*' multiple={false}>
+					<div className={dropzoneContent}>
+						<i id="fa-user" className={"fa fa-user fa-3x"} aria-hidden="true"></i>
+						<div id="drag-dropPhoto">Upload a photo</div>
+					</div>
+					</Dropzone>
 			<p className={space}>,here is my resume</p>
         <Dropzone id="dropResumeDiv" className={props.propsErrorMap.resume ? dropzone + ' ' + error : dropzone} onDrop={onDropResume} accept='application/pdf' multiple={false}>
           <div className={dropzoneContent}>

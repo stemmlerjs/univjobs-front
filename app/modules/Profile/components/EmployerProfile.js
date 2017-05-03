@@ -23,7 +23,8 @@ import config from 'config'
 // ================CSS IMPORTS============================== //
 import { profileContainer, profileHeader, profileField, profileFieldName, profileFieldContent, input,
   textArea, dropzone, resetBtnContainer, dropzoneContent, photoIcon, saveBtnContainer, saveBtn,
-  inlineDropzone, comboBox, city, postalcode, citypostalcoderelative, dropPoint, error, industryMargin } from '../styles/EmployerProfileStyles.css'
+  inlineDropzone, comboBox, city, postalcode, citypostalcoderelative, dropPoint, error, industryMargin,
+  profilePictureDragDrop } from '../styles/EmployerProfileStyles.css'
 import { btn } from 'sharedStyles/widgets.css'
 
 /**
@@ -92,49 +93,28 @@ function placePhoto(element, url) {
   * Place the logo from props onto the Profile Picture field.
   */
 
-  // === New Profile Picture file upload
-  if(typeof props.logoUrl == "object") {
-    let dropPhotoDiv = document.getElementById('dropPhotoDiv')
-    let url = `url('${props.logoUrl.preview}')` // blob
-    placePhoto(dropPhotoDiv, url)
+  var profilePic = {}
 
-  }
-
-  // === Existing Profile Picture
-  else if(props.logoUrl.indexOf("/media") === 0) {
-    // Dev Profile Pictures (via /media)
-    let photoDiv = document.getElementById('dropPhotoDiv')
-    if(photoDiv) {
-      let url = `url('${config.mediaUrl + props.logoUrl.substring(props.logoUrl.indexOf("/media/") + 7)}')` // blob
-      placePhoto(photoDiv, url)
+  if (typeof props.logoUrl == "string") {
+    profilePic = {
+      backgroundImage: `url(http://localhost:8000/${props.logoUrl.replace("\\", "/")})`,
+      backgroundRepeat: "no-repeat",
+      backgroundPosition: "center center",
+      backgroundSize: "125%"
     }
-  } else {
-    // Prod Profile Pictures (via ???)
+  }
+
+  if(typeof props.logoUrl == "object") {
+
+    profilePic = {
+      backgroundImage: `url('${props.logoUrl.preview}')`,
+      backgroundRepeat: "no-repeat",
+      backgroundPosition: "center center",
+      backgroundSize: "125%"
+    }
   }
 
 
-//  /*
-//   * Initialize drag and drop event handlers
-//   */
-
-//   var beingDraggedOver = false;
-
-//   function onDragOver () {
-//     if (!beingDraggedOver) {
-//       beingDraggedOver = true;
-//       console.log("BEING DRAGGED OVER")
-//     }
-//   }
-
-//   function onDragLeave () {
-//     beingDraggedOver = false;
-//     console.log("NO LONGER BEING DRAGGED OVER")
-//   }
-
-//   document.getElementById('drop').ondragover = onDragOver
-//   document.getElementById('drop').ondragleave = onDragLeave
-
-console.log(props)
 
   return (
     <div className={profileContainer}>
@@ -166,10 +146,11 @@ console.log(props)
 
     {/* LOGO */}
       <ProfileField title="Logo">
-        <Dropzone id="dropPhotoDiv" className={props.profileErrorsMap.logoUrl ? dropzone + ' ' + error : dropzone} onDrop={onDrop} accept='image/*' multiple={false}>
+        <Dropzone id="dropPhotoDiv" style={profilePic} className={props.profileErrorsMap.logoUrl ? dropzone + ' ' + error : 
+          props.logoUrl == "" ? dropzone : dropzone + " " + profilePictureDragDrop} onDrop={onDrop} accept='image/*' multiple={false}>
           <div onDragOver={props.onDragOver} onDragLeave={props.onDragLeave} className={dropzoneContent}>
-            <i id="fa-camera" className={"fa fa-camera " + photoIcon} aria-hidden="true"></i>
-            <div id="drag-drop">Drag and drop</div>
+            <i id="fa-camera" className={"fa fa-camera " + photoIcon + props.logoUrl == "" ? " " : "gone"} aria-hidden="true"></i>
+            <div id="drag-drop" className={props.logoUrl == "" ? "" : "gone"}>Drag and drop</div>
           </div>
         </Dropzone>
         <Dropzone className={inlineDropzone} onDrop={onDrop} accept='image/*' multiple={false}>

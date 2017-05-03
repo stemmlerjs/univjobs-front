@@ -157,3 +157,11 @@
 .industryMargin {
       margin-bottom: 15px;
 }
+
+.profilePictureDragDrop {
+    color: #43a0c5 !important;
+    border: 2px solid #43a0c5 !important;
+    background-color: white !important;
+    box-shadow: 1px 1px 15px #43A0C5 !important;
+    transition: all 0.3s ease-out;
+}

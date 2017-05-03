@@ -2,7 +2,7 @@ const config = {
   CURRENT_ENV: 'dev',
   dev: {
     baseUrl: 'http://localhost:8080/api/',
-    mediaUrl: 'http://ec2-52-87-227-85.compute-1.amazonaws.com:8000/media/'
+    mediaUrl: 'http://localhost:8000/'
   },
   prod: {
     baseUrl: 'http://eoymxx-univjobs-back-staging-univjobs.runnableapp.com/api/'
