@@ -44,7 +44,8 @@ export function logout(store, router) {
     method: 'post',
     url: config.baseUrl + 'logout/',
     headers: {
-      "X-CSRFToken": csrfToken
+      "X-CSRFToken": csrfToken,
+      "authorization": getAccessToken()
     }
   })
   .then((res) => {

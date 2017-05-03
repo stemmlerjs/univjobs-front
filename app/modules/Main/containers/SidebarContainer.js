@@ -31,7 +31,6 @@ const SidebarContainer = React.createClass({
   },
 
   render () {
-    console.log(JobSidebar)
     return (
       <div>
         <Sidebar onLogout={this.handleLogout} isAStudent={this.props.isAStudent}/>
