@@ -3,7 +3,7 @@ import config from 'config'
 import cookie from 'react-cookie'
 import { loggingIn, loginSuccess, loginFailure,
   fetchingUserInfo, loggingOut, logoutSuccess, logoutFailure, fetchingUserInfoSuccess, fetchingUserInfoFailure } from 'redux/modules/user/user'
-import { fetchingProfileInfoSuccess } from 'redux/modules/profile/profile'
+import { fetchedProfileInfoSuccess } from 'redux/modules/profile/profile'
 import _ from 'lodash'
 
 /**
@@ -50,7 +50,7 @@ export function logout(store, router) {
   .then((res) => {
     // ACTION: DISPATCH (LOGGING_OUT)
     store.dispatch(logoutSuccess())
-    cookie.remove('univjobs-access-token')
+    localStorage.removeItem('univjobs-access-token')
     router.replace('/join')
   })
   .catch(() => {
@@ -92,11 +92,15 @@ export function getUserInfo(token) {
 export function setAccessToken (token) {
   var d = new Date();
   d.setTime(d.getTime() + 30*60*1000); // set cookie to last 30 mins
-  cookie.save('univjobs-access-token', token, {
-    path: '/'
-  }, {
+  
+  localStorage.setItem('univjobs-access-token', JSON.stringify({
+    token: token,
     expires: d
-  });
+  }));
+}
+
+export function getAccessToken() {
+  return JSON.parse(localStorage.getItem('univjobs-access-token')).token
 }
 
 //
@@ -173,7 +177,7 @@ export function checkIfAuthed (store) {
       /* If the user reloads the page, state is lost and we cannot tell if they are
         authenticated through the use of the store. We must now check the cookie.
       */
-      const accessToken = cookie.load('univjobs-access-token');
+      const accessToken = getAccessToken()
       if(accessToken === undefined) {
         console.log("No access token found, head to main screen")
         reject(false)
@@ -193,17 +197,17 @@ export function checkIfAuthed (store) {
             console.log("access token from cookie is still valid", response)
 
             // User Details
-            const dateJoined = response.data.user.date_joined
-            const email = response.data.user.email
-            const firstName = response.data.user.first_name
-            const lastName = response.data.user.last_name
-            const mobile = response.data.user.mobile
+            const dateJoined = response.data.student !== undefined ? response.data.student.createdAt : response.data.employer.createdAt
+            const email = response.data.student !== undefined ? response.data.user.student.user_email : response.data.employer.user_email 
+            const firstName = response.data.student !== undefined ? response.data.student.user_firstName : response.data.employer.user_firstName
+            const lastName = response.data.student !== undefined ? response.data.student.user_lastName : response.data.employer.user_lastName 
+            const mobile = response.data.student !== undefined ? response.data.student.user_mobile : response.data.employer.user_mobile
 
             // Profile Details
-            const isAStudent = response.data.user.is_a_student
-            const isProfileCompleted = response.data.user.is_profile_completed
-            let profileInfo = _.cloneDeep(response.data);
-            delete profileInfo.user
+            const isAStudent = response.data.student !== undefined ? true : false
+            const isProfileCompleted = response.data.student !== undefined ? response.data.student.is_profile_complete : response.data.employer.is_profile_complete
+
+            let profileInfo = response.data.student !== undefined ? response.data.student : response.data.employer
 
             // ACTION: USER - DISPATCH (FETCHING_USER_INFO_SUCCESS)
             store.dispatch(fetchingUserInfoSuccess(
@@ -211,7 +215,7 @@ export function checkIfAuthed (store) {
             ))
 
             // ACTION: PROFILE - DISPATCH (FETCHING_PROFILE_INFO_SUCCESS)
-            store.dispatch(fetchingProfileInfoSuccess(
+            store.dispatch(fetchedProfileInfoSuccess(
               isProfileCompleted,
               profileInfo,
               isAStudent
@@ -219,13 +223,15 @@ export function checkIfAuthed (store) {
 
             // ACTION: DISPATCH (LOGGING_IN_SUCCESS)
             store.dispatch(loginSuccess(accessToken,
-              response.data.user.is_a_student,
-              response.data.user.is_profile_completed))
+              isAStudent,
+              isProfileCompleted
+            ))
+
             resolve(true)
           })
           .catch(function(err){
-            console.log('NOPE, access token from cookie is not valid- we should go home', err)
-            cookie.remove('univjobs-access-token')
+            console.log('Some error occurred. Could not confirm access token is valid.', err)
+            localStorage.removeItem('univjobs-access-token')
 
             // ACTION: DISPATCH (FETCHING_USER_INFO_FAILURE)
             store.dispatch(fetchingUserInfoFailure())
@@ -239,10 +245,6 @@ export function checkIfAuthed (store) {
     console.log("*************************************************************")
   })
   return promise;
-}
-
-export function getAccessToken() {
-  return cookie.load('univjobs-access-token');
 }
 
 export function getCSRFToken() {
