@@ -293,6 +293,14 @@
     height: 75%;
 }
 
+.sidebarUnivjobsLogo {
+    width: 63px;
+    height: 38px;
+    position: absolute;
+    top: 14px;
+    left: 10px;
+}
+
   /* Keyframes */
   @keyframes shake {
     10%, 90% {
