@@ -429,6 +429,13 @@ export default function StudentProfile (props) {
 			  >
 			 </input>
 			 </li>
+			  <li>
+			    <i className="fa fa-info-circle fa-2x" aria-hidden="true" data-tip="No experience? Use this as a way to tell employers how great you are!"></i>
+			    <ReactTooltip place="bottom"
+			    	type="warning"
+				effect="float"
+			    />
+			  </li>
 			</StudentProfileField>
 
 			{/* CITY */}
