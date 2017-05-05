@@ -9,6 +9,7 @@ import React, { PropTypes } from 'react'
 
 // ==============MADE COMPONENTS========================= //
 import { StudentCard, Title } from 'modules/SharedComponents'
+import config from 'config'
 
 // ==============THIRD PARTY IMPORTS========================= //
 import { DropdownList } from 'react-widgets'
@@ -20,7 +21,9 @@ import { flexibleCardContainer } from 'sharedStyles/cardContainer.css'
 import { campusDropdown, gradDateDropdown, filtersDivider} from '../styles/EmployerDashboardStyles.css'
 
 
+
 export default function EmployerDashboard ({students}) {
+  console.log(Array.isArray(students))
   return (
     <div className={rootComponentContainer}>
 
@@ -55,6 +58,7 @@ export default function EmployerDashboard ({students}) {
           {/* MAIN (Cards list) */}
           <div className={flexibleCardContainer}>
           {/*
+
             {students.map((student) => (
               <StudentCard 
                 key={student.user.email} 
@@ -72,16 +76,22 @@ export default function EmployerDashboard ({students}) {
                 sports={student.sports}
               />
             ))}
-*/}
-          <StudentCard isInviting={true}/>
-          <StudentCard isInviting={true}/>
-          <StudentCard isInviting={true}/>
-          <StudentCard isInviting={true}/>
-          <StudentCard isInviting={true}/>
-          <StudentCard isInviting={true}/>
-          <StudentCard isInviting={true}/>
-          <StudentCard isInviting={true}/>
-          <StudentCard isInviting={true}/> 
+*/}       
+          { students.map((student) => (
+                <StudentCard 
+                  key={student.student_id}
+                  pictureUrl={config.mediaUrl + 'avatar/' + student.photo_url}
+                  resumeUrl={config.mediaUrl + 'res/' + student.resume_url}
+                  funFact={student.fun_fact}
+                  educationLevel={student.edu_level}
+                  hasCar={student.has_car}
+                  hobbies={student.hobbies}
+                  isInviting={true}
+                  showResume={false}
+                />
+          ))}
+          
+          
       </div>
     </div>
   )

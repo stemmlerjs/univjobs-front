@@ -12,6 +12,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { getStudents as getStudentsREST } from 'helpers/dashboard'
 import { authRedirectFilter } from 'config/routes'
+import * as dashboardActionCreators from 'redux/modules/dashboard/dashboard'
 
 // ================CSS IMPORTS============================== //
 import { pageContainer } from 'sharedStyles/sharedContainerStyles.css'
@@ -20,7 +21,7 @@ import { pageContainer } from 'sharedStyles/sharedContainerStyles.css'
 const EmployerDashboardContainer = React.createClass({
   propTypes: {
     user: PropTypes.object, 
-    students: PropTypes.object 
+    students: PropTypes.array 
   },
 
   contextTypes: {
@@ -54,20 +55,23 @@ const EmployerDashboardContainer = React.createClass({
     return authRedirectFilter(config, this.context.store, this.context.router)
   },
 
-  /** finallyDisableOverlay
+ /*
+  * finallyDisableOverlay
   *
   * A handle to the closeOverlay() function passed down from a higher order component.
   * Invoked as the final function on page load.
   */
 
   finallyDisableOverlay() {
-    if(this.context.store.getState().application.isOverlayActive){
+
+   /*
+    * TODO: Watch out for places where we've changed 'application' to rootApplication.
+    * This might screw us up because the overlay stays open.
+    */
+
+    if(this.context.store.getState().rootApplication.isOverlayActive){
       this.props.closeOverlay()
     }
-  },
-
-  getStudents() {
-    return getStudentsREST(this.context.store)
   },
 
   /*
@@ -82,7 +86,7 @@ const EmployerDashboardContainer = React.createClass({
   componentWillMount() {
     /*  On page load, we will first get all the required lists for the screen */  
     this.doRedirectionFilter()
-      .then(this.getStudents())
+      .then(this.props.getStudents)
       .then(this.finallyDisableOverlay)
   },
 
@@ -94,7 +98,7 @@ const EmployerDashboardContainer = React.createClass({
         <EmployerDashboard students={this.props.students}/>
       </div>
     )
-  },
+  }
 })
 
 function mapStateToProps({user, dashboard}) {
@@ -105,7 +109,9 @@ function mapStateToProps({user, dashboard}) {
 }
 
 function mapActionCreatorsToProps(dispatch) {
-  return bindActionCreators({}, dispatch)
+  return bindActionCreators({
+    ...dashboardActionCreators
+  }, dispatch)
 }
 
 export default connect(mapStateToProps, mapActionCreatorsToProps)(EmployerDashboardContainer)

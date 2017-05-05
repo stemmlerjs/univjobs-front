@@ -1,7 +1,10 @@
-/*ApplicatntsContainer
+
+/*
+ * ApplicatntsContainer
  *
- *The container logic that renders all students that applied to a job
- * */
+ * The container logic that renders all students that applied to a job
+ *
+ */
 
 // ==============REACT BUILTIN========================= //
 import React, { Component, PropTypes } from 'react'
@@ -57,12 +60,12 @@ const ApplicantsContainer = React.createClass({
   doRedirectionFilter() {
     const config = {
       failureRedirect: {
-	 student: '/join',	// if not logged in, go here (student)
-	 employer: '/join'      // if not logged in, go here (employer)
+        student: '/join',	// if not logged in, go here (student)
+        employer: '/join'      // if not logged in, go here (employer)
       },
       restricted: {
          to: 'EMPLOYERS',		 // EMPLOYERS only on this route
-	 redirectTo: '/job/myapplicants'   // if not an EMPLOYER, redirect to the employer equivalent
+	       redirectTo: '/job/myapplicants'   // if not an EMPLOYER, redirect to the employer equivalent
 		 			 // This might change to employer categories
       }
     }
@@ -104,10 +107,10 @@ const ApplicantsContainer = React.createClass({
   },
 
   componentWillMount() {
-	console.log("componentWillMount")
-	this.doRedirectionFilter()
-	.then(this.retrieveAll())
-	.then(this.props.closeOverlay())
+
+    this.doRedirectionFilter()
+      .then(this.retrieveAll())
+      .then(this.props.closeOverlay())
 
   },
 
@@ -135,7 +138,9 @@ const ApplicantsContainer = React.createClass({
  * 	At the moment we are borrowing every single question in the dashboard
  * 	Is there a better way?
  *
- * 	In other words, all questions are queried in the dashboard page*/
+ * 	In other words, all questions are queried in the dashboard page
+ */
+
 function mapStateToProps({user}) {
   return {
 	  user: user ? user : {},

@@ -24,7 +24,7 @@ import config from 'config'
 import { profileContainer, profileHeader, profileField, profileFieldName, profileFieldContent, input,
   textArea, dropzone, resetBtnContainer, dropzoneContent, photoIcon, saveBtnContainer, saveBtn,
   inlineDropzone, comboBox, city, postalcode, citypostalcoderelative, dropPoint, error, industryMargin,
-  profilePictureDragDrop } from '../styles/EmployerProfileStyles.css'
+  profilePictureDragDropAlt, profilePictureDragDrop } from '../styles/EmployerProfileStyles.css'
 import { btn } from 'sharedStyles/widgets.css'
 
 /**
@@ -97,10 +97,20 @@ function placePhoto(element, url) {
 
   if (typeof props.logoUrl == "string") {
     profilePic = {
-      backgroundImage: `url(http://localhost:8000/${props.logoUrl.replace("\\", "/")})`,
       backgroundRepeat: "no-repeat",
       backgroundPosition: "center center",
       backgroundSize: "125%"
+    }
+
+   /* 
+    * We add this attribute separately to the style object because
+    * initially in the React lifecycle, this prop will be "".
+    * This results in a garbage request to "/" which obviously will
+    * send back a 404. To stop these garbage 404s, we do this.
+    */
+
+    if (props.logoUrl != "") {
+      profilePic.backgroundImage = `url(http://localhost:8000/${props.logoUrl.replace("\\", "/")})`
     }
   }
 
@@ -113,8 +123,6 @@ function placePhoto(element, url) {
       backgroundSize: "125%"
     }
   }
-
-
 
   return (
     <div className={profileContainer}>
@@ -147,7 +155,7 @@ function placePhoto(element, url) {
     {/* LOGO */}
       <ProfileField title="Logo">
         <Dropzone id="dropPhotoDiv" style={profilePic} className={props.profileErrorsMap.logoUrl ? dropzone + ' ' + error : 
-          props.logoUrl == "" ? dropzone : dropzone + " " + profilePictureDragDrop} onDrop={onDrop} accept='image/*' multiple={false}>
+          props.logoUrl == "" ? dropzone : dropzone + " " + profilePictureDragDropAlt} onDrop={onDrop} accept='image/*' multiple={false}>
           <div onDragOver={props.onDragOver} onDragLeave={props.onDragLeave} className={dropzoneContent}>
             <i id="fa-camera" className={"fa fa-camera " + photoIcon + props.logoUrl == "" ? " " : "gone"} aria-hidden="true"></i>
             <div id="drag-drop" className={props.logoUrl == "" ? "" : "gone"}>Drag and drop</div>

@@ -1,7 +1,7 @@
 import { validateEmployerEmail, validatePassword } from 'helpers/utils'
 import { login, setAccessToken, errorMsg, getAccessToken } from 'helpers/auth'
 import { getUserInfo } from 'helpers/profile'
-import { loggingIn, loginSuccess, loginFailure } from 'redux/modules/user/user'
+import { loggingIn, loginSuccess, loginFailure, fetchingUserInfoSuccess } from 'redux/modules/user/user'
 import { fetchingProfileInfoSuccess } from 'redux/modules/profile/profile'
 import * as profileActions from '../profile/profile'
 import _ from 'lodash'
@@ -46,18 +46,41 @@ export function submitLoginForm(email, password) {
     actuallySubmitLoginFormDispatch()
 
     const promise = new Promise((resolve, reject) => {
+
+
+     /* 
+      * Validate the employer email before trying to login.
+      * (Must be an email)
+      */
+
       if(!validateEmployerEmail(email)) {
+
+       /*
+        * If it wasn't an email, alert user.
+        */
+
         // ACTION: DISPATCH (SUBMIT_LOGIN_FORM_ERROR)
         dispatch(submitLoginFormError('Please enter a valid email address'))
         reject(false)
         return;
       }
 
+     /*
+      * If email looks valid, do the HTTP login.
+      */
+
       // ACTION: DISPATCH (LOGGING_IN)
       dispatch(loggingIn())
 
       login(email, password)
         .then((response) => {
+
+         /*
+          * If login successful, take the token 
+          * and save it to local storage. Now we can use 
+          * the token to make subsequent requests.
+          */
+
           // ACTION: DISPATCH (LOGIN_SUCCESS)
           dispatch(submitLoginFormSuccess())
 
@@ -66,35 +89,50 @@ export function submitLoginForm(email, password) {
           dispatch(profileActions.fetchingProfileInfo())
           // ACTION: DISPATCH (LOGIN_SUCCESS)
          })
+
+        /*
+         * With the newly obtained token, use it to get all the user
+         * info for this user.
+         */
+
         .then(getUserInfo)
         .then((response) => {
-            let user = response.data.student ? response.data.student : response.data.employer
-            const isAStudent = user.is_a_student
-            const isProfileCompleted = user.is_profile_complete
-            let profileInfo = _.cloneDeep(response.data);
 
-            //TODO: discuss with @khalil Why do we need to delete profileInfo?
-            //delete profileInfo.student ? profileInfo.student : profileInfo.employer
-            
-            dispatch(loginSuccess(
-                getAccessToken(),
-                isAStudent,
-                isProfileCompleted
+            // User Details
+            const dateJoined = response.data.student !== undefined ? response.data.student.createdAt : response.data.employer.createdAt
+            const email = response.data.student !== undefined ? response.data.user.student.user_email : response.data.employer.user_email 
+            const firstName = response.data.student !== undefined ? response.data.student.user_firstName : response.data.employer.user_firstName
+            const lastName = response.data.student !== undefined ? response.data.student.user_lastName : response.data.employer.user_lastName 
+            const mobile = response.data.student !== undefined ? response.data.student.user_mobile : response.data.employer.user_mobile
+
+            // Profile Details
+            const isAStudent = response.data.student !== undefined ? true : false
+            const isProfileCompleted = response.data.student !== undefined ? response.data.student.is_profile_complete : response.data.employer.is_profile_complete
+
+            let profileInfo = response.data.student !== undefined ? response.data.student : response.data.employer
+
+            // ACTION: USER - DISPATCH (FETCHING_USER_INFO_SUCCESS)
+            dispatch(fetchingUserInfoSuccess(
+              isAStudent, dateJoined, email, firstName, lastName, mobile
             ))
-            /* GET PROFILE INFO */
 
+            // ACTION: PROFILE - DISPATCH (FETCHING_PROFILE_INFO_SUCCESS)
+            dispatch(profileActions.fetchedProfileInfoSuccess(
+              isProfileCompleted,
+              profileInfo,
+              isAStudent
+            ))
 
-              //ACTION: PROFILE - DISPATCH (FETCHING_PROFILE_INFO_SUCCESS)
-              dispatch(profileActions.fetchedProfileInfoSuccess(
-                isProfileCompleted,
-                profileInfo,
-                isAStudent
-              ))
+            // ACTION: DISPATCH (LOGGING_IN_SUCCESS)
+            dispatch(loginSuccess(getAccessToken(),
+              isAStudent,
+              isProfileCompleted
+            ))
 
-              resolve({
-                  isAStudent,
-                  isProfileCompleted
-              })
+            resolve({
+              isAStudent,
+              isProfileCompleted
+            })
         })
         .catch((err) => {
           console.log(err.status)

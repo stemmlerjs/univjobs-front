@@ -1,5 +1,8 @@
+
 import { getJobs, getIndustries, getJobTypes, pinAJob, 
-    studentApply, unPinAJob } from 'helpers/dashboard'
+    studentApply, unPinAJob, getAllStudents } from 'helpers/dashboard'
+
+
 // =======================================================
 // ====================== ACTIONS ========================
 // =======================================================
@@ -52,55 +55,107 @@ const DASHBOARD_SUBMIT_ANSWERS_FAILURE = 'DASHBOARD_SUBMIT_ANSWERS_FAILURE'
  * */
 
 /**************GET STUDENTS***********************/
-export function getStudentsSuccess(students) {
+function attemptGetStudents () {
+	return {
+		type: GET_STUDENTS
+	}
+}
+
+function getStudentsSuccess(students) {
 	return {
 		type: GET_STUDENTS_SUCCESS,
 		students
 	}
 }
 
-export function getStudentsFailure(error) {
+function getStudentsFailure(error) {
 	return {
 		type: GET_STUDENTS_FAILURE,
 		error
 	}
 }
 
+ /*
+  * getStudents
+  *
+  * Redux thunk to get all the students.
+  */
+
+  export function getStudents () {
+    return function (dispatch) {
+
+     /*
+      * Begin attempting to get all students
+      */
+
+      dispatch(attemptGetStudents())
+
+      getAllStudents()
+
+       /*
+        * If we were able to get all the students, we'll 
+        * dispatch the success action and we'll add the students
+        * to the store.
+        */
+
+        .then((result) => {
+
+          var students = result.data.students
+
+          dispatch(getStudentsSuccess(students))
+
+        })
+
+       /*
+        * If something bad happened, then we'll dispatch the failure 
+        * action and show an error to the store.
+        */
+
+        .catch((err) => {
+
+          dispatch(getStudentsFailure())
+
+        })
+
+
+    }
+  }
+
 /**************GET JOBS***********************/
-export function dashboardFetchingJobs() {
+function dashboardFetchingJobs() {
   return {
 	  type: DASHBOARD_FETCHING_JOBS,
   }
 }
 
-export function dashboardFetchedJobsSuccess(jobs) {
+function dashboardFetchedJobsSuccess(jobs) {
    return {
 	   type: DASHBOARD_FETCHED_JOBS_SUCCESS,
 	   jobs
   }
 }
 
-export function dashboardFetchedJobsFailure(error) {
+function dashboardFetchedJobsFailure(error) {
   return {
 	  type: DASHBOARD_FETCHED_JOBS_FAILURE,
 	  error
   }
 }
 /***************INDUSTRIES***************/
-export function dashboardFetchingIndustries() {
+function dashboardFetchingIndustries() {
   return {
 	  type: DASHBOARD_FETCHING_INDUSTRIES,
   }
 }
 
-export function dashboardFetchedIndustriesSuccess(industries) {
+function dashboardFetchedIndustriesSuccess(industries) {
    return {
 	   type: DASHBOARD_FETCHED_INDUSTRIES_SUCCESS,
 	   industries
   }
 }
 
-export function dashboardFetchedIndustriesFailure(error) {
+function dashboardFetchedIndustriesFailure(error) {
   return {
 	  type: DASHBOARD_FETCHED_INDUSTRIES_FAILURE,
 	  error
@@ -108,41 +163,41 @@ export function dashboardFetchedIndustriesFailure(error) {
 }
 
 /***************JOB TYPES***************/
-export function dashboardFetchingJobTypes() {
+function dashboardFetchingJobTypes() {
   return {
 	  type: DASHBOARD_FETCHING_JOB_TYPES,
   }
 }
 
-export function dashboardFetchedJobTypesSuccess(jobTypes) {
+function dashboardFetchedJobTypesSuccess(jobTypes) {
    return {
 	   type: DASHBOARD_FETCHED_JOB_TYPES_SUCCESS,
 	   jobTypes
   }
 }
 
-export function dashboardFetchedJobTypesFailure(error) {
+function dashboardFetchedJobTypesFailure(error) {
   return {
 	  type: DASHBOARD_FETCHED_JOB_TYPES_FAILURE,
 	  error
   }
 }
 /**************MODALS***********************/
-export function dashboardModalClicked(jobId) {
+function dashboardModalClicked(jobId) {
    return {
    	   type: DASHBOARD_MODAL_CLICKED,
 	   jobId
    }
 }
 
-export function dashboardShowModal(job) {
+function dashboardShowModal(job) {
    return {
    	  type: DASHBOARD_SHOW_MODAL,
 	  job,
    }
 }
 
-export function dashboardHideModal(jobId) {
+function dashboardHideModal(jobId) {
    return {
           type: DASHBOARD_HIDE_MODAL
    }

@@ -1,3 +1,4 @@
+
 import { validateCreateJobFields, createNewJobPOST } from 'helpers/createjob'
 import { yyyymmdd } from 'helpers/utils'
 
@@ -105,21 +106,26 @@ export function createNewJob(props, jobType) {
   return function(dispatch) {
     //type, title, paid, start_date, responsibilties, qualification, compensation, address, city, question_1, question_2, max_participants, active, verified
 
-    debugger;
     let jobTypeInt;
     switch(jobType) {
       case "summer": 
-        jobTypeInt = 1;
-      case "otg":
-        jobTypeInt = 0;
-      case "winter":
         jobTypeInt = 2;
-      case "freelance":
+        break
+      case "otg":
+        jobTypeInt = 1;
+        break
+      case "winter":
         jobTypeInt = 3;
-      case "rep":
+        break
+      case "freelance":
         jobTypeInt = 4;
-      case "pt":
+        break
+      case "rep":
         jobTypeInt = 5;
+        break
+      case "pt":
+        jobTypeInt = 6;
+        break
     }
 
     // ACTION: DISPATCH (SUBMITTING_JOB)
@@ -146,6 +152,7 @@ export function createNewJob(props, jobType) {
 
       // ACTION: DISPATCH (CREATE_JOB_SUCCESS)
       dispatch(createJobSuccess())
+      
     })
     .catch((err) => {
       console.log(err)

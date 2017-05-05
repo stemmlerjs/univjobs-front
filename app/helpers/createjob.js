@@ -3,33 +3,41 @@ import config from 'config'
 import { getAccessToken, getCSRFToken } from 'helpers/auth'
 import { validateJobTitle } from 'helpers/utils'
 
-export function createNewJobPOST (type, title, paid, start_date, responsibilities, qualification, compensation,
- address, city, question_1, question_2, max_participants, active, verified) {
+export function createNewJobPOST (job_type, title, paid, start_date, responsibilities, qualifications, compensation,
+ address, city, question_one_text, question_two_text, max_applicants, active, verified) {
   const accessToken = getAccessToken();
   const csrfToken = getCSRFToken();
 
   return axios({
     method: 'post',
-    url: config.baseUrl + 'job/new/',
+    url: config.baseUrl + 'jobs/new',
     headers: {
       "Authorization":  accessToken,
       'X-CSRFToken': csrfToken
     },
     data: {
-      type,                   // INTEGER (0 for now?)
+      job_type,                   // INTEGER (0 for now?)
       title,                  // STRING
       paid,                   // O, 1 (INTEGER)
       start_date,             // yyyy-mm-dd
       responsibilities,       // STRING
-      qualification,          // STRING
+      qualifications,          // STRING
       compensation,           // STRING
       address,                // STRING
       city,                   // STRING
-      question_1,              // STRING
-      question_2,              // STRING
-      max_participants,        // INTEGER > 1
-      active,                  // boolean?
-      verified                // boolean?
+      question_one_text,              // STRING
+      question_two_text,              // STRING
+
+     /* 
+      * For now, each question will be of type 1 (this is the standard
+      * type of question).
+      */
+
+      question_one_type: 1,   
+      question_two_type: 1, 
+      max_applicants,        // INTEGER > 1
+      // active,                  // boolean?
+      // verified                // boolean?
     }
   })
 }

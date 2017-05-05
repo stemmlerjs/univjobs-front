@@ -1,3 +1,4 @@
+
 // ==============REACT BUILTIN========================= //
 import React, { PropTypes } from 'react'
 
@@ -120,7 +121,7 @@ const CreateJobContainer = React.createClass({
       page3PropsErrorMap: PropTypes.object,
       page4: PropTypes.object,
       errorExist: PropTypes.bool,
-      errors: PropTypes.string,
+      errors: PropTypes.array,
       submitSucess: PropTypes.bool
   },
 
@@ -333,7 +334,25 @@ const CreateJobContainer = React.createClass({
   },
 
   render () {
-    const jobType = 1;
+
+    var jobType;
+
+    var route = window.location.href.substring(window.location.href.indexOf("create/") + 7);
+    
+    if (route.indexOf("otg")) {
+      jobType = 1;
+    } else if (route.indexOf("summer")) {
+      jobType = 2;
+    } else if (route.indexOf("winter")) {
+      jobType = 3;
+    } else if (route.indexOf("freelance")) {
+      jobType = 4;
+    } else if (route.indexOf("rep")) {
+      jobType = 5;
+    } else if (route.indexOf("pt")) {
+      jobType = 6;
+    } 
+
     return (
       <div className={mainContainer}>
         <SidebarContainer/>
@@ -466,7 +485,7 @@ function mapStateToProps({createJob, profile, user, list}) {
     },
     page4: createJob.page4 ? createJob.page4 : {},
     errorsExist: createJob.errorsExist ? createJob.errorsExist : false,
-    errors: createJob.errors ? createJob.errors : '',
+    errors: createJob.errors ? createJob.errors : [],
     submitSuccess: createJob.submitSuccess ? createJob.submitSuccess : false
   }
 }

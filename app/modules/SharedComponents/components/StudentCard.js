@@ -1,13 +1,13 @@
-/*StudentCard
- *
+
+/* 
+ * StudentCard
+ * 
  * This components is to display the card from students for employers to hire or invite
- *
- *
- *
  *
  * NOTE: This might be the same as Application Generic Card
  * TODO: Check if the Application Generic Card is the same
- * */
+ * 
+ */
 
 // ==============REACT BUILTIN========================= //
 import React, { PropTypes } from 'react'
@@ -36,12 +36,12 @@ StudentCard.propTypes = {
 }
 */
 
-const StudentCard = ({isInviting}) => (
+const StudentCard = ({pictureUrl, resumeUrl, showResume, isInviting}) => (
     <div className={cardContainer}>
         <div className={card}>
           <header className={cardHeaderContainer}>
             <div className={cardHeaderItemImage}>
-                <img className={crop} src="https://s3.amazonaws.com/univjobs/logo/2016/09/30/Happy+Birthday+Joey+Ramone.jpg" alt="Smiley face" />
+                <img className={crop} src={pictureUrl} alt="Smiley face" />
             </div>
             <div className={cardHeaderItem}>
                     <div>
@@ -108,6 +108,12 @@ const StudentCard = ({isInviting}) => (
                 <span className={pastJobsInfo}>Line Cook at Jack Astors Grill</span>
             </div>
         </div>
+
+        {showResume 
+            ?  <a href={resumeUrl} target="_blank">RESUME</a>
+            : "" 
+        }
+       
 
             {/*Student invited or hired? */}    
             { isInviting ? 

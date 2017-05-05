@@ -63,17 +63,16 @@ export function getJobs(userId) {
   *
   * Gets all students via /api/student/
   *
-  * @param store - Object
   * @return Promise
   */
 
-export function getStudents(store) {
+export function getAllStudents() {
   const accessToken = getAccessToken()
   const csrfToken = getCSRFToken()
   
   return axios({
 		method: 'get',
-		url: config.baseUrl + 'student/',
+		url: config.baseUrl + 'students/',
 		headers: {
 			'Authorization':  accessToken,
 			'X-CSRFToken' : csrfToken

@@ -2,7 +2,8 @@ import axios from 'axios'
 import config from 'config'
 import cookie from 'react-cookie'
 import { loggingIn, loginSuccess, loginFailure,
-  fetchingUserInfo, loggingOut, logoutSuccess, logoutFailure, fetchingUserInfoSuccess, fetchingUserInfoFailure } from 'redux/modules/user/user'
+  fetchingUserInfo, loggingOut, logoutSuccess, logoutFailure, fetchingUserInfoSuccess, 
+  fetchingUserInfoFailure } from 'redux/modules/user/user'
 import { fetchedProfileInfoSuccess } from 'redux/modules/profile/profile'
 import _ from 'lodash'
 

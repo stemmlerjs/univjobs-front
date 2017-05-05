@@ -20,6 +20,7 @@ import { lastPageContainer, input, textarea,
 
 export default function CreateJobFormPage4 (props) {
 //  console.log("PAGE 4 Props", props)
+console.log(props)
   return (
     <div className={lastPageContainer}>
 
@@ -122,9 +123,10 @@ export default function CreateJobFormPage4 (props) {
           </div>
         </div>
       </div>  
-
-      <button onClick={(e) => props.back(props)} className={saveBtn + " " + navBackBtn}>Back</button>
-      <button onClick={(e) => props.next(props)} className={saveBtn + " " + navSaveBtn}>Save</button>
+      <div>
+        <button onClick={(e) => props.back(props)} className={saveBtn + " " + navBackBtn}>Back</button>
+        <button onClick={(e) => props.next(props)} className={saveBtn + " " + navSaveBtn}>Save</button>
+      </div>
     </div>
   )
 }
