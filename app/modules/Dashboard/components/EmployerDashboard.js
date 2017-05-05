@@ -30,7 +30,7 @@ export default function EmployerDashboard ({students}) {
           {/* TITLE */}
           <Title 
             titleName="Search students"
-            subHeading="In the future, you can invite students to apply to the jobs you posted."
+            subHeading="Invite students to interviews for jobs that you think they'd be a good fit for."
           />
 
       {/* FILTERS 
@@ -57,42 +57,25 @@ export default function EmployerDashboard ({students}) {
 */}
           {/* MAIN (Cards list) */}
           <div className={flexibleCardContainer}>
-          {/*
-
-            {students.map((student) => (
-              <StudentCard 
-                key={student.user.email} 
-                belongsToClubs={student.clubs}
-                educationLevel={student.edu_level}
-                funFact={student.fun_fact}
-                GPA={student.GPA}
-                hasCar={student.has_car}
-                hobbies={student.hobbies}
-                name={student.user.first_name}
-                major={student.major}
-                pastJob={student.position}
-                photo={student.photo}
-                school={student.school.name}
-                sports={student.sports}
-              />
+  
+            { students.map((student) => (
+                  <StudentCard 
+                    key={student.student_id}
+                    name={student.user_firstName.substring(0,1).toUpperCase() + student.user_firstName.substring(1) + ' ' 
+                      + student.user_lastName.substring(0,1).toUpperCase() + student.user_lastName.substring(1)}
+                    pictureUrl={config.mediaUrl + 'avatar/' + student.photo_url}
+                    resumeUrl={config.mediaUrl + 'res/' + student.resume_url}
+                    funFact={student.fun_fact}
+                    educationLevel={student.edu_level}
+                    hasCar={student.has_car}
+                    hobbies={student.hobbies}
+                    major={student.major}
+                    recentCompanyName={student.recent_company_name}
+                    recentPosition={student.recent_company_position}
+                    showResume={false}
+                    isDashboardCard={true}
+                  />
             ))}
-*/}       
-          { students.map((student) => (
-                <StudentCard 
-                  key={student.student_id}
-                  name={student.user_firstName.substring(0,1).toUpperCase() + student.user_firstName.substring(1) + ' ' 
-                    + student.user_lastName.substring(0,1).toUpperCase() + student.user_lastName.substring(1)}
-                  pictureUrl={config.mediaUrl + 'avatar/' + student.photo_url}
-                  resumeUrl={config.mediaUrl + 'res/' + student.resume_url}
-                  funFact={student.fun_fact}
-                  educationLevel={student.edu_level}
-                  hasCar={student.has_car}
-                  hobbies={student.hobbies}
-                  major={student.major}
-                  isInviting={true}
-                  showResume={false}
-                />
-          ))}
           
           
       </div>

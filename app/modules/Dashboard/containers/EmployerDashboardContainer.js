@@ -90,12 +90,71 @@ const EmployerDashboardContainer = React.createClass({
       .then(this.finallyDisableOverlay)
   },
 
+ /*
+  * openStudentProfileModal
+  *
+  * Needs to be triggered when the employer clicks on "SEE MORE"
+  * for a student. Should open a modal with the selected student
+  * and show more information about them.
+  *
+  */
+
+  openStudentProfileModal() {
+
+  },
+
+  closeStudentProfileModal() {
+
+  },
+
+ /*
+  * openInviteStudentModal
+  *
+  * Needs to be triggered when the employer clicks on "INVITE"
+  * for a student. Should open a modal with options to select 
+  * the job that the employer wants to invite the student for and then
+  * should allow the employer to invite the student to the selected
+  * job.
+  */
+
+  openInviteStudentModal() {
+
+  },
+
+  closeInviteStudentModal() {
+
+  },
+
+ /*
+  * doInviteStudent
+  *
+  * This should actually start the process of inviting the student.
+  * There are a couple of states to this as should be reflected in
+  * our action creators.
+  *
+  * When we initiate inviting the student to a job, we shouldn't be able
+  * to close the "invite student modal" until it has completed or it has 
+  * failed. This means that we need some sort of "locking" where we can't 
+  * click away and close the modal.
+  */
+
+  doInviteStudent() {
+
+  },
+
   render () {
     this.finallyDisableOverlay()
     return (
       <div className={pageContainer}>
         <SidebarContainer isAStudent={false}/>
-        <EmployerDashboard students={this.props.students}/>
+        <EmployerDashboard 
+          students={this.props.students}
+          handleOpenStudentProfileModal={this.openStudentProfileModal}
+          handleCloseStudentProfileModal={this.closeStudentProfileModal}
+          handleOpenInviteStudentModal={this.openInviteStudentModal}
+          handleCloseInviteStudentModal={this.closeInviteStudentModal}
+          handleDoInviteStudent={this.doInviteStudent}
+        />
       </div>
     )
   }

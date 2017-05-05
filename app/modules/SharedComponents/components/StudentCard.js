@@ -25,7 +25,8 @@ import { pageContainer, cardContainer, card,
     buttonsContainer, buttonItems, buttonIcons, cardModalContainer, 
     cardModalHeader, jobModalTitle, jobModalIndustry, cardModalBodyLeft, cardModalBodyRight, cardModalScroll, cardModalFooter,
 	image, questionHeader, crop, imgContainer, cardTopContainer, cardBottomContainer, cardHeaderContainer,
-    cardHeaderItemContainer, cardHeaderItemMainText, cardHeaderItemSecondaryText, cardHeaderItemAltItemText } from '../styles/StudentCard.css'
+    cardHeaderItemContainer, cardHeaderItemMainText, cardHeaderItemSecondaryText, cardHeaderItemAltItemText,
+    cardSectionOne, cardSectionTwo, cardActionButtons, cardSectionTitle, cardSectionText } from '../styles/StudentCard.css'
 
 /*
 StudentCard.propTypes = {
@@ -37,7 +38,7 @@ StudentCard.propTypes = {
 }
 */
 
-const StudentCard = ({pictureUrl, resumeUrl, name, major, showResume, isInviting}) => (
+const StudentCard = ({pictureUrl, resumeUrl, name, major, funFact, recentCompanyName, recentPosition, email, isDashboardCard}) => (
 
     <div className={cardContainer}>
         <div className={cardTopContainer}>
@@ -57,8 +58,42 @@ const StudentCard = ({pictureUrl, resumeUrl, name, major, showResume, isInviting
             </div>
         </div>
         <div className={cardBottomContainer}>
-
+            <div className={cardSectionOne}>
+                { recentCompanyName === null || recentPosition === null 
+                    ? <div>
+                        <div className={cardSectionTitle}>About Me</div>
+                        <div className={cardSectionText}>{funFact}</div>
+                      </div>
+                    : <div>
+                        <div className={cardSectionTitle}>Previous Work Experience</div>
+                        <div className={cardSectionText}>
+                            {recentPosition}<br></br>at {recentCompanyName}
+                        </div>
+                      </div>
+                }
+                
+            </div>
+            <div className={cardSectionTwo}>
+                <div className={cardSectionTitle}>Contact Info</div>
+                { isDashboardCard === true 
+                    ? <div className={cardSectionText}>
+                        Hidden until student applies
+                      </div> 
+                    : <div className={cardSectionText}>
+                        {email}
+                      </div>
+                }
+            </div>
         </div>
+        { isDashboardCard === true 
+            ? <div className={cardActionButtons}>
+                    <button>SEE MORE</button>
+                    <button>INVITE</button>
+                </div>
+            : <div className={cardActionButtons}>
+                    <button>HIRE</button>
+                </div>
+        }
     </div>
 
     // <div className={cardContainer}>
