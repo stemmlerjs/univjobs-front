@@ -99,11 +99,11 @@ export function submitLoginForm(email, password) {
         .then((response) => {
 
             // User Details
-            const dateJoined = response.data.student !== undefined ? response.data.student.createdAt : response.data.employer.createdAt
-            const email = response.data.student !== undefined ? response.data.user.student.user_email : response.data.employer.user_email 
-            const firstName = response.data.student !== undefined ? response.data.student.user_firstName : response.data.employer.user_firstName
-            const lastName = response.data.student !== undefined ? response.data.student.user_lastName : response.data.employer.user_lastName 
-            const mobile = response.data.student !== undefined ? response.data.student.user_mobile : response.data.employer.user_mobile
+            const dateJoined = response.data.student !== undefined ? null : response.data.employer.createdAt
+            const email = response.data.student !== undefined ? response.data.student.user_email : response.data.employer.user_email 
+            const firstName = response.data.student !== undefined ? response.data.student.user_firstname : response.data.employer.user_firstName
+            const lastName = response.data.student !== undefined ? response.data.student.user_lastname : response.data.employer.user_lastName 
+            const mobile = response.data.student !== undefined ? null : response.data.employer.user_mobile
 
             // Profile Details
             const isAStudent = response.data.student !== undefined ? true : false

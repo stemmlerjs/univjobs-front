@@ -18,37 +18,37 @@ import { mainContainer } from '../styles/CategoriesContainerStyles.css'
  * Inline styles and categoryList are defined here to follow the convention of containers are the source of data and business logic, any suggestions?*/
 const divStyle = {
     oneTimeGig: {
-        backgroundImage: `https://github.com/UnivJobs/univjobs-front/blob/e2e/app/assets/images/jobtypes/jobtype_33.png?raw=true`,
+        backgroundImage: `https://cloud.githubusercontent.com/assets/6892666/25756967/c09784b8-3196-11e7-96d4-6342ef016bb2.jpg`,
         backgroundRepeat:`no-repeat`,
         backgroundSize:`contain`,
         backgroundPosition:`center`,
     },
     summer: {
-        backgroundImage: `https://github.com/UnivJobs/univjobs-front/blob/e2e/app/assets/images/jobtypes/jobtype_44.png?raw=true`,
+        backgroundImage: `https://cloud.githubusercontent.com/assets/6892666/25756970/c098cd0a-3196-11e7-9216-06826ac6aa46.jpg`,
         backgroundRepeat:`no-repeat`,
         backgroundSize:`contain`,
         backgroundPosition:`center`,
     },
     winter: {
-        backgroundImage: `https://github.com/UnivJobs/univjobs-front/blob/e2e/app/assets/images/jobtypes/jobtype_11.png?raw=true`,
+        backgroundImage: `https://cloud.githubusercontent.com/assets/6892666/25756971/c09abd68-3196-11e7-8e1a-035e2106ae86.jpg`,
         backgroundRepeat:`no-repeat`,
         backgroundSize:`contain`,
         backgroundPosition:`center`,
     },
     freelance: {
-        backgroundImage: `https://github.com/UnivJobs/univjobs-front/blob/e2e/app/assets/images/jobtypes/jobtype_22.png?raw=true`,
+        backgroundImage: `https://cloud.githubusercontent.com/assets/6892666/25756968/c0983fe8-3196-11e7-8bc6-1ccc40ee200d.jpg`,
         backgroundRepeat:`no-repeat`,
         backgroundSize:`contain`,
         backgroundPosition:`center`,
     },
     rep: {
-        backgroundImage: `https://github.com/UnivJobs/univjobs-front/blob/e2e/app/assets/images/jobtypes/jobtype_55.png?raw=true`,
+        backgroundImage: `https://cloud.githubusercontent.com/assets/6892666/25756972/c0b007cc-3196-11e7-94ba-68c246fde92b.jpg`,
         backgroundRepeat:`no-repeat`,
         backgroundSize:`contain`,
         backgroundPosition:`center`,
     },
     partTime: {
-        backgroundImage: `https://github.com/UnivJobs/univjobs-front/blob/e2e/app/assets/images/jobtypes/jobtype_66.png?raw=true`,
+        backgroundImage: `https://cloud.githubusercontent.com/assets/6892666/25756969/c0985cb2-3196-11e7-8c13-0435e14adff1.jpg`,
         backgroundRepeat:`no-repeat`,
         backgroundSize:`contain`,
         backgroundPosition:`center`,
@@ -93,7 +93,7 @@ const categoryList = [{
 }, {
   key: 6,
   heading: 'Part-time work',
-  subHeadingForEmp: 'Jobs/Internships while in school',
+  subHeadingForEmp: 'Jobs/Internships for students during school',
   divStyle,
   type: 'pt'
 }]

@@ -23,15 +23,7 @@
 /*Layout for the cards
  * TODO: Maybe put it in cardContinaer
  * */
-.cardContainer {
-	list-style: none;
-	margin-top: 20px;
-	padding: 0px;
-	align-items: flex-start;
-	width: 350px;
-	padding-left: 10px;
-	padding-right: 10px;
-}
+
 
 .card {
 	/*display: block;*/
@@ -318,4 +310,59 @@
 .crop img {
   width: 64px;
   height: 64px;
+}
+
+/* NEW STUDENT CARD */
+
+.cardContainer {
+list-style: none;
+    margin-top: 20px;
+    padding: 0px;
+    align-items: flex-start;
+    width: 323px;
+    padding-left: 10px;
+    padding-right: 10px;
+    background-color: white;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+
+.cardTopContainer {
+        padding-top: 16px;
+    display: flex;
+    padding-left: 8px;
+}
+
+.imgContainer {
+
+}
+
+.imgContainer > img {
+    height: 106px;
+    width: 106px;
+}
+
+.cardHeaderContainer {
+    width: 60%;
+    /* display: inline-block; */
+    padding-left: 15px;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.cardHeaderItemMainText {
+    font-size: 20px;
+}
+
+.cardHeaderItemSecondaryText {
+        font-size: 15px;
+}
+
+.cardHeaderItemAltItemText {
+    font-size: 13px;
+    color: #808080;
+}
+
+.cardBottomContainer {
+
 }

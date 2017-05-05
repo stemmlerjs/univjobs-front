@@ -80,12 +80,15 @@ export default function EmployerDashboard ({students}) {
           { students.map((student) => (
                 <StudentCard 
                   key={student.student_id}
+                  name={student.user_firstName.substring(0,1).toUpperCase() + student.user_firstName.substring(1) + ' ' 
+                    + student.user_lastName.substring(0,1).toUpperCase() + student.user_lastName.substring(1)}
                   pictureUrl={config.mediaUrl + 'avatar/' + student.photo_url}
                   resumeUrl={config.mediaUrl + 'res/' + student.resume_url}
                   funFact={student.fun_fact}
                   educationLevel={student.edu_level}
                   hasCar={student.has_car}
                   hobbies={student.hobbies}
+                  major={student.major}
                   isInviting={true}
                   showResume={false}
                 />
