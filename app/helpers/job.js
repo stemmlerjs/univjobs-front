@@ -40,7 +40,7 @@ import { getAccessToken, getCSRFToken } from 'helpers/auth'
   * NOTE: axios url is jobs/
   */
 
-export function getJobs(userId) {
+export function getJobs() {
     const accessToken = getAccessToken()
   //  const csrfToken = getCSRFToken()
 
@@ -51,7 +51,6 @@ export function getJobs(userId) {
 			'Authorization':  accessToken
 		}
 	})
-	data: userId
 }
 
 
