@@ -38,7 +38,14 @@ StudentCard.propTypes = {
 }
 */
 
-const StudentCard = ({pictureUrl, resumeUrl, name, major, funFact, recentCompanyName, recentPosition, email, isDashboardCard}) => (
+const StudentCard = ({pictureUrl, resumeUrl, name, major, funFact, recentCompanyName, 
+    recentPosition, email, isDashboardCard, studentObj,
+    handleOpenStudentProfileModal,
+    handleCloseStudentProfileModal,
+    handleOpenInviteStudentModal,
+    handleCloseInviteStudentModal,
+    handleDoInviteStudent
+}) => (
 
     <div className={cardContainer}>
         <div className={cardTopContainer}>
@@ -87,8 +94,18 @@ const StudentCard = ({pictureUrl, resumeUrl, name, major, funFact, recentCompany
         </div>
         { isDashboardCard === true 
             ? <div className={cardActionButtons}>
-                    <button>SEE MORE</button>
-                    <button>INVITE</button>
+                    <button onClick={
+
+                        function() {
+                            handleOpenStudentProfileModal(studentObj)
+                        }
+                        
+                    }>SEE MORE</button>
+                    <button onClick={
+                        function() {
+                            handleOpenInviteStudentModal(studentObj)
+                        }
+                }>INVITE</button>
                 </div>
             : <div className={cardActionButtons}>
                     <button>HIRE</button>

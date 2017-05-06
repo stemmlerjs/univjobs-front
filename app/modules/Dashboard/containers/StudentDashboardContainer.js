@@ -12,6 +12,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as userActionCreators from 'redux/modules/user/user'
 import * as dashboardActionCreators from 'redux/modules/dashboard/dashboard'
+import * as jobActionCreators from 'redux/modules/job/job'
 import * as list from 'helpers/lists'
 import * as fetch from 'helpers/dashboard'
 import { authRedirectFilter } from 'config/routes'
@@ -160,7 +161,7 @@ const StudentDashboardContainer = React.createClass({
   componentWillMount() {
   	console.log("componentWillMount")
   	this.doRedirectionFilter()
-    .then(this.props.handleGetJobs())
+    .then(this.props.getAllJobsStudentJobView())
     .then(this.props.handleGetIndustries())
     .then(this.props.handleGetJobTypes())
   	.then(this.props.closeOverlay())
@@ -204,10 +205,10 @@ const StudentDashboardContainer = React.createClass({
 // @params ({user}) contains BaseUser & Employer attributes
 // */
 
-function mapStateToProps({user, dashboard}) {
+function mapStateToProps({user, dashboard, job}) {
   return {
 	  user: user ? user : {},
-	  jobs: dashboard.studentDashboard.jobs ? dashboard.studentDashboard.jobs.data : '',
+	  jobs: job.studentJobsView ? job.studentJobsView : [],
 	  modal : dashboard.studentDashboard.jobs ? dashboard.modal : '',
 	  industries : dashboard.industries ? dashboard.industries.data : '',
 	  jobTypes : dashboard.jobTypes ? dashboard.jobTypes.data : '',
@@ -228,8 +229,8 @@ function mapStateToProps({user, dashboard}) {
 function mapActionCreatorsToProps(dispatch) {
   return bindActionCreators({
     ...userActionCreators,
-    ...dashboardActionCreators
-  
+    ...dashboardActionCreators,
+    ...jobActionCreators
   }, dispatch)
 }
 

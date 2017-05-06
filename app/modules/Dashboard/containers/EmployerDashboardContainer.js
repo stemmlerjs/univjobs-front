@@ -6,6 +6,8 @@ import { SidebarContainer } from 'modules/Main'
 import { EmployerDashboard } from 'modules/Dashboard'
 
 // ==============THIRD PARTY IMPORTS========================= //
+import SkyLight from 'react-skylight'
+import {Combobox} from 'react-widgets'
 
 // ====== REDUX AND STATE IMPORTS =======
 import { connect } from 'react-redux'
@@ -13,9 +15,13 @@ import { bindActionCreators } from 'redux'
 import { getStudents as getStudentsREST } from 'helpers/dashboard'
 import { authRedirectFilter } from 'config/routes'
 import * as dashboardActionCreators from 'redux/modules/dashboard/dashboard'
+import * as jobActionCreators from 'redux/modules/job/job'
 
 // ================CSS IMPORTS============================== //
 import { pageContainer } from 'sharedStyles/sharedContainerStyles.css'
+import { inviteStudentStyle, inviteStudentModalContainer, comboBox, inviteStudentModalButtonsContainer,
+  inviteStudentModalInputContainer, inviteStudentModalApplicantsCount, cancelBtn, acceptBtn,
+  loader } from '../styles/EmployerDashboardStyles.css'
 
 
 const EmployerDashboardContainer = React.createClass({
@@ -87,6 +93,7 @@ const EmployerDashboardContainer = React.createClass({
     /*  On page load, we will first get all the required lists for the screen */  
     this.doRedirectionFilter()
       .then(this.props.getStudents)
+      .then(this.props.getAllJobsQuestionsAnswersForEmployer)
       .then(this.finallyDisableOverlay)
   },
 
@@ -99,9 +106,15 @@ const EmployerDashboardContainer = React.createClass({
   *
   */
 
-  openStudentProfileModal() {
-
+  openStudentProfileModal(selectedStudent) {
+    this.props.openStudentProfileModal(selectedStudent)
+    this.refs.studentProfileModal.show()
   },
+
+  selectInviteJob (job) {
+    this.context.store.dispatch(dashboardActionCreators.selectJobInviteModal(job))
+  },
+  
 
   closeStudentProfileModal() {
 
@@ -117,8 +130,10 @@ const EmployerDashboardContainer = React.createClass({
   * job.
   */
 
-  openInviteStudentModal() {
-
+  openInviteStudentModal(selectedStudent) {
+    // Add the student id to the invite modal.
+    this.props.openInviteStudentModal(selectedStudent)
+    this.refs.inviteStudentModal.show()
   },
 
   closeInviteStudentModal() {
@@ -140,6 +155,8 @@ const EmployerDashboardContainer = React.createClass({
 
   doInviteStudent() {
 
+    this.props.inviteStudentToJob()
+
   },
 
   render () {
@@ -155,21 +172,72 @@ const EmployerDashboardContainer = React.createClass({
           handleCloseInviteStudentModal={this.closeInviteStudentModal}
           handleDoInviteStudent={this.doInviteStudent}
         />
+        <SkyLight
+            hideOnOverlayClicked
+            ref="studentProfileModal"
+            title="Student Profile">
+            <div>
+              { this.props.studentProfileModal.open ? this.props.studentProfileModal.student.user_firstName : "lkjlkjasd" }
+            </div>
+        </SkyLight>
+
+        {/* =======================================
+                      INVITE STUDENT MODAL
+            =======================================
+        */}
+        <div id="invite-student-modal-wrapper">
+          <SkyLight
+              ref="inviteStudentModal">
+              <div className={inviteStudentModalContainer}>
+                <div className={inviteStudentModalInputContainer}>
+                  <div>Invite this student to apply to </div>
+                    <Combobox
+                      className={comboBox}
+                      textField="title"
+                      valueField="job_id"
+                      filter="contains"
+                      data={this.props.jobs}
+                      onChange={(value) => {
+                        this.selectInviteJob(value)
+                      }}
+                    />
+                </div>
+                <div className={inviteStudentModalApplicantsCount}>
+                  {this.props.inviteStudentModal.currentApplicants !== undefined
+                    ? this.props.inviteStudentModal.currentApplicants
+                    : '#'} of {this.props.inviteStudentModal.maxApplicants 
+                      ? this.props.inviteStudentModal.maxApplicants
+                      : '#'} applicants</div>
+                <div className={this.props.inviteStudentModal.isInviting ? loader : ''}></div>
+              </div>
+              
+              <div className={inviteStudentModalButtonsContainer}>
+                <button className={cancelBtn}>CANCEL</button>
+                <button className={acceptBtn} onClick={this.doInviteStudent}>OK</button>
+              </div>
+
+          </SkyLight>
+
+        </div>
       </div>
     )
   }
 })
 
-function mapStateToProps({user, dashboard}) {
+function mapStateToProps({user, dashboard, job}) {
   return {
     user: user ? user : {},
-    students: dashboard.employerDashboard.students ? dashboard.employerDashboard.students : []
+    students: dashboard.employerDashboard.students ? dashboard.employerDashboard.students : [],
+    inviteStudentModal: dashboard.employerDashboard.inviteStudentModal ? dashboard.employerDashboard.inviteStudentModal : {},
+    studentProfileModal: dashboard.employerDashboard.studentProfileModal ? dashboard.employerDashboard.studentProfileModal: {},
+    jobs: job.employerJobs ? job.employerJobs :  []
   }
 }
 
 function mapActionCreatorsToProps(dispatch) {
   return bindActionCreators({
-    ...dashboardActionCreators
+    ...dashboardActionCreators,
+    ...jobActionCreators
   }, dispatch)
 }
 
