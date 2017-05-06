@@ -51,6 +51,7 @@ export function submitStudentSignupForm(email, password) {
   return function(dispatch) {
     const promise = new Promise((resolve, reject) => {
       // Do form validation
+        debugger
         validateStudentEmail(email, (success, message) => {
           // EMAIL IS NOT VALID
           if(!success) {

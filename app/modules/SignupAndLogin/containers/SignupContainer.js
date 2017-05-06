@@ -129,6 +129,7 @@ const SignupContainer = React.createClass({
   */
     handleStudentSignup(e) {
         e.preventDefault()
+        debugger;
         this.props.submitStudentSignupForm(
             this.props.studentEmail,
             this.props.studentPassword

@@ -115,7 +115,7 @@ export function getAccessToken() {
   * @param (String) - password: post-validated student password
   */
 export function createStudentAccount(email, password) {
-  const accessToken = getAccessToken()
+//  const accessToken = getAccessToken()
 
   return axios.post(config.baseUrl + 'register/', {
     email: email,
@@ -132,8 +132,8 @@ export function createStudentAccount(email, password) {
   * @param (String) - firstName, lastName, companyName, mobile, email, password
   */
 export function createEmployerAccount(firstName, lastName, companyName, mobile, email, password) {
-  const accessToken = getAccessToken()
-  const csrfToken = getCSRFToken()
+ // const accessToken = getAccessToken()
+ // const csrfToken = getCSRFToken()
 
   return axios({
     method: 'post',
@@ -144,7 +144,7 @@ export function createEmployerAccount(firstName, lastName, companyName, mobile, 
     //       https://github.com/UnivJobs/univjobs-front/issues/19
     //
     //  "Authorization":  accessToken,
-      'X-CSRFToken': csrfToken
+   //   'X-CSRFToken': csrfToken
     },
     data: {
       email: email,
