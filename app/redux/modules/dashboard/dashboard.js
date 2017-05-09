@@ -2,6 +2,7 @@
 import { getJobs, getIndustries, getJobTypes, pinAJob, 
     studentApply, unPinAJob, getAllStudents } from 'helpers/dashboard'
 
+import inviteStudentModal from './inviteStudentModal'
 
 // =======================================================
 // ====================== ACTIONS ========================
@@ -404,19 +405,14 @@ function showMaxApplicants (job) {
 	}
 }
 
+
 export function displayMaxApplicants (job) {
 	return {
 
 	}
 }
 
-export function inviteStudentToJob (studentId, jobId) {
-  return function(dispatch) {
 
-
-
-  }
-}
 
 // =======================================================
 // ================== INITIAL STATE ======================
@@ -425,8 +421,8 @@ export function inviteStudentToJob (studentId, jobId) {
 const initialDashboardState = {
 	studentDashboard: {},
 	employerDashboard: {},
-  jobTypes: [],
-  industries: [],
+	jobTypes: [],
+	industries: [],
 	error: '',
 	modal: {},
 	answer: {}
@@ -447,23 +443,6 @@ const initialEmployerDashboardState = {
 	searchField: '',
 	campusFilter: '',
 	gradDateFilter: ''
-}
-
- /*
-  * [EMPLOYER] Dashboard - Invite Student Modal.
-  *
-  * This modal shows when we click invite on a student.
-  * We need this so that we may show the state of inviting a student
-  * to a job.
-  */
-
-const initialInviteStudentModal = {
-	maxApplicants: 0,
-	currentApplicants: 0,
-	isInviting: false,
-  selectedJob: {},
-  selectedStudent: {},
-	error: ''
 }
 
 const initialStudentDashboardState = {
@@ -503,15 +482,6 @@ const initialStudentProfileModalState = {
 }
 
 const STUDENT_PROFILE_MODAL_OPEN = 'STUDENT_PROFILE_MODAL_OPEN'
-const INVITE_STUDENT_MODAL_OPEN = 'INVITE_STUDENT_MODAL_OPEN'
-const SELECT_JOB_INVITE_MODAL = 'SELECT_JOB_INVITE_MODAL'
-
-export function selectJobInviteModal (job) {
-  return {
-    type: SELECT_JOB_INVITE_MODAL,
-    job
-  }
-}
 
 export function openStudentProfileModal(student) {
    return {
@@ -520,12 +490,7 @@ export function openStudentProfileModal(student) {
    }
 }
 
-export function openInviteStudentModal (student) {
-  return {
-    type: INVITE_STUDENT_MODAL_OPEN,
-    student
-  }
-}
+
 
 // =======================================================
 // ===================== REDUCERS ========================
@@ -544,36 +509,32 @@ function studentProfileModal (state = initialStudentProfileModalState, action) {
 	}
 }
 
-function inviteStudentModal (state = initialInviteStudentModal, action) {
-  switch(action.type) {
-    case INVITE_STUDENT_MODAL_OPEN:
-      return {
-        ...state,
-        selectedStudent: action.student
-      }
-    case SELECT_JOB_INVITE_MODAL:
-      return {
-        ...state,
-        maxApplicants: action.job.max_applicants,
-	      currentApplicants: action.job.applicants.length,
-        selectedJob: action.job
-      }
-      default:
-        return state
-  }
-}
-
 function employerDashboard(state = initialEmployerDashboardState, action) {
 	switch(action.type) {
-    case INVITE_STUDENT_MODAL_OPEN:
+    case inviteStudentModal.actions.INVITING_STUDENT_TO_JOB:
       return {
         ...state,
-        inviteStudentModal: inviteStudentModal(state.inviteStudentModal, action)
+        inviteStudentModal: inviteStudentModal.reducers.inviteStudentModal(state.inviteStudentModal, action)
       }
-    case SELECT_JOB_INVITE_MODAL:
+    case inviteStudentModal.actions.INVITING_STUDENT_TO_JOB_SUCCESS:
       return {
         ...state,
-        inviteStudentModal: inviteStudentModal(state.inviteStudentModal, action)
+        inviteStudentModal: inviteStudentModal.reducers.inviteStudentModal(state.inviteStudentModal, action)
+      }
+    case inviteStudentModal.actions.INVITING_STUDENT_TO_JOB_FAILURE:
+      return {
+        ...state,
+        inviteStudentModal: inviteStudentModal.reducers.inviteStudentModal(state.inviteStudentModal, action)
+      }
+    case inviteStudentModal.actions.INVITE_STUDENT_MODAL_OPEN:
+      return {
+        ...state,
+        inviteStudentModal: inviteStudentModal.reducers.inviteStudentModal(state.inviteStudentModal, action)
+      }
+    case inviteStudentModal.actions.SELECT_JOB_INVITE_MODAL:
+      return {
+        ...state,
+        inviteStudentModal: inviteStudentModal.reducers.inviteStudentModal(state.inviteStudentModal, action)
       }
 		case STUDENT_PROFILE_MODAL_OPEN:
 			return {
@@ -731,9 +692,7 @@ function modal(state = intialModalState, action) {
 				isOpen: false,
 			}
 		default:	
-			return {
-				state
-			}//switch
+			return state
 	}
 }
 
@@ -769,12 +728,27 @@ function answer(state = initialAnswerState, action) {
 
 export default function dashboard(state = initialDashboardState, action) {
 	switch(action.type) {
-    case INVITE_STUDENT_MODAL_OPEN:
+    case inviteStudentModal.actions.INVITING_STUDENT_TO_JOB:
       return {
         ...state,
         employerDashboard: employerDashboard(state.employerDashboard, action)
       }
-    case SELECT_JOB_INVITE_MODAL:
+    case inviteStudentModal.actions.INVITING_STUDENT_TO_JOB_SUCCESS:
+      return {
+        ...state,
+        employerDashboard: employerDashboard(state.employerDashboard, action)
+      }
+    case inviteStudentModal.actions.INVITING_STUDENT_TO_JOB_FAILURE:
+      return {
+        ...state,
+        employerDashboard: employerDashboard(state.employerDashboard, action)
+      }
+    case inviteStudentModal.actions.INVITE_STUDENT_MODAL_OPEN:
+      return {
+        ...state,
+        employerDashboard: employerDashboard(state.employerDashboard, action)
+      }
+    case inviteStudentModal.actions.SELECT_JOB_INVITE_MODAL:
       return {
         ...state,
         employerDashboard: employerDashboard(state.employerDashboard, action)

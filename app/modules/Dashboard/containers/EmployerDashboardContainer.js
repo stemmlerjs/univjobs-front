@@ -15,14 +15,31 @@ import { bindActionCreators } from 'redux'
 import { getStudents as getStudentsREST } from 'helpers/dashboard'
 import { authRedirectFilter } from 'config/routes'
 import * as dashboardActionCreators from 'redux/modules/dashboard/dashboard'
+import inviteStudentModal from 'redux/modules/dashboard/inviteStudentModal'
 import * as jobActionCreators from 'redux/modules/job/job'
 
 // ================CSS IMPORTS============================== //
 import { pageContainer } from 'sharedStyles/sharedContainerStyles.css'
 import { inviteStudentStyle, inviteStudentModalContainer, comboBox, inviteStudentModalButtonsContainer,
   inviteStudentModalInputContainer, inviteStudentModalApplicantsCount, cancelBtn, acceptBtn,
-  loader } from '../styles/EmployerDashboardStyles.css'
+  loader, failureMessage, successMessage, listItems } from '../styles/EmployerDashboardStyles.css'
 
+const InviteListItem = React.createClass({
+  render() {
+    var job = this.props.item
+
+    return (
+      <div className={listItems}>
+        <div>{job.title}</div>
+        {job.invited 
+          ? <div>&#10004;</div>
+          : ''
+        }
+        
+      </div>
+    )
+  }
+})
 
 const EmployerDashboardContainer = React.createClass({
   propTypes: {
@@ -112,7 +129,7 @@ const EmployerDashboardContainer = React.createClass({
   },
 
   selectInviteJob (job) {
-    this.context.store.dispatch(dashboardActionCreators.selectJobInviteModal(job))
+    this.context.store.dispatch(this.props.selectJobInviteModal(job))
   },
   
 
@@ -137,7 +154,20 @@ const EmployerDashboardContainer = React.createClass({
   },
 
   closeInviteStudentModal() {
+    setTimeout(()=> {
+      this.refs.inviteStudentModal.hide()
+    }, 2000)
+  },
 
+  componentWillUpdate(props) {
+
+   /* 
+    * After a successful invite, we want to close the modal.
+    */
+
+    if (props.inviteStudentModal.success == true) {
+      this.closeInviteStudentModal()
+    }
   },
 
  /*
@@ -154,9 +184,7 @@ const EmployerDashboardContainer = React.createClass({
   */
 
   doInviteStudent() {
-
-    this.props.inviteStudentToJob()
-
+    this.props.inviteStudentToJob(this.props.inviteStudentModal.selectedJob.job_id, this.props.inviteStudentModal.selectedStudent.student_id)
   },
 
   render () {
@@ -170,7 +198,6 @@ const EmployerDashboardContainer = React.createClass({
           handleCloseStudentProfileModal={this.closeStudentProfileModal}
           handleOpenInviteStudentModal={this.openInviteStudentModal}
           handleCloseInviteStudentModal={this.closeInviteStudentModal}
-          handleDoInviteStudent={this.doInviteStudent}
         />
         <SkyLight
             hideOnOverlayClicked
@@ -187,6 +214,7 @@ const EmployerDashboardContainer = React.createClass({
         */}
         <div id="invite-student-modal-wrapper">
           <SkyLight
+              afterClose={this.props.getAllJobsQuestionsAnswersForEmployer}
               ref="inviteStudentModal">
               <div className={inviteStudentModalContainer}>
                 <div className={inviteStudentModalInputContainer}>
@@ -196,7 +224,24 @@ const EmployerDashboardContainer = React.createClass({
                       textField="title"
                       valueField="job_id"
                       filter="contains"
-                      data={this.props.jobs}
+                      itemComponent={InviteListItem}
+                      data={this.props.jobs.map((job) => {
+
+                       /*
+                        * Set checkmarks for jobs that the student has already been
+                        * invited to.
+                        */    
+
+                        if (this.props.inviteStudentModal.selectedStudent !== undefined) {
+                          job.invites.forEach((invite) => {
+                            if (invite.student_id == this.props.inviteStudentModal.selectedStudent.student_id) {
+                              job.invited = true;
+                            }
+                          })
+                        }
+
+                        return job
+                      })}
                       onChange={(value) => {
                         this.selectInviteJob(value)
                       }}
@@ -209,6 +254,19 @@ const EmployerDashboardContainer = React.createClass({
                       ? this.props.inviteStudentModal.maxApplicants
                       : '#'} applicants</div>
                 <div className={this.props.inviteStudentModal.isInviting ? loader : ''}></div>
+
+                {/* SUCCESS MESSAGE*/}
+                <div className={successMessage}>{this.props.inviteStudentModal.isInviting == false & this.props.inviteStudentModal.success == true 
+                  ? "Success!"
+                  : ''}
+                </div>
+
+                {/* FAILURE MESSAGE */}
+                <div className={failureMessage}>{this.props.inviteStudentModal.isInviting == false & this.props.inviteStudentModal.error !== '' 
+                  ? this.props.inviteStudentModal.error
+                  : ''}
+                </div>
+
               </div>
               
               <div className={inviteStudentModalButtonsContainer}>
@@ -237,7 +295,8 @@ function mapStateToProps({user, dashboard, job}) {
 function mapActionCreatorsToProps(dispatch) {
   return bindActionCreators({
     ...dashboardActionCreators,
-    ...jobActionCreators
+    ...jobActionCreators,
+    ...inviteStudentModal.actionCreators
   }, dispatch)
 }
 

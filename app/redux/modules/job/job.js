@@ -129,6 +129,7 @@ export function getAllJobsQuestionsAnswersForEmployer () {
         var questions = result.data.questions;
         var answers = result.data.answers;
         var applicants = result.data.applicants;
+        var invites = result.data.invites
 
         for(var i = 0; i < jobs.length; i++) {
 
@@ -140,6 +141,7 @@ export function getAllJobsQuestionsAnswersForEmployer () {
           jobs[i].questions = []
           jobs[i].answers = []
           jobs[i].applicants = []
+          jobs[i].invites = []
 
           questions.forEach(function(question) {
             if (question.job_id == jobs[i].job_id) {
@@ -156,6 +158,12 @@ export function getAllJobsQuestionsAnswersForEmployer () {
           applicants.forEach(function(applicant) {
             if (applicant.job_id == jobs[i].job_id) {
               jobs[i].applicants.push(applicant)
+            }
+          })
+
+          invites.forEach(function(invite) {
+            if (invite.job_id == jobs[i].job_id) {
+              jobs[i].invites.push(invite)
             }
           })
 

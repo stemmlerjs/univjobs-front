@@ -116,6 +116,14 @@
   background: #61b8f5;
 }
 
+.failureMessage {
+  color: red;
+}
+
+.successMessage {
+  color: green;
+}
+
 .loader {
     border: 16px solid #f3f3f3;
     border-top: 16px solid #3498db;
@@ -126,6 +134,11 @@
     margin: 0 auto;
     position: relative;
     top: 25px;
+}
+
+.listItems {
+  display: flex;
+  justify-content: space-between;
 }
 
 @keyframes spin {

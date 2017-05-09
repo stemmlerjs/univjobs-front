@@ -191,3 +191,15 @@ export function unPinAJob(data) {
 			data: data
 		})
 }
+
+export function inviteStudent (jobId, studentId) {
+  const accessToken = getAccessToken()
+  
+  return axios({
+    method: 'post',
+    url: config.baseUrl + 'jobs/invite/' + jobId + "/" + studentId,
+    headers: {
+      'Authorization': accessToken
+    }
+  })
+}
