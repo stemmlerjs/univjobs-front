@@ -43,7 +43,7 @@ import { fetchingJobs, fetchedJobSuccess, fetchedJobFailure,
   * NOTE: axios url is job/r/list
   */
 
-export function getJobs(userId) {
+export function getJobs (userId) {
     const accessToken = getAccessToken()
   //  const csrfToken = getCSRFToken()
 
@@ -54,7 +54,6 @@ export function getJobs(userId) {
 			'Authorization':  accessToken
 		}
 	})
-	data: userId
 }
 
 
@@ -73,23 +72,6 @@ export function getAllStudents() {
   return axios({
 		method: 'get',
 		url: config.baseUrl + 'students/',
-		headers: {
-			'Authorization':  accessToken,
-			'X-CSRFToken' : csrfToken
-		}
-	})
-}
-
-/**
-  * getJobTypes 
-  */
-export function getJobTypes() {
-    const accessToken = getAccessToken()
-    const csrfToken = getCSRFToken()
-
-    return axios({
-	    method: 'get',
-		url: config.baseUrl + 'list/jobtypes',
 		headers: {
 			'Authorization':  accessToken,
 			'X-CSRFToken' : csrfToken
@@ -131,18 +113,21 @@ export function getIndustries(){
   *  @return Promise
   */
 
-export function studentApply(data) {
+export function applyToJob (answers, jobId) {
 	const accessToken = getAccessToken()
 	const csrfToken = getCSRFToken()
 
 	return axios({
 		method: 'post',
-		url: config.baseUrl + 'job/new/student/apply/',
+		url: config.baseUrl + 'jobs/' + jobId + '/apply',
 		headers: {
 			'Authorization':  accessToken,
-			'X-CSRFToken' : csrfToken
+			'X-CSRFToken' : csrfToken,
+      'Content-Type': 'application/json'
 		},
-			data: data
+		data: {
+      "answers": answers
+    }
 	})
 }
 

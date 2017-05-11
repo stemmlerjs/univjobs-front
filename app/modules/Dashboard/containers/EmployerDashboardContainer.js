@@ -270,7 +270,9 @@ const EmployerDashboardContainer = React.createClass({
               </div>
               
               <div className={inviteStudentModalButtonsContainer}>
-                <button className={cancelBtn}>CANCEL</button>
+                <button className={cancelBtn} onClick={()=> {
+                  this.refs.inviteStudentModal.hide()
+                }}>CANCEL</button>
                 <button className={acceptBtn} onClick={this.doInviteStudent}>OK</button>
               </div>
 

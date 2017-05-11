@@ -1,8 +1,10 @@
 
-import { getJobs, getIndustries, getJobTypes, pinAJob, 
+import { getJobs, pinAJob, 
     studentApply, unPinAJob, getAllStudents } from 'helpers/dashboard'
+import { getJobTypes, getIndustries } from 'helpers/lists'
 
 import inviteStudentModal from './inviteStudentModal'
+import jobAppModal from './jobAppModal'
 
 // =======================================================
 // ====================== ACTIONS ========================
@@ -183,26 +185,6 @@ function dashboardFetchedJobTypesFailure(error) {
 	  error
   }
 }
-/**************MODALS***********************/
-function dashboardModalClicked(jobId) {
-   return {
-   	   type: DASHBOARD_MODAL_CLICKED,
-	   jobId
-   }
-}
-
-function dashboardShowModal(job) {
-   return {
-   	  type: DASHBOARD_SHOW_MODAL,
-	  job,
-   }
-}
-
-function dashboardHideModal(jobId) {
-   return {
-          type: DASHBOARD_HIDE_MODAL
-   }
-}
 
 /**************PINS***********************/
 function dashboardPinClicked(job) {
@@ -220,7 +202,6 @@ function dashboardPinClicked(job) {
  *  NOTE: find the jobId and changed the pinned status to true in the store
  * */
 function dashboardPinSuccess(response) {
-   debugger
    return {
        type: DASHBOARD_PIN_SUCCESS,
        fill: {color: 'red'},
@@ -229,7 +210,6 @@ function dashboardPinSuccess(response) {
 }
 
 function dashboardPinFailure(error) {
-   debugger
    return {
           type: DASHBOARD_PIN_FAILURE,
           error,
@@ -325,15 +305,20 @@ export function handleGetIndustries() {
     return function(dispatch) {
 	    //ACTION: FETCHING_INDUSTRIES
 	    dispatch(dashboardFetchingIndustries)
+
 	    return getIndustries()
-	        .then((resp) => 
-		    //ACTION: FETCHED_INDUSTRIES_SUCCESS
-		    dispatch(dashboardFetchedIndustriesSuccess(resp))
-	        )
-	        .catch((err) => 
-		    //ACTION: FETCHED_QUESTIONS_FAILURE
-		    dispatch(dashboardFetchedIndustriesFailure(err))
-	        )
+	      .then((response) => {
+				  var industries = response.data.industries;
+
+			  	//ACTION: FETCHED_INDUSTRIES_SUCCESS
+		    	dispatch(dashboardFetchedIndustriesSuccess(industries))
+			  })
+        .catch((err) => {
+
+          //ACTION: FETCHED_QUESTIONS_FAILURE
+          dispatch(dashboardFetchedIndustriesFailure(err))
+          
+			})
     }//dispatch
 }//handleGetIndustries
 
@@ -381,27 +366,12 @@ export function handleUnPinJob(job) {
     }//dispatch
 }//handlePinJob
 
-export function handleSubmitAnswers(answersData) {
-    return function(dispatch) {
-	// DISPATCH (SUBMITTING_ANSWERS)
-	debugger
-	dispatch(dashboardSubmittingAnswers())
-	return studentApply(answersData)
-	    .then((response) => {
-		    dispatch(dashboardSubmitAnswersSuccess(response))
-	    })
-	    .catch((err) => {
-		    dispatch(dashboardSubmitAnswersFailure(err))
-	    })
-    }
-}
 
 const SHOW_MAX_APPLICANTS = "EMPLOYER.DASHBOARD.SHOW_MAX_APPLICANTS"
 
 function showMaxApplicants (job) {
 	return {
 		type: SHOW_MAX_APPLICANTS,
-
 	}
 }
 
@@ -411,8 +381,6 @@ export function displayMaxApplicants (job) {
 
 	}
 }
-
-
 
 // =======================================================
 // ================== INITIAL STATE ======================
@@ -447,6 +415,7 @@ const initialEmployerDashboardState = {
 
 const initialStudentDashboardState = {
 	isFetching: false,
+  jobAppModal: {},
 	error: '',
 	jobs: [],
 	pin: {},
@@ -553,6 +522,42 @@ function employerDashboard(state = initialEmployerDashboardState, action) {
 
 function studentDashboard(state = initialStudentDashboardState, action) {
 	switch(action.type) {
+    
+   /*
+    * APPLY TO JOB MODAL [Student Dashboard]
+    *
+    * Actions include opening the modal, updating the answers and submitting
+    * the application to the job.
+    */
+
+    case jobAppModal.actions.UPDATE_ANSWER_TEXT:
+      return {
+        ...state,
+        jobAppModal: jobAppModal.reducers.jobAppModal(state.jobAppModal, action)
+      }
+    case jobAppModal.actions.JOB_APP_MODAL_OPEN:
+      return {
+        ...state,
+        jobAppModal: jobAppModal.reducers.jobAppModal(state.jobAppModal, action)
+      }
+    case jobAppModal.actions.APPLYING_TO_JOB:
+      return {
+        ...state,
+        jobAppModal: jobAppModal.reducers.jobAppModal(state.jobAppModal, action)
+      }
+    case jobAppModal.actions.APPLYING_TO_JOB_SUCCESS:
+      return {
+        ...state,
+        jobAppModal: jobAppModal.reducers.jobAppModal(state.jobAppModal, action)
+      }
+    case jobAppModal.actions.APPLYING_TO_JOB_FAILURE:
+      return {
+        ...state,
+        jobAppModal: jobAppModal.reducers.jobAppModal(state.jobAppModal, action)
+      }
+
+      // ==========
+
 		case DASHBOARD_FETCHING_JOBS:
 			return {
 				...state,
@@ -728,6 +733,44 @@ function answer(state = initialAnswerState, action) {
 
 export default function dashboard(state = initialDashboardState, action) {
 	switch(action.type) {
+
+   /*
+    * APPLY TO JOB MODAL [Student Dashboard]
+    *
+    * Actions include opening the modal, updating the answers and submitting
+    * the application to the job.
+    */
+
+    case jobAppModal.actions.UPDATE_ANSWER_TEXT:
+      return {
+        ...state,
+        studentDashboard: studentDashboard(state.studentDashboard, action)
+      }
+    case jobAppModal.actions.JOB_APP_MODAL_OPEN:
+      return {
+        ...state,
+        studentDashboard: studentDashboard(state.studentDashboard, action)
+      }
+    case jobAppModal.actions.APPLYING_TO_JOB:
+      return {
+        ...state,
+        studentDashboard: studentDashboard(state.studentDashboard, action)
+      }
+    case jobAppModal.actions.APPLYING_TO_JOB_SUCCESS:
+      return {
+        ...state,
+        studentDashboard: studentDashboard(state.studentDashboard, action)
+      }
+    case jobAppModal.actions.APPLYING_TO_JOB_FAILURE:
+      return {
+        ...state,
+        studentDashboard: studentDashboard(state.studentDashboard, action)
+      }
+    
+   /*
+    * INVITE STUDENT MODAL [Employer Dashboard]
+    */
+
     case inviteStudentModal.actions.INVITING_STUDENT_TO_JOB:
       return {
         ...state,

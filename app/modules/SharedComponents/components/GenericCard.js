@@ -37,7 +37,6 @@ export const DASHBOARD_CARD_TYPE = 'DASHBOARD_CARD_TYPE'
 export const PINNED_JOBS_CARD_TYPE = 'PINNED_JOBS'
 
 export default function GenericCard({ cardType, job, jobTypes, industries, profile, handleCardClick, children }) {
-    debugger
   return (
     <div className={cardContainer}>
       {(() => {

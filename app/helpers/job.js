@@ -29,7 +29,8 @@ import { getAccessToken, getCSRFToken } from 'helpers/auth'
  *    Pure HTTP calls only for the future.
  */
 
-/**
+ /*
+  *
   * getJobs 
   *
   * [Employer]: as an employer, this API call returns:
@@ -57,6 +58,5 @@ export function getJobs() {
 		}
 	})
 }
-
 
 

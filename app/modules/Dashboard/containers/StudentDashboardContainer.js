@@ -6,6 +6,7 @@ import { SidebarContainer } from 'modules/Main'
 import { StudentDashboard } from 'modules/Dashboard'
 
 // ==============THIRD PARTY IMPORTS========================= //
+import SkyLight from 'react-skylight'
 
 // =============REDUX STATE & IMPORTS========================== //
 import { connect } from 'react-redux'
@@ -13,6 +14,7 @@ import { bindActionCreators } from 'redux'
 import * as userActionCreators from 'redux/modules/user/user'
 import * as dashboardActionCreators from 'redux/modules/dashboard/dashboard'
 import * as jobActionCreators from 'redux/modules/job/job'
+import jobAppModal from 'redux/modules/dashboard/jobAppModal'
 import * as list from 'helpers/lists'
 import * as fetch from 'helpers/dashboard'
 import { authRedirectFilter } from 'config/routes'
@@ -54,13 +56,13 @@ const StudentDashboardContainer = React.createClass({
   doRedirectionFilter() {
     const config = {
       failureRedirect: {
-    	  student: '/join',	// if not logged in, go here (student)
+    	  student: '/join',	     // if not logged in, go here (student)
     	  employer: '/join'      // if not logged in, go here (employer)
       },
       restricted: {
-        to: 'STUDENTS',		 // STUDENTS only on this route
+        to: 'STUDENTS',		              // STUDENTS only on this route
 	      redirectTo: '/job/mylistings'   // if not an EMPLOYER, redirect to the employer equivalent
-		 			 // This might change to employer categories
+		 		
       }
     }
      return authRedirectFilter(config, this.context.store, this.context.router)
@@ -72,24 +74,7 @@ const StudentDashboardContainer = React.createClass({
   	})
   },
 
-  /** showModal
-   *
-   * This function takes in the submit event & the job id
-   * It calls a dispatch modalCliked & showModal(id)
-   * Once the store is notified, a reducer should be activated to find the appropriate job info,
-   * then supplies the modal the appropraite job info
-   * After, the modal appears to the user of the job info they pressed
-   *
-   * @param(e) - DOM event
-   * @param(j) - Object job
-   * @param(q) - Object questions
-  */
 
-  showModal(e, j) {
-      e.preventDefault()
-      this.context.store.dispatch(actionCreators.dashboardModalClicked(j.id))
-      this.context.store.dispatch(actionCreators.dashboardShowModal(j, j.questions))
-  },
 
   /* pinJob 
    *   This function pins the job, passes the student id and job id,
@@ -107,88 +92,249 @@ const StudentDashboardContainer = React.createClass({
       } 
   },
 
-
- /** hideModal
-  *   This event gives the user
-  */
-  hideModal (e, id) {
-      this.context.store.dispatch(actionCreators.dashboardHideModal(id))
-      this.context.store.getState().dashboard.answer.answerOne = ''
-      this.context.store.getState().dashboard.answer.answerTwo = ''
-  },
-
-  /** applyClicked
+  /*
+   * applyToJob
    *
    *  This event is pressed the button inside JobCardModal
    *  It should passed the two answers given by the user and it's student id
    */
 
-  applyClicked (e, questions) {
+  applyToJob () {
+
+    const jobAppModal = this.props.jobAppModal
+    const questions = jobAppModal.selectedJob.questions
+
+    const answerOneText = jobAppModal.answerOne
+    const answerTwoText = jobAppModal.answerTwo
+    const jobId = jobAppModal.selectedJob.jobId
+    const question_one_id = questions[0] ? questions[0].question_id : null
+    const question_two_id = questions[1] ? questions[1].question_id : null 
+
+    // console.log(jobId, question_one_id, answerOneText, question_two_id, answerTwoText)
+    this.props.submitJobApplication(jobId, question_one_id, answerOneText, question_two_id, answerTwoText)
+
+    // Use these later - show toaster messages?
+    // toastr.success("Successfully applied to jobs")
+    // toastr.error("✋ You need to answer the employers question if you want to get a job")
+  },
+
+ /*
+  * openJobAppModal
+  *
+  * Opens the job app modal that contains all of the job
+  * details, questions and answers fields so that students 
+  * may apply to a job.
+  */
+
+  openJobAppModal(e, selectedJob) {
     e.preventDefault()
+    this.props.openJobAppModal(selectedJob)
+    this.refs.jobAppModal.show()
+  },
 
-    // Create Large Object
-    let applicationInfo = {
-      "job": this.context.store.getState().dashboard.modal.jobId,
-      "students": this.context.store.getState().user.email,
-      "answers": [{
-        "question": questions[0].id,
-        "student": this.context.store.getState().user.email,
-        "text": this.props.answer.answerOne,
-        "job": this.context.store.getState().dashboard.modal.jobId,
-      }, {
-        "question": questions[1].id,
-        "student": this.context.store.getState().user.email,
-        "text": this.props.answer.answerTwo,
-        "job": this.context.store.getState().dashboard.modal.jobId,
-      }]
-    }
+ /*
+  * closeJobAppModal
+  *
+  * Closes the job app modal.
+  */
 
-    // Given that answers fields were populated, continue
-  	if (this.props.answer.answerOne && this.props.answer.answerTwo) {
-		this.props.handleSubmitAnswers(applicationInfo)
-  		.then(this.context.store.dispatch(actionCreators.dashboardHideModal(0)))
+  closeJobAppModal() {
+    this.refs.jobAppModal.hide()
+  },
 
-        /*TODO: ADD CELEBRATORY GIF 
-         *
-         * NOTE: Future addition would be to give tips while they wait for the job
-         * */
-		.then(toastr.success("Successfully applied to jobs"))
-  	} else {
-  		toastr.error("✋ You need to answer the employers question if you want to get a job")
-  	}
+ /*
+  * openConfirmApplyModal
+  *
+  * When a student finally clicks Apply, they are presented with this
+  * confirmation modal to make sure that the student really wants 
+  * to submit their application.
+  *
+  * This pops up overtop of the job app modal.
+  */
+
+  openConfirmApplyModal () {
+    this.refs.confirmApplyModal.show()
+  },
+
+ /*
+  * closeConfirmApplyModal
+  *
+  * Close the confirm apply modal that pops up overtop of the
+  * job app modal.
+  */
+
+  closeConfirmApplyModal () {
+    this.refs.confirmApplyModal.hide()
   },
 
   componentWillMount() {
-  	console.log("componentWillMount")
   	this.doRedirectionFilter()
-    .then(this.props.getAllJobsStudentJobView())
-    .then(this.props.handleGetIndustries())
-    .then(this.props.handleGetJobTypes())
-  	.then(this.props.closeOverlay())
+      .then(this.props.getAllJobsStudentJobView())
+      .then(this.props.handleGetIndustries())
+      .then(this.props.handleGetJobTypes())
+      .then(this.props.closeOverlay())
   },
 
   componentWillUnmount() {
-    console.log("Component WillUnmount")
+    
   },
 
   render () {
+    console.log(this.props, "Student dashboard container props")
     return (
       <div className={pageContainer} >
       <SidebarContainer isAStudent={true}/>
       <StudentDashboard
-    	  handleCardClick={this.showModal}
-    	  onHideModal={this.hideModal}
-    	  onApplyClicked={this.applyClicked}
-    	  onPinJob={this.pinJob}
-          modal={this.props.modal}
-          jobs={this.props.jobs ? this.props.jobs : ''}
-    	  industries={this.props.industries ? this.props.industries : []}
-    	  jobTypes={this.props.jobTypes ? this.props.jobTypes : []}
-    	  answerOne={this.props.answer.answerOne}
-    	  answerTwo={this.props.answer.answerTwo}
-    	  updateAnswerField={this.props.dashboardUpdateAnswerField}
-          pin={this.props.pin}
+        handleCardClick={this.openJobAppModal}
+        onPinJob={this.pinJob}
+        jobs={this.props.jobs ? this.props.jobs : ''}
+        industries={this.props.industries ? this.props.industries : []}
+        jobTypes={this.props.jobTypes ? this.props.jobTypes : []}
+        answerOne={this.props.answer.answerOne}
+        answerTwo={this.props.answer.answerTwo}
+        pin={this.props.pin}
 	    />
+
+      {
+       /* 
+        * ========================================
+        *           jobAppModal
+        * ========================================
+        * 
+        * This is the main modal for this screen.
+        * It's purpose is to allow the student to see 
+        * the details for a job and apply to the job
+        * after filling in any answers to questions if necessary.
+        */
+      } 
+
+      <SkyLight
+            ref="jobAppModal"
+            title="Job application">
+            <div>
+
+            {
+             /* 
+              * ========= Job Details  ==========
+              *
+              * This section displays all of the job details.
+              * TODO: fill in the rest of the details when the 
+              * design is made.
+              */
+            } 
+
+            { this.props.jobAppModal.selectedJob 
+              ? <div>
+                  <div>{this.props.jobAppModal.selectedJob.title}</div>
+                  <div></div>
+                </div>
+              : ''
+            }
+
+            
+
+            {
+             /* 
+              * ========= Questions ==========
+              *
+              * If there are even questions that need to be shown, we will display them.
+              * We need to first check for the selectedJob attribute to exist (it only)
+              * exists when we actually select a job.
+              *
+              */
+            } 
+              { this.props.jobAppModal.selectedJob 
+                ? (<div> 
+                    {
+                     /*
+                      * In this case, the selectedJob attribute 
+                      * exists. Now we can check to see if we should display
+                      * questions or not.
+                      *
+                      * We do that directly below in the next ternary statement.
+                      */
+                    }
+                    { this.props.jobAppModal.selectedJob.questions.length != 0 
+                      ? <div>
+                          {
+                           /* 
+                            * In this case, THERE ARE questions that need
+                            * to be answered. We iterate over each one and 
+                            * render the HTML for each question and it's answer.
+                            */
+                          }
+
+                          { this.props.jobAppModal.selectedJob.questions.map((question) => (
+                            <div key={question.question_id}>
+                              lkjlkjasdlkj
+                              <div>{question.text}</div>
+                              <input onChange={(e) => {
+
+                               /* 
+                                * Update the answers on change.
+                                *
+                                * To do this, the following block of code figures out
+                                * which answer (1 or 2) is being answered and triggers
+                                * the update accordingly.
+                                */
+                                var _this = this;
+                                var q = this.props.jobAppModal.selectedJob.questions;
+                                for (var i = 0; i < q.length; i++) {
+                                  if (q[i].question_id == question.question_id) {
+                                     _this.context.store.dispatch(_this.props.updateAnswerText(i + 1, e.target.value)) 
+                                  }
+                                }
+
+                              }} type="textarea"/>
+                            </div>
+                          ))}
+                          
+                        </div>
+                      : ''
+                    }
+
+                  </div>)
+                : ''}
+
+              {
+               /* 
+                * ========= Buttons ==========
+                *
+                * Apply to job or close the modal.
+                *
+                */
+                <div>
+                  <button onClick={this.closeJobAppModal}>Close</button>
+                  <button onClick={this.openConfirmApplyModal}>Apply</button>
+                </div>
+              }
+
+              
+            </div>
+        </SkyLight>
+
+    {
+       /* 
+        * ========================================
+        *           jobAppModal
+        * ========================================
+        * 
+        * This is the main modal for this screen.
+        * It's purpose is to allow the student to see 
+        * the details for a job and apply to the job
+        * after filling in any answers to questions if necessary.
+        *
+        */
+      } 
+
+      <SkyLight
+            ref="confirmApplyModal"
+            title="Apply to job?">
+            <div>
+              <button onClick={this.closeConfirmApplyModal}>Cancel</button>
+              <button onClick={this.applyToJob}>Yes, apply</button>
+            </div>
+      </SkyLight>
 
 	  <ReduxToastr
 	    timeOut={4000}
@@ -209,9 +355,9 @@ function mapStateToProps({user, dashboard, job}) {
   return {
 	  user: user ? user : {},
 	  jobs: job.studentJobsView ? job.studentJobsView : [],
-	  modal : dashboard.studentDashboard.jobs ? dashboard.modal : '',
-	  industries : dashboard.industries ? dashboard.industries.data : '',
-	  jobTypes : dashboard.jobTypes ? dashboard.jobTypes.data : '',
+	  jobAppModal: dashboard.studentDashboard.jobAppModal ? dashboard.studentDashboard.jobAppModal : {},
+	  industries : dashboard.industries ? dashboard.industries.data : [],
+	  jobTypes : dashboard.jobTypes ? dashboard.jobTypes.data : [],
 	  answer : dashboard.studentDashboard.jobs ? dashboard.answer : {},
 	  pin: dashboard.studentDashboard.response ? dashboard.studentDashboard.pin : {},
   }
@@ -230,7 +376,8 @@ function mapActionCreatorsToProps(dispatch) {
   return bindActionCreators({
     ...userActionCreators,
     ...dashboardActionCreators,
-    ...jobActionCreators
+    ...jobActionCreators,
+    ...jobAppModal.actionCreators
   }, dispatch)
 }
 

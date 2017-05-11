@@ -206,6 +206,7 @@ export function getAllJobsStudentJobView () {
     getJobs()
 
       .then((result) => {
+        console.log("HERE")
 
        /*
         * If successful, we will add all of the jobs to the
@@ -253,33 +254,6 @@ export function getAllJobsStudentJobView () {
   }
 }
 
-export function handleGetJobs(userId) {
-    return function(dispatch) {
-	    dispatch(fetchingJobs())
-	    return getJobs(userId)
-	        .then((resp) => 
-		        dispatch(fetchedJobsSuccess(resp.data.jobs))
-	        )
-	        .catch((err) => 
-		        dispatch(fetchedJobsFailure(err))
-	        )
-    }
-}
-
-
-export function handleGetJobTypes() {
-    return function(dispatch) {
-	    dispatch(fetchingJobTypes)
-	    return getJobTypes()
-	        .then((resp) => 
-		        dispatch(fetchedJobTypesSuccess(resp))
-	        )
-	        .catch((err) => 
-		        dispatch(fetchedJobTypesFailure(err))
-	        )
-    }//dispatch
-}//handleGetJobTypes
-
 // =======================================================
 // ================== INITIAL STATE ======================
 // =======================================================
@@ -297,8 +271,35 @@ const initialJobState = {
 // ===================== REDUCERS ========================
 // =======================================================
 
-export default function job(state = initialJobState, action) {
+export default function job (state = initialJobState, action) {
 	switch(action.type) {
+
+   /*
+    * Student actions
+    */
+
+    case FETCHING_STUDENT_JOBS_VIEW:
+      return {
+        ...state,
+        isFetching: true
+      }
+    case FETCHED_STUDENT_JOBS_VIEW_SUCCESS:
+      return {
+        ...state,
+        isFetching: false,
+        studentJobsView: action.jobs
+      }
+    case FETCHED_STUDENT_JOBS_VIEW_FAILURE:
+      return {
+        ...state,
+        isFetching: false,
+        error: action.error
+      }
+
+   /*
+    * Employer actions
+    */
+
 		case FETCHING_EMPLOYER_JOBS:
 			return {
 				...state,
@@ -314,6 +315,11 @@ export default function job(state = initialJobState, action) {
 				...state,
 				error: action.error
 			}
+
+   /*
+    * General Actions
+    */
+
 		case FETCHING_JOB_TYPES:
 			return {
 				...state,
@@ -332,7 +338,6 @@ export default function job(state = initialJobState, action) {
 			return state
 	}
 }
-
 
 function employerJobs(state = initialEmployerJobState, action) {
 	switch(action.type) {
