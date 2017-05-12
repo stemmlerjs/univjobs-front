@@ -19,6 +19,8 @@
   const INVITE_STUDENT_MODAL_OPEN = 'INVITE_STUDENT_MODAL_OPEN'
   const SELECT_JOB_INVITE_MODAL = 'SELECT_JOB_INVITE_MODAL'
 
+  const FIND_JOBS_STUDENT_ALREADY_INVITED_TO = 'FIND_JOBS_STUDENT_ALREADY_INVITED_TO'
+
  /*
   * Initial State
   */
@@ -30,6 +32,7 @@
     success: false,
     selectedJob: {},
     selectedStudent: {},
+    jobInvitesForSelectedStudent: [],
     error: ''
   }
 
@@ -56,10 +59,19 @@
     }
   }
 
-  export function openInviteStudentModal (student) {
+ /*
+  * openInviteStudentModal
+  *
+  * The reason why we include all employer jobs as well is because
+  * we want to actually match all of the jobs that this student has 
+  * already been invited to.
+  */
+
+  export function openInviteStudentModal (student, allEmployerJobs) {
     return {
       type: INVITE_STUDENT_MODAL_OPEN,
-      student
+      student,
+      allEmployerJobs
     }
   }
 
@@ -128,6 +140,36 @@
   function inviteStudentModal (state = initialInviteStudentModalState, action) {
     switch(action.type) {
       case INVITE_STUDENT_MODAL_OPEN:
+
+       /*
+        * Here, we need to find all the jobs that the student has already
+        * been invited to and add it to the store so we can show this.
+        */
+
+        var jobs = action.allEmployerJobs
+        var studentId = action.student.student_id
+
+        console.log("lkasjdlksjaldjk", jobs, studentId)
+
+        jobs.map((job) => {
+
+          /*
+          * Set checkmarks for jobs that the student has already been
+          * invited to.
+          */    
+
+          job.invites.forEach((invite) => {
+            if (invite.student_id == studentId) {
+              job.invited = true;
+            } 
+            else {
+              job.invited = false;
+            }
+          })
+
+          return job
+        })
+
         return {
           maxApplicants: 0,
           currentApplicants: 0,
@@ -135,7 +177,8 @@
           success: false,
           selectedJob: {},
           error: '',
-          selectedStudent: action.student
+          selectedStudent: action.student,
+          jobInvitesForSelectedStudent: jobs
         }
       case SELECT_JOB_INVITE_MODAL:
         return {

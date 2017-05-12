@@ -79,6 +79,12 @@ const StudentCard = ({pictureUrl, resumeUrl, name, major, funFact, recentCompany
                 }
                 
             </div>
+            {
+             /* 
+              * SECTION 2 
+              *
+              */
+            }
             <div className={cardSectionTwo}>
                 <div className={cardSectionTitle}>Contact Info</div>
                 { isDashboardCard === true 

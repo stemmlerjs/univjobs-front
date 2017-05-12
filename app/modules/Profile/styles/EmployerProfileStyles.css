@@ -32,10 +32,14 @@
 
 .input {
   composes: input from 'sharedStyles/styles.css';
+  composes: material_1 from 'sharedStyles/material.css';
+  border: #908f8f 1px solid !important;
   width: 75%;
 }
 
 .textArea {
+    composes: material_1 from 'sharedStyles/material.css';
+  border: #908f8f 1px solid !important;
   text-align: left;
   width: 75%;
   height: 25vh;
@@ -43,7 +47,6 @@
   padding: .5em 1em;
   margin: 8px;
   border: 2px dashed rgb(102, 102, 102);
-  border: 1px solid #ccc;
   border-radius: 4px;
   vertical-align: middle;
   -webkit-box-sizing: border-box;
@@ -93,6 +96,7 @@
 }
 
 .saveBtn {
+  composes: material_1 from 'sharedStyles/material.css';
   margin-left: 25%;
   margin-top: 21px;
   padding: 10px 15px 10px 15px;
@@ -113,19 +117,6 @@
   border: none;
   border-radius: 0px;
   display: inline-block;
-}
-
-.comboBox {
-  composes: input from 'sharedStyles/styles.css';
-  width: 75%;
-  padding-top: 0;
-  padding-bottom: 0;
-  padding-left: 0;
-  color: black !important;
-}
-
-.comboBox > input {
-  color: black !important;
 }
 
 .city {

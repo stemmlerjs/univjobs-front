@@ -22,9 +22,10 @@ import {toastr} from 'react-redux-toastr'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as userActionCreators from 'redux/modules/user/user'
+import * as jobActionCreators from 'redux/modules/job/job'
+import * as applicantsActionCreators from 'redux/modules/applicants/applicants'
 import * as list from 'helpers/lists'
 import * as utils from 'helpers/utils'
-
 
 // =============EXTRA IMPORTS========================== //
 import { authRedirectFilter } from 'config/routes'
@@ -35,13 +36,13 @@ import pageContainer  from 'sharedStyles/sharedContainerStyles.css'
 
 const ApplicantsContainer = React.createClass({
 
-    /*TODO: Define the required typechecking variables
-    *
-    * */
-    propTypes: {
-	    user: PropTypes.object 
-    
-    },
+   /*
+    * TODO: Define the required typechecking variables
+    */
+
+  propTypes: {
+    user: PropTypes.object 
+  },
 	contextTypes: {
 		router: PropTypes.object.isRequired,
 		store: PropTypes.object.isRequired
@@ -110,6 +111,7 @@ const ApplicantsContainer = React.createClass({
 
     this.doRedirectionFilter()
       .then(this.retrieveAll())
+      .then(this.props.getAllJobsQuestionsAnswersForEmployer)
       .then(this.props.closeOverlay())
 
   },
@@ -119,10 +121,14 @@ const ApplicantsContainer = React.createClass({
   },
 
   render () {
+    console.log(this.props.jobs)
     return (
       <div className={pageContainer}>
-      <SidebarContainer isAStudent={this.props.user.isAStudent}/>
-       <Applicants/>
+        <SidebarContainer isAStudent={this.props.user.isAStudent}/>
+        <Applicants
+          jobs={this.props.jobs}
+          currentSelectedJob={this.props.currentSelectedJob}
+          changeSelectedJob={this.props.changeSelectedJob}/>
       </div>
     )
   },
@@ -141,9 +147,11 @@ const ApplicantsContainer = React.createClass({
  * 	In other words, all questions are queried in the dashboard page
  */
 
-function mapStateToProps({user}) {
+function mapStateToProps({user, job, applicants}) {
   return {
 	  user: user ? user : {},
+    jobs: job.employerJobs ? job.employerJobs : [],
+    currentSelectedJob: applicants.currentSelectedJob ? applicants.currentSelectedJob : {}
   }
 }
 
@@ -159,6 +167,8 @@ function mapStateToProps({user}) {
 function mapActionCreatorsToProps(dispatch) {
   return bindActionCreators({
       ...userActionCreators,
+      ...jobActionCreators,
+      ...applicantsActionCreators
   }, dispatch)
 }
 

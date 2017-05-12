@@ -67,7 +67,6 @@
 
       var answers = []
       var error = ""
-      debugger;
 
      /*
       * Error checking. Check to make sure that each of the 

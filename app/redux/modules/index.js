@@ -1,4 +1,4 @@
-export application from './application/application'
+export applicants from './applicants/applicants'
 export createJob from './createjob/createjob'
 export dashboard from './dashboard/dashboard'
 export list from './list/list'

@@ -23,9 +23,10 @@ import config from 'config'
 // ================CSS IMPORTS============================== //
 import { profileContainer, profileHeader, profileField, profileFieldName, profileFieldContent, input,
   textArea, dropzone, resetBtnContainer, dropzoneContent, photoIcon, saveBtnContainer, saveBtn,
-  inlineDropzone, comboBox, city, postalcode, citypostalcoderelative, dropPoint, error, industryMargin,
+  inlineDropzone, city, postalcode, citypostalcoderelative, dropPoint, error, industryMargin,
   profilePictureDragDropAlt, profilePictureDragDrop } from '../styles/EmployerProfileStyles.css'
 import { btn } from 'sharedStyles/widgets.css'
+import { title, comboBox } from 'sharedStyles/sharedComponentStyles.css'
 
 /**
   * I'm including these as propTypes because I notice that there is some sort of inconsistency
@@ -37,8 +38,6 @@ import { btn } from 'sharedStyles/widgets.css'
 
 EmployerProfile.propTypes = {
   email: PropTypes.string.isRequired,
-  firstName: PropTypes.string.isRequired,
-  lastName: PropTypes.string.isRequired,
   dateJoined: PropTypes.object.isRequired,
   mobile: PropTypes.number.isRequired
 }

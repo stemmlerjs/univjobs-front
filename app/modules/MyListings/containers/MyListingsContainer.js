@@ -96,7 +96,7 @@ const MyListingsContainer = React.createClass({
             handleCardClick={this.showModal}
             jobs={this.props.job ? this.props.job : ''}
             industries={this.props.industryList}
-    	    jobTypes={this.props.jobTypes}
+    	      jobTypes={this.props.jobTypes}
             profile={this.props.profile}
         />
     </div>

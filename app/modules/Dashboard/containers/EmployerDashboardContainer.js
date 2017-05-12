@@ -24,6 +24,18 @@ import { inviteStudentStyle, inviteStudentModalContainer, comboBox, inviteStuden
   inviteStudentModalInputContainer, inviteStudentModalApplicantsCount, cancelBtn, acceptBtn,
   loader, failureMessage, successMessage, listItems } from '../styles/EmployerDashboardStyles.css'
 
+
+ /*
+  * InviteListItem
+  *
+  * This small component shows on the modal where we choose
+  * which job we want to invite the student to.
+  * 
+  * It simply shows if the student was already invited to the
+  * job or not.
+  *
+  */
+
 const InviteListItem = React.createClass({
   render() {
     var job = this.props.item
@@ -149,7 +161,7 @@ const EmployerDashboardContainer = React.createClass({
 
   openInviteStudentModal(selectedStudent) {
     // Add the student id to the invite modal.
-    this.props.openInviteStudentModal(selectedStudent)
+    this.props.openInviteStudentModal(selectedStudent, this.props.jobs)
     this.refs.inviteStudentModal.show()
   },
 
@@ -225,23 +237,7 @@ const EmployerDashboardContainer = React.createClass({
                       valueField="job_id"
                       filter="contains"
                       itemComponent={InviteListItem}
-                      data={this.props.jobs.map((job) => {
-
-                       /*
-                        * Set checkmarks for jobs that the student has already been
-                        * invited to.
-                        */    
-
-                        if (this.props.inviteStudentModal.selectedStudent !== undefined) {
-                          job.invites.forEach((invite) => {
-                            if (invite.student_id == this.props.inviteStudentModal.selectedStudent.student_id) {
-                              job.invited = true;
-                            }
-                          })
-                        }
-
-                        return job
-                      })}
+                      data={this.props.inviteStudentModal.jobInvitesForSelectedStudent}
                       onChange={(value) => {
                         this.selectInviteJob(value)
                       }}
