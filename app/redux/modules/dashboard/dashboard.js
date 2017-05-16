@@ -468,6 +468,42 @@ export function openStudentProfileModal(student) {
 function studentProfileModal (state = initialStudentProfileModalState, action) {
 	switch(action.type) {
 		case STUDENT_PROFILE_MODAL_OPEN:
+
+		 /*
+			* We need to display the student's sports in a comma delimited list.
+			* Create this string and append it for the 'sports'
+			*/
+			
+			var sportsString = "";
+			var sports = Object.keys(action.student.sports);
+
+			for (var i = 0; i < sports.length; i++) {
+				if (i !== sports.length - 1) {
+					sportsString = sportsString + action.student.sports[sports[i]] + ", "
+				} else {
+					sportsString = sportsString + action.student.sports[sports[i]]
+				}
+			}
+
+			action.student.sportsString = sportsString
+
+		 /*
+			* Additionally, we have to do the same thing with clubs.
+			*/
+
+			var clubsString = "";
+			var clubs = Object.keys(action.student.clubs)
+
+			for (var j = 0; j < clubs.length; j++) {
+				if (j !== clubs.length - 1) {
+					clubsString = clubsString + action.student.clubs[clubs[j]] + ", "
+				} else {
+					clubsString = clubsString + action.student.clubs[clubs[j]]
+				}
+			}
+
+			action.student.clubsString = clubsString
+
 			return {
 				...state,
 				open: true,

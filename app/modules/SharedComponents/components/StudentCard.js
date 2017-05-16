@@ -78,9 +78,14 @@ const StudentCard = ({pictureUrl, resumeUrl, name, major, funFact, recentCompany
             </div>
             <div className={cardHeaderContainer}>
                 <div className={cardHeaderItemMainText}>{name}</div>
-                <div className={cardHeaderItemSecondaryText}>Business Administration</div>
+                <div className={cardHeaderItemSecondaryText}>{lists.majors[major]}</div>
                 <div className={cardHeaderItemAltItemText}>{schoolName} {gradDate.getFullYear()}</div>
                 <div className={cardHeaderItemContainer}>
+                  {
+                   /*
+                    * Has Car rendering
+                    */
+                  }
                     <div>
                         { hasCar == 1
                           ? <div>
@@ -91,26 +96,51 @@ const StudentCard = ({pictureUrl, resumeUrl, name, major, funFact, recentCompany
                         }
                     </div>
                     <div>
+                      {
+                       /*
+                        * Sports rendering
+                        */
+                      }
                         {
                           Object.keys(sports).length !== 0
-                            ? <div>
-                                <ReactTooltip delayHide={100} delayShow={100} place="bottom" effect="float"/>
-                                <img data-tip={'Plays sports such as ' + sports[Object.keys(sports)[0]] + " ..."} src={`${config.assetUrl}components/cards/student/actions/a/sports_active_24px.svg`}/>
-                              </div>
+                            ? Object.keys(sports).length == 1
+                              ? <div>
+                                  <ReactTooltip delayHide={100} delayShow={100} place="bottom" effect="float"/>
+                                  <img data-tip={'Plays ' + sports[Object.keys(sports)[0]] + "."} src={`${config.assetUrl}components/cards/student/actions/a/sports_active_24px.svg`}/>
+                                </div>
+                              : <div>
+                                  <ReactTooltip delayHide={100} delayShow={100} place="bottom" effect="float"/>
+                                  <img data-tip={'Plays ' + sports[Object.keys(sports)[0]] + " and " + Object.keys(sports).length + " more sports."} src={`${config.assetUrl}components/cards/student/actions/a/sports_active_24px.svg`}/>
+                                </div>
                             : <img src={`${config.assetUrl}components/cards/student/actions/d/sports_deactive_24px.svg`}/>
                         }
                     </div>
                     <div>
+                      {
+                       /*
+                        * Clubs rendering
+                        */
+                      }
                         {
                           Object.keys(clubs).length !== 0
-                            ? <div>
-                                <ReactTooltip delayHide={100} delayShow={100} place="bottom" effect="float"/>
-                                <img data-tip={"Involved in clubs such as " + clubs[Object.keys(clubs)[0]] + " ..."} src={`${config.assetUrl}components/cards/student/actions/a/clubs_active_24px.svg`}/>
-                              </div>
+                            ? Object.keys(clubs).length == 1
+                              ? <div>
+                                  <ReactTooltip delayHide={100} delayShow={100} place="bottom" effect="float"/>
+                                  <img data-tip={"Involved in clubs like " + clubs[Object.keys(clubs)[0]] + " and " + Object.keys(clubs).length + " more."} src={`${config.assetUrl}components/cards/student/actions/a/clubs_active_24px.svg`}/>
+                                </div>
+                              : <div>
+                                  <ReactTooltip delayHide={100} delayShow={100} place="bottom" effect="float"/>
+                                  <img data-tip={"Involved in " + clubs[Object.keys(clubs)[0]] + "."} src={`${config.assetUrl}components/cards/student/actions/a/clubs_active_24px.svg`}/>
+                                </div>
                             : <img src={`${config.assetUrl}components/cards/student/actions/d/clubs_deactive_24px.svg`}/>
                         }
                     </div>
                     <div>
+                      {
+                        /*
+                         * GPA rendering
+                         */
+                      }
                         {
                           gpa 
                             ? <div>
@@ -169,7 +199,8 @@ const StudentCard = ({pictureUrl, resumeUrl, name, major, funFact, recentCompany
          
         }
         { isDashboardCard === true 
-            ? (<div className={cardActionButtons}>
+            ? (
+                <div className={cardActionButtons}>
                     <button onClick={
 
                         function() {
@@ -182,7 +213,8 @@ const StudentCard = ({pictureUrl, resumeUrl, name, major, funFact, recentCompany
                             handleOpenInviteStudentModal(studentObj)
                         }
                     }>INVITE</button>
-                </div>)
+                </div>
+              )
             : (
               <div>
                 <div className={cardActionButtons}>
@@ -190,7 +222,8 @@ const StudentCard = ({pictureUrl, resumeUrl, name, major, funFact, recentCompany
                   <button><a className={whiteTxt} target="_blank" href={resumeUrl}>RESUME</a></button>
                   <button>SEE MORE</button>
                 </div>
-              </div>)
+              </div>
+              )
         }
     </div>
 )

@@ -4,7 +4,9 @@ import React, { PropTypes } from 'react'
 // ==============MADE COMPONENTS========================= //
 import { SidebarContainer } from 'modules/Main'
 import { EmployerDashboard } from 'modules/Dashboard'
-import { StudentDetailsModal } from 'modules/SharedComponents'
+import { StudentProfileModal } from 'modules/SharedComponents'
+
+import config from 'config'
 
 // ==============THIRD PARTY IMPORTS========================= //
 import SkyLight from 'react-skylight'
@@ -223,7 +225,31 @@ const EmployerDashboardContainer = React.createClass({
               hideOnOverlayClicked
               ref="studentProfileModal"
               title="">
-              <StudentDetailsModal/>
+              { 
+                this.props.studentProfileModal.student 
+                  ? <StudentProfileModal
+                      pictureUrl={config.mediaUrl + 'avatar/' + this.props.studentProfileModal.student.photo_url}
+                      name={this.props.studentProfileModal.student.user_firstName.substring(0,1).toUpperCase() + this.props.studentProfileModal.student.user_firstName.substring(1) + ' ' 
+                            + this.props.studentProfileModal.student.user_lastName.substring(0,1).toUpperCase() + this.props.studentProfileModal.student.user_lastName.substring(1)}
+                      funFact={this.props.studentProfileModal.student.fun_fact}
+                      educationLevel={this.props.studentProfileModal.student.edu_level}
+                      hasCar={this.props.studentProfileModal.student.has_car}
+                      hobbies={this.props.studentProfileModal.student.hobbies}
+                      languages={this.props.studentProfileModal.student.languages}
+                      clubsString={this.props.studentProfileModal.student.clubsString}
+                      sportsString={this.props.studentProfileModal.student.sportsString}
+                      major={this.props.studentProfileModal.student.major}
+                      gpa={this.props.studentProfileModal.student.gpa}
+                      gradDate={new Date(this.props.studentProfileModal.student.grad_date)}
+                      schoolName={this.props.studentProfileModal.student.school_name}
+                      hometown={this.props.studentProfileModal.student.hometown}
+                      hobbies={this.props.studentProfileModal.student.hobbies}
+                      recentCompanyName={this.props.studentProfileModal.student.recent_company_name}
+                      recentPosition={this.props.studentProfileModal.student.recent_company_position}
+                      lists={this.props.lists}
+                      />
+                  : ''
+              } 
           </SkyLight>
         </div>
 

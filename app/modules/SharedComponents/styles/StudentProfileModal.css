@@ -1,0 +1,57 @@
+
+.studentProfileModalContainer {
+    display: flex;
+} 
+.studentProfileLeftContainer {
+  width: 50%;
+} 
+.stProfileHeader {
+    padding-left: 15px;
+    display: flex;
+    flex-direction: row;
+    text-align: left;
+} 
+.stProfileImageContainer{
+
+} 
+
+.stProfileImageContainer img {
+    height: 106px;
+    width: 106px;
+}
+  
+.stProfileNameAndSchool {
+  padding-left: 15px;
+} 
+.stProfileName {
+      font-size: 20px;
+} 
+.stProfileProgram {
+  font-size: 15px;
+} 
+
+.stProfileGrad {
+      font-size: 13px;
+    color: #808080;
+}
+.studenProfileRightContainer {
+
+} 
+
+.itemIcon {
+  height: 24px;
+  width: 24px;
+  margin-right: 10px;
+
+}
+.experienceHobbiesEtc {
+  text-align: left;
+  padding-left: 20px;
+  padding-top: 17px;
+}
+.listItemContainer {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 9px;
+    font-size: 15px;
+}

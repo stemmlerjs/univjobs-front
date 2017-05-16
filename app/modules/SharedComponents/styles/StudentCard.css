@@ -425,6 +425,7 @@
     height: 51px;
     cursor: pointer;
     outline: none;
+    transition: 0.1s ease-in;
 }
 
 .cardActionButtons > button:hover {

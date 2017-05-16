@@ -86,6 +86,57 @@ export function getAllStaticLists () {
       .then((result) => {
 
         var lists = result.data;
+        var majors = {}
+        var genders = {}
+        var industries = {}
+        var eduLevels = {}
+        var emailPreferences = {}
+        var jobTypes = {}
+        var studentStatus = {}
+
+       /*
+        * Convert the response arrays into objects for easier
+        * accessibiliy throughout the application.
+        */
+        
+        lists.majors.forEach((major) => {
+          majors[major.id] = major.major_text
+        })
+
+        lists.genders.forEach((gender) => {
+          genders[gender.id] = {
+            code: gender.code,
+            description: gender.gender_description
+          }
+        })
+
+        lists.industries.forEach((industry) => {
+          industries[industry.id] = industry.industry_text
+        })
+
+        lists.eduLevel.forEach((eduLevel) => {
+          eduLevels[eduLevel.id] = eduLevel.description
+        })
+
+        lists.emailPref.forEach((pref) => {
+          emailPreferences[pref.id] = pref.description
+        })
+
+        lists.jobTypes.forEach((jobType) => {
+          jobTypes[jobType.id] = jobType.description
+        })
+
+        lists.studentStatus.forEach((sstatus) => {
+          studentStatus[sstatus.id] = sstatus.status_text
+        })
+
+        lists.majors = majors
+        lists.genders = genders 
+        lists.industries = industries 
+        lists.eduLevel = eduLevels
+        lists.emailPref = emailPreferences
+        lists.jobTypes = jobTypes
+        lists.studentStatus = studentStatus
 
        /*
         * We were able to successfully get all of the lists.
@@ -497,7 +548,7 @@ export default function list (state = initialState, action) {
         genders: action.lists.genders,
         industries: action.lists.industries,
         educationLevels: action.lists.eduLevel,
-        major: action.lists.majors,
+        majors: action.lists.majors,
         studentStatus: action.lists.studentStatus,
         jobTypes: action.lists.jobTypes,
         emailPreferences: action.lists.emailPref,
