@@ -90,7 +90,8 @@ const StudentProfileContainer = React.createClass({
   */
 
   finallyDisableOverlay() {
-  	if(this.context.store.getState().application.isOverlayActive) {
+   debugger
+  	if(this.context.store.getState().rootApplication.isOverlayActive) {
   	  this.props.closeOverlay()
   	}
   },
@@ -147,9 +148,10 @@ const StudentProfileContainer = React.createClass({
 
   handleSubmit(studentProps) {
    //If profile is NOT completed, do /PUT. All fields must be populated and valid.
+   debugger
    if(!this.props.isProfileCompleted) {
 	   this.context.store.dispatch(
-		profileActionCreators.submitProfileFirstTime(0, studentProps, this.props.user)
+		    profileActionCreators.submitProfileFirstTime(0, studentProps, this.props.user)
 	    )
    } else {
    	this.context.store.dispatch(
