@@ -5,6 +5,8 @@ import React, { PropTypes } from 'react'
 import { studentCenteredContainer, header, subHeader, btn, btnContainer,
  input, inputContainer, errorMessage } from '../styles/StudentSignupStyles.css'
 
+import { material_1 } from 'sharedStyles/material.css'
+
 StudentSignup.propTypes = {
   submitSignupForm: PropTypes.func.isRequired,
   updateStudentSignupForm: PropTypes.func.isRequired,
@@ -45,7 +47,7 @@ export default function StudentSignup ({submitSignupForm, updateStudentSignupFor
             <div className={errorMessage}>
                 { error }
             </div>
-            <button className={btn} onClick={onSubmitSignup}>Sign me up</button>
+            <button className={btn + ' ' + material_1} onClick={onSubmitSignup}>Sign me up</button>
         </div>
     </div>
   )

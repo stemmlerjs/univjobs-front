@@ -29,15 +29,21 @@ import { getAccessToken, getCSRFToken } from 'helpers/auth'
  *    Pure HTTP calls only for the future.
  */
 
-/**
+ /*
+  *
   * getJobs 
   *
-  * Get all jobs
+  * [Employer]: as an employer, this API call returns:
+  *   - all of the jobs that this user has posted
+  *   - all of the questions on this job 
+  *   - all of the answers to the questions on this job 
   *
-  * @param store - Object
+  * [Student]: as a student, this API call returns: 
+  *   - all of the jobs that employers have posted 
+  *   - all of the questions for each job
+  *
   * @return Promise
   *
-  * NOTE: axios url is jobs/
   */
 
 export function getJobs() {
@@ -52,6 +58,5 @@ export function getJobs() {
 		}
 	})
 }
-
 
 

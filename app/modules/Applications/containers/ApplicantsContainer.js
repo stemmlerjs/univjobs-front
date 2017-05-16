@@ -17,14 +17,16 @@ import { Applicants } from 'modules/Applications'
 import axios from 'axios'
 import ReduxToastr from 'react-redux-toastr'
 import {toastr} from 'react-redux-toastr'
+import SkyLight from 'react-skylight'
 
 // =============REDUX STATE & IMPORTS========================== //
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as userActionCreators from 'redux/modules/user/user'
+import * as jobActionCreators from 'redux/modules/job/job'
+import * as applicantsActionCreators from 'redux/modules/applicants/applicants'
 import * as list from 'helpers/lists'
 import * as utils from 'helpers/utils'
-
 
 // =============EXTRA IMPORTS========================== //
 import { authRedirectFilter } from 'config/routes'
@@ -35,13 +37,10 @@ import pageContainer  from 'sharedStyles/sharedContainerStyles.css'
 
 const ApplicantsContainer = React.createClass({
 
-    /*TODO: Define the required typechecking variables
-    *
-    * */
-    propTypes: {
-	    user: PropTypes.object 
-    
-    },
+  propTypes: {
+    user: PropTypes.object 
+  },
+
 	contextTypes: {
 		router: PropTypes.object.isRequired,
 		store: PropTypes.object.isRequired
@@ -60,58 +59,30 @@ const ApplicantsContainer = React.createClass({
   doRedirectionFilter() {
     const config = {
       failureRedirect: {
-        student: '/join',	// if not logged in, go here (student)
-        employer: '/join'      // if not logged in, go here (employer)
+        student: '/join',	                 // if not logged in, go here (student)
+        employer: '/join'                  // if not logged in, go here (employer)
       },
       restricted: {
-         to: 'EMPLOYERS',		 // EMPLOYERS only on this route
+         to: 'EMPLOYERS',		               // EMPLOYERS only on this route
 	       redirectTo: '/job/myapplicants'   // if not an EMPLOYER, redirect to the employer equivalent
-		 			 // This might change to employer categories
+		 			                                 // This might change to employer categories
       }
     }
-     return authRedirectFilter(config, this.context.store, this.context.router)
+    return authRedirectFilter(config, this.context.store, this.context.router)
   },
 
-/**
- * retrieveAll
- *	This function fetches from endpoints api/job/my_applications:
- *
- *
- *
- * #REFERRENCE:
- * 	https://developers.google.com/web/fundamentals/getting-started/primers/promises
- */
-
-  retrieveAll() {
-      /*
-	axios.all([
-		application.getStudentApplications(this.context.store, actionCreators),
-		list.getIndustries(this.context.store, actionCreators),
-		list.getJobTypes(this.context.store, actionCreators),
-       ])
-      */
+  openConfirmRejectStudentModal () {
+    this.refs.confirmRejectStudentModal.show()
   },
 
-  showModal (e, j) {
-      /*
-  	e.preventDefault()
-	  console.log('ON SHOW MODAL')
-	  console.log(j)
-	  this.context.store.dispatch(actionCreators.applicationModalClicked(j.id))
-  	  this.context.store.dispatch(actionCreators.applicationShowModal(j))
-  */
-  },
-
-  hideModal (e, id) {
-  	this.context.store.dispatch(actionCreators.applicationHideModal(id))
+  closeConfirmRejectStudentModal () {
+    this.refs.confirmRejectStudentModal.hide()
   },
 
   componentWillMount() {
-
     this.doRedirectionFilter()
-      .then(this.retrieveAll())
+      .then(this.props.getAllJobsQuestionsAnswersForEmployer)
       .then(this.props.closeOverlay())
-
   },
 
   componentWillUnmount() {
@@ -119,10 +90,40 @@ const ApplicantsContainer = React.createClass({
   },
 
   render () {
+    console.log(this.props.jobs)
     return (
       <div className={pageContainer}>
-      <SidebarContainer isAStudent={this.props.user.isAStudent}/>
-       <Applicants/>
+        <SidebarContainer isAStudent={this.props.user.isAStudent}/>
+        <Applicants
+          jobs={this.props.jobs}
+          currentSelectedJob={this.props.currentSelectedJob}
+          changeSelectedJob={this.props.changeSelectedJob}
+          handleOpenConfirmRejectStudentModal={this.openConfirmRejectStudentModal}
+          handleCloseConfirmRejectStudentModal={this.closeConfirmRejectStudentModal}
+          />
+          
+        {
+         /* 
+          * ===================================
+          *      confirmRejectStudentModal
+          * ===================================
+          *
+          * This is the reject modal. 
+          * It pops up before we reject the student.
+          */
+        }
+
+        <SkyLight
+            ref="confirmRejectStudentModal"
+            title="">
+            <div>
+              <div>
+                <button>YES, REJECT</button>
+                <button onClick={this.closeConfirmRejectStudentModal}>CANCEL</button>
+              </div>
+            </div>
+        </SkyLight>
+        
       </div>
     )
   },
@@ -141,9 +142,11 @@ const ApplicantsContainer = React.createClass({
  * 	In other words, all questions are queried in the dashboard page
  */
 
-function mapStateToProps({user}) {
+function mapStateToProps({user, job, applicants}) {
   return {
 	  user: user ? user : {},
+    jobs: job.employerJobs ? job.employerJobs : [],
+    currentSelectedJob: applicants.currentSelectedJob ? applicants.currentSelectedJob : {}
   }
 }
 
@@ -159,6 +162,8 @@ function mapStateToProps({user}) {
 function mapActionCreatorsToProps(dispatch) {
   return bindActionCreators({
       ...userActionCreators,
+      ...jobActionCreators,
+      ...applicantsActionCreators
   }, dispatch)
 }
 

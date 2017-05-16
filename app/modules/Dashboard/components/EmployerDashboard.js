@@ -22,15 +22,21 @@ import { campusDropdown, gradDateDropdown, filtersDivider} from '../styles/Emplo
 
 
 
-export default function EmployerDashboard ({students}) {
-  console.log(Array.isArray(students))
+export default function EmployerDashboard ({students, lists,
+    handleOpenStudentProfileModal,
+    handleCloseStudentProfileModal,
+    handleOpenInviteStudentModal,
+    handleCloseInviteStudentModal,
+    handleDoInviteStudent
+}) {
+  console.log(lists)
   return (
     <div className={rootComponentContainer}>
 
           {/* TITLE */}
           <Title 
             titleName="Search students"
-            subHeading="In the future, you can invite students to apply to the jobs you posted."
+            subHeading="Invite students to interviews for jobs that you think they'd be a good fit for."
           />
 
       {/* FILTERS 
@@ -57,42 +63,40 @@ export default function EmployerDashboard ({students}) {
 */}
           {/* MAIN (Cards list) */}
           <div className={flexibleCardContainer}>
-          {/*
-
-            {students.map((student) => (
-              <StudentCard 
-                key={student.user.email} 
-                belongsToClubs={student.clubs}
-                educationLevel={student.edu_level}
-                funFact={student.fun_fact}
-                GPA={student.GPA}
-                hasCar={student.has_car}
-                hobbies={student.hobbies}
-                name={student.user.first_name}
-                major={student.major}
-                pastJob={student.position}
-                photo={student.photo}
-                school={student.school.name}
-                sports={student.sports}
-              />
+  
+            { students.map((student) => (
+                  <StudentCard 
+                    key={student.student_id}
+                    name={student.user_firstName.substring(0,1).toUpperCase() + student.user_firstName.substring(1) + ' ' 
+                      + student.user_lastName.substring(0,1).toUpperCase() + student.user_lastName.substring(1)}
+                    pictureUrl={config.mediaUrl + 'avatar/' + student.photo_url}
+                    resumeUrl={config.mediaUrl + 'res/' + student.resume_url}
+                    funFact={student.fun_fact}
+                    educationLevel={student.edu_level}
+                    hasCar={student.has_car}
+                    hobbies={student.hobbies}
+                    languages={student.languages}
+                    clubs={student.clubs}
+                    sports={student.sports}
+                    major={student.major}
+                    gpa={student.gpa}
+                    gradDate={new Date(student.grad_date)}
+                    schoolName={student.school_name}
+                    hometown={student.hometown}
+                    hobbies={student.hobbies}
+                    recentCompanyName={student.recent_company_name}
+                    recentPosition={student.recent_company_position}
+                    showResume={false}
+                    isDashboardCard={true}
+                    handleOpenStudentProfileModal={handleOpenStudentProfileModal}
+                    handleCloseStudentProfileModal={handleCloseStudentProfileModal}
+                    handleOpenInviteStudentModal={handleOpenInviteStudentModal}
+                    handleCloseInviteStudentModal={handleCloseInviteStudentModal}
+                    handleDoInviteStudent={handleDoInviteStudent}
+                    studentObj={student}
+                    lists={lists}
+                  />
             ))}
-*/}       
-          { students.map((student) => (
-                <StudentCard 
-                  key={student.student_id}
-                  name={student.user_firstName.substring(0,1).toUpperCase() + student.user_firstName.substring(1) + ' ' 
-                    + student.user_lastName.substring(0,1).toUpperCase() + student.user_lastName.substring(1)}
-                  pictureUrl={config.mediaUrl + 'avatar/' + student.photo_url}
-                  resumeUrl={config.mediaUrl + 'res/' + student.resume_url}
-                  funFact={student.fun_fact}
-                  educationLevel={student.edu_level}
-                  hasCar={student.has_car}
-                  hobbies={student.hobbies}
-                  major={student.major}
-                  isInviting={true}
-                  showResume={false}
-                />
-          ))}
           
           
       </div>

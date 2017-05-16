@@ -35,3 +35,113 @@
   flex-grow: 10;
 }
 
+.inviteStudentStyle {
+  color:blue;
+}
+
+.inviteStudentModalContainer {
+    width: 46%;
+    margin: 0 auto;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    height: 80%;
+    justify-content: center;
+}
+
+.comboBox {
+    composes: input from 'sharedStyles/styles.css';
+    width: 100%;
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    color: black !important;
+    font-size: 14px;
+}
+
+.inviteStudentModalButtonsContainer {
+
+}
+
+.inviteStudentModalInputContainer {
+      margin-bottom: 25px;
+      font-size:20px;
+}
+
+.inviteStudentModalApplicantsCount {
+  font-size:20px;
+  font-style:italic;
+}
+
+.cancelBtn {
+    margin-top: 40px;
+    padding: 10px 15px 10px 15px;
+    border-radius: 3px;
+    border: 0;
+    background: #7c8890;
+    font-size: 13px;
+    color: white;
+    text-shadow: 1px 1px 0px rgba(0, 0, 0, .1);
+    cursor: pointer;
+    margin: 0 auto;
+    width: 121px;
+    margin-left: 7px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    transition: 0.3s ease-out;
+}
+
+.acceptBtn {
+    margin-top: 40px;
+    padding: 10px 15px 10px 15px;
+    border-radius: 3px;
+    border: 0;
+    background: #3697DB;
+    font-size: 13px;
+    color: white;
+    text-shadow: 1px 1px 0px rgba(0, 0, 0, .1);
+    cursor: pointer;
+    margin: 0 auto;
+    width: 121px;
+    margin-left: 7px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    transition: 0.3s ease-out;
+}
+
+.cancelBtn:hover {
+  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+}
+
+.acceptBtn:hover {
+  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  background: #61b8f5;
+}
+
+.failureMessage {
+  color: red;
+}
+
+.successMessage {
+  color: green;
+}
+
+.loader {
+    border: 16px solid #f3f3f3;
+    border-top: 16px solid #3498db;
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+    animation: spin 2s linear infinite;
+    margin: 0 auto;
+    position: relative;
+    top: 25px;
+}
+
+.listItems {
+  display: flex;
+  justify-content: space-between;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}

@@ -11,8 +11,12 @@
 
 // ==============REACT BUILTIN========================= //
 import React, { PropTypes } from 'react'
+import ReactTooltip from 'react-tooltip'
+
+import config from 'config'
 
 // ================CSS IMPORTS============================== //
+
 import { pageContainer, cardContainer, card,
     cardHeaderItem, cardHeaderItemText, cardHeaderItemImage, 
     cardHeaderItemIcon, studentMajor, studentMajorItem, 
@@ -25,7 +29,8 @@ import { pageContainer, cardContainer, card,
     buttonsContainer, buttonItems, buttonIcons, cardModalContainer, 
     cardModalHeader, jobModalTitle, jobModalIndustry, cardModalBodyLeft, cardModalBodyRight, cardModalScroll, cardModalFooter,
 	image, questionHeader, crop, imgContainer, cardTopContainer, cardBottomContainer, cardHeaderContainer,
-    cardHeaderItemContainer, cardHeaderItemMainText, cardHeaderItemSecondaryText, cardHeaderItemAltItemText } from '../styles/StudentCard.css'
+    cardHeaderItemContainer, cardHeaderItemMainText, cardHeaderItemSecondaryText, cardHeaderItemAltItemText,
+    cardSectionOne, cardSectionTwo, cardActionButtons, cardSectionTitle, cardSectionText, whiteTxt, gpaTextActive, gpaTextDeactive } from '../styles/StudentCard.css'
 
 /*
 StudentCard.propTypes = {
@@ -37,7 +42,34 @@ StudentCard.propTypes = {
 }
 */
 
-const StudentCard = ({pictureUrl, resumeUrl, name, major, showResume, isInviting}) => (
+ /*
+  * isDashboardCard = true:
+  * => Card state 1 is the Employer Dashboard. This is just when employers are browsing students.
+  * => actionable buttons are in this order: (SEE MORE, INVITE)
+  *
+  * isDashboardCard = false or undefined:
+  * => Card state 2 is the My Applicants Dashboard before CONTACTing a student.
+  * => Actionable buttons are (REJECT, RESUME, SEE MORE)
+  *
+  */
+
+const StudentCard = ({pictureUrl, resumeUrl, name, major, funFact, recentCompanyName, 
+    recentPosition, email, isDashboardCard, studentObj, hasCar, lists,
+    sports,
+    clubs,
+    languages,
+    gpa,
+    gradDate,
+    schoolName,
+    hometown,
+    hobbies,
+    handleOpenStudentProfileModal,
+    handleCloseStudentProfileModal,
+    handleOpenInviteStudentModal,
+    handleCloseInviteStudentModal,
+    handleOpenConfirmRejectStudentModal,
+    handleCloseConfirmRejectStudentModal,
+}) => (
 
     <div className={cardContainer}>
         <div className={cardTopContainer}>
@@ -47,116 +79,120 @@ const StudentCard = ({pictureUrl, resumeUrl, name, major, showResume, isInviting
             <div className={cardHeaderContainer}>
                 <div className={cardHeaderItemMainText}>{name}</div>
                 <div className={cardHeaderItemSecondaryText}>Business Administration</div>
-                <div className={cardHeaderItemAltItemText}>Sheridan College 2020</div>
+                <div className={cardHeaderItemAltItemText}>{schoolName} {gradDate.getFullYear()}</div>
                 <div className={cardHeaderItemContainer}>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
+                    <div>
+                        { hasCar == 1
+                          ? <div>
+                              <ReactTooltip delayHide={100} delayShow={100} place="bottom" effect="float"/>
+                              <img data-tip="Daily access to a vehicle" src={`${config.assetUrl}components/cards/student/actions/a/has_car_active_24px.svg`}/>
+                            </div>
+                          : <img src={`${config.assetUrl}components/cards/student/actions/d/has_car_deactive_24px.svg`}/>
+                        }
+                    </div>
+                    <div>
+                        {
+                          Object.keys(sports).length !== 0
+                            ? <div>
+                                <ReactTooltip delayHide={100} delayShow={100} place="bottom" effect="float"/>
+                                <img data-tip={'Plays sports such as ' + sports[Object.keys(sports)[0]] + " ..."} src={`${config.assetUrl}components/cards/student/actions/a/sports_active_24px.svg`}/>
+                              </div>
+                            : <img src={`${config.assetUrl}components/cards/student/actions/d/sports_deactive_24px.svg`}/>
+                        }
+                    </div>
+                    <div>
+                        {
+                          Object.keys(clubs).length !== 0
+                            ? <div>
+                                <ReactTooltip delayHide={100} delayShow={100} place="bottom" effect="float"/>
+                                <img data-tip={"Involved in clubs such as " + clubs[Object.keys(clubs)[0]] + " ..."} src={`${config.assetUrl}components/cards/student/actions/a/clubs_active_24px.svg`}/>
+                              </div>
+                            : <img src={`${config.assetUrl}components/cards/student/actions/d/clubs_deactive_24px.svg`}/>
+                        }
+                    </div>
+                    <div>
+                        {
+                          gpa 
+                            ? <div>
+                                <ReactTooltip delayHide={100} delayShow={100} place="bottom" effect="float"/>
+                                <div data-tip={`GPA of ${gpa.toFixed(2)}`} className={gpaTextActive}>GPA</div>
+                              </div>
+                            : <div className={gpaTextDeactive}>GPA</div>
+                        }
+                    </div>
                 </div>
             </div>
         </div>
         <div className={cardBottomContainer}>
-
+            <div className={cardSectionOne}>
+              {
+               /*
+                * SECTION 1
+                *
+                * If the student has Previous Work Experience, the first thing we're going
+                * to show on the card will be the previous work experience.
+                *
+                * If the student DOES NOT have Previous Work Experience, we will display 
+                * their fun fact.
+                */
+              }
+                { recentCompanyName === null || recentPosition === null 
+                    ? <div>
+                        <div className={cardSectionTitle}>About Me</div>
+                        <div className={cardSectionText}>{funFact}</div>
+                      </div>
+                    : <div>
+                        <div className={cardSectionTitle}>Previous Work Experience</div>
+                        <div className={cardSectionText}>
+                            {recentPosition} at {recentCompanyName}
+                        </div>
+                      </div>
+                }
+                
+            </div>
+            {
+             /* 
+              * SECTION 2 
+              * 
+              * We can only fit one more piece of information here.
+              *
+              * For the time being, we'll fit Hometown here.
+              */
+            }
+            <div className={cardSectionTwo}>
+              <div className={cardSectionTitle}>Hometown</div>
+              <div className={cardSectionText}>{hometown}</div>
+            </div>
         </div>
+
+        {
+         
+        }
+        { isDashboardCard === true 
+            ? (<div className={cardActionButtons}>
+                    <button onClick={
+
+                        function() {
+                            handleOpenStudentProfileModal(studentObj)
+                        }
+                        
+                    }>SEE MORE</button>
+                    <button onClick={
+                        function() {
+                            handleOpenInviteStudentModal(studentObj)
+                        }
+                    }>INVITE</button>
+                </div>)
+            : (
+              <div>
+                <div className={cardActionButtons}>
+                  <button onClick={handleOpenConfirmRejectStudentModal}>REJECT</button>
+                  <button><a className={whiteTxt} target="_blank" href={resumeUrl}>RESUME</a></button>
+                  <button>SEE MORE</button>
+                </div>
+              </div>)
+        }
     </div>
-
-    // <div className={cardContainer}>
-    //     <div className={card}>
-    //       <header className={cardHeaderContainer}>
-    //         <div className={cardHeaderItemImage}>
-    //             <img className={crop} src={pictureUrl} alt="Smiley face" />
-    //         </div>
-    //         <div className={cardHeaderItem}>
-    //                 <div>
-    //                     <h4 className={studentNameTitle}>Charles Javelona</h4>
-    //                     <span className={studentMajor}>
-    //                         <p className={studentMajorItem}><b>Major:</b> Marketing Management</p>
-    //                     </span>
-    //                 </div>
-    //                 <div className={width}></div>
-    //                 <div className={cardHeaderItemIcon}>
-    //                     <i className={"fa fa-refresh fa-2x fa-rotate-90"} aria-hidden="true"></i>
-    //                     <br/>
-    //                     College<br/>Info
-    //                 </div>
-    //         </div>
-    //       </header>
-
-    //       <div className={headerDivider}></div>
-
-    //       <div className={schoolNameContainer}>
-    //            <span className={schoolTitle}>Sheridan College</span> 
-    //       </div>
-    //       <div className={classYearContainer}>
-    //         <h3 className={classYearItem}>Bachelor's, Grad Class of 2019</h3>
-    //       </div>
-        
-    //      <div className={tagContainer}>
-    //         <span className={firstTagItems}>
-    //             <i className={"fa fa-car " + tagIcon } aria-hidden="true"></i>
-    //             <span className={iconName}>Yes</span>
-    //         </span>
-    //         <span className={tagItems}>
-    //             <i className={"fa fa-futbol-o " + tagIcon } aria-hidden="true"></i>
-    //             <span className={iconName}>No</span>
-    //         </span>
-    //         <span className={tagItems}>
-    //             <i className={"fa fa-paint-brush " + tagIcon } aria-hidden="true"></i>
-    //             <span className={iconName}>Yes</span>
-    //         </span>
-    //         <span className={tagItems}>
-    //             <i className={"fa fa-clipboard " + tagIcon } aria-hidden="true"></i>
-    //             <span className={iconName}>C+</span>
-    //         </span>
-    //      </div>
-
-    //     <div className={studentInfoContainer}>
-    //         <span className={studentInfoItem}>
-    //             <i className={"fa fa-envelope " + studentIcon } aria-hidden="true"></i>
-    //             <span className={studentInfo}>javelonc@sheridancollege.ca</span>
-    //         </span>
-    //         <span className={studentInfoItem}>
-    //             <i className={"fa fa-clipboard " + studentIcon } aria-hidden="true"></i>
-    //             <span className={studentInfo}>647-779-8525</span>
-    //         </span>
-    //         <span className={studentInfoItem}> 
-    //             <i className={"fa fa-check " + studentIcon } aria-hidden="true"></i>
-    //             <span className={studentInfo}>04/03/2017</span>
-    //         </span>
-    //     </div>
-
-    //     <div className={pastJobsContainer}>
-    //         <div className={pastJobsItems}>
-    //             <span className={pastJobsLabel}>Past Job:</span>
-    //             <span className={pastJobsInfo}>Line Cook at Jack Astors Grill</span>
-    //         </div>
-    //     </div>
-
-    //     {showResume 
-    //         ?  <a href={resumeUrl} target="_blank">RESUME</a>
-    //         : "" 
-    //     }
-       
-
-    //         {/*Student invited or hired? */}    
-    //         { isInviting ? 
-    //             <div className={buttonsContainer}>
-    //             </div>
-
-    //             :<div className={buttonsContainer}>
-    //                 <button className={buttonItems}>
-    //                     <i className={"fa fa-file-pdf-o " + buttonIcons} aria-hidden="true"></i>
-    //                         Resume
-    //                 </button>
-    //                 <button className={buttonItems}>
-    //                     <i className={"fa fa-thumbs-o-up " + buttonIcons} aria-hidden="true"></i>
-    //                         Hire
-    //                 </button>
-    //             </div>
-    //         }
-    //     </div>
-    // </div>
 )
 
 export default StudentCard

@@ -48,6 +48,71 @@ const LIST_FETCHED_STUDENT_STATUS_FAILURE = 'LIST.FETCHED_STUDENT_STATUS_FAILURE
 const LIST_FETCHED_SPORTS_FAILURE = 'LIST.FETCHED_SPORTS_FAILURE'
 const LIST_FETCHED_JOB_TYPES_FAILURE = 'LIST.FETCHED_JOB_TYPES_FAILURE'
 
+const LIST_GET_ALL_STATIC_LISTS = 'LIST_GET_ALL_STATIC_LISTS'
+const LIST_GET_ALL_STATIC_LISTS_SUCCESS = 'LIST_GET_ALL_STATIC_LISTS_SUCCESS'
+const LIST_GET_ALL_STATIC_LISTS_FAILURE = 'LIST_GET_ALL_STATIC_LISTS_FAILURE'
+
+function gettingAllLists () {
+  return {
+    type: LIST_GET_ALL_STATIC_LISTS
+  }
+}
+
+function getAllStaticListsSuccess (lists) {
+  return {
+    type: LIST_GET_ALL_STATIC_LISTS_SUCCESS,
+    lists
+  }
+}
+
+function getAllStaticListsFailure (error) {
+  return {
+    type: LIST_GET_ALL_STATIC_LISTS_FAILURE,
+    error
+  }
+}
+
+export function getAllStaticLists () {
+  return function (dispatch) {
+
+   /*
+    * Being attempting to get all of the lists
+    */
+
+    dispatch(gettingAllLists())
+
+    retrieve.getEssentialApplicationLists()
+
+      .then((result) => {
+
+        var lists = result.data;
+
+       /*
+        * We were able to successfully get all of the lists.
+        * This is good, it means we can continue with loading the application
+        * because we'll be able to render various things now.
+        */
+
+        dispatch(getAllStaticListsSuccess(lists))
+
+      })
+      .catch((err) => {
+
+       /*
+        * An error occurred while trying to do this very important
+        * part of the application. If we can't get this, then we're going
+        * to have trouble with the rest of the app because things
+        * cannot render properly. This should stop the application from
+        * continuing if we can't get this.
+        */
+
+        dispatch(getAllStaticListsFailure(err.toString()))
+
+      })
+
+  }
+}
+
 export function fetchingCity() {
     return {
         type: LIST_FETCHING_CITY
@@ -411,6 +476,7 @@ const initialState = {
   sports: [],
   schoolClubs: [],
   jobTypes: [],
+  isFetching: false,
   error: ''
 }
 
@@ -420,6 +486,40 @@ const initialState = {
 
 export default function list (state = initialState, action) {
   switch(action.type) {
+
+   /*
+    * Bulk lists acquiry
+    */
+
+    case LIST_GET_ALL_STATIC_LISTS_SUCCESS:
+      return {
+        ...state,
+        genders: action.lists.genders,
+        industries: action.lists.industries,
+        educationLevels: action.lists.eduLevel,
+        major: action.lists.majors,
+        studentStatus: action.lists.studentStatus,
+        jobTypes: action.lists.jobTypes,
+        emailPreferences: action.lists.emailPref,
+        isFetching: false
+      }
+    case LIST_GET_ALL_STATIC_LISTS_FAILURE:
+      return {
+        ...state,
+        error: action.error,
+        isFetching: false
+      }
+    case LIST_GET_ALL_STATIC_LISTS:
+      return {
+        ...state,
+        isFetching: true,
+        error: ''
+      }
+
+   /*
+    * Specific Lists acquiry
+    */
+
     case LIST_FETCHING_INDUSTRIES:
       return {
         ...state,

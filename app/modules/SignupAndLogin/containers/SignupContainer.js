@@ -263,8 +263,7 @@ const SignupContainer = React.createClass({
             closeButtonStyle={styles.closeButtonStyle}
             hideOnOverlayClicked
             ref="loginModal"
-            title="Log in"
-        >
+            title="Log in">
             <div>
               <input className={input}
                 name="login[email]"

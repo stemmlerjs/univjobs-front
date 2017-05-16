@@ -13,6 +13,8 @@ import { Link } from 'react-router'
 import { nav, leftsideNavItems, rightsideNavItems, 
   logoText, noDeco, btn, btnBabyBlue, pseudoBtn, loginIcon, navItem, univjobsLogo } from '../styles/NavigationStyles.css'
 
+  import { material_1 } from 'sharedStyles/material.css'
+
 Navigation.propTypes = {
   isAStudent: PropTypes.bool.isRequired,
   onSwitchUserType: PropTypes.func.isRequired,
@@ -36,13 +38,13 @@ export default function Navigation ({isAStudent, onSwitchUserType, onOpenLoginMo
                   >
                   </i>
               </div>
-              <button className={ `${pseudoBtn} ${btnBabyBlue} ${navItem}` }
+              <button className={ `${pseudoBtn} ${btnBabyBlue} ${navItem} ${material_1}` }
                     onClick={onOpenLoginModal}
                >
                     LOGIN
               </button>
               <button onClick={onSwitchUserType} 
-                    className={btn + ' ' + navItem}
+                    className={`${btn} ${navItem} ${material_1}`}
               >
                   EMPLOYER
               </button>
@@ -54,13 +56,13 @@ export default function Navigation ({isAStudent, onSwitchUserType, onOpenLoginMo
                 aria-hidden="true">
               </i>
           </div>
-          <div className={ `${pseudoBtn} ${btnBabyBlue} ${navItem}` }
+          <div className={ `${pseudoBtn} ${btnBabyBlue} ${navItem} ${material_1}` }
                 onClick={onOpenLoginModal}
            >
               LOGIN
           </div>
           <button onClick={onSwitchUserType} 
-                  className={btn + ' ' + navItem}
+                  className={btn + ' ' + navItem + ' ' + material_1}
           >
               STUDENT
           </button>

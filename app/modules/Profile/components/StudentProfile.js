@@ -213,7 +213,7 @@ export default function StudentProfile (props) {
 			    <i className="fa fa-info-circle fa-2x" aria-hidden="true" data-tip="Major not there? Please email us at univjobs@gmail.com and we will help you out"></i>
 			    <ReactTooltip place="bottom"
 			    	type="warning"
-				effect="float"
+						effect="float"
 			    />
 			  </li>
 			</StudentProfileField>

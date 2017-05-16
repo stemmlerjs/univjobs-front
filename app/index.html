@@ -47,6 +47,36 @@
         display:none;
       }
 
+      /*
+      * Employer Dashboard - Invite Student Animations
+      */
+
+      #invite-student-modal-wrapper .skylight-overlay {
+        opacity: 1;
+        background-color: rgba(242,242,242,.9) !important;
+        animation: fade 0.2s linear;
+      }
+
+
+      @keyframes fade {
+        0%{ opacity: 0 }
+        100% { opacity: 1 }
+      }
+
+      #invite-student-modal-wrapper .skylight-dialog {
+        animation: inFromTop 0.4s ease-in-out;
+      }
+
+      @keyframes inFromTop {
+        0% { 
+          top: -50%; 
+        }
+
+        100% { 
+          top: 50%; 
+        }
+      }
+
       /* In Chrome, fixes the underlines on the nav elements.*/
 
       a:-webkit-any-link {

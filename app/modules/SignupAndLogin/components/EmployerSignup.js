@@ -10,6 +10,8 @@ import { Footer } from 'modules/SharedComponents'
 // ================CSS IMPORTS============================== //
 import { employerCenteredContainer, header, subHeader, modalContent, errorMessage, btn, input } from '../styles/EmployerSignupStyles.css'
 
+import { material_1 } from 'sharedStyles/material.css'
+
 const styles = {
   overlayStyles: {
     position: 'absolute',
@@ -68,7 +70,7 @@ const EmployerSignup = React.createClass({
                     Post jobs for students at any Canadian college/university
                 </div>
                 <button 
-                    className={btn} 
+                    className={`${btn} ${material_1}`} 
                     onClick={() => this.refs.employerModal.show()}
                 >
                     Employers - Post a job now

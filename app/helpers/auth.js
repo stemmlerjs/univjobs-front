@@ -199,10 +199,10 @@ export function checkIfAuthed (store) {
             console.log("access token from cookie is still valid", response)
 
             // User Details
-            const dateJoined = response.data.student !== undefined ? response.data.student.createdAt : response.data.employer.createdAt
-            const email = response.data.student !== undefined ? response.data.user.student.user_email : response.data.employer.user_email 
-            const firstName = response.data.student !== undefined ? response.data.student.user_firstName : response.data.employer.user_firstName
-            const lastName = response.data.student !== undefined ? response.data.student.user_lastName : response.data.employer.user_lastName 
+            const dateJoined = null
+            const email = response.data.student !== undefined ? response.data.student.user_email : response.data.employer.user_email 
+            const firstName = response.data.student !== undefined ? response.data.student.user_firstname : response.data.employer.user_firstname
+            const lastName = response.data.student !== undefined ? response.data.student.user_lastname : response.data.employer.user_lastname 
             const mobile = response.data.student !== undefined ? response.data.student.user_mobile : response.data.employer.user_mobile
 
             // Profile Details
