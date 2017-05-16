@@ -4,6 +4,7 @@
  * */
 // ==============REACT BUILTIN========================= //
 import React, { PropTypes } from 'react'
+import config from 'config'
 
 // ==============MADE COMPONENTS========================= //
 import { GenericCard, ApplicationModal, APPLICATIONS_CARD_TYPE, StudentCard, Title } from '../../SharedComponents'
@@ -78,6 +79,11 @@ export default function Applicants (props) {
                   ? props.currentSelectedJob.applicants.map((applicant) => (
                       <StudentCard
                         key={applicant.student_id}
+                        pictureUrl={config.mediaUrl + 'avatar/' + applicant.photo_url}
+                        resumeUrl={config.mediaUrl + 'res/' + applicant.resume_url}
+                        cardState={2}
+                        handleOpenConfirmRejectStudentModal={props.handleOpenConfirmRejectStudentModal}
+         	              handleCloseConfirmRejectStudentModal={props.handleCloseConfirmRejectStudentModal}
                       />
                   ))
                 : 'No applicants for this job'

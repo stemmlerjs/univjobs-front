@@ -22,13 +22,14 @@ import { campusDropdown, gradDateDropdown, filtersDivider} from '../styles/Emplo
 
 
 
-export default function EmployerDashboard ({students, 
+export default function EmployerDashboard ({students, lists,
     handleOpenStudentProfileModal,
     handleCloseStudentProfileModal,
     handleOpenInviteStudentModal,
     handleCloseInviteStudentModal,
     handleDoInviteStudent
 }) {
+  console.log(lists)
   return (
     <div className={rootComponentContainer}>
 
@@ -74,7 +75,15 @@ export default function EmployerDashboard ({students,
                     educationLevel={student.edu_level}
                     hasCar={student.has_car}
                     hobbies={student.hobbies}
+                    languages={student.languages}
+                    clubs={student.clubs}
+                    sports={student.sports}
                     major={student.major}
+                    gpa={student.gpa}
+                    gradDate={new Date(student.grad_date)}
+                    schoolName={student.school_name}
+                    hometown={student.hometown}
+                    hobbies={student.hobbies}
                     recentCompanyName={student.recent_company_name}
                     recentPosition={student.recent_company_position}
                     showResume={false}
@@ -85,6 +94,7 @@ export default function EmployerDashboard ({students,
                     handleCloseInviteStudentModal={handleCloseInviteStudentModal}
                     handleDoInviteStudent={handleDoInviteStudent}
                     studentObj={student}
+                    lists={lists}
                   />
             ))}
           

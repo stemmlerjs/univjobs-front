@@ -71,25 +71,6 @@ export default function Applications ({user, applications, industries, jobTypes,
       }
       </div>
      </div>
-      { applicationModal.isOpen 
-        ? <ReactCSSTransitionGroup 
-            transitionName="cardModal"
-            transitionAppear={true}
-            transitionAppearTimeout={500}
-            transitionEnter={false}
-            transitionLeave={true}
-            transitionLeaveTimeout={500}>
-            <SkyLightStateless
-              isVisible={applicationModal.isOpen}
-              onCloseClicked={(e) => onHideModal(e, applicationModal.application.id)}
-              title="">
-              <ApplicationModal application={applicationModal.application}
-                industries={industries}
-                jobTypes={jobTypes}/>
-            </SkyLightStateless>
-        </ReactCSSTransitionGroup>
-        :  ""
-      }
     </div>
 
    )

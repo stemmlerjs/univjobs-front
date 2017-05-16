@@ -4,6 +4,26 @@ import { getAccessToken, getCSRFToken } from 'helpers/auth'
 import { listRetrieved } from 'redux/modules/profile/profile'
 import { listRetrieved as CREATE_JOB_listRetrived } from 'redux/modules/createjob/createjob'
 
+ /*
+  * getEssentialApplicationLists
+  *
+  * This API call should return all of the essential lists for the application such as:
+  * industries, emailPrefs, student statuses, education levels, majors, genders, job types.
+  *
+  * These are all lists that should not change dramatically over time.
+  */
+
+export function getEssentialApplicationLists () {
+	const accessToken = getAccessToken()
+
+	return axios({
+		method: 'get',
+		url: config.baseUrl + 'list/all',
+		headers: {
+			'Authorization':  accessToken,
+		}
+	})
+}
 
 export function getIndustries() {
     const accessToken = getAccessToken()

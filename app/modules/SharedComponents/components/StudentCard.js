@@ -11,8 +11,12 @@
 
 // ==============REACT BUILTIN========================= //
 import React, { PropTypes } from 'react'
+import ReactTooltip from 'react-tooltip'
+
+import config from 'config'
 
 // ================CSS IMPORTS============================== //
+
 import { pageContainer, cardContainer, card,
     cardHeaderItem, cardHeaderItemText, cardHeaderItemImage, 
     cardHeaderItemIcon, studentMajor, studentMajorItem, 
@@ -26,7 +30,7 @@ import { pageContainer, cardContainer, card,
     cardModalHeader, jobModalTitle, jobModalIndustry, cardModalBodyLeft, cardModalBodyRight, cardModalScroll, cardModalFooter,
 	image, questionHeader, crop, imgContainer, cardTopContainer, cardBottomContainer, cardHeaderContainer,
     cardHeaderItemContainer, cardHeaderItemMainText, cardHeaderItemSecondaryText, cardHeaderItemAltItemText,
-    cardSectionOne, cardSectionTwo, cardActionButtons, cardSectionTitle, cardSectionText } from '../styles/StudentCard.css'
+    cardSectionOne, cardSectionTwo, cardActionButtons, cardSectionTitle, cardSectionText, whiteTxt, gpaTextActive, gpaTextDeactive } from '../styles/StudentCard.css'
 
 /*
 StudentCard.propTypes = {
@@ -38,12 +42,33 @@ StudentCard.propTypes = {
 }
 */
 
+ /*
+  * isDashboardCard = true:
+  * => Card state 1 is the Employer Dashboard. This is just when employers are browsing students.
+  * => actionable buttons are in this order: (SEE MORE, INVITE)
+  *
+  * isDashboardCard = false or undefined:
+  * => Card state 2 is the My Applicants Dashboard before CONTACTing a student.
+  * => Actionable buttons are (REJECT, RESUME, SEE MORE)
+  *
+  */
+
 const StudentCard = ({pictureUrl, resumeUrl, name, major, funFact, recentCompanyName, 
-    recentPosition, email, isDashboardCard, studentObj,
+    recentPosition, email, isDashboardCard, studentObj, hasCar, lists,
+    sports,
+    clubs,
+    languages,
+    gpa,
+    gradDate,
+    schoolName,
+    hometown,
+    hobbies,
     handleOpenStudentProfileModal,
     handleCloseStudentProfileModal,
     handleOpenInviteStudentModal,
-    handleCloseInviteStudentModal
+    handleCloseInviteStudentModal,
+    handleOpenConfirmRejectStudentModal,
+    handleCloseConfirmRejectStudentModal,
 }) => (
 
     <div className={cardContainer}>
@@ -54,17 +79,63 @@ const StudentCard = ({pictureUrl, resumeUrl, name, major, funFact, recentCompany
             <div className={cardHeaderContainer}>
                 <div className={cardHeaderItemMainText}>{name}</div>
                 <div className={cardHeaderItemSecondaryText}>Business Administration</div>
-                <div className={cardHeaderItemAltItemText}>Sheridan College 2020</div>
+                <div className={cardHeaderItemAltItemText}>{schoolName} {gradDate.getFullYear()}</div>
                 <div className={cardHeaderItemContainer}>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
+                    <div>
+                        { hasCar == 1
+                          ? <div>
+                              <ReactTooltip delayHide={100} delayShow={100} place="bottom" effect="float"/>
+                              <img data-tip="Daily access to a vehicle" src={`${config.assetUrl}components/cards/student/actions/a/has_car_active_24px.svg`}/>
+                            </div>
+                          : <img src={`${config.assetUrl}components/cards/student/actions/d/has_car_deactive_24px.svg`}/>
+                        }
+                    </div>
+                    <div>
+                        {
+                          Object.keys(sports).length !== 0
+                            ? <div>
+                                <ReactTooltip delayHide={100} delayShow={100} place="bottom" effect="float"/>
+                                <img data-tip={'Plays sports such as ' + sports[Object.keys(sports)[0]] + " ..."} src={`${config.assetUrl}components/cards/student/actions/a/sports_active_24px.svg`}/>
+                              </div>
+                            : <img src={`${config.assetUrl}components/cards/student/actions/d/sports_deactive_24px.svg`}/>
+                        }
+                    </div>
+                    <div>
+                        {
+                          Object.keys(clubs).length !== 0
+                            ? <div>
+                                <ReactTooltip delayHide={100} delayShow={100} place="bottom" effect="float"/>
+                                <img data-tip={"Involved in clubs such as " + clubs[Object.keys(clubs)[0]] + " ..."} src={`${config.assetUrl}components/cards/student/actions/a/clubs_active_24px.svg`}/>
+                              </div>
+                            : <img src={`${config.assetUrl}components/cards/student/actions/d/clubs_deactive_24px.svg`}/>
+                        }
+                    </div>
+                    <div>
+                        {
+                          gpa 
+                            ? <div>
+                                <ReactTooltip delayHide={100} delayShow={100} place="bottom" effect="float"/>
+                                <div data-tip={`GPA of ${gpa.toFixed(2)}`} className={gpaTextActive}>GPA</div>
+                              </div>
+                            : <div className={gpaTextDeactive}>GPA</div>
+                        }
+                    </div>
                 </div>
             </div>
         </div>
         <div className={cardBottomContainer}>
             <div className={cardSectionOne}>
+              {
+               /*
+                * SECTION 1
+                *
+                * If the student has Previous Work Experience, the first thing we're going
+                * to show on the card will be the previous work experience.
+                *
+                * If the student DOES NOT have Previous Work Experience, we will display 
+                * their fun fact.
+                */
+              }
                 { recentCompanyName === null || recentPosition === null 
                     ? <div>
                         <div className={cardSectionTitle}>About Me</div>
@@ -73,7 +144,7 @@ const StudentCard = ({pictureUrl, resumeUrl, name, major, funFact, recentCompany
                     : <div>
                         <div className={cardSectionTitle}>Previous Work Experience</div>
                         <div className={cardSectionText}>
-                            {recentPosition}<br></br>at {recentCompanyName}
+                            {recentPosition} at {recentCompanyName}
                         </div>
                       </div>
                 }
@@ -82,23 +153,23 @@ const StudentCard = ({pictureUrl, resumeUrl, name, major, funFact, recentCompany
             {
              /* 
               * SECTION 2 
+              * 
+              * We can only fit one more piece of information here.
               *
+              * For the time being, we'll fit Hometown here.
               */
             }
             <div className={cardSectionTwo}>
-                <div className={cardSectionTitle}>Contact Info</div>
-                { isDashboardCard === true 
-                    ? <div className={cardSectionText}>
-                        Hidden until student applies
-                      </div> 
-                    : <div className={cardSectionText}>
-                        {email}
-                      </div>
-                }
+              <div className={cardSectionTitle}>Hometown</div>
+              <div className={cardSectionText}>{hometown}</div>
             </div>
         </div>
+
+        {
+         
+        }
         { isDashboardCard === true 
-            ? <div className={cardActionButtons}>
+            ? (<div className={cardActionButtons}>
                     <button onClick={
 
                         function() {
@@ -111,10 +182,15 @@ const StudentCard = ({pictureUrl, resumeUrl, name, major, funFact, recentCompany
                             handleOpenInviteStudentModal(studentObj)
                         }
                     }>INVITE</button>
+                </div>)
+            : (
+              <div>
+                <div className={cardActionButtons}>
+                  <button onClick={handleOpenConfirmRejectStudentModal}>REJECT</button>
+                  <button><a className={whiteTxt} target="_blank" href={resumeUrl}>RESUME</a></button>
+                  <button>SEE MORE</button>
                 </div>
-            : <div className={cardActionButtons}>
-                    <button>HIRE</button>
-                </div>
+              </div>)
         }
     </div>
 )

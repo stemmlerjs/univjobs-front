@@ -4,6 +4,7 @@ import React, { PropTypes } from 'react'
 // ==============MADE COMPONENTS========================= //
 import { SidebarContainer } from 'modules/Main'
 import { EmployerDashboard } from 'modules/Dashboard'
+import { StudentDetailsModal } from 'modules/SharedComponents'
 
 // ==============THIRD PARTY IMPORTS========================= //
 import SkyLight from 'react-skylight'
@@ -206,19 +207,25 @@ const EmployerDashboardContainer = React.createClass({
         <SidebarContainer isAStudent={false}/>
         <EmployerDashboard 
           students={this.props.students}
+          lists={this.props.lists}
           handleOpenStudentProfileModal={this.openStudentProfileModal}
           handleCloseStudentProfileModal={this.closeStudentProfileModal}
           handleOpenInviteStudentModal={this.openInviteStudentModal}
           handleCloseInviteStudentModal={this.closeInviteStudentModal}
         />
-        <SkyLight
-            hideOnOverlayClicked
-            ref="studentProfileModal"
-            title="Student Profile">
-            <div>
-              { this.props.studentProfileModal.open ? this.props.studentProfileModal.student.user_firstName : "lkjlkjasd" }
-            </div>
-        </SkyLight>
+
+        {/* =======================================
+                    SEE STUDENT DETAILS MODAL
+            =======================================
+        */}
+        <div id="student-profile-modal-wrapper">
+          <SkyLight
+              hideOnOverlayClicked
+              ref="studentProfileModal"
+              title="">
+              <StudentDetailsModal/>
+          </SkyLight>
+        </div>
 
         {/* =======================================
                       INVITE STUDENT MODAL
@@ -280,13 +287,14 @@ const EmployerDashboardContainer = React.createClass({
   }
 })
 
-function mapStateToProps({user, dashboard, job}) {
+function mapStateToProps({user, dashboard, job, list}) {
   return {
     user: user ? user : {},
     students: dashboard.employerDashboard.students ? dashboard.employerDashboard.students : [],
     inviteStudentModal: dashboard.employerDashboard.inviteStudentModal ? dashboard.employerDashboard.inviteStudentModal : {},
     studentProfileModal: dashboard.employerDashboard.studentProfileModal ? dashboard.employerDashboard.studentProfileModal: {},
-    jobs: job.employerJobs ? job.employerJobs :  []
+    jobs: job.employerJobs ? job.employerJobs :  [],
+    lists: list ? list : {}
   }
 }
 

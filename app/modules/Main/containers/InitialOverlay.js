@@ -1,4 +1,6 @@
-/*InitialOverlay
+
+/* 
+ * InitialOverlay
  *
  * This components is to display the students who applied to the current job posting being viewed by the employer
  *
@@ -13,6 +15,7 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 // =============REDUX STATE & IMPORTS========================= //
 import { connect } from 'react-redux'
 import { hideOverlay } from 'redux/modules/rootApplication/rootApplication'
+import { getAllStaticLists } from 'redux/modules/list/list'
 
 // ================CSS IMPORTS============================== //
 import animationStyles from '../styles/InitialOverlayStyles.css'
@@ -30,6 +33,8 @@ const InitialOverlay = React.createClass({
   },
 
   closeOverlay() {
+    console.log("[Univjobs]: v1.0 - Getting all application lists.")
+    this.context.store.dispatch(getAllStaticLists())
     this.context.store.dispatch(hideOverlay())
   },
 

@@ -17,6 +17,7 @@ import { Applicants } from 'modules/Applications'
 import axios from 'axios'
 import ReduxToastr from 'react-redux-toastr'
 import {toastr} from 'react-redux-toastr'
+import SkyLight from 'react-skylight'
 
 // =============REDUX STATE & IMPORTS========================== //
 import { connect } from 'react-redux'
@@ -36,13 +37,10 @@ import pageContainer  from 'sharedStyles/sharedContainerStyles.css'
 
 const ApplicantsContainer = React.createClass({
 
-   /*
-    * TODO: Define the required typechecking variables
-    */
-
   propTypes: {
     user: PropTypes.object 
   },
+
 	contextTypes: {
 		router: PropTypes.object.isRequired,
 		store: PropTypes.object.isRequired
@@ -61,59 +59,30 @@ const ApplicantsContainer = React.createClass({
   doRedirectionFilter() {
     const config = {
       failureRedirect: {
-        student: '/join',	// if not logged in, go here (student)
-        employer: '/join'      // if not logged in, go here (employer)
+        student: '/join',	                 // if not logged in, go here (student)
+        employer: '/join'                  // if not logged in, go here (employer)
       },
       restricted: {
-         to: 'EMPLOYERS',		 // EMPLOYERS only on this route
+         to: 'EMPLOYERS',		               // EMPLOYERS only on this route
 	       redirectTo: '/job/myapplicants'   // if not an EMPLOYER, redirect to the employer equivalent
-		 			 // This might change to employer categories
+		 			                                 // This might change to employer categories
       }
     }
-     return authRedirectFilter(config, this.context.store, this.context.router)
+    return authRedirectFilter(config, this.context.store, this.context.router)
   },
 
-/**
- * retrieveAll
- *	This function fetches from endpoints api/job/my_applications:
- *
- *
- *
- * #REFERRENCE:
- * 	https://developers.google.com/web/fundamentals/getting-started/primers/promises
- */
-
-  retrieveAll() {
-      /*
-	axios.all([
-		application.getStudentApplications(this.context.store, actionCreators),
-		list.getIndustries(this.context.store, actionCreators),
-		list.getJobTypes(this.context.store, actionCreators),
-       ])
-      */
+  openConfirmRejectStudentModal () {
+    this.refs.confirmRejectStudentModal.show()
   },
 
-  showModal (e, j) {
-      /*
-  	e.preventDefault()
-	  console.log('ON SHOW MODAL')
-	  console.log(j)
-	  this.context.store.dispatch(actionCreators.applicationModalClicked(j.id))
-  	  this.context.store.dispatch(actionCreators.applicationShowModal(j))
-  */
-  },
-
-  hideModal (e, id) {
-  	this.context.store.dispatch(actionCreators.applicationHideModal(id))
+  closeConfirmRejectStudentModal () {
+    this.refs.confirmRejectStudentModal.hide()
   },
 
   componentWillMount() {
-
     this.doRedirectionFilter()
-      .then(this.retrieveAll())
       .then(this.props.getAllJobsQuestionsAnswersForEmployer)
       .then(this.props.closeOverlay())
-
   },
 
   componentWillUnmount() {
@@ -128,7 +97,33 @@ const ApplicantsContainer = React.createClass({
         <Applicants
           jobs={this.props.jobs}
           currentSelectedJob={this.props.currentSelectedJob}
-          changeSelectedJob={this.props.changeSelectedJob}/>
+          changeSelectedJob={this.props.changeSelectedJob}
+          handleOpenConfirmRejectStudentModal={this.openConfirmRejectStudentModal}
+          handleCloseConfirmRejectStudentModal={this.closeConfirmRejectStudentModal}
+          />
+          
+        {
+         /* 
+          * ===================================
+          *      confirmRejectStudentModal
+          * ===================================
+          *
+          * This is the reject modal. 
+          * It pops up before we reject the student.
+          */
+        }
+
+        <SkyLight
+            ref="confirmRejectStudentModal"
+            title="">
+            <div>
+              <div>
+                <button>YES, REJECT</button>
+                <button onClick={this.closeConfirmRejectStudentModal}>CANCEL</button>
+              </div>
+            </div>
+        </SkyLight>
+        
       </div>
     )
   },
