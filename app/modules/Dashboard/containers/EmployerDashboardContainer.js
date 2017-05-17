@@ -163,7 +163,19 @@ const EmployerDashboardContainer = React.createClass({
   */
 
   openInviteStudentModal(selectedStudent) {
-    // Add the student id to the invite modal.
+
+   /*
+    * Close the student profile modal if it's open; we need to do this
+    * first because we can open it from the student profile modal now.
+    */
+
+    this.refs.studentProfileModal.hide()
+
+   /*
+    * Add the student obj to the invite modal so that we can display the 
+    * student selected.
+    */
+
     this.props.openInviteStudentModal(selectedStudent, this.props.jobs)
     this.refs.inviteStudentModal.show()
   },
@@ -247,6 +259,8 @@ const EmployerDashboardContainer = React.createClass({
                       recentCompanyName={this.props.studentProfileModal.student.recent_company_name}
                       recentPosition={this.props.studentProfileModal.student.recent_company_position}
                       lists={this.props.lists}
+                      handleOpenInviteStudentModal={this.openInviteStudentModal}
+                      studentObj={this.props.studentProfileModal.student}
                       />
                   : ''
               } 

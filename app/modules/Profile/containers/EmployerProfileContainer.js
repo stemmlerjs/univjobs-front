@@ -230,7 +230,7 @@ function mapStateToProps({user, profile, list}) {
     snapshot: profile.snapshot ? profile.snapshot : {},
     companyName: profile.employerProfile.companyName ? profile.employerProfile.companyName : '',
     industry: profile.employerProfile.industry ? profile.employerProfile.industry : '',
-    industryList: list.industries ? list.industries : [],
+    industryList: list.industriesArray ? list.industriesArray : [],
     website: profile.employerProfile.website ? profile.employerProfile.website : '',
     description: profile.employerProfile.description ? profile.employerProfile.description : '',
     employeeCount: profile.employerProfile.employeeCount ? profile.employerProfile.employeeCount : '',

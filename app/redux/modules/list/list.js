@@ -95,6 +95,12 @@ export function getAllStaticLists () {
         var studentStatus = {}
 
        /*
+        * Some of these, we want to keep as arrays.
+        */
+        
+        var industriesArray = lists.industries
+
+       /*
         * Convert the response arrays into objects for easier
         * accessibiliy throughout the application.
         */
@@ -130,6 +136,10 @@ export function getAllStaticLists () {
           studentStatus[sstatus.id] = sstatus.status_text
         })
 
+       /*
+        * Add the object lists to the dispatch object.
+        */
+
         lists.majors = majors
         lists.genders = genders 
         lists.industries = industries 
@@ -137,6 +147,12 @@ export function getAllStaticLists () {
         lists.emailPref = emailPreferences
         lists.jobTypes = jobTypes
         lists.studentStatus = studentStatus
+
+       /*
+        * Add the array lists to the dispatch object.
+        */
+        
+        lists.industriesArray = industriesArray
 
        /*
         * We were able to successfully get all of the lists.
@@ -545,6 +561,13 @@ export default function list (state = initialState, action) {
     case LIST_GET_ALL_STATIC_LISTS_SUCCESS:
       return {
         ...state,
+
+       /*
+        * These lists are stored as objects for O(1) traversal and
+        * being able to access them through their dot property in
+        * JSX elements.
+        */
+
         genders: action.lists.genders,
         industries: action.lists.industries,
         educationLevels: action.lists.eduLevel,
@@ -552,6 +575,14 @@ export default function list (state = initialState, action) {
         studentStatus: action.lists.studentStatus,
         jobTypes: action.lists.jobTypes,
         emailPreferences: action.lists.emailPref,
+
+       /*
+        * These lists (which have the same data as above) are stored
+        * as arrays for places such as the react ComboBox that requires
+        * the list be an array.
+        */
+
+        industriesArray: action.lists.industriesArray,
         isFetching: false
       }
     case LIST_GET_ALL_STATIC_LISTS_FAILURE:
