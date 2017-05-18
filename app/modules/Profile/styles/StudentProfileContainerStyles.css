@@ -137,3 +137,11 @@
   padding-left: 10px;
   padding-right: 5px;
 }
+
+.hideInput {
+    display: none;
+}
+
+.showInput {
+    display: inherit;
+}

@@ -101,8 +101,28 @@ export function setAccessToken (token) {
   }));
 }
 
+/**
+ * Checks the localstorage for truethy values
+ *
+ *  @returns(bool) 
+ *
+ *  Reference: http://stackoverflow.com/questions/5515310/is-there-a-standard-function-to-check-for-null-undefined-or-blank-variables-in
+ * */
+export function checkAccessToken() {
+    return localStorage.getItem('univjobs-access-token') ? true : false
+}
+
+/**
+ *  Returns:
+ *      JSON parsed token if localSorage has token
+ *      Null if localStorage is empty
+ *
+ * NOTE: was causing error earlier when user gets into the signup page 
+ * */
+
 export function getAccessToken() {
-  return JSON.parse(localStorage.getItem('univjobs-access-token')).token
+    const token = localStorage.getItem('univjobs-access-token')
+    return token ? JSON.parse(token).token : null
 }
 
 //
@@ -165,6 +185,7 @@ export function createEmployerAccount(firstName, lastName, companyName, mobile, 
 */
 export function checkIfAuthed (store) {
   const promise = new Promise(function(resolve, reject) {
+    debugger
     console.log("******************* AUTHENTICATION CHECK *******************")
 
     /* If the user is simply flipping through pages, we can tell if they are in fact

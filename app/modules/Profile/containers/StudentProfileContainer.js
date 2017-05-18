@@ -37,7 +37,7 @@ const StudentProfileContainer = React.createClass({
   * and resolves it's returned promise object on completion.
   *
   * @return (Promise)
-  *
+  :*
   */
 
   retrieveAllLists() {
@@ -82,6 +82,27 @@ const StudentProfileContainer = React.createClass({
      return authRedirectFilter(config, this.context.store, this.context.router)
   },
 
+  handleSubmit(studentProps) {
+   //If profile is NOT completed, do /PUT. All fields must be populated and valid.
+   debugger
+   console.log(studentProps)
+   if(!this.props.isProfileCompleted) {
+	   this.context.store.dispatch(
+		    profileActionCreators.submitProfileFirstTime(0, studentProps, this.props.user)
+	    )
+   } else {
+   	this.context.store.dispatch(
+	    profileActionCreators.updateProfile(0, studentProps, this.props.user, this.props.snapshot)
+	)
+	    console.log("Profile already completed, use PATCH")}
+   },
+
+   handleButtonToggle(booleanState, buttonName) {
+       debugger
+       this.props.handleToggleButton(booleanState, buttonName)
+
+   },
+
   /** finallyDisableOverlay
    * 
    * A handle to the closeOverlay() function passed down from a higher order component.
@@ -90,7 +111,6 @@ const StudentProfileContainer = React.createClass({
   */
 
   finallyDisableOverlay() {
-   debugger
   	if(this.context.store.getState().rootApplication.isOverlayActive) {
   	  this.props.closeOverlay()
   	}
@@ -146,19 +166,6 @@ const StudentProfileContainer = React.createClass({
   },
 
 
-  handleSubmit(studentProps) {
-   //If profile is NOT completed, do /PUT. All fields must be populated and valid.
-   debugger
-   if(!this.props.isProfileCompleted) {
-	   this.context.store.dispatch(
-		    profileActionCreators.submitProfileFirstTime(0, studentProps, this.props.user)
-	    )
-   } else {
-   	this.context.store.dispatch(
-	  profileActionCreators.updateProfile(0, studentProps, this.props.user, this.props.snapshot)
-	)
-	console.log("Profile already completed, use PATCH")}
-   },
 
   render () {
     return (
@@ -198,6 +205,10 @@ const StudentProfileContainer = React.createClass({
       	  resume={this.props.resume}
       	  onSubmit={this.handleSubmit}
       	  updateProfileField={this.props.updateProfileField}
+          sportsToggle={this.props.sportsToggle}
+          clubsToggle={this.props.clubsToggle}
+          languagesToggle={this.props.languagesToggle}
+          onHandleButtonToggle={this.handleButtonToggle}
       	 // submitErrorsExist={this.props.submitErrorsExist}
       	  propsErrorMap={this.props.propsErrorMap}
       	  snapshot={this.props.snapshot}/>
@@ -227,19 +238,37 @@ function mapStateToProps({user, profile, list}) {
     school: profile.studentProfile ? profile.snapshot.student : '',
     enrollmentDate: profile.studentProfile.enrollmentDate ?  profile.studentProfile.enrollmentDate : new Date, 
     graduationDate: profile.studentProfile.graduationDate ? profile.studentProfile.graduationDate : new Date,  
+
+    /*major(value, list)*/
     major: profile.studentProfile.major ? profile.studentProfile.major : 1,  
     majorsList: list.majors ? list.majors : [],
+
+    /*gpa(value, boolean)*/
     gpa: profile.studentProfile.gpa ? profile.studentProfile.gpa : '0',
     personalEmail: profile.studentProfile.personalEmail ? profile.studentProfile.personalEmail : '',
+
+    /*gender(value, boolean, list)*/
     gender: profile.studentProfile.gender ? profile.studentProfile.gender : 'Undisclosed',
     gendersList: list.genders ? list.genders : [],
+
+    /*sportsTeam(value, boolean, list)*/
     sportsTeam: profile.studentProfile.sportsTeam ? profile.studentProfile.sportsTeam : [],
+    sportsToggle: profile.studentProfile.sportsToggle ? profile.studentProfile.sportsToggle : false,
     sportsList: list.sports ? list.sports : [],
+
+    /*schoolClub(value, boolean, list)*/
     schoolClub: profile.studentProfile.schoolClub ? profile.studentProfile.schoolClub: [], 
+    clubsToggle: profile.studentProfile.clubsToggle ? profile.studentProfile.clubsToggle : false,
     schoolClubList: list.schoolClubs ? list.schoolClubs : [],
+
+    /*languages(value, boolean, list)*/
     languages: profile.studentProfile.languages ? profile.studentProfile.languages : [],
+    languagesToggle: profile.studentProfile.languagesToggle ? profile.studentProfile.languagesToggle : false,
     languagesList: list.languages ? list.languages : [],
+
+    /*hasCar(value)*/
     hasCar: profile.studentProfile.hasCar ? profile.studentProfile.hasCar : false,
+
     companyName: profile.studentProfile.companyName ? profile.studentProfile.companyName : '',
     position: profile.studentProfile.position ? profile.studentProfile.position : '',
     funFacts: profile.studentProfile.funFacts ? profile.studentProfile.funFacts : '',
@@ -250,29 +279,32 @@ function mapStateToProps({user, profile, list}) {
     isProfileCompleted: profile.isProfileCompleted ? profile.isProfileCompleted : '',
 
     propsErrorMap: profile.studentProfile.propsErrorMap ? profile.studentProfile.propsErrorMap : { 
-	emailPreferences: false,
-	firstName: false,
-   	lastName: false,
-  	studentStatus: false,
-	educationLevel: false,
-   	school: false,
-   	enrollmentDate: false,
-   	graduationDate: false,
-	major: false,
-   	gpa: false,
-   	personalEmail: false,
-	gender: false,
-   	sportsTeam: false,
-   	schoolClub: false,
-   	languages: false,
-   	hasCar: false,
-   	companyName: false,
-   	position: false,
-	funFacts: false,
-   	hometown: false,
-   	hobbies: false,
- 	photo: false,
-	resume: false
+        emailPreferences: false,
+        firstName: false,
+        lastName: false,
+        studentStatus: false,
+        educationLevel: false,
+        school: false,
+        enrollmentDate: false,
+        graduationDate: false,
+        major: false,
+        gpa: false,
+        personalEmail: false,
+        gender: false,
+        sportsTeam: false,
+        schoolClub: false,
+        languages: false,
+        hasCar: false,
+        companyName: false,
+        position: false,
+        funFacts: false,
+        hometown: false,
+        hobbies: false,
+        photo: false,
+        resume: false,
+        sportsToggle: false,
+        clubsToggle: false,
+        languagesToggle: false,
     },
     error: profile.error ? profile.error : '',
     submitSuccess: profile.submitSuccess ? profile.submitSuccess : false

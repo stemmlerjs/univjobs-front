@@ -17,7 +17,13 @@ import ReactTooltip from 'react-tooltip'
 import MaskedTextInput from 'react-text-mask'
 
 // ================CSS IMPORTS============================== //
-import { pageContainer, profileField, profileHeader, container, shortInput, nameField,  emailField, dropDown, shortDropDown, mediumDropDown, longDropDown, dropzone, dropzoneContent, inlineDropzone, btn, saveBtnContainer, saveBtnList, saveBtnClicked, saveBtn, space} from '../styles/StudentProfileContainerStyles.css'
+import { pageContainer, profileField, profileHeader, 
+        container, shortInput, nameField,  
+        emailField, dropDown, shortDropDown, 
+        mediumDropDown, longDropDown, dropzone, 
+        dropzoneContent, inlineDropzone, btn, 
+        saveBtnContainer, saveBtnList, saveBtnClicked, 
+        saveBtn, space, hideInput, showInput} from '../styles/StudentProfileContainerStyles.css'
 import { error } from 'sharedStyles/error.css' 
 import { input } from 'sharedStyles/widgets.css'
 
@@ -286,13 +292,13 @@ export default function StudentProfile (props) {
 			<StudentProfileField title="I"
 			 styles={nameField}>
 			 <li className={saveBtnList}>
-			   <button className={saveBtn}>play</button>
-			   <button className={saveBtn}>do not play</button>
+               <button className={props.sportsToggle ? saveBtnClicked : saveBtn} onClick={() => props.onHandleButtonToggle(true, 'sportsToggle') }>play</button>
+			   <button className={props.sportsToggle ? saveBtn : saveBtnClicked} onClick={() => props.onHandleButtonToggle(false, 'sportsToggle') }>do not play</button>
 			 </li>
 			 <li className={space}>
 			 	<p>on a sports team</p>
 			 </li>
-             <li>
+             <li className={props.sportsToggle ? showInput : hideInput}>
 			    <Multiselect
                    className={props.propsErrorMap.sportsTeam? shortInput + ' ' +  error : shortInput}
                    valueField='id' textField='sport'
@@ -311,13 +317,13 @@ export default function StudentProfile (props) {
 			<StudentProfileField title="I " 
 			 styles={nameField}>
 			 <li className={saveBtnList}>
-			   <button className={props.schoolClub != "" ? saveBtnClicked : saveBtn}>am</button>
-			   <button className={props.schoolClub == "" ? saveBtnClicked : saveBtn}>am not</button>
+			   <button className={props.clubsToggle ? saveBtnClicked : saveBtn} onClick={() => props.onHandleButtonToggle(true, 'clubsToggle') }>am</button>
+			   <button className={props.clubsToggle ? saveBtn : saveBtnClicked} onClick={() => props.onHandleButtonToggle(false, 'clubsToggle') }>am not</button>
 			 </li>
 			 <li className={space}>
 			 	<p>on a school club</p>
 			 </li>
-            <li>
+            <li className={props.clubsToggle ? showInput : hideInput}>
 			 <Multiselect
 			   className={props.propsErrorMap.schoolClub? shortInput + ' ' +  error : shortInput}
 			   valueField='id' textField='club_name'
@@ -336,23 +342,13 @@ export default function StudentProfile (props) {
 			<StudentProfileField title="I" 
 			 styles={nameField}>
 			 <li className={saveBtnList}>
-
-			   <button className={props.languages.length >= 1 ? saveBtnClicked : saveBtn}
-			   	data-selection="0"
-				  data-field-name="languages">
-				   	speak
-				  </button>
-
-			   <button className={props.languages.length == 0 ? saveBtnClicked : saveBtn}
-			   	data-selection="1"
-				  data-field-name="languages">
-			   		do not speak
-			   </button>
-
+			   <button className={props.languagesToggle ? saveBtnClicked : saveBtn} onClick={() => props.onHandleButtonToggle(true, 'languagesToggle') }>speak</button>
+			   <button className={props.languagesToggle ? saveBtn : saveBtnClicked} onClick={() => props.onHandleButtonToggle(false, 'languagesToggle') }>do not speak</button>
 			 </li>
 			 <li className={space}>
 			 	<p>other languages</p>
 			 </li>
+            <li className={props.languagesToggle ? showInput : hideInput}>
 			 <Multiselect
 			   className={props.propsErrorMap.languages ? shortInput + ' ' +  error : shortInput}
 			   textField='language'
@@ -363,6 +359,7 @@ export default function StudentProfile (props) {
 			   onChange={ value => props.updateProfileField('languages', value, true)}
 			   value={props.languages}
 			   />
+            </li>
 			</StudentProfileField>
 
 			{/* CAR */}

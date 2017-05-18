@@ -62,6 +62,9 @@ const styles = {
 
 
 const actionCreators = {
+      ...userActionCreators,
+      ...signupFormActionCreators,
+      ...loginFormActionCreators
 }
 
 const SignupContainer = React.createClass({
@@ -129,7 +132,7 @@ const SignupContainer = React.createClass({
   */
     handleStudentSignup(e) {
         e.preventDefault()
-        debugger;
+      //  debugger;
         this.props.submitStudentSignupForm(
             this.props.studentEmail,
             this.props.studentPassword
@@ -355,11 +358,7 @@ function mapStateToProps({user, signupForm, loginForm}) {
   */
 
 function mapActionCreatorsToProps(dispatch) {
-  return bindActionCreators({
-      ...userActionCreators,
-      ...signupFormActionCreators,
-      ...loginFormActionCreators
-  }, dispatch)
+  return bindActionCreators(actionCreators, dispatch)
 }
 
 // connect(specify_what_keys_you_want_from_store, wraps_dispatch_around_action_creators)(container)

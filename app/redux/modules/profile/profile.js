@@ -11,6 +11,10 @@ import { toISO, hasCarBoolean } from 'helpers/utils'
 // ********** Base form actions **************
 const UPDATE_PROFILE_FIELD = 'PROFILE.UPDATE_PROFILE_FIELD'
 
+const TOGGLE_BUTTON = 'PROFILE.TOGGLE_BUTTON'
+const TOGGLE_BUTTON_SUCCESS = 'PROFILE.TOGGLE_BUTTON_SUCCESS'
+const TOGGLE_BUTTON_FAILURE = 'PROFILE.TOGGLE_BUTTON_FALIURE'
+
 const SAVING_PROFILE_INFO = 'PROFILE.SAVING_PROFILE_INFO'
 const SAVED_PROFILE_INFO_SUCCESS = 'PROFILE.SAVED_PROFILE_INFO_SUCCESS'
 const SAVED_PROFILE_INFO_FAILURE = 'PROFILE.SAVED_PROFILE_INFO_FAILURE'
@@ -22,6 +26,29 @@ const FETCHED_PROFILE_INFO_FAILURE = 'PROFILE.FETCHED_INFO_FAILURE'
 // =======================================================
 // ================== ACTION CREATORS ====================
 // =======================================================
+export function toggleButton(booleanState, buttonName) {
+    return {
+        type: TOGGLE_BUTTON,
+        booleanState,
+        buttonName
+    }
+}
+
+export function toggleButtonSuccess(booleanState, buttonName) {
+    return {
+        type: TOGGLE_BUTTON_SUCCESS,
+        booleanState,
+        buttonName
+    }
+}
+
+export function toggleButtonFailure(error, buttonName) {
+    return {
+        type: TOGGLE_BUTTON_FAILURE,
+        buttonName,
+        error
+    }
+}
 
 export function updateProfileField(fieldName, newValue, isAStudent) {
   return {
@@ -32,6 +59,7 @@ export function updateProfileField(fieldName, newValue, isAStudent) {
  }
 }
 
+/*===============FETCHING PROFILE INFO==============*/
 export function fetchingProfileInfo() {
     return {
         type: FETCHING_PROFILE_INFO
@@ -85,6 +113,14 @@ export function savedProfileFailure(profileErrorsObj, error, isAStudent) {
 //
 //
 //NOTE: Refer to signupform redux line 78, passing dispatch
+export function handleToggleButton(booleanState, buttonName) {
+    return function(dispatch) {
+        debugger
+        //ACTION: FETCHING_USER_PROFILE 
+        dispatch(toggleButton(booleanState, buttonName))
+    }
+}
+
 export function handleGetUserProfile(dispatch) {
     return function(dispatch) {
         //ACTION: FETCHING_USER_PROFILE 
@@ -151,6 +187,8 @@ export function submitProfileFirstTime(userTypeInt, profileInfo, user) {
       		  GPA: profileInfo.gpa,
       		  personal_email: profileInfo.personalEmail,
       		  gender: profileInfo.gender.id,
+
+              /*Converts the value to num*/
       		  has_car: hasCarBoolean(profileInfo.hasCar),
       		  company: profileInfo.companyName,
       		  position: profileInfo.position,
@@ -497,6 +535,11 @@ export default function profile (state = initialState, action) {
         submitSuccess: true,
         error: ''
       }
+    case TOGGLE_BUTTON: 
+        return {
+            ...state,
+            studentProfile: studentProfile(state.studentProfile, action)
+        }
     default :
       return state
   }
@@ -603,11 +646,21 @@ const initialStudentProfileState = {
   hobbies: '',
   photo: '',
   resume: '',
+  sportsToggle: false,
+  clubsToggle: false,
+  languagesToggle: false,
   propsErrorMap: {}
 }
 
 function studentProfile(state = initialStudentProfileState, action) {
   switch(action.type) {
+    case TOGGLE_BUTTON:
+        return {
+            ...state,
+            buttonName: action.buttonName,
+            [action.buttonName]: action.booleanState
+    }
+          //return changes
     case UPDATE_PROFILE_FIELD:
       return {
         ...state,
@@ -638,6 +691,7 @@ const initialStudentProfileErrorState = {
   personalEmail: false,
   gender: false,
   sportsTeam: false,
+  hasSports: false,
   schoolClub: false,
   languages: false,
   hasCar: false,

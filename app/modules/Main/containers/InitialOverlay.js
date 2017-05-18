@@ -14,6 +14,7 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
 // =============REDUX STATE & IMPORTS========================= //
 import { connect } from 'react-redux'
+import { getAccessToken } from 'helpers/auth'
 import { hideOverlay } from 'redux/modules/rootApplication/rootApplication'
 import { getAllStaticLists } from 'redux/modules/list/list'
 
@@ -33,9 +34,21 @@ const InitialOverlay = React.createClass({
   },
 
   closeOverlay() {
-    console.log("[Univjobs]: v1.0 - Getting all application lists.")
-    this.context.store.dispatch(getAllStaticLists())
-    this.context.store.dispatch(hideOverlay())
+  /* InitialOverlay is being called every render: see at root folder config/routes.js
+   * Which means that function getAllStaticLists() is checking for univjobs-token
+   *
+   * Users who do not have token will be stuck at InitialOverlay
+   * 
+   * QUESTION: In what way could we not use the hideOverlay when signupcontainer is called & users do not have token, to avoid being stuck
+   *
+   * OPTION: 1.) Check to see if user has token ? Yes, allow func to execute : No to token, hideoverlay & redirect to signupcontainer 
+   * 
+   * */
+//    debugger
+        console.log("[Univjobs]: v1.0 - Getting all application lists.")
+        this.context.store.dispatch(getAllStaticLists())
+        this.context.store.dispatch(hideOverlay())
+
   },
 
   render () {
