@@ -236,9 +236,9 @@ export default function StudentProfile (props) {
 			     className={props.propsErrorMap.gpa ? input + ' ' + error : input}
 			     type="number"
 			     step="0.1"
-			     max="100"
+			     max="4"
 			     placeholder="GPA" 
-			     onChange={(e) => props.updateProfileField('gpa', e.target.value, true)} 
+			     onChange={(e) => {props.updateProfileField('gpa', e.target.value, true); props.onHandleButtonToggle(false, 'gpaToggle')}} 
 			     value={props.gpa}
 			     />
 			 </li>
@@ -246,7 +246,7 @@ export default function StudentProfile (props) {
 			   <p>or</p>
 			 </li>
 			 <li className={saveBtnList}>
-			   <button className={saveBtn}>I do not have a GPA</button>
+               <button className={props.gpaToggle ? saveBtnClicked : saveBtn} onClick={() => props.onHandleButtonToggle(true, 'gpaToggle') }>I do not have a GPA</button>
 			 </li>
 			</StudentProfileField>
 
@@ -261,7 +261,7 @@ export default function StudentProfile (props) {
 			    type="text"
 			    placeholder="Email"
 			    value={props.personalEmail}
-			    onChange={(e) => props.updateProfileField('personalEmail', e.target.value, true)}
+			    onChange={(e) => {props.updateProfileField('personalEmail', e.target.value, true); props.onHandleButtonToggle(false, 'emailToggle')}}
 			    >
 			  </input>
 			 </li> 
@@ -269,7 +269,7 @@ export default function StudentProfile (props) {
 			   <p>or</p>
 			 </li>
 			 <li className={saveBtnList}>
-			   <button className={saveBtn}>I prefer school email</button>
+               <button className={props.emailToggle ? saveBtnClicked : saveBtn} onClick={() => props.onHandleButtonToggle(true, 'emailToggle') }>I prefer school email</button>
 			 </li>
 			</StudentProfileField>
 

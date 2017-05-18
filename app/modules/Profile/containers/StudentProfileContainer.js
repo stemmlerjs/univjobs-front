@@ -208,6 +208,8 @@ const StudentProfileContainer = React.createClass({
           sportsToggle={this.props.sportsToggle}
           clubsToggle={this.props.clubsToggle}
           languagesToggle={this.props.languagesToggle}
+          gpaToggle={this.props.gpaToggle}
+          emailToggle={this.props.emailToggle}
           onHandleButtonToggle={this.handleButtonToggle}
       	 // submitErrorsExist={this.props.submitErrorsExist}
       	  propsErrorMap={this.props.propsErrorMap}
@@ -244,8 +246,12 @@ function mapStateToProps({user, profile, list}) {
     majorsList: list.majors ? list.majors : [],
 
     /*gpa(value, boolean)*/
-    gpa: profile.studentProfile.gpa ? profile.studentProfile.gpa : '0',
+    gpa: profile.studentProfile.gpa ? profile.studentProfile.gpa : '',
+    gpaToggle: profile.studentProfile.gpaToggle ? profile.studentProfile.gpaToggle : false,
+
+    /*personalEmail(value, boolean)*/
     personalEmail: profile.studentProfile.personalEmail ? profile.studentProfile.personalEmail : '',
+    emailToggle: profile.studentProfile.emailToggle ? profile.studentProfile.emailToggle : false,
 
     /*gender(value, boolean, list)*/
     gender: profile.studentProfile.gender ? profile.studentProfile.gender : 'Undisclosed',
@@ -305,6 +311,8 @@ function mapStateToProps({user, profile, list}) {
         sportsToggle: false,
         clubsToggle: false,
         languagesToggle: false,
+        emailToggle: false,
+        gpaToggle: false,
     },
     error: profile.error ? profile.error : '',
     submitSuccess: profile.submitSuccess ? profile.submitSuccess : false

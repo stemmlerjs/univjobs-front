@@ -649,6 +649,8 @@ const initialStudentProfileState = {
   sportsToggle: false,
   clubsToggle: false,
   languagesToggle: false,
+  gpaToggle: false,
+  emailToggle: false,
   propsErrorMap: {}
 }
 
