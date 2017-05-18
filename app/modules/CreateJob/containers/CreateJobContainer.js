@@ -9,6 +9,8 @@ import CreateJobFormPage2 from '../components/CreateJobFormPage2'
 import CreateJobFormPage3 from '../components/CreateJobFormPage3'
 import CreateJobFormPage4 from '../components/CreateJobFormPage4'
 
+import config from 'config'
+
 // ==============THIRD PARTY IMPORTS========================= //
 import SkyLight from 'react-skylight'
 
@@ -355,7 +357,7 @@ const CreateJobContainer = React.createClass({
 
     return (
       <div className={mainContainer}>
-        <SidebarContainer/>
+        <SidebarContainer isAStudent={false} profilePicture={config.mediaUrl + this.props.profile.logoUrl}/>
         {(() => {
           switch(this.props.currentPage) {
             case 1:
@@ -437,6 +439,7 @@ function mapStateToProps({createJob, profile, user, list}) {
     user: {
       emailVerified: user.emailVerified ? user.emailVerified : false
     },
+    profile: profile.employerProfile ? profile.employerProfile : {},
     currentPage: createJob.currentPage ? createJob.currentPage : 1,
     industry: profile.employerProfile.industry ? profile.employerProfile.industry : 0,
     industryList: list.industries ? list.industries : [],

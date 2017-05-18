@@ -3,7 +3,7 @@
     display: flex;
 } 
 .studentProfileLeftContainer {
-  width: 77%;
+  width: 50%;
 } 
 .stProfileHeader {
     padding-left: 15px;
@@ -35,11 +35,11 @@
     color: #808080;
 }
 .studenProfileRightContainer {
-  width: 33%;
-  text-align: left;
-  margin-top: 121px;
-  padding-left: 20px;
-  padding-right: 20px;
+    width: 50%;
+    text-align: left;
+    /* margin-top: 121px; */
+    padding-left: 20px;
+    padding-right: 20px;
 } 
 
 .itemIcon {
@@ -67,8 +67,8 @@
 }
 
 .supplementalItemsContainer {
-  font-size:15px;
-  height: 133px;
+    font-size: 15px;
+    height: 243px;
 }
 
 .supplementalItemsDetail {
@@ -76,9 +76,11 @@
 }
 
 .leftsideDetails {
-    overflow-y: scroll;
+overflow-y: scroll;
     margin-top: 6px;
     padding-right: 13px;
+    text-align: left;
+    padding-left: 19px;
 }
 
 .invite {

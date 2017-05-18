@@ -2,7 +2,7 @@
 import React, { PropTypes } from 'react'
 
 // ==============MADE COMPONENTS========================= //
-import { Sidebar, JobSidebar } from 'modules/Main'
+import { Sidebar } from 'modules/Main'
 
 // ==============OTHER IMPORTS========================= //
 import { logout } from 'helpers/auth'
@@ -33,8 +33,11 @@ const SidebarContainer = React.createClass({
   render () {
     return (
       <div>
-        <Sidebar onLogout={this.handleLogout} isAStudent={this.props.isAStudent}/>
-        <JobSidebar/>
+        <Sidebar 
+          onLogout={this.handleLogout} 
+          isAStudent={this.props.isAStudent}
+          profilePicture={this.props.profilePicture}
+        />
       </div>
     )
   },

@@ -21,7 +21,7 @@ import { studentProfileModalContainer, studentProfileLeftContainer, stProfileHea
 
 const StudentProfileModal = ({pictureUrl, name, major, sportsString, 
   schoolName, hometown, hasCar, clubsString, gradDate, lists, gpa, funFact, hobbies,
-  handleOpenInviteStudentModal, studentObj}) => (
+  handleOpenInviteStudentModal, studentObj, recentCompanyName, recentCompanyPosition}) => (
 
     <div className={studentProfileModalContainer}>
       <div className={studentProfileLeftContainer}>
@@ -49,8 +49,48 @@ const StudentProfileModal = ({pictureUrl, name, major, sportsString,
         }
 
         <div className={leftsideDetails}>
-          <div className={experienceHobbiesEtc}>
-            { hasCar == 1
+          
+              <div className={supplementalItemsContainer}>
+                {
+                  recentCompanyName !== ""
+                    ? <div>
+                        <div><b>Previous Work Experience</b></div>
+                        <div className={supplementalItemsDetail}>{recentCompanyPosition} at {recentCompanyName}</div>
+                      </div>
+                    : ''
+                }
+                {
+                  hometown 
+                    ? <div>
+                        <div><b>Hometown</b></div>
+                        <div className={supplementalItemsDetail}>{hometown}</div>
+                      </div>
+                    : ''
+                }
+                {
+                  funFact
+                    ? <div>
+                        <div><b>Fun Fact</b></div>
+                        <div className={supplementalItemsDetail}>{funFact}</div>
+                      </div>
+                    : ''
+                }
+                {
+                  hobbies
+                    ? <div>
+                        <div><b>Hobbies</b></div>
+                        <div className={supplementalItemsDetail}>{ hobbies }</div>
+                      </div>
+                    : ''
+                }
+              </div>
+        </div>
+      </div>
+
+
+      <div className={studenProfileRightContainer}>
+        <div className={experienceHobbiesEtc}>
+        { hasCar == 1
                 ? <div className={listItemContainer}>
                     <ReactTooltip delayHide={100} delayShow={100} place="bottom" effect="float"/>
                     <img data-tip={'Transportation availability'} className={itemIcon} src={`${config.assetUrl}components/cards/student/actions/a/has_car_active_24px.svg`}/>
@@ -82,39 +122,7 @@ const StudentProfileModal = ({pictureUrl, name, major, sportsString,
                   </div>
                 : ''
             }
-          
-          <div className={supplementalItemsContainer}>
-            {
-              hometown 
-                ? <div>
-                    <div><b>Hometown</b></div>
-                    <div className={supplementalItemsDetail}>{hometown}</div>
-                  </div>
-                : ''
-            }
-            {
-              funFact
-                ? <div>
-                    <div><b>Fun Fact</b></div>
-                    <div className={supplementalItemsDetail}>{funFact}</div>
-                  </div>
-                : ''
-            }
-            {
-              hobbies
-                ? <div>
-                    <div><b>Hobbies</b></div>
-                    <div className={supplementalItemsDetail}>{ hobbies }</div>
-                  </div>
-                : ''
-            }
           </div>
-        </div>
-        </div>
-      </div>
-
-
-      <div className={studenProfileRightContainer}>
         <button className={invite} onClick={
           function() {
               handleOpenInviteStudentModal(studentObj)

@@ -7,6 +7,8 @@ import axios from 'axios'
 import * as lists from 'helpers/lists'
 import { Title } from 'modules/SharedComponents'
 
+import config from 'config'
+
 // ====== REDUX AND STATE IMPORTS =======
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -189,7 +191,11 @@ const EmployerProfileContainer = React.createClass({
   render () {
     return (
       <div className={pageContainer}>
-        <SidebarContainer isAStudent={false}/>
+        <SidebarContainer 
+          isAStudent={false} 
+          logoUrl={this.props.logoUrl}
+          profilePicture={config.mediaUrl + this.props.profile.logoUrl}
+        />
         <Title 
             titleName="My business profile"
             subHeading=""/>
@@ -227,6 +233,7 @@ const EmployerProfileContainer = React.createClass({
 function mapStateToProps({user, profile, list}) {
   return {
     user: user ? user : {},
+    profile: profile.employerProfile ? profile.employerProfile : {},
     snapshot: profile.snapshot ? profile.snapshot : {},
     companyName: profile.employerProfile.companyName ? profile.employerProfile.companyName : '',
     industry: profile.employerProfile.industry ? profile.employerProfile.industry : '',

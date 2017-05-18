@@ -218,7 +218,7 @@ const EmployerDashboardContainer = React.createClass({
     this.finallyDisableOverlay()
     return (
       <div className={pageContainer}>
-        <SidebarContainer isAStudent={false}/>
+        <SidebarContainer isAStudent={false} profilePicture={config.mediaUrl + this.props.profile.logoUrl}/>
         <EmployerDashboard 
           students={this.props.students}
           lists={this.props.lists}
@@ -261,6 +261,8 @@ const EmployerDashboardContainer = React.createClass({
                       lists={this.props.lists}
                       handleOpenInviteStudentModal={this.openInviteStudentModal}
                       studentObj={this.props.studentProfileModal.student}
+                      recentCompanyName={this.props.studentProfileModal.student.recent_company_name}
+                      recentCompanyPosition={this.props.studentProfileModal.student.recent_company_position}
                       />
                   : ''
               } 
@@ -327,9 +329,10 @@ const EmployerDashboardContainer = React.createClass({
   }
 })
 
-function mapStateToProps({user, dashboard, job, list}) {
+function mapStateToProps({user, profile, dashboard, job, list}) {
   return {
     user: user ? user : {},
+    profile: profile.employerProfile ? profile.employerProfile : {},
     students: dashboard.employerDashboard.students ? dashboard.employerDashboard.students : [],
     inviteStudentModal: dashboard.employerDashboard.inviteStudentModal ? dashboard.employerDashboard.inviteStudentModal : {},
     studentProfileModal: dashboard.employerDashboard.studentProfileModal ? dashboard.employerDashboard.studentProfileModal: {},

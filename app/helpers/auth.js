@@ -102,7 +102,8 @@ export function setAccessToken (token) {
 }
 
 export function getAccessToken() {
-  return JSON.parse(localStorage.getItem('univjobs-access-token')).token
+  var token = localStorage.getItem('univjobs-access-token')
+  return token ? JSON.parse(token).token : null
 }
 
 //

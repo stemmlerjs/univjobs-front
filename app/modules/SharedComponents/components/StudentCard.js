@@ -63,6 +63,7 @@ const StudentCard = ({pictureUrl, resumeUrl, name, major, funFact, recentCompany
     schoolName,
     hometown,
     hobbies,
+    
     handleOpenStudentProfileModal,
     handleCloseStudentProfileModal,
     handleOpenInviteStudentModal,
@@ -220,7 +221,7 @@ const StudentCard = ({pictureUrl, resumeUrl, name, major, funFact, recentCompany
                 <div className={cardActionButtons}>
                   <button onClick={handleOpenConfirmRejectStudentModal}>REJECT</button>
                   <button><a className={whiteTxt} target="_blank" href={resumeUrl}>RESUME</a></button>
-                  <button>SEE MORE</button>
+                  <button>MORE</button>
                 </div>
               </div>
               )

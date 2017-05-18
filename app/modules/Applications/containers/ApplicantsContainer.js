@@ -13,6 +13,8 @@ import React, { Component, PropTypes } from 'react'
 import { SidebarContainer } from 'modules/Main'
 import { Applicants } from 'modules/Applications'
 
+import config from 'config'
+
 // ==============THIRD PARTY IMPORTS========================= //
 import axios from 'axios'
 import ReduxToastr from 'react-redux-toastr'
@@ -93,13 +95,14 @@ const ApplicantsContainer = React.createClass({
     console.log(this.props.jobs)
     return (
       <div className={pageContainer}>
-        <SidebarContainer isAStudent={this.props.user.isAStudent}/>
+        <SidebarContainer isAStudent={this.props.user.isAStudent} profilePicture={config.mediaUrl + this.props.profile.logoUrl}/>
         <Applicants
           jobs={this.props.jobs}
           currentSelectedJob={this.props.currentSelectedJob}
           changeSelectedJob={this.props.changeSelectedJob}
           handleOpenConfirmRejectStudentModal={this.openConfirmRejectStudentModal}
           handleCloseConfirmRejectStudentModal={this.closeConfirmRejectStudentModal}
+          lists={this.props.lists}
           />
           
         {
@@ -112,17 +115,18 @@ const ApplicantsContainer = React.createClass({
           * It pops up before we reject the student.
           */
         }
-
-        <SkyLight
-            ref="confirmRejectStudentModal"
-            title="">
-            <div>
+        <div id="confirm-reject-student-modal-wrapper">
+          <SkyLight
+              ref="confirmRejectStudentModal"
+              title="">
               <div>
-                <button>YES, REJECT</button>
-                <button onClick={this.closeConfirmRejectStudentModal}>CANCEL</button>
+                <div>
+                  <button>YES, REJECT</button>
+                  <button onClick={this.closeConfirmRejectStudentModal}>CANCEL</button>
+                </div>
               </div>
-            </div>
-        </SkyLight>
+          </SkyLight>
+        </div>
         
       </div>
     )
@@ -142,11 +146,13 @@ const ApplicantsContainer = React.createClass({
  * 	In other words, all questions are queried in the dashboard page
  */
 
-function mapStateToProps({user, job, applicants}) {
+function mapStateToProps({user, job, profile, applicants, list}) {
   return {
 	  user: user ? user : {},
+    profile: profile.employerProfile ? profile.employerProfile : {},
     jobs: job.employerJobs ? job.employerJobs : [],
-    currentSelectedJob: applicants.currentSelectedJob ? applicants.currentSelectedJob : {}
+    currentSelectedJob: applicants.currentSelectedJob ? applicants.currentSelectedJob : {},
+    lists: list ? list : {}
   }
 }
 

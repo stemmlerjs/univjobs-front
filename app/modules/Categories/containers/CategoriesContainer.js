@@ -6,8 +6,11 @@ import { Title } from 'modules/SharedComponents'
 import { SidebarContainer } from 'modules/Main'
 import { Categories } from 'modules/Categories'
 
+import config from 'config'
+
 // ==============REDUX & OTHER IMPORTS================//
 import { authRedirectFilter } from 'config/routes'
+import { connect } from 'react-redux'
 
 // ===============CSS IMPORTS======================//
 import { mainContainer } from '../styles/CategoriesContainerStyles.css'
@@ -147,6 +150,7 @@ const CategoriesContainer = React.createClass({
       <div className={mainContainer}>
         <SidebarContainer 
             isAStudent={false} 
+            profilePicture={config.mediaUrl + this.props.profile.logoUrl}
         />
         <Title 
             titleName="I want to post a job for..."
@@ -160,4 +164,17 @@ const CategoriesContainer = React.createClass({
   },
 })
 
-export default CategoriesContainer
+function mapStateToProps({user, job, list, profile}) {
+  return {
+	  user: user ? user : {},
+      job: job ? job.employerJobs.jobs : [],
+      profile: profile.employerProfile ? profile.employerProfile : {},
+      industryList: list.industries ? list.industries : [],
+      jobTypes: list.jobTypes ? list.jobTypes : [],
+
+  }
+}
+
+export default connect(mapStateToProps)(CategoriesContainer)
+
+

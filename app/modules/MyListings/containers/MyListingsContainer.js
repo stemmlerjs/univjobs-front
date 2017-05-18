@@ -5,6 +5,8 @@ import React, { Component, PropTypes } from 'react'
 import { SidebarContainer } from 'modules/Main'
 import { MyListings } from 'modules/MyListings'
 
+import config from 'config'
+
 // ==============THIRD PARTY IMPORTS========================= //
 import axios from 'axios'
 import ReduxToastr from 'react-redux-toastr'
@@ -91,7 +93,7 @@ const MyListingsContainer = React.createClass({
   render () {
     return (
       <div className={pageContainer} >
-        <SidebarContainer isAStudent={false}/>
+        <SidebarContainer isAStudent={false} profilePicture={config.mediaUrl + this.props.profile.employerProfile.logoUrl}/>
         <MyListings
             handleCardClick={this.showModal}
             jobs={this.props.job ? this.props.job : ''}
@@ -114,7 +116,7 @@ function mapStateToProps({user, job, list, profile}) {
   return {
 	  user: user ? user : {},
       job: job ? job.employerJobs.jobs : [],
-      profile: profile ? profile : [],
+      profile: profile ? profile : {},
       industryList: list.industries ? list.industries : [],
       jobTypes: list.jobTypes ? list.jobTypes : [],
 

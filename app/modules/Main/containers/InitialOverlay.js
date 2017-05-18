@@ -49,6 +49,7 @@ const InitialOverlay = React.createClass({
        closeOverlay: this.closeOverlay
      })
     );
+    
     return (
       <div style={styles.main}>
         <ReactCSSTransitionGroup

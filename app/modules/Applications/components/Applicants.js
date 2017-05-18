@@ -26,7 +26,6 @@ Applicants.propTypes = {
 
 
 export default function Applicants (props) {
-  console.log(props)
   return (
   <div className={rootComponentContainer}>
     <div className={margins}>
@@ -81,9 +80,28 @@ export default function Applicants (props) {
                         key={applicant.student_id}
                         pictureUrl={config.mediaUrl + 'avatar/' + applicant.photo_url}
                         resumeUrl={config.mediaUrl + 'res/' + applicant.resume_url}
-                        cardState={2}
+                        name={applicant.user_firstName.substring(0,1).toUpperCase() + applicant.user_firstName.substring(1) + ' ' 
+                          + applicant.user_lastName.substring(0,1).toUpperCase() + applicant.user_lastName.substring(1)}
+                        funFact={applicant.fun_fact}
+                        educationLevel={applicant.edu_level}
+                        hasCar={applicant.has_car}
+                        hobbies={applicant.hobbies}
+                        languages={applicant.languages}
+                        clubs={applicant.clubs}
+                        sports={applicant.sports}
+                        major={applicant.major}
+                        gpa={applicant.gpa}
+                        gradDate={new Date(applicant.grad_date)}
+                        schoolName={applicant.school_name}
+                        hometown={applicant.hometown}
+                        hobbies={applicant.hobbies}
+                        recentCompanyName={applicant.recent_company_name}
+                        recentPosition={applicant.recent_company_position}
+                        showResume={true}
+                        isDashboardCard={false}
                         handleOpenConfirmRejectStudentModal={props.handleOpenConfirmRejectStudentModal}
          	              handleCloseConfirmRejectStudentModal={props.handleCloseConfirmRejectStudentModal}
+                        lists={props.lists}
                       />
                   ))
                 : 'No applicants for this job'
