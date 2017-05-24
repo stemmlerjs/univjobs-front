@@ -30,6 +30,37 @@ const StudentProfileContainer = React.createClass({
     store: PropTypes.object.isRequired
   },
 
+ /** createNewTag
+  *
+  * This function creates a new tag, not in the data list[sports, clubs].
+  * It takes the current value given by the user then creates an object with id and value, and concatenates them
+  *
+  * @return (Promise)
+  :*
+  */
+   createNewTag(newValue, list, textField, updateProfileFieldName) {
+       let pickList = {
+                    //Master list
+                    'schoolClubList': this.props.schoolClubList,
+                    'sportsList': this.props.sportsList,
+                    //propTypes, pushed to the database
+                    'schoolClub': this.props.schoolClub,
+                    'sportsTeam': this.props.sportsTeam
+
+       }
+       debugger
+
+       //Create a new tag array object
+       //Temporarily concat new value to the old specified list. 
+       //Updated list will show when queried
+       let tag = [{ [textField]: newValue }].concat(pickList[updateProfileFieldName])
+       
+       this.props.updateProfileField(updateProfileFieldName, tag, true)
+       
+       //Create an action creator to display which list got updated
+       this.props.updateTag(list)
+       
+   },
 
  /** retrieveAllLists
   *
@@ -84,7 +115,7 @@ const StudentProfileContainer = React.createClass({
 
   handleSubmit(studentProps) {
    //If profile is NOT completed, do /PUT. All fields must be populated and valid.
-   debugger
+   //debugger
    console.log(studentProps)
    if(!this.props.isProfileCompleted) {
 	   this.context.store.dispatch(
@@ -98,9 +129,7 @@ const StudentProfileContainer = React.createClass({
    },
 
    handleButtonToggle(booleanState, buttonName) {
-       debugger
        this.props.handleToggleButton(booleanState, buttonName)
-
    },
 
   /** finallyDisableOverlay
@@ -180,7 +209,7 @@ const StudentProfileContainer = React.createClass({
       	  studentStatusList={this.props.studentStatusList}
       	  educationLevel={this.props.educationLevel}
       	  educationLevelList={this.props.educationLevelList}
-      	  school={this.props.school ? this.props.school.name : ''}
+      	  school={this.props.school}
       	  enrollmentDate={this.props.enrollmentDate}
       	  graduationDate={this.props.graduationDate}
       	  major={this.props.major}
@@ -211,6 +240,7 @@ const StudentProfileContainer = React.createClass({
           gpaToggle={this.props.gpaToggle}
           emailToggle={this.props.emailToggle}
           onHandleButtonToggle={this.handleButtonToggle}
+          onCreateNewTag={this.createNewTag}
       	 // submitErrorsExist={this.props.submitErrorsExist}
       	  propsErrorMap={this.props.propsErrorMap}
       	  snapshot={this.props.snapshot}/>
@@ -237,7 +267,7 @@ function mapStateToProps({user, profile, list}) {
     /**
      * Get students school from snapshot
      * */
-    school: profile.studentProfile ? profile.snapshot.student : '',
+    school: profile.studentProfile ? profile.snapshot.name : '',
     enrollmentDate: profile.studentProfile.enrollmentDate ?  profile.studentProfile.enrollmentDate : new Date, 
     graduationDate: profile.studentProfile.graduationDate ? profile.studentProfile.graduationDate : new Date,  
 
@@ -246,7 +276,7 @@ function mapStateToProps({user, profile, list}) {
     majorsList: list.majors ? list.majors : [],
 
     /*gpa(value, boolean)*/
-    gpa: profile.studentProfile.gpa ? profile.studentProfile.gpa : '',
+    gpa: profile.studentProfile.gpa ? profile.studentProfile.gpa : '0.00',
     gpaToggle: profile.studentProfile.gpaToggle ? profile.studentProfile.gpaToggle : false,
 
     /*personalEmail(value, boolean)*/

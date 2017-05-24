@@ -1,6 +1,7 @@
 import { employerProfilePUT, employerProfilePATCH, validateEmployerProfileFields,
   studentProfilePUT, studentProfilePATCH, validateStudentProfileFields,
-  compareToSnapshot, getUserInfo } from 'helpers/profile'
+  compareToSnapshot, getUserInfo, extractLanguageId,
+  extractClubsObject, extractSportsObject } from 'helpers/profile'
 import { toISO, hasCarBoolean } from 'helpers/utils'
 
 // =======================================================
@@ -12,8 +13,8 @@ import { toISO, hasCarBoolean } from 'helpers/utils'
 const UPDATE_PROFILE_FIELD = 'PROFILE.UPDATE_PROFILE_FIELD'
 
 const TOGGLE_BUTTON = 'PROFILE.TOGGLE_BUTTON'
-const TOGGLE_BUTTON_SUCCESS = 'PROFILE.TOGGLE_BUTTON_SUCCESS'
-const TOGGLE_BUTTON_FAILURE = 'PROFILE.TOGGLE_BUTTON_FALIURE'
+
+const UPDATE_TAG = 'PROFILE.UPDATE_TAG'
 
 const SAVING_PROFILE_INFO = 'PROFILE.SAVING_PROFILE_INFO'
 const SAVED_PROFILE_INFO_SUCCESS = 'PROFILE.SAVED_PROFILE_INFO_SUCCESS'
@@ -34,19 +35,10 @@ export function toggleButton(booleanState, buttonName) {
     }
 }
 
-export function toggleButtonSuccess(booleanState, buttonName) {
+export function updateTag(listName) {
     return {
-        type: TOGGLE_BUTTON_SUCCESS,
-        booleanState,
-        buttonName
-    }
-}
-
-export function toggleButtonFailure(error, buttonName) {
-    return {
-        type: TOGGLE_BUTTON_FAILURE,
-        buttonName,
-        error
+        type: UPDATE_TAG,
+        listName
     }
 }
 
@@ -115,9 +107,21 @@ export function savedProfileFailure(profileErrorsObj, error, isAStudent) {
 //NOTE: Refer to signupform redux line 78, passing dispatch
 export function handleToggleButton(booleanState, buttonName) {
     return function(dispatch) {
-        debugger
         //ACTION: FETCHING_USER_PROFILE 
         dispatch(toggleButton(booleanState, buttonName))
+    }
+}
+
+export function handleSaveNewTag(newTagName, pickList, textField, updateProfileFieldName) {
+    debugger
+    return function(dispatch) {
+        //ACTION: FETCHING_USER_PROFILE 
+        dispatch(saveNewTag())
+        
+        
+        
+        //Enter new tag into sportsTeam or clubsList
+        dispatch(updateProfileField(updateProfileFieldName, newTagName, true))
     }
 }
 
@@ -165,37 +169,37 @@ export function submitProfileFirstTime(userTypeInt, profileInfo, user) {
     	  } else {
     	   console.log('SUBMIT STUDENT PROFILE NO ERRORS')
     	    // No errors, proceed to /PUT on api/me
+          debugger
           var putData = {
-            "is_a_student": true,
-            "is_profile_completed": true,
-            "email": user.email,
-            "first_name": profileInfo.firstName,
-            "last_name": profileInfo.lastName,
-            "is_active": true,
-            "date_joined": user.dateJoined,
-            "mobile": user.mobile,
+              "is_a_student": true,
+              "is_profile_completed": true,
+              "email": user.email,
+              "first_name": profileInfo.firstName,
+              "last_name": profileInfo.lastName,
+              "is_active": true,
+              "date_joined": user.dateJoined,
+              "mobile": user.mobile,
         	  "schoolName": profileInfo.school,
-      		  languages: profileInfo.languages,
-      		  sports: profileInfo.sportsTeam,
-      		  clubs: profileInfo.schoolClub,
-              edu: profileInfo.educationLevel.id,
+      		  languages: btoa(JSON.stringify(extractLanguageId(profileInfo.languages))),
+      		  sports: btoa(JSON.stringify(extractSportsObject(profileInfo.sportsTeam, profileInfo))),
+      		  clubs: btoa(JSON.stringify(extractClubsObject(profileInfo.schoolClub, profileInfo))),
+              edu_level_id: profileInfo.educationLevel.id,
       		  email_pref: profileInfo.emailPreferences.id,
       		  status: profileInfo.studentStatus.id,
       		  enroll_date: toISO(profileInfo.enrollmentDate),
       		  grad_date: toISO(profileInfo.graduationDate),
-      		  major: profileInfo.major.id,
-      		  GPA: profileInfo.gpa,
+      		  major_id: profileInfo.major.id,
+      		  GPA: parseFloat(profileInfo.gpa),
       		  personal_email: profileInfo.personalEmail,
       		  gender: profileInfo.gender.id,
-
               /*Converts the value to num*/
       		  has_car: hasCarBoolean(profileInfo.hasCar),
-      		  company: profileInfo.companyName,
-      		  position: profileInfo.position,
+      		  recent_company_name: profileInfo.companyName,
+      		  recent_company_position: profileInfo.position,
       		  fun_fact: profileInfo.funFacts,
       		  hometown: profileInfo.hometown,
       		  hobbies: profileInfo.hobbies,
-      		  photo: profileInfo.photo,
+      		  profilepicture: profileInfo.photo,
       		  resume: profileInfo.resume,
       	  }
     	    studentProfilePUT(putData)
@@ -540,6 +544,11 @@ export default function profile (state = initialState, action) {
             ...state,
             studentProfile: studentProfile(state.studentProfile, action)
         }
+    case UPDATE_TAG:
+        return {
+            ...state,
+            studentProfile: studentProfile(state.studentProfile, action)
+        }
     default :
       return state
   }
@@ -635,9 +644,9 @@ const initialStudentProfileState = {
   gpa: '',
   personalEmail: '',
   gender: '',
-  sportsTeam: '',
-  schoolClub: '',
-  languages: '',
+  sportsTeam: [],
+  schoolClub: [],
+  languages: [],
   hasCar: '',
   companyName: '',
   position: '',
@@ -662,8 +671,13 @@ function studentProfile(state = initialStudentProfileState, action) {
             buttonName: action.buttonName,
             [action.buttonName]: action.booleanState
     }
-          //return changes
+    case UPDATE_TAG:
+        return {
+            ...state,
+            listName: action.listName
+    }
     case UPDATE_PROFILE_FIELD:
+      debugger
       return {
         ...state,
         [action.fieldName]: action.newValue,

@@ -235,9 +235,9 @@ export default function StudentProfile (props) {
 			     
 			     className={props.propsErrorMap.gpa ? input + ' ' + error : input}
 			     type="number"
-			     step="0.1"
+			     step="0.01"
 			     max="4"
-			     placeholder="GPA" 
+			     placeholder="GPA(0.00 - 4.00)" 
 			     onChange={(e) => {props.updateProfileField('gpa', e.target.value, true); props.onHandleButtonToggle(false, 'gpaToggle')}} 
 			     value={props.gpa}
 			     />
@@ -246,7 +246,10 @@ export default function StudentProfile (props) {
 			   <p>or</p>
 			 </li>
 			 <li className={saveBtnList}>
-               <button className={props.gpaToggle ? saveBtnClicked : saveBtn} onClick={() => props.onHandleButtonToggle(true, 'gpaToggle') }>I do not have a GPA</button>
+               <button className={props.gpaToggle ? saveBtnClicked : saveBtn} 
+                                onClick={(e) => {props.onHandleButtonToggle(true, 'gpaToggle'); props.updateProfileField('gpa', '0.00', true)}}>
+                    I do not have a GPA
+                </button>
 			 </li>
 			</StudentProfileField>
 
@@ -307,6 +310,7 @@ export default function StudentProfile (props) {
                    data={props.sportsList}
                    value={props.sportsTeam}
                    onChange={ value => props.updateProfileField('sportsTeam', value, true)}
+                   onCreate={ value => props.onCreateNewTag(value, 'sportsList', 'sport', 'sportsTeam')}
                    />
              </li>
 			</StudentProfileField>
@@ -331,6 +335,7 @@ export default function StudentProfile (props) {
 			   messages={messages}
 			   data={props.schoolClubList}
 			   value={props.schoolClub}
+               onCreate={ value => props.onCreateNewTag(value, 'schoolClubList', 'club_name', 'schoolClub')}
 			   onChange={ value => props.updateProfileField('schoolClub', value, true)}
 			   />
             </li>
@@ -353,7 +358,7 @@ export default function StudentProfile (props) {
 			   className={props.propsErrorMap.languages ? shortInput + ' ' +  error : shortInput}
 			   textField='language'
 			   valueField='id'
-               placeholder='English, French'
+               placeholder='French, Spanish'
 			   messages={messages}
 			   data={props.languagesList}
 			   onChange={ value => props.updateProfileField('languages', value, true)}
