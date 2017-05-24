@@ -35,6 +35,7 @@ import { authRedirectFilter } from 'config/routes'
 
 // ==============CSS IMPORTS============================= //
 import pageContainer  from 'sharedStyles/sharedContainerStyles.css'
+import { rejectButton, cancelBtn, rejectButtonsContainer } from '../styles/index.css'
 
 
 const ApplicantsContainer = React.createClass({
@@ -73,8 +74,27 @@ const ApplicantsContainer = React.createClass({
     return authRedirectFilter(config, this.context.store, this.context.router)
   },
 
-  openConfirmRejectStudentModal () {
+  openConfirmRejectStudentModal (studentObject) {
+
+   /*
+    * As we open the Confirm Reject Student Modal, we 
+    * need to change the applicants.selectedStudent so that if we 
+    * are to reject them, we have both the  
+    * student id and the job id.
+    * 
+    * Job Id is acquired from applicants.selectedJob.
+    */
+    console.log(studentObject, "kajsdlkjsa")
+    this.context.store.dispatch(this.props.changeSelectedStudent(studentObject))
+
     this.refs.confirmRejectStudentModal.show()
+  },
+
+  handleRejectStudent() {
+    var jobId = this.props.currentSelectedJob.job_id;
+    var studentId = this.props.currentSelectedStudent.student_id;
+
+    this.context.store.dispatch(this.props.rejectStudent(jobId, studentId))
   },
 
   closeConfirmRejectStudentModal () {
@@ -120,9 +140,14 @@ const ApplicantsContainer = React.createClass({
               ref="confirmRejectStudentModal"
               title="">
               <div>
-                <div>
-                  <button>YES, REJECT</button>
-                  <button onClick={this.closeConfirmRejectStudentModal}>CANCEL</button>
+                { this.props.currentSelectedStudent
+                  ? <div>Are you sure you want to REJECT 
+                          {` ${this.props.currentSelectedStudent.user_firstName} ${this.props.currentSelectedStudent.user_lastName} `}
+                        from your <b>{this.props.currentSelectedJob.title}</b> position?</div>
+                  : ''}
+                <div className={rejectButtonsContainer}>
+                  <button className={rejectButton} onClick={this.handleRejectStudent}>YES, REJECT</button>
+                  <button className={cancelBtn} onClick={this.closeConfirmRejectStudentModal}>CANCEL</button>
                 </div>
               </div>
           </SkyLight>
@@ -152,6 +177,7 @@ function mapStateToProps({user, job, profile, applicants, list}) {
     profile: profile.employerProfile ? profile.employerProfile : {},
     jobs: job.employerJobs ? job.employerJobs : [],
     currentSelectedJob: applicants.currentSelectedJob ? applicants.currentSelectedJob : {},
+    currentSelectedStudent: applicants.currentSelectedStudent ? applicants.currentSelectedStudent : {},
     lists: list ? list : {}
   }
 }

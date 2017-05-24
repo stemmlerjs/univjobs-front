@@ -102,6 +102,8 @@ export default function Applicants (props) {
                         handleOpenConfirmRejectStudentModal={props.handleOpenConfirmRejectStudentModal}
          	              handleCloseConfirmRejectStudentModal={props.handleCloseConfirmRejectStudentModal}
                         lists={props.lists}
+                        studentObj={applicant}
+                        state={applicant.state}
                       />
                   ))
                 : 'No applicants for this job'

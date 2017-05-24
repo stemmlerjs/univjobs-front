@@ -30,7 +30,8 @@ import { pageContainer, cardContainer, card,
     cardModalHeader, jobModalTitle, jobModalIndustry, cardModalBodyLeft, cardModalBodyRight, cardModalScroll, cardModalFooter,
 	image, questionHeader, crop, imgContainer, cardTopContainer, cardBottomContainer, cardHeaderContainer,
     cardHeaderItemContainer, cardHeaderItemMainText, cardHeaderItemSecondaryText, cardHeaderItemAltItemText,
-    cardSectionOne, cardSectionTwo, cardActionButtons, cardSectionTitle, cardSectionText, whiteTxt, gpaTextActive, gpaTextDeactive } from '../styles/StudentCard.css'
+    cardSectionOne, cardSectionTwo, cardActionButtons, cardSectionTitle, cardSectionText, whiteTxt, gpaTextActive, gpaTextDeactive,
+    cardContainer__contacted, hidden } from '../styles/StudentCard.css'
 
 /*
 StudentCard.propTypes = {
@@ -63,7 +64,7 @@ const StudentCard = ({pictureUrl, resumeUrl, name, major, funFact, recentCompany
     schoolName,
     hometown,
     hobbies,
-    
+    state,
     handleOpenStudentProfileModal,
     handleCloseStudentProfileModal,
     handleOpenInviteStudentModal,
@@ -71,8 +72,12 @@ const StudentCard = ({pictureUrl, resumeUrl, name, major, funFact, recentCompany
     handleOpenConfirmRejectStudentModal,
     handleCloseConfirmRejectStudentModal,
 }) => (
-
-    <div className={cardContainer}>
+    
+    <div className={state == 'CONTACTED' 
+        ? cardContainer__contacted 
+        : (state == 'INITIAL' 
+            ? cardContainer
+            : hidden ) }>
         <div className={cardTopContainer}>
             <div className={imgContainer}>
                 <img src={pictureUrl}></img>
@@ -219,7 +224,10 @@ const StudentCard = ({pictureUrl, resumeUrl, name, major, funFact, recentCompany
             : (
               <div>
                 <div className={cardActionButtons}>
-                  <button onClick={handleOpenConfirmRejectStudentModal}>REJECT</button>
+                  <button onClick={() => {
+                      handleOpenConfirmRejectStudentModal(studentObj)
+                    }}>REJECT
+                  </button>
                   <button><a className={whiteTxt} target="_blank" href={resumeUrl}>RESUME</a></button>
                   <button>MORE</button>
                 </div>

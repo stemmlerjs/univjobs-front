@@ -29,14 +29,20 @@ export default function SideBar ({onLogout, isAStudent, profilePicture}) {
         {isAStudent 
           ? <Link to="/profile/st" className={noDecoration}>
               <div className={sidebarItem}>
-                <img className={profileImg + " " + animationItem8} src={profilePicture}></img>
+                { profilePicture.indexOf("undefined") === -1
+                    ? <img className={profileImg + " " + animationItem8} src={profilePicture}></img>
+                    : ''
+                }
                 <div className={animationTxt8}>Profile</div>
                 <div className={animateLine1}></div>
               </div>
             </Link>
           : <Link to="/profile/em" className={noDecoration}>
               <div className={sidebarItem}>
-                <img className={profileImg + " " + animationItem8} src={profilePicture}></img>
+                { profilePicture.indexOf("undefined") === -1
+                    ? <img className={profileImg + " " + animationItem8} src={profilePicture}></img>
+                    : ''
+                }
                 <div className={animationTxt8}>Profile</div>
                 <div className={animateLine1}></div>
               </div>
@@ -106,7 +112,11 @@ export default function SideBar ({onLogout, isAStudent, profilePicture}) {
             </div>
           </Link>
       }
-        
+        {/*
+          SETTINGS
+
+            - we don't need this at all right now.
+
         <Link to="/settings" className={noDecoration}>
           <div className={sidebarItem}>
             <i className={animationItem4 + " fa fa-cog"} aria-hidden="true"></i>
@@ -114,7 +124,7 @@ export default function SideBar ({onLogout, isAStudent, profilePicture}) {
             <div className={animateLine2}></div>
           </div>
         </Link>
-
+        */}
 
         
         

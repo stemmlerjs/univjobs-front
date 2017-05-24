@@ -210,7 +210,8 @@ export function getAllJobsStudentJobView () {
 
        /*
         * If successful, we will add all of the jobs to the
-        * studentJobsView. This is where students will pull 
+        * studentJobsView (part of the redux store). 
+        * This is where students will pull 
         * in jobs from the store.
         *
         * The API call returns jobs and questions.
