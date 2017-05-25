@@ -75,7 +75,35 @@ export default function Applicants (props) {
           {
             props.currentSelectedJob.applicants 
               ? props.currentSelectedJob.applicants.length != 0 
-                  ? props.currentSelectedJob.applicants.map((applicant) => (
+                  ? 
+                  
+                  props.currentSelectedJob.applicants.filter((applicant) => {
+
+                  {
+                   /*
+                    * FILTER: We want to filter all of the applicants and make sure not to 
+                    * render any cards that have been REJECTED.
+                    *
+                    * Note: REJECTED cards are still rendered directly after rejecting a student 
+                    * so we needed a way to make these disappear without reloading the page. 
+                    * @see applicants.hiddenStudents
+                    *
+                    * After we've filtered through, we map each of the applicants to a <StudentCard/>
+                    */
+                  }
+
+                    var render = true;
+
+                    props.hiddenStudents.map((hiddenStudent) => {
+                      if ((hiddenStudent.studentId == applicant.student_id) && (hiddenStudent.jobId == applicant.job_id)) {
+                        render = false;
+                      }
+                    })
+
+                    return render;
+                  })
+                  .map((applicant) => (
+                    
                       <StudentCard
                         key={applicant.student_id}
                         pictureUrl={config.mediaUrl + 'avatar/' + applicant.photo_url}
@@ -101,6 +129,8 @@ export default function Applicants (props) {
                         isDashboardCard={false}
                         handleOpenConfirmRejectStudentModal={props.handleOpenConfirmRejectStudentModal}
          	              handleCloseConfirmRejectStudentModal={props.handleCloseConfirmRejectStudentModal}
+                        handleOpenStudentProfileAndAnswersModal={props.handleOpenStudentProfileAndAnswersModal}
+                        handleCloseStudentProfileAndAnswersModal={props.handleCloseStudentProfileAndAnswersModal}
                         lists={props.lists}
                         studentObj={applicant}
                         state={applicant.state}
@@ -109,32 +139,6 @@ export default function Applicants (props) {
                 : 'No applicants for this job'
             : ''
           }
-          
-
-            {/*
-
-          key={student.student_id}
-                    name={student.user_firstName.substring(0,1).toUpperCase() + student.user_firstName.substring(1) + ' ' 
-                      + student.user_lastName.substring(0,1).toUpperCase() + student.user_lastName.substring(1)}
-                    pictureUrl={config.mediaUrl + 'avatar/' + student.photo_url}
-                    resumeUrl={config.mediaUrl + 'res/' + student.resume_url}
-                    funFact={student.fun_fact}
-                    educationLevel={student.edu_level}
-                    hasCar={student.has_car}
-                    hobbies={student.hobbies}
-                    major={student.major}
-                    recentCompanyName={student.recent_company_name}
-                    recentPosition={student.recent_company_position}
-                    showResume={false}
-                    isDashboardCard={true}
-                    handleOpenStudentProfileModal={handleOpenStudentProfileModal}
-                    handleCloseStudentProfileModal={handleCloseStudentProfileModal}
-                    handleOpenInviteStudentModal={handleOpenInviteStudentModal}
-                    handleCloseInviteStudentModal={handleCloseInviteStudentModal}
-                    handleDoInviteStudent={handleDoInviteStudent}
-                    studentObj={student}
-
-*/}
         </div>
 
       </div>

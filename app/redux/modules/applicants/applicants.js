@@ -12,6 +12,8 @@ const REJECTING_STUDENT = 'REJECTING_STUDENT'
 const REJECT_STUDENT_SUCCESS = 'REJECT_STUDENT_SUCCESS'
 const REJECT_STUDENT_FAILURE = 'REJECT_STUDENT_FAILURE'
 
+const OPEN_STUDENT_PROFILE_AND_ANSWERS_MODAL = 'OPEN_STUDENT_PROFILE_AND_ANSWERS_MODAL'
+
 // =======================================================
 // ================== ACTIONS CREATORS ===================
 // =======================================================
@@ -36,9 +38,11 @@ export function rejectingStudent () {
   }
 }
 
-export function rejectStudentSuccess () {
+export function rejectStudentSuccess (jobId, studentId) {
   return {
-    type: REJECT_STUDENT_SUCCESS
+    type: REJECT_STUDENT_SUCCESS,
+    jobId,
+    studentId
   }
 }
 
@@ -50,7 +54,7 @@ export function rejectStudentFailure (error) {
 }
 
 export function rejectStudent (jobId, studentId) {
-  return function (dispatch) {
+  return function (dispatch, other) {
 
    /*
     * First, lets notify that we are going to start
@@ -60,7 +64,7 @@ export function rejectStudent (jobId, studentId) {
 
     dispatch(rejectingStudent())
 
-    rejectStudentHTTPRequest(jobId, studentId)
+    return rejectStudentHTTPRequest(jobId, studentId)
     
       .then((response) => {
 
@@ -68,8 +72,8 @@ export function rejectStudent (jobId, studentId) {
         * If the response came back at all, this means that 
         * it was a success.
         */
-
-        dispatch(rejectStudentSuccess())
+        
+        dispatch(rejectStudentSuccess(jobId, studentId))
 
       })
 
@@ -86,6 +90,13 @@ export function rejectStudent (jobId, studentId) {
   }
 }
 
+export function openStudentProfileAndAnswersModal (studentObject) {
+  return {
+    type: OPEN_STUDENT_PROFILE_AND_ANSWERS_MODAL,
+    studentObject
+  }
+}
+
 // =======================================================
 // ================== INITIAL STATE ======================
 // =======================================================
@@ -93,9 +104,11 @@ export function rejectStudent (jobId, studentId) {
 const initialApplicationsState = {
 	currentSelectedJob: {},
 	currentSelectedStudent: {},
+  hiddenStudents: [],
   isRejecting: false,
   rejectSuccess: false,
-  error: ''
+  error: '',
+  studentProfileAndAnswersModal: {}
 }
 
 // =======================================================
@@ -104,6 +117,49 @@ const initialApplicationsState = {
 
 export default function applicants (state = initialApplicationsState, action) {
   switch(action.type) {
+    case OPEN_STUDENT_PROFILE_AND_ANSWERS_MODAL:
+
+      /*
+			* We need to display the student's sports in a comma delimited list.
+			* Create this string and append it for the 'sports'
+			*/
+			
+			var sportsString = "";
+			var sports = Object.keys(action.studentObject.sports);
+
+			for (var i = 0; i < sports.length; i++) {
+				if (i !== sports.length - 1) {
+					sportsString = sportsString + action.studentObject.sports[sports[i]] + ", "
+				} else {
+					sportsString = sportsString + action.studentObject.sports[sports[i]]
+				}
+			}
+
+			action.studentObject.sportsString = sportsString
+
+		 /*
+			* Additionally, we have to do the same thing with clubs.
+			*/
+
+			var clubsString = "";
+			var clubs = Object.keys(action.studentObject.clubs)
+
+			for (var j = 0; j < clubs.length; j++) {
+				if (j !== clubs.length - 1) {
+					clubsString = clubsString + action.studentObject.clubs[clubs[j]] + ", "
+				} else {
+					clubsString = clubsString + action.studentObject.clubs[clubs[j]]
+				}
+			}
+
+			action.studentObject.clubsString = clubsString
+
+      return {
+        ...state,
+        studentProfileAndAnswersModal: {
+          student: action.studentObject
+        }
+      }
     case REJECT_STUDENT_FAILURE:
       return {
         ...state,
@@ -111,11 +167,17 @@ export default function applicants (state = initialApplicationsState, action) {
         error: action.error
       }
     case REJECT_STUDENT_SUCCESS:
+    var hiddenStudents = state.hiddenStudents;
+    hiddenStudents.push({
+      studentId: action.studentId,
+          jobId: action.jobId
+    })
       return {
         ...state,
         isRejecting: false,
         error: '',
-        rejectSuccess: true
+        rejectSuccess: true,
+        hiddenStudents: hiddenStudents
       }
     case REJECTING_STUDENT:
       return {

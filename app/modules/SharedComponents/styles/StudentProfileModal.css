@@ -56,8 +56,7 @@
 
 .experienceHobbiesEtc {
   text-align: left;
-  padding-left: 20px;
-  padding-top: 17px;
+height: 111px;
 }
 .listItemContainer {
   display: flex;
@@ -103,4 +102,61 @@ overflow-y: scroll;
 .invite:hover {
     background-color: #5396E4;
     color:white;
+}
+
+.buttonsContainer {
+      position: absolute;
+    bottom: 30px;
+}
+
+.buttons {
+  background-color: white;
+    border: none;
+    color: #5396E4 !important;
+    font-weight: bold;
+    font-size: 13px;
+    width: 109px;
+    height: 51px;
+    cursor: pointer;
+    outline: none;
+    transition: 0.1s ease-in;
+}
+
+.buttons:hover {
+    background-color: #5396E4;
+    color:white !important;
+}
+
+.buttons:hover > a{
+    color:white !important;
+}
+
+.whiteTxt {
+  color: #5396E4 !important;
+  padding: 19px;
+}
+
+.questionText {
+  font-size: 15px;
+}
+
+.questionHeader {
+      font-weight: bold;
+}
+
+.questionContainer {
+  margin-bottom:20px
+}
+
+.questionsAndAnswersContainer {
+      height: 176px;
+    overflow-y: scroll;
+}
+
+.hiddenContactInfo {
+  width: 79%;
+  height: 20px;
+  background-color: lightgrey;
+  margin-bottom: 9px;
+  margin-top: 4px;
 }

@@ -71,13 +71,26 @@ const StudentCard = ({pictureUrl, resumeUrl, name, major, funFact, recentCompany
     handleCloseInviteStudentModal,
     handleOpenConfirmRejectStudentModal,
     handleCloseConfirmRejectStudentModal,
+    handleOpenStudentProfileAndAnswersModal,
+    handleCloseStudentProfileAndAnswersModal
 }) => (
+
+   /*
+    * If we're on the Applicants page, we want to style the card differently if 
+    * we've already CONTACTED the students.
+    *
+    * If we're on the Employer Dashboard, we just want to show all cards normally.
+    */
     
-    <div className={state == 'CONTACTED' 
-        ? cardContainer__contacted 
-        : (state == 'INITIAL' 
-            ? cardContainer
-            : hidden ) }>
+    <div className={!isDashboardCard 
+        ? (state == 'CONTACTED' 
+            ? cardContainer__contacted 
+            : (state == 'INITIAL' 
+                ? cardContainer
+                : hidden ) 
+        )
+        : cardContainer
+    }>
         <div className={cardTopContainer}>
             <div className={imgContainer}>
                 <img src={pictureUrl}></img>
@@ -229,7 +242,13 @@ const StudentCard = ({pictureUrl, resumeUrl, name, major, funFact, recentCompany
                     }}>REJECT
                   </button>
                   <button><a className={whiteTxt} target="_blank" href={resumeUrl}>RESUME</a></button>
-                  <button>MORE</button>
+                  <button onClick={
+
+                      function () {
+                          handleOpenStudentProfileAndAnswersModal(studentObj)
+                      }
+                      
+                  }>MORE</button>
                 </div>
               </div>
               )

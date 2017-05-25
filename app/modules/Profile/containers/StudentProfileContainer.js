@@ -16,6 +16,7 @@ import * as listActionCreators from 'redux/modules/list/list'
 var ReactToastr = require("react-toastr");
 var { ToastContainer } = ReactToastr;
 var ToastMessageFactory = React.createFactory(ReactToastr.ToastMessage.animation);
+
 // ========================================== //
 
 const actionCreators = {

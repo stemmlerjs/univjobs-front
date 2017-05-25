@@ -263,6 +263,7 @@ const EmployerDashboardContainer = React.createClass({
                       studentObj={this.props.studentProfileModal.student}
                       recentCompanyName={this.props.studentProfileModal.student.recent_company_name}
                       recentCompanyPosition={this.props.studentProfileModal.student.recent_company_position}
+                      isDashboardCard={true}
                       />
                   : ''
               } 

@@ -17,11 +17,16 @@ import ReactTooltip from 'react-tooltip'
 
 import { studentProfileModalContainer, studentProfileLeftContainer, stProfileHeader, stProfileImageContainer,
   stProfileNameAndSchool, stProfileName, stProfileProgram, studenProfileRightContainer, stProfileGrad, itemIcon, experienceHobbiesEtc,
-  listItemContainer, itemIconGPA, supplementalItemsContainer, supplementalItemsDetail, invite, leftsideDetails } from '../styles/StudentProfileModal.css'
+  listItemContainer, itemIconGPA, supplementalItemsContainer, supplementalItemsDetail, invite, leftsideDetails,
+  buttons, whiteTxt, questionText, questionHeader, questionContainer, buttonsContainer, questionsAndAnswersContainer,
+  hiddenContactInfo } from '../styles/StudentProfileModal.css'
 
 const StudentProfileModal = ({pictureUrl, name, major, sportsString, 
   schoolName, hometown, hasCar, clubsString, gradDate, lists, gpa, funFact, hobbies,
-  handleOpenInviteStudentModal, studentObj, recentCompanyName, recentCompanyPosition}) => (
+  handleOpenInviteStudentModal, studentObj, recentCompanyName, recentCompanyPosition, 
+  
+  isDashboardCard, resumeUrl, questions, answers,
+  handleOpenConfirmRejectStudentModal}) => (
 
     <div className={studentProfileModalContainer}>
       <div className={studentProfileLeftContainer}>
@@ -51,6 +56,13 @@ const StudentProfileModal = ({pictureUrl, name, major, sportsString,
         <div className={leftsideDetails}>
           
               <div className={supplementalItemsContainer}>
+                {!isDashboardCard
+                  ? <div>
+                      <div><b>Contact Info</b></div>
+                      <div className={hiddenContactInfo}></div>
+                    </div>
+                  : ''}
+
                 {
                   recentCompanyName !== ""
                     ? <div>
@@ -123,13 +135,84 @@ const StudentProfileModal = ({pictureUrl, name, major, sportsString,
                 : ''
             }
           </div>
-        <button className={invite} onClick={
-          function() {
-              handleOpenInviteStudentModal(studentObj)
-          }
-        }>INVITE</button>
+
+        {
+         /* =====================================
+          *     QUESTIONS AND ANSWERS
+          * =====================================
+          */
+        }
+
+        { !isDashboardCard
+            ? <div className={questionsAndAnswersContainer}>
+                {
+                  questions.map((question, index) => {
+
+                    return (
+                      <div className={questionContainer} key={question.question_id}>
+                        <div>
+                          <span className={questionHeader}>{"Q" + (index + 1) + ": "}</span>
+                          <span className={questionText}>{question.text}</span>
+                        </div>
+                        { answers.filter((answer) => answer.question_id == question.question_id)
+                            .map((answer) => {
+                              return (
+                                <div key={answer.question_id}>
+                                  <span className={questionHeader}>{"A" + (index + 1) + ": "}</span>
+                                  <span className={questionText}>{answer.text}</span>
+                                </div>
+                              )
+                            })
+                        }
+                      </div>
+                    )
+                  })
+                }
+              </div>
+            : ''
+        }
+        
+        {
+         /* =====================================
+          *     ACTION BUTTONS
+          * =====================================
+          */
+        }
+
+        {
+          isDashboardCard
+            ? <div>
+                <button className={invite} onClick={
+                  function() {
+                      handleOpenInviteStudentModal(studentObj)
+                  }
+                }>INVITE</button>
+              </div>
+            : <div className={buttonsContainer}>
+
+                <button className={buttons} onClick={
+                  function () {
+                    handleOpenConfirmRejectStudentModal(studentObj)
+                  }
+                }>REJECT</button>
+                <button className={buttons}><a className={whiteTxt} target="_blank" href={resumeUrl}>RESUME</a></button>
+                <button className={buttons}>CONTACT</button>
+            
+              </div>
+        }
+
+        
+        
       </div>
     </div>
 )
 
 export default StudentProfileModal
+
+// answers.filter((answer) => {
+//                 if (answer.question_id === question.question_id) {
+//                   return (
+//                     <div>{"A" + (index + 1) + ": "}{answer.text}</div>
+//                   )
+//                 }
+//               })
