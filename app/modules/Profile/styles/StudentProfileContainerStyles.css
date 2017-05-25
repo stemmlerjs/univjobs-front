@@ -160,3 +160,9 @@
 .showInput {
     display: inherit;
 }
+
+.textArea {
+    composes: input from 'sharedStyles/styles.css';
+    width: 35vw;
+    resize: vertical;
+}

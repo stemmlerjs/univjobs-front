@@ -23,7 +23,7 @@ import { pageContainer, profileField, profileHeader,
         mediumDropDown, longDropDown, dropzone, 
         dropzoneContent, inlineDropzone, btn, 
         saveBtnContainer, saveBtnList, saveBtnClicked, 
-        saveBtn, space, hideInput, showInput} from '../styles/StudentProfileContainerStyles.css'
+        saveBtn, space, hideInput, showInput, textArea} from '../styles/StudentProfileContainerStyles.css'
 import { error } from 'sharedStyles/error.css' 
 import { input } from 'sharedStyles/widgets.css'
 
@@ -284,6 +284,7 @@ export default function StudentProfile (props) {
 			  valueField="id" textField="gender_description"
 			  messages={messages}
 			  data={props.gendersList}
+              defaultValue={1}
 			  value={props.gender}
 			  onChange={value => props.updateProfileField('gender', value, true)}
 			/>	
@@ -422,14 +423,15 @@ export default function StudentProfile (props) {
 			{/* FUN FACTS */}
 			<StudentProfileField title="A fun fact about me is ">
 			<li>
-			 <input
-			   className={props.propsErrorMap.funFacts ? input + ' ' + error : input}
+			 <textarea
+			   className={props.propsErrorMap.funFacts ? textArea + ' ' + error : textArea}
 			   type="text"
-			   placeholder="Example: I can juggles chainsaws, I can eat 60 hot dogs in 30 minutes"
+			   placeholder="Example: I backpacked to Europe by myself last summer"
+               maxLength="140"
 			   onChange={(e) => props.updateProfileField('funFacts', e.target.value, true)}
 			   value={props.funFacts}
 			  >
-			 </input>
+			 </textarea>
 			 </li>
 			  <li>
 			    <i className="fa fa-info-circle fa-2x" aria-hidden="true" data-tip="No experience? Use this as a way to tell employers how great you are!"></i>

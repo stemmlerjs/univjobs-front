@@ -25,6 +25,10 @@ const actionCreators = {
 }
 
 const StudentProfileContainer = React.createClass({
+  propTypes: {
+      //TODO: Add propTypes here
+  },
+
   contextTypes: {
     router: PropTypes.object.isRequired,
     store: PropTypes.object.isRequired
@@ -284,7 +288,7 @@ function mapStateToProps({user, profile, list}) {
     emailToggle: profile.studentProfile.emailToggle ? profile.studentProfile.emailToggle : false,
 
     /*gender(value, boolean, list)*/
-    gender: profile.studentProfile.gender ? profile.studentProfile.gender : 'Undisclosed',
+    gender: profile.studentProfile.gender ? profile.studentProfile.gender : 1,
     gendersList: list.genders ? list.genders : [],
 
     /*sportsTeam(value, boolean, list)*/

@@ -182,7 +182,7 @@ export function validateStudentProfileFields(profileInfo, next) {
  	  photo: false,
 	  resume: false
   }
-  
+   
   debugger
   profileFieldErrors.emailPreferences = profileInfo.emailPreferences != "" ? false : true
   profileFieldErrors.firstName = validateFirstName(profileInfo.firstName) ? false : true
@@ -196,7 +196,7 @@ export function validateStudentProfileFields(profileInfo, next) {
   //debugger;
   profileFieldErrors.gpa = validateGPA(profileInfo.gpa)
   profileFieldErrors.personalEmail = validatePersonalEmail(profileInfo.personalEmail) ? false : true
-  profileFieldErrors.gender = profileInfo.gender != "" ? false : true
+  //profileFieldErrors.gender = profileInfo.gender != "" ? false : true
   //profileFieldErrors.sportsTeam = profileInfo.sportsTeam != "" ? false : true
   //profileFieldErrors.schoolClub = profileInfo.schoolClub != "" ? false : true
 
@@ -208,8 +208,8 @@ export function validateStudentProfileFields(profileInfo, next) {
   profileFieldErrors.funFacts = profileInfo.funFacts!= "" ? false : true
   profileFieldErrors.hometown = profileInfo.hometown != "" ? false : true
   profileFieldErrors.hobbies= profileInfo.hobbies != "" ? false : true
-  profileFieldErrors.photo = profileInfo.photo!= "" ? false : true
-  //profileFieldErrors.resume = profileInfo.resume != "" ? false : true
+  profileFieldErrors.photo = profileInfo.photo != "" ? false : true
+  profileFieldErrors.resume = profileInfo.resume != "" ? false : true
 
   // If an error exists in the map, then submitErrorsExist === true
   for (var attr in profileFieldErrors) {

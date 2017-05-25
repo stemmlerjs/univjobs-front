@@ -94,7 +94,6 @@ export function validateAddress(address) {
 export function validateGPA(gpa) {
   const re = /^[0-4]\.\d\d$/
 
-  debugger
   //Return false if regex passes, otherwise return true 
   return !re.test(gpa)
 
