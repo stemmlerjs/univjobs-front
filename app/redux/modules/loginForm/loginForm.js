@@ -110,7 +110,10 @@ export function submitLoginForm(email, password) {
             const isProfileCompleted = response.data.student !== undefined ? response.data.student.is_profile_complete : response.data.employer.is_profile_complete
 
             let profileInfo = response.data.student !== undefined ? response.data.student : response.data.employer
+            profileInfo.tags = profileInfo.is_a_student === 1 ? response.data.tags : ''
 
+
+            //debugger
             // ACTION: USER - DISPATCH (FETCHING_USER_INFO_SUCCESS)
             dispatch(fetchingUserInfoSuccess(
               isAStudent, dateJoined, email, firstName, lastName, mobile

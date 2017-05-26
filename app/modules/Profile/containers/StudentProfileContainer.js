@@ -26,11 +26,46 @@ const actionCreators = {
 }
 
 const StudentProfileContainer = React.createClass({
+  propTypes: {
+      //TODO: Add propTypes here
+  },
+
   contextTypes: {
     router: PropTypes.object.isRequired,
     store: PropTypes.object.isRequired
   },
 
+ /** createNewTag
+  *
+  * This function creates a new tag, not in the data list[sports, clubs].
+  * It takes the current value given by the user then creates an object with id and value, and concatenates them
+  *
+  * @return (Promise)
+  :*
+  */
+   createNewTag(newValue, list, textField, updateProfileFieldName) {
+       let pickList = {
+                    //Master list
+                    'schoolClubList': this.props.schoolClubList,
+                    'sportsList': this.props.sportsList,
+                    //propTypes, pushed to the database
+                    'schoolClub': this.props.schoolClub,
+                    'sportsTeam': this.props.sportsTeam
+
+       }
+       debugger
+
+       //Create a new tag array object
+       //Temporarily concat new value to the old specified list. 
+       //Updated list will show when queried
+       let tag = [{ [textField]: newValue }].concat(pickList[updateProfileFieldName])
+       
+       this.props.updateProfileField(updateProfileFieldName, tag, true)
+       
+       //Create an action creator to display which list got updated
+       this.props.updateTag(list)
+       
+   },
 
  /** retrieveAllLists
   *
@@ -38,7 +73,7 @@ const StudentProfileContainer = React.createClass({
   * and resolves it's returned promise object on completion.
   *
   * @return (Promise)
-  *
+  :*
   */
 
   retrieveAllLists() {
@@ -83,6 +118,25 @@ const StudentProfileContainer = React.createClass({
      return authRedirectFilter(config, this.context.store, this.context.router)
   },
 
+  handleSubmit(studentProps) {
+   //If profile is NOT completed, do /PUT. All fields must be populated and valid.
+   //debugger
+   console.log(studentProps)
+   if(!this.props.isProfileCompleted) {
+	   this.context.store.dispatch(
+		    profileActionCreators.submitProfileFirstTime(0, studentProps, this.props.user)
+	    )
+   } else {
+   	this.context.store.dispatch(
+	    profileActionCreators.updateProfile(0, studentProps, this.props.user, this.props.snapshot)
+	)
+	    console.log("Profile already completed, use PATCH")}
+   },
+
+   handleButtonToggle(booleanState, buttonName) {
+       this.props.handleToggleButton(booleanState, buttonName)
+   },
+
   /** finallyDisableOverlay
    * 
    * A handle to the closeOverlay() function passed down from a higher order component.
@@ -91,10 +145,11 @@ const StudentProfileContainer = React.createClass({
   */
 
   finallyDisableOverlay() {
-  	if(this.context.store.getState().application.isOverlayActive) {
+  	if(this.context.store.getState().rootApplication.isOverlayActive) {
   	  this.props.closeOverlay()
   	}
   },
+
 
   /** componentWillReceiveProps
    *
@@ -104,6 +159,11 @@ const StudentProfileContainer = React.createClass({
    */
 
   componentWillReceiveProps(newProps) {
+
+      //=======================submit & execute below=====================//
+      //TODO: Success for first time submit, need to redirect to job search
+      //
+      //Check user if it is a
      let error = newProps.error;
      let submitSuccess = newProps.submitSuccess;
      
@@ -130,6 +190,7 @@ const StudentProfileContainer = React.createClass({
    * When the DOM is loaded, do the following:
    * 1.)Get all lists required
    * 2.)Then, do the redirection filter (if required)
+   * 4.)Then, put back snapshot user info into inputs (if user has completed profile)
    * 3.)Then, close the overlay
    *
    */
@@ -146,18 +207,6 @@ const StudentProfileContainer = React.createClass({
   },
 
 
-  handleSubmit(studentProps) {
-   //If profile is NOT completed, do /PUT. All fields must be populated and valid.
-   if(!this.props.isProfileCompleted) {
-	   this.context.store.dispatch(
-		profileActionCreators.submitProfileFirstTime(0, studentProps, this.props.user)
-	    )
-   } else {
-   	this.context.store.dispatch(
-	  profileActionCreators.updateProfile(0, studentProps, this.props.user, this.props.snapshot)
-	)
-	console.log("Profile already completed, use PATCH")}
-   },
 
   render () {
     return (
@@ -172,7 +221,7 @@ const StudentProfileContainer = React.createClass({
       	  studentStatusList={this.props.studentStatusList}
       	  educationLevel={this.props.educationLevel}
       	  educationLevelList={this.props.educationLevelList}
-      	  school={this.props.school ? this.props.school.name : ''}
+      	  school={this.props.school}
       	  enrollmentDate={this.props.enrollmentDate}
       	  graduationDate={this.props.graduationDate}
       	  major={this.props.major}
@@ -197,6 +246,13 @@ const StudentProfileContainer = React.createClass({
       	  resume={this.props.resume}
       	  onSubmit={this.handleSubmit}
       	  updateProfileField={this.props.updateProfileField}
+          sportsToggle={this.props.sportsToggle}
+          clubsToggle={this.props.clubsToggle}
+          languagesToggle={this.props.languagesToggle}
+          gpaToggle={this.props.gpaToggle}
+          emailToggle={this.props.emailToggle}
+          onHandleButtonToggle={this.handleButtonToggle}
+          onCreateNewTag={this.createNewTag}
       	 // submitErrorsExist={this.props.submitErrorsExist}
       	  propsErrorMap={this.props.propsErrorMap}
       	  snapshot={this.props.snapshot}/>
@@ -223,22 +279,44 @@ function mapStateToProps({user, profile, list}) {
     /**
      * Get students school from snapshot
      * */
-    school: profile.studentProfile ? profile.snapshot.student : '',
+    school: profile.studentProfile ? profile.snapshot.name : '',
     enrollmentDate: profile.studentProfile.enrollmentDate ?  profile.studentProfile.enrollmentDate : new Date, 
     graduationDate: profile.studentProfile.graduationDate ? profile.studentProfile.graduationDate : new Date,  
+
+    /*major(value, list)*/
     major: profile.studentProfile.major ? profile.studentProfile.major : 1,  
     majorsList: list.majors ? list.majors : [],
-    gpa: profile.studentProfile.gpa ? profile.studentProfile.gpa : '0',
+
+    /*gpa(value, boolean)*/
+    gpa: profile.studentProfile.gpa ? profile.studentProfile.gpa : '0.00',
+    gpaToggle: profile.studentProfile.gpaToggle ? profile.studentProfile.gpaToggle : false,
+
+    /*personalEmail(value, boolean)*/
     personalEmail: profile.studentProfile.personalEmail ? profile.studentProfile.personalEmail : '',
-    gender: profile.studentProfile.gender ? profile.studentProfile.gender : 'Undisclosed',
+    emailToggle: profile.studentProfile.emailToggle ? profile.studentProfile.emailToggle : false,
+
+    /*gender(value, boolean, list)*/
+    gender: profile.studentProfile.gender ? profile.studentProfile.gender : 1,
     gendersList: list.genders ? list.genders : [],
+
+    /*sportsTeam(value, boolean, list)*/
     sportsTeam: profile.studentProfile.sportsTeam ? profile.studentProfile.sportsTeam : [],
+    sportsToggle: profile.studentProfile.sportsToggle ? profile.studentProfile.sportsToggle : false,
     sportsList: list.sports ? list.sports : [],
+
+    /*schoolClub(value, boolean, list)*/
     schoolClub: profile.studentProfile.schoolClub ? profile.studentProfile.schoolClub: [], 
+    clubsToggle: profile.studentProfile.clubsToggle ? profile.studentProfile.clubsToggle : false,
     schoolClubList: list.schoolClubs ? list.schoolClubs : [],
+
+    /*languages(value, boolean, list)*/
     languages: profile.studentProfile.languages ? profile.studentProfile.languages : [],
+    languagesToggle: profile.studentProfile.languagesToggle ? profile.studentProfile.languagesToggle : false,
     languagesList: list.languages ? list.languages : [],
+
+    /*hasCar(value)*/
     hasCar: profile.studentProfile.hasCar ? profile.studentProfile.hasCar : false,
+
     companyName: profile.studentProfile.companyName ? profile.studentProfile.companyName : '',
     position: profile.studentProfile.position ? profile.studentProfile.position : '',
     funFacts: profile.studentProfile.funFacts ? profile.studentProfile.funFacts : '',
@@ -249,29 +327,34 @@ function mapStateToProps({user, profile, list}) {
     isProfileCompleted: profile.isProfileCompleted ? profile.isProfileCompleted : '',
 
     propsErrorMap: profile.studentProfile.propsErrorMap ? profile.studentProfile.propsErrorMap : { 
-	emailPreferences: false,
-	firstName: false,
-   	lastName: false,
-  	studentStatus: false,
-	educationLevel: false,
-   	school: false,
-   	enrollmentDate: false,
-   	graduationDate: false,
-	major: false,
-   	gpa: false,
-   	personalEmail: false,
-	gender: false,
-   	sportsTeam: false,
-   	schoolClub: false,
-   	languages: false,
-   	hasCar: false,
-   	companyName: false,
-   	position: false,
-	funFacts: false,
-   	hometown: false,
-   	hobbies: false,
- 	photo: false,
-	resume: false
+        emailPreferences: false,
+        firstName: false,
+        lastName: false,
+        studentStatus: false,
+        educationLevel: false,
+        school: false,
+        enrollmentDate: false,
+        graduationDate: false,
+        major: false,
+        gpa: false,
+        personalEmail: false,
+        gender: false,
+        sportsTeam: false,
+        schoolClub: false,
+        languages: false,
+        hasCar: false,
+        companyName: false,
+        position: false,
+        funFacts: false,
+        hometown: false,
+        hobbies: false,
+        photo: false,
+        resume: false,
+        sportsToggle: false,
+        clubsToggle: false,
+        languagesToggle: false,
+        emailToggle: false,
+        gpaToggle: false,
     },
     error: profile.error ? profile.error : '',
     submitSuccess: profile.submitSuccess ? profile.submitSuccess : false

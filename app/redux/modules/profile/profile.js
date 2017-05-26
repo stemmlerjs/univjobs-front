@@ -1,6 +1,7 @@
 import { employerProfilePUT, employerProfilePATCH, validateEmployerProfileFields,
   studentProfilePUT, studentProfilePATCH, validateStudentProfileFields,
-  compareToSnapshot, getUserInfo } from 'helpers/profile'
+  compareToSnapshot, getUserInfo, extractLanguageId,
+  extractClubsObject, extractSportsObject } from 'helpers/profile'
 import { toISO, hasCarBoolean } from 'helpers/utils'
 
 // =======================================================
@@ -10,6 +11,10 @@ import { toISO, hasCarBoolean } from 'helpers/utils'
 
 // ********** Base form actions **************
 const UPDATE_PROFILE_FIELD = 'PROFILE.UPDATE_PROFILE_FIELD'
+
+const TOGGLE_BUTTON = 'PROFILE.TOGGLE_BUTTON'
+
+const UPDATE_TAG = 'PROFILE.UPDATE_TAG'
 
 const SAVING_PROFILE_INFO = 'PROFILE.SAVING_PROFILE_INFO'
 const SAVED_PROFILE_INFO_SUCCESS = 'PROFILE.SAVED_PROFILE_INFO_SUCCESS'
@@ -22,6 +27,20 @@ const FETCHED_PROFILE_INFO_FAILURE = 'PROFILE.FETCHED_INFO_FAILURE'
 // =======================================================
 // ================== ACTION CREATORS ====================
 // =======================================================
+export function toggleButton(booleanState, buttonName) {
+    return {
+        type: TOGGLE_BUTTON,
+        booleanState,
+        buttonName
+    }
+}
+
+export function updateTag(listName) {
+    return {
+        type: UPDATE_TAG,
+        listName
+    }
+}
 
 export function updateProfileField(fieldName, newValue, isAStudent) {
   return {
@@ -32,6 +51,7 @@ export function updateProfileField(fieldName, newValue, isAStudent) {
  }
 }
 
+/*===============FETCHING PROFILE INFO==============*/
 export function fetchingProfileInfo() {
     return {
         type: FETCHING_PROFILE_INFO
@@ -53,6 +73,7 @@ export function fetchedProfileInfoFailure (error) {
     error
   }
 }
+
 
 export function savingProfileInfo() {
     return {
@@ -85,6 +106,26 @@ export function savedProfileFailure(profileErrorsObj, error, isAStudent) {
 //
 //
 //NOTE: Refer to signupform redux line 78, passing dispatch
+export function handleToggleButton(booleanState, buttonName) {
+    return function(dispatch) {
+        //ACTION: FETCHING_USER_PROFILE 
+        dispatch(toggleButton(booleanState, buttonName))
+    }
+}
+
+export function handleSaveNewTag(newTagName, pickList, textField, updateProfileFieldName) {
+    debugger
+    return function(dispatch) {
+        //ACTION: FETCHING_USER_PROFILE 
+        dispatch(saveNewTag())
+        
+        
+        
+        //Enter new tag into sportsTeam or clubsList
+        dispatch(updateProfileField(updateProfileFieldName, newTagName, true))
+    }
+}
+
 export function handleGetUserProfile(dispatch) {
     return function(dispatch) {
         //ACTION: FETCHING_USER_PROFILE 
@@ -98,6 +139,8 @@ export function handleGetUserProfile(dispatch) {
             )
     }
 }
+
+
 /*
 * submitProfileFirstTime
 *
@@ -129,35 +172,37 @@ export function submitProfileFirstTime(userTypeInt, profileInfo, user) {
     	  } else {
     	   console.log('SUBMIT STUDENT PROFILE NO ERRORS')
     	    // No errors, proceed to /PUT on api/me
+          debugger
           var putData = {
-            "is_a_student": true,
-            "is_profile_completed": true,
-            "email": user.email,
-            "first_name": profileInfo.firstName,
-            "last_name": profileInfo.lastName,
-            "is_active": true,
-            "date_joined": user.dateJoined,
-            "mobile": user.mobile,
+              "is_a_student": true,
+              "is_profile_completed": true,
+              "email": user.email,
+              "first_name": profileInfo.firstName,
+              "last_name": profileInfo.lastName,
+              "is_active": true,
+              "date_joined": user.dateJoined,
+              "mobile": user.mobile,
         	  "schoolName": profileInfo.school,
-      		  languages: profileInfo.languages,
-      		  sports: profileInfo.sportsTeam,
-      		  clubs: profileInfo.schoolClub,
-              edu: profileInfo.educationLevel.id,
-      		  email_pref: profileInfo.emailPreferences.id,
-      		  status: profileInfo.studentStatus.id,
+      		  languages: btoa(JSON.stringify(extractLanguageId(profileInfo.languages))),
+      		  sports: btoa(JSON.stringify(extractSportsObject(profileInfo.sportsTeam, profileInfo))),
+      		  clubs: btoa(JSON.stringify(extractClubsObject(profileInfo.schoolClub, profileInfo))),
+              edu_level_id: profileInfo.educationLevel.id ? profileInfo.educationLevel.id : profileInfo.educationLevel,
+      		  email_pref: profileInfo.emailPreferences.id ? profileInfo.emailPreferences.id : profileInfo.emailPreferences,
+      		  status: profileInfo.studentStatus.id ? profileInfo.studentStatus.id : 1,
       		  enroll_date: toISO(profileInfo.enrollmentDate),
       		  grad_date: toISO(profileInfo.graduationDate),
-      		  major: profileInfo.major.id,
-      		  GPA: profileInfo.gpa,
+      		  major_id: profileInfo.major.id ? profileInfo.major.id : profileInfo.major,
+      		  GPA: parseFloat(profileInfo.gpa),
       		  personal_email: profileInfo.personalEmail,
-      		  gender: profileInfo.gender.id,
+      		  gender: profileInfo.gender.id ? profileInfo.gender.id : profileInfo.gender,
+              /*Converts the value to num*/
       		  has_car: hasCarBoolean(profileInfo.hasCar),
-      		  company: profileInfo.companyName,
-      		  position: profileInfo.position,
+      		  recent_company_name: profileInfo.companyName,
+      		  recent_company_position: profileInfo.position,
       		  fun_fact: profileInfo.funFacts,
       		  hometown: profileInfo.hometown,
       		  hobbies: profileInfo.hobbies,
-      		  photo: profileInfo.photo,
+      		  profilepicture: profileInfo.photo,
       		  resume: profileInfo.resume,
       	  }
     	    studentProfilePUT(putData)
@@ -246,6 +291,7 @@ export function submitProfileFirstTime(userTypeInt, profileInfo, user) {
 
 export function updateProfile(userTypeInt, profileInfo, user, snapshot) {
   return function (dispatch) {
+      debugger
     switch(userTypeInt) {
 
      /*
@@ -266,6 +312,7 @@ export function updateProfile(userTypeInt, profileInfo, user, snapshot) {
             ], true))
 
           } else {
+              debugger
             // No errors, proceed to /PUT on api/me
             var changedData = {
              // user: {
@@ -279,27 +326,35 @@ export function updateProfile(userTypeInt, profileInfo, user, snapshot) {
              //   "user-mobile": user.mobile,
              // 	is_a_student: false,
              // 	is_profile_completed: true, // set this flag to true so we know for next time
-        		  languages: profileInfo.languages,
-        		  sports: profileInfo.sportsTeam,
-        		  clubs: profileInfo.schoolClub,
-        		  email_pref: profileInfo.emailPreferences,
-        		  status: profileInfo.studentStatus,
-        		  enroll_date: toISO(profileInfo.enrollmentDate),
-        		  grad_date: toISO(profileInfo.graduationDate),
-        		  major: profileInfo.major,
-        		  GPA: profileInfo.gpa,
-        		  personal_email: profileInfo.personalEmail ,
-        		  gender: profileInfo.gender,
-        		  has_car: profileInfo.hasCar,
-        		  company: profileInfo.companyName,
-        		  position: profileInfo.position,
-        		  fun_fact: profileInfo.funFacts,
-        		  hometown: profileInfo.hometown,
-        		  hobbies: profileInfo.hobbies,
-        		  photo: profileInfo.photo,
-        		  resume: profileInfo.resume,
+
+                  user_firstname: profileInfo.firstName,
+                  user_lastname: profileInfo.lastName,
+                  edu_level: profileInfo.educationLevel ? profileInfo.educationLevel : profileInfo.educationLevel.id, 
+                  email_pref: profileInfo.emailPreferences ? profileInfo.emailPreferences : profileInfo.emailPreferences.id,
+                  status: profileInfo.studentStatus ? profileInfo.studentStatus : profileInfo.studentStatus.id, 
+                  enroll_date: toISO(profileInfo.enrollmentDate),
+                  grad_date: toISO(profileInfo.graduationDate),
+                  major: profileInfo.major  ? profileInfo.major : profileInfo.major.id,
+                  gpa: parseFloat(profileInfo.gpa),
+                  personal_email: profileInfo.personalEmail,
+                  gender: profileInfo.gender ? profileInfo.gender : profileInfo.gender.id, 
+                  languages: btoa(JSON.stringify(extractLanguageId(profileInfo.languages))),
+                  sports: btoa(JSON.stringify(extractSportsObject(profileInfo.sportsTeam, profileInfo))),
+                  clubs: btoa(JSON.stringify(extractClubsObject(profileInfo.schoolClub, profileInfo))),
+                  /*Converts the value to num*/
+                  has_car: hasCarBoolean(profileInfo.hasCar),
+                  recent_company_name: profileInfo.companyName,
+                  recent_company_position: profileInfo.position,
+                  fun_fact: profileInfo.funFacts,
+                  hometown: profileInfo.hometown,
+                  hobbies: profileInfo.hobbies,
+                  profilepicture: profileInfo.photo,
+                  resume: profileInfo.resume,
         	  }
             compareToSnapshot(snapshot, changedData, (result) => {
+
+                //changed photo_url & resume_url to reflect backend data
+                result.p
               studentProfilePATCH(result)
                 .then((res) => {
 
@@ -497,6 +552,16 @@ export default function profile (state = initialState, action) {
         submitSuccess: true,
         error: ''
       }
+    case TOGGLE_BUTTON: 
+        return {
+            ...state,
+            studentProfile: studentProfile(state.studentProfile, action)
+        }
+    case UPDATE_TAG:
+        return {
+            ...state,
+            studentProfile: studentProfile(state.studentProfile, action)
+        }
     default :
       return state
   }
@@ -592,9 +657,9 @@ const initialStudentProfileState = {
   gpa: '',
   personalEmail: '',
   gender: '',
-  sportsTeam: '',
-  schoolClub: '',
-  languages: '',
+  sportsTeam: [],
+  schoolClub: [],
+  languages: [],
   hasCar: '',
   companyName: '',
   position: '',
@@ -603,12 +668,29 @@ const initialStudentProfileState = {
   hobbies: '',
   photo: '',
   resume: '',
+  sportsToggle: false,
+  clubsToggle: false,
+  languagesToggle: false,
+  gpaToggle: false,
+  emailToggle: false,
   propsErrorMap: {}
 }
 
 function studentProfile(state = initialStudentProfileState, action) {
   switch(action.type) {
+    case TOGGLE_BUTTON:
+        return {
+            ...state,
+            buttonName: action.buttonName,
+            [action.buttonName]: action.booleanState
+    }
+    case UPDATE_TAG:
+        return {
+            ...state,
+            listName: action.listName
+    }
     case UPDATE_PROFILE_FIELD:
+      debugger
       return {
         ...state,
         [action.fieldName]: action.newValue,
@@ -619,6 +701,42 @@ function studentProfile(state = initialStudentProfileState, action) {
         ...state,
         propsErrorMap: action.profileErrorsObj
       }
+    case FETCHED_PROFILE_INFO_SUCCESS:
+          debugger
+          return {
+            ...state,
+      		  emailPreferences: action.profileInfo.email_pref,
+              firstName: action.profileInfo.user_firstname,
+              lastName: action.profileInfo.user_lastname,
+              studentStatus: action.profileInfo.status,
+              enrollmentDate: new Date(action.profileInfo.enroll_date),
+              graduationDate: new Date(action.profileInfo.grad_date),
+              major: action.profileInfo.major,
+              educationLevel: action.profileInfo.edu_level,
+              schoolName: action.profileInfo.name,
+              gpa: action.profileInfo.gpa.toFixed(2),
+              personalEmail: action.profileInfo.personal_email,
+        	  gender: action.profileInfo.gender,
+              sportsTeam: action.profileInfo.tags.sports, //.map((sport) => sport.id),
+      		  schoolClub: action.profileInfo.tags.clubs, //.map((club) => club.id),
+              languages: action.profileInfo.tags.languages, //.map((language) => language.id),
+              //TODO: convert to yes/no
+              hasCar: hasCarBoolean(action.profileInfo.has_car),
+      		  companyName: action.profileInfo.recent_company_name,
+              position: action.profileInfo.recent_comapany_position,
+              funFacts: action.profileInfo.fun_fact,
+              hometown: action.profileInfo.hometown,
+              hobbies: action.profileInfo.hobbies,
+              photo: action.profileInfo.photo_url,
+              resume: action.profileInfo.resume_url,
+
+              //toggle if complex tags contain vars
+              sportsToggle: action.profileInfo.tags.sports.length > 0,
+              clubsToggle: action.profileInfo.tags.clubs.length > 0,
+              languagesToggle: action.profileInfo.tags.languages.length > 0,
+              gpaToggle: action.profileInfo.gpa === 0 ,
+              emailToggle: action.profileInfo.personal_email !== null,
+          }
     default:
       return state
   }
@@ -638,6 +756,7 @@ const initialStudentProfileErrorState = {
   personalEmail: false,
   gender: false,
   sportsTeam: false,
+  hasSports: false,
   schoolClub: false,
   languages: false,
   hasCar: false,

@@ -17,7 +17,13 @@ import ReactTooltip from 'react-tooltip'
 import MaskedTextInput from 'react-text-mask'
 
 // ================CSS IMPORTS============================== //
-import { pageContainer, profileField, profileHeader, container, shortInput, nameField,  emailField, dropDown, shortDropDown, mediumDropDown, longDropDown, dropzone, dropzoneContent, inlineDropzone, btn, saveBtnContainer, saveBtnList, saveBtnClicked, saveBtn, space} from '../styles/StudentProfileContainerStyles.css'
+import { pageContainer, profileField, profileHeader, 
+        container, shortInput, nameField,  
+        emailField, dropDown, shortDropDown, 
+        mediumDropDown, longDropDown, dropzone, 
+        dropzoneContent, inlineDropzone, btn, 
+        saveBtnContainer, saveBtnList, saveBtnClicked, 
+        saveBtn, space, hideInput, showInput, textArea} from '../styles/StudentProfileContainerStyles.css'
 import { error } from 'sharedStyles/error.css' 
 import { input } from 'sharedStyles/widgets.css'
 
@@ -229,10 +235,10 @@ export default function StudentProfile (props) {
 			     
 			     className={props.propsErrorMap.gpa ? input + ' ' + error : input}
 			     type="number"
-			     step="0.1"
-			     max="100"
-			     placeholder="GPA" 
-			     onChange={(e) => props.updateProfileField('gpa', e.target.value, true)} 
+			     step="0.01"
+			     max="4"
+			     placeholder="GPA(0.00 - 4.00)" 
+			     onChange={(e) => {props.updateProfileField('gpa', e.target.value, true); props.onHandleButtonToggle(false, 'gpaToggle')}} 
 			     value={props.gpa}
 			     />
 			 </li>
@@ -240,7 +246,10 @@ export default function StudentProfile (props) {
 			   <p>or</p>
 			 </li>
 			 <li className={saveBtnList}>
-			   <button className={saveBtn}>I do not have a GPA</button>
+               <button className={props.gpaToggle ? saveBtnClicked : saveBtn} 
+                                onClick={(e) => {props.onHandleButtonToggle(true, 'gpaToggle'); props.updateProfileField('gpa', '0.00', true)}}>
+                    I do not have a GPA
+                </button>
 			 </li>
 			</StudentProfileField>
 
@@ -255,7 +264,7 @@ export default function StudentProfile (props) {
 			    type="text"
 			    placeholder="Email"
 			    value={props.personalEmail}
-			    onChange={(e) => props.updateProfileField('personalEmail', e.target.value, true)}
+			    onChange={(e) => {props.updateProfileField('personalEmail', e.target.value, true); props.onHandleButtonToggle(false, 'emailToggle')}}
 			    >
 			  </input>
 			 </li> 
@@ -263,7 +272,7 @@ export default function StudentProfile (props) {
 			   <p>or</p>
 			 </li>
 			 <li className={saveBtnList}>
-			   <button className={saveBtn}>I prefer school email</button>
+               <button className={props.emailToggle ? saveBtnClicked : saveBtn} onClick={() => props.onHandleButtonToggle(true, 'emailToggle') }>I prefer school email</button>
 			 </li>
 			</StudentProfileField>
 
@@ -275,6 +284,7 @@ export default function StudentProfile (props) {
 			  valueField="id" textField="gender_description"
 			  messages={messages}
 			  data={props.gendersList}
+              defaultValue={1}
 			  value={props.gender}
 			  onChange={value => props.updateProfileField('gender', value, true)}
 			/>	
@@ -286,13 +296,13 @@ export default function StudentProfile (props) {
 			<StudentProfileField title="I"
 			 styles={nameField}>
 			 <li className={saveBtnList}>
-			   <button className={saveBtn}>play</button>
-			   <button className={saveBtn}>do not play</button>
+               <button className={props.sportsToggle ? saveBtnClicked : saveBtn} onClick={() => props.onHandleButtonToggle(true, 'sportsToggle') }>play</button>
+			   <button className={props.sportsToggle ? saveBtn : saveBtnClicked} onClick={() => props.onHandleButtonToggle(false, 'sportsToggle') }>do not play</button>
 			 </li>
 			 <li className={space}>
 			 	<p>on a sports team</p>
 			 </li>
-             <li>
+             <li className={props.sportsToggle ? showInput : hideInput}>
 			    <Multiselect
                    className={props.propsErrorMap.sportsTeam? shortInput + ' ' +  error : shortInput}
                    valueField='id' textField='sport'
@@ -301,6 +311,7 @@ export default function StudentProfile (props) {
                    data={props.sportsList}
                    value={props.sportsTeam}
                    onChange={ value => props.updateProfileField('sportsTeam', value, true)}
+                   onCreate={ value => props.onCreateNewTag(value, 'sportsList', 'sport', 'sportsTeam')}
                    />
              </li>
 			</StudentProfileField>
@@ -311,13 +322,13 @@ export default function StudentProfile (props) {
 			<StudentProfileField title="I " 
 			 styles={nameField}>
 			 <li className={saveBtnList}>
-			   <button className={props.schoolClub != "" ? saveBtnClicked : saveBtn}>am</button>
-			   <button className={props.schoolClub == "" ? saveBtnClicked : saveBtn}>am not</button>
+			   <button className={props.clubsToggle ? saveBtnClicked : saveBtn} onClick={() => props.onHandleButtonToggle(true, 'clubsToggle') }>am</button>
+			   <button className={props.clubsToggle ? saveBtn : saveBtnClicked} onClick={() => props.onHandleButtonToggle(false, 'clubsToggle') }>am not</button>
 			 </li>
 			 <li className={space}>
 			 	<p>on a school club</p>
 			 </li>
-            <li>
+            <li className={props.clubsToggle ? showInput : hideInput}>
 			 <Multiselect
 			   className={props.propsErrorMap.schoolClub? shortInput + ' ' +  error : shortInput}
 			   valueField='id' textField='club_name'
@@ -325,6 +336,7 @@ export default function StudentProfile (props) {
 			   messages={messages}
 			   data={props.schoolClubList}
 			   value={props.schoolClub}
+               onCreate={ value => props.onCreateNewTag(value, 'schoolClubList', 'club_name', 'schoolClub')}
 			   onChange={ value => props.updateProfileField('schoolClub', value, true)}
 			   />
             </li>
@@ -336,33 +348,24 @@ export default function StudentProfile (props) {
 			<StudentProfileField title="I" 
 			 styles={nameField}>
 			 <li className={saveBtnList}>
-
-			   <button className={props.languages.length >= 1 ? saveBtnClicked : saveBtn}
-			   	data-selection="0"
-				  data-field-name="languages">
-				   	speak
-				  </button>
-
-			   <button className={props.languages.length == 0 ? saveBtnClicked : saveBtn}
-			   	data-selection="1"
-				  data-field-name="languages">
-			   		do not speak
-			   </button>
-
+			   <button className={props.languagesToggle ? saveBtnClicked : saveBtn} onClick={() => props.onHandleButtonToggle(true, 'languagesToggle') }>speak</button>
+			   <button className={props.languagesToggle ? saveBtn : saveBtnClicked} onClick={() => props.onHandleButtonToggle(false, 'languagesToggle') }>do not speak</button>
 			 </li>
 			 <li className={space}>
 			 	<p>other languages</p>
 			 </li>
+            <li className={props.languagesToggle ? showInput : hideInput}>
 			 <Multiselect
 			   className={props.propsErrorMap.languages ? shortInput + ' ' +  error : shortInput}
 			   textField='language'
 			   valueField='id'
-               placeholder='English, French'
+               placeholder='French, Spanish'
 			   messages={messages}
 			   data={props.languagesList}
 			   onChange={ value => props.updateProfileField('languages', value, true)}
 			   value={props.languages}
 			   />
+            </li>
 			</StudentProfileField>
 
 			{/* CAR */}
@@ -420,15 +423,23 @@ export default function StudentProfile (props) {
 			{/* FUN FACTS */}
 			<StudentProfileField title="A fun fact about me is ">
 			<li>
-			 <input
-			   className={props.propsErrorMap.funFacts ? input + ' ' + error : input}
+			 <textarea
+			   className={props.propsErrorMap.funFacts ? textArea + ' ' + error : textArea}
 			   type="text"
-			   placeholder="Example: I can juggles chainsaws, I can eat 60 hot dogs in 30 minutes"
+			   placeholder="Example: I backpacked to Europe by myself last summer"
+               maxLength="140"
 			   onChange={(e) => props.updateProfileField('funFacts', e.target.value, true)}
 			   value={props.funFacts}
 			  >
-			 </input>
+			 </textarea>
 			 </li>
+			  <li>
+			    <i className="fa fa-info-circle fa-2x" aria-hidden="true" data-tip="No experience? Use this as a way to tell employers how great you are!"></i>
+			    <ReactTooltip place="bottom"
+			    	type="warning"
+				effect="float"
+			    />
+			  </li>
 			</StudentProfileField>
 
 			{/* CITY */}

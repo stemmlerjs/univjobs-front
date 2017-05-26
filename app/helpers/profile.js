@@ -117,7 +117,7 @@ export function studentProfilePUT(data) {
   const accessToken = getAccessToken();
 
   for(let key in data) {
-    debugger
+    //debugger
     //Ternary boolean checks if key is photo for backend upload of profilePic
     formData.append(
         key === 'photo' ? 'profilepicture' : key, 
@@ -160,29 +160,30 @@ export function validateStudentProfileFields(profileInfo, next) {
   let profileFieldErrors = {
 	  emailPreferences: false,
 	  firstName: false,
-   	lastName: false,
-  	studentStatus: false,
+      lastName: false,
+      studentStatus: false,
 	  educationLevel: false,
-   	school: false,
-   	enrollmentDate: false,
-   	graduationDate: false,
+      school: false,
+      enrollmentDate: false,
+      graduationDate: false,
 	  major: false,
-   	gpa: false,
-   	personalEmail: false,
+      gpa: false,
+      personalEmail: false,
 	  gender: false,
-   	sportsTeam: false,
-   	schoolClub: false,
-   	languages: false,
-   	hasCar: false,
-   	companyName: false,
-   	position: false,
+      sportsTeam: false,
+      schoolClub: false,
+      languages: false,
+      hasCar: false,
+      companyName: false,
+      position: false,
 	  funFacts: false,
-   	hometown: false,
-   	hobbies: false,
+      hometown: false,
+      hobbies: false,
  	  photo: false,
 	  resume: false
   }
-
+   
+  debugger
   profileFieldErrors.emailPreferences = profileInfo.emailPreferences != "" ? false : true
   profileFieldErrors.firstName = validateFirstName(profileInfo.firstName) ? false : true
   profileFieldErrors.lastName = validateLastName(profileInfo.lastName) ? false : true
@@ -192,21 +193,23 @@ export function validateStudentProfileFields(profileInfo, next) {
   profileFieldErrors.enrollmentDate = profileInfo.enrollmentDate != "" ? false : true
   profileFieldErrors.graduationDate = profileInfo.graduationDate != "" ? false : true
   profileFieldErrors.major = profileInfo.major != "" ? false : true
-  debugger;
-  profileFieldErrors.gpa = validateGPA(profileInfo.gpa) ? false : true
+  //debugger;
+  profileFieldErrors.gpa = validateGPA(profileInfo.gpa)
   profileFieldErrors.personalEmail = validatePersonalEmail(profileInfo.personalEmail) ? false : true
-  profileFieldErrors.gender = profileInfo.gender != "" ? false : true
+  //profileFieldErrors.gender = profileInfo.gender != "" ? false : true
   //profileFieldErrors.sportsTeam = profileInfo.sportsTeam != "" ? false : true
   //profileFieldErrors.schoolClub = profileInfo.schoolClub != "" ? false : true
-  profileFieldErrors.languages = validateLanguages(profileInfo.languages) ? false : true
+
+  /*NOTE: languages is not required, english is default*/
+  profileFieldErrors.languages = validateLanguages(profileInfo.languages)
   profileFieldErrors.hasCar = typeof profileInfo.hasCar == "boolean" ? false : true
   //profileFieldErrors.companyName = profileInfo.companyName != "" ? false : true
   //profileFieldErrors.position = profileInfo.position != "" ? false : true
   profileFieldErrors.funFacts = profileInfo.funFacts!= "" ? false : true
   profileFieldErrors.hometown = profileInfo.hometown != "" ? false : true
   profileFieldErrors.hobbies= profileInfo.hobbies != "" ? false : true
-  profileFieldErrors.photo = profileInfo.photo!= "" ? false : true
-  //profileFieldErrors.resume = profileInfo.resume != "" ? false : true
+  profileFieldErrors.photo = profileInfo.photo != "" ? false : true
+  profileFieldErrors.resume = profileInfo.resume != "" ? false : true
 
   // If an error exists in the map, then submitErrorsExist === true
   for (var attr in profileFieldErrors) {
@@ -226,10 +229,102 @@ export function validateStudentProfileFields(profileInfo, next) {
  * ***************************************************/
 
 export function compareToSnapshot(oldProfile, newProfile, callback) {
+    debugger
   for(var prop in newProfile) {
     if(newProfile[prop] == oldProfile[prop]) {
       delete newProfile[prop]
     }
-  }
+
+    if(prop === 'languages' || prop === 'clubs' || prop === 'sports') {
+        debugger
+        //decrypt newProfile[prop]
+        let tempObj = JSON.parse(atob(newProfile[prop]))
+
+        //find the length of the key
+        //pass through if it's not empty
+        if(tempObj.new.length == 0) {
+
+            //1.) compare both i'ds length
+            //2.) for every element of tempObj.id compare it to oldProfile.tags ids
+            //3.) delete if true
+            if(tempObj.ids.length == oldProfile.tags[prop].length 
+                && tempObj.ids.every(function(e, i) {
+                       return e === oldProfile.tags[prop][i].id 
+                })) {
+                //only delete if comparison is true
+                    delete newProfile[prop]
+                }
+        }//checks length
+    }//end
+
+    if(prop === 'enroll_date' || prop === 'grad_date') {
+        if(new Date(newProfile[prop]).toString() === new Date(oldProfile[prop]).toString()) {
+            delete newProfile[prop]
+        }//
+    }//end
+
+      //Check the profilepicture 
+      if(prop === 'profilepicture') {
+            if(newProfile[prop] === oldProfile['photo_url']) {
+                delete newProfile[prop]
+            }
+      }
+
+      //Check the resume
+      if(prop === 'resume') {
+            if(newProfile[prop] === oldProfile['resume_url']) {
+                delete newProfile[prop]
+            }
+      }
+      
+  }//end for loop
   callback(newProfile)
+}
+
+
+/* extractLanguageId
+ *
+ * returns an array of id's from language object
+ * */
+export const extractLanguageId = (languages) => {
+    debugger
+
+    return {
+        'ids': languages.map((language) => language.id),
+        'new': []
+    }
+}
+
+/**
+ * TODO: Add basic clubs at the backend
+ *extractClubsObject 
+ *
+ * returns an object, which contains array id's of clubs and array names of new clubs 
+ **/
+export const extractClubsObject = (clubs, profileInfo) => {
+
+    debugger 
+    //id's: cross referrence clubsList, if the list contains current club get id
+    //new: cross referrence clubList, if the list does not contain the club append the name into the array
+    return {
+        'ids': clubs.filter((club) => club.id).map((club) => club.id),
+        'new': clubs.filter((club) => !club.id).map((club) => club.club_name)
+    }
+}
+
+/**
+ * TODO: Add basic sports at the backend
+ *extractSportsObject
+ *
+ * returns an object, which contains array id's of sports and array names of new cls 
+ **/
+export const extractSportsObject = (sports, profileInfo) => {
+
+    debugger 
+    //id's: cross referrence sportsList, if the list contains current sport get id
+    //new: cross referrence sportsList, if the list does not contain the sport append the name into the array
+    return {
+            'ids': sports.filter((sport) => sport.id).map((sport) => sport.id),
+            'new': sports.filter((sport) => !sport.id).map((sport) => sport.sport)
+    }
 }

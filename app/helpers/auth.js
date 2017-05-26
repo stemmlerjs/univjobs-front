@@ -2,7 +2,7 @@ import axios from 'axios'
 import config from 'config'
 import cookie from 'react-cookie'
 import { loggingIn, loginSuccess, loginFailure,
-  fetchingUserInfo, loggingOut, logoutSuccess, logoutFailure, fetchingUserInfoSuccess, 
+  fetchingUserInfo, loggingOut, logoutSuccess, logoutFailure, fetchingUserInfoSuccess,
   fetchingUserInfoFailure } from 'redux/modules/user/user'
 import { fetchedProfileInfoSuccess } from 'redux/modules/profile/profile'
 import _ from 'lodash'
@@ -94,15 +94,34 @@ export function getUserInfo(token) {
 export function setAccessToken (token) {
   var d = new Date();
   d.setTime(d.getTime() + 30*60*1000); // set cookie to last 30 mins
-  
+
   localStorage.setItem('univjobs-access-token', JSON.stringify({
     token: token,
     expires: d
   }));
 }
 
+/**
+ * Checks the localstorage for truethy values
+ *
+ *  @returns(bool)
+ *
+ *  Reference: http://stackoverflow.com/questions/5515310/is-there-a-standard-function-to-check-for-null-undefined-or-blank-variables-in
+ * */
+export function checkAccessToken() {
+    return localStorage.getItem('univjobs-access-token') ? true : false
+}
+
+/**
+ *  Returns:
+ *      JSON parsed token if localSorage has token
+ *      Null if localStorage is empty
+ *
+ * NOTE: was causing error earlier when user gets into the signup page
+ * */
+
 export function getAccessToken() {
-  var token = localStorage.getItem('univjobs-access-token')
+  const token = localStorage.getItem('univjobs-access-token')
   return token ? JSON.parse(token).token : null
 }
 
@@ -116,7 +135,7 @@ export function getAccessToken() {
   * @param (String) - password: post-validated student password
   */
 export function createStudentAccount(email, password) {
-  const accessToken = getAccessToken()
+//  const accessToken = getAccessToken()
 
   return axios.post(config.baseUrl + 'register/', {
     email: email,
@@ -133,8 +152,8 @@ export function createStudentAccount(email, password) {
   * @param (String) - firstName, lastName, companyName, mobile, email, password
   */
 export function createEmployerAccount(firstName, lastName, companyName, mobile, email, password) {
-  const accessToken = getAccessToken()
-  const csrfToken = getCSRFToken()
+ // const accessToken = getAccessToken()
+ // const csrfToken = getCSRFToken()
 
   return axios({
     method: 'post',
@@ -145,7 +164,7 @@ export function createEmployerAccount(firstName, lastName, companyName, mobile, 
     //       https://github.com/UnivJobs/univjobs-front/issues/19
     //
     //  "Authorization":  accessToken,
-      'X-CSRFToken': csrfToken
+   //   'X-CSRFToken': csrfToken
     },
     data: {
       email: email,
@@ -166,6 +185,7 @@ export function createEmployerAccount(firstName, lastName, companyName, mobile, 
 */
 export function checkIfAuthed (store) {
   const promise = new Promise(function(resolve, reject) {
+    debugger
     console.log("******************* AUTHENTICATION CHECK *******************")
 
     /* If the user is simply flipping through pages, we can tell if they are in fact
@@ -201,9 +221,9 @@ export function checkIfAuthed (store) {
 
             // User Details
             const dateJoined = null
-            const email = response.data.student !== undefined ? response.data.student.user_email : response.data.employer.user_email 
+            const email = response.data.student !== undefined ? response.data.student.user_email : response.data.employer.user_email
             const firstName = response.data.student !== undefined ? response.data.student.user_firstname : response.data.employer.user_firstname
-            const lastName = response.data.student !== undefined ? response.data.student.user_lastname : response.data.employer.user_lastname 
+            const lastName = response.data.student !== undefined ? response.data.student.user_lastname : response.data.employer.user_lastname
             const mobile = response.data.student !== undefined ? response.data.student.user_mobile : response.data.employer.user_mobile
 
             // Profile Details
@@ -257,7 +277,7 @@ export function getCSRFToken() {
 /* errorMsg
  *  Displays the error message depending on the user input
  *
-  * @param (obj) - RESPONSE 
+  * @param (obj) - RESPONSE
   * @return errMsg - error status
  *
  * */
@@ -280,4 +300,4 @@ export function errorMsg(err) {
         errMsg = "Couldn't connect to Univjobs. Please check your network connection."
     }//switch
     return errMsg
-} 
+}
