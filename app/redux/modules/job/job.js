@@ -23,9 +23,24 @@ const FETCHING_JOB_TYPES = 'FETCHING_JOB_TYPES'
 const FETCHED_JOB_TYPES_SUCCESS = 'FETCHED_JOB_TYPES_SUCCESS'
 const FETCHED_JOB_TYPES_FAILURE = 'FETCHED_JOB_TYPES_FAILURE'
 
+const ADD_CONTACT_INFO = 'JOBS.ADD_CONTACT_INFO'
+
 // =======================================================
 // ================== ACTIONS CREATORS ===================
 // =======================================================
+
+/* ===============================
+ * After contacting a student
+ * ===============================
+ */
+
+export function jobs__addContactInfo(applicantUpdateObj) {
+  return {
+    type: ADD_CONTACT_INFO,
+    applicantUpdateObj
+  }
+}
+
 
 /* ===============================
  * Employer jobs view
@@ -300,6 +315,51 @@ export default function job (state = initialJobState, action) {
    /*
     * Employer actions
     */
+    case ADD_CONTACT_INFO:
+
+     /*
+      * We've acquired the contact info for one student. We need to add 
+      * this to the jobs object for this particular applicant.
+      */
+
+      var employerJobs = state.employerJobs;
+
+      var preferredEmail = action.applicantUpdateObj.preferred_email
+
+      var targetJobId = action.applicantUpdateObj.job_id
+      var targetStudentId = action.applicantUpdateObj.student_id
+
+      for(var i = 0; i < employerJobs.length; i++) {
+
+       /*
+        * Find the target job id
+        */
+
+        if (employerJobs[i].job_id == targetJobId) {
+          console.log("found matching one", employerJobs[i].job_id)
+
+         /*
+          * Find the target applicant and add the email to the 
+          * property. Also, set the state to CONTACTED.
+          */
+
+          employerJobs[i].applicants = employerJobs[i].applicants.map((applicant) => {
+
+            if (applicant.student_id == targetStudentId) {
+              applicant.preferred_email = preferredEmail
+              applicant.state = 'CONTACTED'
+            }
+
+            return applicant
+
+          })
+        }
+      }
+
+      return {
+        ...state,
+        employerJobs: employerJobs
+      }
 
 		case FETCHING_EMPLOYER_JOBS:
 			return {

@@ -50,7 +50,9 @@ export default function Applicants (props) {
               textField="title"
               valueField="job_id"
               filter="contains"
-              data={props.jobs}
+              data={props.jobs.filter((job) => {
+                return job.active == 1
+              })}
               onChange={job => props.changeSelectedJob(job)}
               value={props.currentSelectedJob.job_id}
             />

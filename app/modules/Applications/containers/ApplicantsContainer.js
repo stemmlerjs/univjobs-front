@@ -36,7 +36,7 @@ import { authRedirectFilter } from 'config/routes'
 
 // ==============CSS IMPORTS============================= //
 import pageContainer  from 'sharedStyles/sharedContainerStyles.css'
-import { rejectButton, cancelBtn, rejectButtonsContainer } from '../styles/index.css'
+import { rejectButton, cancelBtn, rejectButtonsContainer, hireBtn, postHireBtnContainer, postHireContainer } from '../styles/index.css'
 
 // ============== MESSAGES =================== //
 var ReactToastr = require("react-toastr");
@@ -80,6 +80,13 @@ const ApplicantsContainer = React.createClass({
     return authRedirectFilter(config, this.context.store, this.context.router)
   },
 
+ /*
+  * openConfirmRejectStudentModal
+  *
+  * Literally just opens the modal that allows the user 
+  * to REJECT the student or not.
+  */
+
   openConfirmRejectStudentModal (studentObject) {
 
    /*
@@ -109,6 +116,12 @@ const ApplicantsContainer = React.createClass({
     var studentId = this.props.currentSelectedStudent.student_id;
 
     this.props.rejectStudent(jobId, studentId)
+
+   /*
+    * After the action has completed, we want to check if it was 
+    * successful or not. 
+    */
+
     .then(() => {
       
       function checkIfSuccessOrFailure () {
@@ -143,14 +156,195 @@ const ApplicantsContainer = React.createClass({
     })
   },
 
-  closeConfirmRejectStudentModal () {
-    this.refs.confirmRejectStudentModal.hide()
-  },
+ /*
+  * handleOpenStudentProfileAndAnswersModal
+  *
+  * For this, we need to pass in the student object so that we 
+  * can display the student data in the modal.
+  *
+  */
 
   handleOpenStudentProfileAndAnswersModal (studentObject) {
-    console.log(studentObject)
     this.props.openStudentProfileAndAnswersModal(studentObject)
     this.refs.studentProfileAndAnswersModal.show()
+  },
+
+ /*
+  * handleContactStudent
+  *
+  * When the employer clicks "CONTACT", we want to perform a call to the
+  * backend to update that the employer has moved into the CONTACTED 
+  * state for this applicant. 
+  *
+  * Additionally, the employer is going to need the contact credentials for this 
+  * applicant. This means that we are going to need a new way to also retrieve the contact 
+  * information (either their student email or the personal email).
+  *
+  * Here's what I think we should do:
+  *
+  * 1) In the API call to /jobs, there is an attribute called "applicants" that includes all the
+  *    applicants for a job. If the STATE for an applicant is "CONTACTED", also return their contact 
+  *    info for this applicant. 
+  *
+  * 2) Provide a way to acquire the contact info for ONE applicant. We're going to use an API call 
+  *    of /contact/reveal/:jobId/:studentId which has a POST and a GET. 
+  *
+  *    The POST will change the STATE to "CONTACTED" given that the requesting employer owns the jobId,
+  *    and then it will also return the preferred contact info for that applicant. 
+  *
+  *    The GET will simply return the contact info given that the job belongs to the requesting employer 
+  *    and the state of the applicant is CONTACTED.
+  */
+
+  handleContactStudent (studentObj) {
+    var jobId = studentObj.job_id;
+    var studentId = studentObj.student_id;
+
+   /*
+    * Lockout. Don't allow them to click multiple times.
+    */
+
+    if (!this.props.isContacting) {
+
+      this.props.contactStudent(jobId, studentId, this.props.jobs__addContactInfo)
+
+        .then((response) => {
+
+          function checkIfSuccessOrFailure () {
+            var rejectSuccess = this.context.store.getState().applicants.contactSuccess
+
+            if (rejectSuccess) {
+
+              this.refs.container.success(
+              "Success.",
+              "Contact info for this student now available.", {
+                timeout: 3000
+              });
+
+
+             /*
+              * Really really hackish way to force the component to update
+              * again with the unhidden contact info for the student.
+              *
+              * Close and reopen the modal really fast.
+              */
+
+              this.refs.studentProfileAndAnswersModal.hide()
+              this.handleOpenStudentProfileAndAnswersModal(this.context.store.getState().applicants.studentProfileAndAnswersModal.student)
+
+            }
+
+            else {
+
+              this.refs.container.error(
+              "Whoops.",
+              "Something went wrong trying to collect the contact info for this student.", {
+                timeout: 3000
+              });
+
+            }
+          }
+
+          setTimeout(checkIfSuccessOrFailure.bind(this), 500)
+
+        })
+
+    }
+
+    
+  },
+
+  handleOpenConfirmHireStudentModal (studentObject) {
+    
+    this.context.store.dispatch(this.props.changeSelectedStudent(studentObject))
+
+    this.refs.confirmHireStudentModal.show()
+
+  },
+
+  closeConfirmHireStudent () {
+
+    this.refs.confirmHireStudentModal.hide()
+
+  },
+
+ /*
+  * handleHireStudent
+  *
+  */
+
+  handleHireStudent (studentObj) {
+    var jobId = this.props.currentSelectedStudent.job_id;
+    var studentId = this.props.currentSelectedStudent.student_id;
+
+    /*
+    * Lockout. Don't allow them to click multiple times.
+    */
+
+    if (!this.props.isHiring) {
+
+      this.props.hireStudent(jobId, studentId)
+        
+        .then((response) => {
+
+          function checkIfSuccessOrFailure () {
+            var rejectSuccess = this.context.store.getState().applicants.hireSuccess
+
+            if (rejectSuccess) {
+
+              this.refs.container.success(
+              "Success.",
+              "You've hired a student!", {
+                timeout: 3000
+              });
+
+             /*
+              * Close the confirm hire modal
+              */
+
+              this.refs.confirmHireStudentModal.hide()
+
+             /*
+              * Show the post-hire modal.
+              * When they close the post-hire modal, we reload the page.
+              */
+
+              this.refs.postHireModal.show()
+
+            }
+
+            else {
+
+              this.refs.container.error(
+              "Whoops.",
+              "Something went wrong trying to hire this student.", {
+                timeout: 3000
+              });
+
+            }
+          }
+
+          setTimeout(checkIfSuccessOrFailure.bind(this), 500)
+
+        })
+
+    }
+
+  },
+
+  closePostHireModalAndReload () {
+    this.refs.postHireModal.hide();
+
+   /*
+    * Now reload the page so that the completed job doesn't appear.
+    */
+
+    window.location.reload()
+    
+  },
+
+  closeConfirmRejectStudentModal () {
+    this.refs.confirmRejectStudentModal.hide()
   },
 
   handleCloseStudentProfileAndAnswersModal () {
@@ -211,6 +405,69 @@ const ApplicantsContainer = React.createClass({
           </SkyLight>
         </div>
 
+        {
+         /* 
+          * ===================================
+          *      confirmHireStudentModal
+          * ===================================
+          *
+          * This is the reject modal. 
+          * It pops up before we reject the student.
+          */
+        }
+        <div id="confirm-hire-student-modal-wrapper">
+          <SkyLight
+              ref="confirmHireStudentModal"
+              title="">
+              <div>
+                { this.props.currentSelectedStudent
+                  ? <div>Are you sure you want to HIRE 
+                          {` ${this.props.currentSelectedStudent.user_firstName} ${this.props.currentSelectedStudent.user_lastName} `}
+                        for your <b>{this.props.currentSelectedJob.title}</b> position?</div>
+                  : ''}
+                <div className={rejectButtonsContainer}>
+                  <button className={hireBtn} onClick={this.handleHireStudent}>YES, HIRE</button>
+                  <button className={cancelBtn} onClick={this.closeConfirmHireStudent}>CANCEL</button>
+                </div>
+              </div>
+          </SkyLight>
+        </div>
+
+        {
+         /* 
+          * ===================================
+          *      postHireModal
+          * ===================================
+          *
+          * Post-hire modal.
+          * Show up after hiring the student and gives the
+          * employer a little more information on what to do next.
+          */
+        }
+        <div id="post-hire-modal-wrapper">
+          <SkyLight
+              ref="postHireModal"
+              afterClose={this.closePostHireModalAndReload}
+              title="">
+              <div>
+                <div className={postHireContainer}>
+                  <h3>Congratulations for hiring a student through Univjobs.</h3>
+
+                  <p>We've sent an email to your new hire telling them that you'll be following up shortly 
+                  and we have informed all of the other applicants that the job is now closed.</p>
+
+                  <p>Tell us about your experience using Univjobs; we'd like to improve in the future so that we can
+                  make the hiring process easier.</p>
+
+                  <p><i>The page will reload after you close this window.</i></p>
+                </div>
+                <div className={postHireBtnContainer}>
+                  <button className={hireBtn} onClick={this.closePostHireModalAndReload}>OK</button>
+                </div>
+              </div>
+          </SkyLight>
+        </div>
+
         {/* =======================================
                     SEE STUDENT DETAILS MODAL
             =======================================
@@ -249,8 +506,13 @@ const ApplicantsContainer = React.createClass({
                       resumeUrl={config.mediaUrl + 'res/' + this.props.studentProfileAndAnswersModal.student.resume_url}
                       isDashboardCard={false}
                       handleOpenConfirmRejectStudentModal={this.openConfirmRejectStudentModal}
+                      handleContactStudent={this.handleContactStudent}
                       questions={this.props.currentSelectedJob.questions.filter((question) => question.job_id == this.props.currentSelectedJob.job_id)}
                       answers={this.props.currentSelectedJob.answers.filter((answer) => answer.job_id == this.props.currentSelectedJob.job_id && answer.student == this.props.studentProfileAndAnswersModal.student.student_id)}
+                      isContacting={this.props.isContacting}
+                      preferredEmail={this.props.studentProfileAndAnswersModal.student.preferred_email ? this.props.studentProfileAndAnswersModal.student.preferred_email : null}
+                      isHiring={this.props.isHiring ? this.props.isHiring : false}
+                      handleOpenConfirmHireStudentModal={this.handleOpenConfirmHireStudentModal}
                       />
                   : ''
               } 
@@ -292,6 +554,10 @@ function mapStateToProps({user, job, profile, applicants, list}) {
     hiddenStudents: applicants.hiddenStudents ? applicants.hiddenStudents : {},
     lists: list ? list : {},
     studentProfileAndAnswersModal: applicants.studentProfileAndAnswersModal ? applicants.studentProfileAndAnswersModal: {},
+    isContacting:  applicants.isContacting ? applicants.isContacting : false,
+    contactSuccess: applicants.contactSuccess ? applicants.contactSuccess : false,
+    isHiring: applicants.isHiring ? applicants.isHiring : false,
+    hireSuccess: applicants.hireSuccess ? applicants.hireSuccess : false
   }
 }
 

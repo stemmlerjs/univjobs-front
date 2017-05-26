@@ -19,14 +19,17 @@ import { studentProfileModalContainer, studentProfileLeftContainer, stProfileHea
   stProfileNameAndSchool, stProfileName, stProfileProgram, studenProfileRightContainer, stProfileGrad, itemIcon, experienceHobbiesEtc,
   listItemContainer, itemIconGPA, supplementalItemsContainer, supplementalItemsDetail, invite, leftsideDetails,
   buttons, whiteTxt, questionText, questionHeader, questionContainer, buttonsContainer, questionsAndAnswersContainer,
-  hiddenContactInfo } from '../styles/StudentProfileModal.css'
+  hiddenContactInfo, loader } from '../styles/StudentProfileModal.css'
 
 const StudentProfileModal = ({pictureUrl, name, major, sportsString, 
   schoolName, hometown, hasCar, clubsString, gradDate, lists, gpa, funFact, hobbies,
   handleOpenInviteStudentModal, studentObj, recentCompanyName, recentCompanyPosition, 
   
-  isDashboardCard, resumeUrl, questions, answers,
-  handleOpenConfirmRejectStudentModal}) => (
+  isDashboardCard, resumeUrl, questions, answers, isContacting, preferredEmail,
+  isHiring,
+  handleOpenConfirmRejectStudentModal,
+  handleContactStudent,
+  handleOpenConfirmHireStudentModal}) => (
 
     <div className={studentProfileModalContainer}>
       <div className={studentProfileLeftContainer}>
@@ -59,7 +62,12 @@ const StudentProfileModal = ({pictureUrl, name, major, sportsString,
                 {!isDashboardCard
                   ? <div>
                       <div><b>Contact Info</b></div>
-                      <div className={hiddenContactInfo}></div>
+                      {
+                        preferredEmail 
+                          ? <div className={supplementalItemsDetail}>{preferredEmail}</div>
+                          : <div className={hiddenContactInfo}></div>
+                      }
+                      
                     </div>
                   : ''}
 
@@ -196,7 +204,21 @@ const StudentProfileModal = ({pictureUrl, name, major, sportsString,
                   }
                 }>REJECT</button>
                 <button className={buttons}><a className={whiteTxt} target="_blank" href={resumeUrl}>RESUME</a></button>
-                <button className={buttons}>CONTACT</button>
+                
+                  {
+                    studentObj.state === "INITIAL"
+                      ? <button className={buttons} onClick={
+                          function () {
+                            handleContactStudent(studentObj)
+                          }
+                        }>CONTACT</button>
+                      : <button className={buttons} onClick={
+                          function () {
+                            handleOpenConfirmHireStudentModal(studentObj)
+                          }
+                        }>HIRE</button>
+                  }
+                
             
               </div>
         }
