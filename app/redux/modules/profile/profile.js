@@ -24,9 +24,6 @@ const FETCHING_PROFILE_INFO = 'PROFILE.FETCHING_INFO'
 const FETCHED_PROFILE_INFO_SUCCESS = 'PROFILE.FETCHED_INFO_SUCCESS'
 const FETCHED_PROFILE_INFO_FAILURE = 'PROFILE.FETCHED_INFO_FAILURE'
 
-const PUT_PROFILE_INFO = 'PROFILE.PUT_INFO'
-const PUT_PROFILE_INFO_SUCCESS = 'PROFILE.PUT_INFO_SUCCESS'
-const PUT_PROFILE_INFO_FAILURE = 'PROFILE.PUT_INFO_FAILURE'
 // =======================================================
 // ================== ACTION CREATORS ====================
 // =======================================================
@@ -77,26 +74,6 @@ export function fetchedProfileInfoFailure (error) {
   }
 }
 
-/*===============PUT PROFILE INFO==============*/
-export function putProfileInfo() {
-    return {
-        type: PUT_PROFILE_INFO
-    }
-}
-
-export function putProfileInfoSuccess (snapshot) {
-  return {
-    type: PUT_PROFILE_INFO_SUCCESS,
-    snapshot,
-  }
-}
-
-export function putProfileInfoFailure (error) {
-  return {
-    type: PUT_PROFILE_INFO_FAILURE,
-    error
-  }
-}
 
 export function savingProfileInfo() {
     return {
@@ -163,17 +140,6 @@ export function handleGetUserProfile(dispatch) {
     }
 }
 
-export function handlePutUserProfile(snapshot) {
-    return function(dispatch) {
-        //ACTION: FETCHING_USER_PROFILE 
-        dispatch(putProfileInfo())
-
-        //Test to see if they can put the info on all the inputs
-        debugger
-        dispatch(putProfileInfoSuccess(snapshot))
-
-    }
-}
 
 /*
 * submitProfileFirstTime
@@ -586,21 +552,6 @@ export default function profile (state = initialState, action) {
             ...state,
             studentProfile: studentProfile(state.studentProfile, action)
         }
-    case PUT_PROFILE_INFO:
-        return {
-            ...state,
-            studentProfile: studentProfile(state.studentProfile, action)  
-         }
-    case PUT_PROFILE_INFO_SUCCESS:
-          return {
-            ...state,
-            studentProfile: studentProfile(state.studentProfile, action)  
-          }
-    case PUT_PROFILE_INFO_FAILURE:
-          return {
-            ...state,
-              studentProfile: studentProfile(state.studentProfile, action)
-          }
     default :
       return state
   }
@@ -740,42 +691,41 @@ function studentProfile(state = initialStudentProfileState, action) {
         ...state,
         propsErrorMap: action.profileErrorsObj
       }
-    case PUT_PROFILE_INFO:
-        return {
-            ...state,
-         }
-    case PUT_PROFILE_INFO_SUCCESS:
+    case FETCHED_PROFILE_INFO_SUCCESS:
+          debugger
           return {
             ...state,
-      		  emailPreferences: action.snapshot.email_pref,
-              firstName: action.snapshot.user_firstname,
-              lastName: action.snapshot.user_lastname,
-              studentStatus: action.snapshot.status,
-              enrollmentDate: action.snapshot.enrollmentDate,
-              gradDate: action.snapshot.graduationDate,
-              major: action.snapshot.major,
-              educationLevel: action.snapshot.edu_level,
-              schoolName: action.snapshot.name,
-              gpa: action.snapshot.gpa,
-              personalEmail: action.snapshot.personal_email,
-        	  gender: action.snapshot.gender,
-              sportsTeam: [],
-      		  schoolClub: [],
-              languages: [],
+      		  emailPreferences: action.profileInfo.email_pref,
+              firstName: action.profileInfo.user_firstname,
+              lastName: action.profileInfo.user_lastname,
+              studentStatus: action.profileInfo.status,
+              enrollmentDate: new Date(action.profileInfo.enroll_date),
+              graduationDate: new Date(action.profileInfo.grad_date),
+              major: action.profileInfo.major,
+              educationLevel: action.profileInfo.edu_level,
+              schoolName: action.profileInfo.name,
+              gpa: action.profileInfo.gpa.toFixed(2),
+              personalEmail: action.profileInfo.personal_email,
+        	  gender: action.profileInfo.gender,
+              sportsTeam: action.profileInfo.tags.sports.map((sport) => sport.id),
+      		  schoolClub: action.profileInfo.tags.clubs.map((club) => club.id),
+              languages: action.profileInfo.tags.languages.map((language) => language.id),
               //TODO: convert to yes/no
-              hasCar: action.snapshot.has_car,
-      		  companyName: action.snapshot.recent_company_name,
-              position: action.snapshot.recent_comapany_position,
-              funFacts: action.snapshot.fun_fact,
-              hometown: action.snapshot.hometown,
-              hobbies: action.snapshot.hobbies,
-              photo: action.snapshot.photo_url,
-              resume: action.snapshot.resume_url,
-          }
-    case PUT_PROFILE_INFO_FAILURE:
-          return {
-            ...state,
-            error: action.error
+              hasCar: hasCarBoolean(action.profileInfo.has_car),
+      		  companyName: action.profileInfo.recent_company_name,
+              position: action.profileInfo.recent_comapany_position,
+              funFacts: action.profileInfo.fun_fact,
+              hometown: action.profileInfo.hometown,
+              hobbies: action.profileInfo.hobbies,
+              photo: action.profileInfo.photo_url,
+              resume: action.profileInfo.resume_url,
+
+              //toggle if complex tags contain vars
+              sportsToggle: action.profileInfo.tags.sports.length > 0,
+              clubsToggle: action.profileInfo.tags.clubs.length > 0,
+              languagesToggle: action.profileInfo.tags.languages.length > 0,
+              gpaToggle: action.profileInfo.gpa === 0 ,
+              emailToggle: action.profileInfo.personal_email !== null,
           }
     default:
       return state

@@ -195,12 +195,8 @@ const StudentProfileContainer = React.createClass({
    */
 
   componentWillMount() {
-      debugger
-
-      //
 	  this.retrieveAllLists()
 	    .then(this.doRedirectionFilter)
-        .then(this.props.handlePutUserProfile(this.props.snapshot))
 	    .then(this.finallyDisableOverlay)
 
   },
