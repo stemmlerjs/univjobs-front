@@ -149,6 +149,7 @@ const StudentProfileContainer = React.createClass({
   	}
   },
 
+
   /** componentWillReceiveProps
    *
    * When props comes in, let's do the following:
@@ -157,6 +158,11 @@ const StudentProfileContainer = React.createClass({
    */
 
   componentWillReceiveProps(newProps) {
+
+      //=======================submit & execute below=====================//
+      //TODO: Success for first time submit, need to redirect to job search
+      //
+      //Check user if it is a
      let error = newProps.error;
      let submitSuccess = newProps.submitSuccess;
      
@@ -183,13 +189,18 @@ const StudentProfileContainer = React.createClass({
    * When the DOM is loaded, do the following:
    * 1.)Get all lists required
    * 2.)Then, do the redirection filter (if required)
+   * 4.)Then, put back snapshot user info into inputs (if user has completed profile)
    * 3.)Then, close the overlay
    *
    */
 
   componentWillMount() {
+      debugger
+
+      //
 	  this.retrieveAllLists()
 	    .then(this.doRedirectionFilter)
+        .then(this.props.handlePutUserProfile(this.props.snapshot))
 	    .then(this.finallyDisableOverlay)
 
   },
