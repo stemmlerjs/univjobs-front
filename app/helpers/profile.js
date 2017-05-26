@@ -229,11 +229,55 @@ export function validateStudentProfileFields(profileInfo, next) {
  * ***************************************************/
 
 export function compareToSnapshot(oldProfile, newProfile, callback) {
+    debugger
   for(var prop in newProfile) {
     if(newProfile[prop] == oldProfile[prop]) {
       delete newProfile[prop]
     }
-  }
+
+    if(prop === 'languages' || prop === 'clubs' || prop === 'sports') {
+        debugger
+        //decrypt newProfile[prop]
+        let tempObj = JSON.parse(atob(newProfile[prop]))
+
+        //find the length of the key
+        //pass through if it's not empty
+        if(tempObj.new.length == 0) {
+
+            //1.) compare both i'ds length
+            //2.) for every element of tempObj.id compare it to oldProfile.tags ids
+            //3.) delete if true
+            if(tempObj.ids.length == oldProfile.tags[prop].length 
+                && tempObj.ids.every(function(e, i) {
+                       return e === oldProfile.tags[prop][i].id 
+                })) {
+                //only delete if comparison is true
+                    delete newProfile[prop]
+                }
+        }//checks length
+    }//end
+
+    if(prop === 'enroll_date' || prop === 'grad_date') {
+        if(new Date(newProfile[prop]).toString() === new Date(oldProfile[prop]).toString()) {
+            delete newProfile[prop]
+        }//
+    }//end
+
+      //Check the profilepicture 
+      if(prop === 'profilepicture') {
+            if(newProfile[prop] === oldProfile['photo_url']) {
+                delete newProfile[prop]
+            }
+      }
+
+      //Check the resume
+      if(prop === 'resume') {
+            if(newProfile[prop] === oldProfile['resume_url']) {
+                delete newProfile[prop]
+            }
+      }
+      
+  }//end for loop
   callback(newProfile)
 }
 
@@ -243,6 +287,7 @@ export function compareToSnapshot(oldProfile, newProfile, callback) {
  * returns an array of id's from language object
  * */
 export const extractLanguageId = (languages) => {
+    debugger
 
     return {
         'ids': languages.map((language) => language.id),

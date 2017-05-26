@@ -291,6 +291,7 @@ export function submitProfileFirstTime(userTypeInt, profileInfo, user) {
 
 export function updateProfile(userTypeInt, profileInfo, user, snapshot) {
   return function (dispatch) {
+      debugger
     switch(userTypeInt) {
 
      /*
@@ -311,6 +312,7 @@ export function updateProfile(userTypeInt, profileInfo, user, snapshot) {
             ], true))
 
           } else {
+              debugger
             // No errors, proceed to /PUT on api/me
             var changedData = {
              // user: {
@@ -324,27 +326,35 @@ export function updateProfile(userTypeInt, profileInfo, user, snapshot) {
              //   "user-mobile": user.mobile,
              // 	is_a_student: false,
              // 	is_profile_completed: true, // set this flag to true so we know for next time
-        		  languages: profileInfo.languages,
-        		  sports: profileInfo.sportsTeam,
-        		  clubs: profileInfo.schoolClub,
-        		  email_pref: profileInfo.emailPreferences,
-        		  status: profileInfo.studentStatus,
-        		  enroll_date: toISO(profileInfo.enrollmentDate),
-        		  grad_date: toISO(profileInfo.graduationDate),
-        		  major: profileInfo.major,
-        		  GPA: profileInfo.gpa,
-        		  personal_email: profileInfo.personalEmail ,
-        		  gender: profileInfo.gender,
-        		  has_car: profileInfo.hasCar,
-        		  company: profileInfo.companyName,
-        		  position: profileInfo.position,
-        		  fun_fact: profileInfo.funFacts,
-        		  hometown: profileInfo.hometown,
-        		  hobbies: profileInfo.hobbies,
-        		  photo: profileInfo.photo,
-        		  resume: profileInfo.resume,
+
+                  user_firstname: profileInfo.firstName,
+                  user_lastname: profileInfo.lastName,
+                  edu_level: profileInfo.educationLevel ? profileInfo.educationLevel : profileInfo.educationLevel.id, 
+                  email_pref: profileInfo.emailPreferences ? profileInfo.emailPreferences : profileInfo.emailPreferences.id,
+                  status: profileInfo.studentStatus ? profileInfo.studentStatus : profileInfo.studentStatus.id, 
+                  enroll_date: toISO(profileInfo.enrollmentDate),
+                  grad_date: toISO(profileInfo.graduationDate),
+                  major: profileInfo.major  ? profileInfo.major : profileInfo.major.id,
+                  gpa: parseFloat(profileInfo.gpa),
+                  personal_email: profileInfo.personalEmail,
+                  gender: profileInfo.gender ? profileInfo.gender : profileInfo.gender.id, 
+                  languages: btoa(JSON.stringify(extractLanguageId(profileInfo.languages))),
+                  sports: btoa(JSON.stringify(extractSportsObject(profileInfo.sportsTeam, profileInfo))),
+                  clubs: btoa(JSON.stringify(extractClubsObject(profileInfo.schoolClub, profileInfo))),
+                  /*Converts the value to num*/
+                  has_car: hasCarBoolean(profileInfo.hasCar),
+                  recent_company_name: profileInfo.companyName,
+                  recent_company_position: profileInfo.position,
+                  fun_fact: profileInfo.funFacts,
+                  hometown: profileInfo.hometown,
+                  hobbies: profileInfo.hobbies,
+                  profilepicture: profileInfo.photo,
+                  resume: profileInfo.resume,
         	  }
             compareToSnapshot(snapshot, changedData, (result) => {
+
+                //changed photo_url & resume_url to reflect backend data
+                result.p
               studentProfilePATCH(result)
                 .then((res) => {
 
@@ -707,9 +717,9 @@ function studentProfile(state = initialStudentProfileState, action) {
               gpa: action.profileInfo.gpa.toFixed(2),
               personalEmail: action.profileInfo.personal_email,
         	  gender: action.profileInfo.gender,
-              sportsTeam: action.profileInfo.tags.sports.map((sport) => sport.id),
-      		  schoolClub: action.profileInfo.tags.clubs.map((club) => club.id),
-              languages: action.profileInfo.tags.languages.map((language) => language.id),
+              sportsTeam: action.profileInfo.tags.sports, //.map((sport) => sport.id),
+      		  schoolClub: action.profileInfo.tags.clubs, //.map((club) => club.id),
+              languages: action.profileInfo.tags.languages, //.map((language) => language.id),
               //TODO: convert to yes/no
               hasCar: hasCarBoolean(action.profileInfo.has_car),
       		  companyName: action.profileInfo.recent_company_name,
