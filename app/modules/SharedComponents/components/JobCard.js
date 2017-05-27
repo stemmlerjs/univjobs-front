@@ -4,7 +4,12 @@
 import React, { PropTypes } from 'react'
 import ReactTooltip from 'react-tooltip'
 
-import { cardContainer }from '../styles/StudentCard.css'
+import config from 'config'
+
+import { cardContainer, cardTopContainer, imgContainer, cardHeaderContainer,
+        cardHeaderItemMainText, cardHeaderItemSecondaryText, cardHeaderItemAltItemText,
+        cardHeaderItemContainer, cardLocation, cardBottomContainer, cardSectionOne,
+        cardSectionTwo, cardSectionTitle, cardSectionText, cardActionButtons  }from '../styles/JobCard.css'
 import { pageMainJobCards, rotateIcon, applyButton } from 'modules/SharedComponents/styles/StudentCard.css'
 
 // JobCard.propTypes = {
@@ -15,18 +20,48 @@ import { pageMainJobCards, rotateIcon, applyButton } from 'modules/SharedCompone
 //   handleCardClick: PropTypes.func.isRequired
 // }
 
-export default function JobCard (props) {
+export default function JobCard ({logoUrl, pinned, jobObject, jobId, title, 
+    industries, industry, companyName, officeAddress, officeCity, startDate,
+    compensation,
+    onPinJob, handleCardClick}) {
   return (
     <div className={cardContainer}>
-        <div>{props.title}</div>
-        <button onClick={(e) => props.onPinJob(e, props.jobId)} data-tip={props.pinned ? "Unpin job?" : "Pin job?" }>
-            <i className={props.pinned ? rotateIcon + " fa fa-thumb-tack fa-lg " + fillIcon : rotateIcon + " fa fa-thumb-tack fa-lg"} 
-                aria-hidden="true" />
-            <ReactTooltip place="top" type="dark" effect="float"/>
-        </button>
+        <div className={cardTopContainer}>
+            <div className={imgContainer}>
+                <img src={logoUrl}></img>
+            </div>
+             <div className={cardHeaderContainer}>
+                <div className={cardHeaderItemMainText}>{title}</div>
+                <div className={cardHeaderItemSecondaryText}>{industry}</div> 
+                <div className={cardHeaderItemAltItemText}>{companyName}</div>
+                <div className={cardHeaderItemContainer}>
+                    <img data-tip="Job location" src={`${config.assetUrl}components/cards/student/actions/a/has_car_active_24px.svg`}/>
+                    <div className={cardLocation}>{officeAddress + ", " + officeCity}</div>
+                </div>
+            </div>
+        </div>
+        <div className={cardBottomContainer}>
+          <div className={cardSectionOne}>
+              <div className={cardSectionTitle}>Start Date</div>
+              <div className={cardSectionText}>{startDate}</div>
+          </div>
+          <div className={cardSectionTwo}>
+              <div className={cardSectionTitle}>Compensation</div>
+              <div className={cardSectionText}>{compensation}</div>
+          </div>
 
-        <button  onClick={(e) => props.handleCardClick(e, props)}>APPLY</button>
-                            
-                            </div>
+          <div className={cardActionButtons}>
+            <button onClick={(e) => onPinJob(e, jobId)} >
+              { !pinned ? 'PIN JOB' : 'UNPIN JOB'}
+            </button>
+
+            <button onClick={(e) => handleCardClick(e, jobObject)}>SEE MORE</button>
+          </div>
+        </div>
+             
+    </div>
   )
 }
+
+
+//  <button  onClick={(e) => handleCardClick(e, jobObject)}>APPLY</button>

@@ -4,21 +4,16 @@
  * */
 
 .flexibleCardContainer {
-	width: 100%;
-	text-align: center;
-	margin: auto;
-	margin-top: 4%;
-	margin-bottom: 3%;
-	/* For Safari */
-	display: -webkit-flex;
-	-webkit-flex-direction: row;
-	
-	/* Chrome */
-	display: flex;
-	flex-direction: row;
-	
-	flex-wrap: wrap;
-	justify-content: center;
-	
-    max-width: 1131px;
+    width: 100%;
+    text-align: center;
+    margin: auto;
+    margin-top: 4%;
+    margin-bottom: 3%;
+    display: -webkit-flex;
+    -webkit-flex-direction: row;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 1215px;
 }

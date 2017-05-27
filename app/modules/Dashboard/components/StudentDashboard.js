@@ -15,9 +15,11 @@ import { JobCardModal } from 'modules/Dashboard'
 import { GenericCard, DASHBOARD_CARD_TYPE, Title, JobCard } from 'modules/SharedComponents'
 import { flexibleCardContainer } from 'sharedStyles/cardContainer.css'
 
+import config from 'config'
+import moment from 'moment'
+
 // ==============THIRD PARTY IMPORTS========================= //
 import { SkyLightStateless } from 'react-skylight'
-
 
 // ================CSS IMPORTS============================== //
 import { rootComponentContainer, margins, cardContainer } from 'sharedStyles/sharedComponentStyles.css'
@@ -42,7 +44,6 @@ export default function StudentDashboard ({jobs, handleCardClick,
                     titleName="Let's get you hired"
                     subHeading="Apply to a job now, so we can help you land one!"/>
 
-
                 <div className={flexibleCardContainer}>
   	                { jobs.length > 0 ? jobs.map((job) => (
                         <JobCard 
@@ -52,7 +53,7 @@ export default function StudentDashboard ({jobs, handleCardClick,
                           title={job.title}
                           jobType={job.type}
                           paid={job.paid}
-                          startDate={job.start_date}
+                          startDate={moment(job.start_date).format("MMMM Do, YYYY")}
                           responsibilities={job.responsibilities}
                           qualification={job.qualification}
                           address={job.address}
@@ -61,6 +62,12 @@ export default function StudentDashboard ({jobs, handleCardClick,
                           questions={job.questions}
                           handlePinJob={onPinJob}
                           handleCardClick={handleCardClick}
+                          jobObject={job}
+                          logoUrl={config.mediaUrl + job.logo_url}
+                          industry={industries[job.industry]}
+                          companyName={job.company_name}
+                          officeAddress={job.office_address}
+                          officeCity={job.office_city}
                         />
   	                )) : '' }
                 </div>

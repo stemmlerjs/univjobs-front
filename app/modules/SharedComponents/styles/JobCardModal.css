@@ -1,23 +1,21 @@
 
-.cardContainer {
-    list-style: none;
-    margin-top: 20px;
-    padding: 0px;
-    align-items: flex-start;
-    width: 340px;
-    padding-left: 10px;
-    padding-right: 10px;
-    background-color: white;
-    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-    margin: 20px;
-    height: 370px;
-}
 
-.cardTopContainer {
-    padding-top: 25px;
-    display: flex;
-    padding-left: 16px;
-    padding-right: 16px;
+.cardModalContainer {
+
+} 
+
+.cardLeft {
+  width: 50%;
+}   
+
+.cardRight {
+  width:50%;
+} 
+
+.cardLeftTopContainer {
+      display: flex;
+    flex-direction: row;
+    margin-left: 13px;
 }
 
 .imgContainer {
@@ -31,13 +29,13 @@
 }
 
 .cardHeaderContainer {
-    width: 60%;
+        width: 60%;
     /* display: inline-block; */
     padding-left: 15px;
     display: flex;
     flex-direction: column;
     text-align: left;
-}
+} 
 
 .cardHeaderItemMainText {
     font-size: 20px;
@@ -61,7 +59,7 @@ margin-top: 9px;
 }
 
 .cardHeaderItemContainer img {
-        height: 24px;
+    height: 24px;
     width: 24px;
 }
 
@@ -84,6 +82,11 @@ margin-top: 9px;
 
 
 .cardSectionTwo {
+    margin-bottom: 10px;
+        height: 60px;
+}
+
+.cardSectionThree {
     margin-bottom: 10px;
         height: 60px;
 }

@@ -287,9 +287,9 @@ const EmployerDashboardContainer = React.createClass({
                       valueField="job_id"
                       filter="contains"
                       itemComponent={InviteListItem}
-                      data={this.props.inviteStudentModal.jobInvitesForSelectedStudent.filter((job) => {
+                      data={this.props.inviteStudentModal.jobInvitesForSelectedStudent ? this.props.inviteStudentModal.jobInvitesForSelectedStudent.filter((job) => {
                         return job.active !== 0
-                      })}
+                      }) : this.props.inviteStudentModal.jobInvitesForSelectedStudent}
                       onChange={(value) => {
                         this.selectInviteJob(value)
                       }}

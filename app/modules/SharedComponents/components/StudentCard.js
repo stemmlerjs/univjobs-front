@@ -164,7 +164,7 @@ const StudentCard = ({pictureUrl, resumeUrl, name, major, funFact, recentCompany
                           gpa 
                             ? <div>
                                 <ReactTooltip delayHide={100} delayShow={100} place="bottom" effect="float"/>
-                                <div data-tip={`GPA of ${gpa.toFixed(2)}`} className={gpaTextActive}>GPA</div>
+                                <div data-tip={`GPA of ${Number(gpa)}`} className={gpaTextActive}>GPA</div>
                               </div>
                             : <div className={gpaTextDeactive}>GPA</div>
                         }
