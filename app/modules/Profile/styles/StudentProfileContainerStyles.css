@@ -1,9 +1,14 @@
 .pageContainer {
-	width: 1000px;
-	text-align: center;
-	margin: auto;
-	margin-top: 4%;
-	margin-bottom: 3%;
+    /* width: 1000px; */
+    text-align: center;
+    /* margin: auto; */
+    /* margin-top: 4%; */
+    margin-bottom: 3%;
+    margin-top: 38px;
+        width: 75%;
+    margin-left: 96px;
+    display: flex;
+    flex-direction: row-reverse;
 }
 
 .profileHeader {
@@ -165,4 +170,41 @@
     composes: input from 'sharedStyles/styles.css';
     width: 35vw;
     resize: vertical;
+    height: 174px;
+}
+
+.profilePictureDragDrop {
+    color: #43a0c5 !important;
+    border: 2px solid #43a0c5 !important;
+    background-color: white !important;
+    box-shadow: 1px 1px 15px #43A0C5 !important;
+    transition: all 0.3s ease-out;
+    cursor: pointer;
+}
+
+.profilePictureDragDropAlt {
+    color: #43a0c5 !important;
+    border: 2px solid gray !important;
+    background-color: white !important;
+    /* box-shadow: 1px 1px 15px #43A0C5 !important; */
+    transition: all 0.3s ease-out;
+    cursor: pointer;
+}
+
+.savedResumeView {
+      width: 165px;
+    height: 165px;
+    /* border: 2px dashed rgb(102, 102, 102); */
+    border-radius: 5px;
+    display: inline-block;
+    color: #53585E;
+    /* border: solid 2px rgb(102,102,102); */
+    background-color: #3697DB;
+    color: white;
+    cursor:pointer;
+}
+.actualSaveBtn {
+    position: relative;
+    left: -158px;
+    top: 33px;
 }

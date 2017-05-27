@@ -4,6 +4,11 @@ import { StudentProfile } from 'modules/Profile'
 import { SidebarContainer } from 'modules/Main' 
 import { pageContainer } from '../styles/StudentProfileContainerStyles.css' 
 import axios from 'axios' 
+
+import config from 'config'
+
+
+
 // ========= REDUX AND STATE IMPORTS ========== //
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -53,7 +58,6 @@ const StudentProfileContainer = React.createClass({
                     'sportsTeam': this.props.sportsTeam
 
        }
-       debugger
 
        //Create a new tag array object
        //Temporarily concat new value to the old specified list. 
@@ -78,11 +82,12 @@ const StudentProfileContainer = React.createClass({
 
   retrieveAllLists() {
     const promise = new Promise((resolve, reject) => {
-        this.props.handleGetEmailPref()
-        this.props.handleGetStudentStatus()
-        this.props.handleGetEduLevels()
-        this.props.handleGetMajors()
-        this.props.handleGetGenders()
+
+      if (this.props.gendersList.length == 0) {
+        console.log("[Univjobs]: v1.0 - Getting all static lists.")
+        this.props.getAllStaticLists()
+      }
+
         this.props.handleGetLanguages()
         this.props.handleGetSports()
         this.props.handleGetClubs()
@@ -169,7 +174,7 @@ const StudentProfileContainer = React.createClass({
      
      if(submitSuccess) {
     	this.refs.container.success(
-    		"Success in StudentProfileContainer",
+    		"Nice stuff!",
     		"Profile succesfully updated", {
     		   timeout: 3000
     		});
@@ -196,8 +201,8 @@ const StudentProfileContainer = React.createClass({
    */
 
   componentWillMount() {
-	  this.retrieveAllLists()
-	    .then(this.doRedirectionFilter)
+	    this.doRedirectionFilter()
+      .then(this.retrieveAllLists())
 	    .then(this.finallyDisableOverlay)
 
   },
@@ -211,7 +216,11 @@ const StudentProfileContainer = React.createClass({
   render () {
     return (
       <div className={pageContainer}>
-        <SidebarContainer isAStudent={this.props.user.isAStudent}/>
+        <SidebarContainer isAStudent={this.props.user.isAStudent} 
+          profilePicture={typeof this.props.profile.photo == "object" && this.props.profile.photo !== null
+            ? this.props.profile.photo.preview
+            : config.mediaUrl + '/avatar/' + this.props.profile.photo
+          } />
         <StudentProfile
       	  emailPreferences={this.props.emailPreferences}
       	  emailPrefList={this.props.emailPrefList}
@@ -267,15 +276,16 @@ const StudentProfileContainer = React.createClass({
 function mapStateToProps({user, profile, list}) {
   return {
     user: user ? user : {},
+    profile: profile.studentProfile ? profile.studentProfile : {},
     snapshot: profile.snapshot ? profile.snapshot : {},
     emailPreferences: profile.studentProfile.emailPreferences ? profile.studentProfile.emailPreferences : 2,  // DEFAULT value (string || number)
-    emailPrefList: list.emailPreferences ? list.emailPreferences : [],                      // list of selected value (array)
+    emailPrefList: list.emailPreferencesArray ? list.emailPreferencesArray : [],                      // list of selected value (array)
     firstName: profile.studentProfile.firstName ? profile.studentProfile.firstName : '',
     lastName: profile.studentProfile.lastName ? profile.studentProfile.lastName : '',
     studentStatus: profile.studentProfile.studentStatus ? profile.studentProfile.studentStatus : 1,          // DEFAULT value (String || number)
-    studentStatusList: list.studentStatus ? list.studentStatus : [],                    // list of selected value (array)
+    studentStatusList: list.studentStatusArray ? list.studentStatusArray : [],                    // list of selected value (array)
     educationLevel: profile.studentProfile.educationLevel ? profile.studentProfile.educationLevel : 1,
-    educationLevelList: list.educationLevels ? list.educationLevels : [],
+    educationLevelList: list.eduLevelsArray ? list.eduLevelsArray : [],
     /**
      * Get students school from snapshot
      * */
@@ -285,7 +295,7 @@ function mapStateToProps({user, profile, list}) {
 
     /*major(value, list)*/
     major: profile.studentProfile.major ? profile.studentProfile.major : 1,  
-    majorsList: list.majors ? list.majors : [],
+    majorsList: list.majorsArray ? list.majorsArray : [],
 
     /*gpa(value, boolean)*/
     gpa: profile.studentProfile.gpa ? profile.studentProfile.gpa : '0.00',
@@ -297,7 +307,7 @@ function mapStateToProps({user, profile, list}) {
 
     /*gender(value, boolean, list)*/
     gender: profile.studentProfile.gender ? profile.studentProfile.gender : 1,
-    gendersList: list.genders ? list.genders : [],
+    gendersList: list.gendersArray ? list.gendersArray : [],
 
     /*sportsTeam(value, boolean, list)*/
     sportsTeam: profile.studentProfile.sportsTeam ? profile.studentProfile.sportsTeam : [],

@@ -45,7 +45,6 @@ export function validateFirstName(firstName) {
 }
 
 export function validateLastName(lastName) {
-debugger
   var re = /^[a-z ,.'-]{2,30}$/i
   return re.test(lastName)
 }
@@ -92,7 +91,6 @@ export function validateAddress(address) {
  * Referrence: http://stackoverflow.com/questions/26921116/using-regexpressions-to-validate-gpa
  * */
 export function validateGPA(gpa) {
-debugger
   const re = /^[0-4]\.\d\d$/
   //Return false if regex passes, otherwise return true 
   return !re.test(gpa)
@@ -120,7 +118,6 @@ export function validateLanguages(languageList) {
 
 // ***************** DATE ******************//
 export function toISO(date) {
-    debugger
   return date.getFullYear()+'-' + (date.getMonth()+1) + '-'+date.getDate();//prints expected format.
 }
 

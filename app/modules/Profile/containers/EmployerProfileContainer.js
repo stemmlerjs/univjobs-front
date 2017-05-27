@@ -52,6 +52,11 @@ const EmployerProfileContainer = React.createClass({
 
   retrieveAllLists() {
     const promise = new Promise((resolve, reject) => {
+      if (this.props.industryList.length == 0) {
+        console.log("[Univjobs]: v1.0 - Getting all static lists.")
+        this.props.getAllStaticLists()
+      }
+
         this.props.handleGetIndustries()
           .then((resp) => resolve(true))
           .catch((resp) => resolve(true))
@@ -194,7 +199,9 @@ const EmployerProfileContainer = React.createClass({
         <SidebarContainer 
           isAStudent={false} 
           logoUrl={this.props.logoUrl}
-          profilePicture={config.mediaUrl + this.props.profile.logoUrl}
+          profilePicture={typeof this.props.profile.logoUrl == "object" && this.props.profile.logoUrl !== null
+            ? this.props.profile.logoUrl.preview
+            : config.mediaUrl + '/avatar/' + this.props.profile.logoUrl}
         />
         <Title 
             titleName="My business profile"

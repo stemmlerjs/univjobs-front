@@ -98,7 +98,7 @@ function placePhoto(element, url) {
     profilePic = {
       backgroundRepeat: "no-repeat",
       backgroundPosition: "center center",
-      backgroundSize: "125%"
+      backgroundSize: "104%"
     }
 
    /* 
@@ -119,7 +119,7 @@ function placePhoto(element, url) {
       backgroundImage: `url('${props.logoUrl.preview}')`,
       backgroundRepeat: "no-repeat",
       backgroundPosition: "center center",
-      backgroundSize: "125%"
+      backgroundSize: "104%"
     }
   }
 

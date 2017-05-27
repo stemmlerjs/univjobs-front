@@ -12,6 +12,8 @@ import { ProfileField, StudentProfileField } from 'modules/Profile'
 import { Combobox, DropdownList, DateTimePicker, Calendar, Multiselect, SelectList} from 'react-widgets'
 import Dropzone from 'react-dropzone'
 
+import config from 'config'
+
 // ==============THIRD PARTY IMPORTS========================= //
 import ReactTooltip from 'react-tooltip'
 import MaskedTextInput from 'react-text-mask'
@@ -23,7 +25,8 @@ import { pageContainer, profileField, profileHeader,
         mediumDropDown, longDropDown, dropzone, 
         dropzoneContent, inlineDropzone, btn, 
         saveBtnContainer, saveBtnList, saveBtnClicked, 
-        saveBtn, space, hideInput, showInput, textArea} from '../styles/StudentProfileContainerStyles.css'
+        saveBtn, space, hideInput, showInput, textArea,
+				profilePictureDragDropAlt, savedResumeView, actualSaveBtn } from '../styles/StudentProfileContainerStyles.css'
 import { error } from 'sharedStyles/error.css' 
 import { input } from 'sharedStyles/widgets.css'
 
@@ -37,7 +40,6 @@ var momentLocalizer = require('react-widgets/lib/localizers/moment')
 momentLocalizer(Moment)
 
 export default function StudentProfile (props) {
- console.log(props)
  const messages = {
     emptyFilter: "Can't find your industry? Let us know at theunivjobs@gmail.com."
  }
@@ -95,8 +97,44 @@ export default function StudentProfile (props) {
     document.getElementById('drag-dropResume').style.color = '#00BFFF'
   }
 
+
+	/*
+  * Place the logo from props onto the Profile Picture field.
+  */
+
+  var profilePic = {}
+
+  if (typeof props.photo == "string") {
+    profilePic = {
+      backgroundRepeat: "no-repeat",
+      backgroundPosition: "center center",
+      backgroundSize: "104%"
+    }
+
+   /* 
+    * We add this attribute separately to the style object because
+    * initially in the React lifecycle, this prop will be "".
+    * This results in a garbage request to "/" which obviously will
+    * send back a 404. To stop these garbage 404s, we do this.
+    */
+
+    if (props.photo != "") {
+      profilePic.backgroundImage = `url(${config.mediaUrl}/avatar/${props.photo.replace("\\", "/")})`
+    }
+  }
+
+  if(typeof props.photo == "object") {
+
+    profilePic = {
+      backgroundImage: `url('${props.photo.preview}')`,
+      backgroundRepeat: "no-repeat",
+      backgroundPosition: "center center",
+      backgroundSize: "104%"
+    }
+  }
+
   return (
-    <div className={pageContainer}>
+    <div >
     	<div className={profileHeader}>Complete your profile so we can find you a job today!</div>
 
 			{/* EMAIL NOTIFICATIONS */}
@@ -139,10 +177,9 @@ export default function StudentProfile (props) {
 			    >
 			    </input>
 			 </li> 
+			</StudentProfileField>
 
-			 <li>
-			   <p>, and I am a</p>
-			 </li>
+			<StudentProfileField title="I am a ">
 			 
 			 {/* STATUS */}
 			 <li>
@@ -191,7 +228,7 @@ export default function StudentProfile (props) {
 			  onChange={value => props.updateProfileField('enrollmentDate', value, true)}
 			  value={props.enrollmentDate}
 			 />	
-			 <p>,and I will graduate in</p>
+			 <p> and I will graduate in</p>
 			 <DateTimePicker
 			  className={props.propsErrorMap.graduationDate ? dropDown + ' ' + error : dropDown}
 			  time={false}
@@ -246,7 +283,7 @@ export default function StudentProfile (props) {
 			   <p>or</p>
 			 </li>
 			 <li className={saveBtnList}>
-               <button className={props.gpaToggle ? saveBtnClicked : saveBtn} 
+               <button className={!props.gpa || props.gpa == 0 ? saveBtnClicked : saveBtn} 
                                 onClick={(e) => {props.onHandleButtonToggle(true, 'gpaToggle'); props.updateProfileField('gpa', '0.00', true)}}>
                     I do not have a GPA
                 </button>
@@ -272,7 +309,7 @@ export default function StudentProfile (props) {
 			   <p>or</p>
 			 </li>
 			 <li className={saveBtnList}>
-               <button className={props.emailToggle ? saveBtnClicked : saveBtn} onClick={() => props.onHandleButtonToggle(true, 'emailToggle') }>I prefer school email</button>
+               <button className={!props.personalEmail ? saveBtnClicked : saveBtn} onClick={() => props.onHandleButtonToggle(true, 'emailToggle') }>I prefer school email</button>
 			 </li>
 			</StudentProfileField>
 
@@ -469,25 +506,37 @@ export default function StudentProfile (props) {
 			</StudentProfileField>
 
 			{/* PHOTO & RESUME */}
+
 			<StudentProfileField title="Take a business selfie">
-				<Dropzone id="dropPhotoDiv" className={props.propsErrorMap.photo ? dropzone + ' ' + error: dropzone} onDrop={onDrop} accept='image/*' multiple={false}>
-					<div className={dropzoneContent}>
-						<i id="fa-user" className={"fa fa-user fa-3x"} aria-hidden="true"></i>
-						<div id="drag-dropPhoto">Upload a photo</div>
+				<Dropzone id="dropPhotoDiv" style={profilePic} className={props.propsErrorMap.photo ? dropzone + ' ' + error 
+					: props.photo == "" 
+						? dropzone 
+						: dropzone + " " + profilePictureDragDropAlt} onDrop={onDrop} accept='image/*' multiple={false}>
+					<div className={dropzoneContent} className={props.photo == "" ? "" : "gone"}>
+						<i id="fa-user" className={props.photo == "" ? "fa fa-user fa-3x" : "gone"} aria-hidden="true"></i>
+						<div className={props.photo == "" ? "" : "gone"} id="drag-dropPhoto" >Upload a photo</div>
 					</div>
 					</Dropzone>
-			<p className={space}>,here is my resume</p>
-        <Dropzone id="dropResumeDiv" className={props.propsErrorMap.resume ? dropzone + ' ' + error : dropzone} onDrop={onDropResume} accept='application/pdf' multiple={false}>
-          <div className={dropzoneContent}>
-            <i id="fa-pdf" className={"fa fa-file-pdf-o fa-3x"} aria-hidden="true"></i>
-            <div id="drag-dropResume">Upload your resume</div>
-          </div>
-        </Dropzone>
+
+					<p className={space}> here is my resume</p>
+
+					<Dropzone id="dropResumeDiv" className={props.propsErrorMap.resume ? dropzone + ' ' + error 
+						: props.resume == ""
+							? dropzone
+							: savedResumeView} onDrop={onDropResume} accept='application/pdf' multiple={false}>
+						<div className={dropzoneContent}>
+							<i id="fa-pdf" className={"fa fa-file-pdf-o fa-3x"} aria-hidden="true"></i>
+							<div id="drag-dropResume">{props.resume == ""
+								? 'Upload your resume'
+								: 'Resume on file! Click to change.'}</div>
+						</div>
+					</Dropzone>
+
       </StudentProfileField>
     {/* ======== SAVE BUTTON ======== */}
       <div>
         <div className={saveBtnContainer}>
-          <button onClick={(e) => props.onSubmit(props)} className={saveBtn}>Save</button>
+          <button onClick={(e) => props.onSubmit(props)} className={saveBtn + ' ' + actualSaveBtn}>Save</button>
         </div>
       </div>
    </div>

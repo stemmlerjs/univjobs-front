@@ -183,7 +183,6 @@ export function validateStudentProfileFields(profileInfo, next) {
 	  resume: false
   }
    
-  debugger
   profileFieldErrors.emailPreferences = profileInfo.emailPreferences != "" ? false : true
   profileFieldErrors.firstName = validateFirstName(profileInfo.firstName) ? false : true
   profileFieldErrors.lastName = validateLastName(profileInfo.lastName) ? false : true
@@ -229,14 +228,14 @@ export function validateStudentProfileFields(profileInfo, next) {
  * ***************************************************/
 
 export function compareToSnapshot(oldProfile, newProfile, callback) {
-    debugger
+
   for(var prop in newProfile) {
     if(newProfile[prop] == oldProfile[prop]) {
       delete newProfile[prop]
     }
 
     if(prop === 'languages' || prop === 'clubs' || prop === 'sports') {
-        debugger
+   
         //decrypt newProfile[prop]
         let tempObj = JSON.parse(atob(newProfile[prop]))
 
@@ -287,7 +286,6 @@ export function compareToSnapshot(oldProfile, newProfile, callback) {
  * returns an array of id's from language object
  * */
 export const extractLanguageId = (languages) => {
-    debugger
 
     return {
         'ids': languages.map((language) => language.id),
@@ -303,7 +301,6 @@ export const extractLanguageId = (languages) => {
  **/
 export const extractClubsObject = (clubs, profileInfo) => {
 
-    debugger 
     //id's: cross referrence clubsList, if the list contains current club get id
     //new: cross referrence clubList, if the list does not contain the club append the name into the array
     return {
@@ -320,7 +317,7 @@ export const extractClubsObject = (clubs, profileInfo) => {
  **/
 export const extractSportsObject = (sports, profileInfo) => {
 
-    debugger 
+
     //id's: cross referrence sportsList, if the list contains current sport get id
     //new: cross referrence sportsList, if the list does not contain the sport append the name into the array
     return {

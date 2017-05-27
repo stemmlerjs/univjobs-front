@@ -114,7 +114,6 @@ export function handleToggleButton(booleanState, buttonName) {
 }
 
 export function handleSaveNewTag(newTagName, pickList, textField, updateProfileFieldName) {
-    debugger
     return function(dispatch) {
         //ACTION: FETCHING_USER_PROFILE 
         dispatch(saveNewTag())
@@ -172,7 +171,7 @@ export function submitProfileFirstTime(userTypeInt, profileInfo, user) {
     	  } else {
     	   console.log('SUBMIT STUDENT PROFILE NO ERRORS')
     	    // No errors, proceed to /PUT on api/me
-          debugger
+
           var putData = {
               "is_a_student": true,
               "is_profile_completed": true,
@@ -182,28 +181,28 @@ export function submitProfileFirstTime(userTypeInt, profileInfo, user) {
               "is_active": true,
               "date_joined": user.dateJoined,
               "mobile": user.mobile,
-        	  "schoolName": profileInfo.school,
-      		  languages: btoa(JSON.stringify(extractLanguageId(profileInfo.languages))),
-      		  sports: btoa(JSON.stringify(extractSportsObject(profileInfo.sportsTeam, profileInfo))),
-      		  clubs: btoa(JSON.stringify(extractClubsObject(profileInfo.schoolClub, profileInfo))),
+        	    "schoolName": profileInfo.school,
+              languages: btoa(JSON.stringify(extractLanguageId(profileInfo.languages))),
+              sports: btoa(JSON.stringify(extractSportsObject(profileInfo.sportsTeam, profileInfo))),
+              clubs: btoa(JSON.stringify(extractClubsObject(profileInfo.schoolClub, profileInfo))),
               edu_level_id: profileInfo.educationLevel.id ? profileInfo.educationLevel.id : profileInfo.educationLevel,
-      		  email_pref: profileInfo.emailPreferences.id ? profileInfo.emailPreferences.id : profileInfo.emailPreferences,
-      		  status: profileInfo.studentStatus.id ? profileInfo.studentStatus.id : 1,
-      		  enroll_date: toISO(profileInfo.enrollmentDate),
-      		  grad_date: toISO(profileInfo.graduationDate),
-      		  major_id: profileInfo.major.id ? profileInfo.major.id : profileInfo.major,
-      		  GPA: parseFloat(profileInfo.gpa),
-      		  personal_email: profileInfo.personalEmail,
-      		  gender: profileInfo.gender.id ? profileInfo.gender.id : profileInfo.gender,
-              /*Converts the value to num*/
-      		  has_car: hasCarBoolean(profileInfo.hasCar),
-      		  recent_company_name: profileInfo.companyName,
-      		  recent_company_position: profileInfo.position,
-      		  fun_fact: profileInfo.funFacts,
-      		  hometown: profileInfo.hometown,
-      		  hobbies: profileInfo.hobbies,
-      		  profilepicture: profileInfo.photo,
-      		  resume: profileInfo.resume,
+              email_pref: profileInfo.emailPreferences.id ? profileInfo.emailPreferences.id : profileInfo.emailPreferences,
+              status: profileInfo.studentStatus.id ? profileInfo.studentStatus.id : 1,
+              enroll_date: toISO(profileInfo.enrollmentDate),
+              grad_date: toISO(profileInfo.graduationDate),
+              major_id: profileInfo.major.id ? profileInfo.major.id : profileInfo.major,
+              GPA: parseFloat(profileInfo.gpa),
+              personal_email: profileInfo.personalEmail,
+              gender: profileInfo.gender.id ? profileInfo.gender.id : profileInfo.gender,
+                /*Converts the value to num*/
+              has_car: hasCarBoolean(profileInfo.hasCar),
+              recent_company_name: profileInfo.companyName,
+              recent_company_position: profileInfo.position,
+              fun_fact: profileInfo.funFacts,
+              hometown: profileInfo.hometown,
+              hobbies: profileInfo.hobbies,
+              profilepicture: profileInfo.photo,
+              resume: profileInfo.resume,
       	  }
     	    studentProfilePUT(putData)
     	     .then((res) => {
@@ -291,7 +290,6 @@ export function submitProfileFirstTime(userTypeInt, profileInfo, user) {
 
 export function updateProfile(userTypeInt, profileInfo, user, snapshot) {
   return function (dispatch) {
-      debugger
     switch(userTypeInt) {
 
      /*
@@ -312,7 +310,6 @@ export function updateProfile(userTypeInt, profileInfo, user, snapshot) {
             ], true))
 
           } else {
-              debugger
             // No errors, proceed to /PUT on api/me
             var changedData = {
              // user: {
@@ -681,7 +678,6 @@ function studentProfile(state = initialStudentProfileState, action) {
     case TOGGLE_BUTTON:
         return {
             ...state,
-            buttonName: action.buttonName,
             [action.buttonName]: action.booleanState
     }
     case UPDATE_TAG:
@@ -690,7 +686,6 @@ function studentProfile(state = initialStudentProfileState, action) {
             listName: action.listName
     }
     case UPDATE_PROFILE_FIELD:
-      debugger
       return {
         ...state,
         [action.fieldName]: action.newValue,
@@ -702,28 +697,27 @@ function studentProfile(state = initialStudentProfileState, action) {
         propsErrorMap: action.profileErrorsObj
       }
     case FETCHED_PROFILE_INFO_SUCCESS:
-          debugger
           return {
             ...state,
-      		  emailPreferences: action.profileInfo.email_pref,
+      		    emailPreferences: action.profileInfo.email_pref,
               firstName: action.profileInfo.user_firstname,
               lastName: action.profileInfo.user_lastname,
               studentStatus: action.profileInfo.status,
-              enrollmentDate: new Date(action.profileInfo.enroll_date),
-              graduationDate: new Date(action.profileInfo.grad_date),
+              enrollmentDate: action.profileInfo.enroll_date ? new Date(action.profileInfo.enroll_date) : null,
+              graduationDate: action.profileInfo.grad_date ? new Date(action.profileInfo.grad_date) : null,
               major: action.profileInfo.major,
               educationLevel: action.profileInfo.edu_level,
               schoolName: action.profileInfo.name,
-              gpa: action.profileInfo.gpa.toFixed(2),
+              gpa: action.profileInfo.gpa ? Number(action.profileInfo.gpa) : 0,
               personalEmail: action.profileInfo.personal_email,
-        	  gender: action.profileInfo.gender,
-              sportsTeam: action.profileInfo.tags.sports, //.map((sport) => sport.id),
-      		  schoolClub: action.profileInfo.tags.clubs, //.map((club) => club.id),
-              languages: action.profileInfo.tags.languages, //.map((language) => language.id),
+        	    gender: action.profileInfo.gender,
+              sportsTeam: action.profileInfo.tags ? action.profileInfo.tags.sports : [], //.map((sport) => sport.id),
+      		    schoolClub: action.profileInfo.tags ? action.profileInfo.tags.clubs : [], //.map((club) => club.id),
+              languages: action.profileInfo.tags ? action.profileInfo.tags.languages : [], //.map((language) => language.id),
               //TODO: convert to yes/no
               hasCar: hasCarBoolean(action.profileInfo.has_car),
-      		  companyName: action.profileInfo.recent_company_name,
-              position: action.profileInfo.recent_comapany_position,
+      		    companyName: action.profileInfo.recent_company_name,
+              position: action.profileInfo.recent_company_position,
               funFacts: action.profileInfo.fun_fact,
               hometown: action.profileInfo.hometown,
               hobbies: action.profileInfo.hobbies,
@@ -731,9 +725,9 @@ function studentProfile(state = initialStudentProfileState, action) {
               resume: action.profileInfo.resume_url,
 
               //toggle if complex tags contain vars
-              sportsToggle: action.profileInfo.tags.sports.length > 0,
-              clubsToggle: action.profileInfo.tags.clubs.length > 0,
-              languagesToggle: action.profileInfo.tags.languages.length > 0,
+              sportsToggle: action.profileInfo.tags ? action.profileInfo.tags.sports.length > 0 : false,
+              clubsToggle: action.profileInfo.tags ? action.profileInfo.tags.clubs.length > 0 : false,
+              languagesToggle: action.profileInfo.tags ? action.profileInfo.tags.languages.length > 0 : false,
               gpaToggle: action.profileInfo.gpa === 0 ,
               emailToggle: action.profileInfo.personal_email !== null,
           }

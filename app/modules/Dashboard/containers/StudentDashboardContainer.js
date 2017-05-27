@@ -5,6 +5,8 @@ import React, { Component, PropTypes } from 'react'
 import { SidebarContainer } from 'modules/Main'
 import { StudentDashboard } from 'modules/Dashboard'
 
+import config from 'config'
+
 // ==============THIRD PARTY IMPORTS========================= //
 import SkyLight from 'react-skylight'
 
@@ -183,7 +185,7 @@ const StudentDashboardContainer = React.createClass({
     console.log(this.props, "Student dashboard container props")
     return (
       <div className={pageContainer} >
-      <SidebarContainer isAStudent={true}/>
+      <SidebarContainer isAStudent={true} profilePicture={config.mediaUrl + '/avatar/' + this.props.profile.photo}/>
       <StudentDashboard
         handleCardClick={this.openJobAppModal}
         onPinJob={this.pinJob}
@@ -351,9 +353,10 @@ const StudentDashboardContainer = React.createClass({
 // @params ({user}) contains BaseUser & Employer attributes
 // */
 
-function mapStateToProps({user, dashboard, job}) {
+function mapStateToProps({user, dashboard, job, profile}) {
   return {
 	  user: user ? user : {},
+    profile: profile.studentProfile ? profile.studentProfile : {},
 	  jobs: job.studentJobsView ? job.studentJobsView : [],
 	  jobAppModal: dashboard.studentDashboard.jobAppModal ? dashboard.studentDashboard.jobAppModal : {},
 	  industries : dashboard.industries ? dashboard.industries.data : [],

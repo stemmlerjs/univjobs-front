@@ -99,6 +99,11 @@ export function getAllStaticLists () {
         */
         
         var industriesArray = lists.industries
+        var emailPreferencesArray = lists.emailPref
+        var eduLevelsArray = lists.eduLevel
+        var majorsArray = lists.majors
+        var gendersArray = lists.genders
+        var studentStatusArray = lists.studentStatus
 
        /*
         * Convert the response arrays into objects for easier
@@ -153,6 +158,11 @@ export function getAllStaticLists () {
         */
         
         lists.industriesArray = industriesArray
+        lists.emailPreferencesArray = emailPreferencesArray
+        lists.eduLevelsArray = eduLevelsArray
+        lists.majorsArray = majorsArray
+        lists.gendersArray = gendersArray
+        lists.studentStatusArray = studentStatusArray
 
        /*
         * We were able to successfully get all of the lists.
@@ -583,6 +593,11 @@ export default function list (state = initialState, action) {
         */
 
         industriesArray: action.lists.industriesArray,
+        emailPreferencesArray: action.lists.emailPreferencesArray,
+        eduLevelsArray: action.lists.eduLevelsArray,
+        majorsArray: action.lists.majorsArray,
+        gendersArray: action.lists.gendersArray,
+        studentStatusArray: action.lists.studentStatusArray,
         isFetching: false
       }
     case LIST_GET_ALL_STATIC_LISTS_FAILURE:

@@ -29,9 +29,9 @@ export default function SideBar ({onLogout, isAStudent, profilePicture}) {
         {isAStudent 
           ? <Link to="/profile/st" className={noDecoration}>
               <div className={sidebarItem}>
-                { profilePicture.indexOf("undefined") === -1
+                { profilePicture.indexOf("undefined") === -1 && profilePicture.indexOf("null") === -1
                     ? <img className={profileImg + " " + animationItem8} src={profilePicture}></img>
-                    : ''
+                    : <div><i className={" fa fa-user"} aria-hidden="true"></i></div>
                 }
                 <div className={animationTxt8}>Profile</div>
                 <div className={animateLine1}></div>
@@ -39,9 +39,9 @@ export default function SideBar ({onLogout, isAStudent, profilePicture}) {
             </Link>
           : <Link to="/profile/em" className={noDecoration}>
               <div className={sidebarItem}>
-                { profilePicture.indexOf("undefined") === -1
+                { profilePicture.indexOf("undefined") === -1 && profilePicture.indexOf("null") === -1
                     ? <img className={profileImg + " " + animationItem8} src={profilePicture}></img>
-                    : ''
+                    : <div><i className={" fa fa-user"} aria-hidden="true"></i></div>
                 }
                 <div className={animationTxt8}>Profile</div>
                 <div className={animateLine1}></div>

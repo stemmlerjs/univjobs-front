@@ -185,7 +185,7 @@ export function createEmployerAccount(firstName, lastName, companyName, mobile, 
 */
 export function checkIfAuthed (store) {
   const promise = new Promise(function(resolve, reject) {
-    debugger
+
     console.log("******************* AUTHENTICATION CHECK *******************")
 
     /* If the user is simply flipping through pages, we can tell if they are in fact
@@ -231,6 +231,15 @@ export function checkIfAuthed (store) {
             const isProfileCompleted = response.data.student !== undefined ? response.data.student.is_profile_complete : response.data.employer.is_profile_complete
 
             let profileInfo = response.data.student !== undefined ? response.data.student : response.data.employer
+
+           /*
+            * Add the tags to profile info if the current user is a student
+            * so that we can put the tags on this student.
+            */
+
+            if (response.data.student) {
+              profileInfo.tags = response.data.tags
+            }
 
             // ACTION: USER - DISPATCH (FETCHING_USER_INFO_SUCCESS)
             store.dispatch(fetchingUserInfoSuccess(
