@@ -2,19 +2,11 @@ import axios from 'axios'
 import config from 'config'
 import { getAccessToken, getCSRFToken } from 'helpers/auth'
 
-/*NOTE: Reference to dashboard.js and lists.js
- * TODO: Unify functions of dashboard.js	
- *
 
-/**
+ /*
   * getPinnedJobs 
   *
   * Get all jobs
-  *
-  * @param store - Object
-  * @return Promise
-  *
-  * NOTE: axios url is job/r/pin/
   */
 
 export function getPinnedJobs() {
@@ -23,7 +15,7 @@ export function getPinnedJobs() {
 
 	return axios({
 		method: 'get',
-		url: config.baseUrl + 'job/r/pins/',
+		url: config.baseUrl + 'jobs/pins/',
 		headers: {
 			'Authorization':  accessToken,
 			'X-CSRFToken' : csrfToken
@@ -31,31 +23,34 @@ export function getPinnedJobs() {
 	})
 }
 
-/**
-  * getQuestions 
-  *
-  * Gets all questions 
-  * 
-  * TODO: Get questions with jobs displayed? 
-  *                  OR
-  *       Get pins with question in them?
-  *
-  * @return Promise
-  */
-
-export function getQuestions() {
+export function pinAJob (jobId) {
 	const accessToken = getAccessToken()
 	const csrfToken = getCSRFToken()
 
 	return axios({
-		method: 'get',
-		url: config.baseUrl + 'job/questions/',
+		method: 'PUT',
+		url: config.baseUrl + 'jobs/pins/' + jobId,
 		headers: {
 			'Authorization':  accessToken,
 			'X-CSRFToken' : csrfToken
-		},
+		}
 	})
 }
+
+export function unPinAJob (jobId) {
+  const accessToken = getAccessToken()
+	const csrfToken = getCSRFToken()
+
+	return axios({
+		method: 'DELETE',
+		url: config.baseUrl + 'jobs/pins/' + jobId,
+		headers: {
+			'Authorization':  accessToken,
+			'X-CSRFToken' : csrfToken
+		}
+	})
+}
+
 
 /**
   * getJobTypes 
@@ -98,53 +93,5 @@ export function getIndustries() {
 			'Authorization':  accessToken,
 			'X-CSRFToken' : csrfToken
 		},
-	})
-}
-
-/**
-  * studentApply
-  *
-  *  Performs a POST to  /job/new/student/apply to effecively apply to a new job.
-  *  @param data - Object
-  *         keys: (job, student, answers)
-  *  @return Promise
-  */
-
-export function studentApply(data) {
-	const accessToken = getAccessToken()
-	const csrfToken = getCSRFToken()
-
-	return axios({
-		method: 'post',
-		url: config.baseUrl + 'job/new/student/apply/',
-		headers: {
-			'Authorization':  accessToken,
-			'X-CSRFToken' : csrfToken
-		},
-			data: data
-	})
-}
-
-
-/**
-  * unPinAJob
-  *
-  *  Performs a DELETE to  /job/pin/ to effecively unpin the job.
-  *  @param data - Object
-  *         keys: (id)
-  *  @return Promise
-  */
-export function unPinAJob(data) {
-	const accessToken = getAccessToken()
-	const csrfToken = getCSRFToken()
-
-	return axios({
-		method: 'delete',
-		url: config.baseUrl + 'job/pin/',
-		headers: {
-			'Authorization':  accessToken,
-			'X-CSRFToken' : csrfToken
-		},
-        data: data
 	})
 }

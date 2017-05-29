@@ -17,7 +17,7 @@ export default function JobCardModal({
     updateAnswerText,
     closeJobAppModal,
     openConfirmApplyModal,
-    onPinJob
+    handlePinJob
   }) { 
   return (
     <div className={cardModalContainer}>
@@ -119,8 +119,8 @@ export default function JobCardModal({
               }
               <div>
                 <div className={cardActionButtons}>
-                  <button onClick={(e) => onPinJob(e, jobId)} >
-                    { !job.pinned ? 'PIN JOB' : 'UNPIN JOB'}
+                  <button onClick={(e) => handlePinJob(e, job)} >
+                    { job.pinned == 0 ? 'PIN JOB' : 'UNPIN JOB'}
                   </button>
                   <button onClick={openConfirmApplyModal}>APPLY</button>
                 </div>

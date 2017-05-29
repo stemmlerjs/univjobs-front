@@ -1,5 +1,6 @@
 
 import { getJobs } from 'helpers/job'
+import { pinAJob as pinJobHTTPRequest, unPinAJob as unpinJobHTTPRequest, getPinnedJobs } from 'helpers/pinJobs'
 
 // =======================================================
 // ====================== ACTIONS ========================
@@ -27,12 +28,123 @@ const ADD_CONTACT_INFO = 'JOBS.ADD_CONTACT_INFO'
 
 const UPDATE_APPLIED_JOB = 'UPDATE_APPLIED_JOB'
 
+const PINNING_JOB = 'PINNING_JOB'
+const PIN_JOB_SUCCESS = 'PIN_JOB_SUCCESS'
+const PIN_JOB_FAILURE = 'PIN_JOB_FAILURE'
+
+const UNPINNING_JOB = 'UNPINNING_JOB'
+const UNPIN_JOB_SUCCESS = 'UNPIN_JOB_SUCCESS'
+const UNPIN_JOB_FAILURE = 'UNPIN_JOB_FAILURE'
+
+
+
 // =======================================================
 // ================== ACTIONS CREATORS ===================
 // =======================================================
 
-/*
-*/
+  function pinningJob () {
+    return {
+      type: PINNING_JOB
+    }
+  }
+
+  function pinJobSuccess (jobId) {
+    return {
+      type: PIN_JOB_SUCCESS,
+      jobId
+    }
+  }
+
+  function pinJobFailure (error) {
+    return {
+      type: PIN_JOB_FAILURE,
+      error
+    }
+  }
+
+  export function pinJob (jobId) {
+    return function (dispatch) {
+
+     /*
+      * Start the process, pinning a job.
+      */
+
+      dispatch(pinningJob())
+
+      return pinJobHTTPRequest(jobId)
+
+        .then((result) => {
+
+          // If success, update the job to pinned == 1
+
+          dispatch(pinJobSuccess(jobId))
+
+        })
+
+        .catch((err) => {
+
+          // Failure
+          
+          dispatch(pinJobFailure('Could not pin job.'))
+
+        })
+    }
+  }
+  
+  function unpinningJob () {
+    return {
+      type: UNPINNING_JOB
+    }
+  }
+
+  function unpinJobSuccess (jobId) {
+    return {
+      type: UNPIN_JOB_SUCCESS,
+      jobId
+    }
+  }
+
+  function unpinJobFailure (error) {
+    return {
+      type: UNPIN_JOB_FAILURE,
+      error
+    }
+  }
+
+  export function unpinJob (jobId) {
+    return function (dispatch) {
+
+      /*
+      * Start the process, unpinning a job.
+      */
+
+      dispatch(unpinningJob())
+
+      return unpinJobHTTPRequest(jobId)
+
+        .then((result) => {
+
+          // If success, update the job to pinned == 1
+
+          dispatch(unpinJobSuccess(jobId))
+
+        })
+
+        .catch((err) => {
+
+          // Failure
+          
+          dispatch(unpinJobFailure('Could not unpin job.'))
+
+        })
+
+    }
+  }
+
+ /* ===============================
+  *   After applying to a job
+  * ===============================
+  */
 
 export function updateAppliedJob (jobId) {
   return {
@@ -247,6 +359,7 @@ export function getAllJobsStudentJobView () {
         var jobs = result.data.jobs;
         var questions = result.data.questions;
         var answers = result.data.answers
+        var pinned = result.data.pinnedJobs;
 
         for(var i = 0; i < jobs.length; i++) {
 
@@ -275,6 +388,7 @@ export function getAllJobsStudentJobView () {
               jobs[i].answers.push(answer)
             }
           })
+
         }
 
         dispatch(fetchedStudentJobsViewSuccess(jobs))
@@ -305,7 +419,9 @@ const initialJobState = {
 	studentJobsView: [],
 	jobTypes: [],
 	error: '',
-  isFetching: false
+  isFetching: false,
+  isPinningJob: false,
+  pinJobSuccess: false
 }
 
 
@@ -319,6 +435,80 @@ export default function job (state = initialJobState, action) {
    /*
     * Student actions
     */
+
+   /*
+    * =============================
+    * pin jobs
+    * =============================
+    */
+
+    case PINNING_JOB:
+      return {
+        ...state,
+        isPinningJob: true,
+        pinJobSuccess: false
+      }
+    case PIN_JOB_SUCCESS:
+
+      var studentJobsView = state.studentJobsView
+
+      for (var i = 0; i < studentJobsView.length; i++) {
+        if (studentJobsView[i].job_id == action.jobId) {
+          studentJobsView[i].pinned = 1
+          break;
+        }
+      }
+
+      return {
+        ...state,
+        isPinningJob: false,
+        pinJobSuccess: true,
+        studentJobsView: studentJobsView
+      }
+    case PIN_JOB_FAILURE:
+      return {
+        ...state,
+        isPinningJob: false,
+        pinJobSuccess: false
+      }
+    
+    case UNPINNING_JOB:
+      return {
+        ...state,
+        isPinningJob: true,
+        pinJobSuccess: false
+      }
+
+    case UNPIN_JOB_SUCCESS:
+    
+      var studentJobsView = state.studentJobsView
+
+      for (var i = 0; i < studentJobsView.length; i++) {
+        if (studentJobsView[i].job_id == action.jobId) {
+          studentJobsView[i].pinned = 0
+          break;
+        }
+      }
+
+      return {
+        ...state,
+        isPinningJob: false,
+        pinJobSuccess: true,
+        studentJobsView: studentJobsView
+      }
+    case UNPIN_JOB_FAILURE:
+      return {
+        ...state,
+        isPinningJob: false,
+        pinJobSuccess: false
+      }
+
+   /*
+    * =============================
+    * update jobs after applying
+    * =============================
+    */
+
     case UPDATE_APPLIED_JOB:
 
       var studentJobsView = state.studentJobsView

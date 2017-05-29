@@ -23,7 +23,7 @@ import { pageMainJobCards, rotateIcon, applyButton } from 'modules/SharedCompone
 export default function JobCard ({logoUrl, pinned, jobObject, jobId, title, 
     industries, industry, companyName, officeAddress, officeCity, startDate,
     compensation,
-    onPinJob, handleCardClick}) {
+    handlePinJob, handleCardClick}) {
   return (
     <div className={cardContainer}>
         <div className={cardTopContainer}>
@@ -51,8 +51,8 @@ export default function JobCard ({logoUrl, pinned, jobObject, jobId, title,
           </div>
 
           <div className={cardActionButtons}>
-            <button onClick={(e) => onPinJob(e, jobId)} >
-              { !pinned ? 'PIN JOB' : 'UNPIN JOB'}
+            <button onClick={(e) => handlePinJob(e, jobObject)} >
+              { pinned == 0 ? 'PIN JOB' : 'UNPIN JOB'}
             </button>
 
             <button onClick={(e) => handleCardClick(e, jobObject)}>SEE MORE</button>

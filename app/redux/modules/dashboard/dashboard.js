@@ -217,7 +217,7 @@ function dashboardPinFailure(error) {
 }
 
 /**************UNPINS***********************/
-export function dashboardUnPinClicked(job) {
+function dashboardUnPinClicked(job) {
    return {
    	  type: DASHBOARD_UNPIN_CLICKED,
 	  job,
@@ -231,7 +231,7 @@ export function dashboardUnPinClicked(job) {
  *         }
  *  NOTE: find the jobId and changed the pinned status to true in the store
  * */
-export function dashboardUnPinSuccess(response) {
+function dashboardUnPinSuccess(response) {
    return {
         type: DASHBOARD_UNPIN_SUCCESS,
 	    fill: {color: 'none'},
@@ -239,7 +239,7 @@ export function dashboardUnPinSuccess(response) {
    }
 }
 
-export function dashboardUnPinFailure(error) {
+function dashboardUnPinFailure(error) {
    return {
         type: DASHBOARD_UNPIN_FAILURE,
         error,
@@ -247,7 +247,7 @@ export function dashboardUnPinFailure(error) {
 }
 
 /**************UPDATE FIELDS***********************/
-export function dashboardUpdateAnswerField(fieldName, newValue) {
+function dashboardUpdateAnswerField(fieldName, newValue) {
   return {
 	    type: DASHBOARD_UPDATE_ANSWER_FIELD,
 	    newValue, 
@@ -266,14 +266,14 @@ function dashboardSubmittingAnswers() {
 	}
 }
 
-export function dashboardSubmitAnswersSuccess(response) {
+function dashboardSubmitAnswersSuccess(response) {
    return {
    	  type: DASHBOARD_SUBMIT_ANSWERS_SUCCESS,
 	  response
    }
 }
 
-export function dashboardSubmitAnswersFailure(error) {
+function dashboardSubmitAnswersFailure(error) {
    return {
       type: DASHBOARD_SUBMIT_ANSWERS_FAILURE,
       error

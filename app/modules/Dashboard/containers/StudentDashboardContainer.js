@@ -80,22 +80,108 @@ const StudentDashboardContainer = React.createClass({
   	})
   },
 
+  /* 
+   * pinJob
+   * 
+   * This will actually pin or unpin the job based on the current 
+   * status of the job.
+   */
 
-
-  /* pinJob 
-   *   This function pins the job, passes the student id and job id,
-   *   then the the ids are given to in the payload to transfer a request
-   * */
   pinJob(e, job) {
-      //debugger
+
       e.preventDefault()
       e.stopPropagation()
 
-      if(!job.pinned) {
-          this.props.handlePinJob(job)
-      } else {
-         this.props.handleUnPinJob(job)
-      } 
+     /*
+      * Lockout
+      */
+
+      if (!this.props.isPinningJob) {
+
+        if(job.pinned == 0) {
+
+         /*
+          * PIN the job and display the 
+          * toaster based on the success of it.
+          */
+
+          this.props.pinJob(job.job_id)
+
+            .then((result) => {
+
+              setTimeout(() => {
+
+                var rejectSuccess = this.context.store.getState().job.pinJobSuccess
+
+                if (rejectSuccess) {
+
+                  this.refs.container.success(
+                    "Job saved to My Pinned Jobs.",
+                    "Pinned!",
+                    {
+                      timeout: 3000
+                    });
+
+                }
+
+                else {
+
+                  this.refs.container.error(
+                  "Whoops.",
+                  "Something went wrong pinning this job.", {
+                    timeout: 3000
+                  });
+
+                }
+
+              }, 500)
+
+            })
+
+        } else {
+
+         /*
+          * UNPIN the job and display the 
+          * toaster based on the success of it.
+          */
+
+          this.props.unpinJob(job.job_id)
+
+            .then((result) => {
+
+              setTimeout(() => {
+
+                var rejectSuccess = this.context.store.getState().job.pinJobSuccess
+
+                if (rejectSuccess) {
+
+                  this.refs.container.success(
+                    "Removed this job from your Pinned Jobs.",
+                    "Unpinned!",
+                    {
+                      timeout: 3000
+                    });
+
+                }
+
+                else {
+
+                  this.refs.container.error(
+                  "Whoops.",
+                  "Something went wrong unpinning this job.", {
+                    timeout: 3000
+                  });
+
+                }
+
+              }, 500)
+              
+            })
+
+        } 
+
+      }
+      
   },
 
   /*
@@ -294,11 +380,10 @@ const StudentDashboardContainer = React.createClass({
       <SidebarContainer isAStudent={true} profilePicture={config.mediaUrl + '/avatar/' + this.props.profile.photo}/>
       <StudentDashboard
         handleCardClick={this.openJobAppModal}
-        onPinJob={this.pinJob}
+        handlePinJob={this.pinJob}
         jobs={this.props.jobs ? this.props.jobs : ''}
         industries={this.props.industries ? this.props.industries : {}}
         jobTypes={this.props.jobTypes ? this.props.jobTypes : []}
-        pin={this.props.pin}
 	    />
 
       {
@@ -328,6 +413,7 @@ const StudentDashboardContainer = React.createClass({
                     openConfirmApplyModal={this.openConfirmApplyModal}
                     updateAnswerText={this.handleUpdateAnswerText}
                     industries={this.props.industries}
+                    handlePinJob={this.pinJob}
                     />
                 : ''
               }
@@ -386,7 +472,9 @@ function mapStateToProps({user, dashboard, job, profile, list}) {
 	  answer : dashboard.studentDashboard.jobs ? dashboard.answer : {},
 	  pin: dashboard.studentDashboard.response ? dashboard.studentDashboard.pin : {},
     isApplying: dashboard.studentDashboard.jobAppModal ? dashboard.studentDashboard.jobAppModal.isApplying : false,
-    applySuccess: dashboard.studentDashboard.jobAppModal ? dashboard.studentDashboard.jobAppModal.applySuccess : false
+    applySuccess: dashboard.studentDashboard.jobAppModal ? dashboard.studentDashboard.jobAppModal.applySuccess : false,
+    isPinningJob: job.isPinningJob ? job.isPinningJob : false,
+    pinJobSuccess: job.pinJobSuccess ? job.pinJobSuccess : false
   }
 }
 

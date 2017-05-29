@@ -30,7 +30,7 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 //**NOTE:
 //  Store is accessible
 export default function StudentDashboard ({jobs, handleCardClick, 
-  onPinJob,
+    handlePinJob,
 	modal, jobTypes, industries,
 	answerOne, answerTwo, 
     pin
@@ -63,7 +63,7 @@ export default function StudentDashboard ({jobs, handleCardClick,
                           compensation={job.compensation}
                           createdAt={job.createdAt}
                           questions={job.questions}
-                          handlePinJob={onPinJob}
+                          handlePinJob={handlePinJob}
                           handleCardClick={handleCardClick}
                           jobObject={job}
                           logoUrl={config.mediaUrl + job.logo_url}
@@ -71,6 +71,7 @@ export default function StudentDashboard ({jobs, handleCardClick,
                           companyName={job.company_name}
                           officeAddress={job.office_address}
                           officeCity={job.office_city}
+                          pinned={job.pinned}
                         />
   	                )) : '' }
                 </div>
