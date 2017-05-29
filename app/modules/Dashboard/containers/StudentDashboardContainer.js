@@ -23,8 +23,10 @@ import * as fetch from 'helpers/dashboard'
 import { authRedirectFilter } from 'config/routes'
 
 // ==================MESSAGES============================== //
-import ReduxToastr from 'react-redux-toastr'
-import {toastr} from 'react-redux-toastr'
+
+var ReactToastr = require("react-toastr");
+var { ToastContainer } = ReactToastr;
+var ToastMessageFactory = React.createFactory(ReactToastr.ToastMessage.animation);
 
 // ================CSS IMPORTS============================== //
 import { pageContainer } from 'sharedStyles/sharedContainerStyles.css'
@@ -104,22 +106,120 @@ const StudentDashboardContainer = React.createClass({
    */
 
   applyToJob () {
-
+    const _this = this;
     const jobAppModal = this.props.jobAppModal
     const questions = jobAppModal.selectedJob.questions
 
     const answerOneText = jobAppModal.answerOne
     const answerTwoText = jobAppModal.answerTwo
-    const jobId = jobAppModal.selectedJob.jobId
+    const jobId = jobAppModal.selectedJob.job_id
     const question_one_id = questions[0] ? questions[0].question_id : null
     const question_two_id = questions[1] ? questions[1].question_id : null 
 
-    // console.log(jobId, question_one_id, answerOneText, question_two_id, answerTwoText)
-    this.props.submitJobApplication(jobId, question_one_id, answerOneText, question_two_id, answerTwoText)
+    if (questions.length !== 0) {
 
-    // Use these later - show toaster messages?
-    // toastr.success("Successfully applied to jobs")
-    // toastr.error("✋ You need to answer the employers question if you want to get a job")
+     /*
+      * The user didnt answer all the questions asked. 
+      */
+
+      if ((answerOneText == "" && question_one_id !== null) || (answerTwoText == "" && question_two_id !== null)) {
+
+        this.refs.container.error(
+          "Hold up.",
+          "✋ You need to answer the employer's question if you want to apply to this job.", {
+            timeout: 3000
+          });
+
+      }
+
+      /*
+      * The user answered all the questions or it's not necessary to answer
+      * questions because there isn't any.
+      */
+
+      else {
+
+        doApplyToJob()
+        
+      }
+    }
+
+   /*
+    * This job didn't have any questions, lets apply!
+    */
+
+    else {
+
+      doApplyToJob()
+
+    }
+
+   /*
+    * applyToJob
+    *
+    * Do the actual application of the job. 
+    */
+
+    function doApplyToJob () {
+
+     /*
+      * Lockout. Don't allow them to click to apply again if we're currently applying.
+      */
+
+      if (!_this.props.isApplying) {
+
+        _this.props.submitJobApplication(jobId, question_one_id, answerOneText, question_two_id, answerTwoText)
+        
+          .then((response) => {
+
+            function checkIfSuccessOrFailure () {
+              var rejectSuccess = _this.context.store.getState().dashboard.studentDashboard.jobAppModal.success
+
+              if (rejectSuccess) {
+
+                _this.refs.container.success(
+                "Nice work on applying to that job.",
+                "Done!",
+                {
+                  timeout: 3000
+                });
+
+               /*
+                * Remove that job from the dashboard now.
+                */
+
+                _this.props.updateAppliedJob(jobId)
+
+               /*
+                * Close the apply and job modal
+                */
+
+                _this.closeConfirmApplyModal()
+                _this.closeJobAppModal()
+
+              }
+
+              else {
+
+                _this.refs.container.error(
+                "Whoops.",
+                "Something went wrong trying to hire this student.", {
+                  timeout: 3000
+                });
+
+              }
+            }
+
+            setTimeout(checkIfSuccessOrFailure.bind(_this), 500)
+
+          })
+
+      }
+
+    }    
+
+
+
   },
 
  /*
@@ -260,10 +360,10 @@ const StudentDashboardContainer = React.createClass({
         </SkyLight>
       </div>
 
-	  <ReduxToastr
-	    timeOut={4000}
-	    newestOnTop={false}
-	    position="top-right"/>
+	  <ToastContainer ref="container"
+        toastMessageFactory={ToastMessageFactory}
+        className="toast-top-right" />
+
     </div>
     )
   },
@@ -285,6 +385,8 @@ function mapStateToProps({user, dashboard, job, profile, list}) {
 	  jobTypes : list.jobTypesArray ? list.jobTypesArray : [],
 	  answer : dashboard.studentDashboard.jobs ? dashboard.answer : {},
 	  pin: dashboard.studentDashboard.response ? dashboard.studentDashboard.pin : {},
+    isApplying: dashboard.studentDashboard.jobAppModal ? dashboard.studentDashboard.jobAppModal.isApplying : false,
+    applySuccess: dashboard.studentDashboard.jobAppModal ? dashboard.studentDashboard.jobAppModal.applySuccess : false
   }
 }
 

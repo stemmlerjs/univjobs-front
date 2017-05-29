@@ -1,7 +1,8 @@
 
 
 .cardModalContainer {
-
+display: flex;
+    flex-direction: row;
 } 
 
 .cardLeft {
@@ -9,7 +10,8 @@
 }   
 
 .cardRight {
-  width:50%;
+    width: 50%;
+    margin-right: 47px;
 } 
 
 .cardLeftTopContainer {
@@ -101,12 +103,15 @@ margin-top: 9px;
 }
 
 .cardActionButtons {
-    display: flex;
+display: flex;
     flex-direction: row;
     justify-content: flex-end;
-    padding-left: 16px; 
-    padding-right: 16px; 
+    padding-left: 16px;
+    padding-right: 16px;
     padding-bottom: 13px;
+    position: absolute;
+    right: 19px;
+    bottom: 19px;
 }
 
 .cardActionButtons > button {
@@ -129,4 +134,20 @@ margin-top: 9px;
 
 .cardActionButtons > button:hover a {
     color:white;
+}
+
+.questionsContainer {
+        position: relative;
+    top: 85px;
+    text-align: left;
+    font-size:15px;
+}
+
+.answerTextField {
+    width: 100%;
+    height: 91px;
+    margin-top: 7px;
+    margin-bottom: 7px;
+    font-family: Roboto, sans-serif;
+    font-size: 15px;
 }

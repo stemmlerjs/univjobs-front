@@ -45,7 +45,10 @@ export default function StudentDashboard ({jobs, handleCardClick,
                     subHeading="Apply to a job now, so we can help you land one!"/>
 
                 <div className={flexibleCardContainer}>
-  	                { jobs.length > 0 ? jobs.map((job) => (
+  	                { jobs.length > 0 ? jobs.filter((job) => {
+                          return job.applied == 0
+                      })
+                      .map((job) => (
                         <JobCard 
                           key={job.job_id}
                           jobId={job.job_id}

@@ -4,7 +4,8 @@ import { cardModalContainer, cardLeft, cardRight, cardLeftTopContainer, imgConta
         cardHeaderContainer, cardHeaderItemMainText, cardHeaderItemAltItemText,
         cardHeaderItemSecondaryText, cardHeaderItemContainer,
         cardLocation, cardBottomContainer, cardSectionOne, cardSectionTwo,
-        cardSectionTitle, cardSectionText, cardActionButtons, cardSectionThree } from '../styles/JobCardModal.css'
+        cardSectionTitle, cardSectionText, cardActionButtons, cardSectionThree,
+        questionsContainer, answerTextField } from '../styles/JobCardModal.css'
 
 import config from 'config'
 import moment from 'moment'
@@ -30,10 +31,6 @@ export default function JobCardModal({
                   <div className={cardHeaderItemMainText}>{job.title}</div>
                   <div className={cardHeaderItemSecondaryText}>{industries[job.industry]}</div> 
                   <div className={cardHeaderItemAltItemText}>{job.company_name}</div>
-                  <div className={cardHeaderItemContainer}>
-                      <img data-tip="Job location" src={`${config.assetUrl}components/cards/student/actions/a/has_car_active_24px.svg`}/>
-                      <div className={cardLocation}>{job.office_address + ", " + job.office_city}</div>
-                  </div>
                 </div>
               </div>
 
@@ -48,7 +45,7 @@ export default function JobCardModal({
                 </div>
                 <div className={cardSectionTwo}>
                     <div className={cardSectionTitle}>Qualifications</div>
-                    <div className={cardSectionText}>{job.qualifications}</div>
+                    <div className={cardSectionText}>{job.qualification}</div>
                 </div>
 
               </div>
@@ -56,9 +53,11 @@ export default function JobCardModal({
 
             </div>
             <div className={cardRight}>
-            </div>
 
-            
+            <div className={cardHeaderItemContainer}>
+              <img data-tip="Job location" src={`${config.assetUrl}components/cards/student/actions/a/has_car_active_24px.svg`}/>
+              <div className={cardLocation}>{job.office_address + ", " + job.office_city}</div>
+            </div>
 
             {
              /* 
@@ -72,7 +71,7 @@ export default function JobCardModal({
             }
 
             { questions.length != 0 
-                ? <div>
+                ? <div className={questionsContainer}>
                     {
                       /* 
                       * In this case, THERE ARE questions that need
@@ -81,11 +80,10 @@ export default function JobCardModal({
                       */
                     }
 
-                    { questions.map((question) => (
+                    { questions.map((question, index) => (
                       <div key={question.question_id}>
-                        lkjlkjasdlkj
-                        <div>{question.text}</div>
-                        <input onChange={(e) => {
+                        <div><b>{"Question " + (index + 1) + ": "}</b>{question.text}</div>
+                        <textarea className={answerTextField} onChange={(e) => {
 
                           /* 
                           * Update the answers on change.
@@ -102,7 +100,7 @@ export default function JobCardModal({
                             }
                           }
 
-                        }} type="textarea"/>
+                        }} rows="1" cols="50"></textarea>
                       </div>
                     ))}
                     
@@ -127,6 +125,11 @@ export default function JobCardModal({
                   <button onClick={openConfirmApplyModal}>APPLY</button>
                 </div>
               </div>
+            </div>
+
+            
+
+            
               
     
     </div>

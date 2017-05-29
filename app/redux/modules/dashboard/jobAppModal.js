@@ -140,7 +140,7 @@
         * the answers to the questions.
         */
 
-        applyToJob(answers, jobId)
+        return applyToJob(answers, jobId)
 
        /*
         * After applying to the job, if it went well, 

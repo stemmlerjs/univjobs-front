@@ -25,9 +25,21 @@ const FETCHED_JOB_TYPES_FAILURE = 'FETCHED_JOB_TYPES_FAILURE'
 
 const ADD_CONTACT_INFO = 'JOBS.ADD_CONTACT_INFO'
 
+const UPDATE_APPLIED_JOB = 'UPDATE_APPLIED_JOB'
+
 // =======================================================
 // ================== ACTIONS CREATORS ===================
 // =======================================================
+
+/*
+*/
+
+export function updateAppliedJob (jobId) {
+  return {
+    type: UPDATE_APPLIED_JOB,
+    jobId
+  }
+}
 
 /* ===============================
  * After contacting a student
@@ -222,7 +234,7 @@ export function getAllJobsStudentJobView () {
 
       .then((result) => {
         console.log("HERE")
-
+        
        /*
         * If successful, we will add all of the jobs to the
         * studentJobsView (part of the redux store). 
@@ -234,6 +246,7 @@ export function getAllJobsStudentJobView () {
 
         var jobs = result.data.jobs;
         var questions = result.data.questions;
+        var answers = result.data.answers
 
         for(var i = 0; i < jobs.length; i++) {
 
@@ -247,6 +260,19 @@ export function getAllJobsStudentJobView () {
           questions.forEach(function(question) {
             if (question.job_id == jobs[i].job_id) {
               jobs[i].questions.push(question)
+            }
+          })
+
+         /*
+          * For each job, place the answers onto 
+          * the job object.
+          */
+
+          jobs[i].answers = []
+
+          answers.forEach(function(answer) {
+            if (answer.job_id == jobs[i].job_id) {
+              jobs[i].answers.push(answer)
             }
           })
         }
@@ -293,7 +319,21 @@ export default function job (state = initialJobState, action) {
    /*
     * Student actions
     */
+    case UPDATE_APPLIED_JOB:
 
+      var studentJobsView = state.studentJobsView
+
+      for (var i = 0; i < studentJobsView.length; i++) {
+        if (studentJobsView[i].job_id == action.jobId) {
+          studentJobsView[i].applied = 1
+          break;
+        }
+      }
+
+      return {
+        ...state,
+        studentJobsView: studentJobsView
+      }
     case FETCHING_STUDENT_JOBS_VIEW:
       return {
         ...state,
