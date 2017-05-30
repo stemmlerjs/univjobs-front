@@ -4,6 +4,9 @@ import React, { Component, PropTypes } from 'react'
 // ==============MADE COMPONENTS========================= //
 import { SidebarContainer } from 'modules/Main'
 import { StudentDashboard } from 'modules/Dashboard'
+import { PinJobs } from 'modules/PinJobs'
+import { Invites } from 'modules/Invites'
+import { Applications } from 'modules/Applications'
 import { JobCardModal } from 'modules/SharedComponents'
 
 import config from 'config'
@@ -33,12 +36,15 @@ import { pageContainer } from 'sharedStyles/sharedContainerStyles.css'
 import { applyButton, cancelBtn, applyButtonsContainer } from '../styles/StudentDashboardStyles.css'
 
 
+
+let reloadJobs = ""
+
+
 const StudentDashboardContainer = React.createClass({
     propTypes: {
 	  user: PropTypes.object, 
 	  jobs: PropTypes.array, 
 	  modal : PropTypes.object, 
-	  industries : PropTypes.object,
 	  jobTypes : PropTypes.array, 
 	  answer : PropTypes.object, 
 	  pin: PropTypes.object
@@ -362,11 +368,29 @@ const StudentDashboardContainer = React.createClass({
   },
 
   componentWillMount() {
+    
   	this.doRedirectionFilter()
       .then(this.props.getAllJobsStudentJobView())
       .then(this.props.handleGetIndustries())
       .then(this.props.handleGetJobTypes())
       .then(this.props.closeOverlay())
+
+      
+  },
+
+  componentWillReceiveProps (nextProps) {
+
+    if (reloadJobs == "") {
+        reloadJobs = this.props.route.page
+      }
+
+      if (nextProps.route.page !== reloadJobs) {
+        console.log("[Univjobs]: Changed Jobs view. We should update jobs.")
+        reloadJobs = nextProps.route.page
+
+        this.props.getAllJobsStudentJobView()
+      }
+
   },
 
   componentWillUnmount() {
@@ -374,17 +398,65 @@ const StudentDashboardContainer = React.createClass({
   },
 
   render () {
-    console.log(this.props, "Student dashboard container props")
+
+
     return (
       <div className={pageContainer} >
       <SidebarContainer isAStudent={true} profilePicture={config.mediaUrl + '/avatar/' + this.props.profile.photo}/>
-      <StudentDashboard
-        handleCardClick={this.openJobAppModal}
-        handlePinJob={this.pinJob}
-        jobs={this.props.jobs ? this.props.jobs : ''}
-        industries={this.props.industries ? this.props.industries : {}}
-        jobTypes={this.props.jobTypes ? this.props.jobTypes : []}
-	    />
+
+      {
+        this.props.route.page === "dashboard" 
+          ? <StudentDashboard
+              handleCardClick={this.openJobAppModal}
+              handlePinJob={this.pinJob}
+              jobs={this.props.jobs ? this.props.jobs : ''}
+              industries={this.props.industries ? this.props.industries : {}}
+              jobTypes={this.props.jobTypes ? this.props.jobTypes : []}
+              refreshJobs={this.props.getAllJobsStudentJobView}
+            />
+          : ''
+      }
+
+      {
+        this.props.route.page === "pinnedjobs" 
+          ? <PinJobs
+              handleCardClick={this.openJobAppModal}
+              handlePinJob={this.pinJob}
+              jobs={this.props.jobs ? this.props.jobs : ''}
+              industries={this.props.industries ? this.props.industries : {}}
+              jobTypes={this.props.jobTypes ? this.props.jobTypes : []}
+              refreshJobs={this.props.getAllJobsStudentJobView}
+            />
+          : ''
+      }
+
+      {
+        this.props.route.page === "applications" 
+          ? <Applications
+              handleCardClick={this.openJobAppModal}
+              handlePinJob={this.pinJob}
+              jobs={this.props.jobs ? this.props.jobs : ''}
+              industries={this.props.industries ? this.props.industries : {}}
+              jobTypes={this.props.jobTypes ? this.props.jobTypes : []}
+              refreshJobs={this.props.getAllJobsStudentJobView}
+            />
+          : ''
+      }
+
+      {
+        this.props.route.page === "invitations" 
+          ? <Invites
+              handleCardClick={this.openJobAppModal}
+              handlePinJob={this.pinJob}
+              jobs={this.props.jobs ? this.props.jobs : ''}
+              industries={this.props.industries ? this.props.industries : {}}
+              jobTypes={this.props.jobTypes ? this.props.jobTypes : []}
+              refreshJobs={this.props.getAllJobsStudentJobView}
+            />
+          : ''
+      }
+
+      
 
       {
        /* 
@@ -403,8 +475,9 @@ const StudentDashboardContainer = React.createClass({
               ref="jobAppModal"
               >
 
-              {this.props.jobAppModal.selectedJob 
+              { this.props.jobAppModal.selectedJob 
                 ? <JobCardModal
+                    cardType={this.props.route.page}
                     title={this.props.jobAppModal.selectedJob.title}
                     questions={this.props.jobAppModal.selectedJob.questions}
                     job={this.props.jobAppModal.selectedJob}
@@ -469,8 +542,6 @@ function mapStateToProps({user, dashboard, job, profile, list}) {
 	  jobAppModal: dashboard.studentDashboard.jobAppModal ? dashboard.studentDashboard.jobAppModal : {},
 	  industries : list.industries ? list.industries : [],
 	  jobTypes : list.jobTypesArray ? list.jobTypesArray : [],
-	  answer : dashboard.studentDashboard.jobs ? dashboard.answer : {},
-	  pin: dashboard.studentDashboard.response ? dashboard.studentDashboard.pin : {},
     isApplying: dashboard.studentDashboard.jobAppModal ? dashboard.studentDashboard.jobAppModal.isApplying : false,
     applySuccess: dashboard.studentDashboard.jobAppModal ? dashboard.studentDashboard.jobAppModal.applySuccess : false,
     isPinningJob: job.isPinningJob ? job.isPinningJob : false,

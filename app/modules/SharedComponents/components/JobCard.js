@@ -22,7 +22,7 @@ import { pageMainJobCards, rotateIcon, applyButton } from 'modules/SharedCompone
 
 export default function JobCard ({logoUrl, pinned, jobObject, jobId, title, 
     industries, industry, companyName, officeAddress, officeCity, startDate,
-    compensation,
+    compensation, cardType,
     handlePinJob, handleCardClick}) {
   return (
     <div className={cardContainer}>
@@ -49,11 +49,26 @@ export default function JobCard ({logoUrl, pinned, jobObject, jobId, title,
               <div className={cardSectionTitle}>Compensation</div>
               <div className={cardSectionText}>{compensation}</div>
           </div>
-
+          
           <div className={cardActionButtons}>
-            <button onClick={(e) => handlePinJob(e, jobObject)} >
-              { pinned == 0 ? 'PIN JOB' : 'UNPIN JOB'}
-            </button>
+
+            {
+             /*
+              * PIN JOB button
+              *
+              * The pin job button can be used only the pinnedjobs, dashboard and invites
+              * page but cannot be used on applications page because they've already applied,
+              * there's no need to pin the job at this point.
+              */
+            }
+            
+            {
+              cardType == "pinnedjobs" || cardType == "dashboard"
+                ? <button onClick={(e) => handlePinJob(e, jobObject)} >
+                    { pinned == 0 ? 'PIN JOB' : 'UNPIN JOB'}
+                  </button>
+                : ''
+            }
 
             <button onClick={(e) => handleCardClick(e, jobObject)}>SEE MORE</button>
           </div>

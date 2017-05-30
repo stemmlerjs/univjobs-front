@@ -1,9 +1,4 @@
-/*Applications
- *
- * This components is to display the jobs pinned by the students
- *
- * */
-// ==============REACT BUILTIN========================= //
+
 import React, { PropTypes } from 'react'
 
 // ==============MADE COMPONENTS========================= //
@@ -29,7 +24,7 @@ import { pinIcon, fillIcon, unFillIcon, rotateIcon } from 'sharedStyles/pinCards
 import { buttonContainers } from 'sharedStyles/widgets.css'
 import { overflowFix } from 'sharedStyles/sharedComponentStyles.css'
 
-export default function PinJobs ({jobs,
+export default function Invites ({jobs,
     industries,
     handlePinJob,
     handleCardClick
@@ -39,17 +34,17 @@ export default function PinJobs ({jobs,
         
         {/* TITLE */}
         <Title 
-            titleName="My Pinned Jobs"
-            subHeading="This is where all the job you pinned are displayed"
+            titleName="Invitations"
+            subHeading="These are jobs that employers have invited you to apply to!"
         />
 
         <div className={flexibleCardContainer}>
             { jobs.length > 0 ? jobs.filter((job) => {
-                    return job.pinned == 1
+                    return (job.invited == 1 && job.applied == 0)
                 })
                 .map((job) => (
                     <JobCard 
-                        cardType={'pinjobs'}
+                        cardType={'invites'}
                         key={job.job_id}
                         jobId={job.job_id}
                         postedBy={job.posted_by}
@@ -80,8 +75,5 @@ export default function PinJobs ({jobs,
   )
 }
 
-PinJobs.propTypes = {
+Invites.propTypes = {
 }
-
-
-

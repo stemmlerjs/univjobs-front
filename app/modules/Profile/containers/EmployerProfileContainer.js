@@ -201,7 +201,7 @@ const EmployerProfileContainer = React.createClass({
           logoUrl={this.props.logoUrl}
           profilePicture={typeof this.props.profile.logoUrl == "object" && this.props.profile.logoUrl !== null
             ? this.props.profile.logoUrl.preview
-            : config.mediaUrl + '/avatar/' + this.props.profile.logoUrl}
+            : config.mediaUrl + this.props.profile.logoUrl}
         />
         <Title 
             titleName="My business profile"

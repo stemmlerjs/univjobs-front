@@ -5,6 +5,8 @@ import React, { Component, PropTypes } from 'react'
 import { SidebarContainer } from 'modules/Main'
 import { PinJobs } from 'modules/PinJobs'
 
+import config from 'config'
+
 // ==============THIRD PARTY IMPORTS========================= //
 import ReduxToastr from 'react-redux-toastr'
 import {toastr} from 'react-redux-toastr'
@@ -13,9 +15,10 @@ import {toastr} from 'react-redux-toastr'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as userActionCreators from 'redux/modules/user/user'
-import * as pinJobsActionCreators from 'redux/modules/pinJobs/pinJobs'
+import * as dashboardActionCreators from 'redux/modules/dashboard/dashboard'
+import * as jobActionCreators from 'redux/modules/job/job'
+import jobAppModal from 'redux/modules/dashboard/jobAppModal'
 import * as list from 'helpers/lists'
-import * as fetch from 'helpers/pinJobs'
 
 // =======================OTHER IMPORTS============================== //
 import { authRedirectFilter } from 'config/routes'
@@ -23,15 +26,17 @@ import { authRedirectFilter } from 'config/routes'
 // ==============CSS IMPORTS============================= 
 import { pageContainer } from 'sharedStyles/sharedContainerStyles.css'
 
+var ReactToastr = require("react-toastr");
+var { ToastContainer } = ReactToastr;
+var ToastMessageFactory = React.createFactory(ReactToastr.ToastMessage.animation);
 
 const PinJobsContainer = React.createClass({
     propTypes: {
-	  user: PropTypes.object, 
-	  jobs: PropTypes.array, 
-	  industries : PropTypes.array,
-	  jobTypes : PropTypes.object, 
-	  answer : PropTypes.object, 
-	  modal : PropTypes.object, 
+      user: PropTypes.object, 
+      jobs: PropTypes.array, 
+      jobTypes : PropTypes.array, 
+      answer : PropTypes.object, 
+      modal : PropTypes.object, 
     },
 
 	contextTypes: {
@@ -64,114 +69,168 @@ const PinJobsContainer = React.createClass({
      return authRedirectFilter(config, this.context.store, this.context.router)
   },
 
-  /* pinJob 
-   *   This function pins the job, passes the student id and job id,
-   *   then the the ids are given to in the payload to transfer a request
-   * */
-  pinJob(e, job) {
-      //debugger
-      e.preventDefault()
-      e.stopPropagation()
-      this.props.handleUnPinJob(job)
-
-  },
-  /** showModal
-   *
-   * This function takes in the submit event & the job id
-   * It calls a dispatch modalCliked & showModal(id)
-   * Once the store is notified, a reducer should be activated to find the appropriate job info,
-   * then supplies the modal the appropraite job info
-   * After, the modal appears to the user of the job info they pressed
-   *
-   * @param(e) - DOM event
-   * @param(j) - Object job
-   * @param(q) - Object questions
-  */
-  
-  showModal(e, j) {
-      e.preventDefault()
-      this.context.store.dispatch(actionCreators.pinJobsModalClicked(j.id))
-  	  this.context.store.dispatch(actionCreators.pinJobsShowModal(j))
-  },
-
-
-  hideModal (e, id) {
-      this.context.store.dispatch(actionCreators.pinJobsHideModal(id))
-      this.context.store.getState().pinJobs.answer.answerOne = ''
-  	  this.context.store.getState().pinJobs.answer.answerTwo = ''
-  },
-  /** applyClicked
-   *
-   *  This event is pressed the button inside JobCardModal
-   *  It should passed the two answers given by the user and it's student id
+  /* 
+   * pinJob
+   * 
+   * This will actually pin or unpin the job based on the current 
+   * status of the job.
    */
 
-  applyClicked (e, questions) {
+  pinJob(e, job) {
+
+      e.preventDefault()
+      e.stopPropagation()
+
+     /*
+      * Lockout
+      */
+
+      if (!this.props.isPinningJob) {
+
+        if(job.pinned == 0) {
+
+         /*
+          * PIN the job and display the 
+          * toaster based on the success of it.
+          */
+
+          this.props.pinJob(job.job_id)
+
+            .then((result) => {
+
+              setTimeout(() => {
+
+                var rejectSuccess = this.context.store.getState().job.pinJobSuccess
+
+                if (rejectSuccess) {
+
+                  this.refs.container.success(
+                    "Job saved to My Pinned Jobs.",
+                    "Pinned!",
+                    {
+                      timeout: 3000
+                    });
+
+                }
+
+                else {
+
+                  this.refs.container.error(
+                  "Whoops.",
+                  "Something went wrong pinning this job.", {
+                    timeout: 3000
+                  });
+
+                }
+
+              }, 500)
+
+            })
+
+        } else {
+
+         /*
+          * UNPIN the job and display the 
+          * toaster based on the success of it.
+          */
+
+          this.props.unpinJob(job.job_id)
+
+            .then((result) => {
+
+              setTimeout(() => {
+
+                var rejectSuccess = this.context.store.getState().job.pinJobSuccess
+
+                if (rejectSuccess) {
+
+                  this.refs.container.success(
+                    "Removed this job from your Pinned Jobs.",
+                    "Unpinned!",
+                    {
+                      timeout: 3000
+                    });
+
+                }
+
+                else {
+
+                  this.refs.container.error(
+                  "Whoops.",
+                  "Something went wrong unpinning this job.", {
+                    timeout: 3000
+                  });
+
+                }
+
+              }, 500)
+              
+            })
+
+        } 
+
+      }
+  },
+
+ /*
+  * openJobAppModal
+  *
+  * Opens the job app modal that contains all of the job
+  * details, questions and answers fields so that students 
+  * may apply to a job.
+  */
+
+  openJobAppModal(e, selectedJob) {
     e.preventDefault()
+    this.props.openJobAppModal(selectedJob)
+    this.refs.jobAppModal.show()
+  },
 
-        debugger
-    /* Create Large Object */
-    let applicationInfo = {
-      "job": this.context.store.getState().pinJobs.modal.jobId,
-      "students": this.context.store.getState().user.email,
-      "answers": [{
-        "question": questions[0].id,
-        "student": this.context.store.getState().user.email,
-        "text": this.props.answer.answerOne,
-        "job": this.context.store.getState().pinJobs.modal.jobId,
-      }, {
-        "question": questions[1].id,
-        "student": this.context.store.getState().user.email,
-        "text": this.props.answer.answerTwo,
-        "job": this.context.store.getState().pinJobs.modal.jobId,
-      }]
-    }
+ /*
+  * closeJobAppModal
+  *
+  * Closes the job app modal.
+  */
 
-    // Given that answers fields were populated, continue
-  	if (this.props.answer.answerOne && this.props.answer.answerTwo) {
-		this.props.handleSubmitAnswers(applicationInfo)
-  		 .then(this.context.store.dispatch(actionCreators.pinJobsHideModal(0)))
-		 //TODO: Replace with a Celebration GIF 
-  		 .then(toastr.success("Successfully applied to jobs"))
-  	} else {
-  		toastr.error("✋ You need to answer the employers question if you want to get a job")
-  	}
+  closeJobAppModal() {
+    this.refs.jobAppModal.hide()
   },
 
   componentWillMount() {
-  	console.log("componentWillMount")
-	this.doRedirectionFilter()
-	.then(this.props.handleGetIndustries())
-	.then(this.props.handleGetJobTypes())
-	.then(this.props.handleGetPinnedJobs())
-	.then(this.props.closeOverlay())
+  	
+	  this.doRedirectionFilter()
+      .then(this.props.getAllJobsStudentJobView())
+      .then(this.props.handleGetIndustries())
+      .then(this.props.handleGetJobTypes())
+      .then(this.props.closeOverlay())
+
   },
 
   componentWillUnmount() {
-    console.log("Component WillUnmount")
+    
   },
 
   render () {
     return (
       <div className={pageContainer} >
-          <SidebarContainer isAStudent={true}/>
+          <SidebarContainer isAStudent={true} profilePicture={config.mediaUrl + '/avatar/' + this.props.profile.photo}/>
           <PinJobs
-                handleCardClick={this.showModal}
-    	        onHideModal={this.hideModal}
-	            onPinJob={this.pinJob}
-    	        onApplyClicked={this.applyClicked}
-    	        updateAnswerField={this.props.pinJobsUpdateAnswerField}
-	            modal={this.props.modal}
-	            jobs={this.props.jobs ? this.props.jobs : ''}
-	            industries={this.props.industries ? this.props.industries : ''}
-	            jobTypes={this.props.jobTypes ? this.props.jobTypes : ''}
-	            answerOne={this.props.answer.answerOne}
-	            answerTwo={this.props.answer.answerTwo} 
-	      />
+            handleCardClick={this.openJobAppModal}
+            handlePinJob={this.pinJob}
+            jobs={this.props.jobs ? this.props.jobs : ''}
+            industries={this.props.industries ? this.props.industries : {}}
+            jobTypes={this.props.jobTypes ? this.props.jobTypes : []}
+	        />
+
+          <ToastContainer ref="container"
+            toastMessageFactory={ToastMessageFactory}
+            className="toast-top-right" />
       </div>
     )
   },
 })
+
+
 
 /* The entire redux store is passed in here,
 // Return an object defining which values you want to bind to props
@@ -179,14 +238,17 @@ const PinJobsContainer = React.createClass({
 // @params ({user}) contains BaseUser & Employer attributes
 // */
 
-function mapStateToProps({user, pinJobs}) {
+function mapStateToProps({user, job, profile, list, dashboard}) {
   return {
-	  user: user ? user : {},
-	  jobs: pinJobs.jobs.data ? pinJobs.jobs.data : '',
-	  industries: pinJobs.industries.data ? pinJobs.industries.data : '',
-	  jobTypes: pinJobs.jobTypes.data ? pinJobs.jobTypes.data : '',
-	  answer: pinJobs.jobs ? pinJobs.answer : {},
-	  modal: pinJobs.modal ? pinJobs.modal : ''
+    profile: profile.studentProfile ? profile.studentProfile : {},
+	  jobs: job.studentJobsView ? job.studentJobsView : [],
+    industries : list.industries ? list.industries : [],
+    jobTypes : list.jobTypesArray ? list.jobTypesArray : [],
+    jobAppModal: dashboard.studentDashboard.jobAppModal ? dashboard.studentDashboard.jobAppModal : {},
+    isApplying: dashboard.studentDashboard.jobAppModal ? dashboard.studentDashboard.jobAppModal.isApplying : false,
+    applySuccess: dashboard.studentDashboard.jobAppModal ? dashboard.studentDashboard.jobAppModal.applySuccess : false,
+    isPinningJob: job.isPinningJob ? job.isPinningJob : false,
+    pinJobSuccess: job.pinJobSuccess ? job.pinJobSuccess : false
   }
 }
 
@@ -202,8 +264,9 @@ function mapStateToProps({user, pinJobs}) {
 function mapActionCreatorsToProps(dispatch) {
   return bindActionCreators({
     ...userActionCreators,
-    ...pinJobsActionCreators
-  
+    ...dashboardActionCreators,
+    ...jobActionCreators,
+    ...jobAppModal.actionCreators
   }, dispatch)
 }
 

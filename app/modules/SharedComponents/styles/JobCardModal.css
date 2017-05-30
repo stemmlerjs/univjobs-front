@@ -137,10 +137,18 @@ display: flex;
 }
 
 .questionsContainer {
-        position: relative;
-    top: 85px;
+    position: relative;
+    top: 46px;
     text-align: left;
-    font-size:15px;
+    font-size: 15px;
+    height: 295px;
+    overflow-y: scroll;
+    width: 389px;
+    overflow-x: hidden;
+}
+
+.questionsContainer > div {
+    width: 92%;
 }
 
 .answerTextField {
@@ -150,4 +158,63 @@ display: flex;
     margin-bottom: 7px;
     font-family: Roboto, sans-serif;
     font-size: 15px;
+    padding: 8px;
+}
+
+.answerTextFieldReadOnly {
+    width: 100%;
+    height: 91px;
+    margin-top: 7px;
+    margin-bottom: 7px;
+    font-family: Roboto, sans-serif;
+    font-size: 15px;
+    background-color: #fafafa;
+    padding: 8px;
+}
+
+.dateApplied {
+        font-size: 13px;
+}
+
+.statuses {
+    font-size: 14px;
+    text-align: left;
+    margin-top: 33px;
+}
+
+.statusItem {
+    display: flex;
+} 
+
+.statusIcon {
+        width: 13px;
+    height: 13px;
+    background-color: #0d84d9;
+    border-radius: 40px;
+    margin-right: 12px;
+    position: relative;
+    top: 4px;
+} 
+
+.notActiveStatusIcon {
+        width: 13px;
+    height: 13px;
+    background-color: #8799a6;
+    border-radius: 40px;
+    margin-right: 12px;
+    position: relative;
+    top: 4px;
+}
+
+.statusText {
+ width: 100%;
+}
+
+.statusHeaderText {
+    color: black;
+    margin-bottom: 4px;
+}
+
+.notActive {
+    opacity: 0.3;
 }

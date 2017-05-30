@@ -516,6 +516,7 @@ export default function job (state = initialJobState, action) {
       for (var i = 0; i < studentJobsView.length; i++) {
         if (studentJobsView[i].job_id == action.jobId) {
           studentJobsView[i].applied = 1
+          studentJobsView[i].pinned = 0
           break;
         }
       }

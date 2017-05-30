@@ -29,7 +29,8 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
 //**NOTE:
 //  Store is accessible
-export default function StudentDashboard ({jobs, handleCardClick, 
+export default function StudentDashboard ({
+    jobs, handleCardClick, 
     handlePinJob,
 	modal, jobTypes, industries,
 	answerOne, answerTwo, 
@@ -46,10 +47,11 @@ export default function StudentDashboard ({jobs, handleCardClick,
 
                 <div className={flexibleCardContainer}>
   	                { jobs.length > 0 ? jobs.filter((job) => {
-                          return job.applied == 0
+                          return job.applied == 0 && job.active == 1
                       })
                       .map((job) => (
                         <JobCard 
+                          cardType={'dashboard'}
                           key={job.job_id}
                           jobId={job.job_id}
                           postedBy={job.posted_by}

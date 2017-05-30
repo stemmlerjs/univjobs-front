@@ -8,72 +8,71 @@
 import React, { PropTypes } from 'react'
 
 // ==============MADE COMPONENTS========================= //
-import { GenericCard, ApplicationModal, APPLICATIONS_CARD_TYPE, Title } from '../../SharedComponents'
+import {  } from '../../SharedComponents'
 
 // ==============THIRD PARTY IMPORTS========================= //
 import { SkyLightStateless } from 'react-skylight'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
-// ================CSS IMPORTS============================== //
+import { StudentCard } from 'modules/Dashboard'
+import { Title, JobCard } from 'modules/SharedComponents'
 import { flexibleCardContainer } from 'sharedStyles/cardContainer.css'
+
+import config from 'config'
+import moment from 'moment'
+
+// ================CSS IMPORTS============================== //
 import { rootComponentContainer, margins, title } from 'sharedStyles/sharedComponentStyles.css'
 import { crossHair } from 'sharedStyles/widgets.css'
 
 
-/*TODO: Define the required typechecking variables
- *
- * */
-Applications.propTypes = {
-	    user: PropTypes.object.isRequired, 
-        applications : PropTypes.object,
-        industries : PropTypes.object,
-        jobTypes : PropTypes.object, 
-        applicationModal: PropTypes.object,
-      	onShowModal: PropTypes.func,
-      	onHideModal: PropTypes.func,
-        cardType: PropTypes.string,
-        handleCardClick: PropTypes.func
-}
-
-export default function Applications ({user, applications, industries, jobTypes, applicationModal, onShowModal, onHideModal}) {
+export default function Applications ({jobs,
+    industries,
+    handlePinJob,
+    handleCardClick
+}) {
   return (
-  <div className={rootComponentContainer}>
-    <div className={margins}>
+	<div className={rootComponentContainer}>
+        
+        {/* TITLE */}
+        <Title 
+            titleName="My Applications"
+            subHeading="This is where all the jobs you've applied to are saved."
+        />
 
-    {/* TITLE */}
-    <Title 
-      titleName="My applicants"
-      subHeading="Click on a student to get more in-depth look at their profile and view their applicantion."
-    />
+        <div className={flexibleCardContainer}>
+            { jobs.length > 0 ? jobs.filter((job) => {
+                    return job.applied == 1
+                })
+                .map((job) => (
+                <JobCard 
+                    cardType={'applications'}
+                    key={job.job_id}
+                    jobId={job.job_id}
+                    postedBy={job.posted_by}
+                    title={job.title}
+                    jobType={job.type}
+                    paid={job.paid}
+                    startDate={moment(job.start_date).format("MMMM Do, YYYY")}
+                    responsibilities={job.responsibilities}
+                    qualification={job.qualification}
+                    address={job.address}
+                    compensation={job.compensation}
+                    createdAt={job.createdAt}
+                    questions={job.questions}
+                    handlePinJob={handlePinJob}
+                    handleCardClick={handleCardClick}
+                    jobObject={job}
+                    logoUrl={config.mediaUrl + job.logo_url}
+                    industry={industries[job.industry]}
+                    companyName={job.company_name}
+                    officeAddress={job.office_address}
+                    officeCity={job.office_city}
+                    pinned={job.pinned}
+                />
+            )) : '' }
+        </div>
 
-     {/*MAIN (Cards List)
-       NOTE: Reference for iterating using map
-            https://facebook.github.io/react/docs/multiple-components.html#dynamic-children
-     */}
-
-     <div className={flexibleCardContainer}>
-      { applications ? applications.map((application) => (
-          <div className={application ? crossHair : ''}
-               key={application.id}>
-            <GenericCard
-              cardType={APPLICATIONS_CARD_TYPE}
-              job={application}
-              jobTypes={jobTypes}
-              industries={industries}
-              handleCardClick={onShowModal}>
-              <button/>
-              <button/>
-              <button/>
-            </GenericCard>
-          </div> 
-        ))
-        : ''
-      }
-      </div>
-     </div>
     </div>
-
-   )
-
+  )
 }
-
