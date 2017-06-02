@@ -7,7 +7,7 @@ import { cardModalContainer, cardLeft, cardRight, cardLeftTopContainer, imgConta
         cardSectionTitle, cardSectionText, cardActionButtons, cardSectionThree,
         questionsContainer, answerTextField, answerTextFieldReadOnly, dateApplied,
         statusItem, statusIcon, statusText, statuses, statusHeaderText, notActive,
-        notActiveStatusIcon } from '../styles/JobCardModal.css'
+        notActiveStatusIcon, statusIconReject, statusItemRejected } from '../styles/JobCardModal.css'
 
 import config from 'config'
 import moment from 'moment'
@@ -16,7 +16,7 @@ import moment from 'moment'
 //Accept job object which contains the proptypes.
 export default function JobCardModal({ 
     title, questions, job, industries, cardType,
-    updateAnswerText,
+    updateAnswerText, 
     closeJobAppModal,
     openConfirmApplyModal,
     handlePinJob
@@ -142,6 +142,18 @@ export default function JobCardModal({
                             <div className={statusItem}>
                               <div className={statusIcon}></div>
                               <div className={statusText}>You got the job! Great work.</div>
+                            </div>
+                          </div>
+                        : ''
+                    }
+
+                    {
+                      job.state == "REJECTED" || job.active == 0
+                        ? <div>
+                            <div className={statusItemRejected}>
+                              <div className={statusIconReject}></div>
+                              <div className={statusText}>We're sorry to inform you that the employer has decided to go with another 
+                candidate for this position. Don't get discouraged, keep applying!</div>
                             </div>
                           </div>
                         : ''

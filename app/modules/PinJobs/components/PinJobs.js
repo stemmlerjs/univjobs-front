@@ -1,4 +1,6 @@
-/*Applications
+
+/*
+ * Applications
  *
  * This components is to display the jobs pinned by the students
  *
@@ -31,6 +33,7 @@ import { overflowFix } from 'sharedStyles/sharedComponentStyles.css'
 
 export default function PinJobs ({jobs,
     industries,
+    page,
     handlePinJob,
     handleCardClick
 }) {
@@ -72,6 +75,7 @@ export default function PinJobs ({jobs,
                         officeAddress={job.office_address}
                         officeCity={job.office_city}
                         pinned={job.pinned}
+                        page={page}
                     />
             )) : '' }
         </div>

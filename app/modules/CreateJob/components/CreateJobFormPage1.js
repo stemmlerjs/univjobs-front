@@ -133,14 +133,16 @@ export default function CreateJobFormPage1 (props) {
       */}
       <FormField title="Remote Work?"> 
         <div className={saveBtnList}>
-         <button className={props.page.isPayingJob ? selectedSaveBtn : saveBtn} data-selection="0" onClick={setSelectedPayingJobButton}>Yes</button>
-         <button className={props.page.isPayingJob === false ? selectedSaveBtn : saveBtn} data-selection="1" onClick={setSelectedPayingJobButton}>No</button>
+         <button className={props.page.remoteWork ? selectedSaveBtn : saveBtn} 
+          onClick={() => props.updateFormField('remoteWork', true, 1)}>Yes</button>
+         <button className={props.page.remoteWork === false ? selectedSaveBtn : saveBtn} 
+         onClick={() => props.updateFormField('remoteWork', false, 1)}>No</button>
        </div>
           {
               /*
             <input 
               type="checkbox"
-              onClick={(e) => props.updateFormField('remoteWork', e.target.checked, 1)}>
+              >
             </input>
           */
           }

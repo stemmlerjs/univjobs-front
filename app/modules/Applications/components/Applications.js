@@ -28,8 +28,10 @@ import { crossHair } from 'sharedStyles/widgets.css'
 
 export default function Applications ({jobs,
     industries,
+    page,
     handlePinJob,
-    handleCardClick
+    handleCardClick,
+    handleRemoveJob
 }) {
   return (
 	<div className={rootComponentContainer}>
@@ -62,6 +64,7 @@ export default function Applications ({jobs,
                     questions={job.questions}
                     handlePinJob={handlePinJob}
                     handleCardClick={handleCardClick}
+                    handleRemoveJob={handleRemoveJob}
                     jobObject={job}
                     logoUrl={config.mediaUrl + job.logo_url}
                     industry={industries[job.industry]}
@@ -69,6 +72,8 @@ export default function Applications ({jobs,
                     officeAddress={job.office_address}
                     officeCity={job.office_city}
                     pinned={job.pinned}
+                    state={job.state}
+                    page={page}
                 />
             )) : '' }
         </div>

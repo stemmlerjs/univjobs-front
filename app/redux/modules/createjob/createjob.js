@@ -131,7 +131,7 @@ export function createNewJob(props, jobType) {
     // ACTION: DISPATCH (SUBMITTING_JOB)
     dispatch(submittingJob())
 
-    createNewJobPOST(
+    return createNewJobPOST(
        jobTypeInt,
        props.page1.jobTitle,
        props.page1.isPayingJob ? 1 : 0,

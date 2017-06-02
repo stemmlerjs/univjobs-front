@@ -9,7 +9,8 @@ import config from 'config'
 import { cardContainer, cardTopContainer, imgContainer, cardHeaderContainer,
         cardHeaderItemMainText, cardHeaderItemSecondaryText, cardHeaderItemAltItemText,
         cardHeaderItemContainer, cardLocation, cardBottomContainer, cardSectionOne,
-        cardSectionTwo, cardSectionTitle, cardSectionText, cardActionButtons  }from '../styles/JobCard.css'
+        cardSectionTwo, cardSectionTitle, cardSectionText, cardActionButtons,
+        rejectedCard, activeCard  }from '../styles/JobCard.css'
 import { pageMainJobCards, rotateIcon, applyButton } from 'modules/SharedComponents/styles/StudentCard.css'
 
 // JobCard.propTypes = {
@@ -22,10 +23,15 @@ import { pageMainJobCards, rotateIcon, applyButton } from 'modules/SharedCompone
 
 export default function JobCard ({logoUrl, pinned, jobObject, jobId, title, 
     industries, industry, companyName, officeAddress, officeCity, startDate,
-    compensation, cardType,
-    handlePinJob, handleCardClick}) {
+    compensation, cardType, state, page,
+    handlePinJob, handleCardClick,
+    handleRemoveJob}) {
   return (
-    <div className={cardContainer}>
+    <div className={page == "applications" 
+                        ? state == "REJECTED" || jobObject.active == 0
+                            ? cardContainer + ' ' + rejectedCard 
+                            : cardContainer + ' ' + activeCard
+                        : cardContainer }>
         <div className={cardTopContainer}>
             <div className={imgContainer}>
                 <img src={logoUrl}></img>
@@ -68,6 +74,12 @@ export default function JobCard ({logoUrl, pinned, jobObject, jobId, title,
                     { pinned == 0 ? 'PIN JOB' : 'UNPIN JOB'}
                   </button>
                 : ''
+            }
+
+            {
+                cardType == "applications" && jobObject.state == "REJECTED" && jobObject.hidden == 0
+                    ? <button onClick={(e) => handleRemoveJob(e, jobObject)} >REMOVE</button>
+                    : ''
             }
 
             <button onClick={(e) => handleCardClick(e, jobObject)}>SEE MORE</button>

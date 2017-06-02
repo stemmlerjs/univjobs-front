@@ -127,3 +127,16 @@ margin-top: 9px;
 .cardActionButtons > button:hover a {
     color:white;
 }
+
+.rejectedCard {
+    border-top: solid 4px red;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.activeCard {
+    
+    border-top: solid 4px #007AC1;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}

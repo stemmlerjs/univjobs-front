@@ -30,6 +30,8 @@ var ReactToastr = require("react-toastr");
 var {ToastContainer} = ReactToastr; // This is a React Element.
 var ToastMessageFactory = React.createFactory(ReactToastr.ToastMessage.animation);
 
+let submitted = false;
+
 
 /* =============================================================
 * Circles Components
@@ -171,21 +173,38 @@ const CreateJobContainer = React.createClass({
     let error = newProps.errorsExist;
     let submitSuccess = newProps.submitSuccess;
 
-    if(submitSuccess) {
-      this.refs.container.success(
-        "Nice!",
-        "Job successfully submitted.", {
-        timeOut: 3000
-      });
-    }
 
-    if(error) {
-      this.refs.container.error(
-        error,
-        "Blank or invalid values found on form. Please correct errors to continue.", {
-        timeOut: 3000
-      });
-    }
+     /*
+      * If we were able to successfully
+      * submit, then show the toastr and redirect
+      * to my listings.
+      */
+
+      if(submitSuccess) {
+
+        submitted = true;
+
+        this.refs.container.success(
+          "Nice!",
+          "Job successfully submitted.", {
+          timeOut: 3000
+        });
+
+        setTimeout(() => {
+
+          this.props.history.push('/myapplicants/em');
+
+        }, 1000)
+      }
+
+      if(error) {
+        this.refs.container.error(
+          error,
+          "Blank or invalid values found on form. Please correct errors to continue.", {
+          timeOut: 3000
+        });
+      }
+
   },
 
   confirmExit() {
@@ -272,9 +291,19 @@ const CreateJobContainer = React.createClass({
         )
         return;
       case 4:
-        this.context.store.dispatch(
-          createJobActionCreators.createNewJob(this.props, this.props.params.jobtype)
-        )
+       
+       /*
+        * We should lock the user out if they've already
+        * tried to submit so they don't submit multiple times.
+        */
+
+        if (!this.props.isSubmitting && !this.props.submitSuccess) {
+
+          this.context.store.dispatch(
+            createJobActionCreators.createNewJob(this.props, this.props.params.jobtype)
+          )
+
+        }
         return;
       default:
         return;
@@ -489,7 +518,8 @@ function mapStateToProps({createJob, profile, user, list}) {
     page4: createJob.page4 ? createJob.page4 : {},
     errorsExist: createJob.errorsExist ? createJob.errorsExist : false,
     errors: createJob.errors ? createJob.errors : [],
-    submitSuccess: createJob.submitSuccess ? createJob.submitSuccess : false
+    submitSuccess: createJob.submitSuccess ? createJob.submitSuccess : false,
+    isSubmitting: createJob.isSubmitting ? createJob.isSubmitting : false
   }
 }
 

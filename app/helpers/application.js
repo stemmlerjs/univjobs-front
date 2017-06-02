@@ -1,5 +1,7 @@
+
 import axios from 'axios'
 import config from 'config'
+import { getAccessToken, getCSRFToken } from 'helpers/auth'
 
 /*
  *getJobs
@@ -24,4 +26,25 @@ export function getStudentApplications(store, actionCreators) {
  })//promise
  return promise;
 }//getJobs*/
+
+ /*
+  * removeApplication
+  * @jobId
+  */
+
+  export function toggleApplication (jobId, on) {
+
+    const accessToken = getAccessToken()
+    
+    var hidden = (on == true) ? 0 : 1
+
+    return axios({
+      method: 'delete',
+      url: config.baseUrl + 'applications/show' + jobId + "?=" + hidden,
+      headers: {
+        'Authorization':  accessToken
+      }
+    })
+
+  }
 

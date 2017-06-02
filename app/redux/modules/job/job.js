@@ -1,6 +1,7 @@
 
 import { getJobs } from 'helpers/job'
 import { pinAJob as pinJobHTTPRequest, unPinAJob as unpinJobHTTPRequest, getPinnedJobs } from 'helpers/pinJobs'
+import { toggleApplication } from 'helpers/application'
 
 // =======================================================
 // ====================== ACTIONS ========================
@@ -36,11 +37,115 @@ const UNPINNING_JOB = 'UNPINNING_JOB'
 const UNPIN_JOB_SUCCESS = 'UNPIN_JOB_SUCCESS'
 const UNPIN_JOB_FAILURE = 'UNPIN_JOB_FAILURE'
 
+const REMOVING_JOB = 'REMOVING_JOB'
+const REMOVE_JOB_SUCCESS = 'REMOVE_JOB_SUCCESS'
+const REMOVE_JOB_FAILURE = 'REMOVE_JOB_FAILURE'
+
+const UNDOING_REMOVE = 'UNDOING_REMOVE'
+const UNDO_REMOVE_SUCCESS = 'UNDO_REMOVE_SUCCESS'
+const UNDO_REMOVE_FAILURE = 'UNDO_REMOVE_FAILURE'
 
 
 // =======================================================
 // ================== ACTIONS CREATORS ===================
 // =======================================================
+
+  function undoingRemove () {
+    return {
+      type: UNDOING_REMOVE
+    }
+  }
+
+  function undoRemoveSuccess (jobId) {
+    return {
+      type: UNDO_REMOVE_SUCCESS
+    }
+  }
+
+  function undoRemoveFailure () {
+    return {
+      type: UNDO_REMOVE_FAILURE
+    }
+  }
+
+  export function undoRemoveJobFromApplicants (jobId) {
+    return function (dispatch) {
+
+      dispatch(undoingRemove())
+
+      return toggleApplication(jobId, true)
+
+        .then((result) => {
+
+          dispatch(undoRemoveSuccess(jobId))
+
+        })
+
+        .catch((err) => {
+
+          dispatch(undoRemoveFailure())
+
+        })
+
+    }
+  }
+  
+  function removingJob () {
+    return {
+      type: REMOVING_JOB
+    }
+  }
+
+  function removeJobSuccess (jobId) {
+    return {
+      type: REMOVE_JOB_SUCCESS,
+      jobId
+    }
+  }
+
+  function removeJobError () {
+    return {
+      type: REMOVE_JOB_FAILURE
+    }
+  }
+
+  export function removeJobFromApplicants (jobId) {
+    return function (dispatch) {
+
+     /*
+      * Alert that we're removing a job.
+      */
+
+      dispatch(removingJob())
+
+     /*
+      * Now perform the HTTP call.
+      */
+
+      return toggleApplication(jobId, false)
+
+        /*
+        * Success, dispatch success.
+        */
+        
+        .then((result) => {
+          
+          dispatch(removeJobSuccess(jobId))
+         
+        })
+
+       /*
+        * Error, dispatch error.
+        */
+
+        .catch((err) => {
+
+          dispatch(removeJobError())
+
+        })
+
+    }
+  }
 
   function pinningJob () {
     return {
@@ -421,7 +526,12 @@ const initialJobState = {
 	error: '',
   isFetching: false,
   isPinningJob: false,
-  pinJobSuccess: false
+  pinJobSuccess: false,
+  isRemovingJob: false,
+  removeJobSuccess: false,
+  isUndoingRemove: false,
+  undoRemoveSuccess: false,
+  removedJobId: null
 }
 
 
@@ -435,6 +545,74 @@ export default function job (state = initialJobState, action) {
    /*
     * Student actions
     */
+
+   /*
+    * ===============================
+    *     remove job 
+    * ===============================
+    */
+    
+    case REMOVING_JOB:
+      return {
+        ...state,
+        isRemovingJob: true,
+        removeJobSuccess: false
+      }
+
+    case REMOVE_JOB_SUCCESS:
+      var studentJobsView = state.studentJobsView
+
+      for (var i = 0; i < studentJobsView.length; i++) {
+        if (studentJobsView[i].job_id == action.jobId) {
+          studentJobsView[i].hidden = 1
+          break;
+        }
+      }
+
+      return {
+        ...state,
+        studentJobsView: studentJobsView,
+        isRemovingJob: false,
+        removeJobSuccess: true,
+        removedJobId: action.jobId
+      }
+    
+    case REMOVE_JOB_FAILURE:
+      return {
+        ...state,
+        isRemovingJob: false,
+        removeJobSuccess: false
+      }
+    
+    case UNDOING_REMOVE:
+      return {
+        ...state,
+        isUndoingRemove: true,
+        undoRemoveSuccess: false
+      }
+    
+    case UNDO_REMOVE_SUCCESS:
+      var studentJobsView = state.studentJobsView
+
+      for (var i = 0; i < studentJobsView.length; i++) {
+        if (studentJobsView[i].job_id == action.jobId) {
+          studentJobsView[i].hidden = 0
+          break;
+        }
+      }
+
+      return {
+        ...state,
+        isUndoingRemove: false,
+        undoRemoveSuccess: true
+      }
+    
+    case UNDO_REMOVE_FAILURE:
+      return {
+        ...state,
+        isRemovingJob: false,
+        removeJobSuccess: false
+      }
 
    /*
     * =============================

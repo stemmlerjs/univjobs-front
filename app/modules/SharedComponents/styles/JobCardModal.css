@@ -186,6 +186,12 @@ display: flex;
     display: flex;
 } 
 
+.statusItemRejected {
+     display: flex;
+    border: solid red 2px;
+    padding: 7px;
+}
+
 .statusIcon {
         width: 13px;
     height: 13px;
@@ -195,6 +201,17 @@ display: flex;
     position: relative;
     top: 4px;
 } 
+
+.statusIconReject {
+            width: 13px;
+    height: 13px;
+    background-color: #d90d0d;
+    border-radius: 40px;
+    margin-right: 12px;
+    position: relative;
+    top: 4px;
+    
+}
 
 .notActiveStatusIcon {
         width: 13px;

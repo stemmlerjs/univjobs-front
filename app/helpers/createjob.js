@@ -79,20 +79,34 @@ export function validateCreateJobFields(currentPage, pageProps, next) {
 
     next(errorsExist, page1Errors)
 
+  } 
+
   // =================================================================== //
   // =================== PAGE 2 ERROR VALIDATION ======================= //
   // =================================================================== //
 
-  } else if (currentPage === 2) {
+ /*
+  * Note that these questions are optional. We don't have to ask a question.
+  * We can also ask only 1 question instead of 2.
+  */
+  
+  else if (currentPage === 2) {
 
     let page2Errors = {
       question1: false,
       question2: false,
     }
     
+   /*
+    * TODO: commenting this out because either field is allowed to be blank.
+    * Questions are optional. They don't HAVE to answer them.
+    *
+    * We should validate these fields by checking for any weird user input.
+    *
     // Validate each field in it's own unique way
     page2Errors.question1 = pageProps.question1 != "" ? false : true
     page2Errors.question2 = pageProps.question2 != "" ? false : true
+    */
 
     // If an error exists in the map, then errorsExist === true
     for (var attr in page2Errors) {

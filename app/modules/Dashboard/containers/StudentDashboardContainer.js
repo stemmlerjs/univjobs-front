@@ -1,3 +1,4 @@
+
 // ==============REACT BUILTIN========================= //
 import React, { Component, PropTypes } from 'react'
 
@@ -329,6 +330,107 @@ const StudentDashboardContainer = React.createClass({
   },
 
  /*
+  * removeApplication
+  *
+  * Used by students to remove the application that they've been notified
+  * that they did not get hired to.
+  */
+
+  removeApplication (e, selectedJob) {
+    e.preventDefault()
+
+    if (!this.props.isRemovingJob) {
+
+     /*
+      * This won't actually open the job app modal,
+      * but it will set the selected job for us which is what we want.
+      */
+
+      this.props.openJobAppModal(selectedJob)
+
+      this.props.removeJobFromApplicants(selectedJob.job_id)
+        .then(() => {
+
+          setTimeout(() => {
+
+           /*
+            * If we've successfully hidden the job, show the success toastr
+            */
+
+            if (this.props.rejectSuccess) {
+
+              this.refs.deletetoastr.success(
+                "Removed old application.",
+                "Done!",
+                {
+                  timeout: 3000
+              });
+
+            }
+
+           /*
+            * If we failed to hide the job, show the failure toastr
+            */
+
+            else {
+
+              this.refs.deletetoastr.error(
+                "Whoops.",
+                "Something went wrong trying to remove this.",
+                {
+                  timeout: 3000
+              });
+
+            }
+
+          }, 500)
+
+        })
+          
+    }
+
+   
+  },
+
+  undoRemoveApplication () {
+
+    var jobId = this.props.removedJobId
+
+    if (!this.props.isUndoingRemove) {
+
+      this.props.undoRemoveJobFromApplicants(jobId)
+
+        .then(() => {
+
+          if (this.props.undoRemoveSuccess) {
+
+            this.refs.deletetoastr.success(
+              "Successfully un-did that for you.",
+              "Brought it back.",
+              {
+                timeout: 3000
+            });
+
+          }
+
+          else {
+
+            this.refs.deletetoastr.error(
+              "Something went wrong trying to bring that back.",
+              "Whoops.",
+              {
+                timeout: 3000
+            });
+
+          }
+          
+        })
+
+    }
+
+  },
+
+ /*
   * closeJobAppModal
   *
   * Closes the job app modal.
@@ -380,6 +482,17 @@ const StudentDashboardContainer = React.createClass({
 
   componentWillReceiveProps (nextProps) {
 
+   /*
+    * This is the logic that dictates whether we should reload 
+    * the jobs or not. 
+    *
+    * We only reload when we switch pages right now. We should change
+    * this logic in the future to only reload jobs when we go to the 
+    * DASHBOARD view instead; this would require every other page to 
+    * only make mutations to the store.jobs attribute for any API calls
+    * made.
+    */
+
     if (reloadJobs == "") {
         reloadJobs = this.props.route.page
       }
@@ -413,6 +526,7 @@ const StudentDashboardContainer = React.createClass({
               industries={this.props.industries ? this.props.industries : {}}
               jobTypes={this.props.jobTypes ? this.props.jobTypes : []}
               refreshJobs={this.props.getAllJobsStudentJobView}
+              page={this.props.route.page}
             />
           : ''
       }
@@ -426,6 +540,7 @@ const StudentDashboardContainer = React.createClass({
               industries={this.props.industries ? this.props.industries : {}}
               jobTypes={this.props.jobTypes ? this.props.jobTypes : []}
               refreshJobs={this.props.getAllJobsStudentJobView}
+              page={this.props.route.page}
             />
           : ''
       }
@@ -434,11 +549,13 @@ const StudentDashboardContainer = React.createClass({
         this.props.route.page === "applications" 
           ? <Applications
               handleCardClick={this.openJobAppModal}
+              handleRemoveJob={this.removeApplication}
               handlePinJob={this.pinJob}
               jobs={this.props.jobs ? this.props.jobs : ''}
               industries={this.props.industries ? this.props.industries : {}}
               jobTypes={this.props.jobTypes ? this.props.jobTypes : []}
               refreshJobs={this.props.getAllJobsStudentJobView}
+              page={this.props.route.page}
             />
           : ''
       }
@@ -452,6 +569,7 @@ const StudentDashboardContainer = React.createClass({
               industries={this.props.industries ? this.props.industries : {}}
               jobTypes={this.props.jobTypes ? this.props.jobTypes : []}
               refreshJobs={this.props.getAllJobsStudentJobView}
+              page={this.props.route.page}
             />
           : ''
       }
@@ -523,6 +641,12 @@ const StudentDashboardContainer = React.createClass({
         toastMessageFactory={ToastMessageFactory}
         className="toast-top-right" />
 
+    <ToastContainer ref="deletetoastr"
+        toastMessageFactory={ToastMessageFactory}
+        className="toast-top-right" 
+        onClick={this.undoRemoveApplication}>
+    </ToastContainer>
+
     </div>
     )
   },
@@ -545,7 +669,12 @@ function mapStateToProps({user, dashboard, job, profile, list}) {
     isApplying: dashboard.studentDashboard.jobAppModal ? dashboard.studentDashboard.jobAppModal.isApplying : false,
     applySuccess: dashboard.studentDashboard.jobAppModal ? dashboard.studentDashboard.jobAppModal.applySuccess : false,
     isPinningJob: job.isPinningJob ? job.isPinningJob : false,
-    pinJobSuccess: job.pinJobSuccess ? job.pinJobSuccess : false
+    pinJobSuccess: job.pinJobSuccess ? job.pinJobSuccess : false,
+    isRemovingJob: job.isRemovingJob ? job.isRemovingJob : false,
+    removeJobSuccess: job.removeJobSuccess ? job.removeJobSuccess: false,
+    isUndoingRemove: job.isUndoingRemove ? job.isUndoingRemove : false,
+    undoRemoveSuccess: job.undoRemoveSuccess ? job.undoRemoveSuccess : false,
+    removedJobId: job.removedJobId ? job.removedJobId : false
   }
 }
 

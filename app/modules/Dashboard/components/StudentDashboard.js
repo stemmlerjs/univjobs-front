@@ -33,7 +33,7 @@ export default function StudentDashboard ({
     jobs, handleCardClick, 
     handlePinJob,
 	modal, jobTypes, industries,
-	answerOne, answerTwo, 
+	answerOne, answerTwo, page,
     pin
 }) {
         return (
@@ -74,6 +74,7 @@ export default function StudentDashboard ({
                           officeAddress={job.office_address}
                           officeCity={job.office_city}
                           pinned={job.pinned}
+                          page={page}
                         />
   	                )) : '' }
                 </div>
