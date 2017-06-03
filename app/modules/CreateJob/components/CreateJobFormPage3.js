@@ -51,7 +51,7 @@ export default function CreateJobFormPage3 (props) {
       </div>
 
       <button onClick={(e) => props.back(props)} className={saveBtn + " " + navBackBtn}>Back</button>
-      <button onClick={(e) => props.next(props)} className={saveBtn + " " + navSaveBtn}>Save</button>
+      <button onClick={(e) => props.next(props)} className={saveBtn + " " + navSaveBtn}>Next</button>
     </div>
   )
 }

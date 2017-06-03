@@ -44,7 +44,7 @@ export default function StudentDashboard ({
                 <Title 
                     titleName="Let's get you hired"
                     subHeading="Apply to a job now, so we can help you land one!"/>
-
+                
                 <div className={flexibleCardContainer}>
   	                { jobs.length > 0 ? jobs.filter((job) => {
                           return job.applied == 0 && job.active == 1
@@ -77,6 +77,13 @@ export default function StudentDashboard ({
                           page={page}
                         />
   	                )) : '' }
+
+                    {
+                      jobs.length == 0
+                        ? <h2>No more jobs yet! Check back soon.</h2>
+                        : ''
+                    }
+                    
                 </div>
             </div>
 	    </div>

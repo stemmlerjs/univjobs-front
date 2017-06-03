@@ -180,7 +180,7 @@ const CreateJobContainer = React.createClass({
       * to my listings.
       */
 
-      if(submitSuccess) {
+      if(submitSuccess && submitted == false) {
 
         submitted = true;
 
@@ -192,7 +192,7 @@ const CreateJobContainer = React.createClass({
 
         setTimeout(() => {
 
-          this.props.history.push('/myapplicants/em');
+          this.context.router.push('/myapplicants/em');
 
         }, 1000)
       }
@@ -304,6 +304,7 @@ const CreateJobContainer = React.createClass({
           )
 
         }
+
         return;
       default:
         return;

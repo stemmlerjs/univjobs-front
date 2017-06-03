@@ -128,7 +128,7 @@ function contactStudentFailure () {
 }
 
 
-export function contactStudent (jobId, studentId, updateJobs) {
+export function contactStudent (jobId, studentId, updateJobs, successCallback, failureCallback) {
   return function (dispatch) {
 
    /*
@@ -163,11 +163,15 @@ export function contactStudent (jobId, studentId, updateJobs) {
 
         dispatch(addContactInfo(newApplicantInfo))
 
+        successCallback()
+
       })
 
       .catch((err) => {
 
         dispatch(contactStudentFailure(err.toString()))
+
+        failureCallback()
 
       })
 

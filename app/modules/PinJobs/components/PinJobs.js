@@ -78,6 +78,13 @@ export default function PinJobs ({jobs,
                         page={page}
                     />
             )) : '' }
+
+            {
+              jobs.length == 0
+                ? <h2>You haven't pinned any jobs yet.</h2>
+                : ''
+            }
+
         </div>
 
     </div>

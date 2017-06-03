@@ -206,48 +206,44 @@ const ApplicantsContainer = React.createClass({
 
     if (!this.props.isContacting) {
 
-      this.props.contactStudent(jobId, studentId, this.props.jobs__addContactInfo)
+      this.props.contactStudent(jobId, studentId, this.props.jobs__addContactInfo, 
 
-        .then((response) => {
+     /*
+      * Success callback
+      */
 
-          function checkIfSuccessOrFailure () {
-            var rejectSuccess = this.context.store.getState().applicants.contactSuccess
-
-            if (rejectSuccess) {
-
-              this.refs.container.success(
-              "Success.",
-              "Contact info for this student now available.", {
-                timeout: 3000
-              });
+      () => {
+        this.refs.container.success(
+        "Success.",
+        "Contact info for this student now available.", {
+          timeout: 3000
+        });
 
 
-             /*
-              * Really really hackish way to force the component to update
-              * again with the unhidden contact info for the student.
-              *
-              * Close and reopen the modal really fast.
-              */
+        /*
+        * Really really hackish way to force the component to update
+        * again with the unhidden contact info for the student.
+        *
+        * Close and reopen the modal really fast.
+        */
 
-              this.refs.studentProfileAndAnswersModal.hide()
-              this.handleOpenStudentProfileAndAnswersModal(this.context.store.getState().applicants.studentProfileAndAnswersModal.student)
+        this.refs.studentProfileAndAnswersModal.hide()
+        this.handleOpenStudentProfileAndAnswersModal(this.context.store.getState().applicants.studentProfileAndAnswersModal.student)
+      },
 
-            }
+     /*
+      * Failure callback
+      */
 
-            else {
+      () => {
 
-              this.refs.container.error(
-              "Whoops.",
-              "Something went wrong trying to collect the contact info for this student.", {
-                timeout: 3000
-              });
+        this.refs.container.error(
+          "Whoops.",
+          "Something went wrong trying to collect the contact info for this student.", {
+            timeout: 3000
+          });
 
-            }
-          }
-
-          setTimeout(checkIfSuccessOrFailure.bind(this), 500)
-
-        })
+      })
 
     }
 
@@ -359,6 +355,10 @@ const ApplicantsContainer = React.createClass({
 
   componentWillUnmount() {
     console.log("Component WillUnmount")
+  },
+
+  componentWillReceiveProps(newProps) {
+
   },
 
   render () {

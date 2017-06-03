@@ -69,6 +69,13 @@ export default function Invites ({jobs,
                         pinned={job.pinned}
                     />
             )) : '' }
+
+            {
+              jobs.length == 0
+                ? <h2>You haven't been invited to any jobs yet.</h2>
+                : ''
+            }
+
         </div>
 
     </div>

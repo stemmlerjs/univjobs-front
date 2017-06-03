@@ -137,8 +137,8 @@ const StudentProfileModal = ({pictureUrl, name, major, sportsString,
             { gpa 
                 ? <div className={listItemContainer}>
                     <ReactTooltip delayHide={100} delayShow={100} place="bottom" effect="float"/>
-                    <div data-tip={'GPA'} className={`${itemIcon} ${itemIconGPA}`}>{gpa.toFixed(2)}</div>
-                    <div>GPA of {gpa.toFixed(2)}</div>
+                    <div data-tip={'GPA'} className={`${itemIcon} ${itemIconGPA}`}>{Number(gpa)}</div>
+                    <div>GPA of {Number(gpa)}</div>
                   </div>
                 : ''
             }
