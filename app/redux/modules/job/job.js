@@ -68,22 +68,26 @@ const UNDO_REMOVE_FAILURE = 'UNDO_REMOVE_FAILURE'
     }
   }
 
-  export function undoRemoveJobFromApplicants (jobId) {
+  export function undoRemoveJobFromApplicants (jobId, successCallback, failureCallback) {
     return function (dispatch) {
 
       dispatch(undoingRemove())
 
-      return toggleApplication(jobId, true)
+      toggleApplication(jobId, true)
 
         .then((result) => {
 
           dispatch(undoRemoveSuccess(jobId))
+
+          successCallback()
 
         })
 
         .catch((err) => {
 
           dispatch(undoRemoveFailure())
+
+          failureCallback()
 
         })
 
@@ -109,7 +113,7 @@ const UNDO_REMOVE_FAILURE = 'UNDO_REMOVE_FAILURE'
     }
   }
 
-  export function removeJobFromApplicants (jobId) {
+  export function removeJobFromApplicants (jobId, successCallback, failureCallback) {
     return function (dispatch) {
 
      /*
@@ -122,7 +126,7 @@ const UNDO_REMOVE_FAILURE = 'UNDO_REMOVE_FAILURE'
       * Now perform the HTTP call.
       */
 
-      return toggleApplication(jobId, false)
+      toggleApplication(jobId, false)
 
         /*
         * Success, dispatch success.
@@ -131,6 +135,8 @@ const UNDO_REMOVE_FAILURE = 'UNDO_REMOVE_FAILURE'
         .then((result) => {
           
           dispatch(removeJobSuccess(jobId))
+
+          successCallback()
          
         })
 
@@ -141,6 +147,8 @@ const UNDO_REMOVE_FAILURE = 'UNDO_REMOVE_FAILURE'
         .catch((err) => {
 
           dispatch(removeJobError())
+
+          failureCallback()
 
         })
 
@@ -167,7 +175,7 @@ const UNDO_REMOVE_FAILURE = 'UNDO_REMOVE_FAILURE'
     }
   }
 
-  export function pinJob (jobId) {
+  export function pinJob (jobId, successCallback, failureCallback) {
     return function (dispatch) {
 
      /*
@@ -176,13 +184,15 @@ const UNDO_REMOVE_FAILURE = 'UNDO_REMOVE_FAILURE'
 
       dispatch(pinningJob())
 
-      return pinJobHTTPRequest(jobId)
+      pinJobHTTPRequest(jobId)
 
         .then((result) => {
 
           // If success, update the job to pinned == 1
 
           dispatch(pinJobSuccess(jobId))
+
+          successCallback()
 
         })
 
@@ -191,6 +201,8 @@ const UNDO_REMOVE_FAILURE = 'UNDO_REMOVE_FAILURE'
           // Failure
           
           dispatch(pinJobFailure('Could not pin job.'))
+
+          failureCallback()
 
         })
     }
@@ -216,7 +228,7 @@ const UNDO_REMOVE_FAILURE = 'UNDO_REMOVE_FAILURE'
     }
   }
 
-  export function unpinJob (jobId) {
+  export function unpinJob (jobId, successCallback, failureCallback) {
     return function (dispatch) {
 
       /*
@@ -225,13 +237,15 @@ const UNDO_REMOVE_FAILURE = 'UNDO_REMOVE_FAILURE'
 
       dispatch(unpinningJob())
 
-      return unpinJobHTTPRequest(jobId)
+      unpinJobHTTPRequest(jobId)
 
         .then((result) => {
 
           // If success, update the job to pinned == 1
 
           dispatch(unpinJobSuccess(jobId))
+
+          successCallback()
 
         })
 
@@ -240,6 +254,8 @@ const UNDO_REMOVE_FAILURE = 'UNDO_REMOVE_FAILURE'
           // Failure
           
           dispatch(unpinJobFailure('Could not unpin job.'))
+
+          failureCallback()
 
         })
 

@@ -79,7 +79,7 @@ export function rejectStudent (jobId, studentId, successCallback, failureCallbac
 
     dispatch(rejectingStudent())
 
-    return rejectStudentHTTPRequest(jobId, studentId)
+    rejectStudentHTTPRequest(jobId, studentId)
     
       .then((response) => {
 
@@ -147,7 +147,7 @@ export function contactStudent (jobId, studentId, updateJobs, successCallback, f
     * Then, we'll actually go ahead with the API call.
     */
 
-    return contactStudentHTTPRequest(jobId, studentId)
+    contactStudentHTTPRequest(jobId, studentId)
 
       .then((result) => {
 
@@ -229,7 +229,7 @@ export function hireStudent(jobId, studentId, successCallback, failureCallback) 
    /*
     * Now lets actually perform the request
     */
-    return hireStudentHTTPRequest(jobId, studentId)
+    hireStudentHTTPRequest(jobId, studentId)
 
       .then((result) => {
 

@@ -56,7 +56,7 @@
     }
   }
 
-  export function submitJobApplication (jobId, question_one_id, question_one_text, question_two_id, question_two_text) {
+  export function submitJobApplication (jobId, question_one_id, question_one_text, question_two_id, question_two_text, successCallback, failureCallback) {
     return function (dispatch) {
 
      /*
@@ -140,7 +140,7 @@
         * the answers to the questions.
         */
 
-        return applyToJob(answers, jobId)
+        applyToJob(answers, jobId)
 
        /*
         * After applying to the job, if it went well, 
@@ -150,6 +150,8 @@
         .then((response) => {
 
           dispatch(applyingToJobSuccess())
+
+          successCallback()
 
         })
 
@@ -163,6 +165,8 @@
           var errorMsg = "Network error occurred while applying to the job :("
 
           dispatch(applyingToJobFailure(errorMsg))
+
+          failureCallback()
 
         })
 

@@ -94,38 +94,36 @@ const PinJobsContainer = React.createClass({
           * toaster based on the success of it.
           */
 
-          this.props.pinJob(job.job_id)
+          this.props.pinJob(job.job_id,
 
-            .then((result) => {
+         /*
+          * Success Callback
+          */
+          
+          () => {
 
-              setTimeout(() => {
+            this.refs.container.success(
+              "Job saved to My Pinned Jobs.",
+              "Pinned!",
+              {
+                timeout: 3000
+              });
 
-                var rejectSuccess = this.context.store.getState().job.pinJobSuccess
+          },
 
-                if (rejectSuccess) {
+         /*
+          * Failure callback
+          */
+          
+          () => {
 
-                  this.refs.container.success(
-                    "Job saved to My Pinned Jobs.",
-                    "Pinned!",
-                    {
-                      timeout: 3000
-                    });
+            this.refs.container.error(
+              "Whoops.",
+              "Something went wrong pinning this job.", {
+                timeout: 3000
+              });
 
-                }
-
-                else {
-
-                  this.refs.container.error(
-                  "Whoops.",
-                  "Something went wrong pinning this job.", {
-                    timeout: 3000
-                  });
-
-                }
-
-              }, 500)
-
-            })
+          })
 
         } else {
 
@@ -134,38 +132,28 @@ const PinJobsContainer = React.createClass({
           * toaster based on the success of it.
           */
 
-          this.props.unpinJob(job.job_id)
+          this.props.unpinJob(job.job_id,
+          
+          () => {
 
-            .then((result) => {
+            this.refs.container.success(
+              "Removed this job from your Pinned Jobs.",
+              "Unpinned!",
+              {
+                timeout: 3000
+              });
 
-              setTimeout(() => {
+          },
+          
+          () => {
 
-                var rejectSuccess = this.context.store.getState().job.pinJobSuccess
+            this.refs.container.error(
+              "Whoops.",
+              "Something went wrong unpinning this job.", {
+                timeout: 3000
+              });
 
-                if (rejectSuccess) {
-
-                  this.refs.container.success(
-                    "Removed this job from your Pinned Jobs.",
-                    "Unpinned!",
-                    {
-                      timeout: 3000
-                    });
-
-                }
-
-                else {
-
-                  this.refs.container.error(
-                  "Whoops.",
-                  "Something went wrong unpinning this job.", {
-                    timeout: 3000
-                  });
-
-                }
-
-              }, 500)
-              
-            })
+          })
 
         } 
 

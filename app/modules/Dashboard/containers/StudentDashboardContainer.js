@@ -112,38 +112,37 @@ const StudentDashboardContainer = React.createClass({
           * toaster based on the success of it.
           */
 
-          this.props.pinJob(job.job_id)
+          this.props.pinJob(job.job_id,
 
-            .then((result) => {
+         /*
+          * Success Callback
+          */
+          
+          () => {
 
-              setTimeout(() => {
+            this.refs.container.success(
+              "Job saved to My Pinned Jobs.",
+              "Pinned!",
+              {
+                timeout: 3000
+              });
 
-                var rejectSuccess = this.context.store.getState().job.pinJobSuccess
+          },
 
-                if (rejectSuccess) {
+         /*
+          * Failure Callback
+          */
+          
+          () => {
 
-                  this.refs.container.success(
-                    "Job saved to My Pinned Jobs.",
-                    "Pinned!",
-                    {
-                      timeout: 3000
-                    });
+            this.refs.container.error(
+              "Whoops.",
+              "Something went wrong pinning this job.", {
+                timeout: 3000
+            });
 
-                }
+          })
 
-                else {
-
-                  this.refs.container.error(
-                  "Whoops.",
-                  "Something went wrong pinning this job.", {
-                    timeout: 3000
-                  });
-
-                }
-
-              }, 500)
-
-            })
 
         } else {
 
@@ -152,38 +151,36 @@ const StudentDashboardContainer = React.createClass({
           * toaster based on the success of it.
           */
 
-          this.props.unpinJob(job.job_id)
+          this.props.unpinJob(job.job_id,
 
-            .then((result) => {
+         /*
+          * Success Callback
+          */
+          
+          () => {
 
-              setTimeout(() => {
+            this.refs.container.success(
+              "Removed this job from your Pinned Jobs.",
+              "Unpinned!",
+              {
+                timeout: 3000
+              });
 
-                var rejectSuccess = this.context.store.getState().job.pinJobSuccess
+          },
 
-                if (rejectSuccess) {
+         /*
+          * Failure Callback
+          */
+          
+          () => {
 
-                  this.refs.container.success(
-                    "Removed this job from your Pinned Jobs.",
-                    "Unpinned!",
-                    {
-                      timeout: 3000
-                    });
+            this.refs.container.error(
+              "Whoops.",
+              "Something went wrong unpinning this job.", {
+                timeout: 3000
+              });
 
-                }
-
-                else {
-
-                  this.refs.container.error(
-                  "Whoops.",
-                  "Something went wrong unpinning this job.", {
-                    timeout: 3000
-                  });
-
-                }
-
-              }, 500)
-              
-            })
+          })
 
         } 
 
@@ -261,51 +258,49 @@ const StudentDashboardContainer = React.createClass({
 
       if (!_this.props.isApplying) {
 
-        _this.props.submitJobApplication(jobId, question_one_id, answerOneText, question_two_id, answerTwoText)
+        _this.props.submitJobApplication(jobId, question_one_id, answerOneText, question_two_id, answerTwoText, 
         
-          .then((response) => {
+       /*
+        * Success Callback
+        */
 
-            function checkIfSuccessOrFailure () {
-              var rejectSuccess = _this.context.store.getState().dashboard.studentDashboard.jobAppModal.success
+        () => {
 
-              if (rejectSuccess) {
+          _this.refs.container.success(
+          "Nice work on applying to that job.",
+          "Done!",
+          {
+            timeout: 3000
+          });
 
-                _this.refs.container.success(
-                "Nice work on applying to that job.",
-                "Done!",
-                {
-                  timeout: 3000
-                });
+          /*
+          * Remove that job from the dashboard now.
+          */
 
-               /*
-                * Remove that job from the dashboard now.
-                */
+          _this.props.updateAppliedJob(jobId)
 
-                _this.props.updateAppliedJob(jobId)
+          /*
+          * Close the apply and job modal
+          */
 
-               /*
-                * Close the apply and job modal
-                */
+          _this.closeConfirmApplyModal()
+          _this.closeJobAppModal()
 
-                _this.closeConfirmApplyModal()
-                _this.closeJobAppModal()
+        },
 
-              }
+       /*
+        * Failure Callback
+        */
+        
+        () => {
 
-              else {
-
-                _this.refs.container.error(
+          _this.refs.container.error(
                 "Whoops.",
                 "Something went wrong trying to hire this student.", {
                   timeout: 3000
                 });
 
-              }
-            }
-
-            setTimeout(checkIfSuccessOrFailure.bind(_this), 500)
-
-          })
+        })
 
       }
 
@@ -348,44 +343,38 @@ const StudentDashboardContainer = React.createClass({
 
       this.props.openJobAppModal(selectedJob)
 
-      this.props.removeJobFromApplicants(selectedJob.job_id)
-        .then(() => {
+      this.props.removeJobFromApplicants(selectedJob.job_id, 
+      
+     /*
+      * Success callback
+      */
 
-          setTimeout(() => {
+      () => {
 
-           /*
-            * If we've successfully hidden the job, show the success toastr
-            */
+        this.refs.deletetoastr.success(
+          "Removed old application.",
+          "Done!",
+          {
+            timeout: 3000
+        });
 
-            if (this.props.rejectSuccess) {
+      },
 
-              this.refs.deletetoastr.success(
-                "Removed old application.",
-                "Done!",
-                {
-                  timeout: 3000
-              });
+     /*
+      * Failure callback
+      */
+      
+      () => {
 
-            }
+         this.refs.deletetoastr.error(
+            "Whoops.",
+            "Something went wrong trying to remove this.",
+            {
+              timeout: 3000
+          });
 
-           /*
-            * If we failed to hide the job, show the failure toastr
-            */
 
-            else {
-
-              this.refs.deletetoastr.error(
-                "Whoops.",
-                "Something went wrong trying to remove this.",
-                {
-                  timeout: 3000
-              });
-
-            }
-
-          }, 500)
-
-        })
+      })
           
     }
 
@@ -398,33 +387,37 @@ const StudentDashboardContainer = React.createClass({
 
     if (!this.props.isUndoingRemove) {
 
-      this.props.undoRemoveJobFromApplicants(jobId)
+      this.props.undoRemoveJobFromApplicants(jobId, 
 
-        .then(() => {
+     /*
+      * Success Callback
+      */
+      
+      () => {
 
-          if (this.props.undoRemoveSuccess) {
+        this.refs.deletetoastr.success(
+          "Successfully un-did that for you.",
+          "Brought it back.",
+          {
+            timeout: 3000
+        });
 
-            this.refs.deletetoastr.success(
-              "Successfully un-did that for you.",
-              "Brought it back.",
-              {
-                timeout: 3000
-            });
+      },
 
-          }
+     /*
+      * Failure Callback
+      */
+      
+      () => {
 
-          else {
+        this.refs.deletetoastr.error(
+          "Something went wrong trying to bring that back.",
+          "Whoops.",
+          {
+            timeout: 3000
+        });
 
-            this.refs.deletetoastr.error(
-              "Something went wrong trying to bring that back.",
-              "Whoops.",
-              {
-                timeout: 3000
-            });
-
-          }
-          
-        })
+      })
 
     }
 
