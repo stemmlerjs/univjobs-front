@@ -68,7 +68,7 @@ function rejectStudentFailure (error) {
   }
 }
 
-export function rejectStudent (jobId, studentId) {
+export function rejectStudent (jobId, studentId, successCallback, failureCallback) {
   return function (dispatch, other) {
 
    /*
@@ -90,6 +90,8 @@ export function rejectStudent (jobId, studentId) {
         
         dispatch(rejectStudentSuccess(jobId, studentId))
 
+        successCallback()
+
       })
 
      /*
@@ -99,6 +101,8 @@ export function rejectStudent (jobId, studentId) {
       .catch((err) => {
 
         dispatch(rejectStudentFailure(err.toString()))
+
+        failureCallback()
 
       })
 
@@ -212,7 +216,7 @@ function hireStudentFailure () {
   }
 }
 
-export function hireStudent(jobId, studentId) {
+export function hireStudent(jobId, studentId, successCallback, failureCallback) {
   return function (dispatch) {
 
    /*
@@ -231,11 +235,15 @@ export function hireStudent(jobId, studentId) {
 
         dispatch(hireStudentSuccess())
 
+        successCallback()
+
       })
 
       .catch((err) => {
 
         dispatch(hireStudentFailure(err.toString()))
+
+        failureCallback()
         
       })
   }

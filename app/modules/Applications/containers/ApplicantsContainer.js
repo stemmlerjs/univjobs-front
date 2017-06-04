@@ -115,21 +115,17 @@ const ApplicantsContainer = React.createClass({
     var jobId = this.props.currentSelectedJob.job_id;
     var studentId = this.props.currentSelectedStudent.student_id;
 
-    this.props.rejectStudent(jobId, studentId)
+    if (!this.props.isRejecting) {
 
-   /*
-    * After the action has completed, we want to check if it was 
-    * successful or not. 
-    */
+      this.props.rejectStudent(jobId, studentId, 
+    
+     /*
+      * Success callback
+      */
 
-    .then(() => {
-      
-      function checkIfSuccessOrFailure () {
-        var rejectSuccess = this.context.store.getState().applicants.rejectSuccess
+      () => {
 
-        if (rejectSuccess) {
-
-          this.refs.container.success(
+        this.refs.container.success(
           "All done.",
           "Successfully rejected student.", {
             timeout: 3000
@@ -137,23 +133,25 @@ const ApplicantsContainer = React.createClass({
          
           this.closeConfirmRejectStudentModal()
 
-        }
+      },
 
-        else {
+    /*
+      * Failure callback
+      */
+      
+      () => {
 
-          this.refs.container.error(
+        this.refs.container.error(
           "Whoops.",
           "Something went wrong trying to reject this student.", {
             timeout: 3000
           });
 
-        }
-      }
+      })
 
-      setTimeout(checkIfSuccessOrFailure.bind(this), 1000)
+    }
 
-      
-    })
+  
   },
 
  /*
@@ -279,51 +277,48 @@ const ApplicantsContainer = React.createClass({
 
     if (!this.props.isHiring) {
 
-      this.props.hireStudent(jobId, studentId)
-        
-        .then((response) => {
+      this.props.hireStudent(jobId, studentId, 
+      
+     /*
+      * Success callback
+      */
 
-          function checkIfSuccessOrFailure () {
-            var rejectSuccess = this.context.store.getState().applicants.hireSuccess
+      () => {
 
-            if (rejectSuccess) {
+          this.refs.container.success(
+            "Success.",
+            "You've hired a student!", {
+              timeout: 3000
+          });
 
-              this.refs.container.success(
-              "Success.",
-              "You've hired a student!", {
-                timeout: 3000
-              });
+          /*
+          * Close the confirm hire modal
+          */
 
-             /*
-              * Close the confirm hire modal
-              */
+          this.refs.confirmHireStudentModal.hide()
 
-              this.refs.confirmHireStudentModal.hide()
+          /*
+          * Show the post-hire modal.
+          * When they close the post-hire modal, we reload the page.
+          */
 
-             /*
-              * Show the post-hire modal.
-              * When they close the post-hire modal, we reload the page.
-              */
+          this.refs.postHireModal.show()
 
-              this.refs.postHireModal.show()
+      },
 
-            }
+     /*
+      * Failure callback
+      */
+      
+      () => {
 
-            else {
+        this.refs.container.error(
+          "Whoops.",
+          "Something went wrong trying to hire this student.", {
+            timeout: 3000
+          });
 
-              this.refs.container.error(
-              "Whoops.",
-              "Something went wrong trying to hire this student.", {
-                timeout: 3000
-              });
-
-            }
-          }
-
-          setTimeout(checkIfSuccessOrFailure.bind(this), 500)
-
-        })
-
+      })
     }
 
   },
