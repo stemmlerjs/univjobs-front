@@ -7,6 +7,11 @@
     height: 10vh;
     padding: 1vh 2vw;
     align-items: center;
+    
+}
+
+.navContainer {
+ box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 }
 
 .btn {

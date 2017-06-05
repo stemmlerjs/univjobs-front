@@ -295,10 +295,10 @@ const StudentDashboardContainer = React.createClass({
         () => {
 
           _this.refs.container.error(
-                "Whoops.",
-                "Something went wrong trying to hire this student.", {
-                  timeout: 3000
-                });
+            "Whoops.",
+            "Something went wrong trying to hire this student.", {
+              timeout: 3000
+            });
 
         })
 

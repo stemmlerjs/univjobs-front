@@ -42,3 +42,11 @@
   margin-top: 10px;
   margin-bottom: 19px;
 }
+
+.passwordRst {
+    font-size: 13px;
+    width: 200px;
+    margin: 0 auto;
+    cursor: pointer;
+}
+

@@ -80,7 +80,9 @@ export default function PinJobs ({jobs,
             )) : '' }
 
             {
-              jobs.length == 0
+              jobs.filter((job) => {
+                    return job.pinned == 1
+                }).length == 0
                 ? <h2>You haven't pinned any jobs yet.</h2>
                 : ''
             }

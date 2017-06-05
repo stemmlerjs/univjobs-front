@@ -78,7 +78,9 @@ export default function Applications ({jobs,
             )) : '' }
 
             {
-              jobs.length == 0
+              jobs.filter((job) => {
+                    return job.applied == 1
+                }).length == 0
                 ? <h2>You haven't applied to any jobs yet.</h2>
                 : ''
             }

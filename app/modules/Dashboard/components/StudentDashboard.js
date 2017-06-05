@@ -79,7 +79,10 @@ export default function StudentDashboard ({
   	                )) : '' }
 
                     {
-                      jobs.length == 0
+
+                      jobs.filter((job) => {
+                          return job.applied == 0 && job.active == 1
+                      }).length == 0
                         ? <h2>No more jobs yet! Check back soon.</h2>
                         : ''
                     }

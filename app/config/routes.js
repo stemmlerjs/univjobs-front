@@ -4,7 +4,7 @@ import { ApplicationsContainer, CategoriesContainer, CreateJobContainer, Contact
          EmployerProfileContainer, EmployerDashboardContainer, InitialOverlay,
         SignupContainer, StudentDashboardContainer, StudentProfileContainer,
         AboutPageContainer, PinJobsContainer, MyListingsContainer,
-        ApplicantsContainer } from 'modules'
+        ApplicantsContainer, PasswordResetContainer } from 'modules'
 import { checkIfAuthed } from 'helpers/auth'
 
 // Purpose of IndexRoute - if none of the routes match, we go here
@@ -14,6 +14,8 @@ export default function getRoutes() {
     <Router history={hashHistory} >
         <Route path='/' component={InitialOverlay}>
           <Route path='/join' component={SignupContainer} />
+          <Route path='/password/reset' component={PasswordResetContainer}/>
+          <Route path='/password/confirm/:code' component={PasswordResetContainer} />
           <Route path='/profile/st' component={StudentProfileContainer} />
           <Route path='/profile/em' component={EmployerProfileContainer} />
           <Route path='/categories' component={CategoriesContainer} />

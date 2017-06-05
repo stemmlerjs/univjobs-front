@@ -24,7 +24,7 @@ import { getAccessToken } from 'helpers/auth'
 import { detectEnterPress } from 'helpers/utils'
 
 // ================CSS IMPORTS============================== //
-import { input, errorMessage, loginBtn } from '../styles/SignupContainerStyles.css'
+import { input, errorMessage, loginBtn, passwordRst } from '../styles/SignupContainerStyles.css'
 
 
 const styles = {
@@ -258,6 +258,7 @@ const SignupContainer = React.createClass({
           onSwitchUserType={this.handleSwitchUserType}
           isAStudent={this.props.isAStudent}
           onOpenLoginModal={this.openLoginModal}
+          logoOnly={false}
         />
 
         <SkyLight
@@ -275,13 +276,16 @@ const SignupContainer = React.createClass({
                 onKeyUp={(e) => detectEnterPress(e, this.submitOnEnter)}
                 placeholder="Email"
                />
-                <input className={input}
-                    name="login[password]"
-                    onChange={(e) => this.props.updateLoginForm('password', e.target.value)}
-                    type="password"
-                    onKeyUp={(e) => detectEnterPress(e, this.submitOnEnter)}
-                    placeholder="Password"
-                />
+              <input className={input}
+                name="login[password]"
+                onChange={(e) => this.props.updateLoginForm('password', e.target.value)}
+                type="password"
+                onKeyUp={(e) => detectEnterPress(e, this.submitOnEnter)}
+                placeholder="Password"
+              />
+              <div className={passwordRst} onClick={() => {
+                this.context.router.push('/password/reset')
+              }}>Forgot your password?</div>
             </div>
             <div className={errorMessage}>
               { this.props.loginFormErrorText }

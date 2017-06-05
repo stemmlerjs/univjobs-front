@@ -11,6 +11,24 @@ export function validatePassword(password) {
   return password.length > 6
 }
 
+export function validateResetPasswords (password, confirmPassword) {
+    if (password == "" || confirmPassword == "") {
+      return true;
+    }
+
+    else if (password == confirmPassword) {
+      if (!validatePassword(password) || !validatePassword(confirmPassword)) {
+        return false
+      } else {
+        return true;
+      }
+    }
+
+    else {
+      return false
+    }
+}
+
 export function validateStudentEmail(email, callback) {
   var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
