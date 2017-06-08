@@ -111,12 +111,12 @@ export default function CreateJobFormPage1 (props) {
         {props.page.MAX_CHARS_desiredSkills - props.page.desiredSkills.length + " characters left"}
       </FormField>
 
-      {/* INTERNSHIP LOCATION */}
-      <FormField title="Internship Location">
+      {/* WORK LOCATION */}
+      <FormField title="Work Location">
         <input 
           className={props.page.page1PropsErrorMap.internshipLocation ? error + ' ' + input : input} 
           type="text"
-          placeholder="Mississauga, Ontario"
+          placeholder="123 Trafalgar street, ON, L5T3F2 "
           value={props.page.internshipLocation}
           onChange={(e) => props.updateFormField('internshipLocation', e.target.value, 1)}
           >
