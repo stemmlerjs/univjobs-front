@@ -173,37 +173,13 @@ const CreateJobContainer = React.createClass({
     let error = newProps.errorsExist;
     let submitSuccess = newProps.submitSuccess;
 
-
-     /*
-      * If we were able to successfully
-      * submit, then show the toastr and redirect
-      * to my listings.
-      */
-
-      if(submitSuccess && submitted == false) {
-
-        submitted = true;
-
-        this.refs.container.success(
-          "Nice!",
-          "Job successfully submitted.", {
-          timeOut: 3000
-        });
-
-        setTimeout(() => {
-
-          this.context.router.push('/myapplicants/em');
-
-        }, 1000)
-      }
-
-      if(error) {
-        this.refs.container.error(
-          error,
-          "Blank or invalid values found on form. Please correct errors to continue.", {
-          timeOut: 3000
-        });
-      }
+    if(error) {
+      this.refs.container.error(
+        error,
+        "Blank or invalid values found on form. Please correct errors to continue.", {
+        timeOut: 3000
+      });
+    }
 
   },
 
@@ -300,7 +276,48 @@ const CreateJobContainer = React.createClass({
         if (!this.props.isSubmitting && !this.props.submitSuccess) {
 
           this.context.store.dispatch(
-            createJobActionCreators.createNewJob(this.props, this.props.params.jobtype)
+            createJobActionCreators.createNewJob(this.props, this.props.params.jobtype,
+
+            /*
+             * Success Callback
+             */
+            
+            () => {
+
+              this.refs.container.success(
+                "Looking good!",
+                "Job successfully created.",
+                {
+                  timeout: 3000
+              });
+
+             /*
+              * After the success, we need to clear the form so that if we
+              * want to create a job new job again, we start over from scratch.
+              * We will also redirect back to the employer dashboard.
+              */
+
+              setTimeout(() => {
+                this.props.clearForm()
+                this.context.router.push('/dashboard/em')
+              }, 2000)
+
+            },
+
+            /*
+             * Failure Callback
+             */
+            
+            (errorCode) => {
+
+              this.refs.container.error(
+                "Something broke :(",
+                "Looks like we encountered an error somehow. Please let us know.",
+                {
+                  timeout: 3000
+              });
+
+            })
           )
 
         }
@@ -485,6 +502,7 @@ function mapStateToProps({createJob, profile, user, list}) {
       internshipLocation: createJob.page1.internshipLocation ? createJob.page1.internshipLocation : '',
       remoteWork: createJob.page1.remoteWork ? createJob.page1.remoteWork : false,
       compensation: createJob.page1.compensation ? createJob.page1.compensation : '',
+      MAX_CHARS_jobTitle: createJob.MAX_CHARS_jobTitle ? MAX_CHARS_jobTitle : 30,
       MAX_CHARS_responsibilities: createJob.MAX_CHARS_responsibilities ? MAX_CHARS_responsibilities : 5500,
       MAX_CHARS_qualifications: createJob.MAX_CHARS_qualifications ? MAX_CHARS_qualifications : 1400,
       MAX_CHARS_desiredSkills: createJob.MAX_CHARS_desiredSkills ? MAX_CHARS_desiredSkills : 100,

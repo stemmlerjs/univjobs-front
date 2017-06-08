@@ -499,6 +499,123 @@ const StudentDashboardContainer = React.createClass({
 
   },
 
+  /*
+   * filterStudentJobs
+   * 
+   * Students are able to filter jobs. When the student changes the default filter 
+   * config object, we have to edit the student's view of all jobs that have come in.
+   * 
+   * This function is TEMPORARY for now as we will do front end filtering at this point.
+   * 
+   * It works by iterating over all of the jobs and checking the filter config to see if it
+   * should be rendered or not.
+   * 
+   * Jobs that are to be filtered should have an attribute added to them called "filter_show".
+   * If true, we set to true and if false, we set to false. 
+   */
+
+  filterStudentJobs () {
+
+    console.log('filtering jobs')
+    
+    let filterConfig = this.props.filterConfig
+    let jobs = this.props.jobs
+
+    /*
+     * Iterate over all of the jobs and set filter_show attribute on each job
+     * based on the criteria.
+     */
+
+    for(var i = 0; i < jobs.length; i++) {
+
+      // We set the job to false until proven otherwise.
+
+      jobs[i].filter_show = false;
+
+
+      /*
+       * [Job Type]
+       * 
+       * First, filter everything by job type. If any of the checkboxes are unselected,
+       * they will be taken out.
+       */
+      
+      if (jobs[i].type === 1 && filterConfig.jobType.otg === true) {
+        jobs[i].filter_show = true
+        continue
+      }
+
+      if (jobs[i].type === 2 && filterConfig.jobType.summer === true) {
+        jobs[i].filter_show = true
+        continue
+      }
+
+      if (jobs[i].type === 3 && filterConfig.jobType.winter === true) {
+        jobs[i].filter_show = true
+        continue
+      }
+
+      if (jobs[i].type === 4 && filterConfig.jobType.freelance === true) {
+        jobs[i].filter_show = true
+        continue
+      }
+
+      if (jobs[i].type === 5 && filterConfig.jobType.rep === true) {
+        jobs[i].filter_show = true
+        continue
+      }
+
+      if (jobs[i].type === 6 && filterConfig.jobType.pt === true) {
+        jobs[i].filter_show = true
+        continue
+      }
+
+    }
+
+    /*
+      * [Keyword and City]
+      * 
+      * For the keyword, we check the job responsibilities, qualifications, title,
+      * For the city, we check location
+      * IF and only if the filterConfig.keyword !== '' or filterConfig.city !== ''.
+      */
+
+      if (filterConfig.keyword !== "" || filterConfig.city !== "") {
+        for (var j = 0; j < jobs.length; j++) {
+
+          // debugger;
+
+          jobs[j].filter_show = false;
+
+          if (filterConfig.keyword !== "") {
+            if (jobs[j].responsibilities.toUpperCase().indexOf(filterConfig.keyword.toUpperCase()) !== -1) {
+              jobs[j].filter_show = true
+              continue
+            }
+
+            if (jobs[j].qualification.toUpperCase().indexOf(filterConfig.keyword.toUpperCase()) !== -1) {
+              jobs[j].filter_show = true
+              continue
+            }
+
+            if (jobs[j].title.toUpperCase().indexOf(filterConfig.keyword.toUpperCase()) !== -1) {
+              jobs[j].filter_show = true
+              continue
+            }
+          }
+
+          if (filterConfig.city !== "") {
+            if (jobs[j].location.toUpperCase().indexOf(filterConfig.city.toUpperCase()) !== -1) {
+              jobs[j].filter_show = true
+              continue
+            }
+          }
+        }
+      }
+
+    this.props.updateFilteredJobs(jobs)
+  },
+
   componentWillUnmount() {
     
   },
@@ -520,6 +637,12 @@ const StudentDashboardContainer = React.createClass({
               jobTypes={this.props.jobTypes ? this.props.jobTypes : []}
               refreshJobs={this.props.getAllJobsStudentJobView}
               page={this.props.route.page}
+              updateFilter={this.props.updateFilterSettings}
+              filterStudentJobs={this.filterStudentJobs}
+              filterConfig={this.props.filterConfig}
+              updateFilterSettings={this.props.updateFilterSettings}
+              handleToggleFilterMenu={this.props.toggleFilterMenu}
+              filterMenuOpen={this.props.filterMenuOpen}
             />
           : ''
       }
@@ -667,7 +790,20 @@ function mapStateToProps({user, dashboard, job, profile, list}) {
     removeJobSuccess: job.removeJobSuccess ? job.removeJobSuccess: false,
     isUndoingRemove: job.isUndoingRemove ? job.isUndoingRemove : false,
     undoRemoveSuccess: job.undoRemoveSuccess ? job.undoRemoveSuccess : false,
-    removedJobId: job.removedJobId ? job.removedJobId : false
+    removedJobId: job.removedJobId ? job.removedJobId : false,
+    filterConfig: dashboard.studentDashboard.filterConfig ? dashboard.studentDashboard.filterConfig : {
+      jobType: {
+        'otg': true,
+        'summer': true,
+        'winter': true,
+        'rep': true,
+        'freelance': true,
+        'pt': true
+      },
+      keyword: '',
+      city: ''
+    },
+    filterMenuOpen: dashboard.studentDashboard.filterMenuOpen ? dashboard.studentDashboard.filterMenuOpen : false
   }
 }
 

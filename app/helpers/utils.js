@@ -117,7 +117,7 @@ export function validateGPA(gpa) {
 }
 
 export function validateJobTitle(jobTitle) {
-  var re = /^[a-z ,.'-]{2,40}$/i
+  var re = /^[a-z0-9 ,.'-]{2,30}$/i
   return re.test(jobTitle)
 }
 
@@ -169,4 +169,29 @@ export function hasCarBoolean(input) {
     }
 
     return temp
+}
+
+export function validateResponsibilities (responsibilities) {
+  let re = /^[a-z0-9 ,$()+=?%&*/;:.'-]{2,5500}$/i // numbers, letters and spaces only
+  return re.test(responsibilities)
+}
+
+export function validateQualifications (qualifications) {
+  let re = /^[a-z0-9 ,$()+=?%&*/;:.'-]{2,1400}$/i // numbers, letters and spaces only
+  return re.test(qualifications)
+} 
+
+export function validateDesiredSkills (skills) {
+  let re = /^[a-z0-9 ,$()+=?%&*/;:.'-]{2,100}$/i // numbers, letters and spaces only
+  return re.test(skills)
+}
+
+export function validateJobLocation (location) {
+  let re = /^[a-z0-9 ,().'-]{2,100}$/i // numbers, letters and spaces only
+  return re.test(location)
+} 
+
+export function validateCompensation (comp) {
+  let re = /^[a-z0-9 ,+=$/.'-]{2,380}$/i // numbers, letters and spaces only
+  return re.test(comp)
 }

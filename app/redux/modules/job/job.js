@@ -45,10 +45,19 @@ const UNDOING_REMOVE = 'UNDOING_REMOVE'
 const UNDO_REMOVE_SUCCESS = 'UNDO_REMOVE_SUCCESS'
 const UNDO_REMOVE_FAILURE = 'UNDO_REMOVE_FAILURE'
 
+const UPDATE_FILTERED_JOBS = 'UPDATE_FILTERED_JOBS'
+
 
 // =======================================================
 // ================== ACTIONS CREATORS ===================
 // =======================================================
+
+  export function updateFilteredJobs (jobs) {
+    return {
+      type: UPDATE_FILTERED_JOBS,
+      jobs
+    }
+  }
 
   function undoingRemove () {
     return {
@@ -561,6 +570,12 @@ export default function job (state = initialJobState, action) {
    /*
     * Student actions
     */
+
+    case UPDATE_FILTERED_JOBS:
+      return {
+        ...state,
+        studentJobsView: action.jobs
+      }
 
    /*
     * ===============================

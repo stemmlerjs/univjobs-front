@@ -102,7 +102,7 @@ function createJobFailure(errors) {
 }
 
 // TODO: CREATE NEW JOB THUNK
-export function createNewJob(props, jobType) {
+export function createNewJob(props, jobType, successCallback, failureCallback) {
   return function(dispatch) {
     //type, title, paid, start_date, responsibilties, qualification, compensation, address, city, question_1, question_2, max_participants, active, verified
 
@@ -150,8 +150,18 @@ export function createNewJob(props, jobType) {
     .then((res) => {
       console.log(res)
 
-      // ACTION: DISPATCH (CREATE_JOB_SUCCESS)
+     /*
+      * [Success]
+      *
+      * After we successfully create our new job, we want to wipe the store clean
+      * of all the previous data there so that we can create another new job starting from scratch.
+      *
+      * We'll clear it all by calling clearForm in the CreateJobComponent.
+      */
+
       dispatch(createJobSuccess())
+
+      successCallback()
       
     })
     .catch((err) => {
@@ -159,6 +169,8 @@ export function createNewJob(props, jobType) {
 
       // ACTION: DISPATCH (CREATE_JOB_FAILURE)
       dispatch(createJobFailure("Uh-oh, something went wrong. Please contact us to let us know."))
+
+      failureCallback(err.status)
     })
   }
 }
@@ -310,6 +322,7 @@ const page1InitialState = {
   internshipLocation: '',
   remoteWork: false,
   compensation: '',
+  MAX_CHARS_jobTitle: 30,
   MAX_CHARS_responsibilities: 5500,
   MAX_CHARS_qualifications: 1400,
   MAX_CHARS_desiredSkills: 100,

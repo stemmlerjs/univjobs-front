@@ -36,28 +36,34 @@ const DASHBOARD_MODAL_CLICKED = 'DASHBOARD_MODAL_CLICKED'
 const DASHBOARD_SHOW_MODAL = 'DASHBOARD_SHOW_MODAL'
 const DASHBOARD_HIDE_MODAL = 'DASHBOARD_HIDE_MODAL'
 
-const DASHBOARD_PIN_CLICKED = 'DASHBOARD_PIN_CLICKED'
-const DASHBOARD_PIN_SUCCESS = 'DASHBOARD_PIN_SUCCESS'
-const DASHBOARD_PIN_FAILURE = 'DASHBOARD_PIN_FAILURE'
-
-const DASHBOARD_UNPIN_CLICKED = 'DASHBOARD_UNPIN_CLICKED'
-const DASHBOARD_UNPIN_SUCCESS = 'DASHBOARD_UNPIN_SUCCESS'
-const DASHBOARD_UNPIN_FAILURE = 'DASHBOARD_UNPIN_FAILURE'
-
 const DASHBOARD_UPDATE_ANSWER_FIELD = 'DASHBOARD_UPDATE_ANSWER_FIELD'
 const DASHBOARD_SUBMITTING_ANSWERS = 'DASHBOARD_SUBMITTING_ANSWERS'
 const DASHBOARD_SUBMIT_ANSWERS_SUCCESS = 'DASHBOARD_SUBMIT_ANSWERS_SUCCESS'
 const DASHBOARD_SUBMIT_ANSWERS_FAILURE = 'DASHBOARD_SUBMIT_ANSWERS_FAILURE'
 
+const UPDATE_FILTER_SETTINGS = 'UPDATE_FILTER_SETTINGS'
+
+const TOGGLE_FILTER_MENU = 'TOGGLE_FILTER_MENU'
+
 // =======================================================
 // ================== ACTIONS CREATORS ===================
 // =======================================================
 
-/*TODO: Convert word error into failure
- *
- * */
+export function toggleFilterMenu () {
+	return {
+		type: TOGGLE_FILTER_MENU
+	}
+}
 
-/**************GET STUDENTS***********************/
+export function updateFilterSettings (filterConfig, isAStudent) {
+	return {
+		type: UPDATE_FILTER_SETTINGS,
+		filterConfig,
+		isAStudent
+	}
+}
+
+
 function attemptGetStudents () {
 	return {
 		type: GET_STUDENTS
@@ -186,121 +192,6 @@ function dashboardFetchedJobTypesFailure(error) {
   }
 }
 
-/**************PINS***********************/
-function dashboardPinClicked(job) {
-   return {
-   	  type: DASHBOARD_PIN_CLICKED,
-	  job,
-   }
-}
-
-/* Returns a success reponse
- *  @params(response) an object containing:
- *         { pinned: True, 
- *           jobId: number 
- *         }
- *  NOTE: find the jobId and changed the pinned status to true in the store
- * */
-function dashboardPinSuccess(response) {
-   return {
-       type: DASHBOARD_PIN_SUCCESS,
-       fill: {color: 'red'},
-       response
-   }
-}
-
-function dashboardPinFailure(error) {
-   return {
-          type: DASHBOARD_PIN_FAILURE,
-          error,
-   }
-}
-
-/**************UNPINS***********************/
-function dashboardUnPinClicked(job) {
-   return {
-   	  type: DASHBOARD_UNPIN_CLICKED,
-	  job,
-   }
-}
-
-/* Returns a success reponse
- *  @params(response) an object containing:
- *         { pinned: False, 
- *           jobId: number 
- *         }
- *  NOTE: find the jobId and changed the pinned status to true in the store
- * */
-function dashboardUnPinSuccess(response) {
-   return {
-        type: DASHBOARD_UNPIN_SUCCESS,
-	    fill: {color: 'none'},
-        response
-   }
-}
-
-function dashboardUnPinFailure(error) {
-   return {
-        type: DASHBOARD_UNPIN_FAILURE,
-        error,
-   }
-}
-
-/**************UPDATE FIELDS***********************/
-function dashboardUpdateAnswerField(fieldName, newValue) {
-  return {
-	    type: DASHBOARD_UPDATE_ANSWER_FIELD,
-	    newValue, 
-	    fieldName
-  }
-}
-
-/**************SUBMIT ANSWERS***********************/
-/*NOTE:
- *  Pass the questionIds with the associated answers
- * */
-
-function dashboardSubmittingAnswers() {
-	return {
-		type: DASHBOARD_SUBMITTING_ANSWERS
-	}
-}
-
-function dashboardSubmitAnswersSuccess(response) {
-   return {
-   	  type: DASHBOARD_SUBMIT_ANSWERS_SUCCESS,
-	  response
-   }
-}
-
-function dashboardSubmitAnswersFailure(error) {
-   return {
-      type: DASHBOARD_SUBMIT_ANSWERS_FAILURE,
-      error
-   }
-}
-
-// =======================================================
-// ===================== THUNK ===========================
-// =======================================================
-// REF: https://github.com/ReactjsProgram/Redux-Immutable/commit/c1b261b21150e472c6199dcda7bcb792a81678f8
-// https://online.reacttraining.com/courses/redux-and-immutablejs/lectures/946352
-export function handleGetJobs() {
-    return function(dispatch) {
-	    //ACTION: FETCHING_PINNED_JOBS 
-	    dispatch(dashboardFetchingJobs())
-	    return getJobs()
-	        .then((resp) => 
-		        //ACTION: DASHBOARD_FETCHED_JOBS_SUCCESS
-		        dispatch(dashboardFetchedJobsSuccess(resp))
-	        )
-	        .catch((err) => 
-		        //ACTION: FETCHED_PINNED_JOBS_FAILURE
-		        dispatch(dashboardFetchedJobsFailure(err))
-	        )
-    }//dispatch
-}//handleGetJobs
-
 export function handleGetIndustries() {
     return function(dispatch) {
 	    //ACTION: FETCHING_INDUSTRIES
@@ -337,34 +228,6 @@ export function handleGetJobTypes() {
 	        )
     }//dispatch
 }//handleGetIndustries
-
-export function handlePinJob(job) {
-    return function(dispatch) {
-	    //ACTION: PIN_CLICKED
-	    dispatch(dashboardPinClicked(job))
-	    return pinAJob({'job': job.id})
-	        .then((resp) => 
-		        dispatch(dashboardPinSuccess(resp))
-	        )
-	        .catch((err) => 
-		        dispatch(dashboardPinFailure(err))
-	        )
-    }//dispatch
-}//handlePinJob
-
-export function handleUnPinJob(job) {
-    return function(dispatch) {
-	    //ACTION: PIN_CLICKED
-	    dispatch(dashboardUnPinClicked(job))
-	    return unPinAJob({'job': job.id})
-	        .then((resp) => 
-		        dispatch(dashboardUnPinSuccess(resp))
-	        )
-	        .catch((err) => 
-		        dispatch(dashboardUnPinFailure(err))
-	        )
-    }//dispatch
-}//handlePinJob
 
 
 const SHOW_MAX_APPLICANTS = "EMPLOYER.DASHBOARD.SHOW_MAX_APPLICANTS"
@@ -419,6 +282,19 @@ const initialStudentDashboardState = {
 	error: '',
 	jobs: [],
 	pin: {},
+	filterConfig: {
+		jobType: {
+			'otg': true,
+			'summer': true,
+			'winter': true,
+			'rep': true,
+			'freelance': true,
+			'pt': true
+		},
+		keyword: '',
+		city: ''
+	},
+	filterMenuOpen: false
 }
 
 const intialPinState = {
@@ -558,6 +434,22 @@ function employerDashboard(state = initialEmployerDashboardState, action) {
 
 function studentDashboard(state = initialStudentDashboardState, action) {
 	switch(action.type) {
+
+		/*
+		 * Filtering
+		 */
+
+		case TOGGLE_FILTER_MENU:
+			return {
+				...state,
+				filterMenuOpen: !state.filterMenuOpen
+			}
+
+		case UPDATE_FILTER_SETTINGS:
+			return {
+				...state,
+				filterConfig: action.filterConfig
+			}
     
    /*
     * APPLY TO JOB MODAL [Student Dashboard]
@@ -605,170 +497,37 @@ function studentDashboard(state = initialStudentDashboardState, action) {
 				jobs: action.jobs,
 				isFetching: false,
 			}
-		case DASHBOARD_FETCHED_JOBS_FAILURE:
-			return {
-				...state,
-				isFetching: false,
-				error: action.error,
-			}
-		case DASHBOARD_PIN_CLICKED:
-   			debugger
-			return {
-				...state,
-				pin: pin(state, action)
-			}
-		case DASHBOARD_PIN_SUCCESS:
-   			debugger
-			return {
-				...state,
-				pin: pin(state, action)
-			}
-		case DASHBOARD_PIN_FAILURE:
-   			debugger
-			return {
-				...state,
-				pin: pin(state, action)
-			}
-		case DASHBOARD_UNPIN_CLICKED:
-   			debugger
-			return {
-				...state,
-				pin: pin(state, action)
-			}
-		case DASHBOARD_UNPIN_SUCCESS:
-   			debugger
-			return {
-				...state,
-				pin: pin(state, action)
-			}
-		case DASHBOARD_UNPIN_FAILURE:
-   			debugger
-			return {
-				...state,
-				pin: pin(state, action)
-			}
 		default:	
 			return state 
 	}
 }
 
 
-function pin(state = intialPinState, action) {	
-	switch(action.type) {
-		case DASHBOARD_PIN_CLICKED:
-   			debugger
-			return {
-			    ...state,
-			    job: action.jobs
-			}
-		case DASHBOARD_PIN_SUCCESS:
-   			debugger
-			//Change the attribute for pinned to true locally
-			state.jobs.data.map((job => {
-			    if(job.id === action.response.data.job) {
-			        job.pinned = true
-			    }
-			}))
-			return {
-			    ...state,
-			    response: action.response,
-			    pinColor: action.fill,
-			}
-		case DASHBOARD_PIN_FAILURE:
-   			debugger
-			return {
-			    ...state,
-			    error: action.errors
-			}
-		case DASHBOARD_UNPIN_CLICKED:
-   			debugger
-			return {
-			    ...state,
-			    job: action.jobs
-			}
-		case DASHBOARD_UNPIN_SUCCESS:
-   			debugger
-			//Change the attribute for pinned to true locally
-			state.jobs.data.map((job => {
-			    if(job.id === action.response.data.job) {
-			        job.pinned = false
-			    }
-			}))
-			return {
-			    ...state,
-			    response: action.response,
-			    pinColor: action.fill,
-			}
-		case DASHBOARD_UNPIN_FAILURE:
-   			debugger
-			return {
-			    ...state,
-			    error: action.errors
-			}
-		default:	
-			return {
-				state
-			}//switch
-	}
-}
-
-function modal(state = intialModalState, action) {	
-	switch(action.type) {
-		case DASHBOARD_MODAL_CLICKED:
-			return {
-				...state,
-				isClicked: true,
-				jobId: action.jobId,
-			}
-		case DASHBOARD_SHOW_MODAL:
-			return {
-				...state,
-				isOpen: true,
-				job: action.job,
-			}
-		case DASHBOARD_HIDE_MODAL:
-			return {
-				...state,
-				isClicked: false,
-				isOpen: false,
-			}
-		default:	
-			return state
-	}
-}
-
-function answer(state = initialAnswerState, action) {
-	switch(action.type) {
-		case DASHBOARD_UPDATE_ANSWER_FIELD:
-			return {
-				...state,
-				[action.fieldName]: action.newValue,
-			}
-		case DASHBOARD_SUBMITTING_ANSWERS:
-			return {
-				...state,
-				isSubmitting: true
-			}		
-		case DASHBOARD_SUBMIT_ANSWERS_SUCCESS:
-			return {
-				...state,
-				resopnse: action.response,
-				isSubmitting: false
-			}
-		case DASHBOARD_SUBMIT_ANSWERS_FAILURE:
-			return {
-				...state,
-				error: action.error,
-				isSubmitting: false,
-			}
-		default:
-			return state
-	
-	}
-}
-
 export default function dashboard(state = initialDashboardState, action) {
 	switch(action.type) {
+
+	/*
+	 * [DASHBOARD]: Filtering jobs
+	 */
+
+		case TOGGLE_FILTER_MENU:
+			return {
+				...state,
+				studentDashboard: studentDashboard(state.studentDashboard, action)
+			}
+
+		case UPDATE_FILTER_SETTINGS:
+			if (action.isAStudent) {
+				return {
+					studentDashboard: studentDashboard(state.studentDashboard, action)
+				}	
+			}
+
+			else {
+				return {
+					employerDashboard: employerDashboard(state.employerDashboard, action)
+				}	
+			}
 
    /*
     * APPLY TO JOB MODAL [Student Dashboard]
@@ -889,87 +648,6 @@ export default function dashboard(state = initialDashboardState, action) {
 			return {
 				...state,
 				error: action.error
-			}
-		case DASHBOARD_MODAL_CLICKED:
-			return {
-				...state,
-				modal: modal(state.modal, action)
-			}
-		case DASHBOARD_SHOW_MODAL:
-			return {
-				...state,
-				modal: modal(state.modal, action)
-			}
-		case DASHBOARD_HIDE_MODAL:
-			return {
-				...state,
-				modal: modal(state.modal, action)
-			}
-		case DASHBOARD_UPDATE_ANSWER_FIELD:
-			return {
-				...state,
-				answer: answer(state.answer, action)
-			}
-		case DASHBOARD_SUBMITTING_ANSWERS:
-			debugger
-			return {
-				...state,
-				answer: answer(state.answer, action)
-			}		
-		case DASHBOARD_SUBMIT_ANSWERS_SUCCESS:
-			debugger
-            /*  - Find the position of the job in the state array which was applied to
-             *  - Delete the job in the state after finding the job
-             *  
-             * */
-			let index = state.studentDashboard.jobs.data.findIndex((job) => job.id === state.modal.jobId)
-			index != -1 ? state.studentDashboard.jobs.data.splice(index, 1) : ''  
-			return {
-				...state,
-				answer: answer(state.answer, action)
-			}
-		case DASHBOARD_SUBMIT_ANSWERS_FAILURE:
-			debugger
-			return {
-				...state,
-				answer: answer(state.answer, action),
-				error: action.error
-			}
-		case DASHBOARD_PIN_CLICKED:
-   			debugger
-			return {
-			        ...state,
-				studentDashboard: studentDashboard(state.studentDashboard, action)
-			}
-		case DASHBOARD_PIN_SUCCESS:
-   			debugger
-			return {
-			        ...state,
-				studentDashboard: studentDashboard(state.studentDashboard, action)
-			}
-		case DASHBOARD_PIN_FAILURE:
-   			debugger
-			return {
-			        ...state,
-				studentDashboard: studentDashboard(state.studentDashboard, action)
-			}
-		case DASHBOARD_UNPIN_CLICKED:
-   			debugger
-			return {
-			        ...state,
-				studentDashboard: studentDashboard(state.studentDashboard, action)
-			}
-		case DASHBOARD_UNPIN_SUCCESS:
-   			debugger
-			return {
-			        ...state,
-				studentDashboard: studentDashboard(state.studentDashboard, action)
-			}
-		case DASHBOARD_UNPIN_FAILURE:
-   			debugger
-			return {
-			        ...state,
-				studentDashboard: studentDashboard(state.studentDashboard, action)
 			}
 		default:
 			return state

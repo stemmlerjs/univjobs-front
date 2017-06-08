@@ -48,3 +48,113 @@
 }
 
 
+/*
+new styles for student dashboard filter
+*/
+
+.filtersContainer {
+    display: flex;
+    flex-direction: row;
+    border-top: solid 1px #414a51;
+    /* color: black; */
+    padding-top: 25px;
+}
+.filterJobTypeContainer {
+width: 60%;
+}
+.filterTitle {
+font-size: 20px;
+    font-weight: bold;
+    text-align: left;
+    padding-left: 20px;
+    margin-bottom: 7px
+}
+.filterJobTypeColumnContainer {
+    display: flex;
+    flex-direction: row;
+}
+.filterJobTypeColumn {
+    width: 50%;
+    text-align: left;
+    padding-left: 20px;
+}
+.filterKeywordAndCityContainer {
+width: 40%;
+}
+.filterKeyWordContainer {
+    margin-bottom: 14px;
+}
+.filterButtonsContainer {
+margin-top: 22px;
+}
+.searchButton {
+    background-color: #5396e5;
+    border: none;
+    color: white;
+    font-weight: bold;
+    font-size: 13px;
+    width: 109px;
+    height: 51px;
+    cursor: pointer;
+    outline: none;
+    transition: 0.1s ease-in;
+    border-radius: 5px;
+    border: solid 2px white;
+    margin-right: 18px;
+}
+.cancelButton {
+    background-color: #414a51;
+    border: none;
+    color: white;
+    font-weight: bold;
+    font-size: 13px;
+    width: 109px;
+    height: 51px;
+    cursor: pointer;
+    outline: none;
+    transition: 0.1s ease-in;
+    border-radius: 5px;
+    border: solid 2px #707980;
+    margin-right: 18px;
+}
+
+.filterInputFieldContainer {
+        display: flex;
+    padding-left: 20px;
+}
+
+.filterInputField {
+        text-align: left;
+    padding: .5em 1em;
+    /* margin: 8px; */
+    /* display: inline-block; */
+    border: 1px solid #8b8b8b;
+    border-radius: 4px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    color: inherit;
+    font: inherit;
+    /* width: 88%; */
+    width: 284px;
+}
+
+.filterContainerMain {
+     overflow: hidden;
+    transition: 0.5s ease-out;
+    height: 283px;
+}
+
+.filterContainerMainHidden {
+    overflow: hidden;
+    height: 0;
+    transition: 0.3s ease-out;
+}
+
+.filterJobsOpenButton {
+    font-weight: bold;
+    color: #222;
+    cursor: pointer;
+    position: relative;
+    top: -25px;
+}

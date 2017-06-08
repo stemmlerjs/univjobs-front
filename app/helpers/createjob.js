@@ -1,7 +1,8 @@
 import axios from 'axios'
 import config from 'config'
 import { getAccessToken, getCSRFToken } from 'helpers/auth'
-import { validateJobTitle } from 'helpers/utils'
+import { validateJobTitle, validateResponsibilities, 
+        validateQualifications, validateDesiredSkills, validateJobLocation, validateCompensation } from 'helpers/utils'
 
 export function createNewJobPOST (job_type, title, paid, start_date, responsibilities, qualifications, compensation,
  address, city, question_one_text, question_two_text, max_applicants, active, verified) {
@@ -66,11 +67,11 @@ export function validateCreateJobFields(currentPage, pageProps, next) {
     page1Errors.jobTitle = validateJobTitle(pageProps.jobTitle) ? false : true
     // page1Errors.isPayingJob = pageProps.isPayingJob != "" ? false : true
     page1Errors.startDate = pageProps.startDate != "" ? false : true
-    page1Errors.responsibilities = pageProps.responsibilities != "" ? false : true
-    page1Errors.qualifications = pageProps.qualifications != "" ? false : true 
-    page1Errors.desiredSkills = pageProps.desiredSkills != "" ? false : true
-    page1Errors.internshipLocation =  pageProps.internshipLocation != "" ? false : true
-    page1Errors.compensation = pageProps.compensation != "" ? false : true
+    page1Errors.responsibilities = validateResponsibilities(pageProps.responsibilities) ? false : true
+    page1Errors.qualifications = validateQualifications(pageProps.qualifications) ? false : true 
+    page1Errors.desiredSkills = validateDesiredSkills(pageProps.desiredSkills) ? false : true
+    page1Errors.internshipLocation = validateJobLocation(pageProps.internshipLocation) ? false : true
+    page1Errors.compensation = validateCompensation(pageProps.compensation) ? false : true
 
     // If an error exists in the map, then errorsExist === true
     for (var attr in page1Errors) {

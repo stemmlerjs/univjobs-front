@@ -14,6 +14,9 @@ import { StudentCard } from 'modules/Dashboard'
 import { JobCardModal } from 'modules/Dashboard'
 import { GenericCard, DASHBOARD_CARD_TYPE, Title, JobCard } from 'modules/SharedComponents'
 import { flexibleCardContainer } from 'sharedStyles/cardContainer.css'
+import { filtersContainer, filterJobTypeContainer, filterTitle, filterJobTypeColumnContainer, filterJobTypeColumn, 
+    filterKeywordAndCityContainer, filterKeyWordContainer, filterButtonsContainer, searchButton, cancelButton, 
+    filterInputField, filterInputFieldContainer, filterContainerMain, filterJobsOpenButton, filterContainerMainHidden } from '../styles/StudentDashboardStyles.css'
 
 import config from 'config'
 import moment from 'moment'
@@ -27,14 +30,30 @@ import { pinIcon } from 'sharedStyles/pinCards.css'
 import { overflowFix } from 'sharedStyles/sharedComponentStyles.css'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
+const defaultFilterConfig = {
+  jobType: {
+    'otg': true,
+    'summer': true,
+    'winter': true,
+    'rep': true,
+    'freelance': true,
+    'pt': true
+  },
+  keyword: '',
+  city: ''
+}
+
 //**NOTE:
 //  Store is accessible
 export default function StudentDashboard ({
-    jobs, handleCardClick, 
+    jobs, 
+    modal, jobTypes, industries,
+    answerOne, answerTwo, page, pin, filterConfig, filterMenuOpen,
+    handleToggleFilterMenu,
+    handleCardClick, 
     handlePinJob,
-	modal, jobTypes, industries,
-	answerOne, answerTwo, page,
-    pin
+    updateFilterSettings,
+    filterStudentJobs
 }) {
         return (
             <div className={rootComponentContainer}>
@@ -44,11 +63,147 @@ export default function StudentDashboard ({
                 <Title 
                     titleName="Let's get you hired"
                     subHeading="Apply to a job now, so we can help you land one!"/>
+                <div className={filterJobsOpenButton} onClick={handleToggleFilterMenu}>
+                {
+                  !filterMenuOpen
+                    ? '+ Filter Jobs'
+                    : '- Filter Jobs'
+                  }
+                </div>
+                <div className={ filterMenuOpen ? filterContainerMain : filterContainerMainHidden }>
+                  <div className={filtersContainer}>
+                    <div className={filterJobTypeContainer}>
+                      <div className={filterTitle}>Job Type</div>
+                      <div className={filterJobTypeColumnContainer}>
+                        <div className={filterJobTypeColumn}>
+                          <div>
+                            <input 
+                              type="checkbox" 
+                              name="otg" 
+                              defaultChecked={filterConfig ? filterConfig.jobType.otg : true} 
+                              onChange={() => {
+                                let newFilter = filterConfig;
+                                newFilter.jobType.otg = !filterConfig.jobType.otg
+                                updateFilterSettings(newFilter, true)
+                              }}
+                            />One Time Gig
+                          </div>
+                          <div>
+                            <input 
+                              type="checkbox" 
+                              name="summer"
+                              defaultChecked={filterConfig ? filterConfig.jobType.summer : true} 
+                              onChange={() => {
+                                let newFilter = filterConfig;
+                                newFilter.jobType.summer = !filterConfig.jobType.summer
+                                updateFilterSettings(newFilter, true)
+                              }}
+                            />Summer 2017
+                          </div>
+                          <div>
+                            <input 
+                              type="checkbox" 
+                              name="winter"
+                              defaultChecked={filterConfig ? filterConfig.jobType.winter : true} 
+                              onChange={() => {
+                                let newFilter = filterConfig;
+                                newFilter.jobType.winter = !filterConfig.jobType.winter
+                                updateFilterSettings(newFilter, true)
+                              }}
+                            />Winter 2017
+                          </div>
+                        </div>
+                        <div className={filterJobTypeColumn}>
+                          <div>
+                            <input 
+                              type="checkbox" 
+                              name="rep"
+                              defaultChecked={filterConfig ? filterConfig.jobType.rep : true} 
+                              onChange={() => {
+                                let newFilter = filterConfig;
+                                newFilter.jobType.rep = !filterConfig.jobType.rep
+                                updateFilterSettings(newFilter, true)
+                              }}
+                            />Campus Rep
+                          </div>
+                          <div>
+                            <input 
+                              type="checkbox" 
+                              name="freelance"
+                              defaultChecked={filterConfig ? filterConfig.jobType.freelance : true} 
+                              onChange={() => {
+                                let newFilter = filterConfig;
+                                newFilter.jobType.freelance = !filterConfig.jobType.freelance
+                                updateFilterSettings(newFilter, true)
+                              }}
+                            />Freelance
+                          </div>
+                          <div>
+                            <input 
+                              type="checkbox" 
+                              name="pt"
+                              defaultChecked={filterConfig ? filterConfig.jobType.pt : true} 
+                              onChange={() => {
+                                let newFilter = filterConfig;
+                                newFilter.jobType.pt = !filterConfig.jobType.pt
+                                updateFilterSettings(newFilter, true)
+                              }}
+                            />Part Time Work
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className={filterKeywordAndCityContainer}>
+                      <div className={filterKeyWordContainer}>
+                        <div className={filterTitle}>Keyword</div>
+                        <div className={filterInputFieldContainer}>
+                          <input className={filterInputField} 
+                            onChange={(e) => {
+                            let newFilter = filterConfig;
+                            newFilter.keyword = e.target.value
+                            updateFilterSettings(newFilter, true)
+                          }}/>
+                        </div>
+                      </div>
+                      <div className={filterKeyWordContainer}>
+                        <div className={filterTitle}>City</div>
+                        <div className={filterInputFieldContainer}>
+                          <input className={filterInputField}
+                            onChange={(e) => {
+                              let newFilter = filterConfig;
+                              newFilter.city = e.target.value
+                              updateFilterSettings(newFilter, true)
+                            }}/>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className={filterButtonsContainer}>
+                    <button className={searchButton} onClick={filterStudentJobs}>Search</button>
+                    <button className={cancelButton} onClick={handleToggleFilterMenu}>Cancel</button>
+                  </div>
+                </div>
                 
                 <div className={flexibleCardContainer}>
-  	                { jobs.length > 0 ? jobs.filter((job) => {
-                          return job.applied == 0 && job.active == 1
+  	                { 
+                      /*
+                       * [Mandatory] filter.
+                       * All jobs are to pass through this filter.
+                       * 
+                       * If the job has already been applied to and is active - then show it
+                       * If the job has the filter saying not to show it - don't show it.
+                       */
+
+                      jobs.length > 0 ? jobs.filter((job) => {
+                        var hasntAppliedToAndIsActive = job.applied == 0 && job.active == 1;
+                        var shouldFilterOut = job.filter_show === undefined 
+                                                ? false 
+                                                : job.filter_show === true 
+                                                    ? false 
+                                                    : true;
+                        return hasntAppliedToAndIsActive && !shouldFilterOut
                       })
+
                       .map((job) => (
                         <JobCard 
                           cardType={'dashboard'}
@@ -80,10 +235,34 @@ export default function StudentDashboard ({
 
                     {
 
+                     /*
+                      * If the filter isn't being used and no jobs are returned, just return 
+                      * 'No more jobs yet' because there are actually no new jobs for them.
+                      */
+
+                      (JSON.stringify(defaultFilterConfig) === JSON.stringify(filterConfig) &&
                       jobs.filter((job) => {
                           return job.applied == 0 && job.active == 1
-                      }).length == 0
+                      }).length == 0)
                         ? <h2>No more jobs yet! Check back soon.</h2>
+                        : (
+                          
+                     /*
+                      * Otherwise, if the filter IS being used and we don't render any jobs, 
+                      * we should inform the user to adjust their filter preferences because no jobs
+                      * are showing up.
+                      */
+                          
+                           jobs.filter((job) => {
+                              var hasntAppliedToAndIsActive = job.applied == 0 && job.active == 1;
+                              var shouldFilterOut = job.filter_show === undefined 
+                                                      ? false 
+                                                      : job.filter_show === true 
+                                                          ? false 
+                                                          : true;
+                              return hasntAppliedToAndIsActive && !shouldFilterOut
+                            }).length == 0)
+                        ? <h2>No jobs found. You can try adjusting your filters.</h2>
                         : ''
                     }
                     
