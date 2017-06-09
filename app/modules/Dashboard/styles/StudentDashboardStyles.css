@@ -60,7 +60,7 @@ new styles for student dashboard filter
     padding-top: 25px;
 }
 .filterJobTypeContainer {
-width: 60%;
+width: 30%;
 }
 .filterTitle {
 font-size: 20px;
@@ -82,7 +82,8 @@ font-size: 20px;
 width: 40%;
 }
 .filterKeyWordContainer {
-    margin-bottom: 14px;
+margin-bottom: 14px;
+    display: inline-block;
 }
 .filterButtonsContainer {
 margin-top: 22px;
@@ -157,4 +158,22 @@ margin-top: 22px;
     cursor: pointer;
     position: relative;
     top: -25px;
+}
+
+.comboBoxContainer {
+width: 30%;
+text-align: left;
+padding-left:7px;
+}
+
+.comboBoxTitle {
+    font-size: 20px;
+    font-weight: bold;
+    text-align: left;
+}
+
+.comboBox {
+    composes: comboBox from 'sharedStyles/sharedComponentStyles.css';
+    border: 1px solid #8b8b8b;
+    border-radius: 4px;
 }

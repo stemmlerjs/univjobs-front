@@ -520,98 +520,120 @@ const StudentDashboardContainer = React.createClass({
     
     let filterConfig = this.props.filterConfig
     let jobs = this.props.jobs
+    let filteredJobs = {}
 
     /*
-     * Iterate over all of the jobs and set filter_show attribute on each job
-     * based on the criteria.
+     * Filter by job type
      */
 
     for(var i = 0; i < jobs.length; i++) {
 
-      // We set the job to false until proven otherwise.
-
-      jobs[i].filter_show = false;
-
-
-      /*
-       * [Job Type]
-       * 
-       * First, filter everything by job type. If any of the checkboxes are unselected,
-       * they will be taken out.
-       */
-      
       if (jobs[i].type === 1 && filterConfig.jobType.otg === true) {
-        jobs[i].filter_show = true
+        filteredJobs[i] = jobs[i]
         continue
       }
 
       if (jobs[i].type === 2 && filterConfig.jobType.summer === true) {
-        jobs[i].filter_show = true
+        filteredJobs[i] = jobs[i]
         continue
       }
 
       if (jobs[i].type === 3 && filterConfig.jobType.winter === true) {
-        jobs[i].filter_show = true
+        filteredJobs[i] = jobs[i]
         continue
       }
 
       if (jobs[i].type === 4 && filterConfig.jobType.freelance === true) {
-        jobs[i].filter_show = true
+        filteredJobs[i] = jobs[i]
         continue
       }
 
       if (jobs[i].type === 5 && filterConfig.jobType.rep === true) {
-        jobs[i].filter_show = true
+        filteredJobs[i] = jobs[i]
         continue
       }
 
       if (jobs[i].type === 6 && filterConfig.jobType.pt === true) {
-        jobs[i].filter_show = true
+        filteredJobs[i] = jobs[i]
         continue
       }
-
     }
 
     /*
-      * [Keyword and City]
-      * 
-      * For the keyword, we check the job responsibilities, qualifications, title,
-      * For the city, we check location
-      * IF and only if the filterConfig.keyword !== '' or filterConfig.city !== ''.
-      */
+     * Filter by keyword and city
+     */
 
-      if (filterConfig.keyword !== "" || filterConfig.city !== "") {
-        for (var j = 0; j < jobs.length; j++) {
+    if (filterConfig.keyword !== "" || filterConfig.city !== "" || filterConfig.industry !== "" || filterConfig.industry == undefined) {
+      for (var j = 0; j < jobs.length; j++) {
 
-          // debugger;
-
-          jobs[j].filter_show = false;
-
-          if (filterConfig.keyword !== "") {
-            if (jobs[j].responsibilities.toUpperCase().indexOf(filterConfig.keyword.toUpperCase()) !== -1) {
-              jobs[j].filter_show = true
-              continue
-            }
-
-            if (jobs[j].qualification.toUpperCase().indexOf(filterConfig.keyword.toUpperCase()) !== -1) {
-              jobs[j].filter_show = true
-              continue
-            }
-
-            if (jobs[j].title.toUpperCase().indexOf(filterConfig.keyword.toUpperCase()) !== -1) {
-              jobs[j].filter_show = true
-              continue
-            }
+        if (filterConfig.keyword !== "") {
+          if (jobs[j].responsibilities.toUpperCase().indexOf(filterConfig.keyword.toUpperCase()) !== -1) {
+            filteredJobs[j] = jobs[j]
+            continue
           }
 
-          if (filterConfig.city !== "") {
-            if (jobs[j].location.toUpperCase().indexOf(filterConfig.city.toUpperCase()) !== -1) {
-              jobs[j].filter_show = true
-              continue
-            }
+          if (jobs[j].qualification.toUpperCase().indexOf(filterConfig.keyword.toUpperCase()) !== -1) {
+            filteredJobs[j] = jobs[j]
+            continue
+          }
+
+          if (jobs[j].title.toUpperCase().indexOf(filterConfig.keyword.toUpperCase()) !== -1) {
+            filteredJobs[j] = jobs[j]
+            continue
           }
         }
+
+        if (filterConfig.city !== "") {
+          if (jobs[j].location.toUpperCase().indexOf(filterConfig.city.toUpperCase()) !== -1) {
+            filteredJobs[j] = jobs[j]
+            continue
+          }
+        }
+
+        if (filterConfig.industry !== "" && filterConfig.industry == jobs[j].industry) {
+          filteredJobs[j] = jobs[j]
+          continue
+        }
+
+        // We need to add this case for when we erase the industry filter. When it's erased,
+        // industry becomes undefined. If it's undefined, we want to return all results.
+
+        if (filterConfig.industry == undefined) {
+          filteredJobs[j] = jobs[j]
+          continue
+        }
+
+        delete filteredJobs[j]
       }
+    }
+
+    
+
+    /*
+     * [ADD MORE FILTERS HERE]
+     */
+
+    /*
+     * Now, we will alter the store to show only the filtered jobs.
+     * First, set all jobs to false (don't show).
+     */
+
+    jobs = jobs.map((job) => {
+      job.filter_show = false;
+      return job
+    })
+
+    /*
+     * Then, only show all the jobs that made it through the filter.
+     */
+
+    for (var key in filteredJobs) {
+      jobs[Number(key)].filter_show = true
+    }
+
+    /*
+     * Update the store.
+     */
 
     this.props.updateFilteredJobs(jobs)
   },
@@ -634,6 +656,7 @@ const StudentDashboardContainer = React.createClass({
               handlePinJob={this.pinJob}
               jobs={this.props.jobs ? this.props.jobs : ''}
               industries={this.props.industries ? this.props.industries : {}}
+              industriesList={this.props.industryList ? this.props.industryList : []}
               jobTypes={this.props.jobTypes ? this.props.jobTypes : []}
               refreshJobs={this.props.getAllJobsStudentJobView}
               page={this.props.route.page}
@@ -780,7 +803,8 @@ function mapStateToProps({user, dashboard, job, profile, list}) {
     profile: profile.studentProfile ? profile.studentProfile : {},
 	  jobs: job.studentJobsView ? job.studentJobsView : [],
 	  jobAppModal: dashboard.studentDashboard.jobAppModal ? dashboard.studentDashboard.jobAppModal : {},
-	  industries : list.industries ? list.industries : [],
+	  industries : list.industries ? list.industries : {},
+    industryList: list.industriesArray ? list.industriesArray : [],
 	  jobTypes : list.jobTypesArray ? list.jobTypesArray : [],
     isApplying: dashboard.studentDashboard.jobAppModal ? dashboard.studentDashboard.jobAppModal.isApplying : false,
     applySuccess: dashboard.studentDashboard.jobAppModal ? dashboard.studentDashboard.jobAppModal.applySuccess : false,
@@ -801,7 +825,8 @@ function mapStateToProps({user, dashboard, job, profile, list}) {
         'pt': true
       },
       keyword: '',
-      city: ''
+      city: '',
+      industry: ''
     },
     filterMenuOpen: dashboard.studentDashboard.filterMenuOpen ? dashboard.studentDashboard.filterMenuOpen : false
   }

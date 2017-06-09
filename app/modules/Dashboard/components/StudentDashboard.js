@@ -12,11 +12,13 @@ import React, { PropTypes } from 'react'
 // ==============MADE COMPONENTS========================= //
 import { StudentCard } from 'modules/Dashboard'
 import { JobCardModal } from 'modules/Dashboard'
+import { Combobox } from 'react-widgets'
 import { GenericCard, DASHBOARD_CARD_TYPE, Title, JobCard } from 'modules/SharedComponents'
 import { flexibleCardContainer } from 'sharedStyles/cardContainer.css'
 import { filtersContainer, filterJobTypeContainer, filterTitle, filterJobTypeColumnContainer, filterJobTypeColumn, 
     filterKeywordAndCityContainer, filterKeyWordContainer, filterButtonsContainer, searchButton, cancelButton, 
-    filterInputField, filterInputFieldContainer, filterContainerMain, filterJobsOpenButton, filterContainerMainHidden } from '../styles/StudentDashboardStyles.css'
+    filterInputField, filterInputFieldContainer, filterContainerMain, filterJobsOpenButton, filterContainerMainHidden,
+    comboBoxContainer, comboBox, comboBoxTitle } from '../styles/StudentDashboardStyles.css'
 
 import config from 'config'
 import moment from 'moment'
@@ -40,14 +42,15 @@ const defaultFilterConfig = {
     'pt': true
   },
   keyword: '',
-  city: ''
+  city: '',
+  industry: ''
 }
 
 //**NOTE:
 //  Store is accessible
 export default function StudentDashboard ({
     jobs, 
-    modal, jobTypes, industries,
+    modal, jobTypes, industriesList, industries,
     answerOne, answerTwo, page, pin, filterConfig, filterMenuOpen,
     handleToggleFilterMenu,
     handleCardClick, 
@@ -152,7 +155,26 @@ export default function StudentDashboard ({
                           </div>
                         </div>
                       </div>
+                      
                     </div>
+                    <div className={comboBoxContainer}>
+                        <div className={comboBoxTitle}>Industry</div>
+                        <Combobox
+                            className={`${comboBox}`}
+                            textField='industry_text'
+                            valueField='id'
+                            filter='contains'
+                            data={industriesList}
+                            onChange={(industry) => {
+                              let newFilter = filterConfig;
+                                newFilter.industry = industry.id
+                                updateFilterSettings(newFilter, true)
+                            }}
+                            defaultValue={''}
+                          />
+                      </div>
+
+
                     <div className={filterKeywordAndCityContainer}>
                       <div className={filterKeyWordContainer}>
                         <div className={filterTitle}>Keyword</div>
