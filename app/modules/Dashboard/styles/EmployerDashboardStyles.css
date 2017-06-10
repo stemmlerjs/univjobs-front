@@ -145,3 +145,97 @@
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
+
+.filtersContainer {
+display: flex;
+    flex-direction: row;
+    border-top: solid 1px #414a51;
+    /* color: black; */
+    padding-top: 25px;
+    justify-content: center;
+    margin-left: 25px;
+    margin-right: 25px;
+}
+
+.comboBoxContainer {
+    padding-left: 7px;
+    text-align: left;
+}
+
+.comboBoxTitle {
+    font-size: 20px;
+    font-weight: bold;
+    /* text-align: left; */
+}
+
+.leftSideFilterColumn {
+    width: 50%;
+}
+
+
+@media only screen and (min-width: 1500px) {
+    .leftSideInner {
+      width: 65%;
+    /* margin: 0 auto; */
+    text-align: left;
+    position: relative;
+    left: 50%;
+    }
+}
+
+@media only screen and (max-width: 1499px) {
+    .leftSideInner {
+      width: 65%;
+      margin: 0 auto;
+      text-align: left;
+    }
+}
+
+.rightSideFilterColumn {
+    width: 50%;
+}
+
+.filterContainerInner {
+      display: flex;
+    border-top: 1px black solid;
+    padding-top: 22px;
+}
+
+.onlyShow {
+      font-size: 20px;
+    font-weight: bold;
+    text-align: left;
+    /* padding-left: 20px; */
+    margin-bottom: 7px;
+}
+
+.filterButtonsContainer {
+      margin-top: 22px;
+}
+
+.rightInner {
+  display: flex;
+    flex-direction: column;
+    /* border-top: solid 1px #414a51; */
+    /* color: black; */
+    /* padding-top: 25px; */
+    justify-content: center;
+    /* margin-left: 25px; */
+    /* margin-right: 25px; */
+    width: 60%;
+    margin: 0 auto;
+}
+
+
+.filterContainerMain {
+    transition: 0.2s ease-out;
+    height: 208px;
+        background-color: #c6c6c6;
+}
+
+.filterContainerMainHidden {
+    overflow: hidden;
+    height: 0;
+    transition: 0.2s ease-out;
+        background-color: #c6c6c6;
+}

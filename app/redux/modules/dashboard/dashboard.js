@@ -45,13 +45,25 @@ const UPDATE_FILTER_SETTINGS = 'UPDATE_FILTER_SETTINGS'
 
 const TOGGLE_FILTER_MENU = 'TOGGLE_FILTER_MENU'
 
+const UPDATE_FILTERED_STUDENTS = 'UPDATE_FILTERED_STUDENTS'
+
+
+
 // =======================================================
 // ================== ACTIONS CREATORS ===================
 // =======================================================
 
-export function toggleFilterMenu () {
+export function updateFilteredStudents (students) {
 	return {
-		type: TOGGLE_FILTER_MENU
+		type: UPDATE_FILTERED_STUDENTS,
+		students
+	}
+}
+
+export function toggleFilterMenu (isAStudent) {
+	return {
+		type: TOGGLE_FILTER_MENU,
+		isAStudent
 	}
 }
 
@@ -273,7 +285,13 @@ const initialEmployerDashboardState = {
 	studentProfileModal: {},
 	searchField: '',
 	campusFilter: '',
-	gradDateFilter: ''
+	gradDateFilter: '',
+	filterConfig: {
+		hasCar: '',
+		program: '',
+		industry: ''
+	},
+	filterMenuOpen: false
 }
 
 const initialStudentDashboardState = {
@@ -292,7 +310,8 @@ const initialStudentDashboardState = {
 			'pt': true
 		},
 		keyword: '',
-		city: ''
+		city: '',
+		industry: ''
 	},
 	filterMenuOpen: false
 }
@@ -392,6 +411,28 @@ function studentProfileModal (state = initialStudentProfileModalState, action) {
 
 function employerDashboard(state = initialEmployerDashboardState, action) {
 	switch(action.type) {
+		/*
+		 * Filtering
+		 */
+
+		case UPDATE_FILTERED_STUDENTS:
+			return {
+				...state,
+				students: action.students
+			}
+
+		case TOGGLE_FILTER_MENU:
+			return {
+				...state,
+				filterMenuOpen: !state.filterMenuOpen
+			}
+
+		case UPDATE_FILTER_SETTINGS:
+			return {
+				...state,
+				filterConfig: action.filterConfig
+			}
+
     case inviteStudentModal.actions.INVITING_STUDENT_TO_JOB:
       return {
         ...state,
@@ -510,11 +551,28 @@ export default function dashboard(state = initialDashboardState, action) {
 	 * [DASHBOARD]: Filtering jobs
 	 */
 
-		case TOGGLE_FILTER_MENU:
+		case UPDATE_FILTERED_STUDENTS:
 			return {
 				...state,
-				studentDashboard: studentDashboard(state.studentDashboard, action)
+				employerDashboard: employerDashboard(state.employerDashboard, action)
 			}
+
+		case TOGGLE_FILTER_MENU:
+
+			if (action.isAStudent) {
+				return {
+					...state,
+					studentDashboard: studentDashboard(state.studentDashboard, action)
+				}
+			}
+
+			else {
+				return {
+					...state,
+					employerDashboard: employerDashboard(state.employerDashboard, action)
+				}
+			}
+			
 
 		case UPDATE_FILTER_SETTINGS:
 			if (action.isAStudent) {

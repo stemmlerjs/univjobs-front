@@ -142,14 +142,16 @@ margin-top: 22px;
 
 .filterContainerMain {
      overflow: hidden;
-    transition: 0.5s ease-out;
+    transition: 0.2s ease-out;
     height: 283px;
+        background-color: #c6c6c6;
 }
 
 .filterContainerMainHidden {
     overflow: hidden;
     height: 0;
-    transition: 0.3s ease-out;
+    transition: 0.2s ease-out;
+        background-color: #c6c6c6;
 }
 
 .filterJobsOpenButton {

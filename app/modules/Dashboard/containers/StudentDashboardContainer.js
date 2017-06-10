@@ -36,8 +36,6 @@ var ToastMessageFactory = React.createFactory(ReactToastr.ToastMessage.animation
 import { pageContainer } from 'sharedStyles/sharedContainerStyles.css'
 import { applyButton, cancelBtn, applyButtonsContainer } from '../styles/StudentDashboardStyles.css'
 
-
-
 let reloadJobs = ""
 
 
@@ -664,7 +662,36 @@ const StudentDashboardContainer = React.createClass({
               filterStudentJobs={this.filterStudentJobs}
               filterConfig={this.props.filterConfig}
               updateFilterSettings={this.props.updateFilterSettings}
-              handleToggleFilterMenu={this.props.toggleFilterMenu}
+              handleToggleFilterMenu={() => {
+
+                let delayedHidden = document.getElementById("delayed-overflow-hidden")
+
+                /*
+                * If the menu is opening, set overflow to hidden.
+                * Then after 500 ms, set overflow to auto.
+                */
+
+                if (!this.props.filterMenuOpen) {
+                  console.log("Menu opening, keeping overflow:hidden set.")
+                  delayedHidden.style.overflow = 'hidden !important';
+
+                  setTimeout(() => {
+                    console.log("Menu open now. Turning off overflow.")
+                    //delayedHidden.style.overflow = 'auto !important';
+                  }, 3000)
+                }
+
+              /*
+                * If the menu is closing, turn the overflow on right away.
+                */
+
+                else {
+                  console.log("Menu closing, turned overflow:hidden on.")
+                  delayedHidden.style.overflow = 'hidden !important';
+                }
+
+                this.props.toggleFilterMenu(true)
+              }}
               filterMenuOpen={this.props.filterMenuOpen}
             />
           : ''

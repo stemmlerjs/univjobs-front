@@ -88,7 +88,7 @@
   * [Employer]: Invite a student to a job
   */
 
-  function inviteStudentToJob (jobId, studentId) {
+  function inviteStudentToJob (jobId, studentId, successCallback, failureCallback) {
     return function(dispatch) {
 
      /*
@@ -109,11 +109,15 @@
 
           if (result.status === 200) {
             dispatch(inviteStudentSuccess())
+
+            successCallback()
           }
 
           else {
             
             dispatch(inviteStudentFailure())
+
+            failureCallback("Whoops. That didn't work.")
 
           } 
 
@@ -131,6 +135,8 @@
           }
 
           dispatch(inviteStudentFailure(errorMessage))
+
+          failureCallback(errorMessage)
 
         })
       

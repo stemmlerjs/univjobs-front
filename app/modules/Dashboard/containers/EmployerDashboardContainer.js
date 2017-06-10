@@ -28,6 +28,11 @@ import { inviteStudentStyle, inviteStudentModalContainer, comboBox, inviteStuden
   loader, failureMessage, successMessage, listItems } from '../styles/EmployerDashboardStyles.css'
 
 
+var ReactToastr = require("react-toastr");
+var { ToastContainer } = ReactToastr;
+var ToastMessageFactory = React.createFactory(ReactToastr.ToastMessage.animation);
+
+
  /*
   * InviteListItem
   *
@@ -187,14 +192,6 @@ const EmployerDashboardContainer = React.createClass({
   },
 
   componentWillUpdate(props) {
-
-   /* 
-    * After a successful invite, we want to close the modal.
-    */
-
-    if (props.inviteStudentModal.success == true) {
-      this.closeInviteStudentModal()
-    }
   },
 
  /*
@@ -211,7 +208,121 @@ const EmployerDashboardContainer = React.createClass({
   */
 
   doInviteStudent() {
-    this.props.inviteStudentToJob(this.props.inviteStudentModal.selectedJob.job_id, this.props.inviteStudentModal.selectedStudent.student_id)
+    this.props.inviteStudentToJob(this.props.inviteStudentModal.selectedJob.job_id, this.props.inviteStudentModal.selectedStudent.student_id,
+
+    /*
+     * Success callback
+     */
+
+    () => {
+
+      this.refs.container.success(
+          "Invited that student to the job!",
+          "Did it.",
+          {
+            timeout: 3000
+        });
+
+      setTimeout(() => {
+        this.closeInviteStudentModal()
+      }, 2000)
+    },
+    
+    /*
+     * Failure callback
+     */
+    
+    (errorMessage) => {
+
+      this.refs.container.error(
+          errorMessage,
+          "Couldn't do that.",
+          {
+            timeout: 3000
+        });
+
+    })
+  },
+
+ /*
+  * filterStudents
+  *
+  * Filter the students on the Employer Dashboard through (so far) if they
+  * have a car and their program name.
+  */
+
+  filterStudents () {
+    
+    let filterConfig = this.props.filterConfig
+    let students = this.props.students
+    let filteredStudents = {}
+
+    students = students.map((student) => {
+      student.filter_show = true;
+      return student
+    })
+
+    /*
+     * Filter by the checkboxes first
+     */
+    
+    if (filterConfig.hasCar) {
+      for (let i = 0; i < students.length; i++) {
+
+        if (students[i].has_car === 1) {
+          filteredStudents[i] = students[i]
+          continue
+        }
+
+      }
+    }
+
+    /*
+     * Filter by Program of study.
+     */
+   
+    if (filterConfig.program !== "") {
+      for (let i = 0; i < students.length; i++) {
+
+        if (students[i].major === filterConfig.program) {
+          filteredStudents[i] = students[i]
+          continue
+        }
+
+        delete filteredStudents[i]
+
+      }
+    }
+
+   /*
+    * Now, we will alter the store to show only the filtered students.
+    * First, set all students to false (don't show).
+    */
+
+    if ((filterConfig.program !== "" && filterConfig.program !== undefined) || filterConfig.hasCar) {
+
+      students = students.map((student) => {
+        student.filter_show = false;
+        return student
+      })
+      
+
+      /*
+      * Then, only show all the students that made it through the filter.
+      */
+
+      for (var key in filteredStudents) {
+        students[Number(key)].filter_show = true
+      }
+
+    }
+
+    /*
+     * Update the store.
+     */
+
+    this.props.updateFilteredStudents(students)
+    
   },
 
   render () {
@@ -226,6 +337,43 @@ const EmployerDashboardContainer = React.createClass({
           handleCloseStudentProfileModal={this.closeStudentProfileModal}
           handleOpenInviteStudentModal={this.openInviteStudentModal}
           handleCloseInviteStudentModal={this.closeInviteStudentModal}
+          industriesList={this.props.industryList ? this.props.industryList : []}
+          programsList={this.props.majors ? this.props.majors : []}
+          updateFilter={this.props.updateFilterSettings}
+          filterStudents={this.filterStudents}
+          filterConfig={this.props.filterConfig}
+          updateFilterSettings={this.props.updateFilterSettings}
+          handleToggleFilterMenu={() => {
+
+            let delayedHidden = document.getElementById("delayed-overflow-hidden")
+
+            /*
+             * If the menu is opening, set overflow to hidden.
+             * Then after 500 ms, set overflow to auto.
+             */
+
+            if (!this.props.filterMenuOpen) {
+              console.log("Menu opening, keeping overflow:hidden set.")
+              delayedHidden.style.overflow = 'hidden !important';
+
+              setTimeout(() => {
+                console.log("Menu open now. Turning off overflow.")
+                //delayedHidden.style.overflow = 'auto !important';
+              }, 3000)
+            }
+
+           /*
+            * If the menu is closing, turn the overflow on right away.
+            */
+
+            else {
+              console.log("Menu closing, turned overflow:hidden on.")
+              delayedHidden.style.overflow = 'hidden !important';
+            }
+
+            this.props.toggleFilterMenu(false)
+          }}
+          filterMenuOpen={this.props.filterMenuOpen}
         />
 
         {/* =======================================
@@ -303,17 +451,20 @@ const EmployerDashboardContainer = React.createClass({
                       : '#'} applicants</div>
                 <div className={this.props.inviteStudentModal.isInviting ? loader : ''}></div>
 
-                {/* SUCCESS MESSAGE*/}
+                {/* SUCCESS MESSAGE
                 <div className={successMessage}>{this.props.inviteStudentModal.isInviting == false & this.props.inviteStudentModal.success == true 
                   ? "Success!"
                   : ''}
                 </div>
 
-                {/* FAILURE MESSAGE */}
+                */}
+
+                {/* FAILURE MESSAGE 
                 <div className={failureMessage}>{this.props.inviteStudentModal.isInviting == false & this.props.inviteStudentModal.error !== '' 
                   ? this.props.inviteStudentModal.error
                   : ''}
                 </div>
+                */}
 
               </div>
               
@@ -327,6 +478,10 @@ const EmployerDashboardContainer = React.createClass({
           </SkyLight>
 
         </div>
+
+        	<ToastContainer ref="container"
+          toastMessageFactory={ToastMessageFactory}
+          className="toast-top-right" />
       </div>
     )
   }
@@ -340,7 +495,15 @@ function mapStateToProps({user, profile, dashboard, job, list}) {
     inviteStudentModal: dashboard.employerDashboard.inviteStudentModal ? dashboard.employerDashboard.inviteStudentModal : {},
     studentProfileModal: dashboard.employerDashboard.studentProfileModal ? dashboard.employerDashboard.studentProfileModal: {},
     jobs: job.employerJobs ? job.employerJobs :  [],
-    lists: list ? list : {}
+    lists: list ? list : {},
+    industryList: list.industriesArray ? list.industriesArray : [],
+    majors: list.majorsArray ? list.majorsArray : [],
+    filterConfig: dashboard.employerDashboard.filterConfig ? dashboard.employerDashboard.filterConfig : {
+      hasCar: false,
+      program: '',
+      industry: ''
+    },
+    filterMenuOpen: dashboard.employerDashboard.filterMenuOpen ? dashboard.employerDashboard.filterMenuOpen : false
   }
 }
 

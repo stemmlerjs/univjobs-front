@@ -39,8 +39,8 @@ export function getStudentApplications(store, actionCreators) {
     var hidden = (on == true) ? 0 : 1
 
     return axios({
-      method: 'delete',
-      url: config.baseUrl + 'applications/show' + jobId + "?=" + hidden,
+      method: 'put',
+      url: config.baseUrl + 'applicants/show/' + jobId + "?toggle=" + hidden,
       headers: {
         'Authorization':  accessToken
       }

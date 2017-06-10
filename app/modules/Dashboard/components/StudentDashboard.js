@@ -15,6 +15,7 @@ import { JobCardModal } from 'modules/Dashboard'
 import { Combobox } from 'react-widgets'
 import { GenericCard, DASHBOARD_CARD_TYPE, Title, JobCard } from 'modules/SharedComponents'
 import { flexibleCardContainer } from 'sharedStyles/cardContainer.css'
+
 import { filtersContainer, filterJobTypeContainer, filterTitle, filterJobTypeColumnContainer, filterJobTypeColumn, 
     filterKeywordAndCityContainer, filterKeyWordContainer, filterButtonsContainer, searchButton, cancelButton, 
     filterInputField, filterInputFieldContainer, filterContainerMain, filterJobsOpenButton, filterContainerMainHidden,
@@ -60,7 +61,6 @@ export default function StudentDashboard ({
 }) {
         return (
             <div className={rootComponentContainer}>
-	            <div className={margins}>
 
                 {/* TITLE */}
                 <Title 
@@ -73,7 +73,7 @@ export default function StudentDashboard ({
                     : '- Filter Jobs'
                   }
                 </div>
-                <div className={ filterMenuOpen ? filterContainerMain : filterContainerMainHidden }>
+                <div id="delayed-overflow-hidden" className={ filterMenuOpen ? filterContainerMain : filterContainerMainHidden }>
                   <div className={filtersContainer}>
                     <div className={filterJobTypeContainer}>
                       <div className={filterTitle}>Job Type</div>
@@ -205,6 +205,8 @@ export default function StudentDashboard ({
                     <button className={cancelButton} onClick={handleToggleFilterMenu}>Cancel</button>
                   </div>
                 </div>
+
+
                 
                 <div className={flexibleCardContainer}>
   	                { 
@@ -289,7 +291,6 @@ export default function StudentDashboard ({
                     }
                     
                 </div>
-            </div>
 	    </div>
    )
 }

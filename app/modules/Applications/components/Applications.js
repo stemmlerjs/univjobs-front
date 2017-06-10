@@ -44,7 +44,7 @@ export default function Applications ({jobs,
 
         <div className={flexibleCardContainer}>
             { jobs.length > 0 ? jobs.filter((job) => {
-                    return job.applied == 1
+                    return job.applied == 1 && job.hidden == 0
                 })
                 .map((job) => (
                 <JobCard 
@@ -79,7 +79,7 @@ export default function Applications ({jobs,
 
             {
               jobs.filter((job) => {
-                    return job.applied == 1
+                    return job.applied == 1 && job.hidden == 0
                 }).length == 0
                 ? <h2>You haven't applied to any jobs yet.</h2>
                 : ''
