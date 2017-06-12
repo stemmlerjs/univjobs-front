@@ -14,7 +14,7 @@
 }
 
 .cardTopContainer {
-    padding-top: 25px;
+    padding-top: 39px;
     display: flex;
     padding-left: 16px;
     padding-right: 16px;
@@ -25,26 +25,28 @@
 }
 
 .imgContainer > img {
-    height: 106px;
-    width: 106px;
+    height: 60px;
+    width: 60px;
     border: solid 2px darkslategrey;
 }
 
-.cardHeaderContainer {
-    width: 60%;
+.cardSectionMain {
+    /* width: 60%; */
     /* display: inline-block; */
-    padding-left: 15px;
+    padding-left: 16px;
     display: flex;
     flex-direction: column;
     text-align: left;
+    margin-top: 11px;
 }
 
 .cardHeaderItemMainText {
-    font-size: 20px;
+    font-size: 18px;
+    font-weight: bold;
 }
 
 .cardHeaderItemSecondaryText {
-        font-size: 15px;
+        font-size: 14px;
 }
 
 .cardHeaderItemAltItemText {
@@ -71,10 +73,10 @@ margin-top: 9px;
 }
 
 .cardBottomContainer {
-    text-align: left;
-    margin-left: 16px;
-    margin-right: 16px;
-    margin-top: 11px;
+text-align: left;
+    margin-left: 2px;
+    margin-right: 2px;
+    margin-top: 19px;
 }
 
 .cardSectionOne {
@@ -139,4 +141,84 @@ margin-top: 9px;
     border-top: solid 4px #007AC1;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
+}
+
+.jobTypeText {
+    position: relative;
+    width: 81px;
+    font-size: 13px;
+    top: 11px;
+    left: 7px;
+    color: #949494;
+    height: 0px;
+    text-align: left;
+}
+
+.cardSectionAlt {
+    margin-top: 17px;
+    display: flex;
+    flex-direction: row;
+    margin-left: 18px;
+    margin-right: 18px;
+    justify-content: space-between;
+    font-size: 13px;
+}
+
+.cardSectionAltItem {
+font-weight: bold;
+}
+
+.cardSectionAltItemContainer {
+
+}
+
+.cardSectionAltItemGrey {
+color: #808080;
+}
+
+.paidContainer {
+        text-align: left;
+    border-right: solid 1px #808080;
+    width: 25%;
+}
+
+.distanceContainer {
+    width: 33%;
+    border-left: solid 1px #808080;
+    padding-left: 9px;
+}
+
+.companyInfoClickContainer {
+    font-size: 13px;
+    color: #4a93c7;
+    padding-left: 12px;
+    padding-top: 23px;
+}
+
+.companyInfo {
+    cursor: pointer;
+}
+
+.clock {
+    padding-right: 10px;
+    font-size: 20px;
+    position: relative;
+    top: 3px;
+}
+
+.clock_0_50 {
+    color: #7DD226;
+}
+
+.clock_51_75 {
+    color: #F8E622;
+}
+
+.clock_76_100 {
+    color: #CF0921;
+}
+
+.applicantsContainer {
+    margin-top: 26px;
+    font-size: 14px;
 }

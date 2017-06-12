@@ -27,7 +27,8 @@ import { overflowFix } from 'sharedStyles/sharedComponentStyles.css'
 export default function Invites ({jobs,
     industries,
     handlePinJob,
-    handleCardClick
+    handleCardClick,
+    handleOpenEmployerProfileModal
 }) {
   return (
 	<div className={rootComponentContainer}>
@@ -49,7 +50,20 @@ export default function Invites ({jobs,
                         jobId={job.job_id}
                         postedBy={job.posted_by}
                         title={job.title}
-                        jobType={job.type}
+                        jobType={job.type === 1 
+                                    ? 'One Time Gig' :
+                                    job.type === 2 
+                                    ? 'Summer' :
+                                    job.type === 3 
+                                    ? 'Winter' :
+                                    job.type === 4
+                                    ? 'Freelance' :
+                                    job.type === 5
+                                    ? 'Campus Rep' :
+                                    job.type === 6
+                                    ? 'Part-time' :
+                                    ''
+                                  }
                         paid={job.paid}
                         startDate={moment(job.start_date).format("MMMM Do, YYYY")}
                         responsibilities={job.responsibilities}
@@ -67,6 +81,7 @@ export default function Invites ({jobs,
                         officeAddress={job.office_address}
                         officeCity={job.office_city}
                         pinned={job.pinned}
+                        handleOpenEmployerProfileModal={handleOpenEmployerProfileModal}
                     />
             )) : '' }
 

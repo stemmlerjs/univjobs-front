@@ -8,7 +8,7 @@ import { StudentDashboard } from 'modules/Dashboard'
 import { PinJobs } from 'modules/PinJobs'
 import { Invites } from 'modules/Invites'
 import { Applications } from 'modules/Applications'
-import { JobCardModal } from 'modules/SharedComponents'
+import { JobCardModal, CompanyInfoSideBar } from 'modules/SharedComponents'
 
 import config from 'config'
 
@@ -22,6 +22,7 @@ import * as userActionCreators from 'redux/modules/user/user'
 import * as dashboardActionCreators from 'redux/modules/dashboard/dashboard'
 import * as jobActionCreators from 'redux/modules/job/job'
 import jobAppModal from 'redux/modules/dashboard/jobAppModal'
+import employerProfileModal from 'redux/modules/dashboard/employerProfileModal'
 import * as list from 'helpers/lists'
 import * as fetch from 'helpers/dashboard'
 import { authRedirectFilter } from 'config/routes'
@@ -38,13 +39,11 @@ import { applyButton, cancelBtn, applyButtonsContainer } from '../styles/Student
 
 let reloadJobs = ""
 
-
 const StudentDashboardContainer = React.createClass({
     propTypes: {
 	  user: PropTypes.object, 
 	  jobs: PropTypes.array, 
-	  modal : PropTypes.object, 
-	  jobTypes : PropTypes.array, 
+	  modal : PropTypes.object,
 	  answer : PropTypes.object, 
 	  pin: PropTypes.object
     },
@@ -640,179 +639,226 @@ const StudentDashboardContainer = React.createClass({
     
   },
 
+  /*
+   * handleCompanyInfoSidebarStateChange
+   * 
+   * We need this function to update Redux when the modal is closed so it doesn't
+   * open up again anytime new props are loaded in and this.props.employerProfileModal.isOpen
+   * still === true.
+   */
+
+  handleCompanyInfoSidebarStateChange (state) {
+    if (!state.isOpen) {
+      this.props.employerProfileModalClosed()
+    }
+  },
+
   render () {
-
-
     return (
-      <div className={pageContainer} >
-      <SidebarContainer isAStudent={true} profilePicture={config.mediaUrl + '/avatar/' + this.props.profile.photo}/>
+      <div>
 
-      {
-        this.props.route.page === "dashboard" 
-          ? <StudentDashboard
-              handleCardClick={this.openJobAppModal}
-              handlePinJob={this.pinJob}
-              jobs={this.props.jobs ? this.props.jobs : ''}
-              industries={this.props.industries ? this.props.industries : {}}
-              industriesList={this.props.industryList ? this.props.industryList : []}
-              jobTypes={this.props.jobTypes ? this.props.jobTypes : []}
-              refreshJobs={this.props.getAllJobsStudentJobView}
-              page={this.props.route.page}
-              updateFilter={this.props.updateFilterSettings}
-              filterStudentJobs={this.filterStudentJobs}
-              filterConfig={this.props.filterConfig}
-              updateFilterSettings={this.props.updateFilterSettings}
-              handleToggleFilterMenu={() => {
+        {
+         /*
+          * CompanyInfoSideBar
+          *
+          * When a student clicks on Company Info on a Job Card, the Company Info
+          * sidebar component opens up.
+          */
+        }
 
-                let delayedHidden = document.getElementById("delayed-overflow-hidden")
+        <CompanyInfoSideBar 
+          onStateChange={ this.handleCompanyInfoSidebarStateChange }
+          isOpen={this.props.employerProfileModal.isOpen}
+          employerName={this.props.employerProfileModal.employerInfo ? this.props.employerProfileModal.employerInfo.employerName : null}
+          industry={this.props.employerProfileModal.employerInfo ? this.props.employerProfileModal.employerInfo.industry : null}
+          logoUrl={this.props.employerProfileModal.employerInfo ? this.props.employerProfileModal.employerInfo.logoUrl : null}
+          headquarters={this.props.employerProfileModal.employerInfo ? this.props.employerProfileModal.employerInfo.headquarters : null}
+          website={this.props.employerProfileModal.employerInfo ? this.props.employerProfileModal.employerInfo.website : null}
+          numEmployees={this.props.employerProfileModal.employerInfo ? this.props.employerProfileModal.employerInfo.numEmployees : null}
+          aboutSectionExpanded={this.props.employerProfileModal.isAboutSectionOpen ? this.props.employerProfileModal.isAboutSectionOpen : false}
+          handleToggleAboutSection={this.props.toggleAboutSection}
+          about={this.props.employerProfileModal.employerInfo ? this.props.employerProfileModal.employerInfo.about : null}/>
 
-                /*
-                * If the menu is opening, set overflow to hidden.
-                * Then after 500 ms, set overflow to auto.
-                */
+        {
+         /*
+          * The rest of the page.
+          */
+        }
 
-                if (!this.props.filterMenuOpen) {
-                  console.log("Menu opening, keeping overflow:hidden set.")
-                  delayedHidden.style.overflow = 'hidden !important';
+        <div id="page-wrap" className={pageContainer} >
+            <SidebarContainer isAStudent={true} profilePicture={config.mediaUrl + '/avatar/' + this.props.profile.photo}/>
 
-                  setTimeout(() => {
-                    console.log("Menu open now. Turning off overflow.")
-                    //delayedHidden.style.overflow = 'auto !important';
-                  }, 3000)
-                }
-
-              /*
-                * If the menu is closing, turn the overflow on right away.
-                */
-
-                else {
-                  console.log("Menu closing, turned overflow:hidden on.")
-                  delayedHidden.style.overflow = 'hidden !important';
-                }
-
-                this.props.toggleFilterMenu(true)
-              }}
-              filterMenuOpen={this.props.filterMenuOpen}
-            />
-          : ''
-      }
-
-      {
-        this.props.route.page === "pinnedjobs" 
-          ? <PinJobs
-              handleCardClick={this.openJobAppModal}
-              handlePinJob={this.pinJob}
-              jobs={this.props.jobs ? this.props.jobs : ''}
-              industries={this.props.industries ? this.props.industries : {}}
-              jobTypes={this.props.jobTypes ? this.props.jobTypes : []}
-              refreshJobs={this.props.getAllJobsStudentJobView}
-              page={this.props.route.page}
-            />
-          : ''
-      }
-
-      {
-        this.props.route.page === "applications" 
-          ? <Applications
-              handleCardClick={this.openJobAppModal}
-              handleRemoveJob={this.removeApplication}
-              handlePinJob={this.pinJob}
-              jobs={this.props.jobs ? this.props.jobs : ''}
-              industries={this.props.industries ? this.props.industries : {}}
-              jobTypes={this.props.jobTypes ? this.props.jobTypes : []}
-              refreshJobs={this.props.getAllJobsStudentJobView}
-              page={this.props.route.page}
-            />
-          : ''
-      }
-
-      {
-        this.props.route.page === "invitations" 
-          ? <Invites
-              handleCardClick={this.openJobAppModal}
-              handlePinJob={this.pinJob}
-              jobs={this.props.jobs ? this.props.jobs : ''}
-              industries={this.props.industries ? this.props.industries : {}}
-              jobTypes={this.props.jobTypes ? this.props.jobTypes : []}
-              refreshJobs={this.props.getAllJobsStudentJobView}
-              page={this.props.route.page}
-            />
-          : ''
-      }
-
-      
-
-      {
-       /* 
-        * ========================================
-        *           jobAppModal
-        * ========================================
-        * 
-        * This is the main modal for this screen.
-        * It's purpose is to allow the student to see 
-        * the details for a job and apply to the job
-        * after filling in any answers to questions if necessary.
-        */
-      } 
-      <div id="job-app-modal-wrapper">
-        <SkyLight
-              ref="jobAppModal"
-              >
-
-              { this.props.jobAppModal.selectedJob 
-                ? <JobCardModal
-                    cardType={this.props.route.page}
-                    title={this.props.jobAppModal.selectedJob.title}
-                    questions={this.props.jobAppModal.selectedJob.questions}
-                    job={this.props.jobAppModal.selectedJob}
-                    updateAnswerText={this.props.updateAnswerText}
-                    closeJobAppModal={this.closeJobAppModal}
-                    openConfirmApplyModal={this.openConfirmApplyModal}
-                    updateAnswerText={this.handleUpdateAnswerText}
-                    industries={this.props.industries}
+            {
+              this.props.route.page === "dashboard" 
+                ? <StudentDashboard
+                    handleCardClick={this.openJobAppModal}
                     handlePinJob={this.pinJob}
-                    />
+                    jobs={this.props.jobs ? this.props.jobs : ''}
+                    industries={this.props.industries ? this.props.industries : {}}
+                    industriesList={this.props.industryList ? this.props.industryList : []}
+                    jobTypes={this.props.jobTypes ? this.props.jobTypes : []}
+                    refreshJobs={this.props.getAllJobsStudentJobView}
+                    page={this.props.route.page}
+                    updateFilter={this.props.updateFilterSettings}
+                    filterStudentJobs={this.filterStudentJobs}
+                    filterConfig={this.props.filterConfig}
+                    updateFilterSettings={this.props.updateFilterSettings}
+                    handleToggleFilterMenu={() => {
+
+                      let delayedHidden = document.getElementById("delayed-overflow-hidden")
+
+                      /*
+                      * If the menu is opening, set overflow to hidden.
+                      * Then after 500 ms, set overflow to auto.
+                      */
+
+                      if (!this.props.filterMenuOpen) {
+                        console.log("Menu opening, keeping overflow:hidden set.")
+                        delayedHidden.style.overflow = 'hidden !important';
+
+                        setTimeout(() => {
+                          console.log("Menu open now. Turning off overflow.")
+                          //delayedHidden.style.overflow = 'auto !important';
+                        }, 3000)
+                      }
+
+                    /*
+                      * If the menu is closing, turn the overflow on right away.
+                      */
+
+                      else {
+                        console.log("Menu closing, turned overflow:hidden on.")
+                        delayedHidden.style.overflow = 'hidden !important';
+                      }
+
+                      this.props.toggleFilterMenu(true)
+                    }}
+                    filterMenuOpen={this.props.filterMenuOpen}
+                    handleOpenEmployerProfileModal={this.props.employerProfileModalOpened}
+                  />
                 : ''
-              }
-              
-          </SkyLight>
-        </div>
+            }
 
-    {
-       /* 
-        * ========================================
-        *           Confirm Apply to job
-        * ========================================
-        * 
-        * This is the main modal for this screen.
-        * It's purpose is to allow the student to see 
-        * the details for a job and apply to the job
-        * after filling in any answers to questions if necessary.
-        *
-        */
-      } 
-      <div id="apply-to-job-modal-wrapper">
-        <SkyLight
-              ref="confirmApplyModal"
-              title="Apply to job?">
-              <div>Position: {this.props.jobAppModal.selectedJob ? this.props.jobAppModal.selectedJob.title : ''}</div>
-              <div className={applyButtonsContainer}>
-                <button className={applyButton} onClick={this.applyToJob}>YES, APPLY</button>
-                <button className={cancelBtn} onClick={this.closeConfirmApplyModal}>CANCEL</button>
+            {
+              this.props.route.page === "pinnedjobs" 
+                ? <PinJobs
+                    handleCardClick={this.openJobAppModal}
+                    handlePinJob={this.pinJob}
+                    jobs={this.props.jobs ? this.props.jobs : ''}
+                    industries={this.props.industries ? this.props.industries : {}}
+                    jobTypes={this.props.jobTypes ? this.props.jobTypes : []}
+                    refreshJobs={this.props.getAllJobsStudentJobView}
+                    page={this.props.route.page}
+                    handleOpenEmployerProfileModal={this.props.employerProfileModalOpened}
+                  />
+                : ''
+            }
+
+            {
+              this.props.route.page === "applications" 
+                ? <Applications
+                    handleCardClick={this.openJobAppModal}
+                    handleRemoveJob={this.removeApplication}
+                    handlePinJob={this.pinJob}
+                    jobs={this.props.jobs ? this.props.jobs : ''}
+                    industries={this.props.industries ? this.props.industries : {}}
+                    jobTypes={this.props.jobTypes ? this.props.jobTypes : []}
+                    refreshJobs={this.props.getAllJobsStudentJobView}
+                    page={this.props.route.page}
+                    handleOpenEmployerProfileModal={this.props.employerProfileModalOpened}
+                  />
+                : ''
+            }
+
+            {
+              this.props.route.page === "invitations" 
+                ? <Invites
+                    handleCardClick={this.openJobAppModal}
+                    handlePinJob={this.pinJob}
+                    jobs={this.props.jobs ? this.props.jobs : ''}
+                    industries={this.props.industries ? this.props.industries : {}}
+                    jobTypes={this.props.jobTypes ? this.props.jobTypes : []}
+                    refreshJobs={this.props.getAllJobsStudentJobView}
+                    page={this.props.route.page}
+                    handleOpenEmployerProfileModal={this.props.employerProfileModalOpened}
+                  />
+                : ''
+            }
+
+            
+
+            {
+            /* 
+              * ========================================
+              *           jobAppModal
+              * ========================================
+              * 
+              * This is the main modal for this screen.
+              * It's purpose is to allow the student to see 
+              * the details for a job and apply to the job
+              * after filling in any answers to questions if necessary.
+              */
+            } 
+            <div id="job-app-modal-wrapper">
+              <SkyLight
+                    ref="jobAppModal"
+                    >
+
+                    { this.props.jobAppModal.selectedJob 
+                      ? <JobCardModal
+                          cardType={this.props.route.page}
+                          title={this.props.jobAppModal.selectedJob.title}
+                          questions={this.props.jobAppModal.selectedJob.questions}
+                          job={this.props.jobAppModal.selectedJob}
+                          updateAnswerText={this.props.updateAnswerText}
+                          closeJobAppModal={this.closeJobAppModal}
+                          openConfirmApplyModal={this.openConfirmApplyModal}
+                          updateAnswerText={this.handleUpdateAnswerText}
+                          industries={this.props.industries}
+                          handlePinJob={this.pinJob}
+                          />
+                      : ''
+                    }
+                    
+                </SkyLight>
               </div>
-        </SkyLight>
+
+          {
+            /* 
+              * ========================================
+              *           Confirm Apply to job
+              * ========================================
+              * 
+              * This is the main modal for this screen.
+              * It's purpose is to allow the student to see 
+              * the details for a job and apply to the job
+              * after filling in any answers to questions if necessary.
+              *
+              */
+            } 
+            <div id="apply-to-job-modal-wrapper">
+              <SkyLight
+                    ref="confirmApplyModal"
+                    title="Apply to job?">
+                    <div>Position: {this.props.jobAppModal.selectedJob ? this.props.jobAppModal.selectedJob.title : ''}</div>
+                    <div className={applyButtonsContainer}>
+                      <button className={applyButton} onClick={this.applyToJob}>YES, APPLY</button>
+                      <button className={cancelBtn} onClick={this.closeConfirmApplyModal}>CANCEL</button>
+                    </div>
+              </SkyLight>
+            </div>
+
+          <ToastContainer ref="container"
+              toastMessageFactory={ToastMessageFactory}
+              className="toast-top-right" />
+
+          <ToastContainer ref="deletetoastr"
+              toastMessageFactory={ToastMessageFactory}
+              className="toast-top-right" 
+              onClick={this.undoRemoveApplication}>
+          </ToastContainer>
+
       </div>
-
-	  <ToastContainer ref="container"
-        toastMessageFactory={ToastMessageFactory}
-        className="toast-top-right" />
-
-    <ToastContainer ref="deletetoastr"
-        toastMessageFactory={ToastMessageFactory}
-        className="toast-top-right" 
-        onClick={this.undoRemoveApplication}>
-    </ToastContainer>
-
     </div>
     )
   },
@@ -832,7 +878,7 @@ function mapStateToProps({user, dashboard, job, profile, list}) {
 	  jobAppModal: dashboard.studentDashboard.jobAppModal ? dashboard.studentDashboard.jobAppModal : {},
 	  industries : list.industries ? list.industries : {},
     industryList: list.industriesArray ? list.industriesArray : [],
-	  jobTypes : list.jobTypesArray ? list.jobTypesArray : [],
+	  jobTypes : list.jobTypes ? list.jobTypes : [],
     isApplying: dashboard.studentDashboard.jobAppModal ? dashboard.studentDashboard.jobAppModal.isApplying : false,
     applySuccess: dashboard.studentDashboard.jobAppModal ? dashboard.studentDashboard.jobAppModal.applySuccess : false,
     isPinningJob: job.isPinningJob ? job.isPinningJob : false,
@@ -855,7 +901,8 @@ function mapStateToProps({user, dashboard, job, profile, list}) {
       city: '',
       industry: ''
     },
-    filterMenuOpen: dashboard.studentDashboard.filterMenuOpen ? dashboard.studentDashboard.filterMenuOpen : false
+    filterMenuOpen: dashboard.studentDashboard.filterMenuOpen ? dashboard.studentDashboard.filterMenuOpen : false,
+    employerProfileModal: dashboard.employerProfileModal ? dashboard.employerProfileModal : {}
   }
 }
 
@@ -873,7 +920,8 @@ function mapActionCreatorsToProps(dispatch) {
     ...userActionCreators,
     ...dashboardActionCreators,
     ...jobActionCreators,
-    ...jobAppModal.actionCreators
+    ...jobAppModal.actionCreators,
+    ...employerProfileModal.actionCreators
   }, dispatch)
 }
 

@@ -5,6 +5,7 @@ import { getJobTypes, getIndustries } from 'helpers/lists'
 
 import inviteStudentModal from './inviteStudentModal'
 import jobAppModal from './jobAppModal'
+import employerProfileModal from './employerProfileModal'
 
 // =======================================================
 // ====================== ACTIONS ========================
@@ -268,7 +269,8 @@ const initialDashboardState = {
 	industries: [],
 	error: '',
 	modal: {},
-	answer: {}
+	answer: {},
+	employerProfileModal: {}
 }
 
  /*
@@ -546,6 +548,28 @@ function studentDashboard(state = initialStudentDashboardState, action) {
 
 export default function dashboard(state = initialDashboardState, action) {
 	switch(action.type) {
+
+		/*
+		 * [Employer Profile Modal]
+		 */
+
+		case employerProfileModal.actions.TOGGLE_ABOUT_SECTION_OPEN:
+			return {
+				...state,
+				employerProfileModal: employerProfileModal.reducers.employerProfileModal(state.employerProfileModal, action)
+			}
+		
+		case employerProfileModal.actions.EMPLOYER_PROFILE_MODAL_OPEN:
+			return {
+				...state,
+				employerProfileModal: employerProfileModal.reducers.employerProfileModal(state.employerProfileModal, action)
+			}
+		
+		case employerProfileModal.actions.EMPLOYER_PROFILE_MODAL_CLOSED:
+			return {
+				...state,
+				employerProfileModal: employerProfileModal.reducers.employerProfileModal(state.employerProfileModal, action)
+			}
 
 	/*
 	 * [DASHBOARD]: Filtering jobs

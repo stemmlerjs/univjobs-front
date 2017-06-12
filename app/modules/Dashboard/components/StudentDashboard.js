@@ -55,6 +55,7 @@ export default function StudentDashboard ({
     answerOne, answerTwo, page, pin, filterConfig, filterMenuOpen,
     handleToggleFilterMenu,
     handleCardClick, 
+    handleOpenEmployerProfileModal,
     handlePinJob,
     updateFilterSettings,
     filterStudentJobs
@@ -66,11 +67,11 @@ export default function StudentDashboard ({
                 <Title 
                     titleName="Let's get you hired"
                     subHeading="Apply to a job now, so we can help you land one!"/>
-                <div className={filterJobsOpenButton} onClick={handleToggleFilterMenu}>
+                <div className={filterJobsOpenButton} >
                 {
                   !filterMenuOpen
-                    ? '+ Filter Jobs'
-                    : '- Filter Jobs'
+                    ? <span onClick={handleToggleFilterMenu}>+ Filter Jobs</span>
+                    : <span onClick={handleToggleFilterMenu}>- Filter Jobs</span>
                   }
                 </div>
                 <div id="delayed-overflow-hidden" className={ filterMenuOpen ? filterContainerMain : filterContainerMainHidden }>
@@ -235,9 +236,22 @@ export default function StudentDashboard ({
                           jobId={job.job_id}
                           postedBy={job.posted_by}
                           title={job.title}
-                          jobType={job.type}
+                          jobType={job.type === 1 
+                                    ? 'One Time Gig' :
+                                    job.type === 2 
+                                    ? 'Summer' :
+                                    job.type === 3 
+                                    ? 'Winter' :
+                                    job.type === 4
+                                    ? 'Freelance' :
+                                    job.type === 5
+                                    ? 'Campus Rep' :
+                                    job.type === 6
+                                    ? 'Part-time' :
+                                    ''
+                                  }
                           paid={job.paid}
-                          startDate={moment(job.start_date).format("MMMM Do, YYYY")}
+                          startDate={moment(job.start_date).format('MM/DD/YYYY')}
                           responsibilities={job.responsibilities}
                           qualification={job.qualification}
                           address={job.address}
@@ -254,6 +268,7 @@ export default function StudentDashboard ({
                           officeCity={job.office_city}
                           pinned={job.pinned}
                           page={page}
+                          handleOpenEmployerProfileModal={handleOpenEmployerProfileModal}
                         />
   	                )) : '' }
 

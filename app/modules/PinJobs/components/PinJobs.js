@@ -35,7 +35,8 @@ export default function PinJobs ({jobs,
     industries,
     page,
     handlePinJob,
-    handleCardClick
+    handleCardClick,
+    handleOpenEmployerProfileModal
 }) {
   return (
 	<div className={rootComponentContainer}>
@@ -57,7 +58,20 @@ export default function PinJobs ({jobs,
                         jobId={job.job_id}
                         postedBy={job.posted_by}
                         title={job.title}
-                        jobType={job.type}
+                        jobType={job.type === 1 
+                                    ? 'One Time Gig' :
+                                    job.type === 2 
+                                    ? 'Summer' :
+                                    job.type === 3 
+                                    ? 'Winter' :
+                                    job.type === 4
+                                    ? 'Freelance' :
+                                    job.type === 5
+                                    ? 'Campus Rep' :
+                                    job.type === 6
+                                    ? 'Part-time' :
+                                    ''
+                                  }
                         paid={job.paid}
                         startDate={moment(job.start_date).format("MMMM Do, YYYY")}
                         responsibilities={job.responsibilities}
@@ -76,6 +90,7 @@ export default function PinJobs ({jobs,
                         officeCity={job.office_city}
                         pinned={job.pinned}
                         page={page}
+                        handleOpenEmployerProfileModal={handleOpenEmployerProfileModal}
                     />
             )) : '' }
 
