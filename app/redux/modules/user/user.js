@@ -6,6 +6,14 @@
   const SWITCHED_TO_USER_TYPE_STUDENT = 'SWITCHED_TO_USER_TYPE_STUDENT'
   const SWITCHED_TO_USER_TYPE_EMPLOYER = 'SWITCHED_TO_USER_TYPE_EMPLOYER'
 
+  const SET_PROFILE_COMPLETED = 'SET_PROFILE_COMPLETED'
+
+  export function setProfileCompleted () {
+    return {
+      type: SET_PROFILE_COMPLETED
+    }
+  }
+
   export function switchedToStudent () {
     return {
       type: SWITCHED_TO_USER_TYPE_STUDENT
@@ -159,7 +167,7 @@ const initialState = {
   isFetching: false,
   isAuthenticated: false,
   isAStudent: true,
-  isProfileCompleted: false,
+  isProfileCompleted: 0,
   accessToken: '',
   emailVerified: false,
   dateJoined: '',
@@ -172,6 +180,11 @@ const initialState = {
 
 export default function user (state = initialState, action) {
   switch (action.type) {
+    case SET_PROFILE_COMPLETED: 
+      return {
+        ...state,
+        isProfileCompleted: 1
+      }
     case SWITCHED_TO_USER_TYPE_STUDENT :
       return {
         ...state,

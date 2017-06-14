@@ -225,12 +225,6 @@ function placePhoto(element, url) {
         />
       </ProfileField>
 
-      {/* ======== PASSWORD RESET BUTTON ======== */}
-      <ProfileField title="Password reset">
-        <div className={resetBtnContainer}>
-          <button className={btn}>Reset Password</button>
-        </div>
-      </ProfileField>
 
     {/* ======== SAVE BUTTON ======== */}
       <div className={profileField}>

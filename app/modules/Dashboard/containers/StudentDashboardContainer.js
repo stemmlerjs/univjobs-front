@@ -72,8 +72,8 @@ const StudentDashboardContainer = React.createClass({
       restricted: {
         to: 'STUDENTS',		              // STUDENTS only on this route
 	      redirectTo: '/job/mylistings'   // if not an EMPLOYER, redirect to the employer equivalent
-		 		
-      }
+      },
+      profileIncompleteRedirect: true
     }
      return authRedirectFilter(config, this.context.store, this.context.router)
   },
@@ -693,7 +693,8 @@ const StudentDashboardContainer = React.createClass({
                 ? <StudentDashboard
                     handleCardClick={this.openJobAppModal}
                     handlePinJob={this.pinJob}
-                    jobs={this.props.jobs ? this.props.jobs : ''}
+                    jobs={this.props.jobs ? this.props.jobs : []}
+                    isFetchingJobs={this.props.isFetchingJobs}
                     industries={this.props.industries ? this.props.industries : {}}
                     industriesList={this.props.industryList ? this.props.industryList : []}
                     jobTypes={this.props.jobTypes ? this.props.jobTypes : []}
@@ -745,6 +746,7 @@ const StudentDashboardContainer = React.createClass({
                     handleCardClick={this.openJobAppModal}
                     handlePinJob={this.pinJob}
                     jobs={this.props.jobs ? this.props.jobs : ''}
+                    isFetchingJobs={this.props.isFetchingJobs}
                     industries={this.props.industries ? this.props.industries : {}}
                     jobTypes={this.props.jobTypes ? this.props.jobTypes : []}
                     refreshJobs={this.props.getAllJobsStudentJobView}
@@ -761,6 +763,7 @@ const StudentDashboardContainer = React.createClass({
                     handleRemoveJob={this.removeApplication}
                     handlePinJob={this.pinJob}
                     jobs={this.props.jobs ? this.props.jobs : ''}
+                    isFetchingJobs={this.props.isFetchingJobs}
                     industries={this.props.industries ? this.props.industries : {}}
                     jobTypes={this.props.jobTypes ? this.props.jobTypes : []}
                     refreshJobs={this.props.getAllJobsStudentJobView}
@@ -776,6 +779,7 @@ const StudentDashboardContainer = React.createClass({
                     handleCardClick={this.openJobAppModal}
                     handlePinJob={this.pinJob}
                     jobs={this.props.jobs ? this.props.jobs : ''}
+                    isFetchingJobs={this.props.isFetchingJobs}
                     industries={this.props.industries ? this.props.industries : {}}
                     jobTypes={this.props.jobTypes ? this.props.jobTypes : []}
                     refreshJobs={this.props.getAllJobsStudentJobView}
@@ -875,6 +879,7 @@ function mapStateToProps({user, dashboard, job, profile, list}) {
 	  user: user ? user : {},
     profile: profile.studentProfile ? profile.studentProfile : {},
 	  jobs: job.studentJobsView ? job.studentJobsView : [],
+    isFetchingJobs: job.isFetching ? job.isFetching : false,
 	  jobAppModal: dashboard.studentDashboard.jobAppModal ? dashboard.studentDashboard.jobAppModal : {},
 	  industries : list.industries ? list.industries : {},
     industryList: list.industriesArray ? list.industriesArray : [],

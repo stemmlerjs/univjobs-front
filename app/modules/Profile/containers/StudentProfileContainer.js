@@ -126,16 +126,78 @@ const StudentProfileContainer = React.createClass({
   handleSubmit(studentProps) {
    //If profile is NOT completed, do /PUT. All fields must be populated and valid.
    //debugger
-   console.log(studentProps)
+
+  /*
+   * First time submitting profile.
+   */
+
    if(!this.props.isProfileCompleted) {
-	   this.context.store.dispatch(
-		    profileActionCreators.submitProfileFirstTime(0, studentProps, this.props.user)
-	    )
-   } else {
-   	this.context.store.dispatch(
-	    profileActionCreators.updateProfile(0, studentProps, this.props.user, this.props.snapshot)
-	)
-	    console.log("Profile already completed, use PATCH")}
+
+	   this.context.store.dispatch(profileActionCreators.submitProfileFirstTime(0, studentProps, this.props.user,
+
+      /*
+       * Success callback
+       */
+
+      () => {
+
+        this.context.store.dispatch(userActionCreators.setProfileCompleted())
+
+        this.refs.container.success(
+          "W00t w00t.",
+          "Profile completed. You can go and apply to jobs now.", {
+            timeout: 3000
+          });
+      },
+
+      /*
+       * Failure Callback
+       */
+      
+      (error) => {
+        this.refs.container.error(
+          error,
+          "Something went kaboom!", {
+            timeout: 3000
+          });
+      }))
+
+   } 
+   
+  /*
+   * Any other subsequent time submitting profile.
+   */
+
+   else {
+
+   	this.context.store.dispatch(profileActionCreators.updateProfile(0, studentProps, this.props.user, this.props.snapshot,
+    
+     /*
+      * Success callback
+      */
+
+     () => {
+      this.refs.container.success(
+        "Nice stuff!",
+        "Profile succesfully updated", {
+          timeout: 3000
+        });
+     },
+
+     /*
+      * Failure callback
+      */
+     
+     (error) => {
+       this.refs.container.error(
+    		error,
+    		"Something went kaboom!", {
+    		   timeout: 3000
+    		});
+     }))
+
+    }
+
    },
 
    handleButtonToggle(booleanState, buttonName) {
@@ -165,28 +227,7 @@ const StudentProfileContainer = React.createClass({
 
   componentWillReceiveProps(newProps) {
 
-      //=======================submit & execute below=====================//
-      //TODO: Success for first time submit, need to redirect to job search
-      //
-      //Check user if it is a
-     let error = newProps.error;
-     let submitSuccess = newProps.submitSuccess;
-     
-     if(submitSuccess) {
-    	this.refs.container.success(
-    		"Nice stuff!",
-    		"Profile succesfully updated", {
-    		   timeout: 3000
-    		});
-     }
-    
-     if(error) {
-    	this.refs.container.error(
-    		error,
-    		"Something went kaboom!", {
-    		   timeout: 3000
-    		});
-     }
+
   },
 
   /*
@@ -202,6 +243,32 @@ const StudentProfileContainer = React.createClass({
 
   componentWillMount() {
 	    this.doRedirectionFilter()
+
+      /*
+       * If the profile is not completed, we can show a toastr.
+       * If the profile IS completed, we just advance.
+       */
+
+      .then(({isProfileCompleted}) => {
+        return new Promise((resolve, reject) => {
+          
+          if (isProfileCompleted == 0) {
+            this.refs.container.info(
+              "Thanks!",
+              "Before you can move on, we need you to finish your profile.", {
+                timeout: 3000
+              });
+
+            resolve()
+          }
+
+          else {
+            console.log("profile complete, continue")
+            resolve()
+          }
+
+        })
+      })
       .then(this.retrieveAllLists())
 	    .then(this.finallyDisableOverlay)
 

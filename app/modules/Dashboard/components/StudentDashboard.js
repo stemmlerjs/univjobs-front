@@ -13,8 +13,8 @@ import React, { PropTypes } from 'react'
 import { StudentCard } from 'modules/Dashboard'
 import { JobCardModal } from 'modules/Dashboard'
 import { Combobox } from 'react-widgets'
-import { GenericCard, DASHBOARD_CARD_TYPE, Title, JobCard } from 'modules/SharedComponents'
-import { flexibleCardContainer } from 'sharedStyles/cardContainer.css'
+import { GenericCard, DASHBOARD_CARD_TYPE, Title, JobCard, LoadingCards } from 'modules/SharedComponents'
+import { flexibleCardContainer, ghostFlexibleCardContainer } from 'sharedStyles/cardContainer.css'
 
 import { filtersContainer, filterJobTypeContainer, filterTitle, filterJobTypeColumnContainer, filterJobTypeColumn, 
     filterKeywordAndCityContainer, filterKeyWordContainer, filterButtonsContainer, searchButton, cancelButton, 
@@ -50,7 +50,7 @@ const defaultFilterConfig = {
 //**NOTE:
 //  Store is accessible
 export default function StudentDashboard ({
-    jobs, 
+    jobs, isFetchingJobs,
     modal, jobTypes, industriesList, industries,
     answerOne, answerTwo, page, pin, filterConfig, filterMenuOpen,
     handleToggleFilterMenu,
@@ -211,6 +211,16 @@ export default function StudentDashboard ({
                 
                 <div className={flexibleCardContainer}>
   	                { 
+
+                      isFetchingJobs 
+                        ? (<div className={ghostFlexibleCardContainer}>
+                            <LoadingCards/>
+                            <LoadingCards/>
+                            <LoadingCards/>
+                          </div>
+                          )
+                        : 
+
                       /*
                        * [Mandatory] filter.
                        * All jobs are to pass through this filter.
@@ -279,12 +289,12 @@ export default function StudentDashboard ({
                       * 'No more jobs yet' because there are actually no new jobs for them.
                       */
 
-                      (JSON.stringify(defaultFilterConfig) === JSON.stringify(filterConfig) &&
+                      (JSON.stringify(defaultFilterConfig) === JSON.stringify(filterConfig) && !isFetchingJobs &&
                       jobs.filter((job) => {
                           return job.applied == 0 && job.active == 1
                       }).length == 0)
                         ? <h2>No more jobs yet! Check back soon.</h2>
-                        : (
+                        : !isFetchingJobs && (
                           
                      /*
                       * Otherwise, if the filter IS being used and we don't render any jobs, 

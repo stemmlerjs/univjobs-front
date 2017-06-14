@@ -185,9 +185,7 @@ export default function EmployerDashboard ({students, lists, industriesList, pro
                     studentObj={student}
                     lists={lists}
                   />
-              )) : [1,2,3,4,5].map((num) => (
-                <LoadingCard key={num} />
-              ))
+              )) : ''
 
             }
           

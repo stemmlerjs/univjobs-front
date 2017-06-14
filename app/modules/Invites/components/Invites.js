@@ -10,8 +10,8 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import ReactTooltip from 'react-tooltip'
 
 import { StudentCard } from 'modules/Dashboard'
-import { Title, JobCard } from 'modules/SharedComponents'
-import { flexibleCardContainer } from 'sharedStyles/cardContainer.css'
+import { Title, JobCard, LoadingCards } from 'modules/SharedComponents'
+import { flexibleCardContainer, ghostFlexibleCardContainer } from 'sharedStyles/cardContainer.css'
 
 import config from 'config'
 import moment from 'moment'
@@ -25,6 +25,7 @@ import { buttonContainers } from 'sharedStyles/widgets.css'
 import { overflowFix } from 'sharedStyles/sharedComponentStyles.css'
 
 export default function Invites ({jobs,
+    isFetchingJobs,
     industries,
     handlePinJob,
     handleCardClick,
@@ -40,7 +41,22 @@ export default function Invites ({jobs,
         />
 
         <div className={flexibleCardContainer}>
-            { jobs.length > 0 ? jobs.filter((job) => {
+            { 
+                
+                /*
+                 * If we're fetching jobs, then show the loading cards
+                 */
+
+                isFetchingJobs 
+                    ? (<div className={ghostFlexibleCardContainer}>
+                        <LoadingCards/>
+                        <LoadingCards/>
+                        <LoadingCards/>
+                        </div>
+                        )
+                    : 
+
+                jobs.length > 0 ? jobs.filter((job) => {
                     return (job.invited == 1 && job.applied == 0)
                 })
                 .map((job) => (
@@ -86,7 +102,7 @@ export default function Invites ({jobs,
             )) : '' }
 
             {
-              jobs.filter((job) => {
+              !isFetchingJobs && jobs.filter((job) => {
                     return (job.invited == 1 && job.applied == 0)
                 }).length == 0
                 ? <h2>You haven't been invited to any jobs yet.</h2>

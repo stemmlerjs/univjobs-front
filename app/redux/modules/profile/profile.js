@@ -151,7 +151,7 @@ export function handleGetUserProfile(dispatch) {
 * @param user (Object) - data to PUT
 *
 */
-export function submitProfileFirstTime(userTypeInt, profileInfo, user) {
+export function submitProfileFirstTime(userTypeInt, profileInfo, user, successCallback, failureCallback) {
   return function (dispatch) {
 	console.log(userTypeInt, profileInfo, user)
     dispatch(savingProfileInfo())
@@ -208,13 +208,17 @@ export function submitProfileFirstTime(userTypeInt, profileInfo, user) {
     	     .then((res) => {
     		// DISPATCH - SAVE_PROFILE_SUCCESS
     	        dispatch(savedProfileSuccess())
+
+              successCallback()
     	     })
     	     .catch((err) => {
     	       // DISPATCH - SAVE_PROFILE_ERROR
     	        dispatch(savedProfileFailure({}, [
-    			'HTTP Error Occurred',
-    			err
-    		], true))
+                'HTTP Error Occurred',
+                err
+              ], true))
+
+              failureCallback('Some error occurred trying to update!')
     	     })
     	    }
     	  })
@@ -270,13 +274,17 @@ export function submitProfileFirstTime(userTypeInt, profileInfo, user) {
 
                 // DISPATCH - SAVED_PROFILE_SUCCESS
                 dispatch(savedProfileSuccess())
+
+                successCallback()
               })
               .catch((err) => {
                 // DISPATCH - SAVED_PROFILE_ERROR
                 dispatch(savedProfileFailure({}, [
-                  'HTTP Error Occurred.\n',
-                  err.message
-              ], false))
+                    'HTTP Error Occurred.\n',
+                    err.message
+                ], false))
+
+                failureCallback('Some error occurred trying to update!')
 
               })
           }
@@ -288,7 +296,7 @@ export function submitProfileFirstTime(userTypeInt, profileInfo, user) {
   }
 }
 
-export function updateProfile(userTypeInt, profileInfo, user, snapshot) {
+export function updateProfile(userTypeInt, profileInfo, user, snapshot, successCallback, failureCallback) {
   return function (dispatch) {
     switch(userTypeInt) {
 
@@ -357,6 +365,8 @@ export function updateProfile(userTypeInt, profileInfo, user, snapshot) {
 
                   // DISPATCH - SAVE_PROFILE_SUCCESS
                   dispatch(savedProfileSuccess())
+
+                  successCallback()
                 })
                 .catch((err) => {
 
@@ -365,6 +375,8 @@ export function updateProfile(userTypeInt, profileInfo, user, snapshot) {
                      'HTTP Error Occurred',
                      err
                   ], false))
+
+                  failureCallback('Some error occurred trying to update!')
                 })
              })
             }

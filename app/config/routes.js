@@ -4,7 +4,7 @@ import { ApplicationsContainer, CategoriesContainer, CreateJobContainer, Contact
          EmployerProfileContainer, EmployerDashboardContainer, InitialOverlay,
         SignupContainer, StudentDashboardContainer, StudentProfileContainer,
         AboutPageContainer, PinJobsContainer, MyListingsContainer,
-        ApplicantsContainer, PasswordResetContainer } from 'modules'
+        ApplicantsContainer, PasswordResetContainer, PageNotFoundContainer } from 'modules'
 import { checkIfAuthed } from 'helpers/auth'
 
 // Purpose of IndexRoute - if none of the routes match, we go here
@@ -30,6 +30,7 @@ export default function getRoutes() {
           <Route path='/mylistings/em' component={MyListingsContainer} />
           <Route path='contact-us' component={ContactPageContainer} />
           <Route path='about-us' component={AboutPageContainer} />
+          <Route path='*' component={PageNotFoundContainer} />
         </Route>
     </Router>
   )
@@ -69,6 +70,7 @@ export default function getRoutes() {
   */
 
 export function authRedirectFilter({successRedirect, failureRedirect, restricted, profileIncompleteRedirect}, store, router) {
+  console.log("Success redirect", successRedirect)
 
   /*
   * isUserInRestrictedRoute()
@@ -110,8 +112,8 @@ export function authRedirectFilter({successRedirect, failureRedirect, restricted
   * @see {restricted}
   */
 
-  function profileIncompleteRedirectCheck(isProfileCompleted, profileIncompleteRedirect, isAStudent,cb) {
-    if((profileIncompleteRedirect === true) && (isProfileCompleted === false)) {
+  function profileIncompleteRedirectCheck(isProfileCompleted, profileIncompleteRedirect, isAStudent, cb) {
+    if((profileIncompleteRedirect === true) && (isProfileCompleted === 0)) {
       if(isAStudent) {
         router.replace('/profile/st')
         cb(false)
@@ -131,7 +133,7 @@ export function authRedirectFilter({successRedirect, failureRedirect, restricted
 
     checkIfAuthed(store)
     .then(() => {
-
+    
       // After authentication, we know if the user is a student or an employer
       isAStudent = store.getState().user.isAStudent
       isUserInRestrictedRoute(isAStudent, (inRestrictedRoute, immediateRedirectTo) => {
@@ -139,60 +141,157 @@ export function authRedirectFilter({successRedirect, failureRedirect, restricted
         if(inRestrictedRoute) {
           router.replace(immediateRedirectTo)
           resolve()
-        } else {
+        } 
+        
+        else {
           isProfileCompleted = store.getState().user.isProfileCompleted
 
-          // Now, we want to redirect the user back to /profile IF their profile is not complete and we have configured
-          // this to happen for the route in question.
+          /*
+            * If the profile wasn't completed and we're on a different page from the profile, just redirect to the profile page for 
+            * either a student or an employer
+            */
 
-          profileIncompleteRedirectCheck(isProfileCompleted, profileIncompleteRedirect, isAStudent, (result) => {
-            if(!result) {
-              console.log("AUTH: Successful auth!")
-              if(successRedirect && !inRestrictedRoute) {
-                if(successRedirect.student && isAStudent) {
-                  console.log(`AUTH: 'Student' redirect provided. GOTO: ${successRedirect.student}`)
-                  router.replace(successRedirect.student)
-                } else if (successRedirect.employer && !isAStudent){
-                  console.log(`AUTH: 'Employer' redirect provided. GOTO: ${successRedirect.employer}`)
-                  router.replace(successRedirect.employer)
+            if (isProfileCompleted === 0 && isAStudent && window.location.href.indexOf('profile') === -1) {
+              router.replace('/profile/st')
+              resolve()
+            }
+
+            else if (isProfileCompleted === 0 && !isAStudent && window.location.href.indexOf('profile') === -1) {
+              router.replace('/profile/em')
+              resolve()
+            }
+
+            /*
+             * If we're on the profile page after being redirected there.
+             */
+
+            else if (isProfileCompleted === 0 && window.location.href.indexOf('profile') !== 1) {
+              resolve({isProfileCompleted})
+            }
+
+            else {
+
+              /*
+              * If the user's profile is not complete and it should be, redirect them to
+              * where they really should be. Auth, however; was successful.
+              */
+
+              if(isProfileCompleted === 0) {
+
+                console.log("AUTH: Successful auth but profile not complete!")
+
+                /*
+                * If the user is NOT in a restricted route and we've set where they need to redirect
+                * themselves to after successful auth. Like going to the /join page and already being logged in.
+                */
+
+                if(successRedirect && !inRestrictedRoute) {
+
+                  /*
+                  * If you're a student and we've set the success redirect config
+                  */
+
+                  if(successRedirect.student && isAStudent) {
+                    console.log(`AUTH: 'Student' redirect provided. GOTO: ${successRedirect.student}`)
+                    router.replace(successRedirect.student)
+
+                    resolve({
+                      isProfileCompleted
+                    })
+                  } 
+
+                  /*
+                  * If you're an employer and we've set the success redirect config
+                  */
+                  
+                  else if (successRedirect.employer && !isAStudent){
+                    console.log(`AUTH: 'Employer' redirect provided. GOTO: ${successRedirect.employer}`)
+                    router.replace(successRedirect.employer)
+
+                    resolve({
+                      isProfileCompleted
+                    })
+                  }
+
+                  /*
+                  * If we forgot to set the config, do nothing. Stay at the /join page or whatever.
+                  */
+
+                  else {
+
+                    resolve()
+
+                  }
+
+                }
+
+                /*
+                * If successRedirect wasn't set at all OR you're in a restricted route, we gotta take you home.
+                */
+
+                else {
+
+                  router.replace('/join')
+
+                  reject();
+
                 }
               }
+
+             /*
+              * The user's profile is complete. Let them continue doing what they were doing.
+              */
+
+              else {
+
+                /*
+                 * If you're on the login page and you're authenticated + profile is complete,
+                 * go to dashboard.
+                 */
+
+                if (window.location.href.indexOf('join') !== -1) {
+                  if (isAStudent) {
+                    router.replace('/dashboard/st')
+                    resolve()
+                  }
+
+                  else {
+                    router.replace('/dashboard/st')
+                    resolve()
+                  }
+                }
+
+                /*
+                 * Just go ahead and do what you were doing if you're not on the 
+                 * /join login page.
+                 */
+
+                else {
+                  resolve({
+                    isProfileCompleted
+                  })
+                }
+
+                
+
+              }
+
             }
-          })
+
+           
+
+
+
         }
       })
 
 
-      resolve()
+      
     })
     .catch((err) => {
       // User is not authenticated, therefore redirect them to login:
       router.replace('/join')
 
-      // debugger;
-      // // After authentication, we know if the user is a student or an employer
-      // isAStudent = store.getState().user.isAStudent
-      // inRestrictedRoute = isUserInRestrictedRoute(isAStudent)
-      // isProfileCompleted = store.getState().user.isProfileCompleted
-
-      // // Now, we want to redirect the user back to /profile IF their profile is not complete and we have configured
-      // // this to happen for the route in question.
-
-      // profileIncompleteRedirectCheck(isProfileCompleted, profileIncompleteRedirect, isAStudent, (result) => {
-      //   if(!result) {
-      //     if(failureRedirect) {
-      //       if(failureRedirect.student && isAStudent) {
-      //         console.log(`AUTH: Failed 'Student' auth redirect provided. GOTO: ${failureRedirect.student}`)
-      //         router.replace(failureRedirect.student)
-      //       } else if (failureRedirect.employer && !isAStudent){
-      //         console.log(`AUTH: Failed 'Employer' auth redirect provided. GOTO: ${failureRedirect.employer}`)
-      //         router.replace(failureRedirect.employer)
-      //       }
-      //     } else {
-      //       console.log(`AUTH: Failed auth, no redirect provided.`)
-      //     }
-      //   }
-      // })
       resolve();
     })
   })

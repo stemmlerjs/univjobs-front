@@ -326,7 +326,6 @@ const EmployerDashboardContainer = React.createClass({
   },
 
   render () {
-    this.finallyDisableOverlay()
     return (
       <div className={pageContainer}>
         <SidebarContainer isAStudent={false} profilePicture={config.mediaUrl + this.props.profile.logoUrl}/>

@@ -116,22 +116,6 @@ const EmployerProfileContainer = React.createClass({
   componentWillReceiveProps(newProps) {
     let error = newProps.error;
     let submitSuccess = newProps.submitSuccess;
-
-    if(submitSuccess) {
-      this.refs.container.success(
-        "Woohoo :)",
-        "Profile successfully updated!", {
-        timeOut: 3000
-      });
-    }
-
-    if(error) {
-      this.refs.container.error(
-        error,
-        "Something went wrong while trying to submit", {
-        timeOut: 3000
-      });
-    }
   },
 
   /*
@@ -146,8 +130,35 @@ const EmployerProfileContainer = React.createClass({
 
   componentWillMount() {
     /*  On page load, we will first get all the required lists for the screen */
-    this.retrieveAllLists()
-      .then(this.doRedirectionFilter)
+    
+      this.doRedirectionFilter()
+
+      /*
+       * If the profile is not completed, we can show a toastr.
+       * If the profile IS completed, we just advance.
+       */
+
+      .then(({isProfileCompleted}) => {
+        return new Promise((resolve, reject) => {
+          
+          if (isProfileCompleted == 0) {
+            this.refs.container.info(
+              "Thanks!",
+              "Before you can move on, we need you to finish your profile.", {
+                timeout: 3000
+              });
+
+            resolve()
+          }
+
+          else {
+            console.log("profile complete, continue")
+            resolve()
+          }
+
+        })
+      })
+      .then(this.retrieveAllLists)
       .then(this.finallyDisableOverlay)
       .catch((err) => {
         console.log("[componentWillMount]: Employer Profile - Error occurred", err)
@@ -158,12 +169,68 @@ const EmployerProfileContainer = React.createClass({
     // If Profile is NOT completed, do /PUT. All fields must be populated and valid.
     if(!this.props.isProfileCompleted) {
       this.context.store.dispatch(
-        profileActionCreators.submitProfileFirstTime(1, empProps, this.props.user)
+        profileActionCreators.submitProfileFirstTime(1, empProps, this.props.user,
+        
+        /*
+         * Success Callback
+         */
+
+        () => {
+          this.refs.container.success(
+            "Woohoo :)",
+            "Profile successfully updated!", {
+            timeOut: 3000
+          });
+
+          this.context.store.dispatch(userActionCreators.setProfileCompleted())
+        },
+
+        /*
+         * Failure Callback
+         */
+        
+        (error) => {
+
+          this.refs.container.error(
+            error,
+            "Something went wrong while trying to submit", {
+            timeOut: 3000
+          });
+
+        })
       )
     } else {
       // If Profile is completed already, do /PATCH. All fields must be populated and valid.
       this.context.store.dispatch(
-        profileActionCreators.updateProfile(1, empProps, this.props.user, this.props.snapshot)
+        profileActionCreators.updateProfile(1, empProps, this.props.user, this.props.snapshot,
+        
+        /*
+         * Success Callback
+         */
+
+        () => {
+
+          this.refs.container.success(
+            "Woohoo :)",
+            "Profile successfully updated!", {
+            timeOut: 3000
+          });
+
+        },
+
+        /*
+         * Failure Callback
+         */
+        
+        (error) => {
+
+          this.refs.container.error(
+            error,
+            "Something went wrong while trying to submit", {
+            timeOut: 3000
+          });
+
+        })
       )
       console.log("Profile already completed, lets patch this")
     }

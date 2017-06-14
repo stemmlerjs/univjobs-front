@@ -44,9 +44,12 @@
     animation-timing-function: linear;
     background: #f6f7f8;
     background: linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
-    background-size: 800px 104px;
-    height: 96px;
+    background-size: 741px 59px;
+    height: 290px;
     position: relative;
+    margin-top: 15px;
+    margin-left: 8px;
+    margin-right: 9px;
 } 
 
 .backgroundMasker {
@@ -54,16 +57,125 @@
     position: absolute;
 } 
 
-.headerTop,
+.headerTop {
+    top: 0;
+    left: 40px;
+    right: 0;
+    height: 27px;
+}
+
+.headerTopHelp {
+    top: 11px;
+    left: 0px;
+    right: 0;
+    height: 16px;
+    width: 41px;
+}
+
+.leftSide {
+        height: 265px;
+    width: 10px;
+    position: relative;
+    top: 27px;
+}
+
+.picHorizontal {
+        width: 250px;
+    height: 25px;
+    position: relative;
+    top: -238px;
+    left: 73px;
+}
+
+.picHorizontalUnder {
+    width: 250px;
+    height: 25px;
+    position: relative;
+    top: -228px;
+    left: 73px;
+}
+
+.picCutthrough {
+    width: 14px;
+    height: 25px;
+    position: relative;
+    top: -268px;
+    left: 73px;
+}
+
+.besideCompany {
+    width: 169px;
+    height: 25px;
+    position: relative;
+    top: -297px;
+    left: 167px;
+}
+
+.underPicture {
+    width: 314px;
+    height: 12px;
+    position: relative;
+    top: -279px;
+    left: 10px;
+}
+
+.besideTitle {
+    width: 159px;
+    height: 38px;
+    position: relative;
+    top: -279px;
+    left: 167px;
+}
+
+.underTitle {
+    width: 314px;
+    height: 6px;
+    position: relative;
+    top: -297px;
+    left: 10px;
+}
+
+.thingsBeside {
+    width: 208px;
+    height: 33px;
+    position: relative;
+    top: -297px;
+    left: 115px;
+}
+
+.companySide {
+    width: 208px;
+    height: 7px;
+    position: relative;
+    top: -317px;
+    left: 10px;
+}
+
+.thiccpart {
+     width: 315px;
+    height: 16px;
+    position: relative;
+    top: -306px;
+    left: 10px;
+}
+
 .headerBottom,
 .subheaderBottom {
     top: 0;
     left: 40px;
     right: 0;
-    height: 10px;
+    height: 21px;
 } 
 
-.headerLeft,
+.headerLeft {
+        top: 10px;
+    left: 0px;
+    height: 15px;
+    width: 46px;
+}
+
+
+
 .headerRight,
 .subheaderLeft,
 .subheaderRight  {

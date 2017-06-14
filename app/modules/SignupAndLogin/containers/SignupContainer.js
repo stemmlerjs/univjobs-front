@@ -226,6 +226,7 @@ const SignupContainer = React.createClass({
       failureRedirect: null,
       restricted: null
     }
+
     authRedirectFilter(config, this.context.store, this.context.router)
       .then(() => {
         if(this.context.store.getState().rootApplication.isOverlayActive)
