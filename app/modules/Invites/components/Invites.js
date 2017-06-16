@@ -16,6 +16,8 @@ import { flexibleCardContainer, ghostFlexibleCardContainer } from 'sharedStyles/
 import config from 'config'
 import moment from 'moment'
 
+import { getGoogleMapsLink } from 'helpers/dashboard'
+
 // ================CSS IMPORTS============================== //
 /*NOTE: styles/StudentDashboard.css can be reused */
 import { rootComponentContainer, margins, title } from 'sharedStyles/sharedComponentStyles.css'
@@ -27,6 +29,7 @@ import { overflowFix } from 'sharedStyles/sharedComponentStyles.css'
 export default function Invites ({jobs,
     isFetchingJobs,
     industries,
+    schoolAddress,
     handlePinJob,
     handleCardClick,
     handleOpenEmployerProfileModal
@@ -98,6 +101,10 @@ export default function Invites ({jobs,
                         officeCity={job.office_city}
                         pinned={job.pinned}
                         handleOpenEmployerProfileModal={handleOpenEmployerProfileModal}
+                        location={job.location}
+                        remoteWork={job.remote_work}
+                        paid={job.paid}
+                        mapsLink={getGoogleMapsLink(schoolAddress, job.location)}
                     />
             )) : '' }
 

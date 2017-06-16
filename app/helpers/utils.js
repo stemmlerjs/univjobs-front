@@ -172,18 +172,24 @@ export function hasCarBoolean(input) {
 }
 
 export function validateResponsibilities (responsibilities) {
-  let re = /^[a-z0-9 ,$()+=?%&*/;:.'-]{2,5500}$/i // numbers, letters and spaces only
-  return re.test(responsibilities)
+  if (responsibilities === "") return false
+  return true
+  // let re = /^[a-z0-9 ,$()+=?%&*/;:.'-]{2,5500}$/i // numbers, letters and spaces only
+  // return re.test(responsibilities)
 }
 
 export function validateQualifications (qualifications) {
-  let re = /^[a-z0-9 ,$()+=?%&*/;:.'-]{2,1400}$/i // numbers, letters and spaces only
-  return re.test(qualifications)
+  if (qualifications === "") return false
+  return true
+  // let re = /^[a-z0-9 ,$()+=?%&*/;:.'-]{2,1400}$/i // numbers, letters and spaces only
+  // return re.test(qualifications)
 } 
 
 export function validateDesiredSkills (skills) {
-  let re = /^[a-z0-9 ,$()+=?%&*/;:.'-]{2,100}$/i // numbers, letters and spaces only
-  return re.test(skills)
+  if (skills === "") return false
+  return true
+  // let re = /^[a-z0-9 ,$()+=?%&*/;:.'-]{2,100}$/i // numbers, letters and spaces only
+  // return re.test(skills)
 }
 
 export function validateJobLocation (location) {

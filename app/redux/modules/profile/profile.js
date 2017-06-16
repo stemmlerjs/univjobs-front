@@ -742,6 +742,9 @@ function studentProfile(state = initialStudentProfileState, action) {
               languagesToggle: action.profileInfo.tags ? action.profileInfo.tags.languages.length > 0 : false,
               gpaToggle: action.profileInfo.gpa === 0 ,
               emailToggle: action.profileInfo.personal_email !== null,
+
+              // Additional school details
+              schoolAddress: action.profileInfo.school_address + ', ' + action.profileInfo.school_city + ' ' + action.profileInfo.school_postal_code
           }
     default:
       return state

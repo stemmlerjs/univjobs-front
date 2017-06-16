@@ -5,16 +5,17 @@ import React, { PropTypes } from 'react'
 import { Combobox, DropdownList, DateTimePicker, Calendar} from 'react-widgets'
 
 // ================CSS IMPORTS============================== //
-import { pageContainerAlt, input, textarea, 
+import { pageContainerAlt, input, textarea, pageContainer,
         saveBtnList, saveBtn, saveBtnContainer, 
         selectedSaveBtn, inlineDate, navSaveBtn, 
         navBackBtn, error, leftDivider, 
         rightDivider, sectionHeader, sectionBody, 
         italics, specialInput } from '../styles/CreateJobFormPageStyles.css'
+import { rootComponentContainer } from 'sharedStyles/sharedComponentStyles.css'
 
 export default function CreateJobFormPage3 (props) {
   return (
-    <div>
+    <div className={pageContainer}>
       <div className={pageContainerAlt}>
 
         {/* LEFTSIDE */}

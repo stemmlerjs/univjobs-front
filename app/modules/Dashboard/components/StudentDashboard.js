@@ -24,6 +24,8 @@ import { filtersContainer, filterJobTypeContainer, filterTitle, filterJobTypeCol
 import config from 'config'
 import moment from 'moment'
 
+import { getGoogleMapsLink } from 'helpers/dashboard'
+
 // ==============THIRD PARTY IMPORTS========================= //
 import { SkyLightStateless } from 'react-skylight'
 
@@ -52,7 +54,7 @@ const defaultFilterConfig = {
 export default function StudentDashboard ({
     jobs, isFetchingJobs,
     modal, jobTypes, industriesList, industries,
-    answerOne, answerTwo, page, pin, filterConfig, filterMenuOpen,
+    answerOne, answerTwo, page, pin, filterConfig, filterMenuOpen, schoolAddress,
     handleToggleFilterMenu,
     handleCardClick, 
     handleOpenEmployerProfileModal,
@@ -261,7 +263,7 @@ export default function StudentDashboard ({
                                     ''
                                   }
                           paid={job.paid}
-                          startDate={moment(job.start_date).format('MM/DD/YYYY')}
+                          startDate={moment(job.start_date).format('MMMM Do, YYYY')}
                           responsibilities={job.responsibilities}
                           qualification={job.qualification}
                           address={job.address}
@@ -279,6 +281,10 @@ export default function StudentDashboard ({
                           pinned={job.pinned}
                           page={page}
                           handleOpenEmployerProfileModal={handleOpenEmployerProfileModal}
+                          location={job.location}
+                          remoteWork={job.remote_work}
+                          paid={job.paid}
+                          mapsLink={getGoogleMapsLink(schoolAddress, job.location)}
                         />
   	                )) : '' }
 

@@ -145,7 +145,9 @@ export function createNewJob(props, jobType, successCallback, failureCallback) {
        props.page2.question2,
        Number(props.page3.maxApplicants),
        1, // active (?)
-       props.user.emailVerified ? 1 : 0
+       0, // verified
+       props.page1.remoteWork ? 1 : 0,
+       props.page1.desiredSkills
     )
     .then((res) => {
       console.log(res)

@@ -1,10 +1,13 @@
 .pageContainer {
-  display: flex;
-  flex-direction: column;
-  margin: auto;
-  margin-top: 4%;
-  margin-bottom: 3%;
-  margin-left: 20%;
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    /* left: 20%; */
+    right: 0px;
+    /* margin-top: 15%; */
+    /* margin: 0 auto; */
+    left: 87px;
+    padding-top: 15%;
 }
 
 .pageContainerAlt {
@@ -134,11 +137,11 @@
   background-color: white;
   font-size: 14px;
   text-align: left;
+  margin: 0 auto;
 }
 
 .leftDivider {
   width: 60%;
-  margin-left: 10%
 }
 
 .rightDivider {
@@ -258,4 +261,24 @@
 
 .table {
   width:100%;
+}
+
+
+
+@media only screen and (min-width: 1225px) {
+  .reallyTrickyPageContainerContainer {
+      margin: 0 auto;
+      /* text-align: center; */
+      width: 65%;
+      padding-bottom: 50px;
+  }
+}
+
+@media only screen and (max-width: 1224px) {
+  .reallyTrickyPageContainerContainer {
+      margin: 0 auto;
+      /* text-align: center; */
+      width: 80%;
+      padding-bottom: 50px;
+  }
 }

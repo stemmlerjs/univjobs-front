@@ -8,10 +8,11 @@ import { FormField } from 'modules/CreateJob'
 import { Combobox, DropdownList, DateTimePicker, Calendar} from 'react-widgets'
 
 // ================CSS IMPORTS============================== //
+import { rootComponentContainer } from 'sharedStyles/sharedComponentStyles.css'
 import { pageContainer, input, textArea, 
         saveBtnList, saveBtn, saveBtnContainer, 
         selectedSaveBtn, inlineDate, navSaveBtn, 
-        navBackBtn, error } from '../styles/CreateJobFormPageStyles.css'
+        navBackBtn, error, reallyTrickyPageContainerContainer } from '../styles/CreateJobFormPageStyles.css'
 
 
 export default function CreateJobFormPage1 (props) {
@@ -38,6 +39,8 @@ export default function CreateJobFormPage1 (props) {
 
   return (
     <div className={pageContainer}>
+
+      <div className={reallyTrickyPageContainerContainer}>
       
       {/* JOB TITLE */}
       <FormField title="Job title">
@@ -164,6 +167,8 @@ export default function CreateJobFormPage1 (props) {
       <div className={saveBtnContainer}>
           <button onClick={(e) => props.back(props)} className={saveBtn + " " + navBackBtn}>Back</button>
           <button onClick={(e) => props.next(props)} className={saveBtn + " " + navSaveBtn}>Next</button>
+      </div>
+
       </div>
 
     </div>

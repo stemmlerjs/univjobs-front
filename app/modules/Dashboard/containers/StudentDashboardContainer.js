@@ -12,6 +12,8 @@ import { JobCardModal, CompanyInfoSideBar } from 'modules/SharedComponents'
 
 import config from 'config'
 
+import { getGoogleMapsLink } from 'helpers/dashboard'
+
 // ==============THIRD PARTY IMPORTS========================= //
 import SkyLight from 'react-skylight'
 
@@ -25,6 +27,7 @@ import jobAppModal from 'redux/modules/dashboard/jobAppModal'
 import employerProfileModal from 'redux/modules/dashboard/employerProfileModal'
 import * as list from 'helpers/lists'
 import * as fetch from 'helpers/dashboard'
+
 import { authRedirectFilter } from 'config/routes'
 
 // ==================MESSAGES============================== //
@@ -736,6 +739,7 @@ const StudentDashboardContainer = React.createClass({
                     }}
                     filterMenuOpen={this.props.filterMenuOpen}
                     handleOpenEmployerProfileModal={this.props.employerProfileModalOpened}
+                    schoolAddress={this.props.profile ? this.props.profile.schoolAddress : ''}
                   />
                 : ''
             }
@@ -752,6 +756,7 @@ const StudentDashboardContainer = React.createClass({
                     refreshJobs={this.props.getAllJobsStudentJobView}
                     page={this.props.route.page}
                     handleOpenEmployerProfileModal={this.props.employerProfileModalOpened}
+                    schoolAddress={this.props.profile ? this.props.profile.schoolAddress : ''}
                   />
                 : ''
             }
@@ -769,6 +774,7 @@ const StudentDashboardContainer = React.createClass({
                     refreshJobs={this.props.getAllJobsStudentJobView}
                     page={this.props.route.page}
                     handleOpenEmployerProfileModal={this.props.employerProfileModalOpened}
+                    schoolAddress={this.props.profile ? this.props.profile.schoolAddress : ''}
                   />
                 : ''
             }
@@ -785,6 +791,7 @@ const StudentDashboardContainer = React.createClass({
                     refreshJobs={this.props.getAllJobsStudentJobView}
                     page={this.props.route.page}
                     handleOpenEmployerProfileModal={this.props.employerProfileModalOpened}
+                    schoolAddress={this.props.profile ? this.props.profile.schoolAddress : ''}
                   />
                 : ''
             }
@@ -820,6 +827,9 @@ const StudentDashboardContainer = React.createClass({
                           updateAnswerText={this.handleUpdateAnswerText}
                           industries={this.props.industries}
                           handlePinJob={this.pinJob}
+                          handleOpenEmployerProfileModal={this.props.employerProfileModalOpened}
+                          page={this.props.route.page}
+                          mapsLink={getGoogleMapsLink(this.props.profile.schoolAddress, this.props.jobAppModal.selectedJob.location)}
                           />
                       : ''
                     }

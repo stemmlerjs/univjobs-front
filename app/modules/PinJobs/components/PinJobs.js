@@ -23,6 +23,9 @@ import { flexibleCardContainer, ghostFlexibleCardContainer } from 'sharedStyles/
 import config from 'config'
 import moment from 'moment'
 
+
+import { getGoogleMapsLink } from 'helpers/dashboard'
+
 // ================CSS IMPORTS============================== //
 /*NOTE: styles/StudentDashboard.css can be reused */
 import { rootComponentContainer, margins, title } from 'sharedStyles/sharedComponentStyles.css'
@@ -31,10 +34,12 @@ import { pinIcon, fillIcon, unFillIcon, rotateIcon } from 'sharedStyles/pinCards
 import { buttonContainers } from 'sharedStyles/widgets.css'
 import { overflowFix } from 'sharedStyles/sharedComponentStyles.css'
 
+
 export default function PinJobs ({jobs,
     isFetchingJobs,
     industries,
     page,
+    schoolAddress,
     handlePinJob,
     handleCardClick,
     handleOpenEmployerProfileModal
@@ -107,6 +112,10 @@ export default function PinJobs ({jobs,
                         pinned={job.pinned}
                         page={page}
                         handleOpenEmployerProfileModal={handleOpenEmployerProfileModal}
+                        location={job.location}
+                        remoteWork={job.remote_work}
+                        paid={job.paid}
+                        mapsLink={getGoogleMapsLink(schoolAddress, job.location)}
                     />
             )) : '' }
 

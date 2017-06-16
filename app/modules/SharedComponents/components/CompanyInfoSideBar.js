@@ -17,10 +17,12 @@ let styles = {
     boxShadow: '0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)',
   },
   bmMenuWrap: {
-    zIndex: '32'
+    zIndex: '400',
+    top: '0px'
   },
   bmOverlay: {
-    zIndex: '31'
+    zIndex: '399',
+    top: '0px'
   }
 }
 

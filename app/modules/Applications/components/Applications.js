@@ -21,6 +21,8 @@ import { flexibleCardContainer, ghostFlexibleCardContainer } from 'sharedStyles/
 import config from 'config'
 import moment from 'moment'
 
+import { getGoogleMapsLink } from 'helpers/dashboard'
+
 // ================CSS IMPORTS============================== //
 import { rootComponentContainer, margins, title } from 'sharedStyles/sharedComponentStyles.css'
 import { crossHair } from 'sharedStyles/widgets.css'
@@ -29,6 +31,7 @@ import { crossHair } from 'sharedStyles/widgets.css'
 export default function Applications ({jobs,
     industries, isFetchingJobs,
     page,
+    schoolAddress,
     handlePinJob,
     handleCardClick,
     handleRemoveJob,
@@ -104,6 +107,10 @@ export default function Applications ({jobs,
                     state={job.state}
                     page={page}
                     handleOpenEmployerProfileModal={handleOpenEmployerProfileModal}
+                    location={job.location}
+                    remoteWork={job.remote_work}
+                    paid={job.paid}
+                    mapsLink={getGoogleMapsLink(schoolAddress, job.location)}
                 />
             )) : '' }
 

@@ -1,3 +1,4 @@
+
 // ==============REACT BUILTIN========================= //
 import React, { PropTypes } from 'react'
 
@@ -6,6 +7,10 @@ import { FormField } from 'modules/CreateJob'
 
 // ==============THIRD PARTY IMPORTS========================= //
 import { Combobox, DropdownList, DateTimePicker, Calendar} from 'react-widgets'
+import { JobCard } from 'modules/SharedComponents'
+
+import moment from 'moment'
+import config from 'config'
 
 // ================CSS IMPORTS============================== //
 import { lastPageContainer, input, textarea, 
@@ -16,13 +21,13 @@ import { lastPageContainer, input, textarea,
         italics, specialInput, reminderContainer, bold, 
         detailsContainer, detailsLeft, detailsRight, 
         detailsHeaderLeft, detailsTitle, detailsBody, 
-        jobIndustry, detailsHeaderRight, marginTop, table } from '../styles/CreateJobFormPageStyles.css'
+        jobIndustry, detailsHeaderRight, marginTop, table, pageContainer } from '../styles/CreateJobFormPageStyles.css'
+
+import { rootComponentContainer } from 'sharedStyles/sharedComponentStyles.css'
 
 export default function CreateJobFormPage4 (props) {
-//  console.log("PAGE 4 Props", props)
-console.log(props)
   return (
-    <div className={lastPageContainer}>
+    <div className={pageContainer}>
 
       {/* REMINDER CONTAINER */}
       <div className={reminderContainer}>
@@ -34,41 +39,65 @@ console.log(props)
 
         <div className={detailsLeft}>
           <div className={detailsTitle}>
-            <h3>Here is how your job will look to students (Click the box to see)</h3>
+            <h3>Here is how your job will look to students</h3>
           </div>
 
-          <div className={detailsHeaderLeft}>
-            {(() => {
-              switch(props.jobType) {
-                case 'summer':
-                  return 'SUMMER 2016'
-                case 'otg':
-                  return 'ONE TIME GIG'
-                case 'winter':
-                  return 'WINTER BREAKS'
-                case 'freelance':
-                  return 'FREELANCING'
-                case 'rep':
-                  return 'CAMPUS REP AND BRAND AMBASSADOR'
-                case 'pt':
-                  return 'PART TIME WORK'
-              }
-            })()}
-          </div>
-        {/* DETAILS BODY*/}
-          <div className={detailsBody}>
-            <span className={bold}>{props.jobTitle.toUpperCase()}</span>
-            <div className={jobIndustry}>
-              <span>{props.industry}</span>
-            </div>
-            <div>
-              DATE: {props.startDate.toString()}
-            </div>
-            <br></br>
-            <div>
-              LOCATION: {props.internshipLocation}
-            </div>
-          </div>
+          {/* 
+
+            TODO: 
+              - test and make sure that remote_work is working on the back end
+              - probably change the compensation field to be smaller.
+              - make sure that the skills field is in the database and gets sent to the 
+                database.
+              - update the CreateJobFormPage4 component in CreateJobContainer and give it the props
+                that it needs to sit on this page.
+                    */}
+
+          <JobCard 
+            cardType={'employer'}
+            page={'employer'}
+            title={props.jobTitle}
+            jobType={props.jobType === 1 
+                      ? 'One Time Gig' :
+                      props.jobType === 2 
+                      ? 'Summer' :
+                      props.jobType === 3 
+                      ? 'Winter' :
+                      props.jobType === 4
+                      ? 'Freelance' :
+                      props.jobType === 5
+                      ? 'Campus Rep' :
+                      props.jobType === 6
+                      ? 'Part-time' :
+                      ''
+                    }
+            logoUrl={config.mediaUrl + props.logoUrl}
+            paid={props.paid}
+            companyName={props.companyName}
+            startDate={moment(props.startDate).format('MMMM Do, YYYY')}
+            location={props.internshipLocation}
+            responsibilities={props.responsibilities}
+            qualification={props.qualification}
+            address={props.address}
+            compensation={props.compensation}
+            createdAt={props.createdAt}
+            industry={props.industries[props.employerProfile.industry]}
+            remoteWork={props.remoteWork ? 1 : 0}
+            paid={props.paid ? 1 : 0}
+            questions={props.questions}
+            handleOpenEmployerProfileModal={props.handleOpenEmployerProfileModal}
+            handleCardClick={props.handleCardClick}
+            jobObject={{
+              description: props.employerProfile.description,
+              employee_count: props.employerProfile.employeeCount,
+              office_postal_code: props.employerProfile.officePostalCode,
+              website: props.employerProfile.website,
+              max_applicants: props.maxApplicants,
+              applicant_count: 0
+            }}
+            officeAddress={props.employerProfile.officeAddress}
+            officeCity={props.employerProfile.officeCity}
+          />
 
 
         </div>

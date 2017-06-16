@@ -4,8 +4,23 @@ import { getAccessToken, getCSRFToken } from 'helpers/auth'
 import { validateJobTitle, validateResponsibilities, 
         validateQualifications, validateDesiredSkills, validateJobLocation, validateCompensation } from 'helpers/utils'
 
-export function createNewJobPOST (job_type, title, paid, start_date, responsibilities, qualifications, compensation,
- address, city, question_one_text, question_two_text, max_applicants, active, verified) {
+export function createNewJobPOST (
+  job_type, 
+  title,
+  paid, 
+  start_date, 
+  responsibilities, 
+  qualifications, 
+  compensation,
+  address, 
+  city, 
+  question_one_text, 
+  question_two_text, 
+  max_applicants, 
+  active, 
+  verified, 
+  remoteWork,
+  desiredSkills) {
   const accessToken = getAccessToken();
   const csrfToken = getCSRFToken();
 
@@ -39,6 +54,8 @@ export function createNewJobPOST (job_type, title, paid, start_date, responsibil
       max_applicants,        // INTEGER > 1
       // active,                  // boolean?
       // verified                // boolean?
+      remote_work: remoteWork,
+      desired_skills: desiredSkills
     }
   })
 }

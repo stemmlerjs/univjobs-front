@@ -11,15 +11,16 @@ import { cardContainer, cardTopContainer, imgContainer, cardSectionMain,
         cardHeaderItemContainer, cardLocation, cardBottomContainer, cardSectionOne,
         cardSectionTwo, cardSectionTitle, cardSectionText, cardActionButtons,
         rejectedCard, activeCard, jobTypeText, cardSectionAlt, cardSectionAltItem,
-        cardSectionAltItemContainer, cardSectionAltItemGrey, paidContainer,
+        cardSectionAltItemContainer, cardSectionAltItemGrey, paidContainer, calendarIcon,
         distanceContainer, companyInfoClickContainer, companyInfo, applicantsContainer, 
-        clock, clock_0_50, clock_51_75, clock_76_100 } from '../styles/JobCard.css'
+        clock, clock_0_50, clock_51_75, clock_76_100, lastThing, moneyIcon, flexColumn,
+        googleMapsLinkStyle } from '../styles/JobCard.css'
 import { pageMainJobCards, rotateIcon, applyButton } from 'modules/SharedComponents/styles/StudentCard.css'
 
 
 export default function JobCard ({logoUrl, pinned, jobObject, jobId, title, jobType,
     industries, industry, companyName, officeAddress, officeCity, startDate,
-    compensation, cardType, state, page,
+    compensation, cardType, state, page, location, remoteWork, paid, mapsLink,
     handlePinJob, handleCardClick,
     handleRemoveJob, handleOpenEmployerProfileModal}) {
   return (
@@ -28,18 +29,26 @@ export default function JobCard ({logoUrl, pinned, jobObject, jobId, title, jobT
                             ? cardContainer + ' ' + rejectedCard 
                             : cardContainer + ' ' + activeCard
                         : cardContainer }>
-        <div className={jobTypeText}>{jobType}</div>
-        <div className={cardTopContainer}>
-            
-            <div className={imgContainer}>
-                <img src={logoUrl}></img>
-            </div>
-            <div className={companyInfoClickContainer} onClick={() => {
+        {
+           /*
+            * TOP SECTION
+            */
+        }
 
-                /*
-                 * Opening the Employer Profile Modal
-                 */
-                
+        <div className={cardTopContainer}>
+          <div className={imgContainer}>
+            <img src={logoUrl}></img>
+          </div>
+
+          <div className={cardSectionMain}>
+            <div className={cardHeaderItemMainText}>{title}</div>
+            <div>{jobType}</div>
+            <div className={cardHeaderItemSecondaryText + ' ' + companyInfo} onClick={() => {
+
+               /*
+                * Opening the Employer Profile Modal
+                */
+                  
                 let employerInfo = {
                   logoUrl: logoUrl,
                   employerName: companyName,
@@ -50,18 +59,12 @@ export default function JobCard ({logoUrl, pinned, jobObject, jobId, title, jobT
                   website: jobObject.website
                 }
 
-                handleOpenEmployerProfileModal(employerInfo)
-            }}>
-                <span className={companyInfo}>Company info</span>
-            </div>
+                  handleOpenEmployerProfileModal(employerInfo)
+                }}>{companyName}</div> 
+            <div className={cardHeaderItemAltItemText}>{industry}</div>
+          </div>
         </div>
         
-        <div className={cardSectionMain}>
-            <div className={cardHeaderItemMainText}>{title}</div>
-            <div className={cardHeaderItemSecondaryText}>{companyName}</div> 
-            <div className={cardHeaderItemAltItemText}>{officeAddress + ", " + officeCity}</div>
-        </div>
-
         {
            /*
             * Three sections
@@ -69,39 +72,40 @@ export default function JobCard ({logoUrl, pinned, jobObject, jobId, title, jobT
         }
 
         <div className={cardSectionAlt}>
-            <div className={paidContainer}>
-                <div className={cardSectionAltItem}>Paid</div>
-                <div className={cardSectionAltItemGrey}>{jobObject.paid == 0 ? 'No' : 'Yes'}</div>
+          <div className={flexColumn}>
+            <div>
+              <i className={`fa fa-calendar ${calendarIcon}`} aria-hidden="true"></i> 
+              <span>{startDate}</span>
             </div>
-            <div className={cardSectionAltItemContainer}>
-                <div className={cardSectionAltItem}>Start Date</div>
-                <div className={cardSectionAltItemGrey}>{startDate}</div>
-            </div>
-            <div className={distanceContainer}>
-                <div className={cardSectionAltItem}>School Distance</div>
-                <div className={cardSectionAltItemGrey}>25 KM</div>
-            </div>
+            <div className={lastThing}>
+              <i className={`fa fa-usd ${moneyIcon}`} aria-hidden="true"></i> 
+              <span>{paid === 0 ? 'Not paid' : 'Paid job'}</span>
+            </div> 
+          </div>
+          <div>
+            <div><i className={`fa fa-map-marker ${calendarIcon}`} aria-hidden="true"></i></div>
+            <div><span>{remoteWork === 0 
+              ? mapsLink !== undefined && mapsLink !== '' 
+                  ? <a className={googleMapsLinkStyle} target="_blank" href={mapsLink}>{location}</a>
+                  : location 
+              : 'Remote work'}</span></div>
+          </div>
         </div>
-
-        {
-           /*
-            * Applicants left section
-            */
-        }
+           
 
         <div className={applicantsContainer}>
-            <i className={`fa fa-clock-o ${clock} ${
-                ((jobObject.applicant_count / jobObject.max_applicants) * 100) >= 0 && ((jobObject.applicant_count / jobObject.max_applicants) * 100) <= 50
-                    ? clock_0_50 :
-                
-                ((jobObject.applicant_count / jobObject.max_applicants) * 100) >= 51 && ((jobObject.applicant_count / jobObject.max_applicants) * 100) <= 75
-                    ? clock_51_75 :
-                
-                 ((jobObject.applicant_count / jobObject.max_applicants) * 100) >= 76 && ((jobObject.applicant_count / jobObject.max_applicants) * 100) <= 100
-                    ? clock_76_100 :
-                ''   
-            }`} aria-hidden="true"></i>
-            {`${jobObject.max_applicants - jobObject.applicant_count} of ${jobObject.max_applicants} applicants left.`}
+          <i className={`fa fa-clock-o ${clock} ${
+              ((jobObject.applicant_count / jobObject.max_applicants) * 100) >= 0 && ((jobObject.applicant_count / jobObject.max_applicants) * 100) <= 50
+                  ? clock_0_50 :
+              
+              ((jobObject.applicant_count / jobObject.max_applicants) * 100) >= 51 && ((jobObject.applicant_count / jobObject.max_applicants) * 100) <= 75
+                  ? clock_51_75 :
+              
+                ((jobObject.applicant_count / jobObject.max_applicants) * 100) >= 76 && ((jobObject.applicant_count / jobObject.max_applicants) * 100) <= 100
+                  ? clock_76_100 :
+              ''   
+          }`} aria-hidden="true"></i>
+          {`${jobObject.max_applicants - jobObject.applicant_count} of ${jobObject.max_applicants} applicants left.`}
         </div>
         <div className={cardBottomContainer}>
           
@@ -134,10 +138,8 @@ export default function JobCard ({logoUrl, pinned, jobObject, jobId, title, jobT
             <button onClick={(e) => handleCardClick(e, jobObject)}>SEE MORE</button>
           </div>
         </div>
-             
     </div>
   )
 }
 
 
-//  <button  onClick={(e) => handleCardClick(e, jobObject)}>APPLY</button>

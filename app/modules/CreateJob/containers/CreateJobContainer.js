@@ -9,6 +9,8 @@ import CreateJobFormPage2 from '../components/CreateJobFormPage2'
 import CreateJobFormPage3 from '../components/CreateJobFormPage3'
 import CreateJobFormPage4 from '../components/CreateJobFormPage4'
 
+import { JobCardModal, CompanyInfoSideBar } from 'modules/SharedComponents'
+
 import config from 'config'
 
 // ==============THIRD PARTY IMPORTS========================= //
@@ -22,8 +24,13 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as createJobActionCreators from 'redux/modules/createjob/createjob'
 import * as listActionCreators from 'redux/modules/list/list'
+import jobAppModal from 'redux/modules/dashboard/jobAppModal'
 import { authRedirectFilter } from 'config/routes'
 import * as lists from 'helpers/lists'
+
+import employerProfileModal from 'redux/modules/dashboard/employerProfileModal'
+
+import { pageContainer, formHeader } from 'sharedStyles/sharedContainerStyles.css'
 
 // ============= MESSAGES ===============
 var ReactToastr = require("react-toastr");
@@ -76,7 +83,7 @@ const Circles = function({count, selected}) {
 
 const FormHeader = function({stepNum, totalSteps, headerText}) {
   return (
-    <div>
+    <div className={formHeader}>
       <h3>{"Steps " + stepNum + " of " + totalSteps}</h3>
       <Circles count={totalSteps} selected={stepNum} />
       <h3>{headerText}</h3>
@@ -382,6 +389,45 @@ const CreateJobContainer = React.createClass({
     }
   },
 
+  /*
+   * handleCompanyInfoSidebarStateChange
+   * 
+   * We need this function to update Redux when the modal is closed so it doesn't
+   * open up again anytime new props are loaded in and this.props.employerProfileModal.isOpen
+   * still === true.
+   */
+
+  handleCompanyInfoSidebarStateChange (state) {
+    if (!state.isOpen) {
+      this.props.employerProfileModalClosed()
+    }
+  },
+
+ /*
+  * openJobAppModal
+  *
+  * Opens the job app modal that contains all of the job
+  * details, questions and answers fields so that students 
+  * may apply to a job.
+  */
+
+  openJobAppModal(e, selectedJob) {
+    e.preventDefault()
+
+    this.props.openJobAppModal(selectedJob)
+    this.refs.jobAppModal.show()
+  },
+
+ /*
+  * closeJobAppModal
+  *
+  * Closes the job app modal.
+  */
+
+  closeJobAppModal() {
+    this.refs.jobAppModal.hide()
+  },
+
   render () {
 
     var jobType;
@@ -402,87 +448,197 @@ const CreateJobContainer = React.createClass({
       jobType = 6;
     } 
 
+    console.log(this.props)
+
     return (
-      <div className={mainContainer}>
-        <SidebarContainer isAStudent={false} profilePicture={config.mediaUrl + this.props.profile.logoUrl}/>
-        {(() => {
-          switch(this.props.currentPage) {
-            case 1:
-              return <div>
-              <FormHeader stepNum={this.props.currentPage} totalSteps={4} headerText="Enter basic job details"/>
-              <CreateJobFormPage1
-                page={this.props.page1}
-                next={this.next}
-                back={this.goBack}
-                updateFormField={this.props.updateFormField}/>
-              </div>
-            case 2:
-              return <div>
-              <FormHeader stepNum={this.props.currentPage} totalSteps={4} headerText="Have a question for the applicant? (optional)"/>
-              <CreateJobFormPage2
-                page={this.props.page2}
-                next={this.next}
-                back={this.goBack}
-                updateFormField={this.props.updateFormField}/>
-              </div>
-            case 3:
-              return <div>
-              <FormHeader stepNum={this.props.currentPage} totalSteps={4} headerText="Choose which students can view your job listings"/>
-              <CreateJobFormPage3
-                page={this.props.page3}
-                next={this.next}
-                back={this.goBack}
-                updateFormField={this.props.updateFormField}/>
-              </div>
-            case 4:
-              return <div>
-              <FormHeader stepNum={this.props.currentPage} totalSteps={4} headerText="Review your listing"/>
-              <CreateJobFormPage4
-                page={this.props.page4}
-                next={this.next}
-                back={this.goBack}
-                jobType={jobType}
-                jobTitle={this.props.page1.jobTitle}
-                industry={this.props.industryList[this.props.industry].industry}
-                startDate={this.props.page1.startDate}
-                internshipLocation={this.props.page1.internshipLocation}
-                companyName={this.props.companyName}
-                logoUrl={this.props.logoUrl}
-                maxApplicants={this.props.page3.maxApplicants}
-                updateFormField={this.props.updateFormField}/>
-              </div>
-            default:
-              return <CreateJobFormPage1
-                page={this.props.page1}
-                next={this.next}
-                back={this.goBack}
-                updateFormField={this.props.updateFormField}/>
-          }
-        })()}
+      <div>
+                {
+         /*
+          * CompanyInfoSideBar
+          *
+          * When a student clicks on Company Info on a Job Card, the Company Info
+          * sidebar component opens up.
+          */
+        }
+        <CompanyInfoSideBar 
+          onStateChange={ this.handleCompanyInfoSidebarStateChange }
+          isOpen={this.props.employerProfileModal.isOpen ? this.props.employerProfileModal.isOpen : false}
+          employerName={this.props.employerProfileModal.employerInfo ? this.props.employerProfileModal.employerInfo.employerName : null}
+          industry={this.props.employerProfileModal.employerInfo ? this.props.employerProfileModal.employerInfo.industry : null}
+          logoUrl={this.props.employerProfileModal.employerInfo ? this.props.employerProfileModal.employerInfo.logoUrl : null}
+          headquarters={this.props.employerProfileModal.employerInfo ? this.props.employerProfileModal.employerInfo.headquarters : null}
+          website={this.props.employerProfileModal.employerInfo ? this.props.employerProfileModal.employerInfo.website : null}
+          numEmployees={this.props.employerProfileModal.employerInfo ? this.props.employerProfileModal.employerInfo.numEmployees : null}
+          aboutSectionExpanded={this.props.employerProfileModal.isAboutSectionOpen ? this.props.employerProfileModal.isAboutSectionOpen : false}
+          handleToggleAboutSection={this.props.toggleAboutSection}
+          about={this.props.employerProfileModal.employerInfo ? this.props.employerProfileModal.employerInfo.about : null}/>
 
-      {/* CONFIRM DISCARD MODAL*/}
-        <SkyLight
-          hideOnOverlayClicked
-          ref="confirmDiscard"
-          title="Are you sure you want to discard this job?">
-          All changes will be lost
+        {
+         /*
+          * The rest of the page.
+          */
+        }
+        
+        <div id="page-wrap" className={pageContainer}>
+          <SidebarContainer isAStudent={false} profilePicture={config.mediaUrl + this.props.profile.logoUrl}/>
+            {(() => {
+              switch(this.props.currentPage) {
+                case 1:
+                  return <div>
+                  <FormHeader stepNum={this.props.currentPage} totalSteps={4} headerText="Enter basic job details"/>
+                  <CreateJobFormPage1
+                    page={this.props.page1}
+                    next={this.next}
+                    back={this.goBack}
+                    updateFormField={this.props.updateFormField}/>
+                  </div>
+                case 2:
+                  return <div>
+                  <FormHeader stepNum={this.props.currentPage} totalSteps={4} headerText="Have a question for the applicant? (optional)"/>
+                  <CreateJobFormPage2
+                    page={this.props.page2}
+                    next={this.next}
+                    back={this.goBack}
+                    updateFormField={this.props.updateFormField}/>
+                  </div>
+                case 3:
+                  return <div>
+                  <FormHeader stepNum={this.props.currentPage} totalSteps={4} headerText="Choose which students can view your job listings"/>
+                  <CreateJobFormPage3
+                    page={this.props.page3}
+                    next={this.next}
+                    back={this.goBack}
+                    updateFormField={this.props.updateFormField}/>
+                  </div>
+                case 4:
+                  return <div>
+                  <FormHeader stepNum={this.props.currentPage} totalSteps={4} headerText="Review your listing"/>
+                  <CreateJobFormPage4
+                    page={this.props.page4}
+                    next={this.next}
+                    back={this.goBack}
+                    jobType={jobType}
+                    jobTitle={this.props.page1.jobTitle}
+                    industry={this.props.industryList[this.props.industry].industry}
+                    industries={this.props.industriesObj ? this.props.industriesObj : {}}
+                    startDate={this.props.page1.startDate}
+                    internshipLocation={this.props.page1.internshipLocation}
+                    companyName={this.props.companyName}
+                    logoUrl={this.props.logoUrl}
+                    maxApplicants={this.props.page3.maxApplicants}
+                    updateFormField={this.props.updateFormField}
+                    
+                    responsibilities={this.props.page1 ? this.props.page1.responsibilities : ''}
+                    qualification={this.props.page1 ? this.props.page1.qualification : ''}
+                    address={this.props.page1 ? this.props.page1.internshipLocation : '' }
+                    compensation={this.props.page1 ? this.props.page1.compensation : ''}
+                    createdAt={this.props.page1 ? this.props.page1.createdAt : ''}
+                    questions={this.props.page2 ? { question1: this.props.page2.question1, question2: this.props.page2.question2 } : {}}
+                    industry={this.props.industryList[this.props.industry].industry}
+                    remoteWork={this.props.page1 ? this.props.page1.remoteWork : false}
+                    paid={this.props.page1 ? this.props.page1.isPayingJob : false}
+                    employerProfile={this.props.profile ? this.props.profile : {}}
+                    handleOpenEmployerProfileModal={this.props.employerProfileModalOpened}
+                    handleCardClick={this.openJobAppModal}
+                    
+                    />
+                  </div>
+                default:
+                  return <CreateJobFormPage1
+                    page={this.props.page1}
+                    next={this.next}
+                    back={this.goBack}
+                    updateFormField={this.props.updateFormField}/>
+              }
+            })()}
 
-          <button onClick={this.handleConfirmDiscardChanges}>I'm sure</button>
-        </SkyLight>
+          {/* CONFIRM DISCARD MODAL*/}
+            <SkyLight
+              hideOnOverlayClicked
+              ref="confirmDiscard"
+              title="Are you sure you want to discard this job?">
+              All changes will be lost
 
-      {/* ERROR MESSAGES */}
-        <ToastContainer ref="container"
-          toastMessageFactory={ToastMessageFactory}
-          className="toast-top-right" />
+              <button onClick={this.handleConfirmDiscardChanges}>I'm sure</button>
+            </SkyLight>
 
+          {/* ERROR MESSAGES */}
+            <ToastContainer ref="container"
+              toastMessageFactory={ToastMessageFactory}
+              className="toast-top-right" />
+              
+
+          {
+            /* 
+              * ========================================
+              *           jobAppModal
+              * ========================================
+              * 
+              * This is the main modal for this screen.
+              * It's purpose is to allow the student to see 
+              * the details for a job and apply to the job
+              * after filling in any answers to questions if necessary.
+              */
+            } 
+            <div id="job-app-modal-wrapper">
+              <SkyLight
+                    ref="jobAppModal"
+                    >
+
+                    { this.props.jobAppModal.selectedJob 
+                      ? <JobCardModal
+                          cardType={'createjob'}
+                          title={this.props.page1 ? this.props.page1.jobsTitle : ''}
+                          job={{
+                            applicant_count: 0,
+                            max_applicants: this.props.page3 ? this.props.page3.maxApplicants : 0,
+                            location: this.props.page1 ? this.props.page1.internshipLocation : '',
+                            start_date: this.props.page1 ? this.props.page1.startDate : '',
+                            desired_skills: this.props.page1 ? this.props.page1.desiredSkills : '',
+                            qualification: this.props.page1 ? this.props.page1.qualifications : '',
+                            responsibilities: this.props.page1 ? this.props.page1.responsibilities : '',
+                            description: this.props.profile ? this.props.profile.description : '',
+                            industry: this.props.profile ? this.props.profile.industry : '',
+                            company_name: this.props.profile ? this.props.profile.companyName : '',
+                            type: jobType,
+                            logo_url: this.props.profile ? this.props.profile.logoUrl : '',
+                            website: this.props.profile ? this.props.profile.website : '',
+                            employee_count: this.props.profile ? this.props.profile.employeeCount : 1,
+                            office_address: this.props.profile ? this.props.profile.officeAddress : '',
+                            office_city: this.props.profile ? this.props.profile.officeCity : '',
+                            office_postal_code: this.props.profile ? this.props.profile.officePostalCode : ''
+                            
+                          }}
+                          startDate={this.props.page1 ? this.props.page1.startDate : ''}
+                          logoUrl={this.props.profile ? this.props.profile.logoUrl : ''}
+                          title={this.props.page1 ? this.props.page1.jobTitle : ''}
+                          industry={this.props.profile ? this.props.profile.industry : ''}
+                          industries={this.props.industriesObj}
+                          closeJobAppModal={this.closeJobAppModal}
+                          questions={{
+                            question1: this.props.page2 ? this.props.page2.question1 : '',
+                            question2: this.props.page2 ? this.props.page2.question2 : ''
+                          }}
+                          page={this.props.route.page}
+                          handleOpenEmployerProfileModal={this.props.employerProfileModalOpened}
+                          />
+                      : ''
+                    }
+                    
+                </SkyLight>
+              </div>
+
+        </div>
       </div>
     )
   },
 })
 
-function mapStateToProps({createJob, profile, user, list}) {
+function mapStateToProps({dashboard, createJob, profile, user, list}) {
   //console.log(createJob, "NEW PROPS")
   return {
+    employerProfileModal: dashboard.employerProfileModal ? dashboard.employerProfileModal : {},
+    jobAppModal: dashboard.studentDashboard.jobAppModal ? dashboard.studentDashboard.jobAppModal : {},
     user: {
       emailVerified: user.emailVerified ? user.emailVerified : false
     },
@@ -490,6 +646,7 @@ function mapStateToProps({createJob, profile, user, list}) {
     currentPage: createJob.currentPage ? createJob.currentPage : 1,
     industry: profile.employerProfile.industry ? profile.employerProfile.industry : 0,
     industryList: list.industries ? list.industries : [],
+    industriesObj: list.industries ? list.industries : {},
     companyName: profile.employerProfile.companyName ? profile.employerProfile.companyName : '',
     logoUrl: profile.employerProfile.logoUrl ? profile.employerProfile.logoUrl : '',
     page1: {
@@ -547,6 +704,8 @@ function mapActionCreatorsToProps(dispatch) {
   return bindActionCreators({
       ...createJobActionCreators,
       ...listActionCreators,
+    ...employerProfileModal.actionCreators,
+    ...jobAppModal.actionCreators,
   }, dispatch)
 }
 

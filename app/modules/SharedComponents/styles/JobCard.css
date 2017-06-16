@@ -14,7 +14,7 @@
 }
 
 .cardTopContainer {
-    padding-top: 39px;
+    padding-top: 25px;
     display: flex;
     padding-left: 16px;
     padding-right: 16px;
@@ -25,9 +25,9 @@
 }
 
 .imgContainer > img {
-    height: 60px;
-    width: 60px;
-    border: solid 2px darkslategrey;
+    height: 100px;
+    width: 100px;
+    /* border: solid 2px darkslategrey; */
 }
 
 .cardSectionMain {
@@ -37,7 +37,6 @@
     display: flex;
     flex-direction: column;
     text-align: left;
-    margin-top: 11px;
 }
 
 .cardHeaderItemMainText {
@@ -73,10 +72,10 @@ margin-top: 9px;
 }
 
 .cardBottomContainer {
-text-align: left;
+    text-align: left;
     margin-left: 2px;
     margin-right: 2px;
-    margin-top: 19px;
+    margin-top: 44px;
 }
 
 .cardSectionOne {
@@ -161,7 +160,13 @@ text-align: left;
     margin-left: 18px;
     margin-right: 18px;
     justify-content: space-between;
-    font-size: 13px;
+   font-size: 14px;
+}
+
+.cardSectionAlt > div {
+        width: 50%;
+    text-align: left;
+        display: flex;
 }
 
 .cardSectionAltItem {
@@ -197,6 +202,7 @@ color: #808080;
 
 .companyInfo {
     cursor: pointer;
+    color: #008de0;
 }
 
 .clock {
@@ -219,6 +225,47 @@ color: #808080;
 }
 
 .applicantsContainer {
-    margin-top: 26px;
+    /* margin-top: 26px; */
     font-size: 14px;
+    text-align: left;
+    padding-left: 16px;
+}
+
+.calendarIcon {
+        font-size: 17px;
+    /* background-color: #7b7bd8; */
+    color: #1e9ae3;
+    padding-right: 10px;
+}
+
+.lastThing {
+    text-align: left;
+    /* padding-left: 17px; */
+    font-size: 14px;
+    margin-top: 31px;
+    position: relative;
+    top: -10px;
+    padding-bottom: 9px;
+}
+
+.moneyIcon {
+    padding-left: 3px;
+    padding-right: 14px;
+    font-size: 17px;
+    /* background-color: #7b7bd8; */
+    color: #1e9ae3;
+}
+
+.flexColumn {
+    flex-direction: column;
+}
+
+.googleMapsLinkStyle {
+    color: black;
+    transition: 0.4s ease-out;
+    padding-bottom: 1px;
+}
+
+.googleMapsLinkStyle:hover {
+    border-bottom: solid 1px #229fdb;
 }
