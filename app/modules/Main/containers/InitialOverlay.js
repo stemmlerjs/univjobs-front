@@ -51,6 +51,12 @@ const InitialOverlay = React.createClass({
 
   },
 
+  componentDidMount() {
+    if(window.location.href.indexOf('/#/?')) {
+      window.location.assign('/#/join')
+    }
+  },
+
   render () {
     let elem = document.querySelector('div[data-reactroot]');   
     if(elem) elem.style.height= '100%'
