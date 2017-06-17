@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Univjobs - Land Your Summer Job</title>
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,900italic,900,700italic,700' rel='stylesheet' type='text/css'>
+    <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+    <script src="https://code.jquery.com/jquery-3.0.0.min.js" integrity="sha256-JmvOoLtYsmqlsWxa7mDSLMwa6dZ9rrIdtrrVYRnDRH0=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/TweenMax.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.3/toastr.min.css">
+    <link href="http://diegoddox.github.io/react-redux-toastr/3.8/react-redux-toastr.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <style>
+      /* ========================= ANIMATIONS ========================= */
+
+      /* Page: /dashboard/st
+         ParentComponent: <StudentDashboard>
+         Component(s): <SkylightStatesless><JobCardModal>
+      */
+
+      .cardModal-appear {
+        opacity: 0.01;
+      }
+
+      .cardModal-appear.cardModal-appear-active {
+        opacity: 1;
+        transition: opacity .1s ease-in;
+      }
+
+     /*
+      * Class conditionally added to profile picture on drag over.
+      */
+
+      .profilePictureDragDrop {
+        color: #43a0c5 !important;
+        border: 2px solid #43a0c5 !important;
+        background-color: white !important;
+        box-shadow: 1px 1px 15px #43A0C !important;
+        transition: all 0.3s ease-out;
+      }
+
+      .gone {
+        display:none;
+      }
+
+      /*
+      * Employer Dashboard - Invite Student Animations
+      */
+
+      #invite-student-modal-wrapper .skylight-overlay {
+        opacity: 1;
+        background-color: rgba(242,242,242,.9) !important;
+        animation: fade 0.2s linear;
+      }
+
+
+      @keyframes fade {
+        0%{ opacity: 0 }
+        100% { opacity: 1 }
+      }
+
+      #invite-student-modal-wrapper .skylight-dialog {
+        animation: inFromTop 0.4s ease-in-out;
+      }
+
+      @keyframes inFromTop {
+        0% { 
+          top: -50%; 
+        }
+
+        100% { 
+          top: 50%; 
+        }
+      }
+
+     /*
+      * Employer Dashboard - Open Student Profile Modal
+      */
+
+      #student-profile-modal-wrapper .skylight-overlay {
+        opacity: 1;
+        background-color: rgba(242,242,242,.9) !important;
+        animation: fade 0.2s linear;
+
+      }
+
+      #student-profile-modal-wrapper .skylight-dialog {
+     	    border-radius: 2px !important;
+          z-index: 100 !important;
+          padding: 15px !important;
+          box-shadow: rgba(0, 0, 0, 0.14) 0px 0px 4px, rgba(0, 0, 0, 0.28) 0px 4px 8px !important;
+          display: block !important;
+          position: fixed !important;
+          top: 50% !important;
+          left: 50% !important;
+          margin-top: -203px !important;
+          margin-left: -334px !important;
+          width: 696px !important;
+          height: 393px !important;
+          background-color: white !important;
+      }
+
+     /*
+      * Consult this link for perfect centering:
+      * http://stackoverflow.com/questions/9862167/positioning-div-element-at-center-of-screen
+      */
+
+     /*
+      * My Applicants - Confirm Reject Student Dialog
+      */
+
+      #confirm-reject-student-modal-wrapper .skylight-overlay {
+        z-index: 199 !important;
+
+      }
+
+      #confirm-reject-student-modal-wrapper .skylight-dialog {
+        border-radius: 2px !important;
+        z-index: 200 !important;
+        padding: 15px !important;
+        box-shadow: rgba(0, 0, 0, 0.14) 0px 0px 4px, rgba(0, 0, 0, 0.28) 0px 4px 8px !important;
+        display: block !important;
+        position: fixed !important;
+        top: 50% !important;
+        left: 50% !important;
+        margin-top: -50px !important;
+        margin-left: -91px !important;
+        width: 294px !important;
+        height: 177px !important;
+        background-color: white !important
+      }
+
+      /*
+      * My Applicants - Confirm Hire Student Dialog
+      */
+
+      #confirm-hire-student-modal-wrapper .skylight-overlay {
+        z-index: 199 !important;
+
+      }
+
+      #confirm-hire-student-modal-wrapper .skylight-dialog {
+        border-radius: 2px !important;
+        z-index: 200 !important;
+        padding: 15px !important;
+        box-shadow: rgba(0, 0, 0, 0.14) 0px 0px 4px, rgba(0, 0, 0, 0.28) 0px 4px 8px !important;
+        display: block !important;
+        position: fixed !important;
+        top: 50% !important;
+            left: 47% !important;
+        margin-top: -50px !important;
+        margin-left: -91px !important;
+        width: 294px !important;
+        height: 177px !important;
+        background-color: white !important
+      }
+
+      /*
+      * My Applicants: Post hire modal
+      */
+
+      #post-hire-modal-wrapper .skylight-overlay {
+        z-index: 249 !important;
+      }
+
+      #post-hire-modal-wrapper .skylight-dialog {
+        border-radius: 2px !important;
+        z-index: 250 !important;
+        padding: 15px !important;
+        box-shadow: rgba(0, 0, 0, 0.14) 0px 0px 4px, rgba(0, 0, 0, 0.28) 0px 4px 8px !important;
+        display: block !important;
+        position: fixed !important;
+        top: 50% !important;
+        left: 41% !important;
+        margin-top: -115px !important;
+        margin-left: -91px !important;
+        width: 456px !important;
+        height: 342px !important;
+        background-color: white !important;
+      }
+
+     /*
+      * Student Dashboard
+      */
+
+      #apply-to-job-modal-wrapper .skylight-overlay {
+        z-index: 199 !important;
+      }
+
+      #apply-to-job-modal-wrapper .skylight-dialog {
+        border-radius: 2px !important;
+        z-index: 200 !important;
+        padding: 15px !important;
+        box-shadow: rgba(0, 0, 0, 0.14) 0px 0px 4px, rgba(0, 0, 0, 0.28) 0px 4px 8px !important;
+        display: block !important;
+        position: fixed !important;
+        top: 42% !important;
+        left: 47% !important;
+        margin-top: -50px !important;
+        margin-left: -91px !important;
+        width: 294px !important;
+        height: 177px !important;
+        background-color: white !important
+      }
+
+      #job-app-modal-wrapper .skylight-overlay {
+                opacity: 1;
+        background-color: rgba(242,242,242,.9) !important;
+        animation: fade 0.2s linear;
+      }
+
+      #job-app-modal-wrapper .skylight-dialog {
+        border-radius: 2px !important;
+        z-index: 100 !important;
+        padding: 15px !important;
+        box-shadow: rgba(0, 0, 0, 0.14) 0px 0px 4px, rgba(0, 0, 0, 0.28) 0px 4px 8px !important;
+        display: block !important;
+        position: fixed !important;
+        top: 44% !important;
+        left: 48% !important;
+        margin-top: -203px !important;
+        margin-left: -334px !important;
+        width: 830px !important;
+        height: 583px !important;
+        background-color: white !important;
+      }
+
+      /*
+      * A small styling problem on the Student Profile page.
+      */
+
+      #dropPhotoDiv > div {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      /* In Chrome, fixes the underlines on the nav elements.*/
+
+      a:-webkit-any-link {
+        text-decoration: none;
+      }
+
+    </style>
+
+    <!-- <script src="https://cdn.ravenjs.com/3.7.0/raven.min.js"></script>
+    <script>Raven.config('https://0c02c7b1f4a64678abf730957cbed9cb@sentry.io/86378').install();</script> -->
+</head>
+  <body style="background-color: #DDDEE0;">
+    <div id="app" style="height:100%; width: 100%; position:absolute;"></div>
+  <script type="text/javascript" src="index_bundle.js"></script></body>
+</html>

@@ -4,7 +4,7 @@ React-Redux Frontend of Univjobs
 ## Build instructions
 ### 1) Set Required Environment Variables
 
-- CURRENT_DEV:
+- CURRENT_ENV:
     - Description: dictates where the urls in the application look to.
     - Options:
         - dev
