@@ -44,10 +44,10 @@ let reloadJobs = ""
 
 const StudentDashboardContainer = React.createClass({
     propTypes: {
-	  user: PropTypes.object, 
-	  jobs: PropTypes.array, 
+	  user: PropTypes.object,
+	  jobs: PropTypes.array,
 	  modal : PropTypes.object,
-	  answer : PropTypes.object, 
+	  answer : PropTypes.object,
 	  pin: PropTypes.object
     },
 
@@ -74,7 +74,7 @@ const StudentDashboardContainer = React.createClass({
       },
       restricted: {
         to: 'STUDENTS',		              // STUDENTS only on this route
-	      redirectTo: '/job/mylistings'   // if not an EMPLOYER, redirect to the employer equivalent
+	      redirectTo: '/dashboard/em'    // if not an EMPLOYER, redirect to the employer equivalent
       },
       profileIncompleteRedirect: true
     }
@@ -87,10 +87,10 @@ const StudentDashboardContainer = React.createClass({
   	})
   },
 
-  /* 
+  /*
    * pinJob
-   * 
-   * This will actually pin or unpin the job based on the current 
+   *
+   * This will actually pin or unpin the job based on the current
    * status of the job.
    */
 
@@ -108,7 +108,7 @@ const StudentDashboardContainer = React.createClass({
         if(job.pinned == 0) {
 
          /*
-          * PIN the job and display the 
+          * PIN the job and display the
           * toaster based on the success of it.
           */
 
@@ -117,7 +117,7 @@ const StudentDashboardContainer = React.createClass({
          /*
           * Success Callback
           */
-          
+
           () => {
 
             this.refs.container.success(
@@ -132,7 +132,7 @@ const StudentDashboardContainer = React.createClass({
          /*
           * Failure Callback
           */
-          
+
           () => {
 
             this.refs.container.error(
@@ -147,7 +147,7 @@ const StudentDashboardContainer = React.createClass({
         } else {
 
          /*
-          * UNPIN the job and display the 
+          * UNPIN the job and display the
           * toaster based on the success of it.
           */
 
@@ -156,7 +156,7 @@ const StudentDashboardContainer = React.createClass({
          /*
           * Success Callback
           */
-          
+
           () => {
 
             this.refs.container.success(
@@ -171,7 +171,7 @@ const StudentDashboardContainer = React.createClass({
          /*
           * Failure Callback
           */
-          
+
           () => {
 
             this.refs.container.error(
@@ -182,10 +182,10 @@ const StudentDashboardContainer = React.createClass({
 
           })
 
-        } 
+        }
 
       }
-      
+
   },
 
   /*
@@ -204,12 +204,12 @@ const StudentDashboardContainer = React.createClass({
     const answerTwoText = jobAppModal.answerTwo
     const jobId = jobAppModal.selectedJob.job_id
     const question_one_id = questions[0] ? questions[0].question_id : null
-    const question_two_id = questions[1] ? questions[1].question_id : null 
+    const question_two_id = questions[1] ? questions[1].question_id : null
 
     if (questions.length !== 0) {
 
      /*
-      * The user didnt answer all the questions asked. 
+      * The user didnt answer all the questions asked.
       */
 
       if ((answerOneText == "" && question_one_id !== null) || (answerTwoText == "" && question_two_id !== null)) {
@@ -230,7 +230,7 @@ const StudentDashboardContainer = React.createClass({
       else {
 
         doApplyToJob()
-        
+
       }
     }
 
@@ -247,7 +247,7 @@ const StudentDashboardContainer = React.createClass({
    /*
     * applyToJob
     *
-    * Do the actual application of the job. 
+    * Do the actual application of the job.
     */
 
     function doApplyToJob () {
@@ -258,8 +258,8 @@ const StudentDashboardContainer = React.createClass({
 
       if (!_this.props.isApplying) {
 
-        _this.props.submitJobApplication(jobId, question_one_id, answerOneText, question_two_id, answerTwoText, 
-        
+        _this.props.submitJobApplication(jobId, question_one_id, answerOneText, question_two_id, answerTwoText,
+
        /*
         * Success Callback
         */
@@ -291,7 +291,7 @@ const StudentDashboardContainer = React.createClass({
        /*
         * Failure Callback
         */
-        
+
         () => {
 
           _this.refs.container.error(
@@ -304,7 +304,7 @@ const StudentDashboardContainer = React.createClass({
 
       }
 
-    }    
+    }
 
 
 
@@ -314,7 +314,7 @@ const StudentDashboardContainer = React.createClass({
   * openJobAppModal
   *
   * Opens the job app modal that contains all of the job
-  * details, questions and answers fields so that students 
+  * details, questions and answers fields so that students
   * may apply to a job.
   */
 
@@ -343,8 +343,8 @@ const StudentDashboardContainer = React.createClass({
 
       this.props.openJobAppModal(selectedJob)
 
-      this.props.removeJobFromApplicants(selectedJob.job_id, 
-      
+      this.props.removeJobFromApplicants(selectedJob.job_id,
+
      /*
       * Success callback
       */
@@ -363,7 +363,7 @@ const StudentDashboardContainer = React.createClass({
      /*
       * Failure callback
       */
-      
+
       () => {
 
          this.refs.deletetoastr.error(
@@ -375,10 +375,10 @@ const StudentDashboardContainer = React.createClass({
 
 
       })
-          
+
     }
 
-   
+
   },
 
   undoRemoveApplication () {
@@ -387,12 +387,12 @@ const StudentDashboardContainer = React.createClass({
 
     if (!this.props.isUndoingRemove) {
 
-      this.props.undoRemoveJobFromApplicants(jobId, 
+      this.props.undoRemoveJobFromApplicants(jobId,
 
      /*
       * Success Callback
       */
-      
+
       () => {
 
         this.refs.deletetoastr.success(
@@ -407,7 +407,7 @@ const StudentDashboardContainer = React.createClass({
      /*
       * Failure Callback
       */
-      
+
       () => {
 
         this.refs.deletetoastr.error(
@@ -441,7 +441,7 @@ const StudentDashboardContainer = React.createClass({
   * openConfirmApplyModal
   *
   * When a student finally clicks Apply, they are presented with this
-  * confirmation modal to make sure that the student really wants 
+  * confirmation modal to make sure that the student really wants
   * to submit their application.
   *
   * This pops up overtop of the job app modal.
@@ -463,25 +463,25 @@ const StudentDashboardContainer = React.createClass({
   },
 
   componentWillMount() {
-    
+
   	this.doRedirectionFilter()
       .then(this.props.getAllJobsStudentJobView())
       .then(this.props.handleGetIndustries())
       .then(this.props.handleGetJobTypes())
       .then(this.props.closeOverlay())
 
-      
+
   },
 
   componentWillReceiveProps (nextProps) {
 
    /*
-    * This is the logic that dictates whether we should reload 
-    * the jobs or not. 
+    * This is the logic that dictates whether we should reload
+    * the jobs or not.
     *
     * We only reload when we switch pages right now. We should change
-    * this logic in the future to only reload jobs when we go to the 
-    * DASHBOARD view instead; this would require every other page to 
+    * this logic in the future to only reload jobs when we go to the
+    * DASHBOARD view instead; this would require every other page to
     * only make mutations to the store.jobs attribute for any API calls
     * made.
     */
@@ -501,23 +501,23 @@ const StudentDashboardContainer = React.createClass({
 
   /*
    * filterStudentJobs
-   * 
-   * Students are able to filter jobs. When the student changes the default filter 
+   *
+   * Students are able to filter jobs. When the student changes the default filter
    * config object, we have to edit the student's view of all jobs that have come in.
-   * 
+   *
    * This function is TEMPORARY for now as we will do front end filtering at this point.
-   * 
+   *
    * It works by iterating over all of the jobs and checking the filter config to see if it
    * should be rendered or not.
-   * 
+   *
    * Jobs that are to be filtered should have an attribute added to them called "filter_show".
-   * If true, we set to true and if false, we set to false. 
+   * If true, we set to true and if false, we set to false.
    */
 
   filterStudentJobs () {
 
     console.log('filtering jobs')
-    
+
     let filterConfig = this.props.filterConfig
     let jobs = this.props.jobs
     let filteredJobs = {}
@@ -607,7 +607,7 @@ const StudentDashboardContainer = React.createClass({
       }
     }
 
-    
+
 
     /*
      * [ADD MORE FILTERS HERE]
@@ -639,12 +639,12 @@ const StudentDashboardContainer = React.createClass({
   },
 
   componentWillUnmount() {
-    
+
   },
 
   /*
    * handleCompanyInfoSidebarStateChange
-   * 
+   *
    * We need this function to update Redux when the modal is closed so it doesn't
    * open up again anytime new props are loaded in and this.props.employerProfileModal.isOpen
    * still === true.
@@ -669,7 +669,7 @@ const StudentDashboardContainer = React.createClass({
           */
         }
 
-        <CompanyInfoSideBar 
+        <CompanyInfoSideBar
           onStateChange={ this.handleCompanyInfoSidebarStateChange }
           isOpen={this.props.employerProfileModal.isOpen}
           employerName={this.props.employerProfileModal.employerInfo ? this.props.employerProfileModal.employerInfo.employerName : null}
@@ -692,7 +692,7 @@ const StudentDashboardContainer = React.createClass({
             <SidebarContainer isAStudent={true} profilePicture={config.mediaUrl + '/avatar/' + this.props.profile.photo}/>
 
             {
-              this.props.route.page === "dashboard" 
+              this.props.route.page === "dashboard"
                 ? <StudentDashboard
                     handleCardClick={this.openJobAppModal}
                     handlePinJob={this.pinJob}
@@ -745,7 +745,7 @@ const StudentDashboardContainer = React.createClass({
             }
 
             {
-              this.props.route.page === "pinnedjobs" 
+              this.props.route.page === "pinnedjobs"
                 ? <PinJobs
                     handleCardClick={this.openJobAppModal}
                     handlePinJob={this.pinJob}
@@ -762,7 +762,7 @@ const StudentDashboardContainer = React.createClass({
             }
 
             {
-              this.props.route.page === "applications" 
+              this.props.route.page === "applications"
                 ? <Applications
                     handleCardClick={this.openJobAppModal}
                     handleRemoveJob={this.removeApplication}
@@ -780,7 +780,7 @@ const StudentDashboardContainer = React.createClass({
             }
 
             {
-              this.props.route.page === "invitations" 
+              this.props.route.page === "invitations"
                 ? <Invites
                     handleCardClick={this.openJobAppModal}
                     handlePinJob={this.pinJob}
@@ -796,26 +796,26 @@ const StudentDashboardContainer = React.createClass({
                 : ''
             }
 
-            
+
 
             {
-            /* 
+            /*
               * ========================================
               *           jobAppModal
               * ========================================
-              * 
+              *
               * This is the main modal for this screen.
-              * It's purpose is to allow the student to see 
+              * It's purpose is to allow the student to see
               * the details for a job and apply to the job
               * after filling in any answers to questions if necessary.
               */
-            } 
+            }
             <div id="job-app-modal-wrapper">
               <SkyLight
                     ref="jobAppModal"
                     >
 
-                    { this.props.jobAppModal.selectedJob 
+                    { this.props.jobAppModal.selectedJob
                       ? <JobCardModal
                           cardType={this.props.route.page}
                           title={this.props.jobAppModal.selectedJob.title}
@@ -833,23 +833,23 @@ const StudentDashboardContainer = React.createClass({
                           />
                       : ''
                     }
-                    
+
                 </SkyLight>
               </div>
 
           {
-            /* 
+            /*
               * ========================================
               *           Confirm Apply to job
               * ========================================
-              * 
+              *
               * This is the main modal for this screen.
-              * It's purpose is to allow the student to see 
+              * It's purpose is to allow the student to see
               * the details for a job and apply to the job
               * after filling in any answers to questions if necessary.
               *
               */
-            } 
+            }
             <div id="apply-to-job-modal-wrapper">
               <SkyLight
                     ref="confirmApplyModal"
@@ -868,7 +868,7 @@ const StudentDashboardContainer = React.createClass({
 
           <ToastContainer ref="deletetoastr"
               toastMessageFactory={ToastMessageFactory}
-              className="toast-top-right" 
+              className="toast-top-right"
               onClick={this.undoRemoveApplication}>
           </ToastContainer>
 

@@ -23,7 +23,7 @@ import * as list from 'helpers/lists'
 // =======================OTHER IMPORTS============================== //
 import { authRedirectFilter } from 'config/routes'
 
-// ==============CSS IMPORTS============================= 
+// ==============CSS IMPORTS=============================
 import { pageContainer } from 'sharedStyles/sharedContainerStyles.css'
 
 var ReactToastr = require("react-toastr");
@@ -32,11 +32,11 @@ var ToastMessageFactory = React.createFactory(ReactToastr.ToastMessage.animation
 
 const PinJobsContainer = React.createClass({
     propTypes: {
-      user: PropTypes.object, 
-      jobs: PropTypes.array, 
-      jobTypes : PropTypes.array, 
-      answer : PropTypes.object, 
-      modal : PropTypes.object, 
+      user: PropTypes.object,
+      jobs: PropTypes.array,
+      jobTypes : PropTypes.array,
+      answer : PropTypes.object,
+      modal : PropTypes.object,
     },
 
 	contextTypes: {
@@ -62,17 +62,17 @@ const PinJobsContainer = React.createClass({
       },
       restricted: {
         to: 'STUDENTS',		 // STUDENTS only on this route
-	      redirectTo: '/job/mylistings'   // if not an EMPLOYER, redirect to the employer equivalent
+	    redirectTo: '/dashboard/em'   // if not an EMPLOYER, redirect to the employer equivalent
 		 			 // This might change to employer categories
       }
     }
      return authRedirectFilter(config, this.context.store, this.context.router)
   },
 
-  /* 
+  /*
    * pinJob
-   * 
-   * This will actually pin or unpin the job based on the current 
+   *
+   * This will actually pin or unpin the job based on the current
    * status of the job.
    */
 
@@ -90,7 +90,7 @@ const PinJobsContainer = React.createClass({
         if(job.pinned == 0) {
 
          /*
-          * PIN the job and display the 
+          * PIN the job and display the
           * toaster based on the success of it.
           */
 
@@ -99,7 +99,7 @@ const PinJobsContainer = React.createClass({
          /*
           * Success Callback
           */
-          
+
           () => {
 
             this.refs.container.success(
@@ -114,7 +114,7 @@ const PinJobsContainer = React.createClass({
          /*
           * Failure callback
           */
-          
+
           () => {
 
             this.refs.container.error(
@@ -128,12 +128,12 @@ const PinJobsContainer = React.createClass({
         } else {
 
          /*
-          * UNPIN the job and display the 
+          * UNPIN the job and display the
           * toaster based on the success of it.
           */
 
           this.props.unpinJob(job.job_id,
-          
+
           () => {
 
             this.refs.container.success(
@@ -144,7 +144,7 @@ const PinJobsContainer = React.createClass({
               });
 
           },
-          
+
           () => {
 
             this.refs.container.error(
@@ -155,7 +155,7 @@ const PinJobsContainer = React.createClass({
 
           })
 
-        } 
+        }
 
       }
   },
@@ -164,7 +164,7 @@ const PinJobsContainer = React.createClass({
   * openJobAppModal
   *
   * Opens the job app modal that contains all of the job
-  * details, questions and answers fields so that students 
+  * details, questions and answers fields so that students
   * may apply to a job.
   */
 
@@ -185,7 +185,7 @@ const PinJobsContainer = React.createClass({
   },
 
   componentWillMount() {
-  	
+
 	  this.doRedirectionFilter()
       .then(this.props.getAllJobsStudentJobView())
       .then(this.props.handleGetIndustries())
@@ -195,7 +195,7 @@ const PinJobsContainer = React.createClass({
   },
 
   componentWillUnmount() {
-    
+
   },
 
   render () {

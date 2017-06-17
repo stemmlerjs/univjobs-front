@@ -3,6 +3,7 @@
 
 var express = require('express')
 var path = require('path')
+var morgan = require('morgan')
 
 app = express();
 app.listen(80, function() {
@@ -10,8 +11,8 @@ app.listen(80, function() {
 })
 
 app.use(express.static('dist'))  
+app.use(morgan('dev'));  
 
 app.get('*', function(req, res) {
-  console.log
   res.sendFile(path.join(__dirname + '/dist/index.html'));
 })

@@ -6,7 +6,7 @@
   "scripts": {
     "start": "webpack-dev-server",
     "proxy": "nodemon proxy.js",
-    "production": "npm install --only-dev && webpack -p && node server.js ",
+    "production": "webpack -p && node server.js ",
     "test": "mocha --compilers js:babel-register --require babel-polyfill --recursive app/tests",
     "e2eTest": "codeceptjs run --verbose",
     "lint": "eslint app/.; exit 0",
