@@ -1,3 +1,4 @@
+
 import { validateFirstName, validateLastName, validateCompanyName,
   validatePhoneNumber, validateStudentEmail, validateEmployerEmail, validatePassword } from 'helpers/utils'
 import { createStudentAccount, createEmployerAccount, setAccessToken,
@@ -51,14 +52,13 @@ export function submitStudentSignupForm(email, password) {
   return function(dispatch) {
     const promise = new Promise((resolve, reject) => {
       // Do form validation
-        debugger
+
         validateStudentEmail(email, (success, message) => {
           // EMAIL IS NOT VALID
           if(!success) {
 
             // Set error
             dispatch(submitStudentFormError(message))
-            MAIN_REJECT()
 
           } else {
 
@@ -69,8 +69,7 @@ export function submitStudentSignupForm(email, password) {
             if(!validatePassword(password)) {
 
               // Set error
-              dispatch(submitStudentFormError('Please enter a password with length greater than 6 characters'))
-              MAIN_REJECT()
+              dispatch(submitStudentFormError('Please enter a password 8 characters or longer containing at least 1 uppercase, 1 lowercase characters, 1 digit and 1 symbol.'))
 
             } else {
 
@@ -111,10 +110,11 @@ export function submitStudentSignupForm(email, password) {
 
                   })
                   .catch((err) => {
+
                     // ACTION: DISPATCH (CREATING_USER_ACCOUNT_FAILURE)
                     dispatch(submitStudentFormError(errorMsg(err)))
                     dispatch(userActions.createUserAccountFailure(errorMsg(err)))
-                    dispatch(submitStudentFormError(errorMsg(err)))
+
                     reject(false)
                   })
             } //else => email pass is good
@@ -131,37 +131,37 @@ export function submitEmployerSignupForm(firstName, lastName, companyName, phone
     const promise = new Promise((resolve, reject) => {
         // Do form validation
       if(!validateFirstName(firstName)) {
-        dispatch(submitEmployerFormError('Please enter your first name'))
+        dispatch(submitEmployerFormError('Please enter your first name.'))
         resolve(false)
         return;
       }
 
       if(!validateLastName(lastName)) {
-        dispatch(submitEmployerFormError('Please enter your last name'))
+        dispatch(submitEmployerFormError('Please enter your last name.'))
         resolve(false)
         return;
       }
 
       if(!validateCompanyName(companyName)) {
-        dispatch(submitEmployerFormError('Please enter your company name'))
+        dispatch(submitEmployerFormError('Please enter your company name.'))
         resolve(false)
         return;
       }
 
       if(!validatePhoneNumber(phone)) {
-        dispatch(submitEmployerFormError('Please enter in a valid phone 10 digit number'))
+        dispatch(submitEmployerFormError('Please enter in a valid phone 10 digit number.'))
         resolve(false)
         return;
       }
 
       if(!validateEmployerEmail(email)) {
-        dispatch(submitEmployerFormError('Please enter in a valid email address'))
+        dispatch(submitEmployerFormError('Please enter in a valid email address.'))
         resolve(false)
         return;
       }
 
       if(!validatePassword(password)) {
-        dispatch(submitEmployerFormError('Please enter a password with length greater than 6 characters'))
+        dispatch(submitEmployerFormError('Please enter a password 8 characters or longer containing at least 1 uppercase, 1 lowercase characters, 1 digit and 1 symbol.'))
         resolve(false)
         return;
       }

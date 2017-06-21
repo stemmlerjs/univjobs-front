@@ -44,7 +44,7 @@ export default function StudentSignup ({submitSignupForm, updateStudentSignupFor
                         placeholder="Password"
                 />
             </div>
-            <div className={errorMessage}>
+            <div className={error == "" ? '' : errorMessage}>
                 { error }
             </div>
             <button className={btn + ' ' + material_1} onClick={onSubmitSignup}>Sign me up</button>

@@ -7,8 +7,24 @@ export function yyyymmdd(rightNow) {
   return rightNow.toISOString().slice(0,10).replace(/-/g,"-");
 }
 
+/**
+ * validatePassword
+ * 
+ * @description - The password must be a minimum 8 characters in length,
+ * have 1 upper case character, 1 lower case, 1 symbol and 1 number.
+ * 
+ * @param {string} password - 
+ * @returns {boolean} success - if the password passes the criteria
+ */
+
 export function validatePassword(password) {
-  return password.length > 6
+
+  var upperCaseLowerCaseSymbolHasNumber = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/;
+  let isMinimum8Chars = false;
+  
+  if (password.length >= 8) isMinimum8Chars = true;
+
+  return (upperCaseLowerCaseSymbolHasNumber.test(password) && isMinimum8Chars)
 }
 
 export function validateResetPasswords (password, confirmPassword) {
@@ -31,11 +47,11 @@ export function validateResetPasswords (password, confirmPassword) {
 
 export function validateStudentEmail(email, callback) {
   var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
+  
   if(!re.test(email)){
     callback(false, "Please enter your school email address.")
   } else if (!/@sheridancollege.ca\s*$/.test(email)) {
-     callback(false, "Sorry, we are only currently available to Sheridan College students. Please contact us @ theunivjobs@gmail.com if you'd like us to extend access to your institution.")
+     callback(false, "Sorry, we are only currently available to Sheridan College students. Please contact us at univjobscanada@gmail.com if you'd like us to extend access to your institution.")
   } else {
     callback(true)
   }

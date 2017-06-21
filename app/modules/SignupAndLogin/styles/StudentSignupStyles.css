@@ -65,8 +65,14 @@
 }
 
 .errorMessage {
-  color: white;
-  text-align: center;
-  margin-top: 10px;
-  margin-bottom: 19px;
+    color: white;
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 19px;
+    /* display: flex; */
+    width: 400px;
+    background-color: #fa5252;
+    padding: 20px;
+    border-radius: 18px;
+    transition: 0.2s ease-out;
 }
