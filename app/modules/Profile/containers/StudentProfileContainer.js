@@ -145,7 +145,7 @@ const StudentProfileContainer = React.createClass({
 
         this.refs.container.success(
           "W00t w00t.",
-          "Profile completed. You can go and apply to jobs now.", {
+          "Profile completed. Now go start applying to jobs!", {
             timeout: 3000
           });
       },
@@ -204,6 +204,52 @@ const StudentProfileContainer = React.createClass({
        this.props.handleToggleButton(booleanState, buttonName)
    },
 
+   /**
+    * resendVerifyAccountEmail
+    *
+    * If the user clicks on the notification that's lets them know that they can't advance
+    * any further, we want to ask to resend the verification email to our email. 
+    */
+
+   resendVerifyAccountEmail () {
+     if (!this.props.user.emailVerified) {
+
+      this.props.resendVerifyAccountEmail(
+
+        /*
+          * Success callback
+          *
+          * In this case, we're now able to move throughout the rest of the application.
+          */
+
+        () => {
+          
+          this.refs.container.success(
+            "Almost done!",
+            "Success. We went ahead and sent a new Verify Account email to you. Check your email.", {
+              timeout: 3000
+            });
+
+        },
+
+        /*
+          * Failure callback
+          */
+
+        () => {
+
+          this.refs.container.error(
+            "Please try again later or contact us.",
+            "Uh oh. Looks like something went wrong trying to resend the Verify Account email.", {
+              timeout: 3000
+            });
+
+        }
+      )
+
+    }
+   },
+
   /** finallyDisableOverlay
    * 
    * A handle to the closeOverlay() function passed down from a higher order component.
@@ -234,51 +280,154 @@ const StudentProfileContainer = React.createClass({
    * componentWillMount
    *
    * When the DOM is loaded, do the following:
-   * 1.)Get all lists required
-   * 2.)Then, do the redirection filter (if required)
-   * 4.)Then, put back snapshot user info into inputs (if user has completed profile)
-   * 3.)Then, close the overlay
+   * 1.) Get all lists required
+   * 2.) Then, do the redirection filter (if required)
+   * 4.) Then, put back snapshot user info into inputs (if user has completed profile)
+   * 3.) Then, close the overlay
    *
    */
 
   componentWillMount() {
-	    this.doRedirectionFilter()
 
-      /*
-       * If the profile is not completed, we can show a toastr.
-       * If the profile IS completed, we just advance.
-       */
+     /*
+      * If the user is here now from clicking the Verify Account email link 
+      * and we need to try to verify their account, let's get the token and do
+      * that. 
+      *
+      * The url at this point should look like: profile/st/token/:token
+      */
 
-      .then(({isProfileCompleted}) => {
-        return new Promise((resolve, reject) => {
+      var emailConfirmationToken = this.props.params.token
+
+      if (emailConfirmationToken !== undefined && emailConfirmationToken !== "") {
+
+        this.props.attemptCompleteVerifyAccount(emailConfirmationToken,
+
+
+          /*
+           * Success Callback, account has been verified!
+           */
+        
+          () => {
+
+            this.refs.container.success(
+              "Thank you!",
+              "You've successfully validated your account. That wasn't so bad, was it?", {
+                timeout: 5000
+            });
+
+            regularComponentWillMountBehaviour(this)
+
+          },
+
+
+          /*
+           * Failure Callback, could not verify the account with that token.
+           * Maybe it expired or was invalid.
+           */
           
-          if (isProfileCompleted == 0) {
-            this.refs.container.info(
-              "Thanks!",
-              "Before you can move on, we need you to finish your profile.", {
-                timeout: 3000
-              });
+          () => {
 
-            resolve()
-          }
+            this.refs.container.error(
+              "Please try again.",
+              "Verification link expired or invalid!", {
+                timeout: 5000
+            });
 
-          else {
-            console.log("profile complete, continue")
-            resolve()
-          }
+            regularComponentWillMountBehaviour(this)
+            
+          })
 
-        })
-      })
-      .then(this.retrieveAllLists())
-	    .then(this.finallyDisableOverlay)
+      }
+
+     /*
+      * Just a regular visit to the profile page, continue as usual.
+      */
+
+      else {
+        regularComponentWillMountBehaviour(this)
+      }
+
+
+     // ########################################################################## //
+
+     /*
+      * regularComponentWillMountBehaviour
+      *
+      * We created this regularComponentWillMountBehaviour function so that after
+      * we attempt to complete the user account validation process (if a token exists)
+      * in the URL, we can continue as usual.
+      */
+
+      function regularComponentWillMountBehaviour (_thisContext) {
+        _thisContext.doRedirectionFilter()
+
+          /*
+          * If the profile is not completed, we can show a toastr.
+          * If the profile IS completed, we just advance.
+          */
+
+          .then(({isProfileCompleted, isEmailVerified}) => {
+            return new Promise((resolve, reject) => {
+              console.log(isProfileCompleted, isEmailVerified)
+              
+              if (isProfileCompleted == 0 || !isEmailVerified) {
+
+              /*
+                * A: Both
+                */
+
+                if (isProfileCompleted == 0 && !isEmailVerified) {
+                  _thisContext.refs.container.info(
+                    "You can click here to resend the verification email. Thanks!",
+                    "Before you can move on, we need you to finish your profile & confirm the email we sent you.", {
+                      timeout: 3000
+                  });
+                }
+
+              /*
+                * B: Just profile completion.
+                */
+
+                else if (isProfileCompleted == 0) {
+                  _thisContext.refs.container.info(
+                    "Thanks!",
+                    "Before you can move on, we just need you to finish your profile.", {
+                      timeout: 3000
+                  });
+                }
+
+                /*
+                * C: Just email verification.
+                */
+
+                else {
+                  _thisContext.refs.container.info(
+                    "You can click here to resend the verification email. Thanks!",
+                    "Before you can move on, we just need you to confirm the email we sent you.", {
+                      timeout: 3000
+                  });
+                }
+
+                resolve()
+              }
+
+              else {
+                console.log("profile complete, continue")
+                resolve()
+              }
+
+            })
+          })
+          .then(_thisContext.retrieveAllLists())
+          .then(_thisContext.finallyDisableOverlay)
+      }
 
   },
 
   componentWillUnmount() {
     console.log("wait, no we have to check")
   },
-
-
 
   render () {
     return (
@@ -334,7 +483,8 @@ const StudentProfileContainer = React.createClass({
       	  snapshot={this.props.snapshot}/>
       	<ToastContainer ref="container"
       	  toastMessageFactory={ToastMessageFactory}
-      	  className="toast-top-right" />
+      	  className="toast-top-right"
+          onClick={this.resendVerifyAccountEmail}/>
       </div>
     )
   },

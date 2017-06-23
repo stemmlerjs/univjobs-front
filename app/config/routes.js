@@ -16,8 +16,12 @@ export default function getRoutes() {
           <Route path='/join' component={SignupContainer} />
           <Route path='/password/reset' component={PasswordResetContainer}/>
           <Route path='/password/confirm/:code' component={PasswordResetContainer} />
+
           <Route path='/profile/st' component={StudentProfileContainer} />
+          <Route path='/profile/st/token/:token' component={StudentProfileContainer} />
           <Route path='/profile/em' component={EmployerProfileContainer} />
+          <Route path='/profile/em/token/:token' component={EmployerProfileContainer} />
+
           <Route path='/categories' component={CategoriesContainer} />
           <Route path='/job/create/:jobtype' page={'createjob'} component={CreateJobContainer} />
 	        <Route path='/dashboard/st' page={'dashboard'} component={StudentDashboardContainer} />
@@ -92,7 +96,9 @@ export function authRedirectFilter({successRedirect, failureRedirect, restricted
         cb(true, restricted.redirectTo)
 
       // If the route is restricted to STUDENTS and the user is an employee
-      } else if (restricted.to === 'STUDENTS' && !isAStudent) {
+      } 
+      
+      else if (restricted.to === 'STUDENTS' && !isAStudent) {
         console.log(`AUTH: 'Employer' in a Student only route. GOTO: ${restricted.redirectTo}`)
         cb(true, restricted.redirectTo)
       }
@@ -130,7 +136,9 @@ export function authRedirectFilter({successRedirect, failureRedirect, restricted
     let isAStudent;
     let inRestrictedRoute;
     let isProfileCompleted;
+    let isEmailVerified;
 
+    console.log("--------> routes.js line 139")
     checkIfAuthed(store)
     .then(() => {
     
@@ -144,19 +152,20 @@ export function authRedirectFilter({successRedirect, failureRedirect, restricted
         } 
         
         else {
-          isProfileCompleted = store.getState().user.isProfileCompleted
+          isProfileCompleted = store.getState().user.isProfileCompleted // 0 or 1
+          isEmailVerified = store.getState().user.emailVerified         // boolean
 
           /*
             * If the profile wasn't completed and we're on a different page from the profile, just redirect to the profile page for 
             * either a student or an employer
             */
 
-            if (isProfileCompleted === 0 && isAStudent && window.location.href.indexOf('profile') === -1) {
+            if ((isProfileCompleted === 0 || !isEmailVerified) && isAStudent && window.location.href.indexOf('profile') === -1) {
               router.replace('/profile/st')
               resolve()
             }
 
-            else if (isProfileCompleted === 0 && !isAStudent && window.location.href.indexOf('profile') === -1) {
+            else if ((isProfileCompleted === 0 || !isEmailVerified) && !isAStudent && window.location.href.indexOf('profile') === -1) {
               router.replace('/profile/em')
               resolve()
             }
@@ -165,8 +174,8 @@ export function authRedirectFilter({successRedirect, failureRedirect, restricted
              * If we're on the profile page after being redirected there.
              */
 
-            else if (isProfileCompleted === 0 && window.location.href.indexOf('profile') !== 1) {
-              resolve({isProfileCompleted})
+            else if ((isProfileCompleted === 0 || !isEmailVerified) && window.location.href.indexOf('profile') !== -1) {
+              resolve({isProfileCompleted, isEmailVerified})
             }
 
             else {
@@ -176,7 +185,7 @@ export function authRedirectFilter({successRedirect, failureRedirect, restricted
               * where they really should be. Auth, however; was successful.
               */
 
-              if(isProfileCompleted === 0) {
+              if((isProfileCompleted === 0 || !isEmailVerified)) {
 
                 console.log("AUTH: Successful auth but profile not complete!")
 
@@ -196,7 +205,8 @@ export function authRedirectFilter({successRedirect, failureRedirect, restricted
                     router.replace(successRedirect.student)
 
                     resolve({
-                      isProfileCompleted
+                      isProfileCompleted,
+                      isEmailVerified
                     })
                   } 
 
@@ -209,7 +219,8 @@ export function authRedirectFilter({successRedirect, failureRedirect, restricted
                     router.replace(successRedirect.employer)
 
                     resolve({
-                      isProfileCompleted
+                      isProfileCompleted,
+                      isEmailVerified
                     })
                   }
 
@@ -230,7 +241,7 @@ export function authRedirectFilter({successRedirect, failureRedirect, restricted
                 */
 
                 else {
-
+                  console.log("--------> routes.js line 243")
                   router.replace('/join')
 
                   reject();
@@ -268,7 +279,8 @@ export function authRedirectFilter({successRedirect, failureRedirect, restricted
 
                 else {
                   resolve({
-                    isProfileCompleted
+                    isProfileCompleted,
+                    isEmailVerified
                   })
                 }
 

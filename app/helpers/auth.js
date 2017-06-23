@@ -1,3 +1,4 @@
+
 import axios from 'axios'
 import config from 'config'
 import cookie from 'react-cookie'
@@ -192,6 +193,7 @@ export function checkIfAuthed (store) {
       authenticated or not through the use of the state.
     */
     const stillAuthed = store.getState().user.isAuthenticated
+
     if(stillAuthed) {
       console.log("still authed from state")
       resolve(true)
@@ -205,6 +207,7 @@ export function checkIfAuthed (store) {
         console.log("No access token found, head to main screen")
         reject(false)
       } else {
+        console.log("--------> auth.js line 210")
         // If the token was found, check to ensure that the token is still valid
         // ACTION: DISPATCH (LOGGING_IN)
         store.dispatch(loggingIn())
@@ -229,6 +232,7 @@ export function checkIfAuthed (store) {
             // Profile Details
             const isAStudent = response.data.student !== undefined ? true : false
             const isProfileCompleted = response.data.student !== undefined ? response.data.student.is_profile_complete : response.data.employer.is_profile_complete
+            const isEmailVerified = response.data.student !== undefined ? response.data.student.is_email_verified : response.data.employer.is_email_verified
 
             let profileInfo = response.data.student !== undefined ? response.data.student : response.data.employer
 
@@ -249,6 +253,7 @@ export function checkIfAuthed (store) {
             // ACTION: PROFILE - DISPATCH (FETCHING_PROFILE_INFO_SUCCESS)
             store.dispatch(fetchedProfileInfoSuccess(
               isProfileCompleted,
+              isEmailVerified,
               profileInfo,
               isAStudent
             ))
@@ -256,7 +261,8 @@ export function checkIfAuthed (store) {
             // ACTION: DISPATCH (LOGGING_IN_SUCCESS)
             store.dispatch(loginSuccess(accessToken,
               isAStudent,
-              isProfileCompleted
+              isProfileCompleted,
+              isEmailVerified
             ))
 
             resolve(true)
@@ -282,6 +288,43 @@ export function checkIfAuthed (store) {
 export function getCSRFToken() {
   return cookie.load('csrftoken');
 }
+
+/*
+ * resendVerifyAccountEmail
+ * 
+ * We do this when we want to tell the backend to resend the verify account email
+ * because we probably didn't get it or it expired or something.
+ */
+
+  export function resendVerifyAccountEmail () {
+    const accessToken = getAccessToken()
+
+    return axios({
+      method: 'put',
+      url: config.baseUrl + 'verify',
+      headers: {
+        'Authorization':  accessToken
+      }
+    })
+  }
+
+  export function attemptCompleteVerifyAccount (token) {
+    const accessToken = getAccessToken()
+
+    return axios({
+      method: 'post',
+      url: config.baseUrl + 'verify/' + token,
+      headers: {
+        'Authorization':  accessToken
+      }
+    })
+  } 
+
+  // **********************************************************************
+  // **********************************************************************
+  
+
+
 
 /* errorMsg
  *  Displays the error message depending on the user input

@@ -58,10 +58,11 @@ export function fetchingProfileInfo() {
     }
 }
 
-export function fetchedProfileInfoSuccess (isProfileCompleted, profileInfo, isAStudent) {
+export function fetchedProfileInfoSuccess (isProfileCompleted, isEmailVerified, profileInfo, isAStudent) {
   return {
     type: FETCHED_PROFILE_INFO_SUCCESS,
     isProfileCompleted,
+    isEmailVerified,
     profileInfo,
     isAStudent
   }

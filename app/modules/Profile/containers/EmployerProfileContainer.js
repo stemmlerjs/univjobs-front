@@ -129,40 +129,142 @@ const EmployerProfileContainer = React.createClass({
   */
 
   componentWillMount() {
-    /*  On page load, we will first get all the required lists for the screen */
-    
-      this.doRedirectionFilter()
 
-      /*
-       * If the profile is not completed, we can show a toastr.
-       * If the profile IS completed, we just advance.
-       */
+    /*
+      * If the user is here now from clicking the Verify Account email link 
+      * and we need to try to verify their account, let's get the token and do
+      * that. 
+      *
+      * The url at this point should look like: profile/st/token/:token
+      */
 
-      .then(({isProfileCompleted}) => {
-        return new Promise((resolve, reject) => {
+      var emailConfirmationToken = this.props.params.token
+
+      if (emailConfirmationToken !== undefined && emailConfirmationToken !== "") {
+
+        this.props.attemptCompleteVerifyAccount(emailConfirmationToken,
+
+
+          /*
+           * Success Callback, account has been verified!
+           */
+        
+          () => {
+
+            this.refs.container.success(
+              "Thank you!",
+              "You've successfully validated your account.", {
+                timeout: 5000
+            });
+
+            regularComponentWillMountBehaviour(this)
+
+          },
+
+
+          /*
+           * Failure Callback, could not verify the account with that token.
+           * Maybe it expired or was invalid.
+           */
           
-          if (isProfileCompleted == 0) {
-            this.refs.container.info(
-              "Thanks!",
-              "Before you can move on, we need you to finish your profile.", {
-                timeout: 3000
-              });
+          () => {
 
-            resolve()
-          }
+            this.refs.container.error(
+              "Please try again.",
+              "Verification link expired or invalid!", {
+                timeout: 5000
+            });
 
-          else {
-            console.log("profile complete, continue")
-            resolve()
-          }
+            regularComponentWillMountBehaviour(this)
+            
+          })
 
-        })
-      })
-      .then(this.retrieveAllLists)
-      .then(this.finallyDisableOverlay)
-      .catch((err) => {
-        console.log("[componentWillMount]: Employer Profile - Error occurred", err)
-      })
+      }
+
+     /*
+      * Just a regular visit to the profile page, continue as usual.
+      */
+
+      else {
+        regularComponentWillMountBehaviour(this)
+      }
+
+     // ########################################################################## //
+
+     /*
+      * regularComponentWillMountBehaviour
+      *
+      * We created this regularComponentWillMountBehaviour function so that after
+      * we attempt to complete the user account validation process (if a token exists)
+      * in the URL, we can continue as usual.
+      */
+
+      function regularComponentWillMountBehaviour (_thisContext) {
+
+        _thisContext.doRedirectionFilter()
+
+          /*
+          * If the profile is not completed, we can show a toastr.
+          * If the profile IS completed, we just advance.
+          */
+
+          .then(({isProfileCompleted, isEmailVerified}) => {
+            return new Promise((resolve, reject) => {
+              console.log(isProfileCompleted, isEmailVerified)
+              
+              if (isProfileCompleted == 0 || !isEmailVerified) {
+
+              /*
+                * A: Both
+                */
+
+                if (isProfileCompleted == 0 && !isEmailVerified) {
+                  _thisContext.refs.container.info(
+                    "You can click here to resend the verification email. Thanks!",
+                    "Before you can move on, we need you to finish your profile & confirm the email we sent you.", {
+                      timeout: 3000
+                  });
+                }
+
+              /*
+                * B: Just profile completion.
+                */
+
+                else if (isProfileCompleted == 0) {
+                  _thisContext.refs.container.info(
+                    "Thanks!",
+                    "Before you can move on, we just need you to finish your profile.", {
+                      timeout: 3000
+                  });
+                }
+
+                /*
+                * C: Just email verification.
+                */
+
+                else {
+                  _thisContext.refs.container.info(
+                    "You can click here to resend the verification email. Thanks!",
+                    "Before you can move on, we just need you to confirm the email we sent you.", {
+                      timeout: 3000
+                  });
+                }
+
+                resolve()
+              }
+
+              else {
+                console.log("profile complete, continue")
+                resolve()
+              }
+
+            })
+          })
+          .then(_thisContext.retrieveAllLists())
+          .then(_thisContext.finallyDisableOverlay)
+
+      }
+
   },
 
   handleSubmit(empProps) {

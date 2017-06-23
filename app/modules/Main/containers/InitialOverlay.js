@@ -52,9 +52,15 @@ const InitialOverlay = React.createClass({
   },
 
   componentDidMount() {
-    if(window.location.href.indexOf('/#/?')) {
-      window.location.assign('/#/join')
-    }
+    // TODO: we need to fix the main page so that it takes us to join but it doesnt mess
+    // up our page routing and do this on every page.
+    // 
+    // I think for this to work, it just needs to be a part of the doRedirectionFilter method. It needs to be 
+    // a part of that flow.
+
+    // if(window.location.href.indexOf('/#/?')) {
+    //   window.location.assign('/#/join')
+    // }
   },
 
   render () {
