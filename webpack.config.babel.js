@@ -21,9 +21,19 @@ const HTMLWebpackPluginConfig = new HtmlWebpackPlugin({
   inject: 'body'
 })
 
+ /* =============================================================
+  * ======= SET ENVIRONMENT VARIABLES FOR COMPILED CODE =========
+  *
+  * When we want to build for prod, we can use webpack.DefinePlugin to 
+  * define an object that should be global to the scope of our app.
+  * 
+  * This setting is going to set process.env.CURRENT_ENV to 'prod' inside
+  * of the code that webpack is going to compile for us.
+  */
+
 const productionPlugin = new webpack.DefinePlugin({
   'process.env': {
-    NODE_ENV: JSON.stringify('production')
+    CURRENT_ENV: JSON.stringify('prod')
   }
 })
 
@@ -72,7 +82,14 @@ const developmentConfig = {
       }
     }
   },
-  plugins: [HTMLWebpackPluginConfig, new webpack.HotModuleReplacementPlugin()]
+  plugins: [HTMLWebpackPluginConfig, 
+            new webpack.HotModuleReplacementPlugin(),
+            new webpack.DefinePlugin({
+              'process.env': {
+                CURRENT_ENV: JSON.stringify('dev')
+              }
+            })
+  ]
 }
 
 const productionConfig = {

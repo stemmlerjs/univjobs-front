@@ -7,7 +7,7 @@
   */
 
 const config = {
-  CURRENT_ENV: 'dev',
+  CURRENT_ENV: process.env.CURRENT_ENV,
   dev: {
     baseUrl: 'http://localhost:8080/api/',
     mediaUrl: 'http://localhost:8000/',
