@@ -185,23 +185,23 @@ const SignupContainer = React.createClass({
       this.props.loginFormEmailText,
       this.props.loginFormPasswordText
     )
-    .then(({isAStudent, isProfileCompleted}) => {
+    .then(({isAStudent, isProfileCompleted, isEmailVerified}) => {
       //TODO: Implement this as a tiny module (function) to put inside of authRedirectionFilter
 
       console.log("Here in login")
-      if(isAStudent && isProfileCompleted) {
+      if(isAStudent && isProfileCompleted && isEmailVerified) {
         // Route to Student Dashboard
         this.context.router.replace('/dashboard/st')
 
-      } else if (isAStudent && !isProfileCompleted) {
+      } else if (isAStudent && (!isProfileCompleted || !isEmailVerified)) {
         // Route to Student Profile
         this.context.router.replace('/profile/st')
 
-      } else if (!isAStudent && isProfileCompleted) {
+      } else if (!isAStudent && isProfileCompleted && isEmailVerified) {
         // Route to employer dashboard
         this.context.router.replace('/categories')
 
-      } else if (!isAStudent && !isProfileCompleted) {
+      } else if (!isAStudent && (!isProfileCompleted || !isEmailVerified)) {
         // Route to Employer Profile
         this.context.router.replace('/profile/em')
 

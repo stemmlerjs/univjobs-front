@@ -115,19 +115,7 @@ export default function CreateJobFormPage1 (props) {
         {props.page.MAX_CHARS_desiredSkills - props.page.desiredSkills.length + " characters left"}
       </FormField>
 
-      {/* INTERNSHIP LOCATION */}
-      <FormField title="Job Location">
-        <input 
-          className={props.page.page1PropsErrorMap.internshipLocation ? error + ' ' + input : input} 
-          type="text"
-          placeholder="100 City Centre Dr, Mississauga, ON"
-          value={props.page.internshipLocation}
-          onChange={(e) => props.updateFormField('internshipLocation', e.target.value, 1)}
-          >
-        </input>
-      </FormField>
-
-      {/* REMOTE WORK
+        {/* REMOTE WORK
         TODO:
           [] Change into buttons
           [] Make function to update attribut remoteWork
@@ -142,7 +130,7 @@ export default function CreateJobFormPage1 (props) {
          <button className={props.page.remoteWork === false ? selectedSaveBtn : saveBtn} 
          onClick={() => props.updateFormField('remoteWork', false, 1)}>No</button>
        </div>
-          {
+                 {
               /*
             <input 
               type="checkbox"
@@ -151,6 +139,22 @@ export default function CreateJobFormPage1 (props) {
           */
           }
       </FormField>
+
+      {/* INTERNSHIP LOCATION */}
+      <FormField title="Job Location">
+        <input 
+          className={props.page.page1PropsErrorMap.internshipLocation ? error + ' ' + input : input} 
+          type="text"
+          placeholder={props.page.remoteWork ? '' : "100 City Centre Dr, Mississauga, ON"}
+          value={props.page.internshipLocation}
+          onChange={(e) => props.updateFormField('internshipLocation', e.target.value, 1)}
+          disabled={props.page.remoteWork ? true : false}
+          >
+        </input>
+      </FormField>
+
+
+
 
 
       {/* COMPENSATION */}

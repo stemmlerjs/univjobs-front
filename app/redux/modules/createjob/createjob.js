@@ -347,10 +347,34 @@ const page1PropsErrorMap = {
 function page1(state = page1InitialState, action) {
   switch(action.type) {
     case UPDATE_FORM_FIELD:
-      return {
-        ...state,
-        [action.fieldName]: action.newValue,
-        page1PropsErrorMap: page1Errors(state.page1PropsErrorMap, action)
+
+     /*
+      * If we switch from remoteWork == false to true, then we should
+      * make sure that there is no error showing on the internshipLocation input.
+      */
+
+      if (action.fieldName === 'remoteWork' && action.newValue === true) {
+        var page1PropsErrorMap = state.page1PropsErrorMap
+        page1PropsErrorMap.internshipLocation = false;
+
+        return {
+          ...state,
+          [action.fieldName]: action.newValue,
+          internshipLocation: '',
+          page1PropsErrorMap: page1Errors(state.page1PropsErrorMap, action)
+        }
+      }
+      
+      /*
+       * Otherwise, just update as normally.
+       */
+
+      else {
+        return {
+          ...state,
+          [action.fieldName]: action.newValue,
+          page1PropsErrorMap: page1Errors(state.page1PropsErrorMap, action)
+        }
       }
     case PAGE_ERRORS_EXIST:
       return {

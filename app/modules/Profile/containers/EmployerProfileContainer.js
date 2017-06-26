@@ -363,6 +363,7 @@ const EmployerProfileContainer = React.createClass({
   },
 
   render () {
+    console.log("Employer profile props", this.props.profile)
     return (
       <div className={pageContainer}>
         <SidebarContainer 

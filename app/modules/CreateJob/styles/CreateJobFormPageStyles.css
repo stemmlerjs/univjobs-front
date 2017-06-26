@@ -220,11 +220,14 @@
 }
 
 .detailsHeaderRight {
-  background-color: #53585E;
-  width: 20vw;
-  color: white;
-  height: 30px;
-  padding-top: 10px;
+    background-color: #53585E;
+    width: 20vw;
+    color: white;
+    height: 30px;
+    padding-top: 10px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    z-index: 22;
+    margin-bottom: 7px;
 }
 
 .detailsTitle {
@@ -240,7 +243,7 @@
   /* margin-left: 9px; */
   padding-left: 17px;
   padding-right: 17px;
-
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 }
 
 .jobIndustry {
@@ -263,7 +266,14 @@
   width:100%;
 }
 
+.textAlignLeft {
+  text-align: left;
+  padding-left:4px;
+}
 
+.buttonsContainer {
+  margin-bottom:40px;
+}
 
 @media only screen and (min-width: 1225px) {
   .reallyTrickyPageContainerContainer {

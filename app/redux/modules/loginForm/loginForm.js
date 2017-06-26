@@ -1,3 +1,4 @@
+
 import { validateEmployerEmail, validatePassword } from 'helpers/utils'
 import { login, setAccessToken, errorMsg, getAccessToken } from 'helpers/auth'
 import { getUserInfo } from 'helpers/profile'
@@ -108,33 +109,38 @@ export function submitLoginForm(email, password) {
             // Profile Details
             const isAStudent = response.data.student !== undefined ? true : false
             const isProfileCompleted = response.data.student !== undefined ? response.data.student.is_profile_complete : response.data.employer.is_profile_complete
+            let isEmailVerified = response.data.student !== undefined ? response.data.student.is_email_verified : response.data.employer.is_email_verified
+            isEmailVerified = isEmailVerified === 0 ? false : true;
 
             let profileInfo = response.data.student !== undefined ? response.data.student : response.data.employer
             profileInfo.tags = profileInfo.is_a_student === 1 ? response.data.tags : ''
 
 
             //debugger
-            // ACTION: USER - DISPATCH (FETCHING_USER_INFO_SUCCESS)
+            // ACTION: USER - FETCHING_USER_INFO_SUCCESS
             dispatch(fetchingUserInfoSuccess(
               isAStudent, dateJoined, email, firstName, lastName, mobile
             ))
 
-            // ACTION: PROFILE - DISPATCH (FETCHING_PROFILE_INFO_SUCCESS)
+            // ACTION: PROFILE - FETCHING_PROFILE_INFO_SUCCESS
             dispatch(profileActions.fetchedProfileInfoSuccess(
               isProfileCompleted,
+              isEmailVerified,
               profileInfo,
               isAStudent
             ))
 
-            // ACTION: DISPATCH (LOGGING_IN_SUCCESS)
+            // ACTION: USER - LOGGING_IN_SUCCESS
             dispatch(loginSuccess(getAccessToken(),
               isAStudent,
-              isProfileCompleted
+              isProfileCompleted,
+              isEmailVerified
             ))
 
             resolve({
               isAStudent,
-              isProfileCompleted
+              isProfileCompleted,
+              isEmailVerified
             })
         })
         .catch((err) => {

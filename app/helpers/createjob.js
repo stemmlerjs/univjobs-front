@@ -87,7 +87,19 @@ export function validateCreateJobFields(currentPage, pageProps, next) {
     page1Errors.responsibilities = validateResponsibilities(pageProps.responsibilities) ? false : true
     page1Errors.qualifications = validateQualifications(pageProps.qualifications) ? false : true 
     page1Errors.desiredSkills = validateDesiredSkills(pageProps.desiredSkills) ? false : true
-    page1Errors.internshipLocation = validateJobLocation(pageProps.internshipLocation) ? false : true
+
+   /*
+    * If remote work is selected === true, then this means that we don't need to validate 
+    * the internshipLocation.
+    */
+
+    if (pageProps.remoteWork) {
+      page1Errors.internshipLocation = false;
+    }
+    else {
+      page1Errors.internshipLocation = validateJobLocation(pageProps.internshipLocation) ? false : true
+    }
+    
     page1Errors.compensation = validateCompensation(pageProps.compensation) ? false : true
 
     // If an error exists in the map, then errorsExist === true

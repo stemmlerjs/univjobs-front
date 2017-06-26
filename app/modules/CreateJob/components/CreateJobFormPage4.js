@@ -20,7 +20,7 @@ import { lastPageContainer, input, textarea,
         rightDivider, sectionHeader, sectionBody, 
         italics, specialInput, reminderContainer, bold, 
         detailsContainer, detailsLeft, detailsRight, 
-        detailsHeaderLeft, detailsTitle, detailsBody, 
+        detailsHeaderLeft, detailsTitle, detailsBody, buttonsContainer,
         jobIndustry, detailsHeaderRight, marginTop, table, pageContainer } from '../styles/CreateJobFormPageStyles.css'
 
 import { rootComponentContainer } from 'sharedStyles/sharedComponentStyles.css'
@@ -152,7 +152,7 @@ export default function CreateJobFormPage4 (props) {
           </div>
         </div>
       </div>  
-      <div>
+      <div className={buttonsContainer}>
         <button onClick={(e) => props.back(props)} className={saveBtn + " " + navBackBtn}>Back</button>
         <button onClick={(e) => props.next(props)} className={saveBtn + " " + navSaveBtn}>Save</button>
       </div>
