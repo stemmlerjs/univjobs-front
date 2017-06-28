@@ -19,9 +19,9 @@ import { studentProfileModalContainer, studentProfileLeftContainer, stProfileHea
   stProfileNameAndSchool, stProfileName, stProfileProgram, studenProfileRightContainer, stProfileGrad, itemIcon, experienceHobbiesEtc,
   listItemContainer, itemIconGPA, supplementalItemsContainer, supplementalItemsDetail, invite, leftsideDetails,
   buttons, whiteTxt, questionText, questionHeader, questionContainer, buttonsContainer, questionsAndAnswersContainer,
-  hiddenContactInfo, loader } from '../styles/StudentProfileModal.css'
+  hiddenContactInfo, loader, languagesItemIcon } from '../styles/StudentProfileModal.css'
 
-const StudentProfileModal = ({pictureUrl, name, major, sportsString, 
+const StudentProfileModal = ({ pictureUrl, name, major, sportsString, languagesString,
   schoolName, hometown, hasCar, clubsString, gradDate, lists, gpa, funFact, hobbies,
   handleOpenInviteStudentModal, studentObj, recentCompanyName, recentCompanyPosition, 
   
@@ -65,7 +65,7 @@ const StudentProfileModal = ({pictureUrl, name, major, sportsString,
                       {
                         preferredEmail 
                           ? <div className={supplementalItemsDetail}>{preferredEmail}</div>
-                          : <div className={hiddenContactInfo}></div>
+                          : <div className={hiddenContactInfo}>Hidden until you signal intent to contact</div>
                       }
                       
                     </div>
@@ -137,8 +137,16 @@ const StudentProfileModal = ({pictureUrl, name, major, sportsString,
             { gpa 
                 ? <div className={listItemContainer}>
                     <ReactTooltip delayHide={100} delayShow={100} place="bottom" effect="float"/>
-                    <div data-tip={'GPA'} className={`${itemIcon} ${itemIconGPA}`}>{Number(gpa)}</div>
-                    <div>GPA of {Number(gpa)}</div>
+                    <div data-tip={'GPA'} className={`${itemIcon} ${itemIconGPA}`}>{Number(gpa).toFixed(2)}</div>
+                    <div>GPA of {Number(gpa).toFixed(2)}</div>
+                  </div>
+                : ''
+            }
+            { languagesString !== ""
+                ? <div className={listItemContainer}>
+                    <ReactTooltip delayHide={100} delayShow={100} place="bottom" effect="float"/>
+                    <i data-tip={'Languages'} aria-hidden="true" className={`fa fa-language ${languagesItemIcon}`}></i>
+                    <div>{languagesString}</div>
                   </div>
                 : ''
             }
@@ -199,6 +207,11 @@ const StudentProfileModal = ({pictureUrl, name, major, sportsString,
             : <div className={buttonsContainer}>
 
                 <button className={buttons} onClick={
+
+                 /*
+                  * CONFIRM if you want to Reject the student.
+                  */
+
                   function () {
                     handleOpenConfirmRejectStudentModal(studentObj)
                   }
@@ -208,18 +221,26 @@ const StudentProfileModal = ({pictureUrl, name, major, sportsString,
                   {
                     studentObj.state === "INITIAL"
                       ? <button className={buttons} onClick={
+
+                         /*
+                          * DO signal intent to contact student.
+                          */
+
                           function () {
                             handleContactStudent(studentObj)
                           }
                         }>CONTACT</button>
                       : <button className={buttons} onClick={
+
+                         /*
+                          * CONFIRM if you want to Hire the student.
+                          */
+
                           function () {
                             handleOpenConfirmHireStudentModal(studentObj)
                           }
                         }>HIRE</button>
                   }
-                
-            
               </div>
         }
 
@@ -230,11 +251,3 @@ const StudentProfileModal = ({pictureUrl, name, major, sportsString,
 )
 
 export default StudentProfileModal
-
-// answers.filter((answer) => {
-//                 if (answer.question_id === question.question_id) {
-//                   return (
-//                     <div>{"A" + (index + 1) + ": "}{answer.text}</div>
-//                   )
-//                 }
-//               })

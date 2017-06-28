@@ -267,6 +267,52 @@ const EmployerProfileContainer = React.createClass({
 
   },
 
+   /**
+    * resendVerifyAccountEmail
+    *
+    * If the user clicks on the notification that's lets them know that they can't advance
+    * any further, we want to ask to resend the verification email to our email. 
+    */
+
+   resendVerifyAccountEmail () {
+     if (!this.props.user.emailVerified) {
+
+      this.props.resendVerifyAccountEmail(
+
+        /*
+          * Success callback
+          *
+          * In this case, we're now able to move throughout the rest of the application.
+          */
+
+        () => {
+          
+          this.refs.container.success(
+            "Almost done!",
+            "Success. We went ahead and sent a new Verify Account email to you. Check your email.", {
+              timeout: 3000
+            });
+
+        },
+
+        /*
+          * Failure callback
+          */
+
+        () => {
+
+          this.refs.container.error(
+            "Please try again later or contact us.",
+            "Uh oh. Looks like something went wrong trying to resend the Verify Account email.", {
+              timeout: 3000
+            });
+
+        }
+      )
+
+    }
+   },
+
   handleSubmit(empProps) {
     // If Profile is NOT completed, do /PUT. All fields must be populated and valid.
     if(!this.props.isProfileCompleted) {
@@ -401,7 +447,8 @@ const EmployerProfileContainer = React.createClass({
         />
         <ToastContainer ref="container"
           toastMessageFactory={ToastMessageFactory}
-          className="toast-top-right" />
+          className="toast-top-right"
+          onClick={this.resendVerifyAccountEmail} />
       </div>
     )
   }

@@ -7,7 +7,7 @@ import { slide as Menu } from 'react-burger-menu'
 
 import { logoContainer, bodyContainer, titleContainer, aboutContainer, detailsContainer,
     titleText, altTitleText, aboutText, aboutTitleText, expandIconSpan, expandIcon, expandIconClosed,
-    aboutTextHidden, detailItem, iconContainer, detail, detailDivider } from '../styles/CompanyInfoSideBar.css'
+    aboutTextHidden, detailItem, iconContainer, detail, detailDivider, link } from '../styles/CompanyInfoSideBar.css'
 
 let styles = {
   bmMenu: {
@@ -68,10 +68,14 @@ export default function CompanyInfoSideBar ({ isOpen, logoUrl, employerName, ind
               <div className={iconContainer}>
                 <i className={`fa fa-globe`} aria-hidden="true"></i>
               </div>
-              <div className={detail}>
-                <div>{website}</div>
-                <div className={altTitleText}>Website</div>
-              </div>
+              { website !== "" && website !== undefined 
+                ? <div className={detail}>
+                    <div><a className={link} href={website}>{website}</a></div>
+                    <div className={altTitleText}>Website</div>
+                  </div>
+                : ''
+              }
+              
             </div>
           </div>
 

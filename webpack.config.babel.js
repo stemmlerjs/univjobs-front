@@ -69,10 +69,7 @@ const developmentConfig = {
     progress: true,
     proxy: {
       '/api/**': {
-	    /*FIXME: Uncomment below when going to test server */
-        //target: 'http://ec2-52-87-227-85.compute-1.amazonaws.com:8000',
 	     target: 'http://127.0.0.1:8000/',   // Charles' local server
-        //target: 'http://192.168.0.19:8000/',   // Khalil's local server
         secure: false,
         changeOrigin: true,
         protocolRewrite: true,

@@ -11,9 +11,9 @@ import { cardContainer, cardTopContainer, imgContainer, cardSectionMain,
         cardHeaderItemContainer, cardLocation, cardBottomContainer, cardSectionOne,
         cardSectionTwo, cardSectionTitle, cardSectionText, cardActionButtons,
         rejectedCard, activeCard, jobTypeText, cardSectionAlt, cardSectionAltItem,
-        cardSectionAltItemContainer, cardSectionAltItemGrey, paidContainer, calendarIcon,
+        cardSectionAltItemContainer, cardSectionAltItemGrey, paidContainer, calendarIcon, locationIcon,
         distanceContainer, companyInfoClickContainer, companyInfo, applicantsContainer, 
-        clock, clock_0_50, clock_51_75, clock_76_100, lastThing, moneyIcon, flexColumn,
+        clock, clock_0_50, clock_51_75, clock_76_100, lastThing, moneyIcon, flexColumn, 
         googleMapsLinkStyle } from '../styles/JobCard.css'
 import { pageMainJobCards, rotateIcon, applyButton } from 'modules/SharedComponents/styles/StudentCard.css'
 
@@ -83,7 +83,9 @@ export default function JobCard ({logoUrl, pinned, jobObject, jobId, title, jobT
             </div> 
           </div>
           <div>
-            <div><i className={`fa fa-map-marker ${calendarIcon}`} aria-hidden="true"></i></div>
+            <div><i className={`fa fa-map-marker ${locationIcon}`} onClick={() => {
+              window.open(mapsLink)
+            }} aria-hidden="true"></i></div>
             <div><span>{remoteWork === 0 
               ? mapsLink !== undefined && mapsLink !== '' 
                   ? <a className={googleMapsLinkStyle} target="_blank" href={mapsLink}>{location}</a>

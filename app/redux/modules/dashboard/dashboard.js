@@ -401,6 +401,30 @@ function studentProfileModal (state = initialStudentProfileModalState, action) {
 
 			action.student.clubsString = clubsString
 
+			/*
+			 * Lastly, we want to do the same thing with Languages.
+			 * If the object is empty, we will just return 'ENGLISH'
+			 */
+
+			var languagesString = "";
+			var languages = Object.keys(action.student.languages)
+
+			if (languages.length == 0) {
+				languagesString = "English"
+			}
+
+			else {
+				for (var k = 0; k < languages.length; k++) {
+					if (k !== languages.length - 1) {
+						languagesString = languagesString + action.student.languages[languages[k]] + ", "
+					} else {
+						languagesString = languagesString + action.student.languages[languages[k]]
+					}
+				}
+			}
+			
+			action.student.languagesString = languagesString
+
 			return {
 				...state,
 				open: true,

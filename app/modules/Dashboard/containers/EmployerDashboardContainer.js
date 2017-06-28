@@ -328,7 +328,11 @@ const EmployerDashboardContainer = React.createClass({
   render () {
     return (
       <div className={pageContainer}>
-        <SidebarContainer isAStudent={false} profilePicture={config.mediaUrl + this.props.profile.logoUrl}/>
+        <SidebarContainer isAStudent={false} profilePicture={typeof this.props.profile.logoUrl == "object" && this.props.profile.logoUrl !== null
+            ? this.props.profile.logoUrl.preview
+            : config.mediaUrl + this.props.profile.logoUrl}/>
+
+        
         <EmployerDashboard 
           students={this.props.students}
           lists={this.props.lists}
@@ -397,6 +401,7 @@ const EmployerDashboardContainer = React.createClass({
                       languages={this.props.studentProfileModal.student.languages}
                       clubsString={this.props.studentProfileModal.student.clubsString}
                       sportsString={this.props.studentProfileModal.student.sportsString}
+                      languagesString={this.props.studentProfileModal.student.languagesString}
                       major={this.props.studentProfileModal.student.major}
                       gpa={this.props.studentProfileModal.student.gpa}
                       gradDate={new Date(this.props.studentProfileModal.student.grad_date)}

@@ -89,3 +89,10 @@
     margin-bottom: 4px;
     border-bottom: solid 1px #cccaca;
 }
+
+.link {
+    color: black;
+}
+.link:visited {
+    color: black;
+}

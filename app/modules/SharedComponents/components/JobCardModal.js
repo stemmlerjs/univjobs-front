@@ -113,7 +113,7 @@ export default function JobCardModal({
 
               <div className={cardHeaderItemContainer}>
                 <i className={`fa fa-calendar ${calendar}`}></i>
-                <div className={cardLocation}>{moment(new Date(job.start_date)).format('MMMM Do, YYYY')}</div>
+                <div className={cardLocation}>{'Starts ' + moment(new Date(job.start_date)).format('MMMM Do, YYYY')}</div>
 
                 { /*
                   cardType == "applications" 
@@ -124,7 +124,9 @@ export default function JobCardModal({
                 
               </div>
               <div className={cardHeaderItemContainer}>
-                <i className={`fa fa-map-marker ${locationPin}`} aria-hidden="true"></i>
+                <i className={`fa fa-map-marker ${locationPin}`} onClick={() => {
+                  window.open(mapsLink)
+                }} aria-hidden="true"></i>
                 <div className={cardLocation}>{
                   job.remote_work === 0 
                     ? mapsLink !== undefined && mapsLink !== ''
