@@ -31,6 +31,7 @@ import * as lists from 'helpers/lists'
 import employerProfileModal from 'redux/modules/dashboard/employerProfileModal'
 
 import { pageContainer, formHeader } from 'sharedStyles/sharedContainerStyles.css'
+import { cancelButton, confirmButton, buttonsContainer } from 'sharedStyles/sharedComponentStyles.css'
 
 // ============= MESSAGES ===============
 var ReactToastr = require("react-toastr");
@@ -428,27 +429,33 @@ const CreateJobContainer = React.createClass({
     this.refs.jobAppModal.hide()
   },
 
+  closeConfirmDiscardModal () {
+    console.log(this.refs)
+    this.refs.confirmDiscard.hide()
+  },
+
   render () {
 
     var jobType;
 
     var route = window.location.href.substring(window.location.href.indexOf("create/") + 7);
     
-    if (route.indexOf("otg")) {
+    if (route.indexOf("otg") !== -1) {
       jobType = 1;
-    } else if (route.indexOf("summer")) {
+    } else if (route.indexOf("summer") !== -1) {
       jobType = 2;
-    } else if (route.indexOf("winter")) {
+    } else if (route.indexOf("winter") !== -1) {
       jobType = 3;
-    } else if (route.indexOf("freelance")) {
+    } else if (route.indexOf("freelance") !== -1) {
       jobType = 4;
-    } else if (route.indexOf("rep")) {
+    } else if (route.indexOf("rep") !== -1) {
       jobType = 5;
-    } else if (route.indexOf("pt")) {
+    } else if (route.indexOf("pt") !== -1) {
       jobType = 6;
     } 
 
     console.log(this.props)
+    console.log(jobType)
 
     return (
       <div>
@@ -561,7 +568,10 @@ const CreateJobContainer = React.createClass({
               title="Are you sure you want to discard this job?">
               All changes will be lost
 
-              <button onClick={this.handleConfirmDiscardChanges}>I'm sure</button>
+              <div className={buttonsContainer}>
+                <button className={cancelButton} onClick={this.closeConfirmDiscardModal}>Cancel</button>
+                <button className={confirmButton} onClick={this.handleConfirmDiscardChanges}>Yes, I'm sure</button>
+              </div>
             </SkyLight>
 
           {/* ERROR MESSAGES */}

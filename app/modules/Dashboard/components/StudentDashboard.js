@@ -229,6 +229,7 @@ export default function StudentDashboard ({
                        * 
                        * If the job has already been applied to and is active - then show it
                        * If the job has the filter saying not to show it - don't show it.
+                       * If the job has already met the max number of applicants - don't show it.
                        */
 
                       jobs.length > 0 ? jobs.filter((job) => {
@@ -238,7 +239,9 @@ export default function StudentDashboard ({
                                                 : job.filter_show === true 
                                                     ? false 
                                                     : true;
-                        return hasntAppliedToAndIsActive && !shouldFilterOut
+                        var isMaxApplicantsReached = job.max_applicants == job.applicant_count ? true : false;
+
+                        return hasntAppliedToAndIsActive && !shouldFilterOut && !isMaxApplicantsReached
                       })
 
                       .map((job) => (

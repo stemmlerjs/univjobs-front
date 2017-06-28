@@ -26,6 +26,7 @@ import { lastPageContainer, input, textarea,
 import { rootComponentContainer } from 'sharedStyles/sharedComponentStyles.css'
 
 export default function CreateJobFormPage4 (props) {
+  console.log(props, "page 4")
   return (
     <div className={pageContainer}>
 
@@ -141,11 +142,11 @@ export default function CreateJobFormPage4 (props) {
               <tbody>
                 <tr>
                   <td>Credit Card</td>
-                  <td>Disabled</td>
+                  <td style={{fontStyle: 'italic'}}>Disabled</td>
                 </tr>
                 <tr>
                   <td>Promo Code</td>
-                  <td>Promo Code</td>
+                  <td style={{fontStyle: 'italic'}}>Disabled</td>
                 </tr>
               </tbody>
             </table>

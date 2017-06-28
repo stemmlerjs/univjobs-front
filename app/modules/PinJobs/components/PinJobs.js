@@ -70,7 +70,8 @@ export default function PinJobs ({jobs,
                     : 
 
                 jobs.length > 0 ? jobs.filter((job) => {
-                    return job.pinned == 1
+                    var isMaxApplicantsReached = job.max_applicants == job.applicant_count ? true : false;
+                    return job.pinned == 1 && !isMaxApplicantsReached
                 })
                 .map((job) => (
                     <JobCard 

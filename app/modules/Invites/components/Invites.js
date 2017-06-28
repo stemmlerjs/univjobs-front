@@ -60,7 +60,9 @@ export default function Invites ({jobs,
                     : 
 
                 jobs.length > 0 ? jobs.filter((job) => {
-                    return (job.invited == 1 && job.applied == 0)
+                    var isMaxApplicantsReached = job.max_applicants == job.applicant_count ? true : false;
+
+                    return (job.invited == 1 && job.applied == 0 && !isMaxApplicantsReached)
                 })
                 .map((job) => (
                     <JobCard 

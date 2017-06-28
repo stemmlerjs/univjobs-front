@@ -11,7 +11,7 @@ import { cardContainer, cardTopContainer, imgContainer, cardSectionMain,
         cardHeaderItemContainer, cardLocation, cardBottomContainer, cardSectionOne,
         cardSectionTwo, cardSectionTitle, cardSectionText, cardActionButtons,
         rejectedCard, activeCard, jobTypeText, cardSectionAlt, cardSectionAltItem,
-        cardSectionAltItemContainer, cardSectionAltItemGrey, paidContainer, calendarIcon, locationIcon,
+        cardSectionAltItemContainer, cardSectionAltItemGrey, paidContainer, calendarIcon, locationIcon, locationIconNoHover,
         distanceContainer, companyInfoClickContainer, companyInfo, applicantsContainer, 
         clock, clock_0_50, clock_51_75, clock_76_100, lastThing, moneyIcon, flexColumn, 
         googleMapsLinkStyle } from '../styles/JobCard.css'
@@ -83,8 +83,10 @@ export default function JobCard ({logoUrl, pinned, jobObject, jobId, title, jobT
             </div> 
           </div>
           <div>
-            <div><i className={`fa fa-map-marker ${locationIcon}`} onClick={() => {
-              window.open(mapsLink)
+            <div><i className={`fa fa-map-marker ${ mapsLink == undefined ? locationIconNoHover : locationIcon}`} onClick={() => {
+              if (mapsLink !== undefined) {
+                window.open(mapsLink)
+              }
             }} aria-hidden="true"></i></div>
             <div><span>{remoteWork === 0 
               ? mapsLink !== undefined && mapsLink !== '' 

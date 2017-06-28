@@ -179,7 +179,7 @@ export default function JobCardModal({
 
                           {
                             job.state == "CONTACTED" && job.active == 1
-                              ? <div>
+                              ? <div className={applicationProgress}>
                                   <div className={statusItem}>
                                     <div className={statusIcon} data-tip="Resume and application sent to employer."></div>
                                     <ReactTooltip place="bottom" type="info" effect="float" />
@@ -200,7 +200,7 @@ export default function JobCardModal({
 
                           {
                             job.state == "HIRED" 
-                              ? <div>
+                              ? <div className={applicationProgress}>
                                   <div className={statusItem}>
                                     <div className={statusIcon} data-tip="Resume and application sent to employer."></div>
                                     <ReactTooltip place="bottom" type="info" effect="float" />
@@ -361,7 +361,9 @@ export default function JobCardModal({
 
                   {
                     cardType != "applications" 
-                      ? <button onClick={openConfirmApplyModal}>APPLY</button>
+                      ? job.applicant_count < job.max_applicants
+                        ? <button onClick={openConfirmApplyModal}>APPLY</button>
+                        : ''
                       : ''
                   }
 

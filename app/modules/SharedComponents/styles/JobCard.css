@@ -246,6 +246,13 @@ color: #808080;
     padding-right: 10px;
 }
 
+.locationIconNoHover {
+        color: #ea0808;
+    font-size: 17px;
+    /* background-color: #7b7bd8; */
+    padding-right: 10px;
+}
+
 .lastThing {
     text-align: left;
     /* padding-left: 17px; */

@@ -191,7 +191,8 @@ const EmployerDashboardContainer = React.createClass({
     }, 2000)
   },
 
-  componentWillUpdate(props) {
+  componentWillUpdate(props) { 
+
   },
 
  /*
@@ -452,7 +453,8 @@ const EmployerDashboardContainer = React.createClass({
                     ? this.props.inviteStudentModal.currentApplicants
                     : '#'} of {this.props.inviteStudentModal.maxApplicants 
                       ? this.props.inviteStudentModal.maxApplicants
-                      : '#'} applicants</div>
+                      : '#'} applicants
+                </div>
                 <div className={this.props.inviteStudentModal.isInviting ? loader : ''}></div>
 
                 {/* SUCCESS MESSAGE
@@ -476,7 +478,52 @@ const EmployerDashboardContainer = React.createClass({
                 <button className={cancelBtn} onClick={()=> {
                   this.refs.inviteStudentModal.hide()
                 }}>CANCEL</button>
-                <button className={acceptBtn} onClick={this.doInviteStudent}>OK</button>
+                <button className={acceptBtn} 
+                  onClick={() => {
+                    
+                    /*
+                     * If the user has selected a job to invite them to
+                     */
+                    if (this.props.inviteStudentModal.selectedJob.job_id !== undefined) {
+
+                      /*
+                       * If the job has NOT yet met it's capacity in terms of max 
+                       * applicants, we can invite.
+                       */
+
+                      if (this.props.inviteStudentModal.selectedJob.applicants.length < this.props.inviteStudentModal.selectedJob.max_applicants) {
+                        this.doInviteStudent()
+                      }
+
+                      /*
+                       * Otherwise, if we've met our capacity, then we can't invite this student.
+                       */
+                      
+                      else {
+                        this.refs.container.error(
+                          'No more applicant availability left.',
+                          "Can't invite student to this job.",
+                          {
+                            timeout: 3000
+                        });
+                      }
+                      
+                    }
+
+                    /*
+                     * if the employer hasn't yet selected a job to invite them to.
+                     */
+
+                    else {
+                      this.refs.container.error(
+                        'No job selected.',
+                        "Please select a job to invite this student to.",
+                        {
+                          timeout: 3000
+                      });
+                    }
+
+                  }}>OK</button>
               </div>
 
           </SkyLight>
