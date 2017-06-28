@@ -165,10 +165,10 @@ height: 111px;
 }
 
 .questionsAndAnswersContainer {
-    height: 349px;
-    overflow-y: scroll;
-    margin-top: 12px;
-    padding-right: 7px;
+  height: 349px;
+  overflow-y: scroll;
+  margin-top: 24px;
+  padding-right: 7px;
 }
 
 .questionsAndAnswersContainer::-webkit-scrollbar-track {

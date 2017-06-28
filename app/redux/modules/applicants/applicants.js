@@ -474,6 +474,30 @@ export default function applicants (state = initialApplicationsState, action) {
 
 			action.studentObject.clubsString = clubsString
 
+      /*
+			 * Lastly, we want to do the same thing with Languages.
+			 * If the object is empty, we will just return 'ENGLISH'
+			 */
+
+			var languagesString = "";
+			var languages = Object.keys(action.studentObject.languages)
+
+			if (languages.length == 0) {
+				languagesString = "English"
+			}
+
+			else {
+				for (var k = 0; k < languages.length; k++) {
+					if (k !== languages.length - 1) {
+						languagesString = languagesString + action.studentObject.languages[languages[k]] + ", "
+					} else {
+						languagesString = languagesString + action.studentObject.languages[languages[k]]
+					}
+				}
+			}
+			
+			action.studentObject.languagesString = languagesString
+
       return {
         ...state,
         studentProfileAndAnswersModal: {

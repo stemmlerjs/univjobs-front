@@ -487,6 +487,7 @@ const ApplicantsContainer = React.createClass({
                       languages={this.props.studentProfileAndAnswersModal.student.languages}
                       clubsString={this.props.studentProfileAndAnswersModal.student.clubsString}
                       sportsString={this.props.studentProfileAndAnswersModal.student.sportsString}
+                      languagesString={this.props.studentProfileAndAnswersModal.student.languagesString}
                       major={this.props.studentProfileAndAnswersModal.student.major}
                       gpa={this.props.studentProfileAndAnswersModal.student.gpa}
                       gradDate={new Date(this.props.studentProfileAndAnswersModal.student.grad_date)}
