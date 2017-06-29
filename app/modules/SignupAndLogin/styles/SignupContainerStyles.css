@@ -50,3 +50,15 @@
     cursor: pointer;
 }
 
+.legal {
+    font-size: 13px;
+    color: white;
+    margin-top: 15px;
+    font-weight: 400;
+    line-height: 18px;
+    white-space: normal;
+}
+
+.white {
+    color: white;
+}

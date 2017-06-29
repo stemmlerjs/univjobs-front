@@ -1,9 +1,11 @@
 // ==============REACT BUILTIN========================= //
 import React, { PropTypes } from 'react'
+import { Link } from 'react-router'
 
 // ================CSS IMPORTS============================== //
 import { studentCenteredContainer, header, subHeader, btn, btnContainer,
  input, inputContainer, errorMessage } from '../styles/StudentSignupStyles.css'
+import { legal, white } from '../styles/SignupContainerStyles.css'
 
 import { material_1 } from 'sharedStyles/material.css'
 
@@ -43,6 +45,7 @@ export default function StudentSignup ({submitSignupForm, updateStudentSignupFor
                         type="password" 
                         placeholder="Password"
                 />
+                <p className={legal}>By registering you agree to our <Link to="/terms" className={white}>Terms & Services</Link> and Private Policy</p>
             </div>
             <div className={error == "" ? '' : errorMessage}>
                 { error }
