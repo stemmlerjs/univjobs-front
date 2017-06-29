@@ -6,8 +6,16 @@ import { createStore, applyMiddleware, compose, combineReducers } from 'redux'
 import * as reducers from 'redux/modules'
 import thunk from 'redux-thunk'
 //import createLogger from 'redux-logger'
+
+// Import createMiddleware and a target
+import { createMiddleware } from 'redux-beacon';
+import { GoogleAnalytics } from 'redux-beacon/targets/google-analytics';
+
+//Forms and toastr
 import { reducer as formReducers } from 'redux-form'
 import { reducer as toastrReducer, ReduxToastr } from 'react-redux-toastr'
+
+//Styles
 import { initializeBodyStyles } from 'helpers/styles'
 
 window.React = React
@@ -24,8 +32,10 @@ initializeBodyStyles();
 reducers.form = formReducers
 reducers.toastr = toastrReducer
 
+
 const appReducer = combineReducers(reducers)
 const rootReducer = (state, action) => {
+
 
   // When the Redux action LOGGING_OUT is called from anywhere,
   // force initialstate on the entire Redux store by setting state
@@ -40,9 +50,22 @@ const rootReducer = (state, action) => {
   return appReducer(state, action)
 }
 
-//const logger = createLogger();
+// Define an event
+const pageView = action => ({
+    hitType: 'pageview',
+     page: action.payload,
+})
+
+// Map the event to a Redux action
+const eventsMap = {
+    LOCATION_CHANGE: pageView,
+}
+
+// Create the middleware
+const middleware = createMiddleware(eventsMap, GoogleAnalytics);
+
 const store = createStore(rootReducer,
-  compose(applyMiddleware(thunk),
+  compose(applyMiddleware(thunk, middleware),
   window.devToolsExtension ? window.devToolsExtension() : (f) => f
 ));
 
