@@ -3,6 +3,7 @@ import config from 'config'
 import { getAccessToken, getCSRFToken } from 'helpers/auth'
 import { validateJobTitle, validateResponsibilities, 
         validateQualifications, validateDesiredSkills, validateJobLocation, validateCompensation } from 'helpers/utils'
+import { sanitize } from 'helpers/utils'
 
 export function createNewJobPOST (
   job_type, 
@@ -21,8 +22,23 @@ export function createNewJobPOST (
   verified, 
   remoteWork,
   desiredSkills) {
+    
   const accessToken = getAccessToken();
   const csrfToken = getCSRFToken();
+
+  job_type = sanitize(job_type)
+  title = sanitize(title)
+  paid = sanitize(paid)
+  responsibilities = sanitize(responsibilities)
+  qualifications = sanitize(qualifications)
+  compensation = sanitize(compensation)
+  address = sanitize(address)
+  city = sanitize(city)
+  question_one_text = sanitize(question_one_text)
+  question_two_text = sanitize(question_two_text)
+  max_applicants = sanitize(max_applicants)
+  active = sanitize(active)
+  desiredSkills = sanitize(desiredSkills)
 
   return axios({
     method: 'post',

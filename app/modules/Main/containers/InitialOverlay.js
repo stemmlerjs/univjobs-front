@@ -9,17 +9,22 @@
 // ==============REACT BUILTIN========================= //
 import React, { PropTypes } from 'react'
 
+
 // ==============THIRD PARTY IMPORTS========================= //
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
 // =============REDUX STATE & IMPORTS========================= //
 import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 import { getAccessToken } from 'helpers/auth'
 import { hideOverlay } from 'redux/modules/rootApplication/rootApplication'
 import { getAllStaticLists } from 'redux/modules/list/list'
 
 // ================CSS IMPORTS============================== //
 import animationStyles from '../styles/InitialOverlayStyles.css'
+
+import { FeedbackForm } from 'modules/SharedComponents'
+import * as feedbackFormActionCreators from 'redux/modules/feedback/feedback'
 
 const styles = {
   main: {
@@ -74,9 +79,27 @@ const InitialOverlay = React.createClass({
        closeOverlay: this.closeOverlay
      })
     );
-    
+    console.log(this)
     return (
       <div style={styles.main}>
+        {this.props.location.pathname !== "/join"
+          ? <FeedbackForm 
+          isOpen={this.props.feedback.isOpen} 
+          title={this.props.feedback.title}
+          description={this.props.feedback.description}
+          errorsMap={this.props.feedback.errorsMap}
+          isSubmitting={this.props.feedback.isSubmitting}
+          submitSuccess={this.props.feedback.submitSuccess}
+          submitFailure={this.props.feedback.submitFailure}
+          includeScreenshot={this.props.feedback.includeScreenshot}
+          toggleFeedbackFormOpen={this.props.toggleFeedbackFormOpen} 
+          checkForFormErrors={this.props.checkForFeedbackFormErrors}
+          updateFeedbackForm={this.props.updateFeedbackForm}
+          submitFeedbackForm={this.props.submitFeedbackForm}
+        />
+          :  ''
+        }
+        
         <ReactCSSTransitionGroup
           transitionName={animationStyles}
           transitionAppear={true}
@@ -97,11 +120,17 @@ const InitialOverlay = React.createClass({
   },
 })
 // We should have a new value on the user called 'isOverlayActive'
-function mapStateToProps({rootApplication}) {
+function mapStateToProps({rootApplication, feedback}) {
   return {
     isOverlayActive: rootApplication.isOverlayActive ? true : false,
+    feedback: feedback ? feedback : {}
   }
 }
 
-export default connect(mapStateToProps)(InitialOverlay)
+function mapActionCreatorsToProps(dispatch) {
+  return bindActionCreators(feedbackFormActionCreators, dispatch)
+}
+
+export default connect(mapStateToProps, mapActionCreatorsToProps)(InitialOverlay)
+
 

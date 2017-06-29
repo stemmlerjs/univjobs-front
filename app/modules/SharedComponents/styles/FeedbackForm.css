@@ -1,0 +1,209 @@
+
+.feedbackFormClosed {
+    position: fixed;
+    bottom: 0px;
+    right: 24px;
+    width: 257px;
+    background-color: #3697db;
+    height: 29px;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    padding-top: 9px;
+    font-size: 15px;
+    color: white;
+    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, .3);
+    cursor: pointer;
+    text-align: left;
+    padding-left: 20px;
+    padding-right: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    z-index: 99;
+}
+
+.feedbackFormClosed:hover {
+    background-color:#4eaff3;
+}
+
+.feedbackFormOpen {
+    position: fixed;
+    bottom: 0px;
+    right: 24px;
+    width: 297px;
+    background-color: white;
+    height: 428px;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    /* padding-top: 9px; */
+    font-size: 15px;
+    color: white;
+    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, .3);
+    /* cursor: pointer; */
+    text-align: left;
+    /* display: flex; */
+    /* flex-direction: row; */
+    /* justify-content: space-between; */
+    z-index: 99;
+}
+
+.formOpen_topBar {
+    background-color: #3697db;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 9px;
+    padding-bottom: 10px;
+    box-shadow: 0 1px 0 0 rgba(0, 0, 0, .10);
+}
+
+.formOpen_topBar:hover {
+background-color:#4eaff3;
+}
+
+.formOpen_body {
+    height: 100%;
+    /* margin-top: 10px; */
+    margin: 15px;
+    /* margin-left: 15px; */
+    font-size: 14px;
+    color: black;
+}
+
+.formOpen_intro {
+    color: #544e4e;
+    margin-bottom: 11px;
+}
+
+.formOpen_heading {
+    font-weight: bold;
+    margin-top: 6px;
+    margin-bottom: 6px;
+    color: #008dbf;
+}
+
+.formOpen_input {
+    text-align: left;
+    padding: .5em 1em;
+    /* margin: 8px; */
+    /* display: inline-block; */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    /* vertical-align: middle; */
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    color: inherit;
+    font: inherit;
+    width: 100%;
+    font-size: 14px;
+}
+
+.formOpen_textarea {
+        margin: 0px;
+    height: 114px;
+    border: 1px solid rgb(204, 204, 204);
+    width: 95%;
+    resize: none;
+    padding: 5px;
+        font-family: Roboto, sans-serif;
+}
+
+.formOpen_checkboxContainer {
+    display: flex;
+    margin-top: 10px;
+}
+
+.formOpen_checkbox {
+    margin-left:0px;
+}
+
+.formOpen_heading_span {
+    color: #544e4e;
+    font-weight: normal;
+    font-size: 13px;
+}
+
+.formOpen_submitButton {
+        /* margin-left: 25%; */
+    /* margin-top: 21px; */
+    padding: 10px 15px 10px 15px;
+    border-radius: 3px;
+    border: 0;
+    /* background: white; */
+    font-size: 13px;
+    color: black;
+    /* text-shadow: 1px 1px 0px rgba(0, 0, 0, .1); */
+    cursor: pointer;
+    /* margin: 0 auto; */
+    width: 156px;
+    background-color: #3697db;
+    color: white;
+    margin-top: 11px;
+    position: relative;
+    left: 21%;
+    transition: 0.1s ease-out;
+}
+
+.formOpen_submitButton:hover {
+    background-color:#4eaff3;
+}
+
+
+.submitting {
+
+    animation:submittingAnimation 2s;
+    -moz-animation:submittingAnimation 2s infinite; /* Firefox */
+    -webkit-animation:submittingAnimation 2s infinite; /* Safari and Chrome */
+  }
+
+@keyframes submittingAnimation {
+0%   {background:#3697db;}
+100%   {background:#ff7913}
+}
+
+  @-moz-keyframes submittingAnimation /* Firefox */
+{
+0%   {background:#3697db;}
+100%   {background:#ff7913}
+}
+ 
+@-webkit-keyframes submittingAnimation /* Firefox */
+{
+0%   {background:#3697db;}
+100%   {background:#ff7913}
+}
+  
+
+.formOpen_descriptionArea {
+    border: solid 1px #b1afaf;
+}
+
+.error {
+    border: solid 1px red;
+}
+
+.submitMessageSuccess {
+        text-align: center;
+    /* position: fixed; */
+    /* left: 10px; */
+    margin-top: 4px;
+    font-size: 13px;
+    font-weight: bold;
+    color: #05bf00;
+}
+
+.submitMessageError {
+        text-align: center;
+    /* position: fixed; */
+    /* left: 10px; */
+    margin-top: 4px;
+    font-size: 13px;
+    font-weight: bold;
+    color: #f71212;
+}

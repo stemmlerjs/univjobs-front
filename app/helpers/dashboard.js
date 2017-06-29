@@ -4,6 +4,7 @@ import { getAccessToken, getCSRFToken } from 'helpers/auth'
 import { fetchingJobs, fetchedJobSuccess, fetchedJobFailure, 
 	getStudentsSuccess, getStudentsError, fetchingJobTypes,
 	fetchList, fetchIndustries, fetchingIndustries, dashboard } from 'redux/modules/dashboard/dashboard'
+import { sanitize } from 'helpers/utils'
 
 /*NOTE: Reference to dashboard.js and lists.js
  * 	
@@ -119,7 +120,7 @@ export function applyToJob (answers, jobId) {
 
 	return axios({
 		method: 'post',
-		url: config.baseUrl + 'jobs/' + jobId + '/apply',
+		url: config.baseUrl + 'jobs/' + sanitize(jobId) + '/apply',
 		headers: {
 			'Authorization':  accessToken,
 			'X-CSRFToken' : csrfToken,
@@ -182,7 +183,7 @@ export function inviteStudent (jobId, studentId) {
   
   return axios({
     method: 'post',
-    url: config.baseUrl + 'jobs/invite/' + jobId + "/" + studentId,
+    url: config.baseUrl + 'jobs/invite/' + sanitize(jobId) + "/" + sanitize(studentId),
     headers: {
       'Authorization': accessToken
     }

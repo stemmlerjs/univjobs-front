@@ -23,7 +23,7 @@ export function verifyPasswordResetCode (code) {
 
 	return axios({
 		method: 'post',
-		url: config.baseUrl + 'password/confirm/' + code,
+		url: config.baseUrl + 'password/confirm/' + sanitize(code),
 		headers: {
 			'Authorization':  accessToken,
 		}

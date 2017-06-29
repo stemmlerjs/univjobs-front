@@ -1,11 +1,26 @@
-/*TODO: Switch string concat to template literals */
-export function multipleQueryList(arr) {
-	return arr.map((index, item) => 'job_id=' + item.id + '$').join('')
-}
 
-export function yyyymmdd(rightNow) {
-  return rightNow.toISOString().slice(0,10).replace(/-/g,"-");
-}
+import createDOMPurify from 'dompurify';
+const DOMPurify = createDOMPurify(window);
+
+/*
+ * sanitize
+ * 
+ * @param {String} - the dirty string to sanitize
+ * @return {String} - clean string, sanitized
+ */
+
+  export function sanitize(dirty) {
+    return DOMPurify.sanitize(dirty);
+  }
+
+  /*TODO: Switch string concat to template literals */
+  export function multipleQueryList(arr) {
+    return arr.map((index, item) => 'job_id=' + item.id + '$').join('')
+  }
+
+  export function yyyymmdd(rightNow) {
+    return rightNow.toISOString().slice(0,10).replace(/-/g,"-");
+  }
 
 /**
  * validatePassword

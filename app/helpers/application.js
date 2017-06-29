@@ -2,6 +2,7 @@
 import axios from 'axios'
 import config from 'config'
 import { getAccessToken, getCSRFToken } from 'helpers/auth'
+import { sanitize } from 'helpers/utils'
 
 /*
  *getJobs
@@ -40,7 +41,7 @@ export function getStudentApplications(store, actionCreators) {
 
     return axios({
       method: 'put',
-      url: config.baseUrl + 'applicants/show/' + jobId + "?toggle=" + hidden,
+      url: config.baseUrl + 'applicants/show/' + sanitize(jobId) + "?toggle=" + sanitize(hidden),
       headers: {
         'Authorization':  accessToken
       }

@@ -1,7 +1,7 @@
 import axios from 'axios'
 import config from 'config'
 import { getAccessToken, getCSRFToken } from 'helpers/auth'
-
+import { sanitize } from 'helpers/utils'
 
  /*
   * getPinnedJobs 
@@ -29,7 +29,7 @@ export function pinAJob (jobId) {
 
 	return axios({
 		method: 'PUT',
-		url: config.baseUrl + 'jobs/pins/' + jobId,
+		url: config.baseUrl + 'jobs/pins/' + sanitize(jobId),
 		headers: {
 			'Authorization':  accessToken,
 			'X-CSRFToken' : csrfToken
@@ -43,7 +43,7 @@ export function unPinAJob (jobId) {
 
 	return axios({
 		method: 'DELETE',
-		url: config.baseUrl + 'jobs/pins/' + jobId,
+		url: config.baseUrl + 'jobs/pins/' + sanitize(jobId),
 		headers: {
 			'Authorization':  accessToken,
 			'X-CSRFToken' : csrfToken

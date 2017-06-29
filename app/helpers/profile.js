@@ -4,7 +4,7 @@ import { getAccessToken, getCSRFToken } from 'helpers/auth'
 import { validatePersonalEmail, validateFirstName, validateLastName,
 	validateCompanyName, validateAddress, validateCity,
 	validatePostalCode, validateGPA, validateLanguages,
-    validateWebURL } from 'helpers/utils'
+    validateWebURL, sanitize } from 'helpers/utils'
 
 //********************** EMPLOYER *************************//
 
@@ -34,7 +34,7 @@ export function employerProfilePUT(data) {
   const csrfToken = getCSRFToken()
 
   for(let key in data) {
-    formData.append(key, data[key])
+    formData.append(key, sanitize(data[key]))
   }
 
   return axios({
@@ -54,7 +54,7 @@ export function employerProfilePATCH(data) {
   const csrfToken = getCSRFToken()
 
   for(let key in data) {
-    formData.append(key, data[key])
+    formData.append(key, sanitize(data[key]))
   }
 
   return axios({
@@ -119,9 +119,11 @@ export function studentProfilePUT(data) {
   for(let key in data) {
     //debugger
     //Ternary boolean checks if key is photo for backend upload of profilePic
+    var lineItem = data[key === 'photo' ? 'profilepicture' : key]
+    lineItem = sanitize(lineItem)
     formData.append(
         key === 'photo' ? 'profilepicture' : key, 
-        data[key === 'photo' ? 'profilepicture' : key]
+        lineItem
     )
   }
 
@@ -141,7 +143,7 @@ export function studentProfilePATCH(data) {
   const csrfToken = getCSRFToken()
 
   for(let key in data) {
-    formData.append(key, data[key])
+    formData.append(key, sanitize(data[key]))
   }
 
   return axios({

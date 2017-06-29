@@ -1,6 +1,7 @@
 import axios from 'axios'
 import config from 'config'
 import { getAccessToken, getCSRFToken } from 'helpers/auth'
+import { sanitize } from 'helpers/utils'
 
 /*NOTE: Reference to dashboard.js and lists.js
  * 	

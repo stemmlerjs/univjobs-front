@@ -1,21 +1,26 @@
+
 import React, { PropTypes } from 'react' 
-import { authRedirectFilter } from 'config/routes' 
-import { StudentProfile } from 'modules/Profile' 
-import { SidebarContainer } from 'modules/Main' 
-import { pageContainer } from '../styles/StudentProfileContainerStyles.css' 
-import axios from 'axios' 
-
-import config from 'config'
-
-
-
-// ========= REDUX AND STATE IMPORTS ========== //
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+
+import axios from 'axios' 
+import config from 'config'
+
+import { authRedirectFilter } from 'config/routes' 
+
+import { StudentProfile } from 'modules/Profile' 
+import { SidebarContainer } from 'modules/Main' 
+import { FeedbackForm } from 'modules/SharedComponents'
+
+// ========= REDUX AND STATE IMPORTS ========== //
+
 import * as userActionCreators from 'redux/modules/user/user'
 import * as profileActionCreators from 'redux/modules/profile/profile'
 import * as listActionCreators from 'redux/modules/list/list'
+import * as feedbackFormActionCreators from 'redux/modules/feedback/feedback'
 // ============================================ //
+
+import { pageContainer } from '../styles/StudentProfileContainerStyles.css' 
 
 // ============== MESSAGES =================== //
 var ReactToastr = require("react-toastr");
@@ -27,7 +32,8 @@ var ToastMessageFactory = React.createFactory(ReactToastr.ToastMessage.animation
 const actionCreators = {
     ...listActionCreators,
 	...profileActionCreators,
-	...userActionCreators
+	...userActionCreators,
+  ...feedbackFormActionCreators
 }
 
 const StudentProfileContainer = React.createClass({
@@ -490,9 +496,10 @@ const StudentProfileContainer = React.createClass({
   },
 })
 
-function mapStateToProps({user, profile, list}) {
+function mapStateToProps({user, profile, list, feedback}) {
   return {
     user: user ? user : {},
+    feedback: feedback ? feedback : {},
     profile: profile.studentProfile ? profile.studentProfile : {},
     snapshot: profile.snapshot ? profile.snapshot : {},
     emailPreferences: profile.studentProfile.emailPreferences ? profile.studentProfile.emailPreferences : 2,  // DEFAULT value (string || number)

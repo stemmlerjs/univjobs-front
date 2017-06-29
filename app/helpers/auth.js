@@ -7,6 +7,7 @@ import { loggingIn, loginSuccess, loginFailure,
   fetchingUserInfoFailure } from 'redux/modules/user/user'
 import { fetchedProfileInfoSuccess } from 'redux/modules/profile/profile'
 import _ from 'lodash'
+import { sanitize } from 'helpers/utils'
 
 /**
   * attemptLogin
@@ -32,7 +33,7 @@ export function login (email, password) {
       "content-type": "application/json",
       "X-CSRFToken": csrfToken
     },
-    data: JSON.stringify(bodyData)
+    data: sanitize(JSON.stringify(bodyData))
   })
 }
 
@@ -139,8 +140,8 @@ export function createStudentAccount(email, password) {
 //  const accessToken = getAccessToken()
 
   return axios.post(config.baseUrl + 'register/', {
-    email: email,
-    password: password
+    email: sanitize(email),
+    password: sanitize(password)
   })
 
 }
@@ -168,12 +169,12 @@ export function createEmployerAccount(firstName, lastName, companyName, mobile, 
    //   'X-CSRFToken': csrfToken
     },
     data: {
-      email: email,
-      password: password,
-      first_name: firstName,
-      last_name: lastName,
-      company_name: companyName,
-      mobile: mobile
+      email: sanitize(email),
+      password: sanitize(password),
+      first_name: sanitize(firstName),
+      last_name: sanitize(lastName),
+      company_name: sanitize(companyName),
+      mobile: sanitize(mobile)
     }
   })
 }
@@ -313,7 +314,7 @@ export function getCSRFToken() {
 
     return axios({
       method: 'post',
-      url: config.baseUrl + 'verify/' + token,
+      url: config.baseUrl + 'verify/' + sanitize(token),
       headers: {
         'Authorization':  accessToken
       }
