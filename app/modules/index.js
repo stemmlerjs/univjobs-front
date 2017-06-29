@@ -15,6 +15,7 @@ export StudentProfileContainer from './Profile/containers/StudentProfileContaine
 export StudentDashboardContainer from './Dashboard/containers/StudentDashboardContainer'
 export Terms from './Legal/components/Terms'
 export PinJobsContainer from './PinJobs/containers/PinJobsContainer'
+export Privacy from './Legal/components/Privacy'
 export GenericCard, { APPLICATIONS_CARD_TYPE, DASHBOARD_CARD_TYPE, PINNED_JOBS_CARD_TYPE } from './SharedComponents'
 export PasswordResetContainer from './PasswordReset/containers/PasswordResetContainer'
 export PageNotFoundContainer from './PageNotFound/containers/PageNotFoundContainer'

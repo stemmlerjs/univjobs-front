@@ -62,3 +62,16 @@
 .white {
     color: white;
 }
+
+.legalEmployer {
+    font-size: 13px;
+    color: #919399;
+    margin-top: 15px;
+    font-weight: 400;
+    line-height: 18px;
+    white-space: normal;
+}
+
+.gray {
+    color: gray;
+}

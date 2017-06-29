@@ -1,5 +1,6 @@
 // ==============REACT BUILTIN========================= //
 import React, { PropTypes } from 'react'
+import { Link } from 'react-router'
 
 // ==============THIRD PARTY IMPORTS========================= //
 import SkyLight from 'react-skylight'
@@ -9,6 +10,7 @@ import { Footer } from 'modules/SharedComponents'
 
 // ================CSS IMPORTS============================== //
 import { employerCenteredContainer, header, subHeader, modalContent, errorMessage, btn, input } from '../styles/EmployerSignupStyles.css'
+import { legalEmployer, gray } from '../styles/SignupContainerStyles.css'
 
 import { material_1 } from 'sharedStyles/material.css'
 
@@ -130,6 +132,11 @@ const EmployerSignup = React.createClass({
                                     type="password" 
                                     placeholder="Password"
                             />
+                            <p className={legalEmployer}>By registering you agree to our 
+                                <Link to="/terms" className={gray}> Terms & Services </Link> 
+                                 and 
+                                <Link to="/privacy" className={gray}> Private Policy</Link>
+                            </p>
                         </div>
                         <div className={errorMessage}>
                         { error }

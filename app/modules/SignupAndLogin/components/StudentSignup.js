@@ -45,7 +45,11 @@ export default function StudentSignup ({submitSignupForm, updateStudentSignupFor
                         type="password" 
                         placeholder="Password"
                 />
-                <p className={legal}>By registering you agree to our <Link to="/terms" className={white}>Terms & Services</Link> and Private Policy</p>
+                <p className={legal}>By registering you agree to our 
+                    <Link to="/terms" className={white}> Terms & Services </Link> 
+                    and 
+                    <Link to="/privacy" className={white}> Private Policy</Link>
+                </p>
             </div>
             <div className={error == "" ? '' : errorMessage}>
                 { error }
