@@ -6,6 +6,7 @@
   flex-direction: row;
   max-width: 1400px;
   margin: auto;
+  padding-bottom: 62px;
 }
 
 .title {

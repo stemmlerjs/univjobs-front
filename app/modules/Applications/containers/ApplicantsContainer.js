@@ -20,7 +20,7 @@ import axios from 'axios'
 import ReduxToastr from 'react-redux-toastr'
 import {toastr} from 'react-redux-toastr'
 import SkyLight from 'react-skylight'
-import { StudentProfileModal } from 'modules/SharedComponents'
+import { StudentProfileModal, JobInfoSidebar } from 'modules/SharedComponents'
 
 // =============REDUX STATE & IMPORTS========================== //
 import { connect } from 'react-redux'
@@ -28,6 +28,7 @@ import { bindActionCreators } from 'redux'
 import * as userActionCreators from 'redux/modules/user/user'
 import * as jobActionCreators from 'redux/modules/job/job'
 import * as applicantsActionCreators from 'redux/modules/applicants/applicants'
+import jobInfoSidebar from 'redux/modules/applicants/jobInfoSidebar'
 import * as list from 'helpers/lists'
 import * as utils from 'helpers/utils'
 
@@ -342,6 +343,20 @@ const ApplicantsContainer = React.createClass({
     this.refs.studentProfileAndAnswersModal.hide()
   },
 
+  /*
+   * handleCompanyInfoSidebarStateChange
+   * 
+   * We need this function to update Redux when the modal is closed so it doesn't
+   * open up again anytime new props are loaded in and this.props.jobInfoSidebar.isOpen
+   * still === true.
+   */
+
+  handleJobInfoSidebarStateChange (state) {
+    if (!state.isOpen) {
+      this.props.jobInfoSidebarClosed()
+    }
+  },
+
   componentWillMount() {
     this.doRedirectionFilter()
       .then(this.props.getAllJobsQuestionsAnswersForEmployer)
@@ -362,6 +377,35 @@ const ApplicantsContainer = React.createClass({
         <SidebarContainer isAStudent={this.props.user.isAStudent} profilePicture={typeof this.props.profile.logoUrl == "object" && this.props.profile.logoUrl !== null
             ? this.props.profile.logoUrl.preview
             : config.mediaUrl + this.props.profile.logoUrl}/>
+
+
+        {
+         /*
+          * JobInfoSidebar
+          *
+          * 
+          */
+        }
+
+        <JobInfoSidebar
+          onStateChange={ this.handleJobInfoSidebarStateChange }
+          isOpen={this.props.jobInfoSidebar.isOpen ? this.props.jobInfoSidebar.isOpen : false}
+          logoUrl={this.props.profile.logoUrl ? this.props.profile.logoUrl : ''}
+          info={this.props.jobInfoSidebar.info ? this.props.jobInfoSidebar.info : {}}
+
+          handleToggleResponsibilitiesSection={this.props.toggleResponsibilitiesSection}
+          responsibilitiesSectionExpanded={this.props.jobInfoSidebar.responsibilitiesSectionExpanded ? this.props.jobInfoSidebar.responsibilitiesSectionExpanded : true}
+
+          handleToggleQualificationsSection={this.props.toggleQualificationsSection}
+          qualificationsSectionExpanded={this.props.jobInfoSidebar.qualificationsSectionExpanded ? this.props.jobInfoSidebar.qualificationsSectionExpanded : true}
+
+          handleToggleDesiredSkillsSection={this.props.toggleDesiredSkillsSection}
+          desiredSkillsSectionExpanded={this.props.jobInfoSidebar.desiredSkillsSectionExpanded ? this.props.desiredSkillsSectionExpanded : true}
+
+          handleToggleCompensationSection={this.props.toggleCompensationSection}
+          compensationSectionExpanded={this.props.compensationSectionExpanded ? this.props.compensationSectionExpanded : true}
+          />
+
         <Applicants
           jobs={this.props.jobs}
           currentSelectedJob={this.props.currentSelectedJob}
@@ -372,6 +416,8 @@ const ApplicantsContainer = React.createClass({
           handleCloseStudentProfileAndAnswersModal={this.handleCloseStudentProfileAndAnswersModal}
           lists={this.props.lists}
           hiddenStudents={this.props.hiddenStudents}
+          handleOpenJobInfoSidebar={this.props.jobInfoSidebarOpen}
+          profile={this.props.profile}
           />
           
         {
@@ -543,6 +589,7 @@ function mapStateToProps({user, job, profile, applicants, list}) {
   return {
 	  user: user ? user : {},
     profile: profile.employerProfile ? profile.employerProfile : {},
+    jobInfoSidebar: applicants.jobInfoSidebar ? applicants.jobInfoSidebar : {},
     jobs: job.employerJobs ? job.employerJobs : [],
     currentSelectedJob: applicants.currentSelectedJob ? applicants.currentSelectedJob : {},
     currentSelectedStudent: applicants.currentSelectedStudent ? applicants.currentSelectedStudent : {},
@@ -572,7 +619,8 @@ function mapActionCreatorsToProps(dispatch) {
   return bindActionCreators({
       ...userActionCreators,
       ...jobActionCreators,
-      ...applicantsActionCreators
+      ...applicantsActionCreators,
+      ...jobInfoSidebar.actionCreators
   }, dispatch)
 }
 

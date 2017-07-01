@@ -1,0 +1,36 @@
+
+
+.applicants_top_container {
+    display: flex;
+    flex-direction: row;
+}
+
+.applicants_top_flex_item {
+    width: 50%;
+}
+
+.viewJobButton {
+    background-color: #3697db;
+    border: none;
+    color: white;
+    font-weight: bold;
+    font-size: 13px;
+    width: 109px;
+    height: 51px;
+    cursor: pointer;
+    outline: none;
+    transition: 0.1s ease-in;
+    border-radius: 5px;
+    border: solid 0px white;
+    margin-right: 18px;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.12), 0 1px 1px rgba(0,0,0,0.24);
+    transition: 0.2s ease-out;
+    margin-top: 20px;
+}
+.viewJobButton:hover {
+    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, .3);
+}
+
+.disabledButton {
+    background-color: #8c8d8e;
+}

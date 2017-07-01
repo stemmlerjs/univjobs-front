@@ -14,11 +14,16 @@ import { SkyLightStateless } from 'react-skylight'
 import { Combobox } from 'react-widgets'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
+import moment from 'moment'
+
+import { getGoogleMapsLink } from 'helpers/dashboard'
+
 
 // ================CSS IMPORTS============================== //
 import { rootComponentContainer, margins, title, comboBox } from 'sharedStyles/sharedComponentStyles.css'
 import { pageFiltersAndSearch } from 'sharedStyles/widgets.css'
 import { flexibleCardContainer } from 'sharedStyles/cardContainer.css'
+import { applicants_top_container, applicants_top_flex_item, viewJobButton, disabledButton } from '../styles/Applicants.css'
 
 Applicants.propTypes = {
     //Insert typechecking variables
@@ -43,19 +48,62 @@ export default function Applicants (props) {
           * the ability to switch between jobs with this simple dropdown.
           */
         }
-        <div>
-          <div>Job Title</div>
-          <Combobox
-              className={`${comboBox}`}
-              textField="title"
-              valueField="job_id"
-              filter="contains"
-              data={props.jobs.filter((job) => {
-                return job.active == 1
-              })}
-              onChange={job => props.changeSelectedJob(job)}
-              value={props.currentSelectedJob.job_id}
-            />
+        <div className={applicants_top_container}>
+          <div className={applicants_top_flex_item}>
+            <div>Job Title</div>
+            <Combobox
+                className={`${comboBox}`}
+                textField="title"
+                valueField="job_id"
+                filter="contains"
+                data={props.jobs.filter((job) => {
+                  return job.active == 1
+                })}
+                onChange={job => props.changeSelectedJob(job)}
+                value={props.currentSelectedJob.job_id}
+              />
+          </div>
+          <div className={applicants_top_flex_item}>
+
+            {
+             /*
+              * OPEN JOB INFO SIDEBAR
+              */
+            }
+
+            <button onClick={() => {
+
+               /* 
+                * Then we will open the modal, only when a job is actually
+                * selected.
+                */ 
+
+              if (props.currentSelectedJob.job_id !== undefined) {
+
+                /*
+                 * Now, we need to assemble all the information that's needed inside of the 
+                 * side bar.
+                 */
+
+                props.handleOpenJobInfoSidebar({
+                  paid: props.currentSelectedJob.paid,
+                  title: props.currentSelectedJob.title,
+                  startDate: moment(props.currentSelectedJob.start_date).format('MMMM Do, YYYY'), 
+                  responsibilities: props.currentSelectedJob.responsibilities,
+                  qualification: props.currentSelectedJob.qualification,
+                  max_applicants: props.currentSelectedJob.max_applicants,
+                  applicant_count: props.currentSelectedJob.applicants.length,
+                  jobType: props.currentSelectedJob.type,
+                  desiredSkills: props.currentSelectedJob.desired_skills,
+                  location: props.currentSelectedJob.location,
+                  remote_work: props.currentSelectedJob.remote_work,
+                  compensation: props.currentSelectedJob.compensation,
+                  createdAt: props.currentSelectedJob.createdAt
+                })
+              }
+            }} 
+            className={props.currentSelectedJob.job_id === undefined ? viewJobButton + ' ' + disabledButton : viewJobButton}>View details</button>
+          </div>
         </div>
 
         {

@@ -2,6 +2,8 @@
 import { rejectStudent as rejectStudentHTTPRequest, 
   contactStudent as contactStudentHTTPRequest, hireStudent as hireStudentHTTPRequest } from 'helpers/applicant'
 
+import jobInfoSidebar from './jobInfoSidebar'
+
 // =======================================================
 // ====================== ACTIONS ========================
 // =======================================================
@@ -272,6 +274,7 @@ const initialApplicationsState = {
   contactSuccess: false,
   isHiring: false,
   hireSuccess: false,
+  jobInfoSidebar: {}
 }
 
 // =======================================================
@@ -280,6 +283,43 @@ const initialApplicationsState = {
 
 export default function applicants (state = initialApplicationsState, action) {
   switch(action.type) {
+
+   /*
+    * ==================================
+    *       JOB INFO SIDEBAR
+    * ==================================
+    */
+
+    case jobInfoSidebar.actions.JOB_INFO_SIDEBAR_OPEN:
+      return {
+        ...state,
+        jobInfoSidebar: jobInfoSidebar.reducers.jobInfoSidebar(state.jobInfoSidebar, action)
+      }
+    case jobInfoSidebar.actions.JOB_INFO_SIDEBAR_CLOSED:
+      return {
+        ...state,
+        jobInfoSidebar: jobInfoSidebar.reducers.jobInfoSidebar(state.jobInfoSidebar, action)
+      }
+    case jobInfoSidebar.actions.TOGGLE_QUALIFICATIONS_SECTION:
+      return {
+        ...state,
+        jobInfoSidebar: jobInfoSidebar.reducers.jobInfoSidebar(state.jobInfoSidebar, action)
+      }
+    case jobInfoSidebar.actions.TOGGLE_DESIRED_SKILLS_SECTION:
+      return {
+        ...state,
+        jobInfoSidebar: jobInfoSidebar.reducers.jobInfoSidebar(state.jobInfoSidebar, action)
+      }
+    case jobInfoSidebar.actions.TOGGLE_COMPENSATION_SECTION:
+      return {
+        ...state,
+        jobInfoSidebar: jobInfoSidebar.reducers.jobInfoSidebar(state.jobInfoSidebar, action)
+      }
+    case jobInfoSidebar.actions.TOGGLE_RESPONSIBILITIES_SECTION:
+      return {
+        ...state,
+        jobInfoSidebar: jobInfoSidebar.reducers.jobInfoSidebar(state.jobInfoSidebar, action)
+      } 
 
    /*
     * ==================================
