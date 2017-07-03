@@ -6,6 +6,7 @@
   "scripts": {
     "start": "webpack-dev-server",
     "proxy": "nodemon proxy.js",
+    "build": "webpack -p",
     "production": "webpack -p && node server.js ",
     "test": "mocha --compilers js:babel-register --require babel-polyfill --recursive app/tests",
     "e2eTest": "codeceptjs run --verbose",

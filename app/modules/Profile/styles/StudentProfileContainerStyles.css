@@ -168,9 +168,9 @@
 
 .textArea {
     composes: input from 'sharedStyles/styles.css';
-    width: 35vw;
-    resize: vertical;
-    height: 174px;
+    height: 97px;
+    resize: none;
+    width: 470px;
 }
 
 .profilePictureDragDrop {

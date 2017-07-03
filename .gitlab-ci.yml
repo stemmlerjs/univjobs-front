@@ -1,0 +1,10 @@
+images: bayesimpact/react-base
+
+before_script:
+  - npm install -g webpack
+  - npm install
+
+
+production:
+  script:
+    - npm run build
