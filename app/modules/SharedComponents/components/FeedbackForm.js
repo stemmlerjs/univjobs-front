@@ -57,11 +57,12 @@ export default function FeedbackForm ({ isOpen, isSubmitting, submitSuccess, sub
                 value={description}
                 onBlur={() => checkForFormErrors(title, description)} 
                 className={errorsMap.description ? formOpen_textarea + ' ' + error : formOpen_textarea}/>
-
+              {/* 
               <div className={formOpen_checkboxContainer}>
                 <input checked={includeScreenshot} onChange={(e) => updateFeedbackForm('includeScreenshot')} className={formOpen_checkbox} type="checkbox"/>
                 <div>Include screenshot?</div>
               </div>
+              */}
 
               {
                 submitSuccess

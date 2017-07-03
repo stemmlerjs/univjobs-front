@@ -159,8 +159,19 @@ export function submitProfileFirstTime(userTypeInt, profileInfo, user, successCa
     switch(userTypeInt) {
       case 0:
     	console.log("SUBMITTING STUDENT PROFILE FIRST TIME")
+
+     /*
+      * First, we need to validate the profile fields.
+      * Ensure that any fields that needed to be filled out are filled out.
+      */
         
     	validateStudentProfileFields(profileInfo, (errorExist, profileFieldErrors) => {
+
+        /*
+         * An error occured. Some fields that needed to be filled out were not properly
+         * filled out.
+         */
+
     	  if(errorExist) {
 
     	    // DISPATCH - SAVE_PROFILE_ERROR
@@ -169,9 +180,30 @@ export function submitProfileFirstTime(userTypeInt, profileInfo, user, successCa
     	      "Please fill in missing fields"
     	    ], true))
 
-    	  } else {
+    	  } 
+        
+        /*
+         * Otherwise, all is well. We should go ahead and submit.
+         * But we should also set default values for things if they are null.
+         * 
+         * Important: If we check the redux store, we'll see that there are a bunch
+         * of fields that don't assume the default values that they should be assuming 
+         * until the user actually interacts with that input field. This means that we
+         * are going to have to set the default values in the object that we're using to
+         * update the profile with, here.
+         */
+        
+        else {
     	   console.log('SUBMIT STUDENT PROFILE NO ERRORS')
     	    // No errors, proceed to /PUT on api/me
+
+          debugger;
+
+          /*
+           * SET DEFAULT VALUES (if not interacted with) BEFORE SUBMIT.
+           */
+
+
 
           var putData = {
               "is_a_student": true,
@@ -196,7 +228,7 @@ export function submitProfileFirstTime(userTypeInt, profileInfo, user, successCa
               personal_email: profileInfo.personalEmail,
               gender: profileInfo.gender.id ? profileInfo.gender.id : profileInfo.gender,
                 /*Converts the value to num*/
-              has_car: hasCarBoolean(profileInfo.hasCar),
+              has_car: profileInfo.hasCar === true ? JSON.stringify(1) : JSON.stringify(0),
               recent_company_name: profileInfo.companyName,
               recent_company_position: profileInfo.position,
               fun_fact: profileInfo.funFacts,
@@ -655,11 +687,11 @@ function employerProfileErrors(state = employerProfileErrorsInitialState, action
 */
 
 const initialStudentProfileState = {
-  emailPreferences: '',
+  emailPreferences: 2,
   firstName: '',
   lastName: '',
   studentStatus: '',
-  educationLevel: '',
+  educationLevel: 0,
   schoolName: '',
   enrollmentDate: '',
   graduationDate: '',
