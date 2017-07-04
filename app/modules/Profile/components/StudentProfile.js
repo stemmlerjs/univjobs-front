@@ -26,7 +26,7 @@ import { pageContainer, profileField, profileHeader,
         dropzoneContent, inlineDropzone, btn, 
         saveBtnContainer, saveBtnList, saveBtnClicked, 
         saveBtn, space, hideInput, showInput, textArea,
-				profilePictureDragDropAlt, savedResumeView, actualSaveBtn, materialStyle } from '../styles/StudentProfileContainerStyles.css'
+				profilePictureDragDropAlt, savedResumeView, actualSaveBtn, pageItemsContainer, materialStyle } from '../styles/StudentProfileContainerStyles.css'
 import { error } from 'sharedStyles/error.css' 
 import { input } from 'sharedStyles/widgets.css'
 
@@ -134,7 +134,7 @@ export default function StudentProfile (props) {
   }
 
   return (
-    <div>
+    <div className={pageItemsContainer}>
     	<div className={profileHeader}>Complete your profile so we can find you a job today!</div>
 
 			{/* EMAIL NOTIFICATIONS */}
@@ -183,7 +183,7 @@ export default function StudentProfile (props) {
 			 {/* STATUS */}
 			 <li>
 			  <DropdownList
-			     className={props.propsErrorMap.studentStatus ? shortDropDown + ' ' + error : shortDropDown}
+			     className={props.propsErrorMap.studentStatus ? `${shortDropDown} ${error} ${materialStyle}` : `${shortDropDown} ${materialStyle}`}
 			     valueField="id" textField="status_text"
 			     messages={messages}
 			     data={props.studentStatusList}
@@ -203,7 +203,7 @@ export default function StudentProfile (props) {
 			 styles={nameField}>
 			 <li>
 			   <DropdownList
-			    className={props.propsErrorMap.educationLevel ? shortDropDown + ' ' + error : shortDropDown}
+			    className={props.propsErrorMap.educationLevel ? `${shortDropDown}  ${error} ${materialStyle}` : `${shortDropDown} ${materialStyle}`}
 			    valueField="id" textField="description"
 			    messages={messages}
 			    data={props.educationLevelList}
@@ -221,7 +221,7 @@ export default function StudentProfile (props) {
 			<StudentProfileField title="I enrolled in " 
 			 styles={nameField}>
 			 <DateTimePicker
-			  className={props.propsErrorMap.enrollmentDate ? dropDown + ' ' + error :  dropDown}
+			  className={props.propsErrorMap.enrollmentDate ? `${dropDown} ${error} ${materialStyle}` :  `${dropDown} ${materialStyle}`}
 			  time={false}
 			  format='LL'
 			  onChange={value => props.updateProfileField('enrollmentDate', value, true)}
@@ -229,7 +229,7 @@ export default function StudentProfile (props) {
 			 />	
 			 <p> and I will graduate in</p>
 			 <DateTimePicker
-			  className={props.propsErrorMap.graduationDate ? dropDown + ' ' + error : dropDown}
+			  className={props.propsErrorMap.graduationDate ? `${dropDown} ${error} ${materialStyle}` : `${dropDown} ${materialStyle}`}
 			  time={false}
 			  format='LL'
 			  onChange={value => props.updateProfileField('graduationDate', value, true)}
@@ -242,7 +242,7 @@ export default function StudentProfile (props) {
 			  styles={nameField}>
 			  <li>
 			    <DropdownList
-			      className={props.propsErrorMap.map ? longDropDown + ' ' +  error : longDropDown}
+			      className={props.propsErrorMap.map ? `${longDropDown} ${error} ${materialStyle}` : `${longDropDown} ${materialStyle}`}
 			      valueField="id" textField="major_text"
 			      messages={messages}
 			      data={props.majorsList}
@@ -269,7 +269,7 @@ export default function StudentProfile (props) {
 			 <li>
 			    <input
 			     
-			     className={props.propsErrorMap.gpa ? input + ' ' + error : input}
+			     className={props.propsErrorMap.gpa ? `${input} ${error} ${materialStyle}` : `${input} ${materialStyle}`}
 			     type="number"
 			     step="0.01"
 			     max="4"
@@ -282,7 +282,7 @@ export default function StudentProfile (props) {
 			   <p>or</p>
 			 </li>
 			 <li className={saveBtnList}>
-               <button className={!props.gpa || props.gpa == 0 ? saveBtnClicked : saveBtn} 
+               <button className={!props.gpa || props.gpa == 0 ? `${saveBtnClicked} ${materialStyle}` : `${saveBtn} ${materialStyle}`} 
                                 onClick={(e) => {props.onHandleButtonToggle(true, 'gpaToggle'); props.updateProfileField('gpa', '0.00', true)}}>
                     I do not have a GPA
                 </button>
@@ -296,7 +296,7 @@ export default function StudentProfile (props) {
 			 styles={nameField}>
 			 <li>
 			  <input
-			    className={props.propsErrorMap.personalEmail ? input + ' ' + error : input}
+			    className={props.propsErrorMap.personalEmail ? `${materialStyle} ${input} ${error}` : `${materialStyle} ${input}`}
 			    type="text"
 			    placeholder="Email"
 			    id="student_personalEmail"
@@ -308,7 +308,8 @@ export default function StudentProfile (props) {
 			   <p>or</p>
 			 </li>
 			 <li className={saveBtnList}>
-               <button className={!props.personalEmail ? saveBtnClicked : saveBtn} onClick={() => props.onHandleButtonToggle(true, 'emailToggle') }>I prefer school email</button>
+               <button className={!props.personalEmail ? `${materialStyle} ${saveBtnClicked}` : `${materialStyle} ${saveBtn}`} 
+							 	onClick={() => props.onHandleButtonToggle(true, 'emailToggle') }>I prefer school email</button>
 			 </li>
 			</StudentProfileField>
 
@@ -316,7 +317,7 @@ export default function StudentProfile (props) {
 			<StudentProfileField title="I am " 
 			 styles={nameField}>
 			 <DropdownList
-			  className={props.propsErrorMap.gender ? shortDropDown + ' ' + error : shortDropDown}
+			  className={props.propsErrorMap.gender ? `${shortDropDown} ${materialStyle} ${error}` : `${shortDropDown} ${materialStyle}`}
 			  valueField="id" textField="gender_description"
 			  messages={messages}
 			  data={props.gendersList}
@@ -332,15 +333,17 @@ export default function StudentProfile (props) {
 			<StudentProfileField title="I"
 			 styles={nameField}>
 			 <li className={saveBtnList}>
-               <button className={props.sportsToggle ? saveBtnClicked : saveBtn} onClick={() => props.onHandleButtonToggle(true, 'sportsToggle') }>play</button>
-			   <button className={props.sportsToggle ? saveBtn : saveBtnClicked} onClick={() => props.onHandleButtonToggle(false, 'sportsToggle') }>do not play</button>
+          <button className={props.sportsToggle ? `${materialStyle} ${saveBtnClicked}` : `${materialStyle} ${saveBtn}`} 
+						onClick={() => props.onHandleButtonToggle(true, 'sportsToggle') }>play</button>
+			   <button className={props.sportsToggle ? `${materialStyle} ${saveBtn}` : `${materialStyle} ${saveBtnClicked}`} 
+				 		onClick={() => props.onHandleButtonToggle(false, 'sportsToggle') }>do not play</button>
 			 </li>
 			 <li className={space}>
 			 	<p>on a sports team</p>
 			 </li>
              <li className={props.sportsToggle ? showInput : hideInput}>
 			    <Multiselect
-                   className={props.propsErrorMap.sportsTeam? shortInput + ' ' +  error : shortInput}
+                   className={props.propsErrorMap.sportsTeam? `${materialStyle} ${shortInput} ${error}` : `${materialStyle} ${shortInput}`}
                    valueField='id' textField='sport'
                    placeholder='Basketball, Hockey'
                    messages={messages}
@@ -358,15 +361,17 @@ export default function StudentProfile (props) {
 			<StudentProfileField title="I " 
 			 styles={nameField}>
 			 <li className={saveBtnList}>
-			   <button className={props.clubsToggle ? saveBtnClicked : saveBtn} onClick={() => props.onHandleButtonToggle(true, 'clubsToggle') }>am</button>
-			   <button className={props.clubsToggle ? saveBtn : saveBtnClicked} onClick={() => props.onHandleButtonToggle(false, 'clubsToggle') }>am not</button>
+			   <button className={props.clubsToggle ? `${saveBtnClicked} ${materialStyle}` : `${saveBtn} ${materialStyle}`} 
+				 		onClick={() => props.onHandleButtonToggle(true, 'clubsToggle') }>am</button>
+			   <button className={props.clubsToggle ? `${saveBtn} ${materialStyle}` : `${saveBtnClicked} ${materialStyle}`} 
+				 		onClick={() => props.onHandleButtonToggle(false, 'clubsToggle') }>am not</button>
 			 </li>
 			 <li className={space}>
 			 	<p>on a school club</p>
 			 </li>
-            <li className={props.clubsToggle ? showInput : hideInput}>
+        <li className={props.clubsToggle ? `${showInput}` : `${hideInput}`}>
 			 <Multiselect
-			   className={props.propsErrorMap.schoolClub? shortInput + ' ' +  error : shortInput}
+			   className={props.propsErrorMap.schoolClub? `${materialStyle} ${shortInput} ${error}` : `${materialStyle} ${shortInput}`}
 			   valueField='id' textField='club_name'
                placeholder='Toastmaster, Enactus'
 			   messages={messages}
@@ -384,15 +389,17 @@ export default function StudentProfile (props) {
 			<StudentProfileField title="I" 
 			 styles={nameField}>
 			 <li className={saveBtnList}>
-			   <button className={props.languagesToggle ? saveBtnClicked : saveBtn} onClick={() => props.onHandleButtonToggle(true, 'languagesToggle') }>speak</button>
-			   <button className={props.languagesToggle ? saveBtn : saveBtnClicked} onClick={() => props.onHandleButtonToggle(false, 'languagesToggle') }>do not speak</button>
+			   <button className={props.languagesToggle ? `${materialStyle} ${saveBtnClicked}` : `${materialStyle} ${saveBtn}`} 
+				 		onClick={() => props.onHandleButtonToggle(true, 'languagesToggle') }>speak</button>
+			   <button className={props.languagesToggle ? `${materialStyle} ${saveBtn}` : `${materialStyle} ${saveBtnClicked}`} 
+				 		onClick={() => props.onHandleButtonToggle(false, 'languagesToggle') }>do not speak</button>
 			 </li>
 			 <li className={space}>
 			 	<p>other languages</p>
 			 </li>
             <li className={props.languagesToggle ? showInput : hideInput}>
 			 <Multiselect
-			   className={props.propsErrorMap.languages ? shortInput + ' ' +  error : shortInput}
+			   className={props.propsErrorMap.languages ? `${materialStyle} ${shortInput}  ${error}` : `${materialStyle} ${shortInput}`}
 			   textField='language'
 			   valueField='id'
                placeholder='French, Spanish'
@@ -407,7 +414,7 @@ export default function StudentProfile (props) {
 			{/* CAR */}
 			<StudentProfileField title="I " styles={nameField}>
 			 <li className={saveBtnList}>
-			   <button className={props.hasCar ? saveBtnClicked : saveBtn} 
+			   <button className={props.hasCar ? `${materialStyle} ${saveBtnClicked}` : `${materialStyle} ${saveBtn}`} 
 				   data-selection="0"
 				   data-field-name="hasCar"
 				   onClick={optionHighlightClick}
@@ -415,7 +422,7 @@ export default function StudentProfile (props) {
 			    >
 				    have
 			    </button>
-			   <button className={props.hasCar === false ? saveBtnClicked : saveBtn} 
+			   <button className={props.hasCar === false ? `${materialStyle} ${saveBtnClicked}` : `${materialStyle} ${saveBtn}`} 
 				   data-selection="1"
 				   data-field-name="hasCar"
 				   onClick={optionHighlightClick}
@@ -434,7 +441,7 @@ export default function StudentProfile (props) {
 			<StudentProfileField title="I recently worked at "      styles={nameField}>
 			<li> 
 		        <input
-			   className={props.propsErrorMap.companyName ? input + ' ' + error : input }
+			   className={props.propsErrorMap.companyName ? `${materialStyle} ${input} ${error}` : `${materialStyle} ${input}` }
 			   type="text"
 			   placeholder="Company Name"
 			   id="student_companyName"
@@ -447,7 +454,7 @@ export default function StudentProfile (props) {
 			  </li>
 			  <li>
 			   <input
-			    className={props.propsErrorMap.position ? input + ' ' + error : input}
+			    className={props.propsErrorMap.position ? `${materialStyle} ${input} ${error}` : `${materialStyle} ${input}`}
 			    type="text"
 			    placeholder="Position"
 			    id="student_position"
@@ -461,7 +468,7 @@ export default function StudentProfile (props) {
 			<StudentProfileField title="A fun fact about me is ">
 			<li>
 			 <textarea
-			   className={props.propsErrorMap.funFacts ? textArea + ' ' + error : textArea}
+			   className={props.propsErrorMap.funFacts ? `${materialStyle} ${textArea} ${error}` : `${materialStyle} ${textArea}`}
 			   type="text"
 			   placeholder="Example: I backpacked to Europe by myself last summer"
          maxLength="140"
@@ -484,7 +491,7 @@ export default function StudentProfile (props) {
 			{/* CITY */}
 			<StudentProfileField title="My hometown is">
 			 <input
-			   className={props.propsErrorMap.hometown ? input + ' ' + error : input}
+			   className={props.propsErrorMap.hometown ? `${materialStyle} ${input} ${error}` : `${materialStyle} ${input}`}
 			   type="text"
 			   placeholder="City"
 			   id="student_hometown"
@@ -497,7 +504,7 @@ export default function StudentProfile (props) {
 			<StudentProfileField title="My favourite hobbies are"> 
 			 <li>
 			  <input
-			   className={props.propsErrorMap.hobbies ? shortInput + ' ' + error : shortInput}
+			   className={props.propsErrorMap.hobbies ? `${materialStyle} ${shortInput} ${error}` : `${materialStyle} ${shortInput}`}
 			   type="text"
 			   placeholder="Playing guitar, Making movies, etc.."
 			   onBlur={(e) => props.updateProfileField('hobbies', e.target.value, true)}
@@ -536,11 +543,9 @@ export default function StudentProfile (props) {
 
       </StudentProfileField>
     {/* ======== SAVE BUTTON ======== */}
-      <div>
         <div className={saveBtnContainer}>
-          <button onClick={(e) => props.onSubmit(props)} className={saveBtn + ' ' + actualSaveBtn}>Save</button>
+          <button onClick={(e) => props.onSubmit(props)} className={actualSaveBtn}>Save</button>
         </div>
-      </div>
    </div>
   )
 }
