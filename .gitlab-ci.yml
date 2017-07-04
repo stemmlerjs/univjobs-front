@@ -6,7 +6,7 @@ before_script:
   
 production:
   script:
-    - npm run build
+    - npm run production
 
     # Install ssh-agent if not already installed, it is required by Docker.
     # (change apt-get to yum if you use a CentOS-based image)
