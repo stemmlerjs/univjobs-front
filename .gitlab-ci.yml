@@ -3,8 +3,22 @@ image: bayesimpact/react-base:latest
 before_script:
   - npm install -g webpack
   - npm install
-
-
+  
 production:
   script:
     - npm run build
+
+    # Install ssh-agent if not already installed, it is required by Docker.
+    # (change apt-get to yum if you use a CentOS-based image)
+    - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
+
+    # Run ssh-agent (inside the build environment)
+    - eval $(ssh-agent -s)
+
+    # Add the SSH key stored in SSH_SQUEAKY_KEY variable to the agent store
+    - ssh-add <(echo "$SSH_SQUEAKY_KEY")
+
+    - rsync -a ./dist ci@159.203.10.200:/home/khalil/univjobs-front/dist
+
+
+    
