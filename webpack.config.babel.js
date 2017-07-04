@@ -29,12 +29,14 @@ const HTMLWebpackPluginConfig = new HtmlWebpackPlugin({
   * 
   * This setting is going to set process.env.CURRENT_ENV to 'prod' inside
   * of the code that webpack is going to compile for us.
+  *
+  * TODO: Set ,
+    NODE_ENV: JSON.stringify('production') in productionPlugin
   */
 
 const productionPlugin = new webpack.DefinePlugin({
   'process.env': {
-    CURRENT_ENV: JSON.stringify('prod'),
-    NODE_ENV: JSON.stringify('production')
+    CURRENT_ENV: JSON.stringify('prod')
   }
 })
 
