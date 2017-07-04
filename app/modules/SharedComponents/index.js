@@ -1,6 +1,5 @@
-export ApplicationModal from './components/ApplicationModal'
+
 export Footer from './components/Footer'
-export ApplicationModal from './components/ApplicationModal'
 export GenericCard, { APPLICATIONS_CARD_TYPE, DASHBOARD_CARD_TYPE, PINNED_JOBS_CARD_TYPE } from './components/GenericCard'
 export Navigation from './components/Navigation'
 export RegularNav from './components/RegularNav'
