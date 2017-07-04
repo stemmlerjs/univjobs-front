@@ -16,13 +16,10 @@ production:
     - eval $(ssh-agent -s)
 
     # Install rsync
-    - apt-get update && apt-get upgrade -y && apt-get dist-upgrade -y && apt-get -y install rsync
+    - apt-get update && apt-get upgrade -y && apt-get dist-upgrade -y && apt-get -y install rsync && apt-get -y install sshpass
 
-    # Create private key file.
-    - ls
-    - echo $SSH_SQUEAKY_KEY > key_ssh 
-    - cat key_ssh
-    - rsync -a -e "ssh -i key_ssh" ./dist ci@159.203.10.200:/home/khalil/univjobs-front/dist
+    # Sync
+    - sshpass -p $SSH_SQUEAKY_CI_PASS rsync -avz ./dist ci@159.203.10.200:/home/khalil/univjobs-front
 
 
     
