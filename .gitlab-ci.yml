@@ -1,4 +1,4 @@
-images: bayesimpact:react-base
+images: bayesimpact/react-base:latest
 
 before_script:
   - npm install -g webpack
