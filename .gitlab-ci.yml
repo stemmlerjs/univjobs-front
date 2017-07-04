@@ -15,9 +15,14 @@ production:
     # Run ssh-agent (inside the build environment)
     - eval $(ssh-agent -s)
 
-    # Add the build to the server
+    # Install rsync
     - apt-get update && apt-get upgrade -y && apt-get dist-upgrade -y && apt-get -y install rsync
-    - rsync -a -e "ssh -i $SSH_SQUEAKY_KEY" ./dist ci@159.203.10.200:/home/khalil/univjobs-front/dist
+
+    # Create private key file.
+    - ls
+    - echo $SSH_SQUEAKY_KEY > key_ssh 
+    - cat key_ssh
+    - rsync -a -e "ssh -i key_ssh" ./dist ci@159.203.10.200:/home/khalil/univjobs-front/dist
 
 
     
