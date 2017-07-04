@@ -1,12 +1,12 @@
 image: bayesimpact/react-base:latest
 
 before_script:
-  #- npm install -g webpack
-  #- npm install
+  - npm install -g webpack
+  - npm install
   
 production:
   script:
-    #- npm run build
+    - npm run build
 
     # Install ssh-agent if not already installed, it is required by Docker.
     # (change apt-get to yum if you use a CentOS-based image)
