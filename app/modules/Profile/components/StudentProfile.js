@@ -26,7 +26,7 @@ import { pageContainer, profileField, profileHeader,
         dropzoneContent, inlineDropzone, btn, 
         saveBtnContainer, saveBtnList, saveBtnClicked, 
         saveBtn, space, hideInput, showInput, textArea,
-				profilePictureDragDropAlt, savedResumeView, actualSaveBtn } from '../styles/StudentProfileContainerStyles.css'
+				profilePictureDragDropAlt, savedResumeView, actualSaveBtn, materialStyle } from '../styles/StudentProfileContainerStyles.css'
 import { error } from 'sharedStyles/error.css' 
 import { input } from 'sharedStyles/widgets.css'
 
@@ -134,14 +134,14 @@ export default function StudentProfile (props) {
   }
 
   return (
-    <div >
+    <div>
     	<div className={profileHeader}>Complete your profile so we can find you a job today!</div>
 
 			{/* EMAIL NOTIFICATIONS */}
 			<StudentProfileField title="My email notification preferences:"> 
 			<li>
 			  <DropdownList
-			   className={props.propsErrorMap.emailPreferences ? mediumDropDown + ' ' + error : mediumDropDown}
+			   className={props.propsErrorMap.emailPreferences ? `${mediumDropDown} ${error} ${materialStyle}` : `${mediumDropDown} ${materialStyle}`}
 			   valueField="id" textField="description"
 			   data={props.emailPrefList}
 			   value={props.emailPreferences}
@@ -155,24 +155,24 @@ export default function StudentProfile (props) {
 			<StudentProfileField title="My name is">
 			 <li>
 			    <input
-			     className={props.propsErrorMap.firstName ? input + ' ' + error : input}
-                 name="student[firstname]"
+			     className={props.propsErrorMap.firstName ? `${input} ${error} ${materialStyle}` : `${input} ${materialStyle}`}
+           name="student[firstname]"
 			     type="text"
 			     placeholder="First name"
 			     onChange={(e)=> props.updateProfileField('firstName', e.target.value, true)}
-			     value={props.firstName}
+			     id="student_firstName"
 			     >
 			    </input>
 			 </li>
 		 
 			 <li>
 			   <input
-			    className={props.propsErrorMap.lastName ? input + ' ' + error : input}
-                 name="student[lastname]"
+			    className={props.propsErrorMap.lastName ? `${input} ${materialStyle} ${error}` : `${input} ${materialStyle}`}
+          name="student[lastname]"
 			    type="text"
 			    placeholder="Last Name"
-			    onChange={(e)=> props.updateProfileField('lastName', e.target.value, true)}
-			    value={props.lastName}
+			    onBlur={(e)=> props.updateProfileField('lastName', e.target.value, true)}
+			    id="student_lastName"
 			    >
 			    </input>
 			 </li> 
@@ -299,8 +299,8 @@ export default function StudentProfile (props) {
 			    className={props.propsErrorMap.personalEmail ? input + ' ' + error : input}
 			    type="text"
 			    placeholder="Email"
-			    value={props.personalEmail}
-			    onChange={(e) => {props.updateProfileField('personalEmail', e.target.value, true); props.onHandleButtonToggle(false, 'emailToggle')}}
+			    id="student_personalEmail"
+			    onBlur={(e) => {props.updateProfileField('personalEmail', e.target.value, true); props.onHandleButtonToggle(false, 'emailToggle')}}
 			    >
 			  </input>
 			 </li> 
@@ -419,8 +419,7 @@ export default function StudentProfile (props) {
 				   data-selection="1"
 				   data-field-name="hasCar"
 				   onClick={optionHighlightClick}
-					 defaultValue={true}
-			    >
+					 defaultValue={true}>
 				    do not have
 			    </button>
 			 </li>
@@ -438,8 +437,8 @@ export default function StudentProfile (props) {
 			   className={props.propsErrorMap.companyName ? input + ' ' + error : input }
 			   type="text"
 			   placeholder="Company Name"
-			   value={props.companyName}
-			   onChange={(e) => props.updateProfileField('companyName', e.target.value, true)}
+			   id="student_companyName"
+			   onBlur={(e) => props.updateProfileField('companyName', e.target.value, true)}
 			   >
 			  </input>
 			 </li>
@@ -451,8 +450,8 @@ export default function StudentProfile (props) {
 			    className={props.propsErrorMap.position ? input + ' ' + error : input}
 			    type="text"
 			    placeholder="Position"
-			    value={props.position}
-			    onChange={(e) => props.updateProfileField('position', e.target.value, true)} 
+			    id="student_position"
+			    onBlur={(e) => props.updateProfileField('position', e.target.value, true)} 
 			   >
 			 </input>
 			 </li>
@@ -465,11 +464,13 @@ export default function StudentProfile (props) {
 			   className={props.propsErrorMap.funFacts ? textArea + ' ' + error : textArea}
 			   type="text"
 			   placeholder="Example: I backpacked to Europe by myself last summer"
-               maxLength="140"
-			   onChange={(e) => props.updateProfileField('funFacts', e.target.value, true)}
-			   value={props.funFacts}
+         maxLength="140"
+			   onBlur={(e) => props.updateProfileField('funFacts', e.target.value, true)}
+			  //  defaultValue={props.funFacts}
+				 id="student_funFact"
 			  >
 			 </textarea>
+
 			 </li>
 			  <li>
 			    <i className="fa fa-info-circle fa-2x" aria-hidden="true" data-tip="No experience? Use this as a way to tell employers how great you are!"></i>
@@ -486,8 +487,8 @@ export default function StudentProfile (props) {
 			   className={props.propsErrorMap.hometown ? input + ' ' + error : input}
 			   type="text"
 			   placeholder="City"
-			   value={props.hometown}
-			   onChange={(e) => props.updateProfileField('hometown', e.target.value, true)}
+			   id="student_hometown"
+			   onBlur={(e) => props.updateProfileField('hometown', e.target.value, true)}
 			   >
 			 </input>
 			</StudentProfileField>
@@ -499,8 +500,8 @@ export default function StudentProfile (props) {
 			   className={props.propsErrorMap.hobbies ? shortInput + ' ' + error : shortInput}
 			   type="text"
 			   placeholder="Playing guitar, Making movies, etc.."
-			   onChange={(e) => props.updateProfileField('hobbies', e.target.value, true)}
-			   value={props.hobbies}
+			   onBlur={(e) => props.updateProfileField('hobbies', e.target.value, true)}
+			   id="student_hobbies"
 			   >
 			  </input>
 			 </li>

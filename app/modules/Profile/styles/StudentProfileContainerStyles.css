@@ -208,3 +208,8 @@
     left: -158px;
     top: 33px;
 }
+
+.materialStyle {
+  composes: material_1 from 'sharedStyles/material.css';
+  border: #908f8f 1px solid !important;
+}
