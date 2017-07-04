@@ -33,7 +33,8 @@ const HTMLWebpackPluginConfig = new HtmlWebpackPlugin({
 
 const productionPlugin = new webpack.DefinePlugin({
   'process.env': {
-    CURRENT_ENV: JSON.stringify('prod')
+    CURRENT_ENV: JSON.stringify('prod'),
+    NODE_ENV: JSON.stringify('production')
   }
 })
 
@@ -91,7 +92,11 @@ const developmentConfig = {
 
 const productionConfig = {
   devtool: 'cheap-module-source-map',
-  plugins: [HTMLWebpackPluginConfig, productionPlugin, new BundleTracker({filename: './webpack-stats.json'})]
+  plugins: [HTMLWebpackPluginConfig,
+   productionPlugin, 
+   new BundleTracker({filename: './webpack-stats.json'}),
+   new webpack.optimize.UglifyJsPlugin()
+  ]
 }
 
 export default Object.assign({}, base, isProduction === true ? productionConfig : developmentConfig)
