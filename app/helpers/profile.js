@@ -230,7 +230,7 @@ export function validateStudentProfileFields(profileInfo, next) {
   profileFieldErrors.graduationDate = profileInfo.graduationDate != "" ? false : true
   profileFieldErrors.major = profileInfo.major != "" ? false : true
   //debugger;
-  profileFieldErrors.gpa = validateGPA(profileInfo.gpa)
+  profileFieldErrors.gpa = !validateGPA(profileInfo.gpa)
   profileFieldErrors.personalEmail = validatePersonalEmail(profileInfo.personalEmail) ? false : true
   //profileFieldErrors.gender = profileInfo.gender != "" ? false : true
   //profileFieldErrors.sportsTeam = profileInfo.sportsTeam != "" ? false : true

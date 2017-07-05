@@ -199,7 +199,7 @@ export default function StudentProfile (props) {
 
 			{/* DEGREE */}
 
-			<StudentProfileField title="I am pursuing a " 
+			<StudentProfileField title={props.studentStatus == 3 ? 'I have a ' : "I am pursuing a " }
 			 styles={nameField}>
 			 <li>
 			   <DropdownList
@@ -238,7 +238,7 @@ export default function StudentProfile (props) {
 			</StudentProfileField>
 
 			{/* MAJOR */}
-			<StudentProfileField title="I am studying"
+			<StudentProfileField title={props.studentStatus == 3 ? 'I studied ' : "I am studying " }
 			  styles={nameField}>
 			  <li>
 			    <DropdownList

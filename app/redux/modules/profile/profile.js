@@ -197,8 +197,6 @@ export function submitProfileFirstTime(userTypeInt, profileInfo, user, successCa
     	   console.log('SUBMIT STUDENT PROFILE NO ERRORS')
     	    // No errors, proceed to /PUT on api/me
 
-          debugger;
-
           /*
            * SET DEFAULT VALUES (if not interacted with) BEFORE SUBMIT.
            */
@@ -224,7 +222,7 @@ export function submitProfileFirstTime(userTypeInt, profileInfo, user, successCa
               enroll_date: toISO(profileInfo.enrollmentDate),
               grad_date: toISO(profileInfo.graduationDate),
               major_id: profileInfo.major.id ? profileInfo.major.id : profileInfo.major,
-              GPA: parseFloat(profileInfo.gpa),
+              GPA: JSON.stringify(parseFloat(profileInfo.gpa)),
               personal_email: profileInfo.personalEmail,
               gender: profileInfo.gender.id ? profileInfo.gender.id : profileInfo.gender,
                 /*Converts the value to num*/
