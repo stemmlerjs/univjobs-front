@@ -34,7 +34,18 @@ export function employerProfilePUT(data) {
   const csrfToken = getCSRFToken()
 
   for(let key in data) {
-    formData.append(key, sanitize(data[key]))
+
+    var lineItem = data[key];
+
+    /*
+     * Sanitize all fields that aren't files.
+     */
+
+    if (key !== "logo") {
+      lineItem = sanitize(lineItem)
+    }
+
+    formData.append(key, lineItem)
   }
 
   return axios({
@@ -54,7 +65,17 @@ export function employerProfilePATCH(data) {
   const csrfToken = getCSRFToken()
 
   for(let key in data) {
-    formData.append(key, sanitize(data[key]))
+    var lineItem = data[key];
+
+    /*
+     * Sanitize all fields that aren't files.
+     */
+
+    if (key !== "logo") {
+      lineItem = sanitize(lineItem)
+    }
+
+    formData.append(key, lineItem)
   }
 
   return axios({
@@ -116,15 +137,21 @@ export function studentProfilePUT(data) {
   let formData = new FormData();
   const accessToken = getAccessToken();
 
-  for(let key in data) {
-    //debugger
-    //Ternary boolean checks if key is photo for backend upload of profilePic
-    var lineItem = data[key === 'photo' ? 'profilepicture' : key]
-    lineItem = sanitize(lineItem)
-    formData.append(
-        key === 'photo' ? 'profilepicture' : key, 
-        lineItem
-    )
+  for (let key in data) {
+
+    var lineItem = data[key];
+
+    /*
+     * Sanitize all fields that aren't files.
+     */
+
+    if (key == "has_car") console.log("tis is has car", data[key])
+
+    if (key !== "profilepicture" && key !== "resume") {
+      lineItem = sanitize(lineItem)
+    }
+    
+    formData.append(key, lineItem)
   }
 
   return axios({
@@ -140,18 +167,26 @@ export function studentProfilePUT(data) {
 export function studentProfilePATCH(data) {
   let formData = new FormData();
   const accessToken = getAccessToken();
-  const csrfToken = getCSRFToken()
 
   for(let key in data) {
-    formData.append(key, sanitize(data[key]))
+    var lineItem = data[key]
+
+    /*
+     * Sanitize all fields that aren't files
+     */
+
+    if (key !== "profilepicture" && key !== "resume") {
+      lineItem = sanitize(lineItem)
+    }
+
+    formData.append(key, lineItem)
   }
 
   return axios({
     method: 'patch',
     url: config.baseUrl + 'me/',
     headers: {
-      "Authorization":  accessToken,
-      'X-CSRFToken': csrfToken
+      "Authorization":  accessToken
     },
     data: formData
   })

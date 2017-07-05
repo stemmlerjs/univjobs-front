@@ -182,7 +182,7 @@ export function findJobId(id, jobId) {
 }
 
 
-/* Returns a either a number or boolean or null
+/* Returns a number
  *
  * */
 export function hasCarBoolean(input) {
@@ -190,7 +190,7 @@ export function hasCarBoolean(input) {
     //debugger
     
     if(typeof input === 'number') {
-        temp = input === 0 ? true : false
+        return input;
         
     } else if(typeof input === 'boolean') {
         temp = input === true ? 0 : 1

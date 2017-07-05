@@ -145,7 +145,6 @@ export default function StudentProfile (props) {
 			   valueField="id" textField="description"
 			   data={props.emailPrefList}
 			   value={props.emailPreferences}
-               defaultValue={1}
 			   messages={messages}
 			   onChange={value => props.updateProfileField('emailPreferences', value, true)}
 			 />
@@ -412,6 +411,7 @@ export default function StudentProfile (props) {
 				   data-selection="0"
 				   data-field-name="hasCar"
 				   onClick={optionHighlightClick}
+					 defaultValue={true}
 			    >
 				    have
 			    </button>
@@ -419,6 +419,7 @@ export default function StudentProfile (props) {
 				   data-selection="1"
 				   data-field-name="hasCar"
 				   onClick={optionHighlightClick}
+					 defaultValue={true}
 			    >
 				    do not have
 			    </button>
