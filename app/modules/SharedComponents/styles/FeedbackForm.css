@@ -32,7 +32,7 @@
     right: 24px;
     width: 297px;
     background-color: white;
-    height: 428px;
+    height: 487px;
     border-top-left-radius: 4px;
     border-top-right-radius: 4px;
     /* padding-top: 9px; */
@@ -207,3 +207,58 @@ background-color:#4eaff3;
     font-weight: bold;
     color: #f71212;
 }
+
+.screenshotDropzone {
+    border-width: 1px;
+    border-color: rgb(102, 102, 102);
+    border-style: dashed;
+    border-radius: 5px;
+    width: 95%;
+    height: 27px;
+    margin: 0 auto;
+    text-align: center;
+    background-color: #f1f2f3;
+    color: #585252;
+    padding-top: 9px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+}
+
+.screenshotDropzone:hover {
+    border-width: 1px;
+    border-color: rgb(102, 102, 102);
+    border-style: dashed;
+    border-radius: 5px;
+    width: 95%;
+    height: 27px;
+    margin: 0 auto;
+    text-align: center;
+    background-color: #dee0e2;
+    color: #585252;
+    padding-top: 9px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+}
+
+.screenshotDropzoneUploaded {
+    border-width: 1px;
+    border-color: rgb(102, 102, 102);
+    border-style: solid;
+    border-radius: 5px;
+    width: 95%;
+    height: 27px;
+    margin: 0 auto;
+    text-align: center;
+    background-color: #414A51;
+    color: white;
+    padding-top: 9px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+}
+
+
+
+

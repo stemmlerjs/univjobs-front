@@ -1,5 +1,6 @@
 
 import createDOMPurify from 'dompurify';
+
 const DOMPurify = createDOMPurify(window);
 
 /*

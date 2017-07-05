@@ -271,7 +271,6 @@ const PasswordResetContainer = React.createClass({
   },
 
   render () {
-    console.log(this.props)
     return (
       <div className={pageContainer} >
         <Navigation logoOnly={true}/>

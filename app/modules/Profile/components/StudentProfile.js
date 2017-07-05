@@ -134,7 +134,7 @@ export default function StudentProfile (props) {
   }
 
   return (
-    <div className={pageItemsContainer}>
+    <div id="st_profile" className={pageItemsContainer}>
     	<div className={profileHeader}>Complete your profile so we can find you a job today!</div>
 
 			{/* EMAIL NOTIFICATIONS */}

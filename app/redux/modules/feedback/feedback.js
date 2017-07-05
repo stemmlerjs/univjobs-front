@@ -17,7 +17,7 @@ const SUBMIT_FEEDBACK_FORM_ERROR = 'SUBMIT_FEEDBACK_FORM_ERROR'
 const ERRORS_EXIST_IN_FORM = 'ERRORS_EXIST_IN_FORM'
 const ERRORS_FIXED_IN_FORM = 'ERRORS_FIXED_IN_FORM'
 
-export function submitFeedbackForm (title, description, includeScreenshot) {
+export function submitFeedbackForm (title, description, screenshot) {
   return function(dispatch) {
 
     /*
@@ -47,7 +47,7 @@ export function submitFeedbackForm (title, description, includeScreenshot) {
 
       dispatch(submittingForm())
 
-      submitFeedbackFormHTTP(title, description)
+      submitFeedbackFormHTTP(title, description, screenshot)
 
         .then((result) => {
 
@@ -133,7 +133,7 @@ const initialFeedbackFormState = {
   isOpen: false,
   description: '',
   title: '',
-  includeScreenshot: false,
+  screenshot: null,
   errorsMap: {
     description: false,
     title: false
@@ -165,7 +165,7 @@ export default function feedback (state = initialFeedbackFormState, action) {
         isSubmitting: false,
         description: '',
         title: '',
-        includeScreenshot: false
+        screenshot: null
       }
     case SUBMITTING_FEEDBACK_FORM:
       return {
@@ -191,28 +191,12 @@ export default function feedback (state = initialFeedbackFormState, action) {
         errorsMap: errorsFixedMap
       }
     case UPDATE_FORM:
-      if (action.field === 'includeScreenshot') {
-        return {
-          ...state,
-          includeScreenshot: !state.includeScreenshot,
-          isSubmitting: false,
-          submitSuccess: false,
-          submitFailure: false
-        }
-      } 
-
-      /*
-       * updating title or description
-       */
-
-      else {
-        return {
-          ...state,
-          [action.field]: action.newValue,
-          isSubmitting: false,
-          submitSuccess: false,
-          submitFailure: false
-        }
+      return {
+        ...state,
+        [action.field]: action.newValue,
+        isSubmitting: false,
+        submitSuccess: false,
+        submitFailure: false
       }
     case TOGGLE_FORM_OPEN:
       return {
