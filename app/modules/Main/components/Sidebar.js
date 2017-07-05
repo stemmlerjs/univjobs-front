@@ -112,22 +112,25 @@ export default function SideBar ({onLogout, isAStudent, profilePicture}) {
             </div>
           </Link>
       }
-        {/*
-          SETTINGS
-
-            - we don't need this at all right now.
-
-        <Link to="/settings" className={noDecoration}>
-          <div className={sidebarItem}>
+        {/*SETTINGS*/}
+      { isAStudent
+        ? <Link to="/settings/st" className={noDecoration}>
+           <div className={sidebarItem}>
             <i className={animationItem4 + " fa fa-cog"} aria-hidden="true"></i>
             <div className={animationTxt4}>Settings</div>
             <div className={animateLine2}></div>
           </div>
         </Link>
-        */}
 
-        
-        
+       : <Link to="/settings/em" className={noDecoration}>
+           <div className={sidebarItem}>
+            <i className={animationItem4 + " fa fa-cog"} aria-hidden="true"></i>
+            <div className={animationTxt4}>Settings</div>
+            <div className={animateLine2}></div>
+          </div>
+        </Link>
+      }
+
         <div className={sidebarItem} onClick={onLogout}>
           <i className={animationItem6 + " fa fa-power-off"} aria-hidden="true"></i>
           <div className={animationTxt6}>Logout</div>

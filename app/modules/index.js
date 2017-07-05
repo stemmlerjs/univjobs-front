@@ -10,6 +10,7 @@ export EmployerProfileContainer from './Profile/containers/EmployerProfileContai
 export EmployerDashboardContainer from './Dashboard/containers/EmployerDashboardContainer'
 export InitialOverlay from './Main/containers/InitialOverlay'
 export MyListingsContainer from './MyListings/containers/MyListingsContainer'
+export StudentSettingsContainer from './Settings/containers/StudentSettingsContainer'
 export SignupContainer from './SignupAndLogin/containers/SignupContainer'
 export StudentProfileContainer from './Profile/containers/StudentProfileContainer'
 export StudentDashboardContainer from './Dashboard/containers/StudentDashboardContainer'

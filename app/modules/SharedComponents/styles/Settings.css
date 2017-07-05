@@ -1,0 +1,90 @@
+.flexibleCardContainer {
+  width: 100%;
+  text-align: center;
+  margin: auto;
+  margin-bottom: 3%;
+  display: -webkit-flex;
+  -webkit-flex-direction: row;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 1215px;
+}
+
+.cardSettingsContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    list-style: none;
+    padding: 0px;
+    align-items: flex-start;
+    width: 50%;
+    padding-left: 10px;
+    padding-right: 10px;
+    background-color: white;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    margin:20px;
+    /*border-top: solid 3px #3f95d0;*/
+}           
+      
+.flexRowItem {
+    display: flex;
+    flex-direction: row;
+    margin-left: 5%;
+    margin-right: 5%;
+
+
+}
+
+.toggleContainer {
+    display: inline-block;
+}
+
+.input {
+      display: none;
+}
+
+.label {
+    margin: 0 10px;
+    font-size: 16px;
+    font-family: sans-serif;
+    color: #666666;
+}
+
+.input + .toggle {
+    display: block;
+    position: relative;
+    cursor: pointer;
+    outline: none;
+    user-select: none;
+}
+
+.input + .toggle {
+    padding: 2px;
+    width: 60px;
+    height: 30px;
+    background-color: #dddddd;
+    border-radius: 30px;
+    transition: background 0.4s;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.input + .toggle:before,
+.input + .toggle:after {
+    display: block;
+    position: absolute;
+    content: "";
+}
+
+.input + .toggle:before {
+    top: 2px;
+    left: 2px;
+    bottom: 2px;
+    right: 2px;
+    background-color: #fff;
+    border-radius: 30px;
+    transition: background 0.4s;
+}
+
