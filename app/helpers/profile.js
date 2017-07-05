@@ -238,7 +238,7 @@ export function validateStudentProfileFields(profileInfo, next) {
 
   /*NOTE: languages is not required, english is default*/
   profileFieldErrors.languages = validateLanguages(profileInfo.languages)
-  profileFieldErrors.hasCar = typeof profileInfo.hasCar == "boolean" ? false : true
+  //profileFieldErrors.hasCar = typeof profileInfo.hasCar == "boolean" ? false : true
   //profileFieldErrors.companyName = profileInfo.companyName != "" ? false : true
   //profileFieldErrors.position = profileInfo.position != "" ? false : true
   profileFieldErrors.funFacts = profileInfo.funFacts!= "" ? false : true
@@ -265,7 +265,7 @@ export function validateStudentProfileFields(profileInfo, next) {
  * ***************************************************/
 
 export function compareToSnapshot(oldProfile, newProfile, callback) {
-
+  // debugger;
   for(var prop in newProfile) {
     if(newProfile[prop] == oldProfile[prop]) {
       delete newProfile[prop]

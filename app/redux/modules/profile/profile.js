@@ -342,7 +342,19 @@ export function updateProfile(userTypeInt, profileInfo, user, snapshot, successC
 
       case 0:
         console.log("UPDATING STUDENT PROFILE")
+
+       /*
+        * First, we need to check and see if there are
+        * any errors that exist on screen here.
+        */
+        
         validateStudentProfileFields(profileInfo, (errorExist, profileFieldErrors) => {
+
+         /*
+          * There are definitely some errors. We can't continue
+          * with submitting the user's profile. Also, we should display a toastr because of this.
+          */
+
           if(errorExist) {
 
             // DISPATCH - SAVE_PROFILE_ERROR
@@ -350,44 +362,42 @@ export function updateProfile(userTypeInt, profileInfo, user, snapshot, successC
           "Please fill in missing fields"
             ], true))
 
-          } else {
+            failureCallback("Ah man. Something's wrong in your profile.")
+
+          } 
+
+         /*
+          * No errors occurred. Everything is as it should be, let's go ahead
+          * and save the profile to the backend.
+          */
+          
+          else {
+
             // No errors, proceed to /PUT on api/me
             var changedData = {
-             // user: {
-             //   "user-is_a_student": true,
-             //   "user-is_profile_completed": true,
-             //   "user-email": user.email,
-             //   "user-first_name": user.firstName,
-             //   "user-last_name": user.lastName,
-             //   "user-is_active": true,
-             //   "user-date_joined": user.dateJoined,
-             //   "user-mobile": user.mobile,
-             // 	is_a_student: false,
-             // 	is_profile_completed: true, // set this flag to true so we know for next time
-
-                  user_firstname: profileInfo.firstName,
-                  user_lastname: profileInfo.lastName,
-                  edu_level: profileInfo.educationLevel ? profileInfo.educationLevel : profileInfo.educationLevel.id, 
-                  email_pref: profileInfo.emailPreferences ? profileInfo.emailPreferences : profileInfo.emailPreferences.id,
-                  status: profileInfo.studentStatus ? profileInfo.studentStatus : profileInfo.studentStatus.id, 
-                  enroll_date: toISO(profileInfo.enrollmentDate),
-                  grad_date: toISO(profileInfo.graduationDate),
-                  major: profileInfo.major  ? profileInfo.major : profileInfo.major.id,
-                  gpa: parseFloat(profileInfo.gpa),
-                  personal_email: profileInfo.personalEmail,
-                  gender: profileInfo.gender ? profileInfo.gender : profileInfo.gender.id, 
-                  languages: btoa(JSON.stringify(extractLanguageId(profileInfo.languages))),
-                  sports: btoa(JSON.stringify(extractSportsObject(profileInfo.sportsTeam, profileInfo))),
-                  clubs: btoa(JSON.stringify(extractClubsObject(profileInfo.schoolClub, profileInfo))),
-                  /*Converts the value to num*/
-                  has_car: hasCarBoolean(profileInfo.hasCar),
-                  recent_company_name: profileInfo.companyName,
-                  recent_company_position: profileInfo.position,
-                  fun_fact: profileInfo.funFacts,
-                  hometown: profileInfo.hometown,
-                  hobbies: profileInfo.hobbies,
-                  profilepicture: profileInfo.photo,
-                  resume: profileInfo.resume,
+              user_firstname: profileInfo.firstName,
+              user_lastname: profileInfo.lastName,
+              edu_level: profileInfo.educationLevel ? profileInfo.educationLevel : profileInfo.educationLevel.id, 
+              email_pref: profileInfo.emailPreferences ? profileInfo.emailPreferences : profileInfo.emailPreferences.id,
+              status: profileInfo.studentStatus ? profileInfo.studentStatus : profileInfo.studentStatus.id, 
+              enroll_date: toISO(profileInfo.enrollmentDate),
+              grad_date: toISO(profileInfo.graduationDate),
+              major: profileInfo.major  ? profileInfo.major : profileInfo.major.id,
+              gpa: JSON.stringify(parseFloat(profileInfo.gpa)),
+              personal_email: profileInfo.personalEmail,
+              gender: profileInfo.gender ? profileInfo.gender : profileInfo.gender.id, 
+              languages: btoa(JSON.stringify(extractLanguageId(profileInfo.languages))),
+              sports: btoa(JSON.stringify(extractSportsObject(profileInfo.sportsTeam, profileInfo))),
+              clubs: btoa(JSON.stringify(extractClubsObject(profileInfo.schoolClub, profileInfo))),
+              /*Converts the value to num*/
+              has_car: profileInfo.hasCar === false ? JSON.stringify(0) : JSON.stringify(1),
+              recent_company_name: profileInfo.companyName,
+              recent_company_position: profileInfo.position,
+              fun_fact: profileInfo.funFacts,
+              hometown: profileInfo.hometown,
+              hobbies: profileInfo.hobbies,
+              profilepicture: profileInfo.photo,
+              resume: profileInfo.resume,
         	  }
             compareToSnapshot(snapshot, changedData, (result) => {
 

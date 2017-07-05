@@ -24,8 +24,8 @@ import { pageContainer, profileField, profileHeader,
         emailField, dropDown, shortDropDown, 
         mediumDropDown, longDropDown, dropzone, 
         dropzoneContent, inlineDropzone, btn, 
-        saveBtnContainer, saveBtnList, saveBtnClicked, 
-        saveBtn, space, hideInput, showInput, textArea,
+        saveBtnContainer, saveBtnList, saveBtnClicked,  notActive, personalEmailStyle,
+        saveBtn, space, hideInput, showInput, textArea, unselectedButton,
 				profilePictureDragDropAlt, savedResumeView, actualSaveBtn, pageItemsContainer, materialStyle } from '../styles/StudentProfileContainerStyles.css'
 import { error } from 'sharedStyles/error.css' 
 import { input } from 'sharedStyles/widgets.css'
@@ -146,7 +146,7 @@ export default function StudentProfile (props) {
 			   data={props.emailPrefList}
 			   value={props.emailPreferences}
 			   messages={messages}
-			   onChange={value => props.updateProfileField('emailPreferences', value, true)}
+			   onChange={value => props.updateProfileField('emailPreferences', value.id, true)}
 			 />
 			</li>
 			</StudentProfileField>
@@ -159,7 +159,7 @@ export default function StudentProfile (props) {
            name="student[firstname]"
 			     type="text"
 			     placeholder="First name"
-			     onChange={(e)=> props.updateProfileField('firstName', e.target.value, true)}
+			     onBlur={(e)=> props.updateProfileField('firstName', e.target.value, true)}
 			     id="student_firstName"
 			     >
 			    </input>
@@ -189,7 +189,7 @@ export default function StudentProfile (props) {
 			     data={props.studentStatusList}
 			     value={props.studentStatus}
                  defaultValue={1}
-			     onChange={value => props.updateProfileField('studentStatus', value, true)}
+			     onChange={value => props.updateProfileField('studentStatus', value.id, true)}
 		 	    />
 			 </li> 
 			 <li>
@@ -209,7 +209,7 @@ export default function StudentProfile (props) {
 			    data={props.educationLevelList}
 			    value={props.educationLevel}
                 defaultValue={1}
-			    onChange={value => props.updateProfileField('educationLevel', value, true)}
+			    onChange={value => props.updateProfileField('educationLevel', value.id, true)}
 			   />
 		         </li>
 			 <li>
@@ -248,7 +248,7 @@ export default function StudentProfile (props) {
 			      data={props.majorsList}
 			      value={props.major}
                   defaultValue={1}
-			      onChange={value => props.updateProfileField('major', value, true)}
+			      onChange={value => props.updateProfileField('major', value.id, true)}
 			     />
 			  </li>
 			  <li>
@@ -269,7 +269,8 @@ export default function StudentProfile (props) {
 			 <li>
 			    <input
 			     
-			     className={props.propsErrorMap.gpa ? `${input} ${error} ${materialStyle}` : `${input} ${materialStyle}`}
+			     className={props.propsErrorMap.gpa ? `${input} ${error} ${materialStyle}` 
+					 	: props.gpa == null || props.gpa == 0 || props.gpa == "0.00" ? `${input} ${notActive}  ${materialStyle}` : `${input} ${materialStyle}`}
 			     type="number"
 			     step="0.01"
 			     max="4"
@@ -282,7 +283,7 @@ export default function StudentProfile (props) {
 			   <p>or</p>
 			 </li>
 			 <li className={saveBtnList}>
-               <button className={!props.gpa || props.gpa == 0 ? `${saveBtnClicked} ${materialStyle}` : `${saveBtn} ${materialStyle}`} 
+               <button className={props.gpa == null || props.gpa == 0 || props.gpa == "0.00" ? `${saveBtnClicked} ${materialStyle}` : `${unselectedButton} ${materialStyle}`} 
                                 onClick={(e) => {props.onHandleButtonToggle(true, 'gpaToggle'); props.updateProfileField('gpa', '0.00', true)}}>
                     I do not have a GPA
                 </button>
@@ -296,11 +297,15 @@ export default function StudentProfile (props) {
 			 styles={nameField}>
 			 <li>
 			  <input
-			    className={props.propsErrorMap.personalEmail ? `${materialStyle} ${input} ${error}` : `${materialStyle} ${input}`}
+			    className={props.propsErrorMap.personalEmail 
+						? `${materialStyle} ${input} ${error}` 
+						: props.personalEmail != "" 
+							? `${materialStyle} ${input} ${personalEmailStyle}` 
+							: `${materialStyle} ${input} ${personalEmailStyle} ${notActive}`}
 			    type="text"
 			    placeholder="Email"
 			    id="student_personalEmail"
-			    onBlur={(e) => {props.updateProfileField('personalEmail', e.target.value, true); props.onHandleButtonToggle(false, 'emailToggle')}}
+			    onChange={(e) => {props.updateProfileField('personalEmail', e.target.value, true); props.onHandleButtonToggle(false, 'emailToggle')}}
 			    >
 			  </input>
 			 </li> 
@@ -308,8 +313,10 @@ export default function StudentProfile (props) {
 			   <p>or</p>
 			 </li>
 			 <li className={saveBtnList}>
-               <button className={!props.personalEmail ? `${materialStyle} ${saveBtnClicked}` : `${materialStyle} ${saveBtn}`} 
-							 	onClick={() => props.onHandleButtonToggle(true, 'emailToggle') }>I prefer school email</button>
+               <button className={props.personalEmail == "" || props.personalEmail == null 
+							 		? `${materialStyle} ${saveBtnClicked}` 
+									: `${materialStyle} ${unselectedButton}`} 
+							 	onClick={() => props.updateProfileField('personalEmail', "", true) }>I prefer school email</button>
 			 </li>
 			</StudentProfileField>
 
@@ -323,7 +330,7 @@ export default function StudentProfile (props) {
 			  data={props.gendersList}
               defaultValue={1}
 			  value={props.gender}
-			  onChange={value => props.updateProfileField('gender', value, true)}
+			  onChange={value => props.updateProfileField('gender', value.id, true)}
 			/>	
 			</StudentProfileField>
 
@@ -414,20 +421,19 @@ export default function StudentProfile (props) {
 			{/* CAR */}
 			<StudentProfileField title="I " styles={nameField}>
 			 <li className={saveBtnList}>
-			   <button className={props.hasCar ? `${materialStyle} ${saveBtnClicked}` : `${materialStyle} ${saveBtn}`} 
+			   <button className={props.hasCar == true ? `${materialStyle} ${saveBtnClicked}` : `${materialStyle} ${saveBtn}`} 
 				   data-selection="0"
 				   data-field-name="hasCar"
-				   onClick={optionHighlightClick}
-					 defaultValue={true}
+				   onClick={() => props.updateProfileField('hasCar', true, true)}
 			    >
 				    have
 			    </button>
 			   <button className={props.hasCar === false ? `${materialStyle} ${saveBtnClicked}` : `${materialStyle} ${saveBtn}`} 
 				   data-selection="1"
 				   data-field-name="hasCar"
-				   onClick={optionHighlightClick}
-					 defaultValue={true}>
-				    do not have
+				   onClick={() => props.updateProfileField('hasCar', false, true)}
+					 >
+				    {'do not have'}
 			    </button>
 			 </li>
 			 <li className={space}>
