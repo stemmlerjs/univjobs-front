@@ -154,6 +154,10 @@ const StudentProfileContainer = React.createClass({
           "Profile completed. Now go start applying to jobs!", {
             timeout: 3000
           });
+
+        setTimeout(() => {
+          window.location.reload()
+        }, 2000)
       },
 
       /*
@@ -188,6 +192,10 @@ const StudentProfileContainer = React.createClass({
         "Profile succesfully updated", {
           timeout: 3000
         });
+
+      setTimeout(() => {
+        window.location.reload()
+      }, 2000)
      },
 
      /*

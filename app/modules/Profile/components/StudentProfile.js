@@ -229,7 +229,7 @@ export default function StudentProfile (props) {
 			  onChange={value => props.updateProfileField('enrollmentDate', value, true)}
 			  value={props.enrollmentDate}
 			 />	
-			 <p> and I will graduate in</p>
+			 <p>{props.studentStatus == 3 ? ' and I graduated ' : ' and I will graduate in'}</p>
 			 <DateTimePicker
 			  className={props.propsErrorMap.graduationDate ? `${dropDown} ${error} ${materialStyle}` : `${dropDown} ${materialStyle}`}
 			  time={false}
