@@ -5,7 +5,9 @@ import { Link } from 'react-router'
 // ================CSS IMPORTS============================== //
 import { studentCenteredContainer, header, subHeader, btn, btnContainer,
  input, inputContainer, errorMessage } from '../styles/StudentSignupStyles.css'
-import { legal, white } from '../styles/SignupContainerStyles.css'
+import { legal, white, passwordContainer } from '../styles/SignupContainerStyles.css'
+
+import { ValidPasswordVerifier } from 'modules/SharedComponents'
 
 import { material_1 } from 'sharedStyles/material.css'
 
@@ -37,24 +39,28 @@ export default function StudentSignup ({submitSignupForm, updateStudentSignupFor
                         type="email" 
                         placeholder="Email"
                 />
-                <input className={input} 
-                        name="student[password]"
-                        value={emailText}
-                        value={passwordText}
-                        onChange={(e) => updateStudentSignupForm('password', e.target.value)}
-                        type="password" 
-                        placeholder="Password"
-                />
-                <p className={legal}>By registering you agree to our 
+                <div className={passwordContainer}>
+                  <input className={input} 
+                          name="student[password]"
+                          value={passwordText}
+                          onChange={(e) => updateStudentSignupForm('password', e.target.value)}
+                          type="password" 
+                          placeholder="Password"
+                  />
+                  <ValidPasswordVerifier passwordText={passwordText}/>
+                </div>
+                <p className={`${legal}`}>By registering you agree to our 
                     <Link to="/terms" className={white}> Terms & Services </Link> 
                     and 
                     <Link to="/privacy" className={white}> Private Policy</Link>
                 </p>
             </div>
-            <div className={error == "" ? '' : errorMessage}>
-                { error }
-            </div>
-            <button className={btn + ' ' + material_1} onClick={onSubmitSignup}>Sign me up</button>
+              <div>
+                <div className={error == "" ? '' : errorMessage}>
+                    { error }
+                </div>
+                <button className={btn + ' ' + material_1} onClick={onSubmitSignup}>Sign me up</button>
+              </div>
         </div>
     </div>
   )
