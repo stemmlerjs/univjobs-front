@@ -14,7 +14,6 @@ export function createNewJobPOST (
   qualifications, 
   compensation,
   address, 
-  city, 
   question_one_text, 
   question_two_text, 
   max_applicants, 
@@ -26,14 +25,14 @@ export function createNewJobPOST (
   const accessToken = getAccessToken();
   const csrfToken = getCSRFToken();
 
+  //debugger
   job_type = sanitize(job_type)
   title = sanitize(title)
-  paid = sanitize(paid)
+  paid = sanitize(JSON.stringify(paid))
   responsibilities = sanitize(responsibilities)
   qualifications = sanitize(qualifications)
   compensation = sanitize(compensation)
   address = sanitize(address)
-  city = sanitize(city)
   question_one_text = sanitize(question_one_text)
   question_two_text = sanitize(question_two_text)
   max_applicants = sanitize(max_applicants)
@@ -56,7 +55,7 @@ export function createNewJobPOST (
       qualifications,          // STRING
       compensation,           // STRING
       address,                // STRING
-      city,                   // STRING
+      //city,                   // STRING
       question_one_text,              // STRING
       question_two_text,              // STRING
 

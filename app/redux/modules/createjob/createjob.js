@@ -130,6 +130,8 @@ export function createNewJob(props, jobType, successCallback, failureCallback) {
 
     // ACTION: DISPATCH (SUBMITTING_JOB)
     dispatch(submittingJob())
+      //debugger
+      //console.log(props)
 
     return createNewJobPOST(
        jobTypeInt,
@@ -140,7 +142,6 @@ export function createNewJob(props, jobType, successCallback, failureCallback) {
        props.page1.qualifications,
        props.page1.compensation,
        props.page1.internshipLocation,
-       props.page1.intershipLocation,
        props.page2.question1,
        props.page2.question2,
        Number(props.page3.maxApplicants),
