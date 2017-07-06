@@ -75,3 +75,75 @@
 .gray {
     color: gray;
 }
+
+.passwordContainer {
+    
+}
+
+.passwordQualifications {
+
+}
+
+/* Tooltip container */
+.tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+    top: -66px;
+    left: 13px;
+    font-size: 14px;
+}
+
+/* Tooltip text */
+.tooltip .tooltiptext {
+        visibility: visible;
+    width: 268px;
+    background-color: black;
+    color: #fff;
+    text-align: left;
+    padding: 5px 0;
+    border-radius: 6px;
+    position: absolute;
+    z-index: 1;
+    padding: 10px;
+    -webkit-transition: 0.3s ease-in-out;
+    -moz-transition: 0.3s ease-in-out;
+    transition: 0.3s ease-in-out;
+}
+
+.tooltip .tooltiptext::after {
+    content: " ";
+    position: absolute;
+    top: 50%;
+    right: 100%; /* To the left of the tooltip */
+    margin-top: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent black transparent transparent;
+}
+
+.good {
+    padding-right: 8px;
+    color: #43e600;
+}
+
+.bad {
+    padding-right: 8px;
+    color: #e6008a;
+}
+
+.hidden {
+    opacity: 0;
+    width: 268px;
+    background-color: black;
+    color: #fff;
+    text-align: left;
+    padding: 5px 0;
+    border-radius: 6px;
+    position: absolute;
+    z-index: 1;
+    padding: 10px;
+    -webkit-transition: 0.3s ease-in-out;
+    -moz-transition: 0.3s ease-in-out;
+    transition: 0.3s ease-in-out;
+}

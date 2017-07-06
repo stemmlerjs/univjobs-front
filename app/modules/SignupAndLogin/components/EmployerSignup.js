@@ -12,6 +12,8 @@ import { Footer } from 'modules/SharedComponents'
 import { employerCenteredContainer, header, subHeader, modalContent, errorMessage, btn, input } from '../styles/EmployerSignupStyles.css'
 import { legalEmployer, gray } from '../styles/SignupContainerStyles.css'
 
+import { ValidPasswordVerifier } from 'modules/SharedComponents'
+
 import { material_1 } from 'sharedStyles/material.css'
 
 const styles = {
@@ -132,6 +134,7 @@ const EmployerSignup = React.createClass({
                                     type="password" 
                                     placeholder="Password"
                             />
+                            <ValidPasswordVerifier passwordText={passwordText}/>
                             <p className={legalEmployer}>By registering you agree to our 
                                 <Link to="/terms" className={gray}> Terms & Services </Link> 
                                  and 

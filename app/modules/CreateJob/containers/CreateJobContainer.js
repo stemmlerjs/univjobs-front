@@ -293,10 +293,10 @@ const CreateJobContainer = React.createClass({
             () => {
 
               this.refs.container.success(
-                "Looking good!",
-                "Job successfully created.",
+                "We'll send you an email shortly after we process it.",
+                "Job submitted for approval!",
                 {
-                  timeout: 3000
+                  timeout: 4000
               });
 
              /*
@@ -308,7 +308,7 @@ const CreateJobContainer = React.createClass({
               setTimeout(() => {
                 this.props.clearForm()
                 this.context.router.push('/dashboard/em')
-              }, 2000)
+              }, 4000)
 
             },
 
