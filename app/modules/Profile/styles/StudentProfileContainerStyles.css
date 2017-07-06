@@ -308,8 +308,6 @@ outline: none
     cursor:pointer;
 }
 
-
-
 .materialStyle {
   composes: material_1 from 'sharedStyles/material.css';
   border: #908f8f 1px solid !important;

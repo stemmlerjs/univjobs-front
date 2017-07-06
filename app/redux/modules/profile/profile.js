@@ -76,7 +76,7 @@ export function fetchedProfileInfoFailure (error) {
 }
 
 
-export function savingProfileInfo() {
+export function savingProfileInfo(isAStudent) {
     return {
         type: SAVING_PROFILE_INFO
     }
@@ -198,10 +198,11 @@ export function submitProfileFirstTime(userTypeInt, profileInfo, user, successCa
     	    // No errors, proceed to /PUT on api/me
 
           /*
-           * SET DEFAULT VALUES (if not interacted with) BEFORE SUBMIT.
+           * Let the app know that we're saving profile info so we should 
+           * update the store.
            */
 
-
+          dispatch(savingProfileInfo(true))
 
           var putData = {
               "is_a_student": true,
@@ -271,7 +272,15 @@ export function submitProfileFirstTime(userTypeInt, profileInfo, user, successCa
               'Please fill in missing fields'
             ], false))
 
-          } else {
+          } 
+          else {
+
+          /*
+           * Let the app know that we're saving profile info so we should 
+           * update the store.
+           */
+
+          dispatch(savingProfileInfo(false))
 
             // No errors, proceed to /PUT on api/me
             var putData = {
@@ -371,6 +380,13 @@ export function updateProfile(userTypeInt, profileInfo, user, snapshot, successC
           
           else {
 
+          /*
+           * Let the app know that we're saving profile info so we should 
+           * update the store.
+           */
+
+          dispatch(savingProfileInfo(true))
+
             // No errors, proceed to /PUT on api/me
             var changedData = {
               user_firstname: profileInfo.firstName,
@@ -403,6 +419,12 @@ export function updateProfile(userTypeInt, profileInfo, user, snapshot, successC
                 result.p
               studentProfilePATCH(result)
                 .then((res) => {
+
+                 /*
+                  * Here, after successfully updating the profile, we should update
+                  * the snapshot for any subsequent updates because the state will have changed.
+                  * TODO:
+                  */
 
                   // DISPATCH - SAVE_PROFILE_SUCCESS
                   dispatch(savedProfileSuccess())
@@ -458,7 +480,15 @@ export function updateProfile(userTypeInt, profileInfo, user, snapshot, successC
               'Please fill in missing fields'
             ], false))
 
-          } else {
+          } 
+          else {
+
+          /*
+           * Let the app know that we're saving profile info so we should 
+           * update the store.
+           */
+
+          dispatch(savingProfileInfo(true))
 
            /*
             * No errors, proceed to /PATCH on api/me.
@@ -539,6 +569,12 @@ const initialState = {
 
 export default function profile (state = initialState, action) {
   switch(action.type) {
+    case SAVING_PROFILE_INFO:
+      return {
+        ...state,
+        isSubmittingForm: true,
+        submitSuccess: false
+      }
     case UPDATE_PROFILE_FIELD:
       if(action.isAStudent) {
         return {
@@ -585,6 +621,7 @@ export default function profile (state = initialState, action) {
         return {
           ...state,
           submitErrorsExist: true,
+          isSubmittingForm: false,
           error: action.error,
           studentProfile: studentProfile(state.studentProfile, action)
         }
@@ -592,6 +629,7 @@ export default function profile (state = initialState, action) {
         return {
           ...state,
           submitErrorsExist: true,
+          isSubmittingForm: false,
           error: action.error,
           employerProfile: employerProfile(state.employerProfile, action)
         }
@@ -600,6 +638,7 @@ export default function profile (state = initialState, action) {
       return {
         ...state,
         submitSuccess: true,
+        isSubmittingForm: false,
         error: ''
       }
     case TOGGLE_BUTTON: 

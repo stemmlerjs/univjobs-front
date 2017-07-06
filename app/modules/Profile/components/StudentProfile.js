@@ -27,6 +27,8 @@ import { pageContainer, profileField, profileHeader,
         saveBtnContainer, saveBtnList, saveBtnClicked,  notActive, personalEmailStyle,
         saveBtn, space, hideInput, showInput, textArea, unselectedButton,
 				profilePictureDragDropAlt, savedResumeView, actualSaveBtn, pageItemsContainer, materialStyle } from '../styles/StudentProfileContainerStyles.css'
+
+import { shine } from 'sharedStyles/animations.css'
 import { error } from 'sharedStyles/error.css' 
 import { input } from 'sharedStyles/widgets.css'
 
@@ -550,7 +552,9 @@ export default function StudentProfile (props) {
       </StudentProfileField>
     {/* ======== SAVE BUTTON ======== */}
         <div className={saveBtnContainer}>
-          <button onClick={(e) => props.onSubmit(props)} className={actualSaveBtn}>Save</button>
+          <button onClick={(e) => {
+						props.onSubmit(props)
+					}} className={props.isSubmittingForm ? `${actualSaveBtn} ${shine}` : `${actualSaveBtn}`}>Save</button>
         </div>
    </div>
   )

@@ -511,6 +511,7 @@ const StudentProfileContainer = React.createClass({
           onCreateNewTag={this.createNewTag}
       	 // submitErrorsExist={this.props.submitErrorsExist}
       	  propsErrorMap={this.props.propsErrorMap}
+          isSubmittingForm={this.props.isSubmittingForm}
       	  snapshot={this.props.snapshot}/>
       	<ToastContainer ref="container"
       	  toastMessageFactory={ToastMessageFactory}
@@ -616,7 +617,8 @@ function mapStateToProps({user, profile, list, feedback}) {
         gpaToggle: false,
     },
     error: profile.error ? profile.error : '',
-    submitSuccess: profile.submitSuccess ? profile.submitSuccess : false
+    submitSuccess: profile.submitSuccess ? profile.submitSuccess : false,
+    isSubmittingForm: profile.isSubmittingForm ? profile.isSubmittingForm : false
   }
 }
 
