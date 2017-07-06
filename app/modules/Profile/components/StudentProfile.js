@@ -24,9 +24,11 @@ import { pageContainer, profileField, profileHeader,
         emailField, dropDown, shortDropDown, 
         mediumDropDown, longDropDown, dropzone, 
         dropzoneContent, inlineDropzone, btn, 
-        saveBtnContainer, saveBtnList, saveBtnClicked, 
-        saveBtn, space, hideInput, showInput, textArea,
-				profilePictureDragDropAlt, savedResumeView, actualSaveBtn } from '../styles/StudentProfileContainerStyles.css'
+        saveBtnContainer, saveBtnList, saveBtnClicked,  notActive, personalEmailStyle,
+        saveBtn, space, hideInput, showInput, textArea, unselectedButton,
+				profilePictureDragDropAlt, savedResumeView, actualSaveBtn, pageItemsContainer, materialStyle } from '../styles/StudentProfileContainerStyles.css'
+
+import { shine } from 'sharedStyles/animations.css'
 import { error } from 'sharedStyles/error.css' 
 import { input } from 'sharedStyles/widgets.css'
 
@@ -134,19 +136,19 @@ export default function StudentProfile (props) {
   }
 
   return (
-    <div >
+    <div id="st_profile" className={pageItemsContainer}>
     	<div className={profileHeader}>Complete your profile so we can find you a job today!</div>
 
 			{/* EMAIL NOTIFICATIONS */}
 			<StudentProfileField title="My email notification preferences:"> 
 			<li>
 			  <DropdownList
-			   className={props.propsErrorMap.emailPreferences ? mediumDropDown + ' ' + error : mediumDropDown}
+			   className={props.propsErrorMap.emailPreferences ? `${mediumDropDown} ${error} ${materialStyle}` : `${mediumDropDown} ${materialStyle}`}
 			   valueField="id" textField="description"
 			   data={props.emailPrefList}
 			   value={props.emailPreferences}
 			   messages={messages}
-			   onChange={value => props.updateProfileField('emailPreferences', value, true)}
+			   onChange={value => props.updateProfileField('emailPreferences', value.id, true)}
 			 />
 			</li>
 			</StudentProfileField>
@@ -155,24 +157,24 @@ export default function StudentProfile (props) {
 			<StudentProfileField title="My name is">
 			 <li>
 			    <input
-			     className={props.propsErrorMap.firstName ? input + ' ' + error : input}
-                 name="student[firstname]"
+			     className={props.propsErrorMap.firstName ? `${input} ${error} ${materialStyle}` : `${input} ${materialStyle}`}
+           name="student[firstname]"
 			     type="text"
 			     placeholder="First name"
-			     onChange={(e)=> props.updateProfileField('firstName', e.target.value, true)}
-			     value={props.firstName}
+			     onBlur={(e)=> props.updateProfileField('firstName', e.target.value, true)}
+			     id="student_firstName"
 			     >
 			    </input>
 			 </li>
 		 
 			 <li>
 			   <input
-			    className={props.propsErrorMap.lastName ? input + ' ' + error : input}
-                 name="student[lastname]"
+			    className={props.propsErrorMap.lastName ? `${input} ${materialStyle} ${error}` : `${input} ${materialStyle}`}
+          name="student[lastname]"
 			    type="text"
 			    placeholder="Last Name"
-			    onChange={(e)=> props.updateProfileField('lastName', e.target.value, true)}
-			    value={props.lastName}
+			    onBlur={(e)=> props.updateProfileField('lastName', e.target.value, true)}
+			    id="student_lastName"
 			    >
 			    </input>
 			 </li> 
@@ -183,13 +185,13 @@ export default function StudentProfile (props) {
 			 {/* STATUS */}
 			 <li>
 			  <DropdownList
-			     className={props.propsErrorMap.studentStatus ? shortDropDown + ' ' + error : shortDropDown}
+			     className={props.propsErrorMap.studentStatus ? `${shortDropDown} ${error} ${materialStyle}` : `${shortDropDown} ${materialStyle}`}
 			     valueField="id" textField="status_text"
 			     messages={messages}
 			     data={props.studentStatusList}
 			     value={props.studentStatus}
                  defaultValue={1}
-			     onChange={value => props.updateProfileField('studentStatus', value, true)}
+			     onChange={value => props.updateProfileField('studentStatus', value.id, true)}
 		 	    />
 			 </li> 
 			 <li>
@@ -199,17 +201,17 @@ export default function StudentProfile (props) {
 
 			{/* DEGREE */}
 
-			<StudentProfileField title="I am pursuing a " 
+			<StudentProfileField title={props.studentStatus == 3 ? 'I have a ' : "I am pursuing a " }
 			 styles={nameField}>
 			 <li>
 			   <DropdownList
-			    className={props.propsErrorMap.educationLevel ? shortDropDown + ' ' + error : shortDropDown}
+			    className={props.propsErrorMap.educationLevel ? `${shortDropDown}  ${error} ${materialStyle}` : `${shortDropDown} ${materialStyle}`}
 			    valueField="id" textField="description"
 			    messages={messages}
 			    data={props.educationLevelList}
 			    value={props.educationLevel}
                 defaultValue={1}
-			    onChange={value => props.updateProfileField('educationLevel', value, true)}
+			    onChange={value => props.updateProfileField('educationLevel', value.id, true)}
 			   />
 		         </li>
 			 <li>
@@ -221,15 +223,15 @@ export default function StudentProfile (props) {
 			<StudentProfileField title="I enrolled in " 
 			 styles={nameField}>
 			 <DateTimePicker
-			  className={props.propsErrorMap.enrollmentDate ? dropDown + ' ' + error :  dropDown}
+			  className={props.propsErrorMap.enrollmentDate ? `${dropDown} ${error} ${materialStyle}` :  `${dropDown} ${materialStyle}`}
 			  time={false}
 			  format='LL'
 			  onChange={value => props.updateProfileField('enrollmentDate', value, true)}
 			  value={props.enrollmentDate}
 			 />	
-			 <p> and I will graduate in</p>
+			 <p>{props.studentStatus == 3 ? ' and I graduated ' : ' and I will graduate in'}</p>
 			 <DateTimePicker
-			  className={props.propsErrorMap.graduationDate ? dropDown + ' ' + error : dropDown}
+			  className={props.propsErrorMap.graduationDate ? `${dropDown} ${error} ${materialStyle}` : `${dropDown} ${materialStyle}`}
 			  time={false}
 			  format='LL'
 			  onChange={value => props.updateProfileField('graduationDate', value, true)}
@@ -238,21 +240,21 @@ export default function StudentProfile (props) {
 			</StudentProfileField>
 
 			{/* MAJOR */}
-			<StudentProfileField title="I am studying"
+			<StudentProfileField title={props.studentStatus == 3 ? 'I studied ' : "I am studying " }
 			  styles={nameField}>
 			  <li>
 			    <DropdownList
-			      className={props.propsErrorMap.map ? longDropDown + ' ' +  error : longDropDown}
+			      className={props.propsErrorMap.map ? `${longDropDown} ${error} ${materialStyle}` : `${longDropDown} ${materialStyle}`}
 			      valueField="id" textField="major_text"
 			      messages={messages}
 			      data={props.majorsList}
 			      value={props.major}
                   defaultValue={1}
-			      onChange={value => props.updateProfileField('major', value, true)}
+			      onChange={value => props.updateProfileField('major', value.id, true)}
 			     />
 			  </li>
 			  <li>
-			    <i className="fa fa-info-circle fa-2x" aria-hidden="true" data-tip="Major not there? Please email us at univjobs@gmail.com and we will help you out"></i>
+			    <i className="fa fa-info-circle fa-2x" aria-hidden="true" data-tip="Major not there? Please email us at univjobscanada@gmail.com and we will help you out"></i>
 			    <ReactTooltip place="bottom"
 			    	type="warning"
 						effect="float"
@@ -269,7 +271,8 @@ export default function StudentProfile (props) {
 			 <li>
 			    <input
 			     
-			     className={props.propsErrorMap.gpa ? input + ' ' + error : input}
+			     className={props.propsErrorMap.gpa ? `${input} ${error} ${materialStyle}` 
+					 	: props.gpa == null || props.gpa == 0 || props.gpa == "0.00" ? `${input} ${notActive}  ${materialStyle}` : `${input} ${materialStyle}`}
 			     type="number"
 			     step="0.01"
 			     max="4"
@@ -282,7 +285,7 @@ export default function StudentProfile (props) {
 			   <p>or</p>
 			 </li>
 			 <li className={saveBtnList}>
-               <button className={!props.gpa || props.gpa == 0 ? saveBtnClicked : saveBtn} 
+               <button className={props.gpa == null || props.gpa == 0 || props.gpa == "0.00" ? `${saveBtnClicked} ${materialStyle}` : `${unselectedButton} ${materialStyle}`} 
                                 onClick={(e) => {props.onHandleButtonToggle(true, 'gpaToggle'); props.updateProfileField('gpa', '0.00', true)}}>
                     I do not have a GPA
                 </button>
@@ -296,10 +299,14 @@ export default function StudentProfile (props) {
 			 styles={nameField}>
 			 <li>
 			  <input
-			    className={props.propsErrorMap.personalEmail ? input + ' ' + error : input}
+			    className={props.propsErrorMap.personalEmail 
+						? `${materialStyle} ${input} ${error}` 
+						: props.personalEmail != "" 
+							? `${materialStyle} ${input} ${personalEmailStyle}` 
+							: `${materialStyle} ${input} ${personalEmailStyle} ${notActive}`}
 			    type="text"
 			    placeholder="Email"
-			    value={props.personalEmail}
+			    id="student_personalEmail"
 			    onChange={(e) => {props.updateProfileField('personalEmail', e.target.value, true); props.onHandleButtonToggle(false, 'emailToggle')}}
 			    >
 			  </input>
@@ -308,7 +315,10 @@ export default function StudentProfile (props) {
 			   <p>or</p>
 			 </li>
 			 <li className={saveBtnList}>
-               <button className={!props.personalEmail ? saveBtnClicked : saveBtn} onClick={() => props.onHandleButtonToggle(true, 'emailToggle') }>I prefer school email</button>
+               <button className={props.personalEmail == "" || props.personalEmail == null 
+							 		? `${materialStyle} ${saveBtnClicked}` 
+									: `${materialStyle} ${unselectedButton}`} 
+							 	onClick={() => props.updateProfileField('personalEmail', "", true) }>I prefer school email</button>
 			 </li>
 			</StudentProfileField>
 
@@ -316,13 +326,13 @@ export default function StudentProfile (props) {
 			<StudentProfileField title="I am " 
 			 styles={nameField}>
 			 <DropdownList
-			  className={props.propsErrorMap.gender ? shortDropDown + ' ' + error : shortDropDown}
+			  className={props.propsErrorMap.gender ? `${shortDropDown} ${materialStyle} ${error}` : `${shortDropDown} ${materialStyle}`}
 			  valueField="id" textField="gender_description"
 			  messages={messages}
 			  data={props.gendersList}
               defaultValue={1}
 			  value={props.gender}
-			  onChange={value => props.updateProfileField('gender', value, true)}
+			  onChange={value => props.updateProfileField('gender', value.id, true)}
 			/>	
 			</StudentProfileField>
 
@@ -332,15 +342,17 @@ export default function StudentProfile (props) {
 			<StudentProfileField title="I"
 			 styles={nameField}>
 			 <li className={saveBtnList}>
-               <button className={props.sportsToggle ? saveBtnClicked : saveBtn} onClick={() => props.onHandleButtonToggle(true, 'sportsToggle') }>play</button>
-			   <button className={props.sportsToggle ? saveBtn : saveBtnClicked} onClick={() => props.onHandleButtonToggle(false, 'sportsToggle') }>do not play</button>
+          <button className={props.sportsToggle ? `${materialStyle} ${saveBtnClicked}` : `${materialStyle} ${saveBtn}`} 
+						onClick={() => props.onHandleButtonToggle(true, 'sportsToggle') }>play</button>
+			   <button className={props.sportsToggle ? `${materialStyle} ${saveBtn}` : `${materialStyle} ${saveBtnClicked}`} 
+				 		onClick={() => props.onHandleButtonToggle(false, 'sportsToggle') }>do not play</button>
 			 </li>
 			 <li className={space}>
 			 	<p>on a sports team</p>
 			 </li>
              <li className={props.sportsToggle ? showInput : hideInput}>
 			    <Multiselect
-                   className={props.propsErrorMap.sportsTeam? shortInput + ' ' +  error : shortInput}
+                   className={props.propsErrorMap.sportsTeam? `${materialStyle} ${shortInput} ${error}` : `${materialStyle} ${shortInput}`}
                    valueField='id' textField='sport'
                    placeholder='Basketball, Hockey'
                    messages={messages}
@@ -358,15 +370,17 @@ export default function StudentProfile (props) {
 			<StudentProfileField title="I " 
 			 styles={nameField}>
 			 <li className={saveBtnList}>
-			   <button className={props.clubsToggle ? saveBtnClicked : saveBtn} onClick={() => props.onHandleButtonToggle(true, 'clubsToggle') }>am</button>
-			   <button className={props.clubsToggle ? saveBtn : saveBtnClicked} onClick={() => props.onHandleButtonToggle(false, 'clubsToggle') }>am not</button>
+			   <button className={props.clubsToggle ? `${saveBtnClicked} ${materialStyle}` : `${saveBtn} ${materialStyle}`} 
+				 		onClick={() => props.onHandleButtonToggle(true, 'clubsToggle') }>am</button>
+			   <button className={props.clubsToggle ? `${saveBtn} ${materialStyle}` : `${saveBtnClicked} ${materialStyle}`} 
+				 		onClick={() => props.onHandleButtonToggle(false, 'clubsToggle') }>am not</button>
 			 </li>
 			 <li className={space}>
 			 	<p>on a school club</p>
 			 </li>
-            <li className={props.clubsToggle ? showInput : hideInput}>
+        <li className={props.clubsToggle ? `${showInput}` : `${hideInput}`}>
 			 <Multiselect
-			   className={props.propsErrorMap.schoolClub? shortInput + ' ' +  error : shortInput}
+			   className={props.propsErrorMap.schoolClub? `${materialStyle} ${shortInput} ${error}` : `${materialStyle} ${shortInput}`}
 			   valueField='id' textField='club_name'
                placeholder='Toastmaster, Enactus'
 			   messages={messages}
@@ -384,15 +398,17 @@ export default function StudentProfile (props) {
 			<StudentProfileField title="I" 
 			 styles={nameField}>
 			 <li className={saveBtnList}>
-			   <button className={props.languagesToggle ? saveBtnClicked : saveBtn} onClick={() => props.onHandleButtonToggle(true, 'languagesToggle') }>speak</button>
-			   <button className={props.languagesToggle ? saveBtn : saveBtnClicked} onClick={() => props.onHandleButtonToggle(false, 'languagesToggle') }>do not speak</button>
+			   <button className={props.languagesToggle ? `${materialStyle} ${saveBtnClicked}` : `${materialStyle} ${saveBtn}`} 
+				 		onClick={() => props.onHandleButtonToggle(true, 'languagesToggle') }>speak</button>
+			   <button className={props.languagesToggle ? `${materialStyle} ${saveBtn}` : `${materialStyle} ${saveBtnClicked}`} 
+				 		onClick={() => props.onHandleButtonToggle(false, 'languagesToggle') }>do not speak</button>
 			 </li>
 			 <li className={space}>
 			 	<p>other languages</p>
 			 </li>
             <li className={props.languagesToggle ? showInput : hideInput}>
 			 <Multiselect
-			   className={props.propsErrorMap.languages ? shortInput + ' ' +  error : shortInput}
+			   className={props.propsErrorMap.languages ? `${materialStyle} ${shortInput}  ${error}` : `${materialStyle} ${shortInput}`}
 			   textField='language'
 			   valueField='id'
                placeholder='French, Spanish'
@@ -407,21 +423,19 @@ export default function StudentProfile (props) {
 			{/* CAR */}
 			<StudentProfileField title="I " styles={nameField}>
 			 <li className={saveBtnList}>
-			   <button className={props.hasCar ? saveBtnClicked : saveBtn} 
+			   <button className={props.hasCar == true ? `${materialStyle} ${saveBtnClicked}` : `${materialStyle} ${saveBtn}`} 
 				   data-selection="0"
 				   data-field-name="hasCar"
-				   onClick={optionHighlightClick}
-					 defaultValue={true}
+				   onClick={() => props.updateProfileField('hasCar', true, true)}
 			    >
 				    have
 			    </button>
-			   <button className={props.hasCar === false ? saveBtnClicked : saveBtn} 
+			   <button className={props.hasCar === false ? `${materialStyle} ${saveBtnClicked}` : `${materialStyle} ${saveBtn}`} 
 				   data-selection="1"
 				   data-field-name="hasCar"
-				   onClick={optionHighlightClick}
-					 defaultValue={true}
-			    >
-				    do not have
+				   onClick={() => props.updateProfileField('hasCar', false, true)}
+					 >
+				    {'do not have'}
 			    </button>
 			 </li>
 			 <li className={space}>
@@ -435,11 +449,11 @@ export default function StudentProfile (props) {
 			<StudentProfileField title="I recently worked at "      styles={nameField}>
 			<li> 
 		        <input
-			   className={props.propsErrorMap.companyName ? input + ' ' + error : input }
+			   className={props.propsErrorMap.companyName ? `${materialStyle} ${input} ${error}` : `${materialStyle} ${input}` }
 			   type="text"
 			   placeholder="Company Name"
-			   value={props.companyName}
-			   onChange={(e) => props.updateProfileField('companyName', e.target.value, true)}
+			   id="student_companyName"
+			   onBlur={(e) => props.updateProfileField('companyName', e.target.value, true)}
 			   >
 			  </input>
 			 </li>
@@ -448,11 +462,11 @@ export default function StudentProfile (props) {
 			  </li>
 			  <li>
 			   <input
-			    className={props.propsErrorMap.position ? input + ' ' + error : input}
+			    className={props.propsErrorMap.position ? `${materialStyle} ${input} ${error}` : `${materialStyle} ${input}`}
 			    type="text"
 			    placeholder="Position"
-			    value={props.position}
-			    onChange={(e) => props.updateProfileField('position', e.target.value, true)} 
+			    id="student_position"
+			    onBlur={(e) => props.updateProfileField('position', e.target.value, true)} 
 			   >
 			 </input>
 			 </li>
@@ -462,14 +476,16 @@ export default function StudentProfile (props) {
 			<StudentProfileField title="A fun fact about me is ">
 			<li>
 			 <textarea
-			   className={props.propsErrorMap.funFacts ? textArea + ' ' + error : textArea}
+			   className={props.propsErrorMap.funFacts ? `${materialStyle} ${textArea} ${error}` : `${materialStyle} ${textArea}`}
 			   type="text"
 			   placeholder="Example: I backpacked to Europe by myself last summer"
-               maxLength="140"
-			   onChange={(e) => props.updateProfileField('funFacts', e.target.value, true)}
-			   value={props.funFacts}
+         maxLength="140"
+			   onBlur={(e) => props.updateProfileField('funFacts', e.target.value, true)}
+			  //  defaultValue={props.funFacts}
+				 id="student_funFact"
 			  >
 			 </textarea>
+
 			 </li>
 			  <li>
 			    <i className="fa fa-info-circle fa-2x" aria-hidden="true" data-tip="No experience? Use this as a way to tell employers how great you are!"></i>
@@ -483,11 +499,11 @@ export default function StudentProfile (props) {
 			{/* CITY */}
 			<StudentProfileField title="My hometown is">
 			 <input
-			   className={props.propsErrorMap.hometown ? input + ' ' + error : input}
+			   className={props.propsErrorMap.hometown ? `${materialStyle} ${input} ${error}` : `${materialStyle} ${input}`}
 			   type="text"
 			   placeholder="City"
-			   value={props.hometown}
-			   onChange={(e) => props.updateProfileField('hometown', e.target.value, true)}
+			   id="student_hometown"
+			   onBlur={(e) => props.updateProfileField('hometown', e.target.value, true)}
 			   >
 			 </input>
 			</StudentProfileField>
@@ -496,11 +512,11 @@ export default function StudentProfile (props) {
 			<StudentProfileField title="My favourite hobbies are"> 
 			 <li>
 			  <input
-			   className={props.propsErrorMap.hobbies ? shortInput + ' ' + error : shortInput}
+			   className={props.propsErrorMap.hobbies ? `${materialStyle} ${shortInput} ${error}` : `${materialStyle} ${shortInput}`}
 			   type="text"
 			   placeholder="Playing guitar, Making movies, etc.."
-			   onChange={(e) => props.updateProfileField('hobbies', e.target.value, true)}
-			   value={props.hobbies}
+			   onBlur={(e) => props.updateProfileField('hobbies', e.target.value, true)}
+			   id="student_hobbies"
 			   >
 			  </input>
 			 </li>
@@ -535,11 +551,11 @@ export default function StudentProfile (props) {
 
       </StudentProfileField>
     {/* ======== SAVE BUTTON ======== */}
-      <div>
         <div className={saveBtnContainer}>
-          <button onClick={(e) => props.onSubmit(props)} className={saveBtn + ' ' + actualSaveBtn}>Save</button>
+          <button onClick={(e) => {
+						props.onSubmit(props)
+					}} className={props.isSubmittingForm ? `${actualSaveBtn} ${shine}` : `${actualSaveBtn}`}>Save</button>
         </div>
-      </div>
    </div>
   )
 }

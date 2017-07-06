@@ -154,6 +154,10 @@ const StudentProfileContainer = React.createClass({
           "Profile completed. Now go start applying to jobs!", {
             timeout: 3000
           });
+
+        setTimeout(() => {
+          window.location.reload()
+        }, 2000)
       },
 
       /*
@@ -188,6 +192,10 @@ const StudentProfileContainer = React.createClass({
         "Profile succesfully updated", {
           timeout: 3000
         });
+
+      setTimeout(() => {
+        window.location.reload()
+      }, 2000)
      },
 
      /*
@@ -279,6 +287,30 @@ const StudentProfileContainer = React.createClass({
 
   componentWillReceiveProps(newProps) {
 
+
+  },
+
+  /*
+   * We're setting default values for some fields because we noticed that
+   * they are really too slow to type in the way we're doing.
+   * 
+   * So we've added onBlur to these fields.
+   */
+
+  setDefaultValues () {
+    return new Promise((resolve, reject) => {
+
+      document.getElementById('student_funFact').value = this.props.funFacts
+      document.getElementById('student_hometown').value = this.props.hometown
+      document.getElementById('student_hobbies').value = this.props.hobbies
+      document.getElementById('student_position').value = this.props.position
+      document.getElementById('student_companyName').value = this.props.companyName
+      document.getElementById('student_personalEmail').value = this.props.personalEmail
+      document.getElementById('student_lastName').value = this.props.lastName
+      document.getElementById('student_firstName').value = this.props.firstName
+
+      resolve()
+    })
 
   },
 
@@ -426,6 +458,7 @@ const StudentProfileContainer = React.createClass({
             })
           })
           .then(_thisContext.retrieveAllLists())
+          .then(_thisContext.setDefaultValues)
           .then(_thisContext.finallyDisableOverlay)
       }
 
@@ -470,7 +503,7 @@ const StudentProfileContainer = React.createClass({
       	  hasCar={this.props.hasCar}
       	  companyName={this.props.companyName}
       	  position={this.props.position}
-      	  funFacts={this.props.funFacts}
+      	  funFacts={this.props.funFacts ? this.props.funFacts : ''}
       	  hometown={this.props.hometown}
       	  hobbies={this.props.hobbies}
       	  photo={this.props.photo}
@@ -486,6 +519,7 @@ const StudentProfileContainer = React.createClass({
           onCreateNewTag={this.createNewTag}
       	 // submitErrorsExist={this.props.submitErrorsExist}
       	  propsErrorMap={this.props.propsErrorMap}
+          isSubmittingForm={this.props.isSubmittingForm}
       	  snapshot={this.props.snapshot}/>
       	<ToastContainer ref="container"
       	  toastMessageFactory={ToastMessageFactory}
@@ -591,7 +625,8 @@ function mapStateToProps({user, profile, list, feedback}) {
         gpaToggle: false,
     },
     error: profile.error ? profile.error : '',
-    submitSuccess: profile.submitSuccess ? profile.submitSuccess : false
+    submitSuccess: profile.submitSuccess ? profile.submitSuccess : false,
+    isSubmittingForm: profile.isSubmittingForm ? profile.isSubmittingForm : false
   }
 }
 

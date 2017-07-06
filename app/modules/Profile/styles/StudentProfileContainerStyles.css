@@ -5,10 +5,19 @@
     /* margin-top: 4%; */
     margin-bottom: 3%;
     margin-top: 38px;
-        width: 75%;
-    margin-left: 96px;
+    /* width: 88%; */
+    /* margin-left: 96px; */
     display: flex;
     flex-direction: row-reverse;
+    /* width: 20%; */
+    margin: 0 auto;
+    width: 75%;
+    padding-left: 89px;
+}
+
+.pageItemsContainer {
+    margin: 0 auto;
+    margin-top: 3%;
 }
 
 .profileHeader {
@@ -27,7 +36,7 @@
 }
 
 .emailField {
-	width: auto%;
+	width: auto;
 	display: inline-blocks;
 }
 
@@ -97,10 +106,7 @@
 
 .saveBtnContainer {
   width: 100%;
-  display:inline-block;
   text-align:center;
-  margin-left:13%;
-  margin-top:18px;
 }
 
 .saveBtnList {
@@ -121,7 +127,65 @@
   cursor: pointer;
   margin: 0 auto;
   width: 156px;
+  margin-right: 13px;
+  outline: none
 }
+
+.saveBtnClicked:hover {
+  margin-left: 25%;
+  margin-top: 21px;
+  padding: 10px 15px 10px 15px;
+  border-radius: 3px;
+  border: 0;
+  background: #73b1dc;
+  font-size: 13px;
+  color: white;
+  text-shadow: 1px 1px 0px rgba(0, 0, 0, .1);
+  cursor: pointer;
+  margin: 0 auto;
+  width: 156px;
+  margin-right: 13px;
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+    outline: none
+}
+
+.unselectedButton {
+      
+    margin-left: 25%;
+    margin-top: 21px;
+    padding: 10px 15px 10px 15px;
+    border-radius: 3px;
+    font-size: 13px;
+    text-shadow: 1px 1px 0px rgba(0, 0, 0, .1);
+    cursor: pointer;
+    margin: 0 auto;
+    width: 156px;
+    margin-right: 13px;
+
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+
+    border: #908f8f 1px solid !important;
+    background-color: #f4f4f4;
+    color: black;
+    outline: none
+}
+
+.unselectedButton:hover {
+  background-color:white;
+  outline: none
+}
+
+.notActive {
+background-color: #e2e3e6 !important;
+outline: none
+}
+
+.personalEmailStyle {
+      width: 281px;
+}
+    
+
 
 .saveBtn {
   margin-left: 25%;
@@ -136,9 +200,14 @@
   cursor: pointer;
   margin: 0 auto;
   width: 156px;
+  margin-right: 13px;
+  outline: none
 }
 
 .saveBtn:hover {
+  border: #908f8f 1px solid !important;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
   margin-left: 25%;
   margin-top: 21px;
   padding: 10px 15px 10px 15px;
@@ -151,6 +220,8 @@
   cursor: pointer;
   margin: 0 auto;
   width: 156px;
+  margin-right: 13px;
+  outline: none
 }
 
 .space {
@@ -168,9 +239,9 @@
 
 .textArea {
     composes: input from 'sharedStyles/styles.css';
-    width: 35vw;
-    resize: vertical;
-    height: 174px;
+    height: 97px;
+    resize: none;
+    width: 470px;
 }
 
 .profilePictureDragDrop {
@@ -205,6 +276,39 @@
 }
 .actualSaveBtn {
     position: relative;
-    left: -158px;
     top: 33px;
+    margin-bottom: 43px;
+    width: 286px;
+    height: 46px;
+    background-color: #3697db;
+    color: white;
+    /* border: solid 1px grey; */
+    border: #606060 1px solid !important;
+    border-radius: 4px;
+    font-size: 14px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+    cursor: pointer;
+}
+
+.actualSaveBtn:hover {
+    position: relative;
+    top: 33px;
+    margin-bottom: 43px;
+    width: 286px;
+    height: 46px;
+    background-color: rgb(85, 171, 232);
+    color: white;
+    /* border: solid 1px grey; */
+    border: #606060 1px solid !important;
+    border-radius: 4px;
+    font-size: 14px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+    cursor:pointer;
+}
+
+.materialStyle {
+  composes: material_1 from 'sharedStyles/material.css';
+  border: #908f8f 1px solid !important;
 }

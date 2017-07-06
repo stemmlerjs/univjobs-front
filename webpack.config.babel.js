@@ -29,6 +29,9 @@ const HTMLWebpackPluginConfig = new HtmlWebpackPlugin({
   * 
   * This setting is going to set process.env.CURRENT_ENV to 'prod' inside
   * of the code that webpack is going to compile for us.
+  *
+  * TODO: Set ,
+    NODE_ENV: JSON.stringify('production') in productionPlugin
   */
 
 const productionPlugin = new webpack.DefinePlugin({
@@ -91,7 +94,11 @@ const developmentConfig = {
 
 const productionConfig = {
   devtool: 'cheap-module-source-map',
-  plugins: [HTMLWebpackPluginConfig, productionPlugin, new BundleTracker({filename: './webpack-stats.json'})]
+  plugins: [HTMLWebpackPluginConfig,
+   productionPlugin, 
+   new BundleTracker({filename: './webpack-stats.json'}),
+   new webpack.optimize.UglifyJsPlugin()
+  ]
 }
 
 export default Object.assign({}, base, isProduction === true ? productionConfig : developmentConfig)

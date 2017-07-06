@@ -1,5 +1,6 @@
 
 import createDOMPurify from 'dompurify';
+
 const DOMPurify = createDOMPurify(window);
 
 /*
@@ -139,12 +140,11 @@ export function validateAddress(address) {
  *
  * Referrence: http://stackoverflow.com/questions/26921116/using-regexpressions-to-validate-gpa
  * */
-export function validateGPA(gpa) {
-  const re = /^[0-4]\.\d\d$/
-  //Return false if regex passes, otherwise return true 
-  return !re.test(gpa)
-
-
+export function validateGPA (gpa) {
+  var isANumber = !isNaN(Number(gpa));
+  var isBetweenZeroAndFour = Number(gpa) <= 4 && Number(gpa) >= 0 
+  
+  return (isANumber && isBetweenZeroAndFour)
 }
 
 export function validateJobTitle(jobTitle) {

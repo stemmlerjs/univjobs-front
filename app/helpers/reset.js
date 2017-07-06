@@ -2,6 +2,7 @@
 import axios from 'axios'
 import config from 'config'
 import { getAccessToken } from 'helpers/auth'
+import { sanitize } from 'helpers/utils'
 
 export function submitPasswordReset (email) {
   const accessToken = getAccessToken()

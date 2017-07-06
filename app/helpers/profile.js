@@ -230,7 +230,7 @@ export function validateStudentProfileFields(profileInfo, next) {
   profileFieldErrors.graduationDate = profileInfo.graduationDate != "" ? false : true
   profileFieldErrors.major = profileInfo.major != "" ? false : true
   //debugger;
-  profileFieldErrors.gpa = validateGPA(profileInfo.gpa)
+  profileFieldErrors.gpa = !validateGPA(profileInfo.gpa)
   profileFieldErrors.personalEmail = validatePersonalEmail(profileInfo.personalEmail) ? false : true
   //profileFieldErrors.gender = profileInfo.gender != "" ? false : true
   //profileFieldErrors.sportsTeam = profileInfo.sportsTeam != "" ? false : true
@@ -238,7 +238,7 @@ export function validateStudentProfileFields(profileInfo, next) {
 
   /*NOTE: languages is not required, english is default*/
   profileFieldErrors.languages = validateLanguages(profileInfo.languages)
-  profileFieldErrors.hasCar = typeof profileInfo.hasCar == "boolean" ? false : true
+  //profileFieldErrors.hasCar = typeof profileInfo.hasCar == "boolean" ? false : true
   //profileFieldErrors.companyName = profileInfo.companyName != "" ? false : true
   //profileFieldErrors.position = profileInfo.position != "" ? false : true
   profileFieldErrors.funFacts = profileInfo.funFacts!= "" ? false : true
@@ -265,33 +265,100 @@ export function validateStudentProfileFields(profileInfo, next) {
  * ***************************************************/
 
 export function compareToSnapshot(oldProfile, newProfile, callback) {
+  
+ /*
+  * Look at every prop in newProfile. For every prop that is exactly
+  * the same as in oldProfile, we'll not send that.
+  * We send an altered version of newProfile in the API request through
+  * deleting things that don't need to be updated.
+  */
 
   for(var prop in newProfile) {
+
+   /*
+    * Right away. If the new prop is the same as the old prop, delete it.
+    */
+
     if(newProfile[prop] == oldProfile[prop]) {
       delete newProfile[prop]
     }
 
+    /*
+     * If we're looking at a speciial kind of object (languages, clubs or sports),
+     * we have to do a little bit more to decide what we need to do with the object that we
+     * send.
+     */
+
     if(prop === 'languages' || prop === 'clubs' || prop === 'sports') {
    
-        //decrypt newProfile[prop]
+       /*
+        * We'll need to decrypt the newProfile[prop] from the version it's in.
+        */
+
         let tempObj = JSON.parse(atob(newProfile[prop]))
 
-        //find the length of the key
-        //pass through if it's not empty
+       /*
+        * If there are any NEW tags that need to get created, we'll:
+        * //pass through if it's not empty
+        */
+
         if(tempObj.new.length == 0) {
 
             //1.) compare both i'ds length
             //2.) for every element of tempObj.id compare it to oldProfile.tags ids
             //3.) delete if true
-            if(tempObj.ids.length == oldProfile.tags[prop].length 
-                && tempObj.ids.every(function(e, i) {
-                       return e === oldProfile.tags[prop][i].id 
-                })) {
-                //only delete if comparison is true
-                    delete newProfile[prop]
+
+            if(tempObj.ids.length == oldProfile.tags[prop].length && tempObj.ids.every(function(e, i) {
+                return e === oldProfile.tags[prop][i].id 
+            })) {
+              //only delete if comparison is true
+              delete newProfile[prop]
+            }
+
+           /*
+            * Otherwise, something has changed between the two objects.
+            * If we've REMOVED a tag or something, we're going to need to figure out
+            * which tags we need to delete on the backend. 
+            *
+            * We'll add this to the object as del: ['3', '4', '2',..]
+            */
+
+            else {
+              tempObj.del = [];
+
+              oldProfile.tags[prop].forEach((oldTagId) => {
+                
+                var shouldDelete = true;
+
+                for(var i = 0; i < tempObj.ids.length; i++) {
+
+                  /*
+                   * If the old temp id is still in the new ids object,
+                   * then we shouldn't delete it.
+                   */
+
+                  if (oldTagId.id == tempObj.ids[i]) shouldDelete = false;
                 }
-        }//checks length
-    }//end
+
+                if (shouldDelete) {
+                  tempObj.del.push(oldTagId.id)
+                }
+
+              });
+              
+              /*
+               * Once we're done going through each of these and we know
+               * which tags are no longer present in the current tags object,
+               * let's update the encoded tags object to where it belongs.
+               */
+
+              var encodedTagsString = btoa(JSON.stringify(tempObj))
+
+              newProfile[prop] = encodedTagsString;
+
+            }
+        }
+    }
 
     if(prop === 'enroll_date' || prop === 'grad_date') {
         if(new Date(newProfile[prop]).toString() === new Date(oldProfile[prop]).toString()) {

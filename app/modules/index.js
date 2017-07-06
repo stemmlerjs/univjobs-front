@@ -1,8 +1,8 @@
 // These are the main pages that we use to route to
 export AboutPageContainer from './AboutPage/containers/AboutPageContainer'
-export ApplicationsContainer from './Applications/containers/ApplicationsContainer'
+// export ApplicationsContainer from './Applications/containers/ApplicationsContainer'
 export ApplicantsContainer from './Applications/containers/ApplicantsContainer'
-export ApplicationModal from './SharedComponents'
+// export ApplicationModal from './SharedComponents'
 export CategoriesContainer from './Categories/containers/CategoriesContainer'
 export ContactPageContainer from './ContactPage/containers/ContactPageContainer'
 export CreateJobContainer from './CreateJob/containers/CreateJobContainer'

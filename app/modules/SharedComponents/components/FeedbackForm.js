@@ -3,16 +3,18 @@
 import React, { PropTypes } from 'react'
 
 import config from 'config'
+import Dropzone from 'react-dropzone'
 
 import { feedbackFormClosed, feedbackFormOpen, formOpen_topBar, formOpen_body,
   formOpen_intro, formOpen_heading, formOpen_input, formOpen_textarea,
   formOpen_checkboxContainer, formOpen_checkbox, formOpen_submitButton,
-  formOpen_heading_span, error, submitting, submitMessageSuccess, submitMessageError } from '../styles/FeedbackForm.css'
+  formOpen_heading_span, error, submitting, submitMessageSuccess, submitMessageError,
+  screenshotDropzone, screenshotDropzoneUploaded } from '../styles/FeedbackForm.css'
 
 export default function FeedbackForm ({ isOpen, isSubmitting, submitSuccess, submitFailure,
     title,
     description,
-    includeScreenshot,
+    screenshot,
     errorsMap,
 
     toggleFeedbackFormOpen,
@@ -64,6 +66,25 @@ export default function FeedbackForm ({ isOpen, isSubmitting, submitSuccess, sub
               </div>
               */}
 
+              <div className={formOpen_heading}>Upload screenshot <span className={formOpen_heading_span}>
+                [Optional]</span></div>
+              <Dropzone className={screenshot !== null ? screenshotDropzoneUploaded : screenshotDropzone}
+                onDragOver={() => {
+                  console.log("currently being dragged over")
+                }} 
+                onDragLeave={() => {
+                  console.log("done being dragged over")
+                }} 
+                onDropAccepted={(files) => {
+                  // file[0]
+                  console.log("accepted drop", files)
+                  updateFeedbackForm('screenshot', files[0])
+                }}
+                accept='image/*' 
+                multiple={false}>
+                {screenshot === null ? 'Drop screenshot here!' : 'Thanks :) Ready to upload.'}
+              </Dropzone>
+
               {
                 submitSuccess
                   ? <div className={submitMessageSuccess}>Feedback received. Thank you!</div>
@@ -79,7 +100,7 @@ export default function FeedbackForm ({ isOpen, isSubmitting, submitSuccess, sub
                 <button 
                   onClick={() => {
                     if (!isSubmitting) {
-                      submitFeedbackForm(title, description, includeScreenshot)
+                      submitFeedbackForm(title, description, screenshot)
                     }
                   }} 
                   className={!isSubmitting ? formOpen_submitButton : submitting + ' ' + formOpen_submitButton}>Submit feedback</button>

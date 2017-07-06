@@ -76,7 +76,7 @@ export function fetchedProfileInfoFailure (error) {
 }
 
 
-export function savingProfileInfo() {
+export function savingProfileInfo(isAStudent) {
     return {
         type: SAVING_PROFILE_INFO
     }
@@ -85,9 +85,12 @@ export function savingProfileInfo() {
 /*NOTE: Should this have an input
  *
  * */
-export function savedProfileSuccess() {
+export function savedProfileSuccess(isAStudent, updateInfo, updateTags) {
   return {
-    type: SAVED_PROFILE_INFO_SUCCESS
+    type: SAVED_PROFILE_INFO_SUCCESS,
+    isAStudent,
+    updateInfo,
+    updateTags
   }
 }
 export function savedProfileFailure(profileErrorsObj, error, isAStudent) {
@@ -197,13 +200,12 @@ export function submitProfileFirstTime(userTypeInt, profileInfo, user, successCa
     	   console.log('SUBMIT STUDENT PROFILE NO ERRORS')
     	    // No errors, proceed to /PUT on api/me
 
-          debugger;
-
           /*
-           * SET DEFAULT VALUES (if not interacted with) BEFORE SUBMIT.
+           * Let the app know that we're saving profile info so we should 
+           * update the store.
            */
 
-
+          dispatch(savingProfileInfo(true))
 
           var putData = {
               "is_a_student": true,
@@ -224,7 +226,7 @@ export function submitProfileFirstTime(userTypeInt, profileInfo, user, successCa
               enroll_date: toISO(profileInfo.enrollmentDate),
               grad_date: toISO(profileInfo.graduationDate),
               major_id: profileInfo.major.id ? profileInfo.major.id : profileInfo.major,
-              GPA: parseFloat(profileInfo.gpa),
+              gpa: JSON.stringify(parseFloat(profileInfo.gpa)),
               personal_email: profileInfo.personalEmail,
               gender: profileInfo.gender.id ? profileInfo.gender.id : profileInfo.gender,
                 /*Converts the value to num*/
@@ -273,7 +275,15 @@ export function submitProfileFirstTime(userTypeInt, profileInfo, user, successCa
               'Please fill in missing fields'
             ], false))
 
-          } else {
+          } 
+          else {
+
+          /*
+           * Let the app know that we're saving profile info so we should 
+           * update the store.
+           */
+
+          dispatch(savingProfileInfo(false))
 
             // No errors, proceed to /PUT on api/me
             var putData = {
@@ -342,7 +352,19 @@ export function updateProfile(userTypeInt, profileInfo, user, snapshot, successC
 
       case 0:
         console.log("UPDATING STUDENT PROFILE")
+
+       /*
+        * First, we need to check and see if there are
+        * any errors that exist on screen here.
+        */
+        
         validateStudentProfileFields(profileInfo, (errorExist, profileFieldErrors) => {
+
+         /*
+          * There are definitely some errors. We can't continue
+          * with submitting the user's profile. Also, we should display a toastr because of this.
+          */
+
           if(errorExist) {
 
             // DISPATCH - SAVE_PROFILE_ERROR
@@ -350,44 +372,49 @@ export function updateProfile(userTypeInt, profileInfo, user, snapshot, successC
           "Please fill in missing fields"
             ], true))
 
-          } else {
+            failureCallback("Ah man. Something's wrong in your profile.")
+
+          } 
+
+         /*
+          * No errors occurred. Everything is as it should be, let's go ahead
+          * and save the profile to the backend.
+          */
+          
+          else {
+
+          /*
+           * Let the app know that we're saving profile info so we should 
+           * update the store.
+           */
+
+          dispatch(savingProfileInfo(true))
+
             // No errors, proceed to /PUT on api/me
             var changedData = {
-             // user: {
-             //   "user-is_a_student": true,
-             //   "user-is_profile_completed": true,
-             //   "user-email": user.email,
-             //   "user-first_name": user.firstName,
-             //   "user-last_name": user.lastName,
-             //   "user-is_active": true,
-             //   "user-date_joined": user.dateJoined,
-             //   "user-mobile": user.mobile,
-             // 	is_a_student: false,
-             // 	is_profile_completed: true, // set this flag to true so we know for next time
-
-                  user_firstname: profileInfo.firstName,
-                  user_lastname: profileInfo.lastName,
-                  edu_level: profileInfo.educationLevel ? profileInfo.educationLevel : profileInfo.educationLevel.id, 
-                  email_pref: profileInfo.emailPreferences ? profileInfo.emailPreferences : profileInfo.emailPreferences.id,
-                  status: profileInfo.studentStatus ? profileInfo.studentStatus : profileInfo.studentStatus.id, 
-                  enroll_date: toISO(profileInfo.enrollmentDate),
-                  grad_date: toISO(profileInfo.graduationDate),
-                  major: profileInfo.major  ? profileInfo.major : profileInfo.major.id,
-                  gpa: parseFloat(profileInfo.gpa),
-                  personal_email: profileInfo.personalEmail,
-                  gender: profileInfo.gender ? profileInfo.gender : profileInfo.gender.id, 
-                  languages: btoa(JSON.stringify(extractLanguageId(profileInfo.languages))),
-                  sports: btoa(JSON.stringify(extractSportsObject(profileInfo.sportsTeam, profileInfo))),
-                  clubs: btoa(JSON.stringify(extractClubsObject(profileInfo.schoolClub, profileInfo))),
-                  /*Converts the value to num*/
-                  has_car: hasCarBoolean(profileInfo.hasCar),
-                  recent_company_name: profileInfo.companyName,
-                  recent_company_position: profileInfo.position,
-                  fun_fact: profileInfo.funFacts,
-                  hometown: profileInfo.hometown,
-                  hobbies: profileInfo.hobbies,
-                  profilepicture: profileInfo.photo,
-                  resume: profileInfo.resume,
+              user_firstname: profileInfo.firstName,
+              user_lastname: profileInfo.lastName,
+              edu_level: profileInfo.educationLevel ? profileInfo.educationLevel : profileInfo.educationLevel.id, 
+              email_pref: profileInfo.emailPreferences ? profileInfo.emailPreferences : profileInfo.emailPreferences.id,
+              status: profileInfo.studentStatus ? profileInfo.studentStatus : profileInfo.studentStatus.id, 
+              enroll_date: toISO(profileInfo.enrollmentDate),
+              grad_date: toISO(profileInfo.graduationDate),
+              major: profileInfo.major  ? profileInfo.major : profileInfo.major.id,
+              gpa: JSON.stringify(parseFloat(profileInfo.gpa)),
+              personal_email: profileInfo.personalEmail,
+              gender: profileInfo.gender ? profileInfo.gender : profileInfo.gender.id, 
+              languages: btoa(JSON.stringify(extractLanguageId(profileInfo.languages))),
+              sports: btoa(JSON.stringify(extractSportsObject(profileInfo.sportsTeam, profileInfo))),
+              clubs: btoa(JSON.stringify(extractClubsObject(profileInfo.schoolClub, profileInfo))),
+              /*Converts the value to num*/
+              has_car: profileInfo.hasCar === false ? JSON.stringify(0) : JSON.stringify(1),
+              recent_company_name: profileInfo.companyName,
+              recent_company_position: profileInfo.position,
+              fun_fact: profileInfo.funFacts,
+              hometown: profileInfo.hometown,
+              hobbies: profileInfo.hobbies,
+              profilepicture: profileInfo.photo,
+              resume: profileInfo.resume,
         	  }
             compareToSnapshot(snapshot, changedData, (result) => {
 
@@ -396,8 +423,18 @@ export function updateProfile(userTypeInt, profileInfo, user, snapshot, successC
               studentProfilePATCH(result)
                 .then((res) => {
 
+                 /*
+                  * Here, after successfully updating the profile, we should update
+                  * the snapshot for any subsequent updates because the state will have changed.
+                  * TODO:
+                  */
+
+                  
+                  var updatedStudent = res.data.result.updatedStudent
+                  var updatedTags = res.data.request.updateTags
+
                   // DISPATCH - SAVE_PROFILE_SUCCESS
-                  dispatch(savedProfileSuccess())
+                  dispatch(savedProfileSuccess(true, updatedStudent, updatedTags))
 
                   successCallback()
                 })
@@ -450,7 +487,15 @@ export function updateProfile(userTypeInt, profileInfo, user, snapshot, successC
               'Please fill in missing fields'
             ], false))
 
-          } else {
+          } 
+          else {
+
+          /*
+           * Let the app know that we're saving profile info so we should 
+           * update the store.
+           */
+
+          dispatch(savingProfileInfo(true))
 
            /*
             * No errors, proceed to /PATCH on api/me.
@@ -531,6 +576,12 @@ const initialState = {
 
 export default function profile (state = initialState, action) {
   switch(action.type) {
+    case SAVING_PROFILE_INFO:
+      return {
+        ...state,
+        isSubmittingForm: true,
+        submitSuccess: false
+      }
     case UPDATE_PROFILE_FIELD:
       if(action.isAStudent) {
         return {
@@ -577,6 +628,7 @@ export default function profile (state = initialState, action) {
         return {
           ...state,
           submitErrorsExist: true,
+          isSubmittingForm: false,
           error: action.error,
           studentProfile: studentProfile(state.studentProfile, action)
         }
@@ -584,14 +636,69 @@ export default function profile (state = initialState, action) {
         return {
           ...state,
           submitErrorsExist: true,
+          isSubmittingForm: false,
           error: action.error,
           employerProfile: employerProfile(state.employerProfile, action)
         }
       }
     case SAVED_PROFILE_INFO_SUCCESS:
+    // debugger;
+    //   var newSnapshot = Object.assign(state, action.updateInfo)
+
+    //   var sportsTagsSnapshot = state.snapshot.tags.sports;
+    //   var languagesTagsSnapshot = state.snapshot.tags.languages;
+    //   var clubsTagsSnapshot = state.snapshot.tags.clubs;
+
+    //   /*
+    //    * There are tags that need to be added to the new snapshot.
+    //    */
+
+    //   if (action.updateTags) {
+        
+    //     /*
+    //      * For each type of tag, we need to sync the tags from the update
+    //      * object to the new snapshot.
+    //      * 
+    //      * First, we will start with the sports tags.
+    //      */
+
+    //     if (action.updateTags.sports) {
+
+    //       /*
+    //        * For each of the new sports tags, we need to get the object 
+    //        * containing the id and the value for these and update the new 
+    //        * sports tag state with it.
+    //        */
+
+    //       var newSportsTagsState = action.updateTags.sports.ids 
+          
+    //       newSportsTagsState = newSportsTagsState.forEach((newSportsTag) => {
+
+    //         for (var i = 0; i < sportsTagsSnapshot.length; i++) {
+    //           if (newSportsTag == sportsTagsSnapshot[i].id) {
+    //             newSportsTag = sportsTagsSnapshot[i]
+              
+    //           }
+    //         }
+
+    //         return newSportsTag
+            
+    //       });
+
+    //       /*
+    //        * Now that we've got the new sports tag state, lets add it to our 
+    //        * new snapshot object.
+    //        */
+
+    //       newSnapshot.tags.sports = newSportsTagsState
+    //     }
+    //   }
+
       return {
         ...state,
+        //snapshot: newSnapshot,
         submitSuccess: true,
+        isSubmittingForm: false,
         error: ''
       }
     case TOGGLE_BUTTON: 
