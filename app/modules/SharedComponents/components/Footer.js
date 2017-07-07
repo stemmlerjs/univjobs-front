@@ -56,7 +56,7 @@ const Footer = () => (
         </div>
         <div className={flexFooterRow}> 
             <p>
-                Made with &hearts; in the town of Oakville • Product of UnivJobs, Inc. © 2017
+                Made with &hearts; in the town of Oakville • Product of DCommons, Inc. © 2017
             </p>
         </div>
 

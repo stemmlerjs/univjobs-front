@@ -25,13 +25,14 @@ const AboutPageContainer = React.createClass({
     componentWillMount() {
         // Hide the overlay on mount if coming from direct URL
         this.props.closeOverlay()
+        document.body.scrollTop = document.documentElement.scrollTop = 0;
     },
     render () {
         return (
             <div>
-               <RegularNav />
-               <AboutPage /> 
-               <Footer />
+               <RegularNav/>
+               <AboutPage/> 
+               <Footer/>
              </div>
         )
     },

@@ -5,6 +5,7 @@ import { container, title, subtext, emailContainer, emailInput, emailLabel,
           buttonContainer, resetButton, error, resubmitText } from '../styles/PasswordResetStyles.css'
 
 import { validateResetPasswords } from 'helpers/utils'
+import { ValidPasswordVerifier } from 'modules/SharedComponents'
 
 export default function ConfirmPassword ({ isVerifying, verifySuccess, newPassword, confirmNewPassword,
     handleSubmitNewPassword,
@@ -29,6 +30,7 @@ export default function ConfirmPassword ({ isVerifying, verifySuccess, newPasswo
 
                   }}
                   type="password"/>
+                  <ValidPasswordVerifier passwordText={newPassword}/>
 
                   <label className={emailLabel} htmlFor="confirmPassword">Confirm Password</label>
                   <input className={validateResetPasswords(newPassword, confirmNewPassword) ? emailInput : emailInput + ' ' + error} 
