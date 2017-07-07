@@ -510,11 +510,14 @@ export function getAllJobsStudentJobView () {
 
           jobs[i].questions = []
 
-          questions.forEach(function(question) {
-            if (question.job_id == jobs[i].job_id) {
-              jobs[i].questions.push(question)
-            }
-          })
+          if (questions !== undefined) {
+            questions.forEach(function(question) {
+              if (question.job_id == jobs[i].job_id) {
+                jobs[i].questions.push(question)
+              }
+            })
+          }
+          
 
          /*
           * For each job, place the answers onto 
@@ -523,11 +526,13 @@ export function getAllJobsStudentJobView () {
 
           jobs[i].answers = []
 
-          answers.forEach(function(answer) {
-            if (answer.job_id == jobs[i].job_id) {
-              jobs[i].answers.push(answer)
-            }
-          })
+          if (answers !== undefined) {
+            answers.forEach(function(answer) {
+              if (answer.job_id == jobs[i].job_id) {
+                jobs[i].answers.push(answer)
+              }
+            })
+          }
 
         }
 
