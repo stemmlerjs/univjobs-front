@@ -435,6 +435,7 @@ const CreateJobContainer = React.createClass({
   },
 
   render () {
+    //debugger
 
     var jobType;
 
@@ -528,7 +529,6 @@ const CreateJobContainer = React.createClass({
                     back={this.goBack}
                     jobType={jobType}
                     jobTitle={this.props.page1.jobTitle}
-                    industry={this.props.industryList[this.props.industry].industry}
                     industries={this.props.industriesObj ? this.props.industriesObj : {}}
                     startDate={this.props.page1.startDate}
                     internshipLocation={this.props.page1.internshipLocation}
