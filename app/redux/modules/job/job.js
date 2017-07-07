@@ -412,30 +412,38 @@ export function getAllJobsQuestionsAnswersForEmployer () {
           jobs[i].applicants = []
           jobs[i].invites = []
 
-          questions.forEach(function(question) {
-            if (question.job_id == jobs[i].job_id) {
-              jobs[i].questions.push(question)
-            }
-          })
-
-          answers.forEach(function(answer) {
-            if (answer.job_id == jobs[i].job_id) {
-              jobs[i].answers.push(answer)
-            }
-          })
-
-          applicants.forEach(function(applicant) {
-            if (applicant.job_id == jobs[i].job_id) {
-              jobs[i].applicants.push(applicant)
-            }
-          })
-
-          invites.forEach(function(invite) {
-            if (invite.job_id == jobs[i].job_id) {
-              jobs[i].invites.push(invite)
-            }
-          })
-
+          if (questions !== undefined) {
+            questions.forEach(function(question) {
+              if (question.job_id == jobs[i].job_id) {
+                jobs[i].questions.push(question)
+              }
+            })
+          }
+          
+          if (answers !== undefined) {
+            answers.forEach(function(answer) {
+              if (answer.job_id == jobs[i].job_id) {
+                jobs[i].answers.push(answer)
+              }
+            })
+          }
+          
+          if (applicants !== undefined) {
+            applicants.forEach(function(applicant) {
+              if (applicant.job_id == jobs[i].job_id) {
+                jobs[i].applicants.push(applicant)
+              }
+            })
+          }
+          
+          if (invites !== undefined) {
+            invites.forEach(function(invite) {
+              if (invite.job_id == jobs[i].job_id) {
+                jobs[i].invites.push(invite)
+              }
+            })
+          }
+          
         }
 
        /*
