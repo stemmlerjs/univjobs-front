@@ -406,7 +406,7 @@ export function getAllJobsQuestionsAnswersForEmployer () {
           * For each job, place the answers and questions onto 
           * the job object.
           */
-
+          
           jobs[i].questions = []
           jobs[i].answers = []
           jobs[i].applicants = []
@@ -448,6 +448,8 @@ export function getAllJobsQuestionsAnswersForEmployer () {
       })
 
       .catch((err) => {
+
+        console.log(err)
 
        /*
         * If we were unable to get the jobs for this employer,
