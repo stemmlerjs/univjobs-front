@@ -192,6 +192,10 @@ export function inviteStudent (jobId, studentId) {
 
 export function getGoogleMapsLink (sourceAddress, destinationAddress) {
 
+  if (sourceAddress !== null && destinationAddress !== null) {
+
+  
+
   // Example: https://www.google.ca/maps/dir/1430+Trafalgar+Rd,+Oakville,+ON+L6H+2L1/1255+Eglinton+Ave+W,+Mississauga,+ON+L5V
   // Source: 1430 Trafalgar Road Oakville
   // Destination: 1255 Eglinton Ave West, Mississauga 
@@ -201,5 +205,11 @@ export function getGoogleMapsLink (sourceAddress, destinationAddress) {
   let parsedDestinatinonAddress = destinationAddress.replace(/ /g, '+')
 
   return baseMapsAPIUrl + parsedSourceAddress + '/' + parsedDestinatinonAddress
+
+  }
+  
+  else {
+    return undefined
+  }
   
 }

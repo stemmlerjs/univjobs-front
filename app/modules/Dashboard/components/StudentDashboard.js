@@ -62,6 +62,7 @@ export default function StudentDashboard ({
     updateFilterSettings,
     filterStudentJobs
 }) {
+  console.log(jobs, "jobs")
         return (
             <div className={rootComponentContainer}>
 
