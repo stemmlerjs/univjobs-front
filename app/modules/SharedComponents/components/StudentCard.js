@@ -185,10 +185,13 @@ const StudentCard = ({pictureUrl, resumeUrl, name, major, funFact, recentCompany
                 * their fun fact.
                 */
               }
-                { recentCompanyName === null || recentPosition === null 
+                { recentCompanyName === null || recentCompanyName === "" || recentPosition === null || recentPosition === ""
                     ? <div>
-                        <div className={cardSectionTitle}>About Me</div>
-                        <div className={cardSectionText}>{funFact}</div>
+                        <div className={cardSectionTitle}>Fun Fact</div>
+                        <div className={cardSectionText}>{ funFact.length >= 83 
+                            ? funFact.substring(0, 83) + "..."
+                            : funFact
+                        }</div>
                       </div>
                     : <div>
                         <div className={cardSectionTitle}>Previous Work Experience</div>

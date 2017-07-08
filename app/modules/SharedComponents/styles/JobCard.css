@@ -2,13 +2,13 @@
 .cardContainer {
     list-style: none;
     margin-top: 20px;
-    padding: 0px;
+    padding: 0;
     align-items: flex-start;
-    width: 340px;
+    width: 327px;
     padding-left: 10px;
     padding-right: 10px;
-    background-color: white;
-    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    background-color: #fff;
+    box-shadow: 0 3px 6px rgba(0,0,0,.16), 0 3px 6px rgba(0,0,0,.23);
     margin: 20px;
     height: 370px;
 }

@@ -132,7 +132,7 @@ export function createNewJob(props, jobType, successCallback, failureCallback) {
     dispatch(submittingJob())
       //debugger
       //console.log(props)
-    debugger;
+    
     return createNewJobPOST(
        jobTypeInt,
        props.page1.jobTitle,

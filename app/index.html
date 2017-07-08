@@ -235,21 +235,47 @@
         animation: fade 0.2s linear;
       }
 
-      #job-app-modal-wrapper .skylight-dialog {
-        border-radius: 2px !important;
-        z-index: 100 !important;
-        padding: 15px !important;
-        box-shadow: rgba(0, 0, 0, 0.14) 0px 0px 4px, rgba(0, 0, 0, 0.28) 0px 4px 8px !important;
-        display: block !important;
-        position: fixed !important;
-        top: 44% !important;
-        left: 48% !important;
-        margin-top: -203px !important;
-        margin-left: -334px !important;
-        width: 830px !important;
-        height: 583px !important;
-        background-color: white !important;
+      @media (min-width: 1800px)  {
+        #job-app-modal-wrapper .skylight-dialog {
+          border-radius: 2px !important;
+          z-index: 100 !important;
+          padding: 15px !important;
+          box-shadow: rgba(0, 0, 0, 0.14) 0px 0px 4px, rgba(0, 0, 0, 0.28) 0px 4px 8px !important;
+          display: block !important;
+          position: fixed !important;
+          top: 39% !important;
+          left: 48% !important;
+          margin-top: -203px !important;
+          margin-left: -334px !important;
+          width: 830px !important;
+          height: 583px !important;
+          background-color: white !important;
+        }
       }
+      
+     /* 
+      * Macbook (1280 x 800)
+      */
+
+      @media (max-width: 1800px)  {
+        #job-app-modal-wrapper .skylight-dialog {
+          border-radius: 2px !important;
+          z-index: 100 !important;
+          padding: 15px !important;
+          box-shadow: rgba(0, 0, 0, 0.14) 0px 0px 4px, rgba(0, 0, 0, 0.28) 0px 4px 8px !important;
+          display: block !important;
+          position: fixed !important;
+          top: 39% !important;
+          left: 44% !important;
+          margin-top: -203px !important;
+          margin-left: -334px !important;
+          width: 795px !important;
+          height: 583px !important;
+          background-color: white !important;
+        }
+      }
+
+      
 
       /*
       * A small styling problem on the Student Profile page.
