@@ -1,29 +1,30 @@
 import axios from 'axios'
 import config from 'config'
 import { getAccessToken, getCSRFToken } from 'helpers/auth'
-import { validateJobTitle, validateResponsibilities, 
+import { validateJobTitle, validateResponsibilities,
         validateQualifications, validateDesiredSkills, validateJobLocation, validateCompensation } from 'helpers/utils'
 import { sanitize } from 'helpers/utils'
 
 export function createNewJobPOST (
-  job_type, 
+  job_type,
   title,
-  paid, 
-  start_date, 
-  responsibilities, 
-  qualifications, 
+  paid,
+  start_date,
+  responsibilities,
+  qualifications,
   compensation,
-  address, 
-  question_one_text, 
-  question_two_text, 
-  max_applicants, 
-  active, 
-  verified, 
+  address,
+  question_one_text,
+  question_two_text,
+  max_applicants,
+  active,
+  verified,
   remoteWork,
   desiredSkills) {
-    
+
   const accessToken = getAccessToken();
   const csrfToken = getCSRFToken();
+  debugger;
 
   //debugger
   job_type = sanitize(job_type)
@@ -35,9 +36,10 @@ export function createNewJobPOST (
   address = sanitize(address)
   question_one_text = sanitize(question_one_text)
   question_two_text = sanitize(question_two_text)
-  max_applicants = sanitize(max_applicants)
-  active = sanitize(active)
+  max_applicants = sanitize(JSON.stringify(max_applicants))
+  active = sanitize(JSON.stringify(active))
   desiredSkills = sanitize(desiredSkills)
+  remoteWork = sanitize(JSON.stringify(remoteWork))
 
   return axios({
     method: 'post',
@@ -59,13 +61,13 @@ export function createNewJobPOST (
       question_one_text,              // STRING
       question_two_text,              // STRING
 
-     /* 
+     /*
       * For now, each question will be of type 1 (this is the standard
       * type of question).
       */
 
-      question_one_type: 1,   
-      question_two_type: 1, 
+      question_one_type: 1,
+      question_two_type: 1,
       max_applicants,        // INTEGER > 1
       // active,                  // boolean?
       // verified                // boolean?
@@ -94,17 +96,17 @@ export function validateCreateJobFields(currentPage, pageProps, next) {
       remoteWork: false,
       compensation: false,
     }
-    
+
     // Validate each field in it's own unique way
     page1Errors.jobTitle = validateJobTitle(pageProps.jobTitle) ? false : true
     // page1Errors.isPayingJob = pageProps.isPayingJob != "" ? false : true
     page1Errors.startDate = pageProps.startDate != "" ? false : true
     page1Errors.responsibilities = validateResponsibilities(pageProps.responsibilities) ? false : true
-    page1Errors.qualifications = validateQualifications(pageProps.qualifications) ? false : true 
+    page1Errors.qualifications = validateQualifications(pageProps.qualifications) ? false : true
     page1Errors.desiredSkills = validateDesiredSkills(pageProps.desiredSkills) ? false : true
 
    /*
-    * If remote work is selected === true, then this means that we don't need to validate 
+    * If remote work is selected === true, then this means that we don't need to validate
     * the internshipLocation.
     */
 
@@ -114,7 +116,7 @@ export function validateCreateJobFields(currentPage, pageProps, next) {
     else {
       page1Errors.internshipLocation = validateJobLocation(pageProps.internshipLocation) ? false : true
     }
-    
+
     page1Errors.compensation = validateCompensation(pageProps.compensation) ? false : true
 
     // If an error exists in the map, then errorsExist === true
@@ -124,7 +126,7 @@ export function validateCreateJobFields(currentPage, pageProps, next) {
 
     next(errorsExist, page1Errors)
 
-  } 
+  }
 
   // =================================================================== //
   // =================== PAGE 2 ERROR VALIDATION ======================= //
@@ -134,14 +136,14 @@ export function validateCreateJobFields(currentPage, pageProps, next) {
   * Note that these questions are optional. We don't have to ask a question.
   * We can also ask only 1 question instead of 2.
   */
-  
+
   else if (currentPage === 2) {
 
     let page2Errors = {
       question1: false,
       question2: false,
     }
-    
+
    /*
     * TODO: commenting this out because either field is allowed to be blank.
     * Questions are optional. They don't HAVE to answer them.
@@ -169,7 +171,7 @@ export function validateCreateJobFields(currentPage, pageProps, next) {
     let page3Errors = {
       maxApplicants: false,
     }
-    
+
     // Validate each field in it's own unique way
     page3Errors.maxApplicants = pageProps.maxApplicants >= 20 ? false : true
 
