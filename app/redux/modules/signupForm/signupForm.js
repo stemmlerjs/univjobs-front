@@ -6,7 +6,6 @@ import { createStudentAccount, createEmployerAccount, setAccessToken,
 import { getUserInfo } from 'helpers/profile'
 import * as userActions from '../user/user'
 import * as profileActions from '../profile/profile'
-import { fetchingProfileInfoSuccess, handleGetUserProfile } from 'redux/modules/profile/profile'
 import _ from 'lodash'
 
 
@@ -90,6 +89,7 @@ export function submitStudentSignupForm(email, password) {
                 })
                 .then(getUserInfo)
                 .then((resp) => {
+                    //debugger
                     let profileInfo = _.cloneDeep(resp.data.student)
                     // delete profileInfo.user
 
@@ -100,8 +100,10 @@ export function submitStudentSignupForm(email, password) {
                                                 resp.data.student.is_profile_complete
                         ))
                     //ACTION: PROFILE - DISPATCH (FETCHING_PROFILE_INFO_SUCCESS)
+                    //debugger
                     dispatch(profileActions.fetchedProfileInfoSuccess(
                                                             resp.data.student.is_profile_complete,
+                                                            resp.data.student.isEmailVerified,
                                                             profileInfo,
                                                             resp.data.student.is_a_student
                     ))
