@@ -856,7 +856,7 @@ function studentProfile(state = initialStudentProfileState, action) {
     case FETCHED_PROFILE_INFO_SUCCESS:
           return {
             ...state,
-      		    emailPreferences: action.profileInfo.email_pref,
+      		  emailPreferences: action.profileInfo.email_pref,
               firstName: action.profileInfo.user_firstname,
               lastName: action.profileInfo.user_lastname,
               studentStatus: action.profileInfo.status,
@@ -867,13 +867,13 @@ function studentProfile(state = initialStudentProfileState, action) {
               schoolName: action.profileInfo.name,
               gpa: action.profileInfo.gpa ? Number(action.profileInfo.gpa) : 0,
               personalEmail: action.profileInfo.personal_email,
-        	    gender: action.profileInfo.gender,
+        	  gender: action.profileInfo.gender,
               sportsTeam: action.profileInfo.tags ? action.profileInfo.tags.sports : [], //.map((sport) => sport.id),
-      		    schoolClub: action.profileInfo.tags ? action.profileInfo.tags.clubs : [], //.map((club) => club.id),
+      		  schoolClub: action.profileInfo.tags ? action.profileInfo.tags.clubs : [], //.map((club) => club.id),
               languages: action.profileInfo.tags ? action.profileInfo.tags.languages : [], //.map((language) => language.id),
               //TODO: convert to yes/no
               hasCar: hasCarBoolean(action.profileInfo.has_car),
-      		    companyName: action.profileInfo.recent_company_name,
+      		  companyName: action.profileInfo.recent_company_name,
               position: action.profileInfo.recent_company_position,
               funFacts: action.profileInfo.fun_fact,
               hometown: action.profileInfo.hometown,

@@ -414,6 +414,7 @@ const CreateJobContainer = React.createClass({
 
   openJobAppModal(e, selectedJob) {
     e.preventDefault()
+      debugger
 
     this.props.openJobAppModal(selectedJob)
     this.refs.jobAppModal.show()
@@ -607,6 +608,7 @@ const CreateJobContainer = React.createClass({
                             location: this.props.page1 ? this.props.page1.internshipLocation : '',
                             start_date: this.props.page1 ? this.props.page1.startDate : '',
                             desired_skills: this.props.page1 ? this.props.page1.desiredSkills : '',
+                            compensation: this.props.page1 ? this.props.page1.compensation : '',
                             qualification: this.props.page1 ? this.props.page1.qualifications : '',
                             responsibilities: this.props.page1 ? this.props.page1.responsibilities : '',
                             description: this.props.profile ? this.props.profile.description : '',
