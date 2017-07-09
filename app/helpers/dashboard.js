@@ -1,13 +1,13 @@
 import axios from 'axios'
 import config from 'config'
 import { getAccessToken, getCSRFToken } from 'helpers/auth'
-import { fetchingJobs, fetchedJobSuccess, fetchedJobFailure, 
+import { fetchingJobs, fetchedJobSuccess, fetchedJobFailure,
 	getStudentsSuccess, getStudentsError, fetchingJobTypes,
 	fetchList, fetchIndustries, fetchingIndustries, dashboard } from 'redux/modules/dashboard/dashboard'
 import { sanitize } from 'helpers/utils'
 
 /*NOTE: Reference to dashboard.js and lists.js
- * 	
+ *
  * 	- Since this functions are used in different containers
  * 	  In what way could we refactor these functions to be reusable to each container
  * 	  which uses different action creators for the associated reducers?
@@ -34,7 +34,7 @@ import { sanitize } from 'helpers/utils'
  */
 
 /**
-  * getJobs 
+  * getJobs
   *
   * Get all jobs
   *
@@ -59,7 +59,7 @@ export function getJobs (userId) {
 
 
 /**
-  * getStudents 
+  * getStudents
   *
   * Gets all students via /api/student/
   *
@@ -69,7 +69,7 @@ export function getJobs (userId) {
 export function getAllStudents() {
   const accessToken = getAccessToken()
   const csrfToken = getCSRFToken()
-  
+
   return axios({
 		method: 'get',
 		url: config.baseUrl + 'students/',
@@ -82,7 +82,7 @@ export function getAllStudents() {
 
 
 /**
-  * getIndustries 
+  * getIndustries
   *
   * Gets all industries via /api/list/industries
   *
@@ -117,7 +117,7 @@ export function getIndustries(){
 export function applyToJob (answers, jobId) {
 	const accessToken = getAccessToken()
 	const csrfToken = getCSRFToken()
-
+    debugger;
 	return axios({
 		method: 'post',
 		url: config.baseUrl + 'jobs/' + sanitize(jobId) + '/apply',
@@ -127,7 +127,7 @@ export function applyToJob (answers, jobId) {
       'Content-Type': 'application/json'
 		},
 		data: {
-      "answers": answers
+      "answers": JSON.stringify(answers)
     }
 	})
 }
@@ -180,7 +180,7 @@ export function unPinAJob(data) {
 
 export function inviteStudent (jobId, studentId) {
   const accessToken = getAccessToken()
-  
+
   return axios({
     method: 'post',
     url: config.baseUrl + 'jobs/invite/' + sanitize(jobId) + "/" + sanitize(studentId),
@@ -194,11 +194,11 @@ export function getGoogleMapsLink (sourceAddress, destinationAddress) {
 
   if (sourceAddress !== null && destinationAddress !== null) {
 
-  
+
 
   // Example: https://www.google.ca/maps/dir/1430+Trafalgar+Rd,+Oakville,+ON+L6H+2L1/1255+Eglinton+Ave+W,+Mississauga,+ON+L5V
   // Source: 1430 Trafalgar Road Oakville
-  // Destination: 1255 Eglinton Ave West, Mississauga 
+  // Destination: 1255 Eglinton Ave West, Mississauga
 
   let baseMapsAPIUrl = 'https://www.google.ca/maps/dir/'
   let parsedSourceAddress = sourceAddress.replace(/ /g, '+')
@@ -207,9 +207,9 @@ export function getGoogleMapsLink (sourceAddress, destinationAddress) {
   return baseMapsAPIUrl + parsedSourceAddress + '/' + parsedDestinatinonAddress
 
   }
-  
+
   else {
     return undefined
   }
-  
+
 }
