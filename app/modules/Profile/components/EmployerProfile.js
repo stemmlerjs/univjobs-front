@@ -28,6 +28,8 @@ import { profileContainer, profileHeader, profileField, profileFieldName, profil
 import { btn } from 'sharedStyles/widgets.css'
 import { title, comboBox } from 'sharedStyles/sharedComponentStyles.css'
 
+import { shine } from 'sharedStyles/animations.css'
+
 /**
   * I'm including these as propTypes because I notice that there is some sort of inconsistency
   * when we want to update the Employer profile. Hopefully this will help us figure out exactly
@@ -229,7 +231,7 @@ function placePhoto(element, url) {
     {/* ======== SAVE BUTTON ======== */}
       <div className={profileField}>
         <div className={saveBtnContainer}>
-          <button onClick={(e) => props.onSubmit(props)} className={saveBtn}>Save</button>
+          <button onClick={(e) => props.onSubmit(props)} className={props.isSubmittingForm ? `${saveBtn} ${shine}` : saveBtn}>Save</button>
         </div>
       </div>
     </div>

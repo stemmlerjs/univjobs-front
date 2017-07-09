@@ -517,7 +517,6 @@ const StudentProfileContainer = React.createClass({
           emailToggle={this.props.emailToggle}
           onHandleButtonToggle={this.handleButtonToggle}
           onCreateNewTag={this.createNewTag}
-      	 // submitErrorsExist={this.props.submitErrorsExist}
       	  propsErrorMap={this.props.propsErrorMap}
           isSubmittingForm={this.props.isSubmittingForm}
       	  snapshot={this.props.snapshot}/>

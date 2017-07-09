@@ -488,6 +488,7 @@ export function updateProfile(userTypeInt, profileInfo, user, snapshot, successC
             ], false))
 
           } 
+
           else {
 
           /*
@@ -528,14 +529,18 @@ export function updateProfile(userTypeInt, profileInfo, user, snapshot, successC
 
                   // DISPATCH - SAVE_PROFILE_SUCCESS
                   dispatch(savedProfileSuccess())
+
+                  successCallback()
                 })
                 .catch((err) => {
 
                   // DISPATCH - SAVE_PROFILE_ERROR
                   dispatch(savedProfileFailure({}, [
                     'HTTP Error Occurred.\n',
-                    err.message
-                ], false))
+                     err.message
+                    ], false))
+
+                  failureCallback('Some error occurred trying to update!')
 
                 })
             })

@@ -16,6 +16,7 @@ import { legalEmployer, gray } from '../styles/SignupContainerStyles.css'
 import { ValidPasswordVerifier } from 'modules/SharedComponents'
 
 import { material_1 } from 'sharedStyles/material.css'
+import { shine } from 'sharedStyles/animations.css'
 
 const styles = {
   overlayStyles: {
@@ -62,7 +63,7 @@ const EmployerSignup = React.createClass({
   render() {
     // Props
     const {onSubmitSignup, updateEmployerSignupForm, firstNameText, lastNameText, companyNameText, phoneText, 
-      emailText, passwordText, error, router} = this.props
+      emailText, passwordText, error, router, isCreatingAccount } = this.props
 
 
     return (
@@ -146,7 +147,7 @@ const EmployerSignup = React.createClass({
                         { error }
                         </div>
                         <button 
-                            className={btn} 
+                            className={isCreatingAccount ? `${btn} ${shine}` : btn} 
                             onClick={onSubmitSignup}>
                             Sign up
                         </button>

@@ -25,7 +25,7 @@ import { detectEnterPress } from 'helpers/utils'
 
 // ================CSS IMPORTS============================== //
 import { input, errorMessage, loginBtn, passwordRst } from '../styles/SignupContainerStyles.css'
-
+import { shine } from 'sharedStyles/animations.css'
 
 const styles = {
   overlayStyles: {
@@ -44,7 +44,7 @@ const styles = {
 
     // Custom Styles
     width: '330px',
-    height: '330px',
+    height: '358px',
     zIndex: '100',
     padding: '2px',
     borderRadius: '2px',
@@ -291,7 +291,7 @@ const SignupContainer = React.createClass({
             <div className={errorMessage}>
               { this.props.loginFormErrorText }
             </div>
-              <button className={loginBtn} onClick={this.handleLoginAttempt}>Next</button>
+              <button className={!this.props.isLoggingIn ? loginBtn : `${loginBtn} ${shine}`} onClick={this.handleLoginAttempt}>Next</button>
           </SkyLight>
 
           { this.props.isAStudent === true ?
@@ -303,7 +303,9 @@ const SignupContainer = React.createClass({
                 submitSignupForm={this.props.submitStudentSignupForm}
                 onSubmitSignup={(e) => this.handleStudentSignup(e)}
                 error={this.props.studentFormError}
-                router={this.context.router}/>
+                router={this.context.router}
+                isCreatingAccount={this.props.isCreatingAccount}
+              />
             </div>
             :
             <div>
@@ -317,7 +319,9 @@ const SignupContainer = React.createClass({
                 emailText={this.props.employerEmail}
                 passwordText={this.props.employerPassword}
                 error={this.props.employerFormError}
-                router={this.context.router}/>
+                router={this.context.router}
+                isCreatingAccount={this.props.isCreatingAccount}
+              />
             </div>
           }
         <Footer />
@@ -349,7 +353,9 @@ function mapStateToProps({user, signupForm, loginForm}) {
     employerFormError: signupForm.employerSignupForm.error ? signupForm.employerSignupForm.error : '',
     loginFormEmailText: loginForm.email ? loginForm.email : '',
     loginFormPasswordText: loginForm.password ? loginForm.password : '',
-    loginFormErrorText: loginForm.error ? loginForm.error : ''
+    loginFormErrorText: loginForm.error ? loginForm.error : '',
+    isLoggingIn: user.isLoggingIn ? user.isLoggingIn : false,
+    isCreatingAccount: user.isCreatingAccount ? user.isCreatingAccount : false
   }
 }
 

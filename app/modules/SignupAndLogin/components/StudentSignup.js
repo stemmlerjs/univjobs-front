@@ -10,6 +10,7 @@ import { legal, white, passwordContainer } from '../styles/SignupContainerStyles
 import { ValidPasswordVerifier } from 'modules/SharedComponents'
 
 import { material_1 } from 'sharedStyles/material.css'
+import { shine } from 'sharedStyles/animations.css'
 
 StudentSignup.propTypes = {
   submitSignupForm: PropTypes.func.isRequired,
@@ -20,8 +21,7 @@ StudentSignup.propTypes = {
   router: PropTypes.object.isRequired
 }
 
-export default function StudentSignup ({submitSignupForm, updateStudentSignupForm, onSubmitSignup, emailText, passwordText, error, router}) {
-
+export default function StudentSignup ({ submitSignupForm, updateStudentSignupForm, onSubmitSignup, emailText, passwordText, error, router, isCreatingAccount }) {
   return (
       <div>
         <div className={studentCenteredContainer}>
@@ -37,8 +37,7 @@ export default function StudentSignup ({submitSignupForm, updateStudentSignupFor
                         value={emailText}
                         onChange={(e) => updateStudentSignupForm('email', e.target.value)}
                         type="email" 
-                        placeholder="Email"
-                />
+                        placeholder="Email"/>
                 <div className={passwordContainer}>
                   <input className={input} 
                           name="student[password]"
@@ -59,7 +58,7 @@ export default function StudentSignup ({submitSignupForm, updateStudentSignupFor
                 <div className={error == "" ? '' : errorMessage}>
                     { error }
                 </div>
-                <button className={btn + ' ' + material_1} onClick={onSubmitSignup}>Sign me up</button>
+                <button className={isCreatingAccount ? `${btn} ${material_1} ${shine}` : btn + ' ' + material_1} onClick={onSubmitSignup}>Sign me up</button>
               </div>
         </div>
     </div>

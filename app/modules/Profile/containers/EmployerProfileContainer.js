@@ -359,7 +359,7 @@ const EmployerProfileContainer = React.createClass({
         () => {
 
           this.refs.container.success(
-            "Woohoo :)",
+            "Looking good :)",
             "Profile successfully updated!", {
             timeOut: 3000
           });
@@ -409,7 +409,6 @@ const EmployerProfileContainer = React.createClass({
   },
 
   render () {
-    console.log("Employer profile props", this.props.profile)
     return (
       <div className={pageContainer}>
         <SidebarContainer 
@@ -417,7 +416,8 @@ const EmployerProfileContainer = React.createClass({
           logoUrl={this.props.logoUrl}
           profilePicture={typeof this.props.profile.logoUrl == "object" && this.props.profile.logoUrl !== null
             ? this.props.profile.logoUrl.preview
-            : config.mediaUrl + this.props.profile.logoUrl}
+            : config.mediaUrl + this.props.profile.logoUrl
+          }
         />
         <Title 
             titleName="My business profile"
@@ -444,6 +444,7 @@ const EmployerProfileContainer = React.createClass({
           mobile={Number(this.props.user.mobile)}
           onDragOver={this.onDragOver}
           onDragLeave={this.onDragLeave}
+          isSubmittingForm={this.props.isSubmittingForm}
         />
         <ToastContainer ref="container"
           toastMessageFactory={ToastMessageFactory}
@@ -483,7 +484,8 @@ function mapStateToProps({user, profile, list}) {
       officePostalCode: false
     },
     error: profile.error ? profile.error : '',
-    submitSuccess: profile.submitSuccess ? profile.submitSuccess : false
+    submitSuccess: profile.submitSuccess ? profile.submitSuccess : false,
+    isSubmittingForm: profile.isSubmittingForm ? profile.isSubmittingForm : false
   }
 }
 
