@@ -28,7 +28,6 @@ export default function JobCardModal({
     page
   }) { 
     console.log(questions)
-    debugger
   return (
     <div className={cardModalContainer}>
 

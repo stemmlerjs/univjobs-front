@@ -469,7 +469,6 @@ const StudentProfileContainer = React.createClass({
   },
 
   render () {
-      debugger
     return (
       <div className={pageContainer}>
         <SidebarContainer isAStudent={this.props.user.isAStudent} 

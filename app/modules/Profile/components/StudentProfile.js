@@ -26,7 +26,8 @@ import { pageContainer, profileField, profileHeader,
         dropzoneContent, inlineDropzone, btn, 
         saveBtnContainer, saveBtnList, saveBtnClicked,  notActive, personalEmailStyle,
         saveBtn, space, hideInput, showInput, textArea, unselectedButton,
-				profilePictureDragDropAlt, savedResumeView, actualSaveBtn, pageItemsContainer, materialStyle } from '../styles/StudentProfileContainerStyles.css'
+				profilePictureDragDropAlt, savedResumeView, actualSaveBtn, pageItemsContainer, materialStyle,
+			editHoverSection, deleteHoverSection, hoverSectionContainer } from '../styles/StudentProfileContainerStyles.css'
 
 import { shine } from 'sharedStyles/animations.css'
 import { error } from 'sharedStyles/error.css' 
@@ -42,7 +43,7 @@ var momentLocalizer = require('react-widgets/lib/localizers/moment')
 momentLocalizer(Moment)
 
 export default function StudentProfile (props) {
-    debugger
+
 console.log(props)
 
  const messages = {
@@ -528,10 +529,37 @@ console.log(props)
 			{/* PHOTO & RESUME */}
 
 			<StudentProfileField title="Take a business selfie">
+
 				<Dropzone id="dropPhotoDiv" style={profilePic} className={props.propsErrorMap.photo ? dropzone + ' ' + error 
 					: props.photo == "" 
 						? dropzone 
 						: dropzone + " " + profilePictureDragDropAlt} onDrop={onDrop} accept='image/*' multiple={false}>
+
+						{
+							/*
+							 * EDIT and DELETE buttons 
+							 * for profile picture.
+							 */
+						}
+						
+						{
+							props.photo !== ""
+								? <div className={hoverSectionContainer}>
+										<div className={editHoverSection}>
+											<div>
+												<i id="fa-edit" className={"fa fa-edit fa-2x"} aria-hidden="true"></i>
+											</div>
+										</div>
+										<div className={deleteHoverSection}>
+											<div>
+												<i id="fa-trash" className={"fa fa-trash fa-2x"} aria-hidden="true"></i>
+											</div>
+										</div>
+									</div>
+								: ''
+						}
+						
+
 					<div className={dropzoneContent} className={props.photo == "" ? "" : "gone"}>
 						<i id="fa-user" className={props.photo == "" ? "fa fa-user fa-3x" : "gone"} aria-hidden="true"></i>
 						<div className={props.photo == "" ? "" : "gone"} id="drag-dropPhoto" >Upload a photo</div>
@@ -540,6 +568,7 @@ console.log(props)
 
 					<p className={space}> here is my resume</p>
 
+					
 					<Dropzone id="dropResumeDiv" className={props.propsErrorMap.resume ? dropzone + ' ' + error 
 						: props.resume == ""
 							? dropzone
