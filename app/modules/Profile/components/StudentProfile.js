@@ -13,6 +13,7 @@ import { Combobox, DropdownList, DateTimePicker, Calendar, Multiselect, SelectLi
 import Dropzone from 'react-dropzone'
 
 import config from 'config'
+import { ProfilePicture } from 'modules/SharedComponents'
 
 // ==============THIRD PARTY IMPORTS========================= //
 import ReactTooltip from 'react-tooltip'
@@ -25,7 +26,7 @@ import { pageContainer, profileField, profileHeader,
         mediumDropDown, longDropDown, dropzone, 
         dropzoneContent, inlineDropzone, btn, 
         saveBtnContainer, saveBtnList, saveBtnClicked,  notActive, personalEmailStyle,
-        saveBtn, space, hideInput, showInput, textArea, unselectedButton,
+        saveBtn, space, hideInput, showInput, textArea, unselectedButton, distribute,
 				profilePictureDragDropAlt, savedResumeView, actualSaveBtn, pageItemsContainer, materialStyle,
 			editHoverSection, deleteHoverSection, hoverSectionContainer } from '../styles/StudentProfileContainerStyles.css'
 
@@ -530,40 +531,73 @@ console.log(props)
 
 			<StudentProfileField title="Take a business selfie">
 
+				{
+					/*
+					 * Scenario #1: We haven't uploaded the picture yet.
+					 */
+
+					props.photo == ""
+						?	<Dropzone id="dropPhotoDiv" style={profilePic} className={props.propsErrorMap.photo ? dropzone + ' ' + error 
+								: props.photo == "" 
+									? dropzone 
+									: dropzone + " " + profilePictureDragDropAlt}>
+								<div className={dropzoneContent} className={props.photo == "" ? "" : "gone"}>
+									<i id="fa-user" className={props.photo == "" ? "fa fa-user fa-3x" : "gone"} aria-hidden="true"></i>
+									<div className={props.photo == "" ? "" : "gone"} id="drag-dropPhoto" >Upload a photo</div>
+								</div>
+							</Dropzone>
+						: ''
+				}
+
+				{
+					/*
+					 * Scenario #2: We've uploaded the photo and we want the option to either be able 
+					 * to delete it or edit (upload a different one).
+					 *
+					 * EDIT and DELETE buttons 
+					 * for profile picture.
+					 */
+
+					props.photo !== ""
+						? <div>
+								<Dropzone id="dropPhotoDiv" style={profilePic} className={props.propsErrorMap.photo ? dropzone + ' ' + error 
+								: props.photo == "" 
+									? dropzone 
+									: dropzone + " " + profilePictureDragDropAlt} onDrop={onDrop} accept='image/*' multiple={false}>
+									
+
+									<div className={dropzoneContent} className={props.photo == "" ? "" : "gone"}>
+										<i id="fa-user" className={props.photo == "" ? "fa fa-user fa-3x" : "gone"} aria-hidden="true"></i>
+										<div className={props.photo == "" ? "" : "gone"} id="drag-dropPhoto" >Upload a photo</div>
+									</div>
+								</Dropzone>
+								<div className={distribute}>
+									<div className={editHoverSection}>
+										<div>
+											<i id="fa-edit" className={"fa fa-edit fa-2x"} aria-hidden="true"></i>
+										</div>
+									</div>
+									<div className={deleteHoverSection}>
+										<div>
+											<i id="fa-trash" className={"fa fa-trash fa-2x"} aria-hidden="true"></i>
+										</div>
+									</div>
+								</div>
+							</div>
+						: ''
+				}
+				
+
 				<Dropzone id="dropPhotoDiv" style={profilePic} className={props.propsErrorMap.photo ? dropzone + ' ' + error 
 					: props.photo == "" 
 						? dropzone 
 						: dropzone + " " + profilePictureDragDropAlt} onDrop={onDrop} accept='image/*' multiple={false}>
-
-						{
-							/*
-							 * EDIT and DELETE buttons 
-							 * for profile picture.
-							 */
-						}
-						
-						{
-							props.photo !== ""
-								? <div className={hoverSectionContainer}>
-										<div className={editHoverSection}>
-											<div>
-												<i id="fa-edit" className={"fa fa-edit fa-2x"} aria-hidden="true"></i>
-											</div>
-										</div>
-										<div className={deleteHoverSection}>
-											<div>
-												<i id="fa-trash" className={"fa fa-trash fa-2x"} aria-hidden="true"></i>
-											</div>
-										</div>
-									</div>
-								: ''
-						}
 						
 
-					<div className={dropzoneContent} className={props.photo == "" ? "" : "gone"}>
-						<i id="fa-user" className={props.photo == "" ? "fa fa-user fa-3x" : "gone"} aria-hidden="true"></i>
-						<div className={props.photo == "" ? "" : "gone"} id="drag-dropPhoto" >Upload a photo</div>
-					</div>
+						<div className={dropzoneContent} className={props.photo == "" ? "" : "gone"}>
+							<i id="fa-user" className={props.photo == "" ? "fa fa-user fa-3x" : "gone"} aria-hidden="true"></i>
+							<div className={props.photo == "" ? "" : "gone"} id="drag-dropPhoto" >Upload a photo</div>
+						</div>
 					</Dropzone>
 
 					<p className={space}> here is my resume</p>

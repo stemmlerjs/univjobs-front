@@ -363,3 +363,10 @@ outline: none
   transition:0.2s ease-in;
   opacity: 1;
 }
+
+.distribute {
+  height: 165px;
+  width: 168px;
+  position: relative;
+  top: -169px;
+}
