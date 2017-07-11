@@ -183,6 +183,8 @@ export function submitProfileFirstTime(userTypeInt, profileInfo, user, successCa
     	      "Please fill in missing fields"
     	    ], true))
 
+          failureCallback('INVALID FIELDS')
+
     	  } 
         
         /*
@@ -253,7 +255,7 @@ export function submitProfileFirstTime(userTypeInt, profileInfo, user, successCa
                 err
               ], true))
 
-              failureCallback('Some error occurred trying to update!')
+              failureCallback('HTTP ERROR')
     	     })
     	    }
     	  })

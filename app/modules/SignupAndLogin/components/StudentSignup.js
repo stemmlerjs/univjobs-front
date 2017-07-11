@@ -11,6 +11,7 @@ import { ValidPasswordVerifier } from 'modules/SharedComponents'
 
 import { material_1 } from 'sharedStyles/material.css'
 import { shine } from 'sharedStyles/animations.css'
+import { detectEnterPress } from 'helpers/utils'
 
 StudentSignup.propTypes = {
   submitSignupForm: PropTypes.func.isRequired,
@@ -37,7 +38,8 @@ export default function StudentSignup ({ submitSignupForm, updateStudentSignupFo
                         value={emailText}
                         onChange={(e) => updateStudentSignupForm('email', e.target.value)}
                         type="email" 
-                        placeholder="Email"/>
+                        placeholder="Email"
+                        onKeyUp={(e) => detectEnterPress(e, onSubmitSignup)}/>
                 <div className={passwordContainer}>
                   <input className={input} 
                           name="student[password]"
@@ -45,6 +47,7 @@ export default function StudentSignup ({ submitSignupForm, updateStudentSignupFo
                           onChange={(e) => updateStudentSignupForm('password', e.target.value)}
                           type="password" 
                           placeholder="Password"
+                          onKeyUp={(e) => detectEnterPress(e, onSubmitSignup)}
                   />
                   <ValidPasswordVerifier passwordText={passwordText}/>
                 </div>

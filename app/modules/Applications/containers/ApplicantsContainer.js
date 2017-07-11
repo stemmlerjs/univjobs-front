@@ -375,7 +375,7 @@ const ApplicantsContainer = React.createClass({
     return (
       <div className={pageContainer}>
         <SidebarContainer isAStudent={this.props.user.isAStudent} profilePicture={typeof this.props.profile.logoUrl == "object" && this.props.profile.logoUrl !== null
-            ? this.props.profile.logoUrl.preview
+            ? this.props.profile.logoUrl ? this.props.profile.logoUrl.preview : ''
             : config.mediaUrl + this.props.profile.logoUrl}/>
 
 

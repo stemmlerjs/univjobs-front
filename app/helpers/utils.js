@@ -112,7 +112,7 @@ export function validateCompanyName(companyName) {
 export function detectEnterPress(event, callback) {
   let keyCode = event.keyCode || event.charCode;
   if(keyCode === 13) {
-    callback()
+    callback(event)
   }
 }
 

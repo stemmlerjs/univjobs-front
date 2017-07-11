@@ -244,8 +244,8 @@ export function validateStudentProfileFields(profileInfo, next) {
   profileFieldErrors.funFacts = profileInfo.funFacts!= "" ? false : true
   profileFieldErrors.hometown = profileInfo.hometown != "" ? false : true
   profileFieldErrors.hobbies= profileInfo.hobbies != "" ? false : true
-  profileFieldErrors.photo = profileInfo.photo != "" ? false : true
-  profileFieldErrors.resume = profileInfo.resume != "" ? false : true
+  // profileFieldErrors.photo = profileInfo.photo != "" ? false : true
+  // profileFieldErrors.resume = profileInfo.resume != "" ? false : true
 
   // If an error exists in the map, then submitErrorsExist === true
   for (var attr in profileFieldErrors) {

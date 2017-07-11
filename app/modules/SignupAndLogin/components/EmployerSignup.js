@@ -18,6 +18,8 @@ import { ValidPasswordVerifier } from 'modules/SharedComponents'
 import { material_1 } from 'sharedStyles/material.css'
 import { shine } from 'sharedStyles/animations.css'
 
+import { detectEnterPress } from 'helpers/utils'
+
 const styles = {
   overlayStyles: {
     position: 'absolute',
@@ -97,6 +99,7 @@ const EmployerSignup = React.createClass({
                                     onChange={(e) => updateEmployerSignupForm('firstName', e.target.value)}
                                     type="text" 
                                     placeholder="First Name"
+                                    onKeyUp={(e) => detectEnterPress(e, onSubmitSignup)}
                             />
                             <input className={input} 
                                     name="employer[lastname]"
@@ -104,6 +107,7 @@ const EmployerSignup = React.createClass({
                                     onChange={(e) => updateEmployerSignupForm('lastName', e.target.value)}
                                     type="text" 
                                     placeholder="Last Name"
+                                    onKeyUp={(e) => detectEnterPress(e, onSubmitSignup)}
                             />
                             <input className={input} 
                                     name="employer[companyName]"
@@ -111,6 +115,7 @@ const EmployerSignup = React.createClass({
                                     onChange={(e) => updateEmployerSignupForm('companyName', e.target.value)}
                                     type="text" 
                                     placeholder="Company"
+                                    onKeyUp={(e) => detectEnterPress(e, onSubmitSignup)}
                             />
                             <input className={input} 
                                     name="employer[phone]"
@@ -119,6 +124,7 @@ const EmployerSignup = React.createClass({
                                     onChange={(e) => updateEmployerSignupForm('phone', e.target.value)}
                                     type="text" 
                                     placeholder="Phone #"
+                                    onKeyUp={(e) => detectEnterPress(e, onSubmitSignup)}
                             />
                             <input className={input} 
                                     name="employer[email]"
@@ -127,6 +133,7 @@ const EmployerSignup = React.createClass({
                                     onChange={(e) => updateEmployerSignupForm('email', e.target.value)}
                                     type="email" 
                                     placeholder="Email"
+                                    onKeyUp={(e) => detectEnterPress(e, onSubmitSignup)}
                             />
                             <input className={input} 
                                     name="employer[password]"
@@ -135,6 +142,7 @@ const EmployerSignup = React.createClass({
                                     onChange={(e) => updateEmployerSignupForm('password', e.target.value)}
                                     type="password" 
                                     placeholder="Password"
+                                    onKeyUp={(e) => detectEnterPress(e, onSubmitSignup)}
                             />
                             <ValidPasswordVerifier passwordText={passwordText}/>
                             <p className={legalEmployer}>By registering you agree to our 

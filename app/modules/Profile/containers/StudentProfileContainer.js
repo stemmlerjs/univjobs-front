@@ -165,11 +165,31 @@ const StudentProfileContainer = React.createClass({
        */
       
       (error) => {
-        this.refs.container.error(
-          error,
-          "Something went kaboom!", {
+
+        /*
+         * We can get two different types of errors.
+         * HTTP ERROR or INVALID FIELDS. 
+         * 
+         * Either way, we need to show a toastr to let the user know that they
+         * need to fix this.
+         */
+
+        if (error == "HTTP ERROR") {
+          this.refs.container.error(
+            "Let us know about it, pretty please?",
+            "Ah darn. Couldn't save profile.",{
+              timeout: 3000
+            });
+        }
+
+        else {
+          this.refs.container.error(
+          "Fill those out real quick then try again.",
+          "Hold up, there. You're missing some required fields!", {
             timeout: 3000
           });
+        }
+        
       }))
 
    } 
@@ -469,7 +489,6 @@ const StudentProfileContainer = React.createClass({
   },
 
   render () {
-      debugger
     return (
       <div className={pageContainer}>
         <SidebarContainer isAStudent={this.props.user.isAStudent} 

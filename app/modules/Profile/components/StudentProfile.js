@@ -37,7 +37,6 @@ var momentLocalizer = require('react-widgets/lib/localizers/moment')
 momentLocalizer(Moment)
 
 export default function StudentProfile (props) {
-    debugger
 console.log(props)
 
  const messages = {
