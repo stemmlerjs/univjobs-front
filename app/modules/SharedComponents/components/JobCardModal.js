@@ -7,7 +7,7 @@ import { cardModalContainer, cardLeft, cardRight, cardLeftTopContainer, imgConta
         cardSectionTitle, cardSectionText, cardActionButtons, cardSectionThree,
         questionsContainer, answerTextField, answerTextFieldReadOnly, dateApplied,
         statusItem, statusIcon, statusText, statuses, statusHeaderText, notActive,
-        notActiveStatusIcon, statusIconReject, statusItemRejected,
+        notActiveStatusIcon, statusIconReject, statusItemRejected, locationIconNoHover,
 
         cardSectionMain, companyInfo , clock, applicantsContainer, clock_0_50, clock_51_75, 
         clock_76_100, calendar, locationPin, applicationProgress, googleMapsLinkStyle
@@ -125,8 +125,10 @@ export default function JobCardModal({
                 
               </div>
               <div className={cardHeaderItemContainer}>
-                <i className={`fa fa-map-marker ${locationPin}`} onClick={() => {
-                  window.open(mapsLink)
+                <i className={job.remote_work === 0 ? `fa fa-map-marker ${locationPin}` : `fa fa-map-marker ${locationIconNoHover}`} onClick={() => {
+                  if (job.remote_work === 0) {
+                    window.open(mapsLink)
+                  }
                 }} aria-hidden="true"></i>
                 <div className={cardLocation}>{
                   job.remote_work === 0 

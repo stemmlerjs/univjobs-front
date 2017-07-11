@@ -116,7 +116,7 @@ font-size: 14px;
 }
 
 .cardSectionText {
-    font-size: 15px;
+    font-size: 14px;
 }
 
 .cardActionButtons {
@@ -329,6 +329,13 @@ display: flex;
     /* background-color: #7b7bd8; */
     color: #ea0808;
     cursor: pointer;
+}
+
+.locationIconNoHover {
+        color: #ea0808;
+    font-size: 17px;
+    /* background-color: #7b7bd8; */
+    padding-right: 10px;
 }
 
 .applicationProgress {
