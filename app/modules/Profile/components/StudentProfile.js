@@ -1,8 +1,3 @@
-/*StudentProfile
- *
- * This components is to display the form to create the student profile 
- *
- * */
 
 // ==============REACT BUILTIN========================= //
 import React, { PropTypes } from 'react'

@@ -182,7 +182,7 @@ export default function JobCardModal({ isOpen, onStateChange, logoUrl, info,
               </i>
               </span>
             </div>
-            <div className={`${aboutText} ${desiredSkillsSectionExpanded ? aboutTextHidden : ''}`}>{info.desired_skills}</div>
+            <div className={`${aboutText} ${desiredSkillsSectionExpanded ? aboutTextHidden : ''}`}>{info.desiredSkills}</div>
             
         </div>
 
