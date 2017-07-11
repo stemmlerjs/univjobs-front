@@ -328,9 +328,18 @@ const EmployerProfileContainer = React.createClass({
             "Woohoo :)",
             "Profile successfully updated!", {
             timeOut: 3000
+
           });
 
           this.context.store.dispatch(userActionCreators.setProfileCompleted())
+
+           /*NOTE: router.push may not be the best solution. Will check to see if this is the ideal solution*/
+           setTimeout(() => {
+             window.location.reload()
+             this.context.router.push('/dashboard/em')
+           }, 2000)
+
+
         },
 
         /*
@@ -363,6 +372,12 @@ const EmployerProfileContainer = React.createClass({
             "Profile successfully updated!", {
             timeOut: 3000
           });
+
+           /*NOTE: router.push may not be the best solution. Will check to see if this is the ideal solution*/
+           setTimeout(() => {
+             window.location.reload()
+             this.context.router.push('/dashboard/em')
+           }, 2000)
 
         },
 
