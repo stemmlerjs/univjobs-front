@@ -155,9 +155,13 @@ const StudentProfileContainer = React.createClass({
             timeout: 3000
           });
 
+          /*NOTE: router that push is working, will monitor if there are errors on the reroute*/
         setTimeout(() => {
           window.location.reload()
+          this.context.router.push('/dashboard/st')
         }, 2000)
+
+
       },
 
       /*
@@ -213,9 +217,11 @@ const StudentProfileContainer = React.createClass({
           timeout: 3000
         });
 
-      setTimeout(() => {
-        window.location.reload()
-      }, 2000)
+         /*NOTE: router.push may not be the best solution. Will check to see if this is the ideal solution*/
+        setTimeout(() => {
+          window.location.reload()
+          this.context.router.push('/dashboard/st')
+        }, 2000)
      },
 
      /*
