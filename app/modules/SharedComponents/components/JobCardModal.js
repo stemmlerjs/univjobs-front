@@ -230,7 +230,7 @@ export default function JobCardModal({
                           }
 
                           {
-                            job.state == "REJECTED" || job.active == 0
+                            job.state == "REJECTED" && job.active == 0
                               ? <div>
                                   <div className={statusItemRejected}>
                                     <div className={statusIconReject}></div>
