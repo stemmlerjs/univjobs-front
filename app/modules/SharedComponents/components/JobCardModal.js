@@ -10,7 +10,8 @@ import { cardModalContainer, cardLeft, cardRight, cardLeftTopContainer, imgConta
         notActiveStatusIcon, statusIconReject, statusItemRejected, locationIconNoHover,
 
         cardSectionMain, companyInfo , clock, applicantsContainer, clock_0_50, clock_51_75, 
-        clock_76_100, calendar, locationPin, applicationProgress, googleMapsLinkStyle
+        clock_76_100, calendar, locationPin, applicationProgress, googleMapsLinkStyle,
+        hideDisplay
      } from '../styles/JobCardModal.css'
 import { altImageContainer } from '../styles/JobCard.css'
 
@@ -163,8 +164,8 @@ export default function JobCardModal({
                       </div>
 
                   : (   
-                       <div className={statuses}>
-                          <div>Application Process:</div>
+                       <div className={job.state == "REJECTED" ? hideDisplay : statuses}>
+                          <div className={job.state == "REJECTED" ? hideDisplay : ''}>Application Process:</div>
                           {
                             job.state == "INITIAL" && job.active == 1
                               ? <div className={applicationProgress}>

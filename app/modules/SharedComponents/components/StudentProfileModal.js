@@ -224,12 +224,12 @@ const StudentProfileModal = ({ pictureUrl, name, major, sportsString, languagesS
                     handleOpenConfirmRejectStudentModal(studentObj)
                   }
                 }>REJECT</button>
-                
-                {
-                  resumeUrl.indexOf('null') == -1
-                    ? <button className={buttons}><a className={whiteTxt} target="_blank" href={resumeUrl}>RESUME</a></button>
-                    : ''
-                }
+
+                  {
+                    resumeUrl.indexOf('null') == -1
+                      ? <button className={buttons}><a className={whiteTxt} target="_blank" href={resumeUrl}>RESUME</a></button>
+                      : ''
+                  }
                 
                   {
                     studentObj.state === "INITIAL"

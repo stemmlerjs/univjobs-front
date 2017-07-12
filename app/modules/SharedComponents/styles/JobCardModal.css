@@ -353,3 +353,7 @@ display: flex;
 .googleMapsLinkStyle:hover {
     border-bottom: solid 1px #229fdb;
 }
+
+.hideDisplay {
+    display: none;
+}
