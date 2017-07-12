@@ -118,7 +118,7 @@ export function validateEmployerProfileFields(profileInfo, next) {
   profileFieldErrors.officeAddress = validateAddress(profileInfo.officeAddress) && profileInfo.officeAddress != "" ? false : true
   profileFieldErrors.officePostalCode = validatePostalCode(profileInfo.officePostalCode) ? false : true
   profileFieldErrors.officeCity = validateCity(profileInfo.officeCity) ? false : true
-  profileFieldErrors.logoUrl =  profileInfo.logoUrl != "" ? false : true
+  // profileFieldErrors.logoUrl =  profileInfo.logoUrl != "" ? false : true
   profileFieldErrors.website = validateWebURL(profileInfo.website) ? false : true
 
   // If an error exists in the map, then submitErrorsExist === true

@@ -132,3 +132,54 @@
     bottom: 31px;
     width: 100%;
 }
+
+.userProfileAdviceTitle {
+    font-weight: bold;
+}
+
+.userProfileAdviceBody {
+    padding: 10px;
+}
+
+.cancelBtn {
+    margin-top: 40px;
+    padding: 10px 15px 10px 15px;
+    border-radius: 3px;
+    border: 0;
+    background: #7c8890;
+    font-size: 13px;
+    color: white;
+    text-shadow: 1px 1px 0px rgba(0, 0, 0, .1);
+    cursor: pointer;
+    margin: 0 auto;
+    width: 121px;
+    margin-left: 7px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    transition: 0.3s ease-out;
+}
+
+.acceptBtn {
+    margin-top: 40px;
+    padding: 10px 15px 10px 15px;
+    border-radius: 3px;
+    border: 0;
+    background: #3697DB;
+    font-size: 13px;
+    color: white;
+    text-shadow: 1px 1px 0px rgba(0, 0, 0, .1);
+    cursor: pointer;
+    margin: 0 auto;
+    width: 121px;
+    margin-left: 7px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    transition: 0.3s ease-out;
+}
+
+.cancelBtn:hover {
+  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+}
+
+.acceptBtn:hover {
+  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  background: #61b8f5;
+}

@@ -1,8 +1,10 @@
+
 import { employerProfilePUT, employerProfilePATCH, validateEmployerProfileFields,
   studentProfilePUT, studentProfilePATCH, validateStudentProfileFields,
   compareToSnapshot, getUserInfo, extractLanguageId,
   extractClubsObject, extractSportsObject } from 'helpers/profile'
 import { toISO, hasCarBoolean } from 'helpers/utils'
+import profileAdviceModal from './profileAdviceModal'
 
 // =======================================================
 // ==================== ACTIONS ==========================
@@ -24,9 +26,18 @@ const FETCHING_PROFILE_INFO = 'PROFILE.FETCHING_INFO'
 const FETCHED_PROFILE_INFO_SUCCESS = 'PROFILE.FETCHED_INFO_SUCCESS'
 const FETCHED_PROFILE_INFO_FAILURE = 'PROFILE.FETCHED_INFO_FAILURE'
 
+const PROFILE_ADVICE_PRESENTED = 'PROFILE_ADVICE_PRESENTED'
+
 // =======================================================
 // ================== ACTION CREATORS ====================
 // =======================================================
+
+export function presentProfileAdvice () {
+  return {
+    type: PROFILE_ADVICE_PRESENTED
+  }
+}
+
 export function toggleButton(booleanState, buttonName) {
     return {
         type: TOGGLE_BUTTON,
@@ -155,7 +166,7 @@ export function handleGetUserProfile(dispatch) {
 * @param user (Object) - data to PUT
 *
 */
-export function submitProfileFirstTime(userTypeInt, profileInfo, user, successCallback, failureCallback) {
+export function submitProfileFirstTime(userTypeInt, profileInfo, user, successCallback, failureCallback, promptUserCallback, userProfileAdvicePresented) {
   return function (dispatch) {
 	console.log(userTypeInt, profileInfo, user)
     dispatch(savingProfileInfo())
@@ -199,64 +210,83 @@ export function submitProfileFirstTime(userTypeInt, profileInfo, user, successCa
          */
         
         else {
-    	   console.log('SUBMIT STUDENT PROFILE NO ERRORS')
-    	    // No errors, proceed to /PUT on api/me
 
           /*
-           * Let the app know that we're saving profile info so we should 
-           * update the store.
+           * If the user isn't going to upload a photo AND resume, we should let them know 
+           * that profiles with a photo and resume perform better. Lets trigger the flag that 
+           * says that we've let them know this. Next time they submit this, we'll have the flag
+           * to know that we should just go ahead and submit.
            */
 
-          dispatch(savingProfileInfo(true))
+          if ((profileInfo.photo == null || profileInfo.photo == "")
+              && (profileInfo.resume == null || profileInfo.resume == "")
+              && userProfileAdvicePresented === false) {
+            dispatch(presentProfileAdvice())
+            promptUserCallback()
+          }
 
-          var putData = {
-              "is_a_student": true,
-              "is_profile_completed": true,
-              "email": user.email,
-              "first_name": profileInfo.firstName,
-              "last_name": profileInfo.lastName,
-              "is_active": true,
-              "date_joined": user.dateJoined,
-              "mobile": user.mobile,
-        	    "schoolName": profileInfo.school,
-              languages: btoa(JSON.stringify(extractLanguageId(profileInfo.languages))),
-              sports: btoa(JSON.stringify(extractSportsObject(profileInfo.sportsTeam, profileInfo))),
-              clubs: btoa(JSON.stringify(extractClubsObject(profileInfo.schoolClub, profileInfo))),
-              edu_level_id: profileInfo.educationLevel.id ? profileInfo.educationLevel.id : profileInfo.educationLevel,
-              email_pref: profileInfo.emailPreferences.id ? profileInfo.emailPreferences.id : profileInfo.emailPreferences,
-              status: profileInfo.studentStatus.id ? profileInfo.studentStatus.id : 1,
-              enroll_date: toISO(profileInfo.enrollmentDate),
-              grad_date: toISO(profileInfo.graduationDate),
-              major_id: profileInfo.major.id ? profileInfo.major.id : profileInfo.major,
-              gpa: JSON.stringify(parseFloat(profileInfo.gpa)),
-              personal_email: profileInfo.personalEmail,
-              gender: profileInfo.gender.id ? profileInfo.gender.id : profileInfo.gender,
-                /*Converts the value to num*/
-              has_car: profileInfo.hasCar === true ? JSON.stringify(1) : JSON.stringify(0),
-              recent_company_name: profileInfo.companyName,
-              recent_company_position: profileInfo.position,
-              fun_fact: profileInfo.funFacts,
-              hometown: profileInfo.hometown,
-              hobbies: profileInfo.hobbies,
-              profilepicture: profileInfo.photo,
-              resume: profileInfo.resume,
-      	  }
-    	    studentProfilePUT(putData)
-    	     .then((res) => {
-    		// DISPATCH - SAVE_PROFILE_SUCCESS
-    	        dispatch(savedProfileSuccess())
+          else {
 
-              successCallback()
-    	     })
-    	     .catch((err) => {
-    	       // DISPATCH - SAVE_PROFILE_ERROR
-    	        dispatch(savedProfileFailure({}, [
-                'HTTP Error Occurred',
-                err
-              ], true))
+           /* 
+            * No errors, proceed to /PUT on api/me
+            * Let the app know that we're saving profile info so we should 
+            * update the store.
+            */
 
-              failureCallback('HTTP ERROR')
-    	     })
+            dispatch(savingProfileInfo(true))
+
+            var putData = {
+                "is_a_student": true,
+                "is_profile_completed": true,
+                "email": user.email,
+                "first_name": profileInfo.firstName,
+                "last_name": profileInfo.lastName,
+                "is_active": true,
+                "date_joined": user.dateJoined,
+                "mobile": user.mobile,
+                "schoolName": profileInfo.school,
+                languages: btoa(JSON.stringify(extractLanguageId(profileInfo.languages))),
+                sports: btoa(JSON.stringify(extractSportsObject(profileInfo.sportsTeam, profileInfo))),
+                clubs: btoa(JSON.stringify(extractClubsObject(profileInfo.schoolClub, profileInfo))),
+                edu_level_id: profileInfo.educationLevel.id ? profileInfo.educationLevel.id : profileInfo.educationLevel,
+                email_pref: profileInfo.emailPreferences.id ? profileInfo.emailPreferences.id : profileInfo.emailPreferences,
+                status: profileInfo.studentStatus.id ? profileInfo.studentStatus.id : 1,
+                enroll_date: toISO(profileInfo.enrollmentDate),
+                grad_date: toISO(profileInfo.graduationDate),
+                major_id: profileInfo.major.id ? profileInfo.major.id : profileInfo.major,
+                gpa: JSON.stringify(parseFloat(profileInfo.gpa)),
+                personal_email: profileInfo.personalEmail,
+                gender: profileInfo.gender.id ? profileInfo.gender.id : profileInfo.gender,
+                  /*Converts the value to num*/
+                has_car: profileInfo.hasCar === true ? JSON.stringify(1) : JSON.stringify(0),
+                recent_company_name: profileInfo.companyName,
+                recent_company_position: profileInfo.position,
+                fun_fact: profileInfo.funFacts,
+                hometown: profileInfo.hometown,
+                hobbies: profileInfo.hobbies,
+                profilepicture: profileInfo.photo,
+                resume: profileInfo.resume,
+            }
+            studentProfilePUT(putData)
+            .then((res) => {
+          // DISPATCH - SAVE_PROFILE_SUCCESS
+                dispatch(savedProfileSuccess())
+
+                successCallback()
+            })
+            .catch((err) => {
+              // DISPATCH - SAVE_PROFILE_ERROR
+                dispatch(savedProfileFailure({}, [
+                  'HTTP Error Occurred',
+                  err
+                ], true))
+
+                failureCallback('HTTP ERROR')
+            })
+            
+          }
+
+          
     	    }
     	  })
     	  return;
@@ -277,61 +307,80 @@ export function submitProfileFirstTime(userTypeInt, profileInfo, user, successCa
               'Please fill in missing fields'
             ], false))
 
+            failureCallback('INVALID FIELDS')
+
           } 
           else {
-
+          debugger;
           /*
-           * Let the app know that we're saving profile info so we should 
-           * update the store.
+           * If the user isn't going to upload a photo we should let them know 
+           * that profiles with a photo and resume perform better. Lets trigger the flag that 
+           * says that we've let them know this. Next time they submit this, we'll have the flag
+           * to know that we should just go ahead and submit.
            */
 
-          dispatch(savingProfileInfo(false))
+          if ((profileInfo.logoUrl == null || profileInfo.logoUrl == "")
+              && userProfileAdvicePresented === false) {
+            dispatch(presentProfileAdvice())
+            promptUserCallback()
+          }
 
-            // No errors, proceed to /PUT on api/me
-            var putData = {
-              "user-is_a_student": false,
-              "user-is_profile_completed": true,
-              "user-email": user.email,
-              "user-first_name": user.firstName,
-              "user-last_name": user.lastName,
-              "user-is_active": true,
-              "user-date_joined": user.dateJoined,
-              "user-mobile": user.mobile,
-              is_a_student: false,
-              is_profile_completed: true, // set this flag to true so we know for next time
-              company_name: profileInfo.companyName,
-              logo: profileInfo.logoUrl,
-              office_address: profileInfo.officeAddress,
-              office_city: profileInfo.officeCity,
-              office_postal_code: profileInfo.officePostalCode,
-              description: profileInfo.description,
-              website: profileInfo.website,
-              employee_count: profileInfo.employeeCount,
-              industry: profileInfo.industry.id,
-              date_joined: user.dateJoined,
-              first_name: user.firstName,
-              last_name: user.lastName,
-              email: user.email
+          else {
+
+           /*
+            * Let the app know that we're saving profile info so we should 
+            * update the store.
+            */
+
+            dispatch(savingProfileInfo(false))
+
+              // No errors, proceed to /PUT on api/me
+              var putData = {
+                "user-is_a_student": false,
+                "user-is_profile_completed": true,
+                "user-email": user.email,
+                "user-first_name": user.firstName,
+                "user-last_name": user.lastName,
+                "user-is_active": true,
+                "user-date_joined": user.dateJoined,
+                "user-mobile": user.mobile,
+                is_a_student: false,
+                is_profile_completed: true, // set this flag to true so we know for next time
+                company_name: profileInfo.companyName,
+                logo: profileInfo.logoUrl,
+                office_address: profileInfo.officeAddress,
+                office_city: profileInfo.officeCity,
+                office_postal_code: profileInfo.officePostalCode,
+                description: profileInfo.description,
+                website: profileInfo.website,
+                employee_count: profileInfo.employeeCount,
+                industry: profileInfo.industry.id,
+                date_joined: user.dateJoined,
+                first_name: user.firstName,
+                last_name: user.lastName,
+                email: user.email
+              }
+
+              employerProfilePUT(putData)
+              .then((res) => {
+
+                  // DISPATCH - SAVED_PROFILE_SUCCESS
+                  dispatch(savedProfileSuccess())
+
+                  successCallback()
+                })
+                .catch((err) => {
+                  // DISPATCH - SAVED_PROFILE_ERROR
+                  dispatch(savedProfileFailure({}, [
+                      'HTTP Error Occurred.\n',
+                      err.message
+                  ], false))
+
+                  failureCallback('HTTP ERROR')
+
+                })
             }
 
-            employerProfilePUT(putData)
-            .then((res) => {
-
-                // DISPATCH - SAVED_PROFILE_SUCCESS
-                dispatch(savedProfileSuccess())
-
-                successCallback()
-              })
-              .catch((err) => {
-                // DISPATCH - SAVED_PROFILE_ERROR
-                dispatch(savedProfileFailure({}, [
-                    'HTTP Error Occurred.\n',
-                    err.message
-                ], false))
-
-                failureCallback('Some error occurred trying to update!')
-
-              })
           }
         })
         return;
@@ -567,7 +616,9 @@ const initialState = {
   isProfileCompleted: false,
   submitErrorsExist: false,
   submitSuccess: false,
-  error: ''
+  error: '',
+  userProfileAdvicePresented: false,
+  profileAdviceModal: {}
 }
 
 
@@ -583,6 +634,14 @@ const initialState = {
 
 export default function profile (state = initialState, action) {
   switch(action.type) {
+    case PROFILE_ADVICE_PRESENTED:
+      return {
+        ...state,
+        userProfileAdvicePresented: true,
+        isSubmittingForm: false,
+        submitSuccess: false,
+        error: ''
+      }
     case SAVING_PROFILE_INFO:
       return {
         ...state,
@@ -594,6 +653,7 @@ export default function profile (state = initialState, action) {
         return {
           ...state,
           studentProfile: studentProfile(state.studentProfile, action),
+          userProfileAdvicePresented: false,
           submitSuccess: false,
           error: ''
         }
@@ -602,6 +662,7 @@ export default function profile (state = initialState, action) {
           ...state,
           employerProfile: employerProfile(state.employerProfile, action),
           submitSuccess: false,
+          userProfileAdvicePresented: false,
           error: ''
         }
       }
@@ -709,15 +770,21 @@ export default function profile (state = initialState, action) {
         error: ''
       }
     case TOGGLE_BUTTON: 
-        return {
-            ...state,
-            studentProfile: studentProfile(state.studentProfile, action)
-        }
+      return {
+        ...state,
+        studentProfile: studentProfile(state.studentProfile, action),
+        userProfileAdvicePresented: false,
+        submitSuccess: false,
+        error: ''
+      }
     case UPDATE_TAG:
-        return {
-            ...state,
-            studentProfile: studentProfile(state.studentProfile, action)
-        }
+      return {
+        ...state,
+        studentProfile: studentProfile(state.studentProfile, action),
+        userProfileAdvicePresented: false,
+        submitSuccess: false,
+        error: ''
+      }
     default :
       return state
   }

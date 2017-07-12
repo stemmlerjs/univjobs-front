@@ -261,7 +261,6 @@ const SignupContainer = React.createClass({
           onOpenLoginModal={this.openLoginModal}
           logoOnly={false}
         />
-
         <SkyLight
             overlayStyles={styles.overlayStyles}
             dialogStyles={styles.dialogStyles}

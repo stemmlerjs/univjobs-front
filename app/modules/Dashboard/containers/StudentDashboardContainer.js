@@ -470,7 +470,6 @@ const StudentDashboardContainer = React.createClass({
       .then(this.props.handleGetJobTypes())
       .then(this.props.closeOverlay())
 
-
   },
 
   componentWillReceiveProps (nextProps) {

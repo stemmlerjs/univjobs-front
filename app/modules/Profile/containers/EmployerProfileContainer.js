@@ -16,6 +16,9 @@ import * as userActionCreators from 'redux/modules/user/user'
 import * as profileActionCreators from 'redux/modules/profile/profile'
 import * as listActionCreators from 'redux/modules/list/list'
 
+import SkyLight from 'react-skylight'
+import { userProfileAdviceTitle, userProfileAdviceBody, cancelBtn, acceptBtn } from 'sharedStyles/sharedComponentStyles.css'
+
 // ============= MESSAGES ===============
 var ReactToastr = require("react-toastr");
 var {ToastContainer} = ReactToastr; // This is a React Element.
@@ -313,6 +316,19 @@ const EmployerProfileContainer = React.createClass({
     }
    },
 
+   continueSaveProfile () {
+     this.closeUserProfileAdvice()
+      this.handleSubmit(this.props)
+   },
+
+   openUserProfileAdvice () {
+     this.refs.userProfileAdvice.show()
+   },
+
+   closeUserProfileAdvice () {
+     this.refs.userProfileAdvice.hide()
+   },
+
   handleSubmit(empProps) {
     // If Profile is NOT completed, do /PUT. All fields must be populated and valid.
     if(!this.props.isProfileCompleted) {
@@ -331,6 +347,10 @@ const EmployerProfileContainer = React.createClass({
           });
 
           this.context.store.dispatch(userActionCreators.setProfileCompleted())
+
+          setTimeout(() => {
+            window.location.reload()
+          }, 2000)
         },
 
         /*
@@ -339,15 +359,47 @@ const EmployerProfileContainer = React.createClass({
         
         (error) => {
 
-          this.refs.container.error(
-            error,
-            "Something went wrong while trying to submit", {
-            timeOut: 3000
-          });
+          /*
+          * We can get two different types of errors.
+          * HTTP ERROR or INVALID FIELDS. 
+          * 
+          * Either way, we need to show a toastr to let the user know that they
+          * need to fix this.
+          */
 
-        })
+          if (error == "HTTP ERROR") {
+            this.refs.container.error(
+              "Please try again later.",
+              "We've encountered an issue saving your profile.",{
+                timeout: 3000
+              });
+          }
+
+          else {
+            this.refs.container.error(
+            "Please fill those out and re-submit.",
+            "You're missing some required fields!", {
+              timeout: 3000
+            });
+          }
+
+        },
+        
+       /*
+        * Prompt User Callback
+        * 
+        * This callback should be executed when we want to tell the user that
+        * they should probably upload a photo and or resume if they want to get better
+        * results for applying to jobs. 
+        */
+
+        this.openUserProfileAdvice,
+        this.props.userProfileAdvicePresented
+        )
       )
-    } else {
+    } 
+    
+    else {
       // If Profile is completed already, do /PATCH. All fields must be populated and valid.
       this.context.store.dispatch(
         profileActionCreators.updateProfile(1, empProps, this.props.user, this.props.snapshot,
@@ -450,6 +502,33 @@ const EmployerProfileContainer = React.createClass({
           toastMessageFactory={ToastMessageFactory}
           className="toast-top-right"
           onClick={this.resendVerifyAccountEmail} />
+
+
+          {
+            /*
+              * ========================================
+              *           userProfileAdvice
+              * ========================================
+              *
+              * This is the main modal for this screen.
+              * It's purpose is to allow the student to see
+              * the details for a job and apply to the job
+              * after filling in any answers to questions if necessary.
+              */
+            }
+            <div id="user-profile-advice-wrapper">
+              <SkyLight ref="userProfileAdvice">
+                <div className={userProfileAdviceTitle}>Hey! Just a suggestion ✋</div>
+                <div className={userProfileAdviceBody}>Did you know that profiles with a <span className={userProfileAdviceTitle}>profile picture </span>
+                  {"perform better than those that don't? You can still save your profile, we just thought we'd let you know."} </div>
+                <br/>
+                <div className={userProfileAdviceBody}>What do you want to do?</div>
+                <div>
+                  <button className={acceptBtn} onClick={this.continueSaveProfile}>Save profile</button>
+                  <button className={cancelBtn} onClick={this.closeUserProfileAdvice}>Cancel</button>
+                </div>
+              </SkyLight>
+            </div>
       </div>
     )
   }
@@ -485,7 +564,9 @@ function mapStateToProps({user, profile, list}) {
     },
     error: profile.error ? profile.error : '',
     submitSuccess: profile.submitSuccess ? profile.submitSuccess : false,
-    isSubmittingForm: profile.isSubmittingForm ? profile.isSubmittingForm : false
+    isSubmittingForm: profile.isSubmittingForm ? profile.isSubmittingForm : false,
+    openUserProfileAdvice: profile.openUserProfileAdvice ? profile.openUserProfileAdvice : false,
+    userProfileAdvicePresented: profile.userProfileAdvicePresented ? profile.userProfileAdvicePresented : false
   }
 }
 

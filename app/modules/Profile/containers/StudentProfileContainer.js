@@ -11,6 +11,7 @@ import { authRedirectFilter } from 'config/routes'
 import { StudentProfile } from 'modules/Profile' 
 import { SidebarContainer } from 'modules/Main' 
 import { FeedbackForm } from 'modules/SharedComponents'
+import SkyLight from 'react-skylight'
 
 // ========= REDUX AND STATE IMPORTS ========== //
 
@@ -21,6 +22,7 @@ import * as feedbackFormActionCreators from 'redux/modules/feedback/feedback'
 // ============================================ //
 
 import { pageContainer } from '../styles/StudentProfileContainerStyles.css' 
+import { userProfileAdviceTitle, userProfileAdviceBody, cancelBtn, acceptBtn } from 'sharedStyles/sharedComponentStyles.css'
 
 // ============== MESSAGES =================== //
 var ReactToastr = require("react-toastr");
@@ -129,9 +131,34 @@ const StudentProfileContainer = React.createClass({
      return authRedirectFilter(config, this.context.store, this.context.router)
   },
 
+ /*
+  * Prompt User Callback
+  * 
+  * This callback should be executed when we want to tell the user that
+  * they should probably upload a photo and or resume if they want to get better
+  * results for applying to jobs. 
+  */
+
+  promptUserCallback () {
+    this.openUserProfileAdvice()
+  },
+
+  continueSaveProfile() {
+    this.closeUserProfileAdvice()
+    this.handleSubmit(this.props)
+  },
+
+  /*
+   * handleSubmit
+   * 
+   * Submit the profile. It must pass through a function that checks to see
+   * if all fields are valid first before doing this. If all fields are valid,
+   * it will then make the API call to create the profile, otherwise, we will
+   * execute the failureCallback.
+   * 
+   */
+
   handleSubmit(studentProps) {
-   //If profile is NOT completed, do /PUT. All fields must be populated and valid.
-   //debugger
 
   /*
    * First time submitting profile.
@@ -153,7 +180,7 @@ const StudentProfileContainer = React.createClass({
           "W00t w00t.",
           "Profile completed. Now go start applying to jobs!", {
             timeout: 3000
-          });
+        });
 
         setTimeout(() => {
           window.location.reload()
@@ -190,7 +217,19 @@ const StudentProfileContainer = React.createClass({
           });
         }
         
-      }))
+      }, 
+      
+      /*
+       * Prompt User Callback
+       * 
+       * This callback should be executed when we want to tell the user that
+       * they should probably upload a photo and or resume if they want to get better
+       * results for applying to jobs. 
+       */
+
+      this.openUserProfileAdvice,
+      this.props.userProfileAdvicePresented
+    ))
 
    } 
    
@@ -332,6 +371,33 @@ const StudentProfileContainer = React.createClass({
       resolve()
     })
 
+  },
+
+  /*
+  * openConfirmApplyModal
+  *
+  * When a student finally clicks Apply, they are presented with this
+  * confirmation modal to make sure that the student really wants
+  * to submit their application.
+  *
+  * This pops up overtop of the job app modal.
+  */
+
+  openUserProfileAdvice () {
+    if (this.refs.userProfileAdvice) {
+      this.refs.userProfileAdvice.show()
+    }
+  },
+
+ /*
+  * closeConfirmApplyModal
+  *
+  * Close the confirm apply modal that pops up overtop of the
+  * job app modal.
+  */
+
+  closeUserProfileAdvice () {
+    this.refs.userProfileAdvice.hide()
   },
 
   /*
@@ -539,11 +605,38 @@ const StudentProfileContainer = React.createClass({
           onCreateNewTag={this.createNewTag}
       	  propsErrorMap={this.props.propsErrorMap}
           isSubmittingForm={this.props.isSubmittingForm}
-      	  snapshot={this.props.snapshot}/>
+      	  snapshot={this.props.snapshot}
+        />
       	<ToastContainer ref="container"
       	  toastMessageFactory={ToastMessageFactory}
       	  className="toast-top-right"
           onClick={this.resendVerifyAccountEmail}/>
+
+          {
+            /*
+              * ========================================
+              *           userProfileAdvice
+              * ========================================
+              *
+              * This is the main modal for this screen.
+              * It's purpose is to allow the student to see
+              * the details for a job and apply to the job
+              * after filling in any answers to questions if necessary.
+              */
+            }
+            <div id="user-profile-advice-wrapper">
+              <SkyLight ref="userProfileAdvice">
+                <div className={userProfileAdviceTitle}>Hey! Hold up ✋</div>
+                <div className={userProfileAdviceBody}>We just wanted you to know that profiles that have a <span className={userProfileAdviceTitle}>profile picture </span>
+                  and a <span className={userProfileAdviceTitle}>resume</span> {"perform better than those that don't. You can still save your profile, we just thought we'd let you know."} </div>
+                <br/>
+                <div className={userProfileAdviceBody}>What do you wanna do?</div>
+                <div>
+                  <button className={acceptBtn} onClick={this.continueSaveProfile}>Save profile</button>
+                  <button className={cancelBtn} onClick={this.closeUserProfileAdvice}>Cancel</button>
+                </div>
+              </SkyLight>
+            </div>
       </div>
     )
   },
@@ -645,7 +738,8 @@ function mapStateToProps({user, profile, list, feedback}) {
     },
     error: profile.error ? profile.error : '',
     submitSuccess: profile.submitSuccess ? profile.submitSuccess : false,
-    isSubmittingForm: profile.isSubmittingForm ? profile.isSubmittingForm : false
+    isSubmittingForm: profile.isSubmittingForm ? profile.isSubmittingForm : false,
+    userProfileAdvicePresented: profile.userProfileAdvicePresented ? profile.userProfileAdvicePresented : false
   }
 }
 

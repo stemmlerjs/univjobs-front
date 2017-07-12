@@ -27,8 +27,6 @@ export default function JobCardModal({
     handlePinJob,
     page
   }) { 
-    console.log(questions)
-    debugger
   return (
     <div className={cardModalContainer}>
 
