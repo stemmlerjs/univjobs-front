@@ -14,7 +14,8 @@ import { cardContainer, cardTopContainer, imgContainer, cardSectionMain,
         cardSectionAltItemContainer, cardSectionAltItemGrey, paidContainer, calendarIcon, locationIcon, locationIconNoHover,
         distanceContainer, companyInfoClickContainer, companyInfo, applicantsContainer, 
         clock, clock_0_50, clock_51_75, clock_76_100, lastThing, moneyIcon, flexColumn, 
-        googleMapsLinkStyle } from '../styles/JobCard.css'
+        googleMapsLinkStyle, altImageContainer } from '../styles/JobCard.css'
+        
 import { pageMainJobCards, rotateIcon, applyButton } from 'modules/SharedComponents/styles/StudentCard.css'
 
 
@@ -23,6 +24,7 @@ export default function JobCard ({logoUrl, pinned, jobObject, jobId, title, jobT
     compensation, cardType, state, page, location, remoteWork, paid, mapsLink,
     handlePinJob, handleCardClick,
     handleRemoveJob, handleOpenEmployerProfileModal}) {
+      console.log(logoUrl)
   return (
     <div className={page == "applications" 
                         ? state == "REJECTED" || jobObject.active == 0
@@ -37,7 +39,11 @@ export default function JobCard ({logoUrl, pinned, jobObject, jobId, title, jobT
 
         <div className={cardTopContainer}>
           <div className={imgContainer}>
-            <img src={logoUrl}></img>
+              { 
+                logoUrl.indexOf("avatar") === -1
+                  ? <div className={altImageContainer}><i className={'fa fa-building-o'} aria-hidden="true"></i></div>
+                  : <img src={logoUrl}/> 
+              }
           </div>
 
           <div className={cardSectionMain}>

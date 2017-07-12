@@ -31,7 +31,7 @@ import { pageContainer, cardContainer, card,
 	image, questionHeader, crop, imgContainer, cardTopContainer, cardBottomContainer, cardHeaderContainer,
     cardHeaderItemContainer, cardHeaderItemMainText, cardHeaderItemSecondaryText, cardHeaderItemAltItemText,
     cardSectionOne, cardSectionTwo, cardActionButtons, cardSectionTitle, cardSectionText, whiteTxt, gpaTextActive, gpaTextDeactive,
-    cardContainer__contacted, hidden } from '../styles/StudentCard.css'
+    cardContainer__contacted, hidden, altImageContainer } from '../styles/StudentCard.css'
 
 /*
 StudentCard.propTypes = {
@@ -93,7 +93,11 @@ const StudentCard = ({pictureUrl, resumeUrl, name, major, funFact, recentCompany
     }>
         <div className={cardTopContainer}>
             <div className={imgContainer}>
-                <img src={pictureUrl}></img>
+              {
+                pictureUrl.indexOf("null") === -1
+                  ? <img src={pictureUrl}/>
+                  : <div className={altImageContainer}><i className={'fa fa-user'} aria-hidden="true"></i></div>
+              }
             </div>
             <div className={cardHeaderContainer}>
                 <div className={cardHeaderItemMainText}>{name}</div>
@@ -244,7 +248,13 @@ const StudentCard = ({pictureUrl, resumeUrl, name, major, funFact, recentCompany
                       handleOpenConfirmRejectStudentModal(studentObj)
                     }}>REJECT
                   </button>
-                  <button><a className={whiteTxt} target="_blank" href={resumeUrl}>RESUME</a></button>
+
+                  {
+                    resumeUrl.indexOf('null') === -1
+                      ? <button><a className={whiteTxt} target="_blank" href={resumeUrl}>RESUME</a></button>
+                      : ''
+                  }
+                  
                   <button onClick={
 
                       function () {

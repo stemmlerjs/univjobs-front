@@ -21,6 +21,8 @@ import { studentProfileModalContainer, studentProfileLeftContainer, stProfileHea
   buttons, whiteTxt, questionText, questionHeader, questionContainer, buttonsContainer, questionsAndAnswersContainer,
   hiddenContactInfo, loader, languagesItemIcon } from '../styles/StudentProfileModal.css'
 
+import { altImageContainer } from '../styles/StudentCard.css'
+
 const StudentProfileModal = ({ pictureUrl, name, major, sportsString, languagesString,
   schoolName, hometown, hasCar, clubsString, gradDate, lists, gpa, funFact, hobbies,
   handleOpenInviteStudentModal, studentObj, recentCompanyName, recentCompanyPosition, 
@@ -41,7 +43,13 @@ const StudentProfileModal = ({ pictureUrl, name, major, sportsString, languagesS
         }
         <div className={stProfileHeader}>
           <div className={stProfileImageContainer}>
-            <img src={pictureUrl}/>
+
+              {
+                pictureUrl.indexOf("null") === -1
+                  ? <img src={pictureUrl}/>
+                  : <div className={altImageContainer}><i className={'fa fa-user'} aria-hidden="true"></i></div>
+              }
+            
           </div>
           <div className={stProfileNameAndSchool}>
             <div className={stProfileName}>{name}</div>
@@ -216,7 +224,12 @@ const StudentProfileModal = ({ pictureUrl, name, major, sportsString, languagesS
                     handleOpenConfirmRejectStudentModal(studentObj)
                   }
                 }>REJECT</button>
-                <button className={buttons}><a className={whiteTxt} target="_blank" href={resumeUrl}>RESUME</a></button>
+                
+                {
+                  resumeUrl.indexOf('null') == -1
+                    ? <button className={buttons}><a className={whiteTxt} target="_blank" href={resumeUrl}>RESUME</a></button>
+                    : ''
+                }
                 
                   {
                     studentObj.state === "INITIAL"

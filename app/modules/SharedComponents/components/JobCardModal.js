@@ -12,6 +12,8 @@ import { cardModalContainer, cardLeft, cardRight, cardLeftTopContainer, imgConta
         cardSectionMain, companyInfo , clock, applicantsContainer, clock_0_50, clock_51_75, 
         clock_76_100, calendar, locationPin, applicationProgress, googleMapsLinkStyle
      } from '../styles/JobCardModal.css'
+import { altImageContainer } from '../styles/JobCard.css'
+
 import ReactTooltip from 'react-tooltip'
 import config from 'config'
 import moment from 'moment'
@@ -33,7 +35,13 @@ export default function JobCardModal({
             <div className={cardLeft}>
               <div className={cardLeftTopContainer}>
                 <div className={imgContainer}>
-                    <img src={config.mediaUrl + job.logo_url}></img>
+                  { 
+                    job.logoUrl === undefined
+                      ? <div className={altImageContainer}><i className={'fa fa-building-o'} aria-hidden="true"></i></div>
+                      : job.logoUrl.indexOf("avatar") === -1
+                        ? <img src={config.mediaUrl + job.logo_url}/>
+                        : <div className={altImageContainer}><i className={'fa fa-building-o'} aria-hidden="true"></i></div>
+                  }
                 </div>
                 <div className={cardSectionMain}>
                   <div className={cardHeaderItemMainText}>{title}</div>

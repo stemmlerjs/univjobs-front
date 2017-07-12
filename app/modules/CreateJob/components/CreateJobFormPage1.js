@@ -16,14 +16,15 @@ import { pageContainer, input, textArea,
 
 
 export default function CreateJobFormPage1 (props) {
-//  console.log(props)
+
   /*
-   * TODO: 
-   *  [] Put this function to the container
+  * TODO: 
+  *  [] Put this function to the container
   * setSelectedButton()
   * 
   * This selects the isPayingJob button and binds it to the redux store.
   */
+
   function setSelectedPayingJobButton(e) {
     switch(e.target.getAttribute('data-selection')) {
       case "0":

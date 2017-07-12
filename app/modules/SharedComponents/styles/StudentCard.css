@@ -470,3 +470,19 @@
 .hidden {
     display: none;
 }
+
+.altImageContainer {
+    height: 106px;
+    width: 106px;
+    border: solid 2px darkslategrey;
+    background-color: #dddee0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.altImageContainer > i {
+    font-size: 56px;
+    color: #5396e4;
+    text-align: center;
+}

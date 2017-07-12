@@ -414,7 +414,6 @@ const CreateJobContainer = React.createClass({
 
   openJobAppModal(e, selectedJob) {
     e.preventDefault()
-      debugger
 
     this.props.openJobAppModal(selectedJob)
     this.refs.jobAppModal.show()

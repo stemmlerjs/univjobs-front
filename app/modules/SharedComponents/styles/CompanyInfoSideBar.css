@@ -96,3 +96,16 @@
 .link:visited {
     color: black;
 }
+
+.efimClass {
+    height: 165px;
+    background-color: #e7eeee;
+    color: #589fce;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.efimClass > i {
+    font-size: 82px;
+}

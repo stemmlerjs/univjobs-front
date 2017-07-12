@@ -16,6 +16,8 @@ import  { topContainer, imgContainer, titleContainer, logo, iconsSectionContaine
   calendarIcon, locationIconNoHover, locationIcon, startDateContainer, aboutContainer, aboutText
  } from '../styles/JobInfoSidebar.css'
 
+import { altImageContainer } from '../styles/JobCard.css'
+
 let styles = {
   bmMenu: {
     background: 'white',
@@ -48,12 +50,18 @@ export default function JobCardModal({ isOpen, onStateChange, logoUrl, info,
   compensationSectionExpanded
 
  }) { 
-  console.log(info)
   return (
     <Menu onStateChange={onStateChange} width={ 400 } pageWrapId={ "page-wrap" } right styles={ styles } isOpen={isOpen}>
       <div className={topContainer}>
         <div className={imgContainer}>
-          <img className={logo} src={logoUrl ? config.mediaUrl + logoUrl : ''} />
+          { 
+            logoUrl 
+              ? logoUrl.indexOf("null") === -1 || logoUrl.indexOf("avatar") === -1 || logoUrl === undefined
+                ? <div className={altImageContainer}><i className={'fa fa-building-o'} aria-hidden="true"></i></div>
+                : <img className={logo} src={logoUrl ? config.mediaUrl + logoUrl : ''} />
+              : ''
+            
+            }
         </div>
         <div className={titleContainer}>
             <div className={titleText}>{info.title}</div>
