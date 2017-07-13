@@ -50,17 +50,15 @@ export default function JobCardModal({ isOpen, onStateChange, logoUrl, info,
   compensationSectionExpanded
 
  }) { 
+   console.log('logo', logoUrl === "")
   return (
     <Menu onStateChange={onStateChange} width={ 400 } pageWrapId={ "page-wrap" } right styles={ styles } isOpen={isOpen}>
       <div className={topContainer}>
         <div className={imgContainer}>
           { 
-            logoUrl 
-              ? logoUrl.indexOf("null") === -1 || logoUrl.indexOf("avatar") === -1 || logoUrl === undefined
-                ? <div className={altImageContainer}><i className={'fa fa-building-o'} aria-hidden="true"></i></div>
-                : <img className={logo} src={logoUrl ? config.mediaUrl + logoUrl : ''} />
-              : ''
-            
+            logoUrl.indexOf("avatar") === -1 
+              ? <div className={altImageContainer}><i className={'fa fa-building-o'} aria-hidden="true"></i></div>
+              : <img className={logo} src={logoUrl ? config.mediaUrl + logoUrl : ''} />
             }
         </div>
         <div className={titleContainer}>
