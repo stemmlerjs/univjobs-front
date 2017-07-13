@@ -405,6 +405,7 @@ const EmployerProfileContainer = React.createClass({
     } 
     
     else {
+        debugger
       // If Profile is completed already, do /PATCH. All fields must be populated and valid.
       this.context.store.dispatch(
         profileActionCreators.updateProfile(1, empProps, this.props.user, this.props.snapshot,

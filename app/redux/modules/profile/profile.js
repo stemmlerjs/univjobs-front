@@ -556,7 +556,7 @@ export function updateProfile(userTypeInt, profileInfo, user, snapshot, successC
             var changedData = {
               company_name: profileInfo.companyName,
               logo: profileInfo.logoUrl,
-              office_location: profileInfo.officeAddress,
+              office_address: profileInfo.officeAddress,
               office_city: profileInfo.officeCity,
               office_postal_code: profileInfo.officePostalCode,
               description: profileInfo.description,
