@@ -265,8 +265,9 @@ export default function JobCardModal({
 
                ? questions.length != 0 
                   ? <div className={questionsContainer}>
+
                       {
-                        /* 
+                       /* 
                         * In this case, we're on a regular job page and THERE ARE questions that need
                         * to be answered. We iterate over each one and 
                         * render the HTML for each question and it's answer.

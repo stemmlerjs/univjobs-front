@@ -13,7 +13,7 @@ import { cardContainer, cardTopContainer, imgContainer, cardSectionMain,
         rejectedCard, activeCard, jobTypeText, cardSectionAlt, cardSectionAltItem,
         cardSectionAltItemContainer, cardSectionAltItemGrey, paidContainer, calendarIcon, locationIcon, locationIconNoHover,
         distanceContainer, companyInfoClickContainer, companyInfo, applicantsContainer, 
-        clock, clock_0_50, clock_51_75, clock_76_100, lastThing, moneyIcon, flexColumn, 
+        clock, clock_0_50, clock_51_75, clock_76_100, lastThing, moneyIcon, flexColumn, hiredCard,
         googleMapsLinkStyle, altImageContainer } from '../styles/JobCard.css'
         
 import { pageMainJobCards, rotateIcon, applyButton } from 'modules/SharedComponents/styles/StudentCard.css'
@@ -27,9 +27,11 @@ export default function JobCard ({logoUrl, pinned, jobObject, jobId, title, jobT
       console.log(logoUrl)
   return (
     <div className={page == "applications" 
-                        ? state == "REJECTED" || jobObject.active == 0
+                        ? state == "REJECTED" && jobObject.active == 0
                             ? cardContainer + ' ' + rejectedCard 
-                            : cardContainer + ' ' + activeCard
+                            : state == "HIRED" && jobObject.active == 0
+                              ? cardContainer + ' ' + hiredCard
+                              : cardContainer + ' ' + activeCard
                         : cardContainer }>
         {
            /*

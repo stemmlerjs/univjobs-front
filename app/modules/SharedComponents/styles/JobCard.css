@@ -299,3 +299,9 @@ color: #808080;
     color: #5396e4;
     text-align: center;
 }
+
+.hiredCard {
+    border-top: 4px solid #10ff00;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}

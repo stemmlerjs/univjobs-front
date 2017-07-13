@@ -55,15 +55,14 @@ export default function Applications ({jobs,
 
                 isFetchingJobs 
                     ? (<div className={ghostFlexibleCardContainer}>
-                        <LoadingCards/>
-                        <LoadingCards/>
-                        <LoadingCards/>
-                        </div>
-                        )
+                          <LoadingCards/>
+                          <LoadingCards/>
+                          <LoadingCards/> 
+                        </div>)
                     : 
                 
                 jobs.length > 0 ? jobs.filter((job) => {
-                    return job.applied == 1 && job.hidden == 0
+                  return job.applied == 1 && job.hidden == 0
                 })
                 .map((job) => (
                 <JobCard 
@@ -73,19 +72,19 @@ export default function Applications ({jobs,
                     postedBy={job.posted_by}
                     title={job.title}
                     jobType={job.type === 1 
-                                    ? 'One Time Gig' :
-                                    job.type === 2 
-                                    ? 'Summer' :
-                                    job.type === 3 
-                                    ? 'Winter' :
-                                    job.type === 4
-                                    ? 'Freelance' :
-                                    job.type === 5
-                                    ? 'Campus Rep' :
-                                    job.type === 6
-                                    ? 'Part-time' :
-                                    ''
-                                  }
+                      ? 'One Time Gig' :
+                      job.type === 2 
+                      ? 'Summer' :
+                      job.type === 3 
+                      ? 'Winter' :
+                      job.type === 4
+                      ? 'Freelance' :
+                      job.type === 5
+                      ? 'Campus Rep' :
+                      job.type === 6
+                      ? 'Part-time' :
+                      ''
+                    }
                     paid={job.paid}
                     startDate={moment(job.start_date).format("MMMM Do, YYYY")}
                     responsibilities={job.responsibilities}
