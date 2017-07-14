@@ -166,7 +166,8 @@ export function handleGetUserProfile(dispatch) {
 * @param user (Object) - data to PUT
 *
 */
-export function submitProfileFirstTime(userTypeInt, profileInfo, user, successCallback, failureCallback, promptUserCallback, userProfileAdvicePresented) {
+export function submitProfileFirstTime(userTypeInt, profileInfo, user, successCallback, failureCallback, 
+                                    promptUserCallback, userProfileAdvicePresented, doRedirect) {
   return function (dispatch) {
 	console.log(userTypeInt, profileInfo, user)
     dispatch(savingProfileInfo())
@@ -273,6 +274,7 @@ export function submitProfileFirstTime(userTypeInt, profileInfo, user, successCa
                 dispatch(savedProfileSuccess())
 
                 successCallback()
+                //doRedirect()
             })
             .catch((err) => {
               // DISPATCH - SAVE_PROFILE_ERROR
@@ -284,17 +286,19 @@ export function submitProfileFirstTime(userTypeInt, profileInfo, user, successCa
                 failureCallback('HTTP ERROR')
             })
             
-          }
+          }// Else that has no error
 
           
-    	    }
-    	  })
-    	  return;
+    	    } // upload photo & resume checker
+    	  })// validateStudentFields
+    	  return;//case0
 
       // ===================================================== //
       // ========== EMPLOYER ================================= //
       // ===================================================== //
 
+
+      //SWEET SPOT
       case 1:
         console.log("SUBMITTING EMPLOYER PROFILE FIRST TIME")
 
@@ -311,7 +315,7 @@ export function submitProfileFirstTime(userTypeInt, profileInfo, user, successCa
 
           } 
           else {
-          debugger;
+          debugger
           /*
            * If the user isn't going to upload a photo we should let them know 
            * that profiles with a photo and resume perform better. Lets trigger the flag that 
@@ -368,6 +372,7 @@ export function submitProfileFirstTime(userTypeInt, profileInfo, user, successCa
                   dispatch(savedProfileSuccess())
 
                   successCallback()
+                  //doRedirect()
                 })
                 .catch((err) => {
                   // DISPATCH - SAVED_PROFILE_ERROR
@@ -379,11 +384,11 @@ export function submitProfileFirstTime(userTypeInt, profileInfo, user, successCa
                   failureCallback('HTTP ERROR')
 
                 })
-            }
+            }//else for saving profile
 
-          }
-        })
-        return;
+          }//else for uploading resume and picture
+        })//validateEmployerProfile
+        return;//case 1
       default:
         return;
     }
@@ -488,6 +493,7 @@ export function updateProfile(userTypeInt, profileInfo, user, snapshot, successC
                   dispatch(savedProfileSuccess(true, updatedStudent, updatedTags))
 
                   successCallback()
+
                 })
                 .catch((err) => {
 

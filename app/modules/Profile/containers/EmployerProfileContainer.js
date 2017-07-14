@@ -349,13 +349,13 @@ const EmployerProfileContainer = React.createClass({
 
           this.context.store.dispatch(userActionCreators.setProfileCompleted())
 
-
-           /*NOTE: router.push may not be the best solution. Will check to see if this is the ideal solution*/
-           setTimeout(() => {
-             window.location.reload()
-             this.context.router.push('/dashboard/em')
-           }, 2000)
-
+         /* Promise that checks all conditions must be true in order to reroute to dashboard automatically
+          * */
+          
+          this.onHandleReload(this.props.user.isProfileCompleted, 
+                            this.props.user.emailVerified).then((message) =>{
+                                message == true ? this.context.router.push('/dashboard/em') : null
+                            })
         },
 
         /*
@@ -399,13 +399,12 @@ const EmployerProfileContainer = React.createClass({
         */
 
         this.openUserProfileAdvice,
-        this.props.userProfileAdvicePresented
+        this.props.userProfileAdvicePresented,
         )
       )
     } 
     
     else {
-        debugger
       // If Profile is completed already, do /PATCH. All fields must be populated and valid.
       this.context.store.dispatch(
         profileActionCreators.updateProfile(1, empProps, this.props.user, this.props.snapshot,
@@ -425,7 +424,6 @@ const EmployerProfileContainer = React.createClass({
            /*NOTE: router.push may not be the best solution. Will check to see if this is the ideal solution*/
            setTimeout(() => {
              window.location.reload()
-             this.context.router.push('/dashboard/em')
            }, 2000)
 
         },
@@ -447,6 +445,37 @@ const EmployerProfileContainer = React.createClass({
       console.log("Profile already completed, lets patch this")
     }
   },
+
+  /*onHandleReload
+   *
+   *
+  * @param (boolean) isProfileCompleted
+  * @param (boolean) emailVerified 
+   * */
+   onHandleReload (isProfileCompleted, emailVerified) {
+          //Pass on isProfileCompleted && emailVerified to a function that:
+            //checks to see if both vars are true
+            //if they are:
+                //push to new url dashboard
+            //otherwise, just reload the page
+        return new Promise((resolve, reject) => {
+          if(isProfileCompleted && emailVerified) {
+              //Setwindow reload and reroute
+              setTimeout(() => {
+                    window.location.reload()
+                    resolve(true)
+              }, 1000)
+                
+            } else {
+              setTimeout(() => {
+                    window.location.reload()
+                    reject(false)
+              }, 1000)
+            
+            }
+        })
+
+   },
 
   /*
   * onDragOver
