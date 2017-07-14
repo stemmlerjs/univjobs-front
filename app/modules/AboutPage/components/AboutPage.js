@@ -7,7 +7,7 @@ import { DropdownList } from 'react-widgets'
 // ==============CSS IMPORTS=========================== //
 import { blackBackGround,flexContainer, flexRowContainer, flexRowItem,
          fontLighter, header, headerContactForm, input, 
-         marginReduce, paragraphContainer, paragraphItem,
+         marginReduce, paragraphContainer, paragraphItem, img,
          regularFlexContainer, subHeader, topMarginReduce }from '../styles/AboutPage.css'
 
 /*
@@ -36,7 +36,7 @@ const AboutPage = () => (
                 </div>
                 <div className={flexRowContainer}>
                     <div className={flexRowItem}>
-                        <img src="https://cloud.githubusercontent.com/assets/7959179/21650060/c9dd4744-d271-11e6-8c02-3c22b330dbbc.png" alt="step1"/>
+                        <img  className={img} src="https://cloud.githubusercontent.com/assets/7959179/21650060/c9dd4744-d271-11e6-8c02-3c22b330dbbc.png" alt="step1"/>
                         <h3 className={fontLighter}>Step 1</h3>
                         <div className={paragraphContainer}>
                             <p className={paragraphItem}>
@@ -45,7 +45,7 @@ const AboutPage = () => (
                         </div>
                     </div>
                     <div className={flexRowItem}>
-                        <img src="https://cloud.githubusercontent.com/assets/7959179/21650355/a603d4a4-d272-11e6-9dea-a33dfee933f9.png" alt="step2"/>
+                        <img className={img} src="https://cloud.githubusercontent.com/assets/7959179/21650355/a603d4a4-d272-11e6-9dea-a33dfee933f9.png" alt="step2"/>
                         <h3 className={fontLighter}>Step 2</h3>
                         <div className={paragraphContainer}>
                             <p className={paragraphItem}>
@@ -71,11 +71,11 @@ const AboutPage = () => (
                 </div>
                 <div className={flexRowContainer}>
                     <div className={flexRowItem}>
-                        <img src="https://cloud.githubusercontent.com/assets/7959179/21650060/c9dd4744-d271-11e6-8c02-3c22b330dbbc.png" alt="step1"/>
+                        <img className={img} src="https://cloud.githubusercontent.com/assets/7959179/21650060/c9dd4744-d271-11e6-8c02-3c22b330dbbc.png" alt="step1"/>
                         <h3 className={fontLighter}>Step 1</h3>
                     </div>
                     <div className={flexRowItem}>
-                        <img src="https://cloud.githubusercontent.com/assets/7959179/21650355/a603d4a4-d272-11e6-9dea-a33dfee933f9.png" alt="step2"/>
+                        <img className={img} src="https://cloud.githubusercontent.com/assets/7959179/21650355/a603d4a4-d272-11e6-9dea-a33dfee933f9.png" alt="step2"/>
                         <h3 className={fontLighter}>Step 2</h3>
                     </div>
                     <div className={flexRowItem}>
@@ -85,7 +85,6 @@ const AboutPage = () => (
                 </div>
             </div>
         </div>
-
 )
 
 
