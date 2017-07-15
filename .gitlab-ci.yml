@@ -22,7 +22,8 @@ production:
     - apt-get update && apt-get upgrade -y && apt-get dist-upgrade -y && apt-get -y install rsync && apt-get -y install sshpass
 
     # Sync
-    - sshpass -p $SSH_AWS_CI_PASS rsync -avz ./dist ci@52.60.179.192:/home/ubuntu/univjobs/univjobs-front
+    - echo $SSH_AWS_KEY > univjobs-dmz-server.pem
+    - rsync -avL --progress -e "ssh -i univjobs-dmz-server.pem" ./dist ubuntu@52.60.179.192:/home/ubuntu/univjobs/univjobs-front
 
 
 
