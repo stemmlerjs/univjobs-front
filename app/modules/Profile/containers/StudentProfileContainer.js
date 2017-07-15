@@ -256,11 +256,13 @@ const StudentProfileContainer = React.createClass({
           timeout: 3000
         });
 
-         /*NOTE: router.push may not be the best solution. Will check to see if this is the ideal solution*/
-        setTimeout(() => {
-          window.location.reload()
-          this.context.router.push('/dashboard/st')
-        }, 2000)
+         /* Promise that checks all conditions must be true in order to reroute to dashboard automatically
+          * */
+          
+          this.onHandleReload(this.props.user.isProfileCompleted, 
+                            this.props.user.emailVerified).then((message) =>{
+                                message == true ? this.context.router.push('/dashboard/st') : null
+                            })
      },
 
      /*
@@ -277,6 +279,37 @@ const StudentProfileContainer = React.createClass({
 
     }
 
+   },
+
+
+  /*onHandleReload
+   *
+   *
+  * @param (boolean) isProfileCompleted
+  * @param (boolean) emailVerified 
+   * */
+   onHandleReload (isProfileCompleted, emailVerified) {
+          //Pass on isProfileCompleted && emailVerified to a function that:
+            //checks to see if both vars are true
+            //if they are:
+                //push to new url dashboard
+            //otherwise, just reload the page
+        return new Promise((resolve, reject) => {
+          if(isProfileCompleted && emailVerified) {
+              //Setwindow reload and reroute
+              setTimeout(() => {
+                    window.location.reload()
+                    resolve(true)
+              }, 1000)
+                
+            } else {
+              setTimeout(() => {
+                    window.location.reload()
+                    reject(false)
+              }, 1000)
+            
+            }
+        })
    },
 
    handleButtonToggle(booleanState, buttonName) {
