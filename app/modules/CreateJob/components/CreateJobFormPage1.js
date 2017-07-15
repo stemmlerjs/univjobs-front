@@ -155,9 +155,6 @@ export default function CreateJobFormPage1 (props) {
       </FormField>
 
 
-
-
-
       {/* COMPENSATION */}
       <FormField title="Compensation">
         <textarea rows="6" className={props.page.page1PropsErrorMap.compensation ? error + ' ' + textArea : textArea}
