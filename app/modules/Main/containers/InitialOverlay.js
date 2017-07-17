@@ -56,6 +56,20 @@ const InitialOverlay = React.createClass({
 
   },
 
+  /*Detects if the browser is mobile or not
+   * */
+
+  detectMobile() {
+      if (/Mobi/i.test(navigator.userAgent) || /Anroid/i.test(navigator.userAgent) || 
+          /Mobile/i.test(navigator.userAgent)) {
+                console.log('TRUEEST')
+          } else {
+                console.log('NOT TRUESST')
+          
+          }
+
+  },
+
   componentDidMount() {
     // TODO: we need to fix the main page so that it takes us to join but it doesnt mess
     // up our page routing and do this on every page.
@@ -80,6 +94,7 @@ const InitialOverlay = React.createClass({
      })
     );
     console.log(this)
+    debugger
     return (
       <div style={styles.main}>
         {this.props.location.pathname !== "/join"
@@ -113,6 +128,10 @@ const InitialOverlay = React.createClass({
             </div>
             : null
           }
+
+         { this.detectMobile()
+          
+          }
         </ReactCSSTransitionGroup>
         {childrenWithProps}
       </div>
@@ -120,10 +139,11 @@ const InitialOverlay = React.createClass({
   },
 })
 // We should have a new value on the user called 'isOverlayActive'
-function mapStateToProps({rootApplication, feedback}) {
+function mapStateToProps({rootApplication, feedback, mobileLoad}) {
   return {
     isOverlayActive: rootApplication.isOverlayActive ? true : false,
-    feedback: feedback ? feedback : {}
+    feedback: feedback ? feedback : {},
+    mobileLoad: mobileLoad.isMobileOverlayActive ? true : false,
   }
 }
 

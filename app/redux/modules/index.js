@@ -12,4 +12,5 @@ export signupForm from './signupForm/signupForm'
 export user from './user/user'
 export reset from './reset/reset'
 export feedback from './feedback/feedback'
+export mobileLoad from './mobileLoad/mobileLoad'
 
