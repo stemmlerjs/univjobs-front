@@ -14,8 +14,8 @@ const config = {
     assetUrl: 'https://s3.amazonaws.com/assets.univjobs/'
   },
   prod: {
-    baseUrl: 'http://api.univjobs.ca/api/',
-    mediaUrl: 'http://api.univjobs.ca/',
+    baseUrl: 'https://api.univjobs.ca/api/',
+    mediaUrl: 'https://api.univjobs.ca/',
     assetUrl: 'https://s3.amazonaws.com/assets.univjobs/'
   }
 }
