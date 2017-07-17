@@ -63,8 +63,10 @@ const InitialOverlay = React.createClass({
       if (/Mobi/i.test(navigator.userAgent) || /Anroid/i.test(navigator.userAgent) || 
           /Mobile/i.test(navigator.userAgent)) {
                 console.log('TRUEEST')
+                alert('TRUEST')
           } else {
                 console.log('NOT TRUESST')
+               alert('NOT TRUEST')
           
           }
 
