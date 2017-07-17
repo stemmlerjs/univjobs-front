@@ -96,7 +96,6 @@ const InitialOverlay = React.createClass({
      })
     );
     console.log(this)
-    debugger
     return (
       <div style={styles.main}>
         {this.props.location.pathname !== "/join"
