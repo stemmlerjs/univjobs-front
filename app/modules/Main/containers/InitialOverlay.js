@@ -63,13 +63,12 @@ const InitialOverlay = React.createClass({
       if (/Mobi/i.test(navigator.userAgent) || /Anroid/i.test(navigator.userAgent) || 
           /Mobile/i.test(navigator.userAgent)) {
                 console.log('TRUEEST')
-                alert('TRUEST')
-          } else {
-                console.log('NOT TRUESST')
-               alert('NOT TRUEST')
-          
-          }
-
+             return (
+                <div style={{zIndex: '1000', position: 'fixed', backgroundColor:'white', left: 0, right: 0, top: 0, bottom: 0}}>
+                  <h1>MOBILE</h1>
+                </div>
+             )
+          } 
   },
 
   componentDidMount() {
@@ -128,10 +127,6 @@ const InitialOverlay = React.createClass({
               <h1>Welcome to Univjobs!</h1>
             </div>
             : null
-          }
-
-         { this.detectMobile()
-          
           }
         </ReactCSSTransitionGroup>
         {childrenWithProps}
