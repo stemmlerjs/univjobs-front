@@ -54,7 +54,6 @@ export function updateTag(listName) {
 }
 
 export function updateProfileField(fieldName, newValue, isAStudent) {
-    debugger
   return {
     type: UPDATE_PROFILE_FIELD,
     fieldName,
@@ -180,7 +179,6 @@ export function submitProfileFirstTime(userTypeInt, profileInfo, user, successCa
       * First, we need to validate the profile fields.
       * Ensure that any fields that needed to be filled out are filled out.
       */
-        
     	validateStudentProfileFields(profileInfo, (errorExist, profileFieldErrors) => {
 
         /*
@@ -236,57 +234,72 @@ export function submitProfileFirstTime(userTypeInt, profileInfo, user, successCa
             */
 
             dispatch(savingProfileInfo(true))
-              debugger
 
             var putData = {
-                "is_a_student": true,
-                "is_profile_completed": true,
-                "email": user.email,
-                "first_name": profileInfo.firstName,
-                "last_name": profileInfo.lastName,
-                "is_active": true,
-                "date_joined": user.dateJoined,
-                "mobile": user.mobile,
-                "schoolName": profileInfo.school,
-                languages: btoa(JSON.stringify(extractLanguageId(profileInfo.languages))),
-                sports: btoa(JSON.stringify(extractSportsObject(profileInfo.sportsTeam, profileInfo))),
-                clubs: btoa(JSON.stringify(extractClubsObject(profileInfo.schoolClub, profileInfo))),
-                edu_level_id: profileInfo.educationLevel.id ? profileInfo.educationLevel.id : profileInfo.educationLevel,
-                email_pref: profileInfo.emailPreferences.id ? profileInfo.emailPreferences.id : profileInfo.emailPreferences,
-                status: profileInfo.studentStatus.id ? profileInfo.studentStatus.id : 1,
-                enroll_date: toISO(profileInfo.enrollmentDate),
-                grad_date: toISO(profileInfo.graduationDate),
-                major_id: profileInfo.major.id ? profileInfo.major.id : 0,
-                gpa: JSON.stringify(parseFloat(profileInfo.gpa)),
-                personal_email: profileInfo.personalEmail,
-                gender: profileInfo.gender.id ? profileInfo.gender.id : profileInfo.gender,
-                  /*Converts the value to num*/
-                has_car: profileInfo.hasCar === true ? JSON.stringify(1) : JSON.stringify(0),
-                recent_company_name: profileInfo.companyName,
-                recent_company_position: profileInfo.position,
-                fun_fact: profileInfo.funFacts,
-                hometown: profileInfo.hometown,
-                hobbies: profileInfo.hobbies,
-                profilepicture: profileInfo.photo,
-                resume: profileInfo.resume,
+              "is_a_student": true,
+              "is_profile_completed": true,
+              "email": user.email,
+              "first_name": profileInfo.firstName,
+              "last_name": profileInfo.lastName,
+              "is_active": true,
+              "date_joined": user.dateJoined,
+              "mobile": user.mobile,
+              "schoolName": profileInfo.school,
+              languages: btoa(JSON.stringify(extractLanguageId(profileInfo.languages))),
+              sports: btoa(JSON.stringify(extractSportsObject(profileInfo.sportsTeam, profileInfo))),
+              clubs: btoa(JSON.stringify(extractClubsObject(profileInfo.schoolClub, profileInfo))),
+              edu_level_id: profileInfo.educationLevel.id ? profileInfo.educationLevel.id : profileInfo.educationLevel,
+              email_pref: profileInfo.emailPreferences.id ? profileInfo.emailPreferences.id : profileInfo.emailPreferences,
+              status: profileInfo.studentStatus.id ? profileInfo.studentStatus.id : 1,
+              enroll_date: toISO(profileInfo.enrollmentDate),
+              grad_date: toISO(profileInfo.graduationDate),
+              major_id: profileInfo.major.id ? profileInfo.major.id : profileInfo.major ? profileInfo.major : 0,
+              gpa: JSON.stringify(parseFloat(profileInfo.gpa)),
+              personal_email: profileInfo.personalEmail,
+              gender: profileInfo.gender.id ? profileInfo.gender.id : profileInfo.gender,
+                /*Converts the value to num*/
+              has_car: profileInfo.hasCar === true ? JSON.stringify(1) : JSON.stringify(0),
+              recent_company_name: profileInfo.companyName,
+              recent_company_position: profileInfo.position,
+              fun_fact: profileInfo.funFacts,
+              hometown: profileInfo.hometown,
+              hobbies: profileInfo.hobbies,
+              profilepicture: profileInfo.photo,
+              resume: profileInfo.resume,
             }
+
+           /*
+            * Perform the HTTP put to /api/me to submit the profile for the first time.
+            */
+
             studentProfilePUT(putData)
-            .then((res) => {
-          // DISPATCH - SAVE_PROFILE_SUCCESS
+
+             /*
+              * Successful PUT to /api/me.
+              * In the successCallback, we should make sure that we 
+              * reload the page (do this on every PUT or PATCH).
+              */
+
+              .then((res) => {
+                // DISPATCH - SAVE_PROFILE_SUCCESS
                 dispatch(savedProfileSuccess())
 
                 successCallback()
-                //doRedirect()
-            })
-            .catch((err) => {
-              // DISPATCH - SAVE_PROFILE_ERROR
+              })
+
+             /*
+              * Something went wrong with updating the student profile.
+              */
+              
+              .catch((err) => {
+                console.log(err)
                 dispatch(savedProfileFailure({}, [
                   'HTTP Error Occurred',
                   err
                 ], true))
 
                 failureCallback('HTTP ERROR')
-            })
+              })
             
           }// Else that has no error
 
@@ -299,8 +312,6 @@ export function submitProfileFirstTime(userTypeInt, profileInfo, user, successCa
       // ========== EMPLOYER ================================= //
       // ===================================================== //
 
-
-      //SWEET SPOT
       case 1:
         console.log("SUBMITTING EMPLOYER PROFILE FIRST TIME")
 

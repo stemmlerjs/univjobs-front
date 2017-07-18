@@ -58,12 +58,12 @@ const StudentProfileContainer = React.createClass({
   */
    createNewTag(newValue, list, textField, updateProfileFieldName) {
        let pickList = {
-                    //Master list
-                    'schoolClubList': this.props.schoolClubList,
-                    'sportsList': this.props.sportsList,
-                    //propTypes, pushed to the database
-                    'schoolClub': this.props.schoolClub,
-                    'sportsTeam': this.props.sportsTeam
+          //Master list
+          'schoolClubList': this.props.schoolClubList,
+          'sportsList': this.props.sportsList,
+          //propTypes, pushed to the database
+          'schoolClub': this.props.schoolClub,
+          'sportsTeam': this.props.sportsTeam
 
        }
 
@@ -174,7 +174,9 @@ const StudentProfileContainer = React.createClass({
 
       () => {
 
-        this.context.store.dispatch(userActionCreators.setProfileCompleted())
+        /*
+         * Display success toastr.
+         */
 
         this.refs.container.success(
           "W00t w00t.",
@@ -182,12 +184,31 @@ const StudentProfileContainer = React.createClass({
             timeout: 3000
         });
 
-          /*NOTE: router that push is working, will monitor if there are errors on the reroute*/
-        setTimeout(() => {
-          window.location.reload()
-          this.context.router.push('/dashboard/st')
-        }, 2000)
+        /*
+         * Now, we want to actually update the redux state so
+         * that the client is in sync with the back and knows that
+         * our profile is complete.
+         * 
+         * This will allow us to move to different parts of the app 
+         * now.
+         */
 
+        this.context.store.dispatch(
+          userActionCreators.setProfileCompleteThenReloadToDashboard(() => {
+
+            /*
+             * After syncing the front, is_profile_complete = true,
+             * we need to do our classic reload but when we come back to
+             * the app, we want to be at /dashboard/st
+             */
+
+            setTimeout(() => {
+              window.location.reload()
+              this.context.router.push('/dashboard/st')
+            }, 2000)
+
+          })
+        )
 
       },
 
@@ -255,13 +276,19 @@ const StudentProfileContainer = React.createClass({
           timeout: 3000
         });
 
-         /* Promise that checks all conditions must be true in order to reroute to dashboard automatically
-          * */
+       /*
+        * Reload everytime we update the profile.
+        * (We only redirect to /dashboard/st if 
+        * their email is verified and they are just 
+        * completing their profile for the first time).
+        * 
+        * KS
+        */
           
-          this.onHandleReload(this.props.user.isProfileCompleted, 
-                            this.props.user.emailVerified).then((message) =>{
-                                message == true ? this.context.router.push('/dashboard/st') : null
-                            })
+        setTimeout(() => {
+          window.location.reload()
+        }, 2000)
+
      },
 
      /*
@@ -284,8 +311,8 @@ const StudentProfileContainer = React.createClass({
   /*onHandleReload
    *
    *
-  * @param (boolean) isProfileCompleted
-  * @param (boolean) emailVerified 
+   * @param (boolean) isProfileCompleted
+   * @param (boolean) emailVerified 
    * */
    onHandleReload (isProfileCompleted, emailVerified) {
           //Pass on isProfileCompleted && emailVerified to a function that:
