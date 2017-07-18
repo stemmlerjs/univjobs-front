@@ -271,7 +271,7 @@ export function authRedirectFilter({successRedirect, failureRedirect, restricted
                   }
 
                   else {
-                    router.replace('/dashboard/st')
+                    router.replace('/dashboard/em')
                     resolve()
                   }
                 }

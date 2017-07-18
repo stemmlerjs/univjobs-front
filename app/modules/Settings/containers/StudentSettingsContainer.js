@@ -4,6 +4,7 @@ import React, { Component, PropTypes } from 'react'
 // ==============MADE COMPONENTS========================= //
 import { SidebarContainer } from 'modules/Main'
 import { StudentSettings } from 'modules/Settings'
+import SkyLight from 'react-skylight'
 
 import config from 'config'
 
@@ -21,33 +22,21 @@ import { authRedirectFilter } from 'config/routes'
 
 // ==============CSS IMPORTS=============================
 import { pageContainer } from 'sharedStyles/sharedContainerStyles.css'
+import { userProfileAdviceTitle, userProfileAdviceBody, cancelBtn, acceptBtn } from 'sharedStyles/sharedComponentStyles.css'
 
 var ReactToastr = require("react-toastr");
 var { ToastContainer } = ReactToastr;
 var ToastMessageFactory = React.createFactory(ReactToastr.ToastMessage.animation);
 
 const StudentSettingsContainer = React.createClass({
-    propTypes: {
-      user: PropTypes.object,
-      //id: PropTypes.string.isRequired,
-      //isChecked: PropTypes.bool,
-      //clickedButton: PropTypes.func,
-    },
+  propTypes: {
+    user: PropTypes.object,
+  },
 
 	contextTypes: {
 		router: PropTypes.object.isRequired,
 		store: PropTypes.object.isRequired
 	},
-
-    clickedButton(e, id, isChecked) {
-        e.preventDefault()
-        console.log(id)
-        console.log(isChecked)
-        //Receive the id, isChecked
-        //Change state to true or false
-        //Change css style
-    
-    },
 
   /** doRedirectionFilter
    *
@@ -78,31 +67,66 @@ const StudentSettingsContainer = React.createClass({
 
 
   componentWillMount() {
-
 	  this.doRedirectionFilter()
       .then(this.props.closeOverlay())
-
   },
 
   componentWillUnmount() {
 
   },
 
+  confirmDeactivateAccount () {
+    this.refs.confirmDeactivateAccount.show()
+  },
+
+  deactivateAccount () {
+
+  },
+
+  closeDeactivateAccount () {
+    this.refs.confirmDeactivateAccount.hide()
+  },
+
   render () {
     return (
       <div className={pageContainer} >
-          <SidebarContainer isAStudent={true} profilePicture={config.mediaUrl + '/avatar/' + this.props.profile.photo}/>
-          <StudentSettings
-                id={'name'}
-                isChecked={true}
-                onClickedButton={this.clickedButton}
-            />
+        <SidebarContainer isAStudent={true} profilePicture={config.mediaUrl + '/avatar/' + this.props.profile.photo}/>
+        <StudentSettings
+          handleConfirmDeactivateAccount={this.confirmDeactivateAccount}/>
+
+
+          {
+            /*
+              * ========================================
+              *           confirmDeactivateAccount
+              * ========================================
+              *
+              * This will show right before a student gets to
+              * actually deactivate their account. a
+              *
+              * It should let them know what the implications of
+              * deactivating their account is.
+              */
+            }
+            <div id="settings-confirm-deactivate-account-wrapper">
+              <SkyLight ref="confirmDeactivateAccount">
+                <div className={userProfileAdviceTitle}>Do ya really wanna deactivate your account? ✋</div>
+                <div className={userProfileAdviceBody}>We just wanted you to know that profiles that have a <span className={userProfileAdviceTitle}>profile picture </span>
+                  and a <span className={userProfileAdviceTitle}>resume</span> {"perform better than those that don't. You can still save your profile, we just thought we'd let you know."} </div>
+                <br/>
+                <div className={userProfileAdviceBody}>What do you wanna do?</div>
+                <div>
+                  <button className={acceptBtn} onClick={this.deactivateAccount}>Yes, deactivate account</button>
+                  <button className={cancelBtn} onClick={this.closeDeactivateAccount}>Cancel</button>
+                </div>
+              </SkyLight>
+            </div>
+
+
       </div>
     )
   },
 })
-
-
 
 /* The entire redux store is passed in here,
 // Return an object defining which values you want to bind to props

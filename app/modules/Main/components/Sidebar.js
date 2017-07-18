@@ -136,13 +136,7 @@ export default function SideBar ({onLogout, isAStudent, profilePicture}) {
           </div>
         </Link>
 
-       : <Link to="/settings/em" className={noDecoration}>
-           <div className={sidebarItem}>
-            <i className={animationItem4 + " fa fa-cog"} aria-hidden="true"></i>
-            <div className={animationTxt4}>Settings</div>
-            <div className={animateLine2}></div>
-          </div>
-        </Link>
+       : ''
       }
 
         <div className={sidebarItem} onClick={onLogout}>

@@ -24,7 +24,8 @@ import moment from 'moment'
 /*NOTE: styles/StudentDashboard.css can be reused */
 import { rootComponentContainer, margins, title } from 'sharedStyles/sharedComponentStyles.css'
 import { buttonContainers } from 'sharedStyles/widgets.css'
-import { cardSettingsContainer, flexibleCardContainer, flexRowItem } from 'modules/SharedComponents/styles/Settings.css'
+import { cardSettingsContainer, flexibleCardContainer, flexRowItem, settingsOptionHeader, settingsOptionDetail,
+    textButton } from 'modules/SharedComponents/styles/Settings.css'
 
 /* For each setting, make a card that has a standard design for a toggle
  * https://myaccount.google.com/accessibility
@@ -32,27 +33,58 @@ import { cardSettingsContainer, flexibleCardContainer, flexRowItem } from 'modul
  * */
 
 
-export default function StudentSettings ({id, isChecked, onClickedButton}) {
+export default function StudentSettings ({ id, isChecked, onClickedButton, handleConfirmDeactivateAccount }) {
   return (
-	<div className={rootComponentContainer}>
+	  <div className={rootComponentContainer}>
         
         {/* TITLE */}
         <Title 
             titleName="My Settings"
-            subHeading="This is where you manage your personal profile"
+            subHeading="This is where you manage your account settings"
         />
 
         <div className={flexibleCardContainer}>
-            <div className={cardSettingsContainer}>
-                <div className={flexRowItem}>
-                     <h3>Test</h3>
-                    <ToggleButton
-                        id={id}
-                        isChecked={isChecked}
-                        clickedButton={onClickedButton}
-                    />
-                </div>
+
+        {
+          /*
+           * DE ACTIVATE ACCOUNT 
+           */
+        }
+
+          <div className={cardSettingsContainer}>
+            <div className={flexRowItem}>
+              <div className={settingsOptionHeader}>Deactivate account</div>
+              <div className={settingsOptionDetail}>Hide your profile from employers and resigns any current job applications you have open. You can reactivate your account later.</div>
             </div>
+            <div className={flexRowItem}>
+              <div className={textButton}>Deactivate</div>
+            </div>
+          </div>
+
+
+          {
+            /*
+             * OTHER SETTINGS
+             */
+          }
+          
+          {/**
+          <div className={cardSettingsContainer}>
+            <div className={flexRowItem}>
+              <div className={settingsOptionHeader}>Deactivate account</div>
+              <div className={settingsOptionDetail}>Hide your profile from employers and resigns any current job applications you have open. You can reactivate your account later.</div>
+            </div>
+            <div className={flexRowItem}>
+              <ToggleButton
+                id={id}
+                isChecked={isChecked}
+                clickedButton={onClickedButton}
+              />
+            </div>
+          </div>
+           */}
+
+
         </div>
     </div>
   )
