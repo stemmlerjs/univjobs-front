@@ -501,6 +501,24 @@ const EmployerProfileContainer = React.createClass({
     document.getElementById('dropPhotoDiv').classList.remove('profilePictureDragDrop')
   },
 
+ /*
+  * showImageSizeTooLargeError
+  *
+  * Presented on file selection for profile picture.
+  * Alerts the user that the image they've selected is too large
+  * for the request.
+  *
+  * Max size: 2MB
+  */
+
+  showImageSizeTooLargeError () {
+    this.refs.container.error(
+      "Max image size is 2MB. Sorry about that.",
+      "Looks great, but that image is a little too large.", {
+        timeout: 3000
+    });
+  },
+
   render () {
     return (
       <div className={pageContainer}>
@@ -538,6 +556,7 @@ const EmployerProfileContainer = React.createClass({
           onDragOver={this.onDragOver}
           onDragLeave={this.onDragLeave}
           isSubmittingForm={this.props.isSubmittingForm}
+          handleShowImageSizeTooLargeError={this.showImageSizeTooLargeError}
         />
         <ToastContainer ref="container"
           toastMessageFactory={ToastMessageFactory}

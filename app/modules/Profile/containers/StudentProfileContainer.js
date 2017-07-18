@@ -625,6 +625,42 @@ const StudentProfileContainer = React.createClass({
 
   },
 
+ /*
+  * showImageSizeTooLargeError
+  *
+  * Presented on file selection for profile picture.
+  * Alerts the user that the image they've selected is too large
+  * for the request.
+  *
+  * Max size: 1MB
+  */
+
+  showImageSizeTooLargeError () {
+    this.refs.container.error(
+      "Images need to be less than 1MB.",
+      "Whoa. That's a big picture. Can you shrink that down a bit?", {
+        timeout: 3000
+    });
+  },
+
+ /*
+  * showImageSizeTooLargeError
+  *
+  * Presented on file selection for profile picture.
+  * Alerts the user that the image they've selected is too large
+  * for the request.
+  * 
+  * Max size: 2MB
+  */
+
+  showResumeSizeTooLargeError () {
+    this.refs.container.error(
+      "The max size is 2MB.",
+      "That resume is a little too hefty for us. Can you try another version?", {
+        timeout: 3000
+    });
+  },
+
   componentWillUnmount() {
     console.log("wait, no we have to check")
   },
@@ -681,6 +717,8 @@ const StudentProfileContainer = React.createClass({
       	  propsErrorMap={this.props.propsErrorMap}
           isSubmittingForm={this.props.isSubmittingForm}
       	  snapshot={this.props.snapshot}
+          handleShowImageSizeTooLargeError={this.showImageSizeTooLargeError}
+          handleShowResumeSizeTooLargeError={this.showResumeSizeTooLargeError}
         />
       	<ToastContainer ref="container"
       	  toastMessageFactory={ToastMessageFactory}
