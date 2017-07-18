@@ -307,37 +307,6 @@ const StudentProfileContainer = React.createClass({
 
    },
 
-
-  /*onHandleReload
-   *
-   *
-   * @param (boolean) isProfileCompleted
-   * @param (boolean) emailVerified 
-   * */
-   onHandleReload (isProfileCompleted, emailVerified) {
-          //Pass on isProfileCompleted && emailVerified to a function that:
-            //checks to see if both vars are true
-            //if they are:
-                //push to new url dashboard
-            //otherwise, just reload the page
-        return new Promise((resolve, reject) => {
-          if(isProfileCompleted && emailVerified) {
-              //Setwindow reload and reroute
-              setTimeout(() => {
-                    window.location.reload()
-                    resolve(true)
-              }, 1000)
-                
-            } else {
-              setTimeout(() => {
-                    window.location.reload()
-                    reject(false)
-              }, 1000)
-            
-            }
-        })
-   },
-
    handleButtonToggle(booleanState, buttonName) {
        this.props.handleToggleButton(booleanState, buttonName)
    },
@@ -354,11 +323,11 @@ const StudentProfileContainer = React.createClass({
 
       this.props.resendVerifyAccountEmail(
 
-        /*
-          * Success callback
-          *
-          * In this case, we're now able to move throughout the rest of the application.
-          */
+       /*
+        * Success callback
+        *
+        * In this case, we're now able to move throughout the rest of the application.
+        */
 
         () => {
           
@@ -505,7 +474,14 @@ const StudentProfileContainer = React.createClass({
                 timeout: 5000
             });
 
-            regularComponentWillMountBehaviour(this)
+           /*
+            * Inform componentWillMount that this is the instance in which we 
+            * verified our email
+            */
+
+            var verifiedEmailThisInstance = true;
+
+            regularComponentWillMountBehaviour(this, verifiedEmailThisInstance)
 
           },
 
@@ -548,7 +524,7 @@ const StudentProfileContainer = React.createClass({
       * in the URL, we can continue as usual.
       */
 
-      function regularComponentWillMountBehaviour (_thisContext) {
+      function regularComponentWillMountBehaviour (_thisContext, emailVerifiedThisInstance) {
         _thisContext.doRedirectionFilter()
 
           /*
@@ -602,8 +578,42 @@ const StudentProfileContainer = React.createClass({
               }
 
               else {
-                console.log("profile complete, continue")
-                resolve()
+
+               /*
+                * D: Profile is complete AND Email is verified.
+                *
+                * Now, if this particular instance of componentWillMount was involved
+                * in the completion of the Email Verification, then we want to redirect 
+                * the user to the Student Dashboard so that they know what they should do 
+                * next.
+                *
+                * We can tell if this was the instance by consulting a flag emailVerifiedThisInstance. 
+                * If it is set to true, then we know that this was the componentWillMount instance in which 
+                * we verified the email and the user's profile is now complete overall. We redirect in that
+                * scenario.
+                */
+                
+                if (emailVerifiedThisInstance) {
+                  console.log("[Univjobs]: Profile was completely verfied + completed in THIS instance of componentWillMount, redirect.")
+
+                  setTimeout(() => {
+                    window.location.reload()
+                    _thisContext.context.router.push('/dashboard/st')
+                  }, 3000)
+
+                }
+
+               /*
+                * Otherwise, continue as usual.
+                */
+
+                else {
+
+                  console.log("[Univjobs]: Profile was completed + verified in an earlier instance of componentWillMount, continue.")
+                  resolve()
+
+                }
+
               }
 
             })
