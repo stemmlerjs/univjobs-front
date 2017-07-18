@@ -22,8 +22,9 @@ import { getAllStaticLists } from 'redux/modules/list/list'
 
 // ================CSS IMPORTS============================== //
 import animationStyles from '../styles/InitialOverlayStyles.css'
+import { loadingFlexibleContainer } from 'sharedStyles/loading.css'
 
-import { FeedbackForm } from 'modules/SharedComponents'
+import { FeedbackForm, LoadingSpinner } from 'modules/SharedComponents'
 import * as feedbackFormActionCreators from 'redux/modules/feedback/feedback'
 
 const styles = {
@@ -101,6 +102,7 @@ const InitialOverlay = React.createClass({
      })
     );
     console.log(this)
+      debugger
     return (
       <div style={styles.main}>
         {this.props.location.pathname !== "/join"
@@ -129,8 +131,10 @@ const InitialOverlay = React.createClass({
           transitionAppearTimeout={600}
           transitionLeaveTimeout={300}>
           { this.props.isOverlayActive === true ? 
-            <div style={{zIndex: '1000', position: 'fixed', backgroundColor:'white', left: 0, right: 0, top: 0, bottom: 0}}>
-              <h1>Welcome to Univjobs!</h1>
+            <div style={{zIndex: '1000', position: 'fixed', backgroundColor:'#52a7fa', color: 'white', left: 0, right: 0, top: 0, bottom: 0}}>
+                  <div className={loadingFlexibleContainer} style={{paddingTop: '20vh', paddingLeft: '30', paddingRight: '30'}}>
+                    <LoadingSpinner />
+                  </div>
             </div>
             : null
           }
