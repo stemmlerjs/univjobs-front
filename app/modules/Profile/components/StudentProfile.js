@@ -240,14 +240,14 @@ console.log(props)
 			<StudentProfileField title={props.studentStatus == 3 ? 'I studied ' : "I am studying " }
 			  styles={nameField}>
 			  <li>
-			    <DropdownList
-			      className={props.propsErrorMap.map ? `${longDropDown} ${error} ${materialStyle}` : `${longDropDown} ${materialStyle}`}
+			    <Combobox
+			      className={props.propsErrorMap.map ? `${materialStyle} ${shortInput} ${error}` : `${longDropDown} ${materialStyle}`}
 			      valueField="id" textField="major_text"
-			      messages={messages}
+                  filter="contains"
 			      data={props.majorsList}
+			      messages={messages}
+			      onChange={value => props.updateProfileField('major', value, true)}
 			      value={props.major}
-                  defaultValue={1}
-			      onChange={value => props.updateProfileField('major', value.id, true)}
 			     />
 			  </li>
 			  <li>

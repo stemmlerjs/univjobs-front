@@ -242,9 +242,8 @@ const StudentProfileContainer = React.createClass({
    */
 
    else {
-
    	this.context.store.dispatch(profileActionCreators.updateProfile(0, studentProps, this.props.user, this.props.snapshot,
-    
+     
      /*
       * Success callback
       */

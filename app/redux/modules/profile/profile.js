@@ -54,6 +54,7 @@ export function updateTag(listName) {
 }
 
 export function updateProfileField(fieldName, newValue, isAStudent) {
+    debugger
   return {
     type: UPDATE_PROFILE_FIELD,
     fieldName,
@@ -235,6 +236,7 @@ export function submitProfileFirstTime(userTypeInt, profileInfo, user, successCa
             */
 
             dispatch(savingProfileInfo(true))
+              debugger
 
             var putData = {
                 "is_a_student": true,
@@ -254,7 +256,7 @@ export function submitProfileFirstTime(userTypeInt, profileInfo, user, successCa
                 status: profileInfo.studentStatus.id ? profileInfo.studentStatus.id : 1,
                 enroll_date: toISO(profileInfo.enrollmentDate),
                 grad_date: toISO(profileInfo.graduationDate),
-                major_id: profileInfo.major.id ? profileInfo.major.id : profileInfo.major,
+                major_id: profileInfo.major.id ? profileInfo.major.id : 0,
                 gpa: JSON.stringify(parseFloat(profileInfo.gpa)),
                 personal_email: profileInfo.personalEmail,
                 gender: profileInfo.gender.id ? profileInfo.gender.id : profileInfo.gender,
@@ -315,7 +317,6 @@ export function submitProfileFirstTime(userTypeInt, profileInfo, user, successCa
 
           } 
           else {
-          debugger
           /*
            * If the user isn't going to upload a photo we should let them know 
            * that profiles with a photo and resume perform better. Lets trigger the flag that 
@@ -455,7 +456,7 @@ export function updateProfile(userTypeInt, profileInfo, user, snapshot, successC
               status: profileInfo.studentStatus ? profileInfo.studentStatus : profileInfo.studentStatus.id, 
               enroll_date: toISO(profileInfo.enrollmentDate),
               grad_date: toISO(profileInfo.graduationDate),
-              major: profileInfo.major  ? profileInfo.major : profileInfo.major.id,
+              major: profileInfo.major  ? profileInfo.major.id : 1,
               gpa: JSON.stringify(parseFloat(profileInfo.gpa)),
               personal_email: profileInfo.personalEmail,
               gender: profileInfo.gender ? profileInfo.gender : profileInfo.gender.id, 
