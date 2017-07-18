@@ -70,7 +70,7 @@ const InitialOverlay = React.createClass({
                     
                         <h1>Hey there!</h1> 
                         <h2>Sorry but our plaform is not mobile friendly.</h2>
-                        <h2>For now, please use the desktop browser to get the best experience.</h2>
+                        <h2>For now, please use the desktop browser.</h2>
                    </div>
                 </div>
              )
