@@ -24,17 +24,34 @@
     padding-right: 10px;
     background-color: white;
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-    margin:20px;
-    /*border-top: solid 3px #3f95d0;*/
-}           
+    /* margin: 20px; */
+    /* border-top: solid 3px #3f95d0; */
+    /* height: 115px; */
+    min-height: 115px;
+    max-height: 190px;
+    border-bottom: solid 1px #d4d2d2;
+
+}        
+
+.settingsOptionHeader {
+    font-weight: bold;
+}   
+
+.settingsOptionDetail {
+    color: #474545;
+}
       
 .flexRowItem {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     margin-left: 5%;
     margin-right: 5%;
-
-
+    text-align: left;
+    font-size: 15px;
+    /* justify-content: center; */
+    /* margin-top: 19px; */
+    height: 100%;
+    justify-content: center;
 }
 
 .toggleContainer {
@@ -87,4 +104,36 @@
     border-radius: 30px;
     transition: background 0.4s;
 }
+
+.textButton {
+    height: 64px;
+    display: flex;
+    width: 102px;
+    justify-content: center;
+    flex-direction: row;
+    align-items: center;
+    color: #3697db;
+    font-size: 15px;
+    -webkit-transition: 0.2s ease-in ;
+    -moz-transition: 0.2s ease-in ;
+    transition: 0.2s ease-in ;
+    cursor:pointer;
+}
+
+.textButton:hover {
+    height: 64px;
+    display: flex;
+    width: 102px;
+    justify-content: center;
+    flex-direction: row;
+    align-items: center;
+    color: white;
+    background-color:#3697db;
+    font-size: 15px;
+    -webkit-transition: 0.2s ease-in ;
+    -moz-transition: 0.2s ease-in ;
+    transition: 0.2s ease-in ;
+    cursor:pointer;
+}
+
 

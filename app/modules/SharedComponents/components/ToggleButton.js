@@ -16,23 +16,21 @@ import config from 'config'
 /*NOTE: styles/StudentDashboard.css can be reused */
 import { toggleContainer, input, toggle } from 'modules/SharedComponents/styles/Settings.css'
 
+import { switchClass, slider, round } from 'modules/SharedComponents/styles/ToggleButton.css'
+
 const ToggleButton = ({id, isChecked, clickedButton}) => (
-    <div className={toggleContainer}>
-        <input 
-            id={id}
-            className={input}
-            type="checkbox"
-            defaultChecked={isChecked}
-            onChange={(e) => clickedButton(e, id, isChecked) }
-        />
-        <label className={toggle} htmlFor={id}/>
-    </div>
+  <div>
+    <label className={switchClass}>
+      <input type="checkbox"></input>
+      <span className={`${slider} ${round}`}></span>
+    </label>
+  </div>
 )
 
 ToggleButton.propTypes = {
-        id: PropTypes.string.isRequired,
-        isChecked: PropTypes.bool,
-        clickedButton: PropTypes.func,
+    id: PropTypes.string.isRequired,
+    isChecked: PropTypes.bool,
+    clickedButton: PropTypes.func,
 };
 
 export default ToggleButton
