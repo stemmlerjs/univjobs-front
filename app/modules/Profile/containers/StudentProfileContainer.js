@@ -12,6 +12,7 @@ import { StudentProfile } from 'modules/Profile'
 import { SidebarContainer } from 'modules/Main' 
 import { FeedbackForm } from 'modules/SharedComponents'
 import SkyLight from 'react-skylight'
+import Croppie from 'croppie'
 
 // ========= REDUX AND STATE IMPORTS ========== //
 
@@ -23,6 +24,8 @@ import * as feedbackFormActionCreators from 'redux/modules/feedback/feedback'
 
 import { pageContainer } from '../styles/StudentProfileContainerStyles.css' 
 import { userProfileAdviceTitle, userProfileAdviceBody, cancelBtn, acceptBtn } from 'sharedStyles/sharedComponentStyles.css'
+import { cropper, cropButton } from 'modules/SharedComponents/styles/Cropper.css'
+
 
 // ============== MESSAGES =================== //
 var ReactToastr = require("react-toastr");
@@ -661,11 +664,133 @@ const StudentProfileContainer = React.createClass({
     });
   },
 
+ /*
+  * openPictureCropper
+  *
+  * Opens a modal with the image to crop on it.
+  */
+
+  openPictureCropper (newImageToCrop) {
+
+    /*
+     * Open the modal's overlay
+     */
+
+    this.refs.pictureCropper.show()
+
+    /*
+     * Initialize Croppie. Paste 
+     * the image from the client onto the 
+     * cropper so that they can crop the image.
+     */
+
+    setTimeout(() => {
+
+      var el = document.getElementById('cropper');
+      window.cropperInstance = new Croppie(el, {
+        viewport: { width: 250, height: 250 },
+        boundary: { width: 250, height: 250 },
+        showZoomer: false,
+        enableResize: false,
+        enableOrientation: false
+      });
+
+      window.cropperInstance.bind({
+        url: newImageToCrop.preview,
+      });
+
+    }, 50)
+    
+  },
+
+  /*
+   * cropAndContinueWithImage
+   * 
+   * Called after showing the pictureCropper modal with the
+   * cropped image inside of it.
+   */
+
+  cropAndAppendImage() {
+
+   /*
+    * Get the current cropped result of 
+    * the image.
+    */
+
+    window.cropperInstance.result('blob')
+
+     /*
+      * Append the cropped blob to props for update / save.
+      */
+
+      .then((blob) => {
+
+       /*
+        * Create a file object. Normally we don't really have to do
+        * this but because our app currenly expects this type of
+        * object to float through multiple different components,
+        * lets replicate exactly what it's used to seeing.
+        *
+        * We NEED to include the type of the file because our backend
+        * only accepts images.
+        *
+        * TODO: let the user know ahead of time if they've selected a bad
+        * image file type.
+        */
+        
+        var type = blob.type
+        type = type.substring(type.indexOf("/") + 1)
+
+        var croppedFile = new File([blob], 
+          "newphoto_" + new Date().toDateString() + "." + type,
+          {
+            type: blob.type
+          });
+
+       /*
+        * Important: create the preview attribute and append it to
+        * the file object (apparently it doesnt create this) by
+        * default.
+        */
+
+        var preview = URL.createObjectURL(blob)
+        croppedFile.preview = preview;
+
+        this.props.updateProfileField('photo', croppedFile, true)
+
+       
+       /*
+        * Place a preview of the image on the Student Profile
+        * picture div.
+        */
+
+         let dropPhotoDiv = document.getElementById('dropPhotoDiv')
+        dropPhotoDiv.style.backgroundImage = `url('${croppedFile.preview}')` // blob
+        dropPhotoDiv.style.backgroundSize = "cover"
+
+        /*
+         * Hide icon, text and border
+         */
+
+        dropPhotoDiv.style.border = "0"
+        document.getElementById('fa-user').style.visibility = "hidden"
+        document.getElementById('drag-dropPhoto').style.visibility = "hidden"
+
+        /*
+         * Finally, hide the picture cropper modal.
+         */
+
+        this.refs.pictureCropper.hide()
+      });
+
+  },
+
   componentWillUnmount() {
-    console.log("wait, no we have to check")
+
   },
 
   render () {
+    console.log("Student profile props", this.props)
     return (
       <div className={pageContainer}>
         <SidebarContainer isAStudent={this.props.user.isAStudent} 
@@ -719,6 +844,7 @@ const StudentProfileContainer = React.createClass({
       	  snapshot={this.props.snapshot}
           handleShowImageSizeTooLargeError={this.showImageSizeTooLargeError}
           handleShowResumeSizeTooLargeError={this.showResumeSizeTooLargeError}
+          handleOpenPictureCropper={this.openPictureCropper}
         />
       	<ToastContainer ref="container"
       	  toastMessageFactory={ToastMessageFactory}
@@ -750,6 +876,25 @@ const StudentProfileContainer = React.createClass({
                 </div>
               </SkyLight>
             </div>
+
+            {
+            /*
+              * ========================================
+              *           pictureCropper
+              * ========================================
+              *
+              * This is the modal that will contain the picture and crop it.
+              */
+            }
+
+            <div id="cropper-container-wrapper">
+              <SkyLight ref="pictureCropper">
+                <div className={cropper} id="cropper"></div>
+                <div>Drag and zoom to crop your new profile picture</div>
+                <button className={cropButton} onClick={this.cropAndAppendImage}>Done cropping</button>
+              </SkyLight>
+            </div>
+
       </div>
     )
   },

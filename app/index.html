@@ -17,6 +17,8 @@
     <link href="http://diegoddox.github.io/react-redux-toastr/3.8/react-redux-toastr.min.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
 
+    <link rel="stylesheet" href="/assets/css/croppie.css">
+
     <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
     <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
@@ -332,6 +334,33 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
+      }
+
+     /*
+      * ==============================
+      * Croppie (photo cropper styling)
+      * ==============================
+      */
+
+      #cropper-container-wrapper .skylight-dialog {
+        width: 50% !important;
+        height: 447px !important;
+        position: fixed !important;
+        top: 50% !important;
+        left: 50% !important;
+        margin-top: -200px !important;
+        margin-left: -25% !important;
+        background-color: rgb(255, 255, 255) !important;
+        border-radius: 2px !important;
+        z-index: 100 !important;
+        padding: 15px !important;
+        box-shadow: rgba(0, 0, 0, 0.14) 0px 0px 4px, rgba(0, 0, 0, 0.28) 0px 4px 8px !important;
+        display: block !important;
+        font-size:15px;
+      }
+
+      #cropper-container-wrapper .cr-boundary {
+        border: solid 12px black;
       }
 
       /* In Chrome, fixes the underlines on the nav elements.*/

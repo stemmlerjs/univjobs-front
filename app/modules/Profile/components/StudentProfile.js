@@ -93,20 +93,13 @@ console.log(props)
 		} 
 
 	 /*
-		* Size OK, continue.
+		* Size OK, continue to open the cropper.
 		*/
 
 		else {
-			let dropPhotoDiv = document.getElementById('dropPhotoDiv')
-			props.updateProfileField('photo', files[0], true)
-			// Preview the image
-			dropPhotoDiv.style.backgroundImage = `url('${files[0].preview}')` // blob
-			dropPhotoDiv.style.backgroundSize = "cover"
 
-			// Hide icon, text and border
-			dropPhotoDiv.style.border = "0"
-			document.getElementById('fa-user').style.visibility = "hidden"
-			document.getElementById('drag-dropPhoto').style.visibility = "hidden"
+			props.handleOpenPictureCropper(files[0])
+			
 		}
   }
 
