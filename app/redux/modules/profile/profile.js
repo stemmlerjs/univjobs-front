@@ -236,36 +236,36 @@ export function submitProfileFirstTime(userTypeInt, profileInfo, user, successCa
             dispatch(savingProfileInfo(true))
 
             var putData = {
-              "is_a_student": true,
-              "is_profile_completed": true,
-              "email": user.email,
-              "first_name": profileInfo.firstName,
-              "last_name": profileInfo.lastName,
-              "is_active": true,
-              "date_joined": user.dateJoined,
-              "mobile": user.mobile,
-              "schoolName": profileInfo.school,
-              languages: btoa(JSON.stringify(extractLanguageId(profileInfo.languages))),
-              sports: btoa(JSON.stringify(extractSportsObject(profileInfo.sportsTeam, profileInfo))),
-              clubs: btoa(JSON.stringify(extractClubsObject(profileInfo.schoolClub, profileInfo))),
-              edu_level_id: profileInfo.educationLevel.id ? profileInfo.educationLevel.id : profileInfo.educationLevel,
-              email_pref: profileInfo.emailPreferences.id ? profileInfo.emailPreferences.id : profileInfo.emailPreferences,
-              status: profileInfo.studentStatus.id ? profileInfo.studentStatus.id : 1,
-              enroll_date: toISO(profileInfo.enrollmentDate),
-              grad_date: toISO(profileInfo.graduationDate),
-              major_id: profileInfo.major.id ? profileInfo.major.id : profileInfo.major ? profileInfo.major : 0,
-              gpa: JSON.stringify(parseFloat(profileInfo.gpa)),
-              personal_email: profileInfo.personalEmail,
-              gender: profileInfo.gender.id ? profileInfo.gender.id : profileInfo.gender,
-                /*Converts the value to num*/
-              has_car: profileInfo.hasCar === true ? JSON.stringify(1) : JSON.stringify(0),
-              recent_company_name: profileInfo.companyName,
-              recent_company_position: profileInfo.position,
-              fun_fact: profileInfo.funFacts,
-              hometown: profileInfo.hometown,
-              hobbies: profileInfo.hobbies,
-              profilepicture: profileInfo.photo,
-              resume: profileInfo.resume,
+                "is_a_student": true,
+                "is_profile_completed": true,
+                "email": user.email,
+                "first_name": profileInfo.firstName,
+                "last_name": profileInfo.lastName,
+                "is_active": true,
+                "date_joined": user.dateJoined,
+                "mobile": user.mobile,
+                "schoolName": profileInfo.school,
+                languages: btoa(JSON.stringify(extractLanguageId(profileInfo.languages))),
+                sports: btoa(JSON.stringify(extractSportsObject(profileInfo.sportsTeam, profileInfo))),
+                clubs: btoa(JSON.stringify(extractClubsObject(profileInfo.schoolClub, profileInfo))),
+                edu_level_id: profileInfo.educationLevel.id ? profileInfo.educationLevel.id : profileInfo.educationLevel,
+                email_pref: profileInfo.emailPreferences.id ? profileInfo.emailPreferences.id : profileInfo.emailPreferences,
+                status: profileInfo.studentStatus.id ? profileInfo.studentStatus.id : 1,
+                enroll_date: toISO(profileInfo.enrollmentDate),
+                grad_date: toISO(profileInfo.graduationDate),
+                major_id: profileInfo.major.id ? profileInfo.major.id : profileInfo.major,
+                gpa: JSON.stringify(parseFloat(profileInfo.gpa)),
+                personal_email: profileInfo.personalEmail,
+                gender: profileInfo.gender.id ? profileInfo.gender.id : profileInfo.gender,
+                  /*Converts the value to num*/
+                has_car: profileInfo.hasCar === true ? JSON.stringify(1) : JSON.stringify(0),
+                recent_company_name: profileInfo.companyName,
+                recent_company_position: profileInfo.position,
+                fun_fact: profileInfo.funFacts,
+                hometown: profileInfo.hometown,
+                hobbies: profileInfo.hobbies,
+                profilepicture: profileInfo.photo,
+                resume: profileInfo.resume,
             }
 
            /*
@@ -467,7 +467,7 @@ export function updateProfile(userTypeInt, profileInfo, user, snapshot, successC
               status: profileInfo.studentStatus ? profileInfo.studentStatus : profileInfo.studentStatus.id, 
               enroll_date: toISO(profileInfo.enrollmentDate),
               grad_date: toISO(profileInfo.graduationDate),
-              major: profileInfo.major  ? profileInfo.major.id : 1,
+              major: profileInfo.major.id  ? profileInfo.major.id : profileInfo.major,
               gpa: JSON.stringify(parseFloat(profileInfo.gpa)),
               personal_email: profileInfo.personalEmail,
               gender: profileInfo.gender ? profileInfo.gender : profileInfo.gender.id, 
@@ -570,6 +570,7 @@ export function updateProfile(userTypeInt, profileInfo, user, snapshot, successC
            /*
             * No errors, proceed to /PATCH on api/me.
             */
+              
 
             var changedData = {
               company_name: profileInfo.companyName,

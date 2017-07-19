@@ -922,7 +922,7 @@ function mapStateToProps({user, profile, list, feedback}) {
     graduationDate: profile.studentProfile.graduationDate ? profile.studentProfile.graduationDate : new Date,  
 
     /*major(value, list)*/
-    major: profile.studentProfile.major ? profile.studentProfile.major : 1,  
+    major: profile.studentProfile.major ? profile.studentProfile.major : '',  
     majorsList: list.majorsArray ? list.majorsArray : [],
 
     /*gpa(value, boolean)*/
