@@ -107,12 +107,11 @@ function placePhoto(element, url) {
 		} 
 
 	 /*
-		* Size OK, continue.
+		* Size OK, continue to open the cropper.
 		*/
 
 		else {
-      // Update props with the File object (profile picture)
-      props.updateProfileField('logoUrl', files[0], false)
+      props.handleOpenPictureCropper(files[0])
     }
   }
 

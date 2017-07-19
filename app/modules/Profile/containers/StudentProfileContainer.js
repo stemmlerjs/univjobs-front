@@ -10,7 +10,7 @@ import { authRedirectFilter } from 'config/routes'
 
 import { StudentProfile } from 'modules/Profile' 
 import { SidebarContainer } from 'modules/Main' 
-import { FeedbackForm } from 'modules/SharedComponents'
+import { FeedbackForm, PictureCropper } from 'modules/SharedComponents'
 import SkyLight from 'react-skylight'
 import Croppie from 'croppie'
 
@@ -24,8 +24,6 @@ import * as feedbackFormActionCreators from 'redux/modules/feedback/feedback'
 
 import { pageContainer } from '../styles/StudentProfileContainerStyles.css' 
 import { userProfileAdviceTitle, userProfileAdviceBody, cancelBtn, acceptBtn } from 'sharedStyles/sharedComponentStyles.css'
-import { cropper, cropButton } from 'modules/SharedComponents/styles/Cropper.css'
-
 
 // ============== MESSAGES =================== //
 var ReactToastr = require("react-toastr");
@@ -878,7 +876,7 @@ const StudentProfileContainer = React.createClass({
             </div>
 
             {
-            /*
+             /*
               * ========================================
               *           pictureCropper
               * ========================================
@@ -886,15 +884,14 @@ const StudentProfileContainer = React.createClass({
               * This is the modal that will contain the picture and crop it.
               */
             }
-
             <div id="cropper-container-wrapper">
               <SkyLight ref="pictureCropper">
-                <div className={cropper} id="cropper"></div>
-                <div>Drag and zoom to crop your new profile picture</div>
-                <button className={cropButton} onClick={this.cropAndAppendImage}>Done cropping</button>
+                <PictureCropper 
+                  onDoneCrop={this.cropAndAppendImage}
+                />
               </SkyLight>
             </div>
-
+            
       </div>
     )
   },
