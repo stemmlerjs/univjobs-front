@@ -256,7 +256,7 @@ export function submitProfileFirstTime(userTypeInt, profileInfo, user, successCa
                 status: profileInfo.studentStatus.id ? profileInfo.studentStatus.id : 1,
                 enroll_date: toISO(profileInfo.enrollmentDate),
                 grad_date: toISO(profileInfo.graduationDate),
-                major_id: profileInfo.major.id ? profileInfo.major.id : 0,
+                major_id: profileInfo.major.id ? profileInfo.major.id : profileInfo.major,
                 gpa: JSON.stringify(parseFloat(profileInfo.gpa)),
                 personal_email: profileInfo.personalEmail,
                 gender: profileInfo.gender.id ? profileInfo.gender.id : profileInfo.gender,
@@ -456,7 +456,7 @@ export function updateProfile(userTypeInt, profileInfo, user, snapshot, successC
               status: profileInfo.studentStatus ? profileInfo.studentStatus : profileInfo.studentStatus.id, 
               enroll_date: toISO(profileInfo.enrollmentDate),
               grad_date: toISO(profileInfo.graduationDate),
-              major: profileInfo.major  ? profileInfo.major.id : 1,
+              major: profileInfo.major.id  ? profileInfo.major.id : profileInfo.major,
               gpa: JSON.stringify(parseFloat(profileInfo.gpa)),
               personal_email: profileInfo.personalEmail,
               gender: profileInfo.gender ? profileInfo.gender : profileInfo.gender.id, 
@@ -559,6 +559,7 @@ export function updateProfile(userTypeInt, profileInfo, user, snapshot, successC
            /*
             * No errors, proceed to /PATCH on api/me.
             */
+              
 
             var changedData = {
               company_name: profileInfo.companyName,

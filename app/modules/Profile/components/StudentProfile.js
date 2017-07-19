@@ -241,11 +241,12 @@ console.log(props)
 			  styles={nameField}>
 			  <li>
 			    <Combobox
-			      className={props.propsErrorMap.map ? `${materialStyle} ${shortInput} ${error}` : `${longDropDown} ${materialStyle}`}
-			      valueField="id" textField="major_text"
+			      className={props.propsErrorMap.major ? `${longDropDown} ${error}` : `${longDropDown}`} 
+                  textField="major_text"
+			      valueField="id" 
                   filter="contains"
 			      data={props.majorsList}
-			      messages={messages}
+                  messages={messages}
 			      onChange={value => props.updateProfileField('major', value, true)}
 			      value={props.major}
 			     />
