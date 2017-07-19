@@ -64,36 +64,98 @@ console.log(props)
 	  }
   }
   
-
-  /* 
-  *   Display the profile new profile picture when the user drags and drops or selects one.
-  */
+/*
+ * onDrop
+ * 
+ * @param File[]
+ * Handle profile picture drop event.
+ */
+  
   function onDrop(files) {
-    let dropPhotoDiv = document.getElementById('dropPhotoDiv')
-    props.updateProfileField('photo', files[0], true)
-    // Preview the image
-    dropPhotoDiv.style.backgroundImage = `url('${files[0].preview}')` // blob
-    dropPhotoDiv.style.backgroundSize = "cover"
 
-    // Hide icon, text and border
-    dropPhotoDiv.style.border = "0"
-    document.getElementById('fa-user').style.visibility = "hidden"
-    document.getElementById('drag-dropPhoto').style.visibility = "hidden"
+	 /*
+		* If the photo is not over 1MB, then we'll move forward and use it.
+		*
+		* 54173  bytes (52.9 KB) OK
+		* 7577067 bytes (7.5 MB) NOT OK
+		*/
+
+		var fileSizeBytes = files[0].size
+		var maxSizeBytes = 1000000; // 1MB
+
+	 /*
+		* Too large, present error.
+		*/
+
+		if (fileSizeBytes >= maxSizeBytes) {
+			console.log("way too large", fileSizeBytes, maxSizeBytes)
+			props.handleShowImageSizeTooLargeError()
+		} 
+
+	 /*
+		* Size OK, continue.
+		*/
+
+		else {
+			let dropPhotoDiv = document.getElementById('dropPhotoDiv')
+			props.updateProfileField('photo', files[0], true)
+			// Preview the image
+			dropPhotoDiv.style.backgroundImage = `url('${files[0].preview}')` // blob
+			dropPhotoDiv.style.backgroundSize = "cover"
+
+			// Hide icon, text and border
+			dropPhotoDiv.style.border = "0"
+			document.getElementById('fa-user').style.visibility = "hidden"
+			document.getElementById('drag-dropPhoto').style.visibility = "hidden"
+		}
   }
 
+ /*
+	* onDropResume
+	* 
+	* @param File[]
+	* Handle resume drop event.
+	*/
+
   function onDropResume(files) {
-    let dropResumeDiv = document.getElementById('dropResumeDiv')
-    props.updateProfileField('resume', files[0], true)
-    // Preview the image
 
-    // Preview the image
-    dropResumeDiv.style.borderStyle = "solid" // blob
-    dropResumeDiv.style.borderColor = "	#00BFFF" // blob
-    dropResumeDiv.style.backgroundSize = "cover"
+		/*
+		* If the resume is not over 2MB, then we'll move forward and use it.
+		*
+		* 54173  bytes (52.9 KB) OK
+		* 7577067 bytes (7.5 MB) NOT OK
+		*/
 
-    document.getElementById('fa-pdf').style.color = "#00BFFF"
-    document.getElementById('drag-dropResume').innerHTML = "Resume Uploaded ◕‿‿◕"
-    document.getElementById('drag-dropResume').style.color = '#00BFFF'
+		var fileSizeBytes = files[0].size
+		var maxSizeBytes = 2000000; // 2MB
+
+	 /*
+		* Too large, present error.
+		*/
+
+		if (fileSizeBytes >= maxSizeBytes) {
+			console.log("way too large", fileSizeBytes, maxSizeBytes)
+			props.handleShowResumeSizeTooLargeError()
+		} 
+
+	 /*
+		* Size OK, continue.
+		*/
+
+		else {
+			let dropResumeDiv = document.getElementById('dropResumeDiv')
+			props.updateProfileField('resume', files[0], true)
+			// Preview the image
+
+			// Preview the image
+			dropResumeDiv.style.borderStyle = "solid" // blob
+			dropResumeDiv.style.borderColor = "	#00BFFF" // blob
+			dropResumeDiv.style.backgroundSize = "cover"
+
+			document.getElementById('fa-pdf').style.color = "#00BFFF"
+			document.getElementById('drag-dropResume').innerHTML = "Resume Attached ◕‿‿◕"
+			document.getElementById('drag-dropResume').style.color = '#00BFFF'
+		}
   }
 
 

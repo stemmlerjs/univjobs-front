@@ -494,7 +494,7 @@ export function handleGetLanguages(dispatch) {
                dispatch(fetchedLanguagesSuccess(resp.data.languages))
             )
             .catch((err) => 
-               dispatch(fetchedLanguagessFailure(err))
+               dispatch(fetchedLanguagesFailure(err))
             )
     }
 }

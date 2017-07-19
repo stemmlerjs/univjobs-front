@@ -108,7 +108,16 @@
     }
   }
 
-  export function setProfileCompleted () {
+  export function setProfileCompleteThenReloadToDashboard(then) {
+    return function(dispatch) {
+
+      dispatch(setProfileCompleted())
+
+      then()
+    }
+  }
+
+  function setProfileCompleted () {
     return {
       type: SET_PROFILE_COMPLETED
     }
