@@ -348,15 +348,42 @@ const EmployerProfileContainer = React.createClass({
 
           });
 
-          this.context.store.dispatch(userActionCreators.setProfileCompleted())
 
-         /* Promise that checks all conditions must be true in order to reroute to dashboard automatically
-          * */
+          /*
+          * Now, we want to actually update the redux state so
+          * that the client is in sync with the back and knows that
+          * our profile is complete.
+          * 
+          * This will allow us to move to different parts of the app 
+          * now.
+          */
+
+          this.context.store.dispatch(
+            userActionCreators.setProfileCompleteThenReloadToDashboard(() => {
+
+              /*
+              * After syncing the front, is_profile_complete = true,
+              * we need to do our classic reload but when we come back to
+              * the app, we want to be at /dashboard/st
+              */
+
+              setTimeout(() => {
+                window.location.reload()
+                this.context.router.push('/dashboard/em')
+              }, 2000)
+
+            })
+          )
+
+        //   this.context.store.dispatch(userActionCreators.setProfileCompleted())
+
+        //  /* Promise that checks all conditions must be true in order to reroute to dashboard automatically
+        //   * */
           
-          this.onHandleReload(this.props.user.isProfileCompleted, 
-                            this.props.user.emailVerified).then((message) =>{
-                                message == true ? this.context.router.push('/dashboard/em') : null
-                            })
+        //   this.onHandleReload(this.props.user.isProfileCompleted, 
+        //                     this.props.user.emailVerified).then((message) =>{
+        //                         message == true ? this.context.router.push('/dashboard/em') : null
+        //                     })
         },
 
         /*

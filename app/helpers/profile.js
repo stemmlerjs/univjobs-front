@@ -63,7 +63,7 @@ export function employerProfilePATCH(data) {
   let formData = new FormData();
   const accessToken = getAccessToken();
   const csrfToken = getCSRFToken()
-
+  debugger;
   for(let key in data) {
     var lineItem = data[key];
 
@@ -358,6 +358,12 @@ export function compareToSnapshot(oldProfile, newProfile, callback) {
 
             }
         }
+    }
+
+    if (prop === 'logo') {
+      if (newProfile['logo'] === oldProfile['logo_url']) {
+        delete newProfile['logo']
+      }
     }
 
     if(prop === 'enroll_date' || prop === 'grad_date') {

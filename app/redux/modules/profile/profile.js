@@ -370,7 +370,7 @@ export function submitProfileFirstTime(userTypeInt, profileInfo, user, successCa
                 description: profileInfo.description,
                 website: profileInfo.website,
                 employee_count: profileInfo.employeeCount,
-                industry: profileInfo.industry.id,
+                industry: profileInfo.industry || profileInfo.industry.id,
                 date_joined: user.dateJoined,
                 first_name: user.firstName,
                 last_name: user.lastName,
@@ -590,29 +590,48 @@ export function updateProfile(userTypeInt, profileInfo, user, snapshot, successC
 
             compareToSnapshot(snapshot, changedData, (result) => {
 
+
+            /*
+             * If nothing to update- nothing changed, then we'll
+             * just let them know that nothing has changed.
+             */
+
+              if (Object.keys(result).length === 0) {
+
+                // DISPATCH - SAVE_PROFILE_SUCCESS
+                dispatch(savedProfileSuccess())
+
+                successCallback('Profile up to date.')
+              }
+              
              /*
-              * Perform the HTTP request.
-              */
+              * Otherwise, there is stuff to update.
+              * Lets make the HTTP call now.
+              */ 
 
-              employerProfilePATCH(result)
-                .then((res) => {
+              else {
 
-                  // DISPATCH - SAVE_PROFILE_SUCCESS
-                  dispatch(savedProfileSuccess())
+                employerProfilePATCH(result)
+                  .then((res) => {
 
-                  successCallback()
-                })
-                .catch((err) => {
+                    // DISPATCH - SAVE_PROFILE_SUCCESS
+                    dispatch(savedProfileSuccess())
 
-                  // DISPATCH - SAVE_PROFILE_ERROR
-                  dispatch(savedProfileFailure({}, [
-                    'HTTP Error Occurred.\n',
-                     err.message
-                    ], false))
+                    successCallback()
+                  })
+                  .catch((err) => {
 
-                  failureCallback('Some error occurred trying to update!')
+                    // DISPATCH - SAVE_PROFILE_ERROR
+                    dispatch(savedProfileFailure({}, [
+                      'HTTP Error Occurred.\n',
+                      err.message
+                      ], false))
 
-                })
+                    failureCallback('Some error occurred trying to update!')
+
+                  })
+              }
+             
             })
           }
         })
