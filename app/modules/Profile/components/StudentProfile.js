@@ -296,7 +296,7 @@ console.log(props)
 			  styles={nameField}>
 			  <li>
 			    <Combobox
-			      className={props.propsErrorMap.major ? `${longDropDown} ${error}` : `${longDropDown}`} 
+			      className={props.propsErrorMap.major ? `${longDropDown} ${error} ${materialStyle}` : `${longDropDown} ${materialStyle}`} 
                   textField="major_text"
 			      valueField="id" 
                   filter="contains"
