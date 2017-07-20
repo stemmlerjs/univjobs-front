@@ -137,7 +137,7 @@ function placePhoto(element, url) {
     */
 
     if (props.logoUrl != "") {
-      profilePic.backgroundImage = `url(http://localhost:8000/${props.logoUrl.replace("\\", "/")})`
+      profilePic.backgroundImage = `url(${config.mediaUrl}${props.logoUrl.replace("\\", "/")})`
     }
   }
 

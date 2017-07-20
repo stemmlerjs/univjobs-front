@@ -2,13 +2,19 @@
   import { createStudentAccount, resendVerifyAccountEmail as resendVerifyAccountEmailHTTP,
       attemptCompleteVerifyAccount as attemptCompleteVerifyAccountHTTP } from 'helpers/auth'
 
+
   // **********************************************************************
   // **********************************************************************
   
-  const SWITCHED_TO_USER_TYPE_STUDENT = 'SWITCHED_TO_USER_TYPE_STUDENT'
-  const SWITCHED_TO_USER_TYPE_EMPLOYER = 'SWITCHED_TO_USER_TYPE_EMPLOYER'
-
-  const SET_PROFILE_COMPLETED = 'SET_PROFILE_COMPLETED'
+  /*
+   * Verify Account
+   * 
+   * This section is concerned with verifying the user's account and
+   * resending the account verification email.
+   * 
+   * We do the EMAIL resending and the TOKEN confirmation with this 
+   * section of redux.
+   */
 
   const RESEND_VERIFY_ACCOUNT_EMAIL = 'RESEND_VERIFY_ACCOUNT_EMAIL'
   const RESEND_VERIFY_ACCOUNT_EMAIL_SUCCESS = 'RESEND_VERIFY_ACCOUNT_EMAIL_SUCCESS'
@@ -63,7 +69,6 @@
     }
   }
 
-
   export function resendVerifyAccountEmail (successCallback, failureCallback) {
     return function (dispatch) {
 
@@ -116,6 +121,22 @@
       then()
     }
   }
+
+
+  // **********************************************************************
+  // **********************************************************************
+
+  /*
+   * User Accounts
+   * 
+   * This section is mostly concerned with the Signup page before we
+   * even create an account / we can switch between user types.
+   */
+  
+  const SWITCHED_TO_USER_TYPE_STUDENT = 'SWITCHED_TO_USER_TYPE_STUDENT'
+  const SWITCHED_TO_USER_TYPE_EMPLOYER = 'SWITCHED_TO_USER_TYPE_EMPLOYER'
+
+  const SET_PROFILE_COMPLETED = 'SET_PROFILE_COMPLETED'
 
   function setProfileCompleted () {
     return {

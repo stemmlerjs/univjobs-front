@@ -57,7 +57,7 @@ export default function StudentSettings ({ id, isChecked, onClickedButton, handl
               <div className={settingsOptionDetail}>Hide your profile from employers and resigns any current job applications you have open. You can reactivate your account later.</div>
             </div>
             <div className={flexRowItem}>
-              <div className={textButton}>Deactivate</div>
+              <div className={textButton} onClick={handleConfirmDeactivateAccount}>Deactivate</div>
             </div>
           </div>
 

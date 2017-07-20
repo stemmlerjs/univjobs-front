@@ -22,7 +22,8 @@ import { authRedirectFilter } from 'config/routes'
 
 // ==============CSS IMPORTS=============================
 import { pageContainer } from 'sharedStyles/sharedContainerStyles.css'
-import { userProfileAdviceTitle, userProfileAdviceBody, cancelBtn, acceptBtn } from 'sharedStyles/sharedComponentStyles.css'
+import { userProfileAdviceTitle, userProfileAdviceTitleAlt, userProfileAdviceBody, userProfileAdviceBodyAlt, 
+  cancelBtn, badBtn, bold, boldHeader } from 'sharedStyles/sharedComponentStyles.css'
 
 var ReactToastr = require("react-toastr");
 var { ToastContainer } = ReactToastr;
@@ -80,7 +81,7 @@ const StudentSettingsContainer = React.createClass({
   },
 
   deactivateAccount () {
-
+    
   },
 
   closeDeactivateAccount () {
@@ -110,13 +111,23 @@ const StudentSettingsContainer = React.createClass({
             }
             <div id="settings-confirm-deactivate-account-wrapper">
               <SkyLight ref="confirmDeactivateAccount">
-                <div className={userProfileAdviceTitle}>Do ya really wanna deactivate your account? ✋</div>
-                <div className={userProfileAdviceBody}>We just wanted you to know that profiles that have a <span className={userProfileAdviceTitle}>profile picture </span>
-                  and a <span className={userProfileAdviceTitle}>resume</span> {"perform better than those that don't. You can still save your profile, we just thought we'd let you know."} </div>
+                <div className={userProfileAdviceTitleAlt}>Are you sure you want to deactivate your account? ✋</div>
+                <div className={userProfileAdviceBodyAlt}>
+                  Let's make sure this is what you really want.
+                  <ul>
+                    <li>Employers can no longer see your beautiful face and <span className={bold}>won't be able to invite you to jobs</span>.</li>
+                    <li>Any job applications that you've submitted <span className={bold}>will be deleted</span> (and you can't re-apply to these) !!</li>
+                    <li>You <span className={bold}>won't be able to apply to any jobs</span> until you've reactivated your account.</li>
+                  </ul>
+                  But...
+                  <ul>
+                    <li>You can still browse through new jobs in the Dashboard.</li>
+                  </ul>
+                </div>
                 <br/>
-                <div className={userProfileAdviceBody}>What do you wanna do?</div>
+                <div className={boldHeader}>What do you wanna do?</div>
                 <div>
-                  <button className={acceptBtn} onClick={this.deactivateAccount}>Yes, deactivate account</button>
+                  <button className={badBtn} onClick={this.deactivateAccount}>Deactivate</button>
                   <button className={cancelBtn} onClick={this.closeDeactivateAccount}>Cancel</button>
                 </div>
               </SkyLight>
