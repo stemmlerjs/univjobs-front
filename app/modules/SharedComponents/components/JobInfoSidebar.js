@@ -50,7 +50,6 @@ export default function JobCardModal({ isOpen, onStateChange, logoUrl, info,
   compensationSectionExpanded
 
  }) { 
-   console.log('logo', logoUrl === "")
   return (
     <Menu onStateChange={onStateChange} width={ 400 } pageWrapId={ "page-wrap" } right styles={ styles } isOpen={isOpen}>
       <div className={topContainer}>

@@ -24,7 +24,6 @@ export default function JobCard ({logoUrl, pinned, jobObject, jobId, title, jobT
     compensation, cardType, state, page, location, remoteWork, paid, mapsLink,
     handlePinJob, handleCardClick,
     handleRemoveJob, handleOpenEmployerProfileModal}) {
-      console.log(logoUrl)
   return (
     <div className={page == "applications" 
                         ? state == "REJECTED" && jobObject.active == 0

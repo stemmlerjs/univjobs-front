@@ -28,7 +28,6 @@ display: flex;
 .imgContainer > img {
     height: 106px;
     width: 106px;
-    border: solid 2px darkslategrey;
 }
 
 .cardHeaderContainer {

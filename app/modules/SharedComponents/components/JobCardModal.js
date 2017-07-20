@@ -37,9 +37,9 @@ export default function JobCardModal({
               <div className={cardLeftTopContainer}>
                 <div className={imgContainer}>
                   { 
-                    job.logoUrl === undefined
+                    job.logo_url === undefined
                       ? <div className={altImageContainer}><i className={'fa fa-building-o'} aria-hidden="true"></i></div>
-                      : job.logoUrl.indexOf("avatar") === -1
+                      : job.logo_url.indexOf("avatar") !== -1
                         ? <img src={config.mediaUrl + job.logo_url}/>
                         : <div className={altImageContainer}><i className={'fa fa-building-o'} aria-hidden="true"></i></div>
                   }
