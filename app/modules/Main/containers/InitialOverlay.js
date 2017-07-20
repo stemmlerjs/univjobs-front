@@ -182,6 +182,7 @@ const InitialOverlay = React.createClass({
           checkForFormErrors={this.props.checkForFeedbackFormErrors}
           updateFeedbackForm={this.props.updateFeedbackForm}
           submitFeedbackForm={this.props.submitFeedbackForm}
+          showLongRequestMessage={this.props.feedback.showLongRequestMessage}
         />
           :  ''
         }

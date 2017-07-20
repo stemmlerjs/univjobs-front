@@ -17,6 +17,15 @@ const SUBMIT_FEEDBACK_FORM_ERROR = 'SUBMIT_FEEDBACK_FORM_ERROR'
 const ERRORS_EXIST_IN_FORM = 'ERRORS_EXIST_IN_FORM'
 const ERRORS_FIXED_IN_FORM = 'ERRORS_FIXED_IN_FORM'
 
+const SHOW_LONG_REQUEST_MESSAGE = 'SHOW_LONG_REQUEST_MESSAGE'
+
+
+function showLongRequestMessage () {
+  return {
+    type: SHOW_LONG_REQUEST_MESSAGE
+  }
+}
+
 export function submitFeedbackForm (title, description, screenshot) {
   return function(dispatch) {
 
@@ -46,6 +55,14 @@ export function submitFeedbackForm (title, description, screenshot) {
        */
 
       dispatch(submittingForm())
+
+      /*
+       * Set timer
+       */
+
+      setTimeout(()=> {
+        dispatch(showLongRequestMessage())
+      }, 10000)
 
       submitFeedbackFormHTTP(title, description, screenshot)
 
@@ -140,17 +157,24 @@ const initialFeedbackFormState = {
   },
   isSubmitting: false,
   submitSuccess: false,
-  submitFailure: false
+  submitFailure: false,
+  showLongRequestMessage: false
 }
 
 export default function feedback (state = initialFeedbackFormState, action) {
   switch(action.type) {
+    case SHOW_LONG_REQUEST_MESSAGE:
+      return {
+        ...state,
+        showLongRequestMessage: true
+      }
     case SUBMIT_FEEDBACK_FORM_ERROR:
       return {
         ...state,
         isSubmitting: false,
         submitSuccess: false,
-        submitFailure: true
+        submitFailure: true,
+        showLongRequestMessage: false
       }
     case SUBMIT_FEEDBACK_FORM_SUCCESS:
 
@@ -165,7 +189,8 @@ export default function feedback (state = initialFeedbackFormState, action) {
         isSubmitting: false,
         description: '',
         title: '',
-        screenshot: null
+        screenshot: null,
+        showLongRequestMessage: false
       }
     case SUBMITTING_FEEDBACK_FORM:
       return {

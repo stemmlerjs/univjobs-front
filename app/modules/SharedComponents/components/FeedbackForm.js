@@ -9,13 +9,15 @@ import { feedbackFormClosed, feedbackFormOpen, formOpen_topBar, formOpen_body,
   formOpen_intro, formOpen_heading, formOpen_input, formOpen_textarea,
   formOpen_checkboxContainer, formOpen_checkbox, formOpen_submitButton,
   formOpen_heading_span, error, submitting, submitMessageSuccess, submitMessageError,
-  screenshotDropzone, screenshotDropzoneUploaded } from '../styles/FeedbackForm.css'
+  screenshotDropzone, screenshotDropzoneUploaded, longReqMessage } from '../styles/FeedbackForm.css'
 
 export default function FeedbackForm ({ isOpen, isSubmitting, submitSuccess, submitFailure,
     title,
     description,
     screenshot,
     errorsMap,
+
+    showLongRequestMessage,
 
     toggleFeedbackFormOpen,
     checkForFormErrors,
@@ -104,6 +106,12 @@ export default function FeedbackForm ({ isOpen, isSubmitting, submitSuccess, sub
                     }
                   }} 
                   className={!isSubmitting ? formOpen_submitButton : submitting + ' ' + formOpen_submitButton}>Submit feedback</button>
+              
+              {
+                showLongRequestMessage
+                  ? <div className={longReqMessage}>While it seems a little slow, don't worry- it's still sending! Thank you!</div>
+                  : ''
+              }
               
             </div>
           </div>
