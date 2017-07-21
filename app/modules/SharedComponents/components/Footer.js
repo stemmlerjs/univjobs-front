@@ -55,9 +55,11 @@ const Footer = () => (
             </Link>
         </div>
         <div className={flexFooterRow}> 
+          <div>
             <p>
                 Made with &hearts; in the town of Oakville • Product of DCommons, Inc. © 2017
             </p>
+          </div>
         </div>
 
     </footer>

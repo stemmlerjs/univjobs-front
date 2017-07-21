@@ -104,6 +104,32 @@ export default function PublicJobView ({ info, handleOpenEmployerProfileModal })
                 {`${info.max_applicants - info.applicant_count} of ${info.max_applicants} applicants left.`}
               </div>
 
+
+              {
+                /*
+                 * SHARE STUFF
+                 */
+              }
+
+            <meta property="og:url"           content="http://www.your-domain.com/your-page.html" />
+            <meta property="og:type"          content="website" />
+            <meta property="og:title"         content="Your Website Title" />
+            <meta property="og:description"   content="Your description" />
+            <meta property="og:image"         content="http://www.your-domain.com/path/image.jpg" />
+
+            <button className={"fb-share-button"} 
+              data-href="http://www.your-domain.com/your-page.html" 
+              data-layout="button_count" onClick={() => {
+
+                FB.ui({
+                  method: 'share',
+                  display: 'popup',
+                  href: 'https://univjobs.ca/#/posting/26?_k=1nhj8f',
+                }, function(response){});
+
+              }}>
+            </button>
+
             </div>
 
           </div>
