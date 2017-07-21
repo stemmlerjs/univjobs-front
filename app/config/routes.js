@@ -5,7 +5,7 @@ import { ApplicationsContainer, CategoriesContainer, CreateJobContainer, Contact
         SignupContainer, StudentDashboardContainer, StudentProfileContainer,
         AboutPageContainer, PinJobsContainer, MyListingsContainer,
         ApplicantsContainer, PasswordResetContainer, PageNotFoundContainer,
-        Terms, Privacy, StudentSettingsContainer } from 'modules'
+        Terms, Privacy, StudentSettingsContainer, PublicJobViewContainer } from 'modules'
 import { checkIfAuthed } from 'helpers/auth'
 
 // Purpose of IndexRoute - if none of the routes match, we go here
@@ -27,6 +27,9 @@ export default function getRoutes() {
           <Route path='/job/create/:jobtype' page={'createjob'} component={CreateJobContainer} />
 	        <Route path='/dashboard/st' page={'dashboard'} component={StudentDashboardContainer} />
           <Route path='/dashboard/st/:jobId' component={StudentDashboardContainer} />
+
+          <Route path='/posting/:jobId' component={PublicJobViewContainer} />
+
           <Route path='/dashboard/em' component={EmployerDashboardContainer} />
           <Route path='/myapplications/st' page={'applications'} component={StudentDashboardContainer} />
           <Route path='/myapplicants/em' component={ApplicantsContainer} />

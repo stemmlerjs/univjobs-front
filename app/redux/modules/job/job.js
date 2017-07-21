@@ -2,6 +2,7 @@
 import { getJobs } from 'helpers/job'
 import { pinAJob as pinJobHTTPRequest, unPinAJob as unpinJobHTTPRequest, getPinnedJobs } from 'helpers/pinJobs'
 import { toggleApplication } from 'helpers/application'
+import publicJobView from './publicJobView'
 
 // =======================================================
 // ====================== ACTIONS ========================
@@ -562,6 +563,7 @@ export function getAllJobsStudentJobView () {
 const initialJobState = {
 	employerJobs: [],
 	studentJobsView: [],
+  publicJobView: {},
 	jobTypes: [],
 	error: '',
   isFetching: false,
@@ -581,6 +583,27 @@ const initialJobState = {
 
 export default function job (state = initialJobState, action) {
 	switch(action.type) {
+
+  /* ===================================
+   * PUBLIC JOB VIEW ACTIONS
+   * ===================================
+   */
+    
+    case publicJobView.actions.FETCHING_PUBLIC_JOB_DETAILS:
+      return {
+        ...state,
+        publicJobView: publicJobView.reducers.publicJobView(state.publicJobView, action)
+      }
+    case publicJobView.actions.FETCHING_PUBLIC_JOB_DETAILS_SUCCESS:
+      return {
+        ...state,
+        publicJobView: publicJobView.reducers.publicJobView(state.publicJobView, action)
+      }
+    case publicJobView.actions.FETCHING_PUBLIC_JOB_DETAILS_FAILURE:
+      return {
+        ...state,
+        publicJobView: publicJobView.reducers.publicJobView(state.publicJobView, action)
+      }
 
    /*
     * Student actions

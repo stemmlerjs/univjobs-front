@@ -25,6 +25,7 @@
   }
 
   function employerProfileModalOpened (employerInfo) {
+    console.log("opening employer profile with info", employerInfo)
     return {
       type: EMPLOYER_PROFILE_MODAL_OPEN,
       employerInfo

@@ -48,7 +48,7 @@ import { sanitize } from 'helpers/utils'
   */
 
 export function getJobs() {
-    const accessToken = getAccessToken()
+  const accessToken = getAccessToken()
   //  const csrfToken = getCSRFToken()
 
 	return axios({
@@ -57,6 +57,22 @@ export function getJobs() {
 		headers: {
 			'Authorization':  accessToken
 		}
+	})
+}
+
+/*
+ * getPublicJobViewById
+ * 
+ * @param jobId - job id of the public job view that we want to
+ * view.
+ * @desc This method only returns the public job view. Used in the
+ * /posting/:jobId page.
+ */
+
+export function getPublicJobViewById (jobId) {
+  return axios({
+		method: 'get',
+		url: config.baseUrl + 'public/job/' + jobId
 	})
 }
 

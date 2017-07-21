@@ -1,0 +1,157 @@
+
+.publicJobViewContainerStyle {
+    display: flex;
+    width: 100%;
+    padding-top: 60px;
+    padding-bottom: 60px;
+    background-color: white;
+    justify-content: center;
+}
+
+.jobViewMiddleContainer {
+width: 50%;
+    min-width: 600px;
+    max-width: 775px;
+}
+
+.employerPicture {
+    height: 250px;
+    width: 250px;
+}
+
+.employerPictureContainer {
+width: 40%;
+    text-align: right;
+}
+
+.noProfilePictureClass {
+    height: 250px;
+    background-color: #e7eeee;
+    color: #589fce;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 250px;
+    float: right;
+}
+
+.noProfilePictureClass > i {
+    font-size: 82px;
+}
+
+.topSection {
+display: flex;
+    justify-content: center;
+}
+
+.headerInfoContainer {
+    width: 60%;
+        text-align: left;
+    padding-left: 25px;
+
+}
+
+.companyIndustry {
+    font-size: 13px;
+    color: gray;
+}
+
+.jobTitle {
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.companyInfoButton {
+    cursor: pointer;
+    color: #008de0;
+}
+
+.bodySectionContainer {
+padding-left: 50px;
+    padding-right: 50px;
+    text-align: left;
+    margin-top: 54px;
+    font-size: 15px;
+}
+
+.bodyTitleHeader {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 2px;
+}
+
+.bodySection {
+    margin-bottom: 26px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.calendarContainer {
+    display: flex;
+        margin-bottom: 8px;
+}
+
+.calendar {
+        padding-left: 3px;
+    padding-right: 14px;
+    font-size: 17px;
+    /* background-color: #7b7bd8; */
+    color: #1e9ae3;
+}
+
+.reallyExtraComponents {
+    margin-top: 17px;
+    font-size: 14px;
+}
+
+
+.locationIconNoHover {
+    color: #ea0808;
+    font-size: 17px;
+    padding-right: 17px;
+    padding-left: 6px;
+}
+
+.clock_0_50 {
+    color: #7DD226;
+}
+
+.clock_51_75 {
+    color: #F8E622;
+}
+
+.clock_76_100 {
+    color: #CF0921;
+}
+
+.clock {
+    padding-right: 10px;
+    font-size: 20px;
+    position: relative;
+    top: 3px;
+}
+
+.applicantsContainer {
+    /* margin-top: 26px; */
+    font-size: 14px;
+    text-align: left;
+    /* padding-left: 16px; */
+    padding-left: 4px;
+    margin-top: 6px;
+}
+
+/*
+ * Overlay kill works with the 
+ * react burger menu. 
+ *
+ * When it's not active, we set the width of the overlay to 0%
+ * because it usually takes up the entire screen.
+ */
+
+.overlayKill {
+
+}
+
+.overlayKill button {
+    width: 0% !important;
+}
