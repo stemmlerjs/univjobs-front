@@ -134,18 +134,7 @@ const PublicJobViewContainer = React.createClass({
           */
         }
         <div className={this.props.employerProfileModal.isOpen ? '' : overlayKill}>
-          <CompanyInfoSideBar
-            onStateChange={ this.handleCompanyInfoSidebarStateChange }
-            isOpen={this.props.employerProfileModal.isOpen}
-            employerName={this.props.employerProfileModal.employerInfo ? this.props.employerProfileModal.employerInfo.employerName : null}
-            industry={this.props.employerProfileModal.employerInfo ? this.props.employerProfileModal.employerInfo.industry : null}
-            logoUrl={this.props.employerProfileModal.employerInfo ? this.props.employerProfileModal.employerInfo.logoUrl : null}
-            headquarters={this.props.employerProfileModal.employerInfo ? this.props.employerProfileModal.employerInfo.headquarters : null}
-            website={this.props.employerProfileModal.employerInfo ? this.props.employerProfileModal.employerInfo.website : null}
-            numEmployees={this.props.employerProfileModal.employerInfo ? this.props.employerProfileModal.employerInfo.numEmployees : null}
-            aboutSectionExpanded={this.props.employerProfileModal.isAboutSectionOpen ? this.props.employerProfileModal.isAboutSectionOpen : false}
-            handleToggleAboutSection={this.props.toggleAboutSection}
-            about={this.props.employerProfileModal.employerInfo ? this.props.employerProfileModal.employerInfo.about : null}/>
+
         </div>
         <PublicJobView
           info={this.props.publicJobView.job ? this.props.publicJobView.job : {}}
@@ -163,7 +152,6 @@ const PublicJobViewContainer = React.createClass({
         <meta property="og:type"          content="website" />
         <meta property="og:title"         content={window.document.title} />
         <meta property="og:description"   content={this.props.publicJobView.job ? this.props.publicJobView.job.responsibilities : ''} />
-        <meta property="og:image"         content={"https://univjobs.ca/assets/images/front/univjobs-logo-1024.png"} />
         
       </div>
     )

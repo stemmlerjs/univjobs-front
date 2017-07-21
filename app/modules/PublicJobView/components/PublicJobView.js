@@ -48,26 +48,7 @@ export default function PublicJobView ({ info, handleOpenEmployerProfileModal })
                       ''
                 }
             </div>
-            <div className={companyInfoButton} onClick={() => {
-              console.log("kajsdlk")
-
-             /*
-              * Opening the Employer Profile Modal
-              */
-                
-              let employerInfo = {
-                logoUrl: config.mediaUrl + info.logo_url,
-                employerName: info.company_name,
-                industry: info.industry,
-                about: info.description,
-                numEmployees: info.employee_count,
-                headquarters: info.office_address + ", " + info.office_city + " " + info.office_postal_code,
-                website: info.website
-              }
-
-                handleOpenEmployerProfileModal(employerInfo)
-
-            }}>{info.company_name}</div>
+            <div className={companyInfoButton}>{info.company_name}</div>
             <div className={companyIndustry}>{info.industry}</div>
 
             {
@@ -132,13 +113,29 @@ export default function PublicJobView ({ info, handleOpenEmployerProfileModal })
                   </button>
 
                   { /* TWITTER */}
-                  <button className={twitterShareButton}></button>
+                  <button className={twitterShareButton} onClick={() => {
+
+                    var url = window.location.href;
+                    var text = `Check out this "${info.title}" job posting on Univjobs!`;
+                    window.open('http://twitter.com/share?url='+encodeURIComponent(url)+'&text='+encodeURIComponent(text), '', 'left=0,top=0,width=550,height=450,personalbar=0,toolbar=0,scrollbars=0,resizable=0');
+
+                  }}></button>
 
                   { /* LINKEDIN */}
-                  <button className={linkedInShareButton}></button>
+                  <button className={linkedInShareButton} onClick={() => {
+
+                    var url = window.location.href;
+                    var title = 'Job Posting - "' + info.title + '" on Univjobs '
+                    window.open('https://www.linkedin.com/shareArticle?mini=true&url='+encodeURIComponent(url)+'&title='+encodeURIComponent(title)+'&summary='+encodeURIComponent(info.responsibilities)+'&source='+encodeURIComponent(window.location.host))
+
+                  }}></button>
 
                   { /* EMAIL */}
-                  <button className={emailShareButton}></button>
+                  <button className={emailShareButton} onClick={() => {
+                    var subject = 'Job Posting - "' + info.title + '" on Univjobs '
+                    var body = `Check out this "${info.title}" job posting on Univjobs via ${window.location.href}.`;
+                    window.location.href = (`mailto:?subject=${subject}&body=${body}`)
+                  }}></button>
 
                 </div>
               </div>
@@ -174,7 +171,7 @@ export default function PublicJobView ({ info, handleOpenEmployerProfileModal })
           <div className={bodyTitleHeader}>Compensation</div>
           <div className={bodySection}>{info.compensation}</div>
 
-          <div className={bodyTitleHeader}>The Company</div>
+          <div className={bodyTitleHeader}>About {info.company_name}</div>
           <div className={bodySection}>{info.description}</div>
 
           <div className={bodyTitleHeader}>Website</div>
