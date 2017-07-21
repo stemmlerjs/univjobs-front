@@ -173,6 +173,12 @@ export default function PublicJobView ({ info, handleOpenEmployerProfileModal })
 
           <div className={bodyTitleHeader}>Compensation</div>
           <div className={bodySection}>{info.compensation}</div>
+
+          <div className={bodyTitleHeader}>The Company</div>
+          <div className={bodySection}>{info.description}</div>
+
+          <div className={bodyTitleHeader}>Website</div>
+          <div className={bodySection}><a href={info.website}>{info.website}</a></div>
         </div>
 
         

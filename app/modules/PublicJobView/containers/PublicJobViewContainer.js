@@ -162,9 +162,8 @@ const PublicJobViewContainer = React.createClass({
         <meta property="og:url"           content={window.location.href} />
         <meta property="og:type"          content="website" />
         <meta property="og:title"         content={window.document.title} />
-        <meta property="og:description"   content={this.props.publicJobView.job.responsibilities} />
+        <meta property="og:description"   content={this.props.publicJobView.job ? this.props.publicJobView.job.responsibilities : ''} />
         <meta property="og:image"         content={"https://univjobs.ca/assets/images/front/univjobs-logo-1024.png"} />
-
         
       </div>
     )
