@@ -78,6 +78,12 @@ const PublicJobViewContainer = React.createClass({
 
       () => {
 
+       /*
+        * Change metadata for this webpage.
+        */
+
+        document.title = `${this.props.publicJobView.job.title} - Univjobs`;
+
         this.props.closeOverlay()
 
       },
@@ -146,6 +152,18 @@ const PublicJobViewContainer = React.createClass({
           handleOpenEmployerProfileModal={this.props.employerProfileModalOpened}
         />
         <Footer/>
+
+        {
+         /*
+          * Metadata
+          */
+        }
+
+        <meta property="og:url"           content={window.location.href} />
+        <meta property="og:type"          content="website" />
+        <meta property="og:title"         content={window.document.title} />
+        <meta property="og:description"   content={this.props.publicJobView.job.responsibilities} />
+        <meta property="og:image"         content={"https://univjobs.ca/assets/images/front/univjobs-logo-1024.png"} />
 
         
       </div>

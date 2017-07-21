@@ -212,6 +212,15 @@ const SignupContainer = React.createClass({
     })
   },
 
+  /*
+   * componentDidMount
+   * 
+   */
+
+  componentDidMount() {
+    window.scroll(0,0);
+  },
+
 /**
   * componentWillMount
   *

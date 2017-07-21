@@ -2,12 +2,15 @@
 import React, { PropTypes } from 'react'
 import config from 'config'
 import moment from 'moment'
+import { Link } from 'react-router'
 
 import { publicJobViewContainerStyle, jobViewMiddleContainer, employerPicture,
   topSection, employerPictureContainer, headerInfoContainer, jobTitle, companyInfoButton,
   companyIndustry, noProfilePictureClass, bodyTitleHeader, bodySection, bodySectionContainer,
   calendar, reallyExtraComponents, calendarContainer, locationIconNoHover,
-  applicantsContainer, clock_0_50, clock_51_75, clock_76_100, clock } from '../styles/PublicJobView.css'
+  applicantsContainer, clock_0_50, clock_51_75, clock_76_100, clock, callToActionContainer, 
+  fbShareButton, socialLinksContainer, shareHeader, twitterShareButton, linkedInShareButton,
+  emailShareButton, linksFlex } from '../styles/PublicJobView.css'
 
 export default function PublicJobView ({ info, handleOpenEmployerProfileModal }) {
   return (
@@ -111,24 +114,36 @@ export default function PublicJobView ({ info, handleOpenEmployerProfileModal })
                  */
               }
 
-            <meta property="og:url"           content="http://www.your-domain.com/your-page.html" />
-            <meta property="og:type"          content="website" />
-            <meta property="og:title"         content="Your Website Title" />
-            <meta property="og:description"   content="Your description" />
-            <meta property="og:image"         content="http://www.your-domain.com/path/image.jpg" />
+              <div className={socialLinksContainer}>
+                <div className={shareHeader}>Share</div>
+                <div className={linksFlex}>
+                  {/* FACEBOOK */}
+                  <button className={`fb-share-button ${fbShareButton}`} 
+                    data-href="http://www.your-domain.com/your-page.html" 
+                    data-layout="button_count" onClick={() => {
 
-            <button className={"fb-share-button"} 
-              data-href="http://www.your-domain.com/your-page.html" 
-              data-layout="button_count" onClick={() => {
+                      FB.ui({
+                        method: 'share',
+                        display: 'popup',
+                        href: 'https://univjobs.ca/#/posting/26?_k=1nhj8f',
+                      }, function(response){});
 
-                FB.ui({
-                  method: 'share',
-                  display: 'popup',
-                  href: 'https://univjobs.ca/#/posting/26?_k=1nhj8f',
-                }, function(response){});
+                    }}>
+                  </button>
 
-              }}>
-            </button>
+                  { /* TWITTER */}
+                  <button className={twitterShareButton}></button>
+
+                  { /* LINKEDIN */}
+                  <button className={linkedInShareButton}></button>
+
+                  { /* EMAIL */}
+                  <button className={emailShareButton}></button>
+
+                </div>
+              </div>
+
+            
 
             </div>
 
@@ -159,8 +174,20 @@ export default function PublicJobView ({ info, handleOpenEmployerProfileModal })
           <div className={bodyTitleHeader}>Compensation</div>
           <div className={bodySection}>{info.compensation}</div>
         </div>
-      </div>
+
         
+      </div>
+
+      <div className={callToActionContainer}>
+          <h1>Interested in applying to this job?</h1>
+          <div>
+            <Link to="/join">
+              <button>Sign up</button>
+            </Link>
+          </div>
+          
+        </div>
+
     </div>
   )
 }
