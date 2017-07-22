@@ -339,10 +339,6 @@ export function authRedirectFilter({successRedirect, failureRedirect, restricted
 
               }
 
-            
-
-
-
           }
         })
 

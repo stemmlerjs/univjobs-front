@@ -20,7 +20,7 @@ export default function ShareJobModal({ job }) {
         responsibilities={job.responsibilities
       }/>
       <input id="share-job-target" className={copyLink} 
-        value={config.baseUrl + "posting/" + job.job_id}
+        value={"https://univjobs.ca/#/posting/" + job.job_id}
         type="text"/>
       
       <Link to={`/posting/${job.job_id}`}>
