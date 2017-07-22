@@ -9,6 +9,9 @@
   display: flex;
   align-items: center;
   flex-direction: row;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
   z-index:30;
 }
 
@@ -56,6 +59,8 @@
     font-size:15px;
     position: absolute;
     margin-top:22px;
+    -webkit-margin-before: 60px; /*Safari*/
+    -webkit-margin-start: -40px; /*Safari*/
     opacity:0;
     transition: 0.3s ease;
   }
@@ -101,6 +106,7 @@
     transition: 0.3s ease;
     position:absolute;
     margin-top: 39px;
+   -webkit-margin-before: 80px; /*Safari*/
   }
 
   .sidebarItem:hover .animateLine1 {
@@ -111,7 +117,7 @@
 
   .animationItem2 {
     transition: 0.3s ease;
-    position: absolute;
+    /*position: absolute;*/
   }
 
   .sidebarItem:hover .animationItem2 {
@@ -130,6 +136,7 @@
     transition: 0.3s ease;
     position:absolute;
     margin-top: 39px;
+   -webkit-margin-before: 80px; /*Safari*/
   }
 
   .sidebarItem:hover .animateLine2 {
@@ -140,6 +147,8 @@
     font-size:15px;
     position: absolute;
     margin-top: 22px;
+    -webkit-margin-before: 60px;
+    -webkit-margin-start: -50px;
     height: 0px;
     overflow: hidden;
   }
@@ -166,6 +175,8 @@
     position: absolute;
     font-size: 13px;
     margin-top: 19px;
+    -webkit-margin-before: 49px; /*Safari*/
+    -webkit-margin-start: -55px; /*Safari*/
     overflow: hidden;
     width: 0px;
   }
@@ -181,6 +192,7 @@
     background-color: #52A7FA;
     position: relative;
     margin-top: 16px;
+   -webkit-margin-before: 80px; /*Safari*/
   }
 
 
@@ -201,6 +213,8 @@
     position: absolute;
     font-size: 15px;
     margin-top: 20px;
+    -webkit-margin-before: 55px; /*Safari*/
+    -webkit-margin-start: -40px; /*Safari*/
     opacity:0;
   }
 
@@ -224,6 +238,8 @@
     font-size:13px;
     position: absolute;
     margin-top: 21px;
+    -webkit-margin-before: 50px; /*Safari*/
+    -webkit-margin-start: -55px; /*Safari*/
     height: 0px;
     overflow:hidden;
   }
@@ -236,8 +252,7 @@
 
   .animationItem6 {
     transition: 0.3s ease;
-    position: absolute;
-
+    /*position: absolute;*/
   }
   .sidebarItem:hover .animationItem6 {
     margin-top: -13px;
@@ -251,7 +266,10 @@
     height: 0px;
     font-size: 16px;
     margin-top: 25px;
+    -webkit-margin-before: 56px; /*Safari*/
+    -webkit-margin-start: -38px; /*Safari*/
     overflow: hidden;
+    position: absolute;
   }
 
   .sidebarItem:hover .animationTxt6 {
@@ -261,7 +279,7 @@
   /* 7) Invitations */
 
   .animationItem7 {
-    position:absolute;
+    /*position:absolute;*/
   }
 
   .sidebarItem:hover .animationItem7 {
@@ -275,6 +293,8 @@
     font-size: 15px;
     position: absolute;
     margin-top: 20px;
+    -webkit-margin-before: 56px; /*Safari*/
+    -webkit-margin-start: -49px; /*Safari*/
     overflow: hidden;
     height: 0px;
   }
