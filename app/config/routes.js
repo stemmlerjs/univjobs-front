@@ -25,16 +25,33 @@ export default function getRoutes() {
 
           <Route path='/categories' component={CategoriesContainer} />
           <Route path='/job/create/:jobtype' page={'createjob'} component={CreateJobContainer} />
+
+
+          {
+            /*
+             * Private Job view urls
+             */
+          }
 	        <Route path='/dashboard/st' page={'dashboard'} component={StudentDashboardContainer} />
           <Route path='/dashboard/st/:jobId' component={StudentDashboardContainer} />
+          <Route path='/myapplications/st' page={'applications'} component={StudentDashboardContainer} />
+          <Route path='/myapplications/st/:jobId' page={'applications'} component={StudentDashboardContainer} />
+          <Route path='/pinnedjobs' page={'pinnedjobs'} component={StudentDashboardContainer} />
+          <Route path='/pinnedjobs/:jobId' page={'pinnedjobs'} component={StudentDashboardContainer} />
+          <Route path='/invitations' page={'invitations'} component={StudentDashboardContainer} />
+          <Route path='/invitations/:jobId' page={'invitations'} component={StudentDashboardContainer} />
+
+          {
+            /*
+             * Public Job view url
+             */
+          }
 
           <Route path='/posting/:jobId' component={PublicJobViewContainer} />
 
           <Route path='/dashboard/em' component={EmployerDashboardContainer} />
-          <Route path='/myapplications/st' page={'applications'} component={StudentDashboardContainer} />
           <Route path='/myapplicants/em' component={ApplicantsContainer} />
-          <Route path='/pinnedjobs' page={'pinnedjobs'} component={StudentDashboardContainer} />
-          <Route path='/invitations' page={'invitations'} component={StudentDashboardContainer} />
+          
           <Route path='/mylistings/em' component={MyListingsContainer} />
           <Route path='/settings/st' component={StudentSettingsContainer} />
           <Route path='contact-us' component={ContactPageContainer} />

@@ -35,7 +35,8 @@ export default function Applications ({jobs,
     handlePinJob,
     handleCardClick,
     handleRemoveJob,
-    handleOpenEmployerProfileModal
+    handleOpenEmployerProfileModal,
+    handleOpenShareModal
 }) {
   return (
 	<div className={rootComponentContainer}>
@@ -110,6 +111,7 @@ export default function Applications ({jobs,
                     remoteWork={job.remote_work}
                     paid={job.paid}
                     mapsLink={getGoogleMapsLink(schoolAddress, job.location)}
+                    handleOpenShareModal={handleOpenShareModal}
                 />
             )) : '' }
 

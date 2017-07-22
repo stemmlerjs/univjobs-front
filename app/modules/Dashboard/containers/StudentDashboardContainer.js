@@ -8,7 +8,7 @@ import { StudentDashboard } from 'modules/Dashboard'
 import { PinJobs } from 'modules/PinJobs'
 import { Invites } from 'modules/Invites'
 import { Applications } from 'modules/Applications'
-import { JobCardModal, CompanyInfoSideBar } from 'modules/SharedComponents'
+import { JobCardModal, CompanyInfoSideBar, ShareJobModal } from 'modules/SharedComponents'
 
 import config from 'config'
 
@@ -25,6 +25,7 @@ import * as dashboardActionCreators from 'redux/modules/dashboard/dashboard'
 import * as jobActionCreators from 'redux/modules/job/job'
 import jobAppModal from 'redux/modules/dashboard/jobAppModal'
 import employerProfileModal from 'redux/modules/dashboard/employerProfileModal'
+import shareJobModal from 'redux/modules/dashboard/shareJobModal'
 import * as list from 'helpers/lists'
 import * as fetch from 'helpers/dashboard'
 
@@ -316,12 +317,45 @@ const StudentDashboardContainer = React.createClass({
   * Opens the job app modal that contains all of the job
   * details, questions and answers fields so that students
   * may apply to a job.
+  *
+  * We also need to change the url when we OPEN a job app modal.
+  *
+  * When a job app modal is closed, we also need to change the modal.
   */
 
   openJobAppModal(e, selectedJob) {
-    e.preventDefault()
+    if (e !== null) e.preventDefault()
+
+    var jobId = selectedJob.job_id;
+    var jobTitle = selectedJob.title;
+    var url = window.location.href.substring(0, window.location.href.indexOf("?")) + "/" + jobId
+
+    document.title = jobTitle + " - Univjobs";
+    
+    var path = this.props.route.path 
+    var newPath = path + "/" + jobId
+
+    this.context.router.push(newPath)
+
     this.props.openJobAppModal(selectedJob)
     this.refs.jobAppModal.show()
+  },
+
+  /*
+   * afterJobAppModalClose
+   * 
+   * After we close the job modal, we need to 
+   * remove the jobId from the route.
+   */
+
+  afterJobAppModalClose() {
+
+    var path = this.props.route.path;
+    var newPath = path.substring(path, path.indexOf(":") - 1)
+
+    console.log('new path', newPath)
+
+    this.context.router.push(newPath)
   },
 
  /*
@@ -462,10 +496,106 @@ const StudentDashboardContainer = React.createClass({
     this.refs.confirmApplyModal.hide()
   },
 
+ /*
+  * componentDidMount
+  * 
+  * In this lifecycle component, we need to check to see if 
+  * we need to open the job card modal or not.
+  *
+  * If we see :jobId in the path, then we should get it and open 
+  * the modal with that job card.
+  */
+
   componentWillMount() {
+    document.title = `Univjobs - Land Your Summer Job Today`;
+
+    var shouldOpenModal = false;
+    var jobId = ""
+    if (this.props.route.path.indexOf(':jobId') !== -1) {
+      shouldOpenModal = true;
+      jobId = this.props.params.jobId;
+    }
 
   	this.doRedirectionFilter()
-      .then(this.props.getAllJobsStudentJobView())
+      .then(() => {
+        return new Promise((resolve, reject) => {
+
+          this.props.getAllJobsStudentJobView(
+
+           /*
+            * Callback after getting all jobs.
+            */ 
+
+            () => {
+
+             /*
+              * If :jobId is present in the request, then we're going to have to
+              * find the job that this id belongs to from the view and then we're 
+              * going to have to open the modal for it.
+              */
+
+                if (shouldOpenModal) {
+                  var jobFound = false;
+                  console.log(`[Univjobs]: About to attempt to open job_id=${jobId} from external link.`)
+
+                /*
+                 * Find the job that we need to open.
+                 */
+    
+                  this.props.jobs.forEach((job) => {
+                    
+                    /*
+                     * Found the job.
+                     * Open the job modal and set the current selected job.
+                     */
+
+                    if (job.job_id == jobId) {
+
+                      jobFound = true;
+                      this.props.openJobAppModal(job)
+                      this.refs.jobAppModal.show()
+
+                    }
+
+                  });
+
+                  /*
+                  * If we were unable to find the job from a link,
+                  * alert a toastr saying that we couldn't find that job id.
+                  * 
+                  * Also say change the url to the basic non params link.
+                  */
+
+                  if (!jobFound) {
+
+                    this.refs.container.error(
+                      "It may not exist anymore... or maybe it never did! Spooky.",
+                      "Hmm. We don't know where that job is.", {
+                        timeout: 3000
+                    });
+
+                    var path = this.props.route.path;
+                    var newPath = path.substring(path, path.indexOf(":") - 1)
+
+                    this.context.router.push(newPath)
+                    
+                  }
+
+                }
+
+            }
+
+          )
+
+          /*
+           * Always resolve so that we don't stop the 
+           * page from loading.
+           */
+
+          resolve()
+
+        })
+      })
       .then(this.props.handleGetIndustries())
       .then(this.props.handleGetJobTypes())
       .then(this.props.closeOverlay())
@@ -655,6 +785,34 @@ const StudentDashboardContainer = React.createClass({
     }
   },
 
+  /*
+   * handleOpenShareModal
+   * 
+   * Open the share modal and put the job info
+   * for this job into redux.
+   */
+
+  handleOpenShareModal (jobObject) {
+
+    var path = this.props.route.path 
+    var newPath = path + "/" + jobObject.job_id
+
+    this.context.router.push(newPath)
+
+    this.props.openShareJobModal(jobObject)
+    this.refs.shareJobModal.show();
+
+    /*
+     * And then, select the target to copy and paste.
+     */
+    
+    setTimeout(() => {
+      document.getElementById("share-job-target").focus();
+      document.getElementById("share-job-target").select();
+    }, 50)
+
+  },
+
   render () {
     return (
       <div>
@@ -741,6 +899,7 @@ const StudentDashboardContainer = React.createClass({
                     filterMenuOpen={this.props.filterMenuOpen}
                     handleOpenEmployerProfileModal={this.props.employerProfileModalOpened}
                     schoolAddress={this.props.profile ? this.props.profile.schoolAddress : ''}
+                    handleOpenShareModal={this.handleOpenShareModal}
                   />
                 : ''
             }
@@ -758,6 +917,7 @@ const StudentDashboardContainer = React.createClass({
                     page={this.props.route.page}
                     handleOpenEmployerProfileModal={this.props.employerProfileModalOpened}
                     schoolAddress={this.props.profile ? this.props.profile.schoolAddress : ''}
+                    handleOpenShareModal={this.handleOpenShareModal}
                   />
                 : ''
             }
@@ -776,6 +936,7 @@ const StudentDashboardContainer = React.createClass({
                     page={this.props.route.page}
                     handleOpenEmployerProfileModal={this.props.employerProfileModalOpened}
                     schoolAddress={this.props.profile ? this.props.profile.schoolAddress : ''}
+                    handleOpenShareModal={this.handleOpenShareModal}
                   />
                 : ''
             }
@@ -793,6 +954,7 @@ const StudentDashboardContainer = React.createClass({
                     page={this.props.route.page}
                     handleOpenEmployerProfileModal={this.props.employerProfileModalOpened}
                     schoolAddress={this.props.profile ? this.props.profile.schoolAddress : ''}
+                    handleOpenShareModal={this.handleOpenShareModal}
                   />
                 : ''
             }
@@ -814,6 +976,7 @@ const StudentDashboardContainer = React.createClass({
             <div id="job-app-modal-wrapper">
               <SkyLight
                     ref="jobAppModal"
+                    afterClose={this.afterJobAppModalClose}
                     >
 
                     { this.props.jobAppModal.selectedJob
@@ -860,6 +1023,30 @@ const StudentDashboardContainer = React.createClass({
                       <button className={applyButton} onClick={this.applyToJob}>YES, APPLY</button>
                       <button className={cancelBtn} onClick={this.closeConfirmApplyModal}>CANCEL</button>
                     </div>
+              </SkyLight>
+            </div>
+
+          
+          {
+            /*
+              * ========================================
+              *           Share Job Modal
+              * ========================================
+              *
+              * This job allows users to share jobs.
+              *
+              */
+            }
+            <div id="share-modal-wrapper">
+              <SkyLight
+                    ref="shareJobModal"
+                    title="Sharing is caring"
+                    afterClose={this.afterJobAppModalClose}
+                    >
+                    
+                    <ShareJobModal
+                      job={this.props.shareJobModal ? this.props.shareJobModal.job : {}}
+                    />
               </SkyLight>
             </div>
 
@@ -918,7 +1105,8 @@ function mapStateToProps({user, dashboard, job, profile, list}) {
       industry: ''
     },
     filterMenuOpen: dashboard.studentDashboard.filterMenuOpen ? dashboard.studentDashboard.filterMenuOpen : false,
-    employerProfileModal: dashboard.employerProfileModal ? dashboard.employerProfileModal : {}
+    employerProfileModal: dashboard.employerProfileModal ? dashboard.employerProfileModal : {},
+    shareJobModal: dashboard.shareJobModal ? dashboard.shareJobModal : {}
   }
 }
 
@@ -937,7 +1125,8 @@ function mapActionCreatorsToProps(dispatch) {
     ...dashboardActionCreators,
     ...jobActionCreators,
     ...jobAppModal.actionCreators,
-    ...employerProfileModal.actionCreators
+    ...employerProfileModal.actionCreators,
+    ...shareJobModal.actionCreators
   }, dispatch)
 }
 

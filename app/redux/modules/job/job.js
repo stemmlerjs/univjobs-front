@@ -473,7 +473,7 @@ export function getAllJobsQuestionsAnswersForEmployer () {
   }
 }
 
-export function getAllJobsStudentJobView () {
+export function getAllJobsStudentJobView (callback) {
   return function (dispatch) {
 
    /*
@@ -538,6 +538,8 @@ export function getAllJobsStudentJobView () {
         }
 
         dispatch(fetchedStudentJobsViewSuccess(jobs))
+
+        callback()
 
       })
 

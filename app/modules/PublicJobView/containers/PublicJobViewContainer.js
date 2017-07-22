@@ -10,6 +10,10 @@ import ReduxToastr from 'react-redux-toastr'
 import {toastr} from 'react-redux-toastr'
 import { CompanyInfoSideBar } from 'modules/SharedComponents'
 
+var ReactToastr = require("react-toastr");
+var { ToastContainer } = ReactToastr;
+var ToastMessageFactory = React.createFactory(ReactToastr.ToastMessage.animation);
+
 // =============REDUX STATE & IMPORTS========================== //
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -47,56 +51,66 @@ const PublicJobViewContainer = React.createClass({
 
   doRedirectionFilter() {
     const config = {
-      failureRedirect: {
-    	  student: '/join',	// if not logged in, go here (student)
-    	  employer: '/join'      // if not logged in, go here (employer)
-      },
-      restricted: {
-        to: 'STUDENTS',		 // STUDENTS only on this route
-	    redirectTo: '/dashboard/em'   // if not an EMPLOYER, redirect to the employer equivalent
-		 			 // This might change to employer categories
-      }
+      
     }
      return authRedirectFilter(config, this.context.store, this.context.router)
   },
 
   componentWillMount() {
 
-    /*
-     * First, we get the jobId from the route params if it's even there.
-     * If it's not there, then we're at /posting (we have to handle this)
-     * in another <Route path="/posting">
-     */
+    this.doRedirectionFilter()
+      .then(() => {
 
-    const jobId = this.props.routeParams.jobId;
-
-    this.props.fetchPublicJobDetails(jobId,
-    
-    /*
-     * Success callback
-     */
-
-      () => {
-
-       /*
-        * Change metadata for this webpage.
+        /*
+        * First, we get the jobId from the route params if it's even there.
+        * If it's not there, then we're at /posting (we have to handle this)
+        * in another <Route path="/posting">
         */
 
-        document.title = `${this.props.publicJobView.job.title} - Univjobs`;
+        const jobId = this.props.routeParams.jobId;
 
-        this.props.closeOverlay()
+        this.props.fetchPublicJobDetails(jobId,
+        
+        /*
+        * Success callback
+        */
 
-      },
+          () => {
 
-    /*
-     * Failure callback
-     */
-      
-      () => {
+          /*
+            * Change metadata for this webpage.
+            */
 
-        this.props.closeOverlay()
+            document.title = `${this.props.publicJobView.job.title} - Univjobs`;
 
-      })
+            this.props.closeOverlay()
+
+          },
+
+        /*
+        * Failure callback
+        */
+          
+          () => {
+
+            /*
+            * If we couldn't find the job details, then 
+            * we'll just redirect to /join.
+            */
+
+            this.refs.container.error(
+              "It may not exist anymore... or maybe it never did! Spooky.",
+              "Hmm. We don't know where that job is.", {
+                timeout: 4000
+            });
+
+            setTimeout(() => {
+              this.context.router.push("/join")
+            }, 4000)  
+
+          })
+
+       })
 	  
   },
 
@@ -115,32 +129,30 @@ const PublicJobViewContainer = React.createClass({
   },
 
   render () {
-    console.log(this.props)
     return (
       <div>
         <RegularNav/>
         {
-         /*
-          * CompanyInfoSideBar
-          *
-          * When a student clicks on Company Info on a Job Card, the Company Info
-          * sidebar component opens up.
-          *
-          * @class .overlayKill works with the 
-          * react burger menu. 
-          *
-          * When it's not active, we set the width of the overlay to 0%
-          * because it usually takes up the entire screen.
-          */
+          this.props.publicJobView
+            ? this.props.publicJobView.job 
+              ? <PublicJobView
+                  info={this.props.publicJobView.job ? this.props.publicJobView.job : {}}
+                  handleOpenEmployerProfileModal={this.props.employerProfileModalOpened}
+                  showViewInApp={this.props.isAuthenticated && this.props.isAStudent}
+                />
+              : ''
+            : ''
         }
-        <div className={this.props.employerProfileModal.isOpen ? '' : overlayKill}>
 
-        </div>
-        <PublicJobView
-          info={this.props.publicJobView.job ? this.props.publicJobView.job : {}}
-          handleOpenEmployerProfileModal={this.props.employerProfileModalOpened}
-        />
-        <Footer/>
+        {
+          this.props.publicJobView
+            ? this.props.publicJobView.job 
+              ? <Footer/>
+              : ''
+            : ''
+        }
+        
+        
 
         {
          /*
@@ -152,16 +164,22 @@ const PublicJobViewContainer = React.createClass({
         <meta property="og:type"          content="website" />
         <meta property="og:title"         content={window.document.title} />
         <meta property="og:description"   content={this.props.publicJobView.job ? this.props.publicJobView.job.responsibilities : ''} />
+
+        <ToastContainer ref="container"
+              toastMessageFactory={ToastMessageFactory}
+              className="toast-top-right" />
         
       </div>
     )
   },
 })
 
-function mapStateToProps({ job, dashboard }) {
+function mapStateToProps({ job, dashboard, user }) {
   return {
     publicJobView: job.publicJobView ? job.publicJobView : {},
-    employerProfileModal: dashboard.employerProfileModal ? dashboard.employerProfileModal : {}
+    employerProfileModal: dashboard.employerProfileModal ? dashboard.employerProfileModal : {},
+    isAuthenticated: user.isAuthenticated ? user.isAuthenticated : false,
+    isAStudent: user.isAStudent ? user.isAStudent : false
   }
 }
 

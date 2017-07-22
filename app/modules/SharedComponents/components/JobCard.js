@@ -23,7 +23,7 @@ export default function JobCard ({logoUrl, pinned, jobObject, jobId, title, jobT
     industries, industry, companyName, officeAddress, officeCity, startDate,
     compensation, cardType, state, page, location, remoteWork, paid, mapsLink,
     handlePinJob, handleCardClick,
-    handleRemoveJob, handleOpenEmployerProfileModal}) {
+    handleRemoveJob, handleOpenEmployerProfileModal, handleOpenShareModal}) {
   return (
     <div className={page == "applications" 
                         ? state == "REJECTED" && jobObject.active == 0
@@ -145,7 +145,7 @@ export default function JobCard ({logoUrl, pinned, jobObject, jobId, title, jobT
                     ? <button onClick={(e) => handleRemoveJob(e, jobObject)} >REMOVE</button>
                     : ''
             }
-
+            <button onClick={(e) => handleOpenShareModal(jobObject)}>SHARE</button>
             <button onClick={(e) => handleCardClick(e, jobObject)}>SEE MORE</button>
           </div>
         </div>

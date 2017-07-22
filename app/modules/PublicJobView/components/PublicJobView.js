@@ -4,15 +4,17 @@ import config from 'config'
 import moment from 'moment'
 import { Link } from 'react-router'
 
+import { SocialLinks } from 'modules/SharedComponents'
+
 import { publicJobViewContainerStyle, jobViewMiddleContainer, employerPicture,
   topSection, employerPictureContainer, headerInfoContainer, jobTitle, companyInfoButton,
   companyIndustry, noProfilePictureClass, bodyTitleHeader, bodySection, bodySectionContainer,
   calendar, reallyExtraComponents, calendarContainer, locationIconNoHover,
   applicantsContainer, clock_0_50, clock_51_75, clock_76_100, clock, callToActionContainer, 
   fbShareButton, socialLinksContainer, shareHeader, twitterShareButton, linkedInShareButton,
-  emailShareButton, linksFlex } from '../styles/PublicJobView.css'
+  emailShareButton, linksFlex, viewInAppLink } from '../styles/PublicJobView.css'
 
-export default function PublicJobView ({ info, handleOpenEmployerProfileModal }) {
+export default function PublicJobView ({ info, handleOpenEmployerProfileModal, showViewInApp }) {
   return (
 	  <div className={publicJobViewContainerStyle}>
       <div className={jobViewMiddleContainer}>
@@ -97,47 +99,10 @@ export default function PublicJobView ({ info, handleOpenEmployerProfileModal })
 
               <div className={socialLinksContainer}>
                 <div className={shareHeader}>Share</div>
-                <div className={linksFlex}>
-                  {/* FACEBOOK */}
-                  <button className={`fb-share-button ${fbShareButton}`} 
-                    data-href="http://www.your-domain.com/your-page.html" 
-                    data-layout="button_count" onClick={() => {
-
-                      FB.ui({
-                        method: 'share',
-                        display: 'popup',
-                        href: 'https://univjobs.ca/#/posting/26?_k=1nhj8f',
-                      }, function(response){});
-
-                    }}>
-                  </button>
-
-                  { /* TWITTER */}
-                  <button className={twitterShareButton} onClick={() => {
-
-                    var url = window.location.href;
-                    var text = `Check out this "${info.title}" job posting on Univjobs!`;
-                    window.open('http://twitter.com/share?url='+encodeURIComponent(url)+'&text='+encodeURIComponent(text), '', 'left=0,top=0,width=550,height=450,personalbar=0,toolbar=0,scrollbars=0,resizable=0');
-
-                  }}></button>
-
-                  { /* LINKEDIN */}
-                  <button className={linkedInShareButton} onClick={() => {
-
-                    var url = window.location.href;
-                    var title = 'Job Posting - "' + info.title + '" on Univjobs '
-                    window.open('https://www.linkedin.com/shareArticle?mini=true&url='+encodeURIComponent(url)+'&title='+encodeURIComponent(title)+'&summary='+encodeURIComponent(info.responsibilities)+'&source='+encodeURIComponent(window.location.host))
-
-                  }}></button>
-
-                  { /* EMAIL */}
-                  <button className={emailShareButton} onClick={() => {
-                    var subject = 'Job Posting - "' + info.title + '" on Univjobs '
-                    var body = `Check out this "${info.title}" job posting on Univjobs via ${window.location.href}.`;
-                    window.location.href = (`mailto:?subject=${subject}&body=${body}`)
-                  }}></button>
-
-                </div>
+                <SocialLinks 
+                  jobTitle={info.title}
+                  responsibilities={info.responsibilities}
+                />
               </div>
 
             
@@ -153,6 +118,14 @@ export default function PublicJobView ({ info, handleOpenEmployerProfileModal })
            */
         }
         <div className={bodySectionContainer}>
+
+        {
+          showViewInApp
+            ? <Link to={`/dashboard/st/${info.job_id}`}>
+                <div className={viewInAppLink}>[Return to in-app view]</div>
+              </Link>
+            : ''
+        }
 
         {/*
           <div className={bodyTitleHeader}>Company Description</div>

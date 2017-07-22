@@ -481,6 +481,35 @@
         }
       }
 
+     /* ========================================
+      *   SHARE MODAL WRAPPER
+      * ========================================
+      */
+
+      #share-modal-wrapper .skylight-overlay {
+                opacity: 1;
+        background-color: rgba(242,242,242,.9) !important;
+        animation: fade 0.2s linear;
+      }
+
+      @media (min-width: 1700px)  {
+        #share-modal-wrapper .skylight-dialog {
+          width: 500px !important;
+          height: 400px !important;
+          position: fixed !important;
+          top: 42% !important;
+          left: 63% !important;
+          margin-top: -200px !important;
+          margin-left: -25% !important;
+          background-color: rgb(255, 255, 255) !important;
+          border-radius: 2px !important;
+          z-index: 100 !important;
+          padding: 15px !important;
+          box-shadow: rgba(0, 0, 0, 0.14) 0px 0px 4px, rgba(0, 0, 0, 0.28) 0px 4px 8px !important;
+          display: block !important;
+        }
+      }
+
 
       /* In Chrome, fixes the underlines on the nav elements.*/
 

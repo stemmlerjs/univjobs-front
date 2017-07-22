@@ -6,6 +6,7 @@ import { getJobTypes, getIndustries } from 'helpers/lists'
 import inviteStudentModal from './inviteStudentModal'
 import jobAppModal from './jobAppModal'
 import employerProfileModal from './employerProfileModal'
+import shareJobModal from './shareJobModal'
 
 // =======================================================
 // ====================== ACTIONS ========================
@@ -270,7 +271,8 @@ const initialDashboardState = {
 	error: '',
 	modal: {},
 	answer: {},
-	employerProfileModal: {}
+	employerProfileModal: {},
+	shareJobModal: {}
 }
 
  /*
@@ -572,6 +574,16 @@ function studentDashboard(state = initialStudentDashboardState, action) {
 
 export default function dashboard(state = initialDashboardState, action) {
 	switch(action.type) {
+
+		/*
+		 * [Share Job Modal]
+		 */
+
+		case shareJobModal.actions.SELECT_JOB_TO_SHARE:
+			return {
+				...state,
+				shareJobModal: shareJobModal.reducers.shareJobModal(state.shareJobModal, action)
+			}
 
 		/*
 		 * [Employer Profile Modal]

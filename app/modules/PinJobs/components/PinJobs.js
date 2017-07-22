@@ -42,7 +42,8 @@ export default function PinJobs ({jobs,
     schoolAddress,
     handlePinJob,
     handleCardClick,
-    handleOpenEmployerProfileModal
+    handleOpenEmployerProfileModal,
+    handleOpenShareModal
 }) {
   return (
 	<div className={rootComponentContainer}>
@@ -117,6 +118,7 @@ export default function PinJobs ({jobs,
                         remoteWork={job.remote_work}
                         paid={job.paid}
                         mapsLink={getGoogleMapsLink(schoolAddress, job.location)}
+                        handleOpenShareModal={handleOpenShareModal}
                     />
             )) : '' }
 

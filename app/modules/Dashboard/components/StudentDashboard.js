@@ -60,7 +60,8 @@ export default function StudentDashboard ({
     handleOpenEmployerProfileModal,
     handlePinJob,
     updateFilterSettings,
-    filterStudentJobs
+    filterStudentJobs,
+    handleOpenShareModal
 }) {
   console.log(jobs, "jobs")
         return (
@@ -289,6 +290,7 @@ export default function StudentDashboard ({
                           remoteWork={job.remote_work}
                           paid={job.paid}
                           mapsLink={getGoogleMapsLink(schoolAddress, job.location)}
+                          handleOpenShareModal={handleOpenShareModal}
                         />
   	                )) : '' }
 

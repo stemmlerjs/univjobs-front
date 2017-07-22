@@ -223,6 +223,7 @@
           error: ''
         }
       case JOB_APP_MODAL_OPEN:
+      console.log(" we openin ", action)
         return {
           ...state,
           selectedJob: action.job,
