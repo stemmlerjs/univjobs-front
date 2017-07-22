@@ -51,7 +51,7 @@ const PublicJobViewContainer = React.createClass({
 
   doRedirectionFilter() {
     const config = {
-      
+      justCheckAuth: true
     }
      return authRedirectFilter(config, this.context.store, this.context.router)
   },

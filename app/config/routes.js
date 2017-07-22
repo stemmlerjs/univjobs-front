@@ -97,7 +97,7 @@ export default function getRoutes() {
     }
   */
 
-export function authRedirectFilter({successRedirect, failureRedirect, restricted, profileIncompleteRedirect}, store, router) {
+export function authRedirectFilter({successRedirect, failureRedirect, restricted, profileIncompleteRedirect, justCheckAuth}, store, router) {
   console.log("Success redirect", successRedirect)
 
   /*
@@ -162,173 +162,220 @@ export function authRedirectFilter({successRedirect, failureRedirect, restricted
     let isProfileCompleted;
     let isEmailVerified;
 
-    console.log("--------> routes.js line 139")
+   /*
+    * Confirm if the user is authenticated or not.
+    * After this API call, we will be able to make decisions based on 
+    * if the user isAuthenticated or not.
+    */
+
     checkIfAuthed(store)
     .then(() => {
-    
-      // After authentication, we know if the user is a student or an employer
-      isAStudent = store.getState().user.isAStudent
-      isUserInRestrictedRoute(isAStudent, (inRestrictedRoute, immediateRedirectTo) => {
 
-        if(inRestrictedRoute) {
-          router.replace(immediateRedirectTo)
-          resolve()
-        } 
-        
-        else {
-          isProfileCompleted = store.getState().user.isProfileCompleted // 0 or 1
-          isEmailVerified = store.getState().user.emailVerified         // boolean
+     /*
+      * If justCheckAuth was set to TRUE, then we'll resolve this and not continue further any more.
+      * We use this in places like the PublicJobViewContainer when we just want to know
+      * if the user is logged in or not so we can know whether to display an option 
+      * to "View in-app job".
+      */
 
-          /*
-            * If the profile wasn't completed and we're on a different page from the profile, just redirect to the profile page for 
-            * either a student or an employer
-            */
+      if (justCheckAuth) {
 
-            if ((isProfileCompleted === 0 || !isEmailVerified) && isAStudent && window.location.href.indexOf('profile') === -1) {
-              router.replace('/profile/st')
-              resolve()
-            }
+        resolve()
 
-            else if ((isProfileCompleted === 0 || !isEmailVerified) && !isAStudent && window.location.href.indexOf('profile') === -1) {
-              router.replace('/profile/em')
-              resolve()
-            }
+      }
+
+      /*
+       * Otherwise, we're going to go ahead and do all of the redirection
+       * configuration things that we do in most pages.
+       */
+
+      else {
+
+        // After authentication, we know if the user is a student or an employer
+        isAStudent = store.getState().user.isAStudent
+        isUserInRestrictedRoute(isAStudent, (inRestrictedRoute, immediateRedirectTo) => {
+
+          if(inRestrictedRoute) {
+            router.replace(immediateRedirectTo)
+            resolve()
+          } 
+          
+          else {
+            isProfileCompleted = store.getState().user.isProfileCompleted // 0 or 1
+            isEmailVerified = store.getState().user.emailVerified         // boolean
 
             /*
-             * If we're on the profile page after being redirected there.
-             */
-
-            else if ((isProfileCompleted === 0 || !isEmailVerified) && window.location.href.indexOf('profile') !== -1) {
-              resolve({isProfileCompleted, isEmailVerified})
-            }
-
-            else {
-
-              /*
-              * If the user's profile is not complete and it should be, redirect them to
-              * where they really should be. Auth, however; was successful.
+              * If the profile wasn't completed and we're on a different page from the profile, just redirect to the profile page for 
+              * either a student or an employer
               */
 
-              if((isProfileCompleted === 0 || !isEmailVerified)) {
-
-                console.log("AUTH: Successful auth but profile not complete!")
-
-                /*
-                * If the user is NOT in a restricted route and we've set where they need to redirect
-                * themselves to after successful auth. Like going to the /join page and already being logged in.
-                */
-
-                if(successRedirect && !inRestrictedRoute) {
-
-                  /*
-                  * If you're a student and we've set the success redirect config
-                  */
-
-                  if(successRedirect.student && isAStudent) {
-                    console.log(`AUTH: 'Student' redirect provided. GOTO: ${successRedirect.student}`)
-                    router.replace(successRedirect.student)
-
-                    resolve({
-                      isProfileCompleted,
-                      isEmailVerified
-                    })
-                  } 
-
-                  /*
-                  * If you're an employer and we've set the success redirect config
-                  */
-                  
-                  else if (successRedirect.employer && !isAStudent){
-                    console.log(`AUTH: 'Employer' redirect provided. GOTO: ${successRedirect.employer}`)
-                    router.replace(successRedirect.employer)
-
-                    resolve({
-                      isProfileCompleted,
-                      isEmailVerified
-                    })
-                  }
-
-                  /*
-                  * If we forgot to set the config, do nothing. Stay at the /join page or whatever.
-                  */
-
-                  else {
-
-                    resolve()
-
-                  }
-
-                }
-
-                /*
-                * If successRedirect wasn't set at all OR you're in a restricted route, we gotta take you home.
-                */
-
-                else {
-                  console.log("--------> routes.js line 243")
-                  router.replace('/join')
-
-                  reject();
-
-                }
+              if ((isProfileCompleted === 0 || !isEmailVerified) && isAStudent && window.location.href.indexOf('profile') === -1) {
+                router.replace('/profile/st')
+                resolve()
               }
 
-             /*
-              * The user's profile is complete. Let them continue doing what they were doing.
+              else if ((isProfileCompleted === 0 || !isEmailVerified) && !isAStudent && window.location.href.indexOf('profile') === -1) {
+                router.replace('/profile/em')
+                resolve()
+              }
+
+              /*
+              * If we're on the profile page after being redirected there.
               */
+
+              else if ((isProfileCompleted === 0 || !isEmailVerified) && window.location.href.indexOf('profile') !== -1) {
+                resolve({isProfileCompleted, isEmailVerified})
+              }
 
               else {
 
                 /*
-                 * If you're on the login page and you're authenticated + profile is complete,
-                 * go to dashboard.
-                 */
+                * If the user's profile is not complete and it should be, redirect them to
+                * where they really should be. Auth, however; was successful.
+                */
 
-                if (window.location.href.indexOf('join') !== -1) {
-                  if (isAStudent) {
-                    router.replace('/dashboard/st')
-                    resolve()
+                if((isProfileCompleted === 0 || !isEmailVerified)) {
+
+                  console.log("AUTH: Successful auth but profile not complete!")
+
+                  /*
+                  * If the user is NOT in a restricted route and we've set where they need to redirect
+                  * themselves to after successful auth. Like going to the /join page and already being logged in.
+                  */
+
+                  if(successRedirect && !inRestrictedRoute) {
+
+                    /*
+                    * If you're a student and we've set the success redirect config
+                    */
+
+                    if(successRedirect.student && isAStudent) {
+                      console.log(`AUTH: 'Student' redirect provided. GOTO: ${successRedirect.student}`)
+                      router.replace(successRedirect.student)
+
+                      resolve({
+                        isProfileCompleted,
+                        isEmailVerified
+                      })
+                    } 
+
+                    /*
+                    * If you're an employer and we've set the success redirect config
+                    */
+                    
+                    else if (successRedirect.employer && !isAStudent){
+                      console.log(`AUTH: 'Employer' redirect provided. GOTO: ${successRedirect.employer}`)
+                      router.replace(successRedirect.employer)
+
+                      resolve({
+                        isProfileCompleted,
+                        isEmailVerified
+                      })
+                    }
+
+                    /*
+                    * If we forgot to set the config, do nothing. Stay at the /join page or whatever.
+                    */
+
+                    else {
+
+                      resolve()
+
+                    }
+
                   }
+
+                  /*
+                  * If successRedirect wasn't set at all OR you're in a restricted route, we gotta take you home.
+                  */
 
                   else {
-                    router.replace('/dashboard/em')
-                    resolve()
+                    console.log("--------> routes.js line 243")
+                    router.replace('/join')
+
+                    reject();
+
                   }
                 }
 
-                /*
-                 * Just go ahead and do what you were doing if you're not on the 
-                 * /join login page.
-                 */
+              /*
+                * The user's profile is complete. Let them continue doing what they were doing.
+                */
 
                 else {
-                  resolve({
-                    isProfileCompleted,
-                    isEmailVerified
-                  })
-                }
 
-                
+                  /*
+                  * If you're on the login page and you're authenticated + profile is complete,
+                  * go to dashboard.
+                  */
+
+                  if (window.location.href.indexOf('join') !== -1) {
+                    if (isAStudent) {
+                      router.replace('/dashboard/st')
+                      resolve()
+                    }
+
+                    else {
+                      router.replace('/dashboard/em')
+                      resolve()
+                    }
+                  }
+
+                  /*
+                  * Just go ahead and do what you were doing if you're not on the 
+                  * /join login page.
+                  */
+
+                  else {
+                    resolve({
+                      isProfileCompleted,
+                      isEmailVerified
+                    })
+                  }
+
+                  
+
+                }
 
               }
 
-            }
-
-           
+            
 
 
 
-        }
-      })
+          }
+        })
 
-
+      }
       
     })
-    .catch((err) => {
-      // User is not authenticated, therefore redirect them to login:
-      router.replace('/join')
 
-      resolve();
+   /*
+    * The user was not logged in OR some sort of server side 
+    * error has occured. If justCheckAuth is not set to TRUE,
+    * then we'll redirect to /join.
+    */
+
+    .catch((err) => {
+      
+      /*
+       * We're just checking if we're authenticated or not.
+       */
+
+      if (justCheckAuth) {
+
+        resolve()
+
+      }
+
+      else {
+        // User is not authenticated, therefore redirect them to login:
+        router.replace('/join')
+
+        resolve();
+      }
+
+      
     })
   })
 
