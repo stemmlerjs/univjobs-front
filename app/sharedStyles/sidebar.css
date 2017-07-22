@@ -28,14 +28,17 @@
 }
 
 .sidebarItem {
-  height: 87px;
+  height: 12vh;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  /*padding-top: */
   color: white;
   font-size: 29px;
   border-top: solid #707980 1px;
   cursor: pointer;
+  margin: auto;
 }
 /* ======================================================
    ================= Sidebar Animations ================= 
@@ -45,22 +48,17 @@
 
   .animationItem8 {
     transition: 0.3s ease-in;
-    position: relative;
     border: white solid 1px;
   }
 
   .sidebarItem:hover .animationItem8 {
-    width:40px;
-    height:40px;
-    margin-bottom: 20px;
+    width:40%;
+    height:40%;
+    margin-bottom: 10px;
   }
 
   .animationTxt8 {
-    font-size:15px;
-    position: absolute;
-    margin-top:22px;
-    -webkit-margin-before: 60px; /*Safari*/
-    -webkit-margin-start: -40px; /*Safari*/
+    font-size:small;
     opacity:0;
     transition: 0.3s ease;
   }
@@ -80,7 +78,6 @@
     font-weight: 500;
     display: flex;
     justify-content: center;
-    flex-direction: column;
     transition: 0.6s ease;
     border-top: white solid 1px;
   }
@@ -99,24 +96,25 @@
   }
 
   .animateLine1 {
+    transition: 0.3s ease;
     height:2px;
     background-color: white;
     width:80px;
     left: -84px;
     transition: 0.3s ease;
-    position:absolute;
-    margin-top: 39px;
-   -webkit-margin-before: 80px; /*Safari*/
+    visibility: hidden;
   }
 
   .sidebarItem:hover .animateLine1 {
     left: 3px;
+    visibility: visible;
   }
 
   /* 2) Dashboard Animation */
 
   .animationItem2 {
-    transition: 0.3s ease;
+    margin: auto;
+    margin-top: 2vh;    
     /*position: absolute;*/
   }
 
@@ -125,7 +123,7 @@
     transform: translate3d(0, 0, 0);
     backface-visibility: hidden;
     perspective: 1000px;
-    padding-bottom: 30px;
+    transition: 0.3s ease;
   }
 
   .animateLine2 {
@@ -134,56 +132,49 @@
     width:80px;
     left: -84px;
     transition: 0.3s ease;
-    position:absolute;
-    margin-top: 39px;
-   -webkit-margin-before: 80px; /*Safari*/
+    visibility: hidden;
+    margin: auto;
   }
 
   .sidebarItem:hover .animateLine2 {
     left: 3px;
+    visibility: visible;
+    margin: auto;
+
   }
 
   .animationTxt2 {
-    font-size:15px;
-    position: absolute;
-    margin-top: 22px;
-    -webkit-margin-before: 60px;
-    -webkit-margin-start: -50px;
-    height: 0px;
-    overflow: hidden;
+    font-size: small;
+    /*height: 0px;*/
   }
 
   .sidebarItem:hover .animationTxt2 {
     transition: 0.3s ease;
-    height: 20px;
+    font-size: medium;
   }
 
   /* 3) Applications Animation */
 
   .animationItem3 {
-    transition: 0.2s ease;
+    margin: auto;
+    margin-top: 2vh;    
   }
 
   .sidebarItem:hover .animationItem3 {
     animation: kick 0.82s cubic-bezier(.36,.07,.19,.97) both;
     transform: translate3d(0, 0, 0);
-    margin-bottom:30px;
+    transition: 0.2s ease; 
   }
 
   .animationTxt3 {
-    transition: 0.2s ease;
-    position: absolute;
-    font-size: 13px;
-    margin-top: 19px;
-    -webkit-margin-before: 49px; /*Safari*/
-    -webkit-margin-start: -55px; /*Safari*/
-    overflow: hidden;
-    width: 0px;
+    font-size: small;
+    transition: 0.2s ease; 
   }
 
   .sidebarItem:hover .animationTxt3 {
-    width: 87px;
+   font-size: medium ;
   }
+
 
   .animationLine3 {
     transition: 0.2s ease;
@@ -200,32 +191,30 @@
 
   .animationItem4 {
     transition: 0.3s ease;
+    margin: auto;
+    margin-top: 2vh;
   }
 
   .sidebarItem:hover .animationItem4 {
     animation: spin 0.82s cubic-bezier(.36,.07,.19,.97) both;
     transform: translate3d(0, 0, 0);
-    margin-bottom:30px;
   }
 
   .animationTxt4 {
-    transition: 0.3s ease;
-    position: absolute;
-    font-size: 15px;
-    margin-top: 20px;
-    -webkit-margin-before: 55px; /*Safari*/
-    -webkit-margin-start: -40px; /*Safari*/
-    opacity:0;
+    font-size: small;
   }
 
   .sidebarItem:hover .animationTxt4 {
-    opacity: 1;
+    transition: 0.3s ease;
+    font-size: medium;
   }
   
   /* 5) My Pinned Jobs */
 
   .animationItem5 {
     transition: 0.3s ease;
+    margin: auto;
+    margin-top: 2vh;    
   }
 
   .sidebarItem:hover .animationItem5 {
@@ -234,74 +223,58 @@
   }
 
   .animationTxt5 {
-    transition: 0.3s ease;
-    font-size:13px;
-    position: absolute;
-    margin-top: 21px;
-    -webkit-margin-before: 50px; /*Safari*/
-    -webkit-margin-start: -55px; /*Safari*/
-    height: 0px;
-    overflow:hidden;
+    font-size: small;
   }
 
   .sidebarItem:hover .animationTxt5 {
-    height:30px;
+    transition: 0.3s ease;
+    font-size: medium;
   }
 
   /* 6) Logout */
 
   .animationItem6 {
     transition: 0.3s ease;
+    margin: auto;
+    margin-top: 2vh;
     /*position: absolute;*/
   }
   .sidebarItem:hover .animationItem6 {
-    margin-top: -13px;
     animation: pulse 0.5s infinite;
     animation-delay: 0;
     animation-direction: alternate;
   }
 
   .animationTxt6 {
-    transition: 0.3s ease;
-    height: 0px;
-    font-size: 16px;
-    margin-top: 25px;
-    -webkit-margin-before: 56px; /*Safari*/
-    -webkit-margin-start: -38px; /*Safari*/
-    overflow: hidden;
-    position: absolute;
+    font-size: small;
   }
 
   .sidebarItem:hover .animationTxt6 {
-    height: 20px;
+    transition: 0.2s ease;
+    font-size: medium;
   }
 
   /* 7) Invitations */
 
   .animationItem7 {
+    margin: auto;
+    margin-top: 2vh;
     /*position:absolute;*/
   }
 
   .sidebarItem:hover .animationItem7 {
     animation: shimmy 0.3s cubic-bezier(.36,.07,.19,.97) both;
     animation-timing-function: ease-out;
-    padding-bottom:15px;
   }
 
   .animationTxt7 {
-    transition: 0.3s ease;
-    font-size: 15px;
-    position: absolute;
-    margin-top: 20px;
-    -webkit-margin-before: 56px; /*Safari*/
-    -webkit-margin-start: -49px; /*Safari*/
-    overflow: hidden;
-    height: 0px;
+    font-size: small;
   }
 
 
   .sidebarItem:hover .animationTxt7 {
-    height: 22px;
+    transition: 0.2s ease;
+    font-size: medium;
   }
 
 .sidebarItem:nth-of-type(6) {
@@ -309,8 +282,10 @@
 }
 
 .profileImg {
-    width: 75%;
-    height: 75%;
+    margin: auto;
+    margin-top: 2vh;
+    width: 50%;
+    height: 50%;
 }
 
 .sidebarUnivjobsLogo {

@@ -44,8 +44,8 @@ export default function SideBar ({onLogout, isAStudent, profilePicture}) {
                           ? <img className={profileImg + " " + animationItem8} src={profilePicture}></img>
                           : <div><i className={" fa fa-user"} aria-hidden="true"></i></div>
                       }
-                      <div className={animationTxt8}>Profile</div>
-                      <div className={animateLine1}></div>
+                      <div className={animationTxt2}>Profile</div>
+                      <div className={animateLine2}></div>
                     </div>
                   </Link>
                 : <Link to="/profile/em" className={noDecoration}>
@@ -55,8 +55,8 @@ export default function SideBar ({onLogout, isAStudent, profilePicture}) {
                           ? <img className={profileImg + " " + animationItem8} src={profilePicture}></img>
                           : <div><i className={" fa fa-user"} aria-hidden="true"></i></div>
                       }
-                      <div className={animationTxt8}>Profile</div>
-                      <div className={animateLine1}></div>
+                      <div className={animationTxt2}>Profile</div>
+                      <div className={animateLine2}></div>
                     </div>
                   </Link>
           
