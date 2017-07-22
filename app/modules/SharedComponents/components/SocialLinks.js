@@ -6,7 +6,7 @@ import { linksFlex, fbShareButton, twitterShareButton, linkedInShareButton, emai
 import config from 'config'
 import moment from 'moment'
 
-export default function SocialLinks ({ jobTitle, responsibilities }) { 
+export default function SocialLinks ({ jobTitle, responsibilities, socialShareUrl }) { 
   return (
     <div className={linksFlex}>
       {/* FACEBOOK */}
@@ -16,7 +16,7 @@ export default function SocialLinks ({ jobTitle, responsibilities }) {
             FB.ui({
             method: 'share',
             display: 'popup',
-            href: window.location.href,
+            href: socialShareUrl,
             }, function(response){});
 
       }}>
@@ -27,7 +27,7 @@ export default function SocialLinks ({ jobTitle, responsibilities }) {
 
         var url = window.location.href;
         var text = `Check out this "${jobTitle}" job posting on Univjobs!`;
-        window.open('http://twitter.com/share?url='+encodeURIComponent(url)+'&text='+encodeURIComponent(text), '', 'left=0,top=0,width=550,height=450,personalbar=0,toolbar=0,scrollbars=0,resizable=0');
+        window.open('http://twitter.com/share?url='+encodeURIComponent(socialShareUrl)+'&text='+encodeURIComponent(text), '', 'left=0,top=0,width=550,height=450,personalbar=0,toolbar=0,scrollbars=0,resizable=0');
 
       }}></button>
 
@@ -36,14 +36,14 @@ export default function SocialLinks ({ jobTitle, responsibilities }) {
 
         var url = window.location.href;
         var title = 'Job Posting - "' + jobTitle + '" on Univjobs '
-        window.open('https://www.linkedin.com/shareArticle?mini=true&url='+encodeURIComponent(url)+'&title='+encodeURIComponent(title)+'&summary='+encodeURIComponent(responsibilities)+'&source='+encodeURIComponent(window.location.host))
+        window.open('https://www.linkedin.com/shareArticle?mini=true&url='+encodeURIComponent(socialShareUrl)+'&title='+encodeURIComponent(title)+'&summary='+encodeURIComponent(responsibilities)+'&source='+encodeURIComponent(window.location.host))
 
       }}></button>
 
       { /* EMAIL */}
       <button className={emailShareButton} onClick={() => {
         var subject = 'Job Posting - "' + jobTitle + '" on Univjobs '
-        var body = `Check out this "${jobTitle}" job posting on Univjobs via ${window.location.href}.`;
+        var body = `Check out this "${jobTitle}" job posting on Univjobs via ${socialShareUrl}.`;
         window.location.href = (`mailto:?subject=${subject}&body=${body}`)
       }}></button>
 

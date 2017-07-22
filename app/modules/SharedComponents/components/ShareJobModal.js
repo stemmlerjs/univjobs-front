@@ -17,8 +17,8 @@ export default function ShareJobModal({ job }) {
       <div className={jobCompany}>{job.company_name}</div>
       <SocialLinks
         jobTitle={job.title}
-        responsibilities={job.responsibilities
-      }/>
+        responsibilities={job.responsibilities}
+        socialShareUrl={'https://univjobs.ca/#/posting/' + job.job_id}/>
       <input id="share-job-target" className={copyLink} 
         value={"https://univjobs.ca/#/posting/" + job.job_id}
         type="text"/>
