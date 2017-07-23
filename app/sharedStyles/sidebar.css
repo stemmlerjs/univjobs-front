@@ -28,7 +28,7 @@
 }
 
 .sidebarItem {
-  height: 12vh;
+  height: 86px;
   display: flex;
   flex-direction: column;
   align-items: center;
