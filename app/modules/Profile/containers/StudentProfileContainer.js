@@ -333,8 +333,8 @@ const StudentProfileContainer = React.createClass({
         () => {
           
           this.refs.container.success(
-            "Almost done!",
-            "Success. We went ahead and sent a new Verify Account email to you. Check your email.", {
+            "",
+            "Success. We went ahead and sent a new Verify Account email to your student email.", {
               timeout: 3000
             });
 
@@ -545,8 +545,8 @@ const StudentProfileContainer = React.createClass({
 
                 if (isProfileCompleted == 0 && !isEmailVerified) {
                   _thisContext.refs.container.info(
-                    "You can click here to resend the verification email. Thanks!",
-                    "Before you can move on, we need you to finish your profile & confirm the email we sent you.", {
+                    "Click here to resend the verification email. Thanks!",
+                    "Before you can move on, we need you to finish your profile & confirm the email we sent to your student email.", {
                       timeout: 3000
                   });
                 }
@@ -569,8 +569,8 @@ const StudentProfileContainer = React.createClass({
 
                 else {
                   _thisContext.refs.container.info(
-                    "You can click here to resend the verification email. Thanks!",
-                    "Before you can move on, we just need you to confirm the email we sent you.", {
+                    "Click here to resend the verification email. Thanks!",
+                    "Before you can move on, we just need you to confirm the email we sent to your student email.", {
                       timeout: 3000
                   });
                 }

@@ -884,38 +884,22 @@ const StudentDashboardContainer = React.createClass({
                     updateFilterSettings={this.props.updateFilterSettings}
                     handleToggleFilterMenu={() => {
 
-                      let delayedHidden = document.getElementById("delayed-overflow-hidden")
-
-                      /*
-                      * If the menu is opening, set overflow to hidden.
-                      * Then after 500 ms, set overflow to auto.
-                      */
-
                       if (!this.props.filterMenuOpen) {
-                        console.log("Menu opening, keeping overflow:hidden set.")
-                        delayedHidden.style.overflow = 'hidden !important';
-
                         setTimeout(() => {
-                          console.log("Menu open now. Turning off overflow.")
-                          //delayedHidden.style.overflow = 'auto !important';
-                        }, 3000)
+                          this.props.toggleFilterMenu(true)
+                        },300)
                       }
-
-                    /*
-                      * If the menu is closing, turn the overflow on right away.
-                      */
 
                       else {
-                        console.log("Menu closing, turned overflow:hidden on.")
-                        delayedHidden.style.overflow = 'hidden !important';
+                         this.props.toggleFilterMenu(true)
                       }
-
-                      this.props.toggleFilterMenu(true)
+                      
                     }}
                     filterMenuOpen={this.props.filterMenuOpen}
                     handleOpenEmployerProfileModal={this.props.employerProfileModalOpened}
                     schoolAddress={this.props.profile ? this.props.profile.schoolAddress : ''}
                     handleOpenShareModal={this.handleOpenShareModal}
+                    industryFilterOpen={this.props.industryFilterOpen}
                   />
                 : ''
             }
@@ -1121,6 +1105,7 @@ function mapStateToProps({user, dashboard, job, profile, list}) {
       industry: ''
     },
     filterMenuOpen: dashboard.studentDashboard.filterMenuOpen ? dashboard.studentDashboard.filterMenuOpen : false,
+    industryFilterOpen: dashboard.studentDashboard.industryFilterOpen ? dashboard.studentDashboard.industryFilterOpen :false,
     employerProfileModal: dashboard.employerProfileModal ? dashboard.employerProfileModal : {},
     shareJobModal: dashboard.shareJobModal ? dashboard.shareJobModal : {}
   }

@@ -164,11 +164,11 @@ const InitialOverlay = React.createClass({
        closeOverlay: this.closeOverlay
      })
     );
-    console.log(this)
+    console.log(this.props.location)
 
     return (
       <div style={styles.main}>
-        {this.props.location.pathname !== "/join"
+        { this.props.isAuthenticated 
           ? <FeedbackForm 
           isOpen={this.props.feedback.isOpen} 
           title={this.props.feedback.title}
@@ -213,11 +213,12 @@ const InitialOverlay = React.createClass({
   },
 })
 // We should have a new value on the user called 'isOverlayActive'
-function mapStateToProps({rootApplication, feedback, mobileLoad}) {
+function mapStateToProps({rootApplication, feedback, mobileLoad, user }) {
   return {
     isOverlayActive: rootApplication.isOverlayActive ? true : false,
     feedback: feedback ? feedback : {},
     mobileLoad: mobileLoad.isMobileOverlayActive ? true : false,
+    isAuthenticated: user.isAuthenticated ? user.isAuthenticated : false
   }
 }
 
