@@ -53,12 +53,11 @@
 
   .sidebarItem:hover .animationItem8 {
     width:40%;
-    height:40%;
-    margin-bottom: 10px;
+    height: auto;
   }
 
   .animationTxt8 {
-    font-size:small;
+    font-size: 10px;
     opacity:0;
     transition: 0.3s ease;
   }
@@ -144,13 +143,13 @@
   }
 
   .animationTxt2 {
-    font-size: small;
+    font-size: 10px;
     /*height: 0px;*/
   }
 
   .sidebarItem:hover .animationTxt2 {
     transition: 0.3s ease;
-    font-size: medium;
+    font-size: 12px;
   }
 
   /* 3) Applications Animation */
@@ -167,12 +166,12 @@
   }
 
   .animationTxt3 {
-    font-size: small;
+    font-size: 10px;
     transition: 0.2s ease; 
   }
 
   .sidebarItem:hover .animationTxt3 {
-   font-size: medium ;
+   font-size: 12px ;
   }
 
 
@@ -201,12 +200,12 @@
   }
 
   .animationTxt4 {
-    font-size: small;
+    font-size: 10px;
   }
 
   .sidebarItem:hover .animationTxt4 {
     transition: 0.3s ease;
-    font-size: medium;
+    font-size: 12px;
   }
   
   /* 5) My Pinned Jobs */
@@ -223,12 +222,12 @@
   }
 
   .animationTxt5 {
-    font-size: small;
+    font-size: 10px;
   }
 
   .sidebarItem:hover .animationTxt5 {
     transition: 0.3s ease;
-    font-size: medium;
+    font-size: 12px;
   }
 
   /* 6) Logout */
@@ -246,12 +245,12 @@
   }
 
   .animationTxt6 {
-    font-size: small;
+    font-size: 10px;
   }
 
   .sidebarItem:hover .animationTxt6 {
     transition: 0.2s ease;
-    font-size: medium;
+    font-size: 12px;
   }
 
   /* 7) Invitations */
@@ -268,13 +267,13 @@
   }
 
   .animationTxt7 {
-    font-size: small;
+    font-size: 10px;
   }
 
 
   .sidebarItem:hover .animationTxt7 {
     transition: 0.2s ease;
-    font-size: medium;
+    font-size: 12px;
   }
 
 .sidebarItem:nth-of-type(6) {
@@ -283,9 +282,9 @@
 
 .profileImg {
     margin: auto;
-    margin-top: 2vh;
+    margin-top: 1vh;
     width: 50%;
-    height: 50%;
+    height: auto;
 }
 
 .sidebarUnivjobsLogo {
