@@ -131,14 +131,14 @@
     width:80px;
     left: -84px;
     transition: 0.3s ease;
-    visibility: hidden;
+    position: relative;
     margin: auto;
   }
 
   .sidebarItem:hover .animateLine2 {
-    left: 3px;
-    visibility: visible;
+    left: 2px;
     margin: auto;
+    margin-right: 5px;
 
   }
 
