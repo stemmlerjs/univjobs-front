@@ -251,12 +251,15 @@ padding-left: 50px;
 
 .socialLinksContainer {
     margin-top: 12px;
+    float: right;
+    width: 250px;
 }
 
 .shareHeader {
-        font-size: 17px;
+ font-size: 17px;
     font-weight: bold;
     margin-bottom: 14px;
+    text-align: left;
 }
 
 .linksFlex {
@@ -269,4 +272,13 @@ padding-left: 50px;
     color: #008de0;
     cursor: pointer;
     outline: none;
+}
+
+.moneyIcon {
+padding-left: 3px;
+    padding-right: 14px;
+    font-size: 17px;
+    /* background-color: #7b7bd8; */
+    color: #1e9ae3;
+    margin-top: 8px;
 }
