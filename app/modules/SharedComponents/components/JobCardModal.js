@@ -11,7 +11,7 @@ import { cardModalContainer, cardLeft, cardRight, cardLeftTopContainer, imgConta
 
         cardSectionMain, companyInfo , clock, applicantsContainer, clock_0_50, clock_51_75, 
         clock_76_100, calendar, locationPin, applicationProgress, googleMapsLinkStyle,
-        hideDisplay
+        hideDisplay, moneyIcon, lastThing
      } from '../styles/JobCardModal.css'
 import { altImageContainer } from '../styles/JobCard.css'
 
@@ -145,6 +145,10 @@ export default function JobCardModal({
                     : 'Remote work'
                 }</div>
               </div>
+              <div className={lastThing}>
+                <i className={`fa fa-usd ${moneyIcon}`} aria-hidden="true"></i> 
+                <span>{job.paid === 0 ? 'Not paid' : 'Paid job'}</span>
+              </div> 
 
               {
                 page !== 'applications'

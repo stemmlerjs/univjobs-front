@@ -293,13 +293,29 @@ const StudentDashboardContainer = React.createClass({
         * Failure Callback
         */
 
-        () => {
+        (error) => {
 
-          _this.refs.container.error(
-            "Whoops.",
-            "Something went wrong trying to hire this student.", {
-              timeout: 3000
+          if (error.status == 409) {
+             _this.refs.container.error(
+              "",
+              "You already applied to this job posting.", {
+                timeout: 3000
+              });
+          }
+
+          else {
+            console.log(error)
+
+            _this.refs.container.error(
+              "Please try again later or let us know if the error persists.",
+              "Something went wrong trying to apply to this job :(", {
+                timeout: 3000
             });
+
+          }
+
+          _this.closeConfirmApplyModal()
+
 
         })
 

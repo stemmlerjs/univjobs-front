@@ -166,7 +166,7 @@
 
           dispatch(applyingToJobFailure(errorMsg))
 
-          failureCallback()
+          failureCallback(err)
 
         })
 
