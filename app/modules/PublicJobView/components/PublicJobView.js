@@ -12,7 +12,7 @@ import { publicJobViewContainerStyle, jobViewMiddleContainer, employerPicture,
   calendar, reallyExtraComponents, calendarContainer, locationIconNoHover,
   applicantsContainer, clock_0_50, clock_51_75, clock_76_100, clock, callToActionContainer, 
   fbShareButton, socialLinksContainer, shareHeader, twitterShareButton, linkedInShareButton,
-  emailShareButton, linksFlex, viewInAppLink } from '../styles/PublicJobView.css'
+  emailShareButton, linksFlex, viewInAppLink, moneyIcon } from '../styles/PublicJobView.css'
 
 export default function PublicJobView ({ info, handleOpenEmployerProfileModal, showViewInApp }) {
   return (
@@ -32,6 +32,22 @@ export default function PublicJobView ({ info, handleOpenEmployerProfileModal, s
                 : <img className={employerPicture} src={config.mediaUrl + info.logo_url}/>
               : ''
             }
+
+            {
+                /*
+                 * SHARE STUFF
+                 */
+              }
+
+              <div className={socialLinksContainer}>
+                <div className={shareHeader}>Share this job</div>
+                <SocialLinks 
+                  jobTitle={info.title}
+                  responsibilities={info.responsibilities}
+                  socialShareUrl={'https://univjobs.ca/#/posting/' + info.job_id}
+                />
+              </div>
+
           </div>
           <div className={headerInfoContainer}>
             <div className={jobTitle}>{info.title}</div>
@@ -90,22 +106,10 @@ export default function PublicJobView ({ info, handleOpenEmployerProfileModal, s
                 {`${info.max_applicants - info.applicant_count} of ${info.max_applicants} applicants left.`}
               </div>
 
-
-              {
-                /*
-                 * SHARE STUFF
-                 */
-              }
-
-              <div className={socialLinksContainer}>
-                <div className={shareHeader}>Share</div>
-                <SocialLinks 
-                  jobTitle={info.title}
-                  responsibilities={info.responsibilities}
-                  socialShareUrl={'https://univjobs.ca/#/posting/' + info.job_id}
-                />
-              </div>
-
+              <div className={applicantsContainer}>
+                <i className={`fa fa-usd ${moneyIcon}`} aria-hidden="true"></i> 
+                <span>{info.paid === 0 ? 'Not paid' : 'Paid job'}</span>
+              </div> 
             
 
             </div>
