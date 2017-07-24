@@ -49,6 +49,10 @@
     color: white !important;
 }
 
+.grayBackGround {
+    background-color: ##f2f5f7 !important;
+}
+
 /*--------------------------How It Works ----------------------------*/
 /*Note: This should be at sharedStlyes, 
  * and others will override the background, and justify-content
@@ -95,3 +99,51 @@
     font-size: smaller;
 }
 
+/*Section*/
+.section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    display: -webkit-flex;
+    -webkit-flex-direction: column;
+    -webkit-justify-content: center;
+    -webkit-align-items: center;
+    width: 100%;
+    padding-top: 60px;
+    padding-bottom: 60px;
+    /*padding-left: 30px;
+    padding-right: 30px;*/
+}
+
+
+/*CARD*/
+.card {
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    display: -webkit-flex;
+    -webkit-flex-direction: column;
+    -webkit-justify-content: center;
+    width: 360px;
+    background-color: #ffffff;
+    border: solid 1px #e5e5e5;
+    margin: 10px;
+    min-height: 400px;
+
+}
+
+/*3-column for cards*/
+.threeColumn {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    display: -webkit-flex;
+    -webkit-flex-direction: row;
+    -webkit-justify-content: center;
+    -webkit-align-items: center;
+    -webkit-flex-wrap: wrap;
+    width: 100%;
+}

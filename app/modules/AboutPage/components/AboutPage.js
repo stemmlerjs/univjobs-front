@@ -8,7 +8,8 @@ import { DropdownList } from 'react-widgets'
 import { blackBackGround,flexContainer, flexRowContainer, flexRowItem,
          fontLighter, header, headerContactForm, input, 
          marginReduce, paragraphContainer, paragraphItem, img,
-         regularFlexContainer, subHeader, topMarginReduce }from '../styles/AboutPage.css'
+         regularFlexContainer, subHeader, topMarginReduce,
+         card, threeColumn, grayBackGround, section }from '../styles/AboutPage.css'
 
 /*
  *  * NOTE: Testing ES6 stateless function
@@ -26,18 +27,17 @@ const AboutPage = () => (
                     <p className={marginReduce}>that connects employers with students and recent grads </p>
                     <p className={marginReduce}>on meaningful opportunities!</p>
                 </div>
-                <br></br>
             </div>
-            <div className={regularFlexContainer + ' ' + blackBackGround}>
-                <div className={subHeader}>
-                    <h1 className={fontLighter + ' ' + topMarginReduce}>How It Works</h1>
-                </div>
-            </div>
-
-            <div className={regularFlexContainer}>
-                <div className={subHeader}>
-                    <h1 className={fontLighter + ' ' + topMarginReduce}>Meet the team</h1>
-                </div>
+            <div className={section + ' ' + grayBackGround}>
+                    <h1 className={fontLighter}>Meet The Team</h1>
+                    <div className={threeColumn}>
+                        {/*FIRST CARD*/}
+                        <div className={card}></div>
+                        {/*SECOND CARD*/}
+                        <div className={card}></div>
+                        {/*THIRD CARD*/} 
+                        <div className={card}></div>
+                    </div>
             </div>
         </div>
 )
