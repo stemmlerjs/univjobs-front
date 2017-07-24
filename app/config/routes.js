@@ -7,12 +7,13 @@ import { ApplicationsContainer, CategoriesContainer, CreateJobContainer, Contact
         ApplicantsContainer, PasswordResetContainer, PageNotFoundContainer,
         Terms, Privacy, StudentSettingsContainer, PublicJobViewContainer } from 'modules'
 import { checkIfAuthed } from 'helpers/auth'
+import { syncHistoryWithStore } from 'react-router-redux'
 
 // Purpose of IndexRoute - if none of the routes match, we go here
-export default function getRoutes() {
-
+export default function getRoutes(store) {
+  const history = syncHistoryWithStore(hashHistory, store)
   return (
-    <Router history={hashHistory} >
+    <Router history={history} >
         <Route path='/' component={InitialOverlay}>
           <Route path='/join' component={SignupContainer} />
           <Route path='/password/reset' component={PasswordResetContainer}/>
