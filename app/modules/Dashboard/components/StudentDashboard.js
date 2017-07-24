@@ -61,7 +61,8 @@ export default function StudentDashboard ({
     handlePinJob,
     updateFilterSettings,
     filterStudentJobs,
-    handleOpenShareModal
+    handleOpenShareModal,
+    industryFilterOpen
 }) {
   console.log(jobs, "jobs")
         return (
@@ -176,6 +177,13 @@ export default function StudentDashboard ({
                                 updateFilterSettings(newFilter, true)
                             }}
                             defaultValue={''}
+                            onToggle={(even) => {
+                              /*
+                               * Update if industry filter is open 
+                               * and whether or not to put the overflow hidden on or
+                               * not.
+                               */
+                            }}
                           />
                       </div>
 

@@ -13,7 +13,8 @@ display: flex;
 
 .cardRight {
     width: 50%;
-    margin-right: 47px;
+    margin-right: 12px;
+    margin-left: 5px;
 } 
 
 .cardLeftTopContainer {
