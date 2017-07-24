@@ -46,6 +46,10 @@
 */
   /* 1) Profile Picture Animation */
 
+  .marginTop {
+        margin-top: 15px;
+  }
+
   .animationItem8 {
     transition: 0.3s ease-in;
     border: white solid 1px;
