@@ -37,6 +37,8 @@ const AboutPage = () => (
                         <div className={card}></div>
                         {/*THIRD CARD*/} 
                         <div className={card}></div>
+                        {/*FOURTH CARD*/} 
+                        <div className={card}></div>
                     </div>
             </div>
         </div>
