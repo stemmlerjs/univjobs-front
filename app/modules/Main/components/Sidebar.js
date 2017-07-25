@@ -19,7 +19,7 @@ import { sidebar, sidebarLogo, sidebarItemsContainer,
         animationItem4, animationTxt4, animationItem5, 
         animationTxt5, animationItem6, animationTxt6, 
         animationItem7, animationTxt7, animationItem8, 
-        animationTxt8, sidebarUnivjobsLogo } from 'sharedStyles/sidebar.css'
+        animationTxt8, sidebarUnivjobsLogo, marginTop } from 'sharedStyles/sidebar.css'
 
 export default function SideBar ({onLogout, isAStudent, profilePicture}) {
   return (
@@ -30,8 +30,10 @@ export default function SideBar ({onLogout, isAStudent, profilePicture}) {
 
           profilePicture == ""
             ?  <Link to="/profile/st" className={noDecoration}>
-                    <div className={sidebarItem}>
-                    <div><i className={" fa fa-user"} aria-hidden="true"></i></div>
+                  <div className={sidebarItem}>
+                    <div className={marginTop}>
+                      <i className={" fa fa-user"} aria-hidden="true"></i>
+                    </div>
                     <div className={animationTxt8}>Profile</div>
                       <div className={animateLine1}></div>
                   </div>
@@ -42,7 +44,7 @@ export default function SideBar ({onLogout, isAStudent, profilePicture}) {
                       { 
                         profilePicture.indexOf("undefined") === -1 && profilePicture.indexOf("null") === -1
                           ? <img className={profileImg + " " + animationItem8} src={profilePicture}></img>
-                          : <div><i className={" fa fa-user"} aria-hidden="true"></i></div>
+                          : <div className={marginTop}><i className={" fa fa-user"} aria-hidden="true"></i></div>
                       }
                       <div className={animationTxt2}>Profile</div>
                       <div className={animateLine2}></div>

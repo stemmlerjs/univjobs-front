@@ -97,6 +97,8 @@ const productionConfig = {
   plugins: [HTMLWebpackPluginConfig,
    productionPlugin, 
    new BundleTracker({filename: './webpack-stats.json'}),
+   new webpack.optimize.DedupePlugin(),
+   new webpack.optimize.OccurrenceOrderPlugin(),
    new webpack.optimize.UglifyJsPlugin()
   ]
 }

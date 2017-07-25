@@ -176,16 +176,6 @@ const StudentProfileContainer = React.createClass({
       () => {
 
         /*
-         * Display success toastr.
-         */
-
-        this.refs.container.success(
-          "W00t w00t.",
-          "Profile completed. Now go start applying to jobs!", {
-            timeout: 3000
-        });
-
-        /*
          * Now, we want to actually update the redux state so
          * that the client is in sync with the back and knows that
          * our profile is complete.
@@ -196,6 +186,41 @@ const StudentProfileContainer = React.createClass({
 
         this.context.store.dispatch(
           userActionCreators.setProfileCompleteThenReloadToDashboard(() => {
+
+            /*
+             * Profile is complete. We know this because we're in the success 
+             * callback for profile is complete.
+             * 
+             * If the email is also verified- then we're done!!!1
+             */
+
+            if (this.props.isEmailVerified == 1) {
+
+              this.refs.container.success(
+                "W00t w00t.",
+                "Profile completed. Now go start applying to jobs!", {
+                  timeout: 3000
+              });
+
+            } 
+
+            /*
+             * Otherwise, student only completed their profile- they still need to verifiy
+             * their email.
+             * 
+             * If the email hasn't been verified yet- that's the last thing that the user needs
+             * to do before they can say that they're completed their profile entirely.
+             */
+
+            else {
+
+              this.refs.container.success(
+                "Check your student email.",
+                "Nice! Profile completed. We just need you to verify your email now.", {
+                  timeout: 3000
+              });
+
+            }
 
             /*
              * After syncing the front, is_profile_complete = true,
@@ -335,7 +360,7 @@ const StudentProfileContainer = React.createClass({
           this.refs.container.success(
             "",
             "Success. We went ahead and sent a new Verify Account email to your student email.", {
-              timeout: 3000
+              timeout: 6000
             });
 
         },
@@ -960,6 +985,9 @@ function mapStateToProps({user, profile, list, feedback}) {
     photo: profile.studentProfile.photo ? profile.studentProfile.photo : '',
     resume: profile.studentProfile.resume ? profile.studentProfile.resume : '',
     isProfileCompleted: profile.isProfileCompleted ? profile.isProfileCompleted : '',
+
+    isProfileComplete: user.isProfileComplete ? user.isProfileComplete : 0,
+    isEmailVerified: user.emailVerified ? user.emailVerified : 0,
 
     propsErrorMap: profile.studentProfile.propsErrorMap ? profile.studentProfile.propsErrorMap : { 
         emailPreferences: false,
