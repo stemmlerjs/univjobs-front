@@ -147,3 +147,113 @@
     -webkit-flex-wrap: wrap;
     width: 100%;
 }
+
+/* */
+.picture {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    display: -webkit-flex;
+    -webkit-flex-direction: row;
+    -webkit-justify-content: center;
+}
+
+.charlesImg {
+    width: 128px;
+    height: 125px;
+    object-fit: fill;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    border-radius: 50%;
+    background-image: url(https://user-images.githubusercontent.com/7959179/28594259-55ce1294-715d-11e7-9a44-6d55a3121bac.png);
+    /* Center and scale the image nicely */
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.khalilImg {
+    width: 128px;
+    height: 125px;
+    object-fit: fill;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    border-radius: 50%;
+    background-image: url(https://user-images.githubusercontent.com/7959179/28594573-74d716da-715e-11e7-9f6e-f70a1f22dfd8.png);
+    /* Center and scale the image nicely */
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.georgeImg {
+    width: 128px;
+    height: 125px;
+    object-fit: fill;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    border-radius: 50%;
+    background-image: url(https://user-images.githubusercontent.com/7959179/28595026-21686786-7160-11e7-9608-aff2652271ce.png);
+    /* Center and scale the image nicely */
+    background-repeat: no-repeat;
+    background-size: cover;
+
+}
+
+.julioImg {
+    width: 128px;
+    height: 125px;
+    object-fit: fill;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    border-radius: 50%;
+    background-image: url(https://user-images.githubusercontent.com/7959179/28595430-d7d6270a-7161-11e7-91fa-d172cbef1e60.png);
+    /* Center and scale the image nicely */
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+
+.Img {
+    width: 128px;
+    height: 125px;
+    object-fit: fill;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    border-radius: 50%;
+    background-image: url(https://user-images.githubusercontent.com/7959179/28594573-74d716da-715e-11e7-9f6e-f70a1f22dfd8.png);
+    /* Center and scale the image nicely */
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+
+.personsName {
+    font-size: 14px;
+    margin-bottom: 5px;
+    font-weight: 900;
+    letter-spacing: 2px;
+    text-align: center;
+    color: #4a4a4a;
+    text-transform: uppercase;
+    font-family: "Lato", sans-serif;
+}
+
+.title {
+    font-size: 14px;
+    font-weight: 900;
+    text-align: center;
+    margin-top: 0px;
+    color: #4a4a4a;
+    font-family: "Lato", sans-serif;
+}
+
+.paragraph {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.5;
+    text-align: center;
+    color: #4a4a4a;
+    padding: 0 0 15px 0;
+    margin: 0;
+    font-family: "Lato", sans-serif;
+
+}
