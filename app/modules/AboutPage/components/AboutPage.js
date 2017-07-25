@@ -57,7 +57,7 @@ const AboutPage = () => (
                         </div>
                         {/*THIRD CARD*/} 
                         <div className={card}> 
-                            <div classNme={picture}>
+                            <div className={picture}>
                                 <img className={georgeImg}/>              
                             </div>
                             <h3 className={personsName}>George Kavuma</h3>
@@ -74,7 +74,7 @@ const AboutPage = () => (
                             <h3 className={personsName}>Julio Sueiras</h3>
                             <h4 className={title}>DevOps, Founder</h4>
                             <p className={paragraph}>
-                                Julio loves automation. He's helped companies streamline their IT infrastructure. Fun fact: Julio was born in China, raised in Cuba and speaks 3 languages (Mandarin, Spanish, English).
+                                Julio loves automation. He's helped companies streamline their IT infrastructure. Fun fact: Julio was born in Cuba, raised in China and speaks 3 languages (Mandarin, Spanish, English).
                             </p>
                         </div>
                     </div>
