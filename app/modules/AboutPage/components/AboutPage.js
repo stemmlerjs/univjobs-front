@@ -40,8 +40,8 @@ const AboutPage = () => (
                             </div>
                             <h3 className={personsName}>Charles Javelona</h3>
                             <h4 className={title}>CEO, Founder</h4>
-                            <p className={paragraph}>Charles previously worked at Scotiabank Innovation Factory, delving into fintech analysis and blockchain development. 
-                               He is originally from Philippines.
+                            <p className={paragraph}>
+                                Charles previously worked at Scotiabank Innovation Factory, delving into Fintech analysis and blockchain development. He is originally from the Philippines.
                             </p>
                         </div>
                         {/*SECOND CARD*/}
@@ -51,8 +51,8 @@ const AboutPage = () => (
                             </div>
                             <h3 className={personsName}>Khalil Stemmler</h3>
                             <h4 className={title}>CTO, Founder</h4>
-                            <p className={paragraph}>Khalil previously worked at Pinacca helping them build virtual communication solutions as a software engineer.
-                               In his free time, he loves listening and making post punk music.
+                            <p className={paragraph}>
+                                Khalil previously worked at Pinacca helping them build virtual communication solutions as a software engineer. In his free time, he enjoys longboarding and making post punk music.
                             </p>
                         </div>
                         {/*THIRD CARD*/} 
@@ -62,8 +62,8 @@ const AboutPage = () => (
                             </div>
                             <h3 className={personsName}>George Kavuma</h3>
                             <h4 className={title}>Chief Design Officer, Founder</h4>
-                            <p className={paragraph}>George is an interaction designer, previously worked with small companies.
-                                If he's not preparing for a marathon race. George usually likes making instrumentals beats or taking artistic photos.
+                            <p className={paragraph}>
+                                George is an interaction designer who has previously worked with small companies. If he's not preparing for a marathon race, you'll find usually find George working on instrumentals beats or improving his photography skills.
                             </p>
                         </div>
                         {/*FOURTH CARD*/} 
@@ -73,8 +73,8 @@ const AboutPage = () => (
                             </div>
                             <h3 className={personsName}>Julio Sueiras</h3>
                             <h4 className={title}>DevOps, Founder</h4>
-                            <p className={paragraph}>Julio loves automating. He helped companies such as AquaMobile and BlinkMortgage streamline their IT infastructure.
-                                Fun fact! Julio was born in China, raised in Cuba, speaks 3 languages(Mandarin, Spanish, English).   
+                            <p className={paragraph}>
+                                Julio loves automation. He's helped companies streamline their IT infrastructure. Fun fact: Julio was born in China, raised in Cuba and speaks 3 languages (Mandarin, Spanish, English).
                             </p>
                         </div>
                     </div>
