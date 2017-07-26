@@ -26,8 +26,8 @@ const AboutPage = () => (
             <div className={flexContainer}>
                 <div className={header}>
                     <p className={marginReduce}>We're on a mission to build a platform</p>
-                    <p className={marginReduce}>that connects employers with students and recent grads </p>
-                    <p className={marginReduce}>on meaningful opportunities!</p>
+                    <p className={marginReduce}>that connects employers to students and recent grads </p>
+                    <p className={marginReduce}>for meaningful opportunities!</p>
                 </div>
             </div>
             <div className={section + ' ' + grayBackGround}>
@@ -52,7 +52,8 @@ const AboutPage = () => (
                             <h3 className={personsName}>Khalil Stemmler</h3>
                             <h4 className={title}>CTO, Founder</h4>
                             <p className={paragraph}>
-                                Khalil previously worked at Pinacca helping them build virtual communication solutions as a software engineer. In his free time, he enjoys longboarding and making post punk music.
+                                Prior to Univjobs, Khalil worked in software development at IBM and Pinnaca in between his schooling at Brock University and Sheridan College.
+                                His favourite things include cats, tinkering with robotics and collecting music; though not necessarily in that order.
                             </p>
                         </div>
                         {/*THIRD CARD*/} 
@@ -74,7 +75,7 @@ const AboutPage = () => (
                             <h3 className={personsName}>Julio Sueiras</h3>
                             <h4 className={title}>DevOps, Founder</h4>
                             <p className={paragraph}>
-                                Julio loves automation. He's helped companies streamline their IT infrastructure. Fun fact: Julio was born in China, raised in Cuba and speaks 3 languages (Mandarin, Spanish, English).
+                                Julio loves automation. He's helped companies streamline their IT infrastructure. Fun fact: Julio was born in China, raised in Cuba and speaks 3 languages (Mandarin, Spanish and English).
                             </p>
                         </div>
                     </div>

@@ -30,6 +30,7 @@
 
 .fontLighter {
     font-weight: lighter;
+        font-size: 49px;
 }
 
 
@@ -128,7 +129,7 @@
     -webkit-justify-content: center;
     width: 360px;
     background-color: #ffffff;
-    border: solid 1px #e5e5e5;
+    border: 1px solid #bdbbbb;
     margin: 10px;
     min-height: 400px;
 
