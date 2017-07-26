@@ -58,13 +58,13 @@ const AboutPage = () => (
                         </div>
                         {/*THIRD CARD*/} 
                         <div className={card}> 
-                            <div classNme={picture}>
+                            <div className={picture}>
                                 <img className={georgeImg}/>              
                             </div>
                             <h3 className={personsName}>George Kavuma</h3>
                             <h4 className={title}>Chief Design Officer, Founder</h4>
                             <p className={paragraph}>
-                                George is an interaction designer who has previously worked with small companies. If he's not preparing for a marathon race, you'll find usually find George working on instrumentals beats or improving his photography skills.
+                                George is an interaction designer who has previously worked with small companies. If he's not preparing for a marathon race, you'll find George working on instrumentals beats or improving his photography skills.
                             </p>
                         </div>
                         {/*FOURTH CARD*/} 
