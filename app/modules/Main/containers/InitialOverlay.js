@@ -121,7 +121,9 @@ const InitialOverlay = React.createClass({
     if (/Mobi/i.test(navigator.userAgent) || /Anroid/i.test(navigator.userAgent) || 
       /Mobile/i.test(navigator.userAgent)) {
 
-          if (this.props.location.pathname === "/join" || this.props.location.pathname === "/posting" || this.props.location.pathname === "/about-us") {
+          debugger
+
+          if (this.props.location.pathname === "/join" || this.props.location.pathname === "/posting/*" || this.props.location.pathname === "/about-us") {
                 return ("")
 
           }  else {
