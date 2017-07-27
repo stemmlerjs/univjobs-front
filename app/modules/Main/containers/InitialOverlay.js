@@ -102,13 +102,28 @@ const InitialOverlay = React.createClass({
 
 
 
-  /*Detects if the browser is mobile or not
+  /*isMobile()
+   * returns a boolean that is true
+   *   if the browser is IOS or Android
+   *
+   *
+   *
    * */
 
   detectMobile() {
+
+    //Check if url is join, posting, or about-us show page
+        //Else if Anroid or IOS mobile return 
+    //
+
+    /*Detect if it's a Android or IOS mobile*/  
     if (/Mobi/i.test(navigator.userAgent) || /Anroid/i.test(navigator.userAgent) || 
       /Mobile/i.test(navigator.userAgent)) {
 
+          if (this.props.location.pathname === "/join" || this.props.location.pathname === "/posting" || this.props.location.pathname === "/about-us") {
+                return ("")
+
+          }  else {
        /*
         * First disable scrolling
         */
@@ -127,7 +142,8 @@ const InitialOverlay = React.createClass({
               </div>
           </div>
         )
-      } 
+    } /* else*/
+   }
   },
 
   componentDidMount() {
