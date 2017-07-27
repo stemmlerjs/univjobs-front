@@ -11,6 +11,9 @@ import thunk from 'redux-thunk'
 // Import createMiddleware and a target
 import { createMiddleware } from 'redux-beacon';
 import { GoogleAnalytics } from 'redux-beacon/targets/google-analytics';
+import { GoogleTagManager } from 'redux-beacon/targets/google-tag-manager';
+
+
 import { logger } from 'redux-beacon/extensions/logger';
 
 //Forms and toastr
@@ -73,7 +76,8 @@ const rootReducer = (state, action) => {
  */
 
 console.log('[Univjobs]: Starting the app in ENV =', process.env.CURRENT_ENV)
-const middleware = process.env.CURRENT_ENV === 'dev' ? createMiddleware(eventsMap, GoogleAnalytics, { logger }) : createMiddleware(eventsMap, GoogleAnalytics)
+const googleAnalyticsMiddleware = process.env.CURRENT_ENV === 'dev' ? createMiddleware(eventsMap, GoogleAnalytics, { logger }) : createMiddleware(eventsMap, GoogleAnalytics)
+const tagManagerMiddleware = createMiddleware(eventsMap, GoogleTagManager());
 
 /*
  * Apply all the middleware to create the redux store.
@@ -86,7 +90,7 @@ const middleware = process.env.CURRENT_ENV === 'dev' ? createMiddleware(eventsMa
  */
 
 const store = createStore(rootReducer,
-  compose(applyMiddleware(thunk, middleware),
+  compose(applyMiddleware(thunk, googleAnalyticsMiddleware, tagManagerMiddleware),
   window.devToolsExtension ? window.devToolsExtension() : (f) => f
 ));
 
