@@ -123,7 +123,7 @@ const InitialOverlay = React.createClass({
 
           debugger
 
-          if (this.props.location.pathname === "/join" || this.props.location.pathname === "/posting/*" || this.props.location.pathname === "/about-us") {
+          if (this.props.location.pathname === "/join" || this.props.location.pathname.search("posting") === 1 || this.props.location.pathname === "/about-us") {
                 return ("")
 
           }  else {
