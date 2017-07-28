@@ -10,8 +10,11 @@ import SkyLight from 'react-skylight'
 import { Footer } from 'modules/SharedComponents'
 
 // ================CSS IMPORTS============================== //
-import { employerCenteredContainer, header, subHeader, modalContent, errorMessage, btn, input } from '../styles/EmployerSignupStyles.css'
+import { employerCenteredContainer, header, subHeader, 
+        modalContent, errorMessage, btn, input,
+        overlayStyles, dialogStyles } from '../styles/EmployerSignupStyles.css'
 import { legalEmployer, gray } from '../styles/SignupContainerStyles.css'
+
 
 import { ValidPasswordVerifier } from 'modules/SharedComponents'
 
@@ -21,31 +24,6 @@ import { shine } from 'sharedStyles/animations.css'
 import { detectEnterPress } from 'helpers/utils'
 
 const styles = {
-  overlayStyles: {
-    position: 'absolute',
-    top: '0px',
-    left: '0px',
-    right: '0px',
-    bottom: '0px',
-    zIndex: 99,
-    backgroundColor: 'rgba(0,0,0,0.3)'
-  },
-  dialogStyles: {
-    height: '400px',
-    fontSize:'30px',
-    backgroundColor: '#fff',
-    borderRadius: '2px',
-    zIndex: 100,
-    padding: '15px',
-    boxShadow: '0 0 4px rgba(0,0,0,.14),0 4px 8px rgba(0,0,0,.28)',
-    position: 'absolute',
-    top: 'none',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: '537px',
-    marginLeft: '0px',
-    textAlign: 'center'
-  }
 };
 
 const EmployerSignup = React.createClass({
@@ -85,8 +63,8 @@ const EmployerSignup = React.createClass({
                 </button>
                 <div id="employer-signup-modal-wrapper">
                     <SkyLight 
-                        overlayStyles={styles.overlayStyles} 
-                        dialogStyles={styles.dialogStyles}
+                        overlayStyles={overlayStyles} 
+                        dialogStyles={dialogStyles}
                         closeButtonStyle={styles.closeButtonStyle}
                         hideOnOverlayClicked 
                         ref="employerModal" 

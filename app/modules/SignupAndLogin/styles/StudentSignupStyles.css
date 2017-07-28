@@ -1,14 +1,30 @@
-/*NOTE: Quick fix*/
+/*NOTE:
+ *  - Media queries found below
+ *  - New code has not been tested using Safari or Edge
+ *  - Porting from index to specific component not been tested
+ *  - CSS modules id's are unknown to me  at this moment
+ *
+ *  */
 
-/*FIXME: studentCenteredContainer & employeredCenteredCOntainer has similar strucure eexcept for background-image*/
+/*FIXME: 
+ * - Redundant code for studentSignup.css & this css file has similar strucure except for background-image
+ * - index.html media queiries shoul
+ *
+ * */
+
+
 .studentCenteredContainer {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    width: 100%;
+    min-height: 700px;
     align-items: center;
-    min-height: 100vh;
     background-size: cover;
     background-image: url("https://github.com/UnivJobs/univjobs-front/blob/master/images/front/coffeelaptop.jpg?raw=true");
+
+    /*NOTE: overflow seems to fix the error I encountered on the phone from showing the gray background*/
+    overflow: hidden;
 }
 
 
@@ -78,3 +94,71 @@
     border-radius: 18px;
     transition: 0.2s ease-out;
 }
+
+/* ===========================================Media Queiries===================================*/
+/*  TIDBIT: Start from the smallest screen and work your way up as a best practice
+ *
+ *
+ */
+
+/*=== min-width of 360px and breakpoint change to max-width of 412 ===*/
+@media (min-width: 360px) and (max-width: 412px) {
+
+    .studentCenteredContainer {
+        min-height: 500px;
+    }
+
+    .header {
+      text-align: center;
+      font-size: 35px;
+      font-weight: 600;
+      color: white;
+    }
+
+    .subHeader {
+      text-align: center;
+      font-size: 15px;
+      font-weight: 300;
+      color: white;
+      margin-bottom:40px;
+    }
+
+    .btn {
+        margin-top: 40px;
+        padding: 10px 15px 10px 15px;
+        border-radius: 3px;
+        border: 0;
+        background: #3697DB;
+        font-size: 1.0em;
+        color: white;
+        cursor: pointer;
+        margin: 0 auto;
+        min-height: 37px;
+    }
+
+
+}
+
+/*
+
+@media (min-width: 1200px) {
+    .container {
+        width: ;
+    }
+}
+
+@media (min-width: 992px) {
+    .container {
+        width: 970px;
+    }
+
+}
+
+
+@media (min-width: 768px) {
+    .container {
+        width: 750px;
+}
+
+
+*/

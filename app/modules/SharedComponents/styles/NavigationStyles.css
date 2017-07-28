@@ -1,17 +1,35 @@
-.nav {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+/*NOTE:
+ *  - Media queries found below
+ *  - New code has not been tested using Safari or Edge
+ *  - Porting from index to specific component not been tested
+ *  - CSS modules id's are unknown to me  at this moment
+ *
+ *  */
+
+.header {
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    min-height: 56px;
+    transition: min-height 0.3s;
     background-color: #52A7FA;
-    color: #100C27;
-    height: 10vh;
-    padding: 1vh 2vw;
-    align-items: center;
     
 }
 
-.navContainer {
- box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+.headerContainer {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.headerItem {
+    margin-top: 1em;
+    margin-bottom: 1em;
+    margin-right: 1em;
+    margin-left: 1em;
 }
 
 .btn {
@@ -20,10 +38,10 @@
     padding: 10px 15px 10px 15px;
     border-radius: 6px;
     border-style: solid;
-    border-color: white;
-    background-color: transparent;
+    border-color: #229AD6;
+    background-color: white;
     font-size: 1.0em;
-    color: white;
+    color: #229AD6;
     cursor: pointer;
 }
 
@@ -32,9 +50,9 @@
     border-radius: 6px;
     border-style: solid;
     border-color: #229AD6;
-    background-color: #229AD6;
+    background-color: white;
     font-size: 1.0em;
-    color: black;
+    color: white;
     cursor: pointer;
 }
 
@@ -45,7 +63,7 @@
     border-color: #3697DB;
     background-color: #3697DB;
     font-size: 1.0em;
-    color: black;
+    color: white;
     cursor: pointer;
 }
 .btn:active {
@@ -78,6 +96,7 @@
     font: inherit;
     min-height: 37px;
 }
+
 .noDeco {
     text-decoration: none;
 }
@@ -93,12 +112,65 @@
 }
 
 .navItem {
-    margin-left:10px;
+    margin-left: 0.5em;
+    margin-bottom: 0.5em;
+    margin-top: 0.5em;
     
 }
 
 .univjobsLogo {
-    width: 25vh;
-    padding-top: 10px;
+    height: 72px;
+    margin-right: 1.5em;
+    margin-left: 1.5em;
+    vertical-align: top;
+    margin-top: 12px;
 }
 
+
+
+/* ===========================================Media Queiries===================================*/
+/*  TIDBIT: Best advice for responsive web, start with the small screen and work your way up.
+ *
+ *
+ * */
+
+/*=== min-width of 360px ===*/
+@media (min-width: 360px) {
+    .header {
+        box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+        min-height: 23px;
+        transition: min-height 0.3s;
+        background-color: #52A7FA;
+        
+    }
+
+    .headerContainer {
+        width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+        display: flex;
+        flex-wrap: nowrap;
+    }
+
+    .headerItem {
+        margin-top: 0.5em;
+        margin-bottom: 0.5em;
+        margin-right: 0.5em;
+        margin-left: 0.5em;
+    }
+    
+    .univjobsLogo {
+        height: 72px;
+        margin-right: 1.5em;
+        margin-left: 1.5em;
+        vertical-align: top;
+        margin-top: 5px;
+    }
+
+    .navItem {
+        margin-left: 0.5em;
+        margin-bottom: 0.5em;
+        
+    }
+    
+}
