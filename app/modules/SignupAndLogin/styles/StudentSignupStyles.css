@@ -1,3 +1,5 @@
+/*NOTE: Quick fix*/
+
 /*FIXME: studentCenteredContainer & employeredCenteredCOntainer has similar strucure eexcept for background-image*/
 .studentCenteredContainer {
     display: flex;
