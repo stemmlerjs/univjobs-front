@@ -11,7 +11,7 @@ import { blackBackGround,flexContainer, flexRowContainer, flexRowItem,
          regularFlexContainer, subHeader, topMarginReduce,
          card, threeColumn, grayBackGround, section, picture,
          personsName, title, paragraph, 
-        charlesImg, khalilImg, georgeImg, julioImg }from '../styles/AboutPage.css'
+        charlesImg, khalilImg, georgeImg, julioImg, aboutUsTitle }from '../styles/AboutPage.css'
 
 /*
  *  * NOTE: Testing ES6 stateless function
@@ -24,6 +24,7 @@ const AboutPage = () => (
         <div>
             <div className={flexContainer}>
               <div className={header}>
+                <div className={aboutUsTitle}>About us</div>
                 <p className={marginReduce}>We're on a mission to build a platform</p>
                 <p className={marginReduce}>that connects employers to students and recent grads </p>
                 <p className={marginReduce}>for meaningful opportunities!</p>
@@ -68,7 +69,7 @@ const AboutPage = () => (
                         </div>
                         {/*FOURTH CARD*/} 
                         <div className={card}> 
-                            <div classNme={picture}>
+                            <div className={picture}>
                                 <img className={julioImg}/>              
                             </div>
                             <h3 className={personsName}>Julio Sueiras</h3>

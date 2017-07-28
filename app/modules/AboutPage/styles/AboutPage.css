@@ -9,16 +9,15 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
+    min-height: 56vh;
     background-size: cover;
-    /*FIXME: Find a different gif*/
     background-image: url(https://user-images.githubusercontent.com/7959179/28506140-382e9068-6ff7-11e7-953f-76be897772e6.jpg);
 }
 
 .header {
   text-align: center;
   font-size: 40px;
-  font-weight: 600;
+  font-weight: normal;
   color: white;
 }
 
@@ -30,13 +29,17 @@
 
 .fontLighter {
     font-weight: lighter;
-        font-size: 49px;
+    font-size: 49px;
+    font-style: italic;
+    margin-bottom: 30px;
 }
 
 
 .marginReduce {
     margin-top: 0px;
     margin-bottom: 0px;
+    margin-left: 15px;
+    margin-right: 15px;
 }
 
 .topMarginReduce {
@@ -119,6 +122,7 @@
 
 
 /*CARD*/
+
 .card {
     padding: 30px;
     display: flex;
@@ -257,4 +261,47 @@
     margin: 0;
     font-family: "Lato", sans-serif;
 
+}
+
+.aboutUsTitle {
+      color: #52a7fa;
+    font-size: 103px;
+    font-weight: bold;
+}
+
+
+/* ========================= MEDIA QUERIES =============================== */
+
+@media (max-width: 777px) {
+  .card {
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    display: -webkit-flex;
+    -webkit-flex-direction: column;
+    -webkit-justify-content: center;
+    /* width: 360px; */
+    background-color: #ffffff;
+    border: 1px solid #bdbbbb;
+    margin: 10px;
+    min-height: 400px;
+    min-width: 80%;
+  }
+}
+
+@media (min-width: 200px) and (max-width: 700px) {
+  .aboutUsTitle {
+      color: #52a7fa;
+      font-size: 78px;
+      font-weight: bold;
+  }
+
+  .marginReduce {
+        margin-top: 0px;
+    margin-bottom: 0px;
+    margin-left: 15px;
+    margin-right: 15px;
+    font-size: 27px;
+  }
 }

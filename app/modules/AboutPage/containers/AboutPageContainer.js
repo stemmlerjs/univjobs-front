@@ -9,8 +9,17 @@ import { Footer, RegularNav } from 'modules/SharedComponents'
 // =============REDUX STATE & IMPORTS========================== //
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import * as userActionCreators from 'redux/modules/user/user'
 import { authRedirectFilter } from 'config/routes'
+
+import * as userActionCreators from 'redux/modules/user/user'
+import * as signupFormActionCreators from 'redux/modules/signupForm/signupForm'
+import * as loginFormActionCreators from 'redux/modules/loginForm/loginForm'
+
+const actionCreators = {
+      ...userActionCreators,
+      ...signupFormActionCreators,
+      ...loginFormActionCreators
+}
 
 
 const AboutPageContainer = React.createClass({
@@ -28,18 +37,24 @@ const AboutPageContainer = React.createClass({
         document.body.scrollTop = document.documentElement.scrollTop = 0;
     },
     render () {
+      console.log(this.props, "props yo")
         return (
             <div>
-               <RegularNav/>
+               <RegularNav 
+                  dropDownActive={this.props.dropDownActive}
+                  toggleDropdownMenu={this.props.toggleDropdownMenu}
+                  router={this.context.router}
+                  closeNavDropDown={this.props.closeNavDropDown}/>
                <AboutPage/> 
                <Footer/>
              </div>
         )
     },
 })
-    function mapStateToProps({user}) {
+    function mapStateToProps({user, signupForm}) {
         return {
             user: user ? user : {},
+            dropDownActive: signupForm.dropDownActive ? signupForm.dropDownActive : false
         }
     }
     
@@ -53,7 +68,7 @@ const AboutPageContainer = React.createClass({
      *               **/
 
     function mapActionCreatorsToProps(dispatch) {
-          return bindActionCreators({}, dispatch)
+          return bindActionCreators(actionCreators, dispatch)
     }
 
     // connect(specify_what_keys_you_want_from_store, wraps_dispatch_around_action_creators)(container)

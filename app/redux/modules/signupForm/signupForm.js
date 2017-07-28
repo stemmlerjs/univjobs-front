@@ -17,8 +17,15 @@ const UPDATE_EMPLOYER_FORM = 'UPDATE_EMPLOYER_FORM'
 const SUBMIT_EMPLOYER_FORM_ERROR = 'SUBMIT_EMPLOYER_FORM_ERROR'
 
 const TOGGLE_DROPDOWN_MENU = 'TOGGLE_DROPDOWN_MENU'
+const CLOSE_NAV_DROP_DOWN = 'CLOSE_NAV_DROP_DOWN'
 
 // ACTION CREATORS
+export function closeNavDropDown () {
+  return {
+    type: CLOSE_NAV_DROP_DOWN
+  }
+}
+
 export function toggleDropdownMenu () {
   return {
     type: TOGGLE_DROPDOWN_MENU
@@ -236,6 +243,11 @@ const initialState = {
 
 export default function signupForm (state = initialState, action) {
   switch(action.type) {
+    case CLOSE_NAV_DROP_DOWN:
+      return {
+        ...state,
+        dropDownActive: false
+      }
     case TOGGLE_DROPDOWN_MENU:
       return {
         ...state,

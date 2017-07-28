@@ -105,6 +105,7 @@ const SignupContainer = React.createClass({
   handleSwitchUserType (e) {
     e.preventDefault()
     this.props.switchedUserType(this.props.isAStudent)
+    this.props.closeNavDropDown();
   },
 
 /**
@@ -119,6 +120,7 @@ const SignupContainer = React.createClass({
   openLoginModal (e) {
     e.preventDefault()
     this.refs.loginModal.show()
+    this.props.closeNavDropDown();
   },
 
 /**

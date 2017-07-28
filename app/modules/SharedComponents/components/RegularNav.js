@@ -13,7 +13,7 @@ import { Link } from 'react-router'
 // ================CSS IMPORTS============================== //
 import { header, leftsideNavItems, rightsideNavItems, 
   logoText, noDeco, btn, btnBabyBlue, pseudoBtn, loginIcon, navItem, univjobsLogo,
-  headerContainer, headerItem } from '../styles/NavigationStyles.css'
+  headerContainer, headerItem, globalDropdown, dropDownToggleButton, dropDownMenu, bold, border, hidden } from '../styles/NavigationStyles.css'
   import { material_1 } from 'sharedStyles/material.css'
 
 
@@ -21,7 +21,7 @@ import { header, leftsideNavItems, rightsideNavItems,
  *  * NOTE: Testing ES6 stateless function
  *   * Ref: https://toddmotto.com/stateless-react-components/
 */
-const RegularNav = () => (
+const RegularNav = ({ dropDownActive, toggleDropdownMenu, router, closeNavDropDown }) => (
     <header className={`${header}`}>
 
         <div className={headerContainer}>
@@ -37,6 +37,31 @@ const RegularNav = () => (
                         <Link to="/join" className={`${btn} ${navItem} ${material_1}`}>
                             SIGNUP
                         </Link>
+
+                    {
+                      /* 
+                       * ==============================================
+                       * DROPDOWN - when screen is in mobile view
+                       * ==============================================
+                       */
+                    }
+                    <div className={globalDropdown}>
+                      <i aria-hidden="true" data-hidden="true" className={"fa fa-bars"} onClick={() => {
+                        toggleDropdownMenu()
+                      }}></i>
+                    </div>
+                    <div className={dropDownActive ? dropDownMenu : `${dropDownMenu} ${hidden}`}>
+                      <ul>
+                        <li onClick={() => {
+                          closeNavDropDown()                          
+                          router.push("/join")
+                        }} className={`${bold} ${border}`}>Login</li>
+                        <li onClick={() => {
+                          closeNavDropDown()                          
+                          router.push("/join")
+                        }}>Sigup</li>
+                      </ul>
+                    </div>
                 </div>
           </div>
         </header>
