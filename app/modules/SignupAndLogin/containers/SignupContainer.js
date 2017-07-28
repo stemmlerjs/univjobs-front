@@ -269,6 +269,8 @@ const SignupContainer = React.createClass({
           onSwitchUserType={this.handleSwitchUserType}
           isAStudent={this.props.isAStudent}
           onOpenLoginModal={this.openLoginModal}
+          dropDownActive={this.props.dropDownActive}
+          toggleDropdownMenu={this.props.toggleDropdownMenu}
           logoOnly={false}
         />
         <SkyLight
@@ -364,7 +366,7 @@ function mapStateToProps({user, signupForm, loginForm}) {
     loginFormPasswordText: loginForm.password ? loginForm.password : '',
     loginFormErrorText: loginForm.error ? loginForm.error : '',
     isLoggingIn: user.isLoggingIn ? user.isLoggingIn : false,
-    isCreatingAccount: user.isCreatingAccount ? user.isCreatingAccount : false
+    dropDownActive: signupForm.dropDownActive ? signupForm.dropDownActive : false
   }
 }
 

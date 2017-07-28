@@ -16,7 +16,15 @@ const SUBMIT_STUDENT_FORM_ERROR = 'SUBMIT_STUDENT_FORM_ERROR'
 const UPDATE_EMPLOYER_FORM = 'UPDATE_EMPLOYER_FORM'
 const SUBMIT_EMPLOYER_FORM_ERROR = 'SUBMIT_EMPLOYER_FORM_ERROR'
 
+const TOGGLE_DROPDOWN_MENU = 'TOGGLE_DROPDOWN_MENU'
+
 // ACTION CREATORS
+export function toggleDropdownMenu () {
+  return {
+    type: TOGGLE_DROPDOWN_MENU
+  }
+}
+
 export function updateStudentForm (fieldName, newValue) {
   return {
     type: UPDATE_STUDENT_FORM,
@@ -222,11 +230,17 @@ export function submitEmployerSignupForm(firstName, lastName, companyName, phone
 
 const initialState = {
   studentSignupForm: {},
-  employerSignupForm: {}
+  employerSignupForm: {},
+  dropDownActive: false
 }
 
 export default function signupForm (state = initialState, action) {
   switch(action.type) {
+    case TOGGLE_DROPDOWN_MENU:
+      return {
+        ...state,
+        dropDownActive: !state.dropDownActive
+      }
     case UPDATE_STUDENT_FORM:
       return {
         ...state,

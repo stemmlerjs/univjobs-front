@@ -12,7 +12,7 @@ import { Link } from 'react-router'
 
 // ================CSS IMPORTS============================== //
 import { flexFooter, flexFooterRow, flexMediaItems, header, 
-         icon, link, spacer } from '../styles/Footer.css'
+         icon, link, spacer, knowUs } from '../styles/Footer.css'
 
 /*
  *  * NOTE: Testing ES6 stateless function
@@ -21,8 +21,10 @@ import { flexFooter, flexFooterRow, flexMediaItems, header,
 const Footer = () => (
     <footer className={flexFooter}>
         <div className={header}>
+            <p className={knowUs}>
+                Want to get to know more about us? &nbsp;
+            </p>
             <p>
-                Want to get know more about us? &nbsp;
                 <Link className={link} to={`join`}>
                     Check us out
                 </Link>

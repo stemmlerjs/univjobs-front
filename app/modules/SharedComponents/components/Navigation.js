@@ -12,7 +12,7 @@ import { Link } from 'react-router'
 // ================CSS IMPORTS============================== //
 import { header, leftsideNavItems, rightsideNavItems, 
   logoText, noDeco, btn, btnBabyBlue, pseudoBtn, loginIcon, navItem, univjobsLogo,
-  headerContainer, headerItem } from '../styles/NavigationStyles.css'
+  headerContainer, headerItem, globalDropdown, dropDownToggleButton, dropDownMenu, bold, border, hidden } from '../styles/NavigationStyles.css'
 
   import { material_1 } from 'sharedStyles/material.css'
 
@@ -22,7 +22,7 @@ Navigation.propTypes = {
   onOpenLoginModal: PropTypes.func
 }
 
-export default function Navigation ({isAStudent, onSwitchUserType, onOpenLoginModal, logoOnly}) {
+export default function Navigation ({isAStudent, onSwitchUserType, onOpenLoginModal, logoOnly, dropDownActive, toggleDropdownMenu}) {
   return (
 
     <header className={`${header}`}>
@@ -47,6 +47,26 @@ export default function Navigation ({isAStudent, onSwitchUserType, onOpenLoginMo
                     >
                         EMPLOYER
                     </button>
+
+                    {
+                      /* 
+                       * ==============================================
+                       * DROPDOWN - when screen is in mobile view
+                       * ==============================================
+                       */
+                    }
+
+                    <div className={globalDropdown}>
+                      <i aria-hidden="true" data-hidden="true" className={"fa fa-bars"} onClick={() => {
+                        toggleDropdownMenu()
+                      }}></i>
+                    </div>
+                    <div className={dropDownActive ? dropDownMenu : `${dropDownMenu} ${hidden}`}>
+                      <ul>
+                        <li onClick={onOpenLoginModal} className={`${bold} ${border}`}>Login</li>
+                        <li onClick={onSwitchUserType}>{isAStudent === true ? 'Employer Signup' : 'Student Signup'}</li>
+                      </ul>
+                    </div>
                 </div>
               : 
               <div className={headerItem}>
@@ -60,6 +80,26 @@ export default function Navigation ({isAStudent, onSwitchUserType, onOpenLoginMo
                 >
          STUDENT
                 </button>
+
+                {
+                      /* 
+                       * ==============================================
+                       * DROPDOWN - when screen is in mobile view
+                       * ==============================================
+                       */
+                    }
+
+                    <div className={globalDropdown}>
+                      <i aria-hidden="true" data-hidden="true" className={"fa fa-bars"} onClick={() => {
+                        toggleDropdownMenu()
+                      }}></i>
+                    </div>
+                    <div className={dropDownActive ? dropDownMenu : `${dropDownMenu} ${hidden}`}>
+                      <ul>
+                        <li onClick={onOpenLoginModal} className={`${bold} ${border}`}>Login</li>
+                        <li onClick={onSwitchUserType}>{isAStudent === true ? 'Employer Signup' : 'Student Signup'}</li>
+                      </ul>
+                    </div>
               </div>
             : ''
         }

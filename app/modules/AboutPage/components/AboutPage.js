@@ -23,11 +23,11 @@ import { blackBackGround,flexContainer, flexRowContainer, flexRowItem,
 const AboutPage = () => (
         <div>
             <div className={flexContainer}>
-                <div className={header}>
-                  <p className={marginReduce}>We're on a mission to build a platform</p>
-                  <p className={marginReduce}>that connects employers to students and recent grads </p>
-                  <p className={marginReduce}>for meaningful opportunities!</p>
-                </div>
+              <div className={header}>
+                <p className={marginReduce}>We're on a mission to build a platform</p>
+                <p className={marginReduce}>that connects employers to students and recent grads </p>
+                <p className={marginReduce}>for meaningful opportunities!</p>
+              </div>
             </div>
             <div className={section + ' ' + grayBackGround}>
                     <h1 className={fontLighter}>Meet The Team</h1>

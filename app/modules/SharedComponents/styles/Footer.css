@@ -34,6 +34,7 @@
     font-size: 1.6em;
     font-family: "Open Sans",sans-serif;
     margin: 0;
+    padding: 10px;
 }
 
 .link {
@@ -44,6 +45,10 @@
 
 .spacer {
     min-height: 8vh;
+}
+
+.knowUs {
+    font-size: 27px;
 }
 
 /* ===========================================Media Queiries===================================*/
@@ -71,8 +76,7 @@
 
     .header {
         font-size: 1.0em;
-        padding-left: 3em;
-        padding-right: 3em;
+        padding: 10px;
     }
 
     .flexFooterRow {

@@ -109,18 +109,30 @@
     }
 
     .header {
-      text-align: center;
-      font-size: 35px;
-      font-weight: 600;
-      color: white;
+          text-align: center;
+    font-size: 64px;
+    font-weight: 600;
+    color: white;
     }
 
     .subHeader {
-      text-align: center;
-      font-size: 15px;
-      font-weight: 300;
-      color: white;
-      margin-bottom:40px;
+          text-align: center;
+    font-size: 22px;
+    font-weight: 300;
+    color: white;
+    margin-bottom: 40px;
+    }
+
+    .legal {
+            font-size: 13px;
+    color: white;
+    margin-top: 15px;
+    font-weight: 400;
+    line-height: 18px;
+    white-space: normal;
+    margin-left: 36px;
+    margin-right: 36px;
+    
     }
 
     .btn {

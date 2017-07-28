@@ -121,8 +121,6 @@ const InitialOverlay = React.createClass({
     if (/Mobi/i.test(navigator.userAgent) || /Anroid/i.test(navigator.userAgent) || 
       /Mobile/i.test(navigator.userAgent)) {
 
-          debugger
-
           if (this.props.location.pathname === "/join" || this.props.location.pathname.search("posting") === 1 || this.props.location.pathname === "/about-us") {
                 return ("")
 
@@ -131,7 +129,7 @@ const InitialOverlay = React.createClass({
         * First disable scrolling
         */
 
-        disableScroll()
+        // disableScroll()
 
         return (
           <div style={{zIndex: '500', position: 'fixed', backgroundColor:'#52a7fa', color: 'white', left: 0, right: 0, top: 0, bottom: 0}}>

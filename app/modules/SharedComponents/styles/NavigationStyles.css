@@ -126,6 +126,16 @@
     margin-top: 12px;
 }
 
+.bold {
+    font-weight: bold;
+}
+
+.globalDropdown {}
+
+.dropDownToggleButton {}
+
+.dropDownMenu {}
+
 
 
 /* ===========================================Media Queiries===================================*/
@@ -135,7 +145,22 @@
  * */
 
 /*=== min-width of 360px ===*/
-@media (min-width: 360px) {
+
+@media (min-width: 416px) {
+    .globalDropdown {
+        display: none;
+        height: 0px;
+        overflow: hidden;
+    }
+
+    .dropDownMenu {
+        display: none;
+        height: 0px;
+        overflow: hidden;
+    }
+}
+
+@media (max-width: 415px) {
     .header {
         box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
         min-height: 23px;
@@ -159,6 +184,7 @@
         margin-left: 0.5em;
     }
     
+    
     .univjobsLogo {
         height: 72px;
         margin-right: 1.5em;
@@ -167,10 +193,111 @@
         margin-top: 5px;
     }
 
+    /* These two buttons should be inside a dropdown when the screen is this small. */
     .navItem {
         margin-left: 0.5em;
         margin-bottom: 0.5em;
-        
+        display:none;
+    }
+
+    .pseudoBtn {
+        display: none;
+    }
+    
+    /* Instead, we should be looking at a dropdown */
+
+    .globalDropdown {
+        margin-right: 22px;
+        color: white;
+    }
+
+    .globalDropdown i {
+        font-size: 23px;
+        cursor:pointer;
+        padding: 7px;
+    }
+
+    .globalDropdown i:active {
+        font-size: 23px;
+        cursor:pointer;
+        padding: 7px;
+        background-color: #3c9af7;
+    }
+
+    .dropDownMenu {
+        display: block;
+        position: absolute;
+        /* width: 100%; */
+        /* top: 100%; */
+        /* left: 0; */
+        z-index: 9;
+        min-width: 208px;
+        margin-top: 2px;
+        margin-bottom: 0;
+        font-size: 14px;
+        font-weight: normal;
+        padding: 8px 0;
+        background-color: #fff;
+        border: 1px solid #e5e5e5;
+        border-radius: 3px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        transform: translateY(-10px);
+        visibility: hidden;
+        transition-property: opacity, transform, visibility;
+        transition-duration: 70ms, 250ms, 250ms;
+        transition-timing-function: linear,cubic-bezier(0.23, 1, 0.32, 1);
+        transition-delay: 25ms, 50ms, 0ms;
+        display: block;
+        transform: translateY(0);
+        visibility: visible;
+        opacity: 1;
+        transition-duration: 100ms, 150ms, 25ms;
+        transition-delay: 35ms, 50ms, 25ms;
+        box-sizing: border-box;
+        right: 13px;
+        width: 49px;
+    }
+
+    .hidden {
+        opacity: 0;
+        transform: translateY(0);
+        transition-duration: 100ms, 150ms, 25ms;
+        transition-delay: 35ms, 50ms, 25ms;
+        height: 0px;
+            overflow: hidden;
+    }
+
+    .dropDownMenu ul {
+        text-align: left;
+        list-style: none;
+        padding-left: 22px;
+        padding-right: 22px;
+        margin-top: 5px;
+        margin-bottom: -6px;
+        font-size: 15px;
+        cursor: pointer;
+    }
+
+    .dropDownMenu ul:active {
+        text-align: left;
+        list-style: none;
+        padding-left: 22px;
+        padding-right: 22px;
+        margin-top: 5px;
+        margin-bottom: -6px;
+        font-size: 15px;
+        cursor: pointer;
+        background-color: #fbfbfb;
+    }
+
+    .dropDownMenu li {
+        margin-bottom: 7px;
+        /* color: black; */
+        padding-bottom: 10px;
+    }
+
+    .border {
+        border-bottom: solid 1px #eae6e6;
     }
     
 }
