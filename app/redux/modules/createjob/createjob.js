@@ -148,7 +148,8 @@ export function createNewJob(props, jobType, successCallback, failureCallback) {
        1, // active (?)
        0, // verified
        props.page1.remoteWork ? 1 : 0,
-       props.page1.desiredSkills
+       props.page1.desiredSkills,
+       Number(props.page3.numPositions)
     )
     .then((res) => {
       console.log(res)
@@ -449,6 +450,7 @@ function page2Errors(state = page2PropsErrorMap, action) {
 
 const page3InitialState = {
   maxApplicants: 20,
+  numPositions: 20,
   costPerApplicant: 0,
   allowStudentsOption: {},
   applyFilters: false,

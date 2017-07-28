@@ -18,16 +18,15 @@ import { blackBackGround,flexContainer, flexRowContainer, flexRowItem,
  *   * Ref: https://toddmotto.com/stateless-react-components/
  *
  *   NOTE: Maybe use scroll http://stackoverflow.com/questions/30495062/how-can-i-scroll-a-div-to-be-visible-in-reactjs
- *  
-*/
+ */
 
 const AboutPage = () => (
         <div>
             <div className={flexContainer}>
                 <div className={header}>
-                    <p className={marginReduce}>We're on a mission to build a platform</p>
-                    <p className={marginReduce}>that connects employers to students and recent grads </p>
-                    <p className={marginReduce}>for meaningful opportunities!</p>
+                  <p className={marginReduce}>We're on a mission to build a platform</p>
+                  <p className={marginReduce}>that connects employers to students and recent grads </p>
+                  <p className={marginReduce}>for meaningful opportunities!</p>
                 </div>
             </div>
             <div className={section + ' ' + grayBackGround}>

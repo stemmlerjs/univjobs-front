@@ -21,7 +21,7 @@ import { lastPageContainer, input, textarea,
         italics, specialInput, reminderContainer, bold, 
         detailsContainer, detailsLeft, detailsRight, 
         detailsHeaderLeft, detailsTitle, detailsBody, buttonsContainer,
-        jobIndustry, detailsHeaderRight, marginTop, table, pageContainer } from '../styles/CreateJobFormPageStyles.css'
+        jobIndustry, detailsHeaderRight, marginTop, table, pageContainer, leftPadTableItem } from '../styles/CreateJobFormPageStyles.css'
 
 import { rootComponentContainer } from 'sharedStyles/sharedComponentStyles.css'
 
@@ -99,8 +99,6 @@ export default function CreateJobFormPage4 (props) {
             officeAddress={props.employerProfile.officeAddress}
             officeCity={props.employerProfile.officeCity}
           />
-
-
         </div>
 
         <div className={detailsRight}>
@@ -115,19 +113,23 @@ export default function CreateJobFormPage4 (props) {
             <table className={table}>
               <tbody>
                 <tr>
-                 <td>Max Applicants</td>
+                 <td className={leftPadTableItem}>Max Applicants</td>
                  <td>{props.maxApplicants}</td>
                 </tr>
                 <tr>
-                 <td>Cost per applicant</td>
+                 <td className={leftPadTableItem}>Number of positions</td>
+                 <td>{props.numPositions}</td>
+                </tr>
+                <tr>
+                 <td className={leftPadTableItem}>Cost per applicant</td>
                  <td>$0</td>
                 </tr>
                 <tr>
-                 <td>Number of campuses</td>
+                 <td className={leftPadTableItem}>Number of campuses</td>
                  <td>1</td>
                 </tr>
                 <tr>
-                 <td>Premium options</td>
+                 <td className={leftPadTableItem}>Premium options</td>
                  <td>0</td>
                 </tr>
               </tbody>
@@ -141,11 +143,11 @@ export default function CreateJobFormPage4 (props) {
             <table className={table}>
               <tbody>
                 <tr>
-                  <td>Credit Card</td>
+                  <td className={leftPadTableItem}>Credit Card</td>
                   <td style={{fontStyle: 'italic'}}>Disabled</td>
                 </tr>
                 <tr>
-                  <td>Promo Code</td>
+                  <td className={leftPadTableItem}>Promo Code</td>
                   <td style={{fontStyle: 'italic'}}>Disabled</td>
                 </tr>
               </tbody>

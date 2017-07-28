@@ -9,8 +9,9 @@ import { pageContainerAlt, input, textarea, pageContainer,
         saveBtnList, saveBtn, saveBtnContainer, 
         selectedSaveBtn, inlineDate, navSaveBtn, 
         navBackBtn, error, leftDivider, 
-        rightDivider, sectionHeader, sectionBody, 
-        italics, specialInput } from '../styles/CreateJobFormPageStyles.css'
+        rightDivider, sectionHeader, sectionBody, sectionBodyRight, applicantsjobsCountHeader,
+        applicantsjobsCount, divide, red, sectionBodyPremium,
+        italics, specialInput, sectionText, sectionText2 } from '../styles/CreateJobFormPageStyles.css'
 import { rootComponentContainer } from 'sharedStyles/sharedComponentStyles.css'
 
 export default function CreateJobFormPage3 (props) {
@@ -24,30 +25,55 @@ export default function CreateJobFormPage3 (props) {
           {/* SECTION 1 */}
           <div className={sectionHeader}>AUDIENCE TARGETING</div>
           <div className={sectionBody}>
-            <p>Maximum number of resumes you want to receive? </p>
-            <input type="number" 
-              className={props.page.page3PropsErrorMap.maxApplicants ? specialInput + ' ' + error : specialInput}
-              
-              onChange={(e) => props.updateFormField('maxApplicants', e.target.value, 3)}/>
-              <span className={italics}> (Minimum 20) </span>
-            <p className={italics}>This job posting will be removed once you receive the number of resumes you desire.</p>
+            <div>
+              <div className={sectionText}>Maximum number of resumes you want to receive?</div>
+              <input type="number" 
+                defaultValue={20}
+                className={props.page.page3PropsErrorMap.maxApplicants ? specialInput + ' ' + error : specialInput}
+                
+                onChange={(e) => props.updateFormField('maxApplicants', e.target.value, 3)}/>
+                <span className={italics}> (Minimum 20) </span>
+            </div>
+            <div>
+              <div className={sectionText2}>Maximum number of positions available?</div>
+              <input type="number" 
+                defaultValue={1}
+                className={props.page.page3PropsErrorMap.numPositions ? specialInput + ' ' + error : specialInput}
+                onChange={(e) => props.updateFormField('numPositions', e.target.value, 3)}
+              />
+            </div>
           </div>
 
           <br></br>
 
           {/* SECTION 2 */}
           <div className={sectionHeader}>PREMIUM FILTERS</div>
-          <div className={sectionBody}>
+          <div className={sectionBodyPremium}>
             <p>Premium filters and features coming soon!</p>
           </div>
         </div>
 
       {/* RIGHTSIDE */}
         <div className={rightDivider}>
-          <h3>YOUR ORDER</h3>
-          <h3>-</h3>
-          <h3>Max Applicants</h3>
-          <h3>{props.page.maxApplicants}</h3>
+          <div className={sectionHeader}>YOUR ORDER</div>
+          <div className={sectionBodyRight}>
+            <div className={applicantsjobsCountHeader}>
+              <div>Applicant Slots</div>
+              <div># of Jobs</div>
+            </div>
+            <div className={applicantsjobsCount}>
+              {
+                props.page.maxApplicants >= 20 
+                  ? <div>{props.page.maxApplicants}</div>
+                  : <div className={red}>{props.page.maxApplicants}</div> 
+              }
+              <div className={divide}>{" / "}</div>
+              { props.page.numPositions > 0 
+                  ? <div>{props.page.numPositions}</div>
+                  : <div className={red}>{props.page.numPositions}</div>
+              }
+            </div>
+          </div>
         </div>
       </div>
 

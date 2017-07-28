@@ -32,7 +32,7 @@ export default function CreateJobFormPage2 (props) {
           <h4>Tip:</h4>
             <ul className={alignLeft}>
               <li className={alignLeft}>Pause and think to decide carefully! You may not have a chance to change these questions
-          without contacting us once applicants have begun answering them</li>
+          without contacting us once applicants have begun answering them.</li>
             </ul>
         </div>
 

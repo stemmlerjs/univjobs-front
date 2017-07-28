@@ -12,7 +12,7 @@ import { rootComponentContainer } from 'sharedStyles/sharedComponentStyles.css'
 import { pageContainer, input, textArea, 
         saveBtnList, saveBtn, saveBtnContainer, 
         selectedSaveBtn, inlineDate, navSaveBtn, 
-        navBackBtn, error, reallyTrickyPageContainerContainer } from '../styles/CreateJobFormPageStyles.css'
+        navBackBtn, error, reallyTrickyPageContainerContainer, responsibilitiesClass } from '../styles/CreateJobFormPageStyles.css'
 
 
 export default function CreateJobFormPage1 (props) {
@@ -83,8 +83,8 @@ export default function CreateJobFormPage1 (props) {
       {/* RESPONSIBILTIES */}
       <FormField title="Responsibilities">
         <textarea rows="6" 
-          className={props.page.page1PropsErrorMap.responsibilities ? textArea + ' ' + error : textArea}
-          placeholder="Write a short blurb about the job!&#10;&#8203; &#10;ADVICE: Place the number of hours expected to work per week. &#10;&#8203; &#10;Warning! To ensure safety of the students. A job post will not be approved if the application contains any URLS or email alias. All students should apply through UnivJobs"
+          className={props.page.page1PropsErrorMap.responsibilities ? `${textArea} ${error} ${responsibilitiesClass}` : `${textArea} ${responsibilitiesClass}`}
+          placeholder="Write a short blurb about the job!&#10;&#8203; &#10;ADVICE: Place the number of hours expected to work per week. &#10;&#8203; &#10;Warning! To ensure safety of the students. A job post will not be approved if the application contains any URLS or email alias. All students should apply through UnivJobs."
           maxLength={props.page.MAX_CHARS_responsibilities}
           value={props.page.responsibilities}
           onChange={(e) => props.updateFormField('responsibilities', e.target.value, 1)}>
@@ -95,7 +95,7 @@ export default function CreateJobFormPage1 (props) {
       {/* QUALIFICATIONS */}
       <FormField title="Qualifications">
         <textarea rows="6" className={props.page.page1PropsErrorMap.qualifications ? error + ' ' + textArea : textArea}
-          placeholder="Write a short blurb about the qualifications! &#10;&#8203; &#10;Warning! To ensure safety of the students. A job post will not be approved if the application contains any URLS or email alias. All students should apply through UnivJobs"
+          placeholder="Write a short blurb about the qualifications! &#10;&#8203; &#10;Warning! To ensure safety of the students. A job post will not be approved if the application contains any URLS or email alias. All students should apply through UnivJobs."
           value={props.page.qualifications}
           maxLength={props.page.MAX_CHARS_qualifications}
           onChange={(e) => props.updateFormField('qualifications', e.target.value, 1)}>
@@ -108,7 +108,7 @@ export default function CreateJobFormPage1 (props) {
         <input 
           className={props.page.page1PropsErrorMap.desiredSkills ? error + ' ' + input : input} 
           type="text"
-          placeholder=""
+          placeholder="Photoshop, WordPress, outgoing, etc"
           maxLength={props.page.MAX_CHARS_desiredSkills}
           value={props.page.desiredSkills}
           onChange={(e) => props.updateFormField('desiredSkills', e.target.value, 1)}>
@@ -146,7 +146,7 @@ export default function CreateJobFormPage1 (props) {
         <input 
           className={props.page.page1PropsErrorMap.internshipLocation ? error + ' ' + input : input} 
           type="text"
-          placeholder={props.page.remoteWork ? '' : "EXAMPLE: 100 City Centre Dr, Mississauga, ON"}
+          placeholder={props.page.remoteWork ? '' : "100 City Centre Dr, Mississauga, ON"}
           value={props.page.internshipLocation}
           onChange={(e) => props.updateFormField('internshipLocation', e.target.value, 1)}
           disabled={props.page.remoteWork ? true : false}
@@ -157,7 +157,7 @@ export default function CreateJobFormPage1 (props) {
       {/* COMPENSATION */}
       <FormField title="Compensation">
         <textarea rows="6" className={props.page.page1PropsErrorMap.compensation ? error + ' ' + textArea : textArea}
-          placeholder="EXAMPLE: $15/hr, paid training, mentorship support, etc... "
+          placeholder="$15/hr, paid training, mentorship support, etc... "
           value={props.page.compensation}
           maxLength={props.page.MAX_CHARS_compensation}
           onChange={(e) => props.updateFormField('compensation', e.target.value, 1)}>

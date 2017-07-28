@@ -20,7 +20,8 @@ export function createNewJobPOST (
   active,
   verified,
   remoteWork,
-  desiredSkills) {
+  desiredSkills,
+  numPositions) {
 
   const accessToken = getAccessToken();
   const csrfToken = getCSRFToken();
@@ -72,7 +73,8 @@ export function createNewJobPOST (
       // active,                  // boolean?
       // verified                // boolean?
       remote_work: remoteWork,
-      desired_skills: desiredSkills
+      desired_skills: desiredSkills,
+      num_positions: numPositions
     }
   })
 }
@@ -135,6 +137,7 @@ export function validateCreateJobFields(currentPage, pageProps, next) {
  /*
   * Note that these questions are optional. We don't have to ask a question.
   * We can also ask only 1 question instead of 2.
+  *
   */
 
   else if (currentPage === 2) {
@@ -174,6 +177,7 @@ export function validateCreateJobFields(currentPage, pageProps, next) {
 
     // Validate each field in it's own unique way
     page3Errors.maxApplicants = pageProps.maxApplicants >= 20 ? false : true
+    page3Errors.numPositions = pageProps.numPositions >= 1 ? false : true
 
     // If an error exists in the map, then errorsExist === true
     for (var attr in page3Errors) {

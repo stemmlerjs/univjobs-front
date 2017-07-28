@@ -435,7 +435,6 @@ const CreateJobContainer = React.createClass({
   },
 
   render () {
-    //debugger
 
     var jobType;
 
@@ -454,9 +453,6 @@ const CreateJobContainer = React.createClass({
     } else if (route.indexOf("pt") !== -1) {
       jobType = 6;
     } 
-
-    console.log(this.props)
-    console.log(jobType)
 
     return (
       <div>
@@ -527,6 +523,7 @@ const CreateJobContainer = React.createClass({
                     page={this.props.page4}
                     next={this.next}
                     back={this.goBack}
+                    
                     jobType={jobType}
                     jobTitle={this.props.page1.jobTitle}
                     industries={this.props.industriesObj ? this.props.industriesObj : {}}
@@ -535,8 +532,9 @@ const CreateJobContainer = React.createClass({
                     companyName={this.props.companyName}
                     logoUrl={this.props.logoUrl}
                     maxApplicants={this.props.page3.maxApplicants}
+                    numPositions={this.props.page3.numPositions}
                     updateFormField={this.props.updateFormField}
-                    
+
                     responsibilities={this.props.page1 ? this.props.page1.responsibilities : ''}
                     qualification={this.props.page1 ? this.props.page1.qualification : ''}
                     address={this.props.page1 ? this.props.page1.internshipLocation : '' }
@@ -699,7 +697,8 @@ function mapStateToProps({dashboard, createJob, profile, user, list}) {
       }
     },
     page3: {
-      maxApplicants: createJob.page3.maxApplicants ? createJob.page3.maxApplicants : '',
+      maxApplicants: createJob.page3.maxApplicants ? createJob.page3.maxApplicants : 20,
+      numPositions: createJob.page3.numPositions ? createJob.page3.numPositions : 1,
       page3PropsErrorMap: createJob.page3.page3PropsErrorMap ? createJob.page3.page3PropsErrorMap : {
         maxApplicants: false
       }
