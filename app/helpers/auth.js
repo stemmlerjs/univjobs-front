@@ -19,6 +19,7 @@ import { sanitize } from 'helpers/utils'
   */
 
 export function login (email, password) {
+  email = email.replace(/^\s+|\s+$/g, '').toLowerCase()
   let bodyData = {
     email,
     password
@@ -140,7 +141,7 @@ export function createStudentAccount(email, password) {
 //  const accessToken = getAccessToken()
 
   return axios.post(config.baseUrl + 'register/', {
-    email: sanitize(email),
+    email: sanitize(email).replace(/^\s+|\s+$/g, '').toLowerCase(),
     password: sanitize(password)
   })
 
@@ -169,7 +170,7 @@ export function createEmployerAccount(firstName, lastName, companyName, mobile, 
    //   'X-CSRFToken': csrfToken
     },
     data: {
-      email: sanitize(email),
+      email: sanitize(email).replace(/^\s+|\s+$/g, '').toLowerCase(),
       password: sanitize(password),
       first_name: sanitize(firstName),
       last_name: sanitize(lastName),
