@@ -297,6 +297,17 @@
       font-weight: bold;
   }
 
+  .flexContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 56vh;
+    background-size: cover;
+    background-image: url(https://user-images.githubusercontent.com/7959179/28506140-382e9068-6ff7-11e7-953f-76be897772e6.jpg);
+    height: 579px;
+  }
+
   .marginReduce {
         margin-top: 0px;
     margin-bottom: 0px;
