@@ -13,6 +13,7 @@
     justify-content: center;
     align-content: center;
     text-align: center;
+    padding-bottom: 0px;
 }
 
 .flexFooterRow {
@@ -44,11 +45,15 @@
 }
 
 .spacer {
-    min-height: 8vh;
+    min-height: 4vh;
 }
 
 .knowUs {
     font-size: 27px;
+}
+
+.withLoveSection {
+    background-color: #52a7fa;
 }
 
 /* ===========================================Media Queiries===================================*/
@@ -63,6 +68,7 @@
         padding: 16px 0;
         margin-left: auto;
         margin-right: auto;
+        padding-bottom:0px;
     }
 
 

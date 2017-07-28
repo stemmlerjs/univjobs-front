@@ -273,40 +273,40 @@ const SignupContainer = React.createClass({
           toggleDropdownMenu={this.props.toggleDropdownMenu}
           logoOnly={false}
         />
-        <SkyLight
-            overlayStyles={styles.overlayStyles}
-            dialogStyles={styles.dialogStyles}
-            closeButtonStyle={styles.closeButtonStyle}
-            hideOnOverlayClicked
-            ref="loginModal"
-            title="Log in">
-            <div>
-              <input className={input}
-                name="login[email]"
-                onChange={(e) => this.props.updateLoginForm('email', e.target.value)}
-                type="text"
-                onKeyUp={(e) => detectEnterPress(e, this.submitOnEnter)}
-                placeholder="Email"
-               />
-              <input className={input}
-                name="login[password]"
-                onChange={(e) => this.props.updateLoginForm('password', e.target.value)}
-                type="password"
-                onKeyUp={(e) => detectEnterPress(e, this.submitOnEnter)}
-                placeholder="Password"
-              />
-              <div className={passwordRst} onClick={() => {
-                this.context.router.push('/password/reset')
-              }}>Forgot your password?</div>
-            </div>
-            <div className={errorMessage}>
-              { this.props.loginFormErrorText }
-            </div>
-              <button className={!this.props.isLoggingIn ? loginBtn : `${loginBtn} ${shine}`} onClick={this.handleLoginAttempt}>Next</button>
-          </SkyLight>
+        <div id="login-modal-wrapper">
+          <SkyLight
+              closeButtonStyle={styles.closeButtonStyle}
+              hideOnOverlayClicked
+              ref="loginModal"
+              title="Log in">
+              <div>
+                <input className={input}
+                  name="login[email]"
+                  onChange={(e) => this.props.updateLoginForm('email', e.target.value)}
+                  type="text"
+                  onKeyUp={(e) => detectEnterPress(e, this.submitOnEnter)}
+                  placeholder="Email"
+                />
+                <input className={input}
+                  name="login[password]"
+                  onChange={(e) => this.props.updateLoginForm('password', e.target.value)}
+                  type="password"
+                  onKeyUp={(e) => detectEnterPress(e, this.submitOnEnter)}
+                  placeholder="Password"
+                />
+                <div className={passwordRst} onClick={() => {
+                  this.context.router.push('/password/reset')
+                }}>Forgot your password?</div>
+              </div>
+              <div className={errorMessage}>
+                { this.props.loginFormErrorText }
+              </div>
+                <button className={!this.props.isLoggingIn ? loginBtn : `${loginBtn} ${shine}`} onClick={this.handleLoginAttempt}>Next</button>
+            </SkyLight>
+          </div>
 
           { this.props.isAStudent === true ?
-            <div>
+            <div id="student-signup-modal-wrapper">
               <StudentSignup
                 emailText={this.props.studentEmail}
                 passwordText={this.props.studentPassword}

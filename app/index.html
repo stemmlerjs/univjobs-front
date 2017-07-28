@@ -112,19 +112,44 @@
       .gone {
         display:none;
       }
+      
+     /*
+      * Login Modal for the app
+      */
+
+      #login-modal-wrapper .skylight-dialog {
+        width: 330px !important;
+        height: 358px !important;
+        position: fixed !important;
+        top: 50% !important;
+        left: 50% !important;
+        margin-top: 0px !important;
+        margin-left: 0px !important;
+        background-color: rgb(255, 255, 255) !important;
+        border-radius: 2px !important;
+        z-index: 100 !important;
+        padding: 2px !important;
+        box-shadow: rgba(0, 0, 0, 0.137) 0px 0px 4px, rgba(0, 0, 0, 0.28) 0px 4px 8px !important;
+        font-size: 20px !important;
+        text-align: center !important;
+        display: block !important;
+        flex-direction: column !important;
+        transform: translate(-50%, -50%) !important;
+        padding-top: 33px !important;
+      }
 
      /*
       * Employer Signup Modal Wrapper
       */
 
       #employer-signup-modal-wrapper .skylight-dialog {
-        width: 537px;
-        height: 463px !important;
-        position: absolute;
-        left: 50%;
-        margin-top: -200px;
-        margin-left: 0px;
-        background-color: rgb(255, 255, 255);
+        width: 537px !important;
+        height: 400px !important;
+        position: absolute !important;
+        left: 50% !important;
+       top: 70% !important; 
+        margin-left: 0px !important;
+        background-color: rgb(255, 255, 255) !important;
         border-radius: 2px;
         z-index: 100;
         padding: 15px;
@@ -133,6 +158,32 @@
         transform: translate(-50%, -50%);
         text-align: center;
         display: block;
+        height: 566px !important;
+      }
+
+     /*
+      * Employer Signup Modal Wrapper (less than 565px)
+      */
+
+      @media (max-width: 565px) {
+        #employer-signup-modal-wrapper .skylight-dialog {
+          width: 98% !important;
+          height: 400px !important;
+          position: absolute !important;
+          left: 50% !important;
+          top: 70% !important; 
+          margin-left: 0px !important;
+          background-color: rgb(255, 255, 255) !important;
+          border-radius: 2px;
+          z-index: 100;
+          padding: 15px;
+          box-shadow: rgba(0, 0, 0, 0.14) 0px 0px 4px, rgba(0, 0, 0, 0.28) 0px 4px 8px;
+          font-size: 30px;
+          transform: translate(-50%, -50%);
+          text-align: center;
+          display: block;
+          height: 566px !important;
+        }
       }
 
       /*

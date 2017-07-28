@@ -12,7 +12,7 @@ import { Link } from 'react-router'
 
 // ================CSS IMPORTS============================== //
 import { flexFooter, flexFooterRow, flexMediaItems, header, 
-         icon, link, spacer, knowUs } from '../styles/Footer.css'
+         icon, link, spacer, knowUs, withLoveSection } from '../styles/Footer.css'
 
 /*
  *  * NOTE: Testing ES6 stateless function
@@ -56,7 +56,7 @@ const Footer = () => (
                 Contact
             </Link>
         </div>
-        <div className={flexFooterRow}> 
+        <div className={`${flexFooterRow} ${withLoveSection}`}> 
           <div>
             <p>
                 Made with &hearts; in the town of Oakville • Product of DCommons, Inc. © 2017
