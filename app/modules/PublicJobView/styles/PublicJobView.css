@@ -1,20 +1,6 @@
 
-.publicJobViewContainerStyle {
-display: flex;
-    width: 100%;
-    padding-top: 60px;
-    /* padding-bottom: 60px; */
-    background-color: white;
-    justify-content: center;
-    flex-direction: column;
-}
 
-.jobViewMiddleContainer {
-    width: 50%;
-    min-width: 600px;
-    max-width: 775px;
-    margin: 0 auto;
-}
+
 
 .employerPicture {
     height: 250px;
@@ -214,6 +200,8 @@ padding-left: 50px;
     background-repeat: no-repeat;
     margin-right: 10px;
     cursor: pointer;
+    min-width: 34px;
+    min-height: 34px;
 }
 
 .twitterShareButton {
@@ -225,6 +213,8 @@ padding-left: 50px;
     background-repeat: no-repeat;
     margin-right: 10px;
     cursor: pointer;
+    min-width: 34px !important;
+    min-height: 34px !important;
 }
 
 .linkedInShareButton {
@@ -236,6 +226,8 @@ padding-left: 50px;
     background-repeat: no-repeat;
     margin-right: 10px;
     cursor: pointer;
+    min-width: 34px !important;
+    min-height: 34px !important;
 }
 
 .emailShareButton {
@@ -247,12 +239,8 @@ padding-left: 50px;
     background-repeat: no-repeat;
     margin-right: 10px;
     cursor: pointer;
-}
-
-.socialLinksContainer {
-    margin-top: 12px;
-    float: right;
-    width: 250px;
+    min-width: 34px !important;
+    min-height: 34px !important;
 }
 
 .shareHeader {
@@ -262,10 +250,6 @@ padding-left: 50px;
     text-align: left;
 }
 
-.linksFlex {
-    display: flex;
-    flex-direction: row;
-}
 
 .viewInAppLink {
         text-align: right;
@@ -281,4 +265,116 @@ padding-left: 3px;
     /* background-color: #7b7bd8; */
     color: #1e9ae3;
     margin-top: 8px;
+}
+
+
+    
+
+/* EVERYTHING ELSE GREATER THAN 361 */
+
+@media (min-width: 646px) {
+
+.linksFlex {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .publicJobViewContainerStyle {
+    display: flex;
+        width: 100%;
+        padding-top: 60px;
+        /* padding-bottom: 60px; */
+        background-color: white;
+        justify-content: center;
+        flex-direction: column;
+    }
+
+    
+    .jobViewMiddleContainer {
+        width: 50%;
+        min-width: 600px;
+        max-width: 775px;
+        margin: 0 auto;
+    }
+
+    .socialLinksContainer {
+        margin-top: 12px;
+        float: right;
+        width: 250px;
+    }
+
+}
+
+
+/* EVERYTHING LOWER THAN 360 */
+
+@media (max-width: 645px) {
+
+    .publicJobViewContainerStyle {
+        display: flex;
+        width: 100%;
+        padding-top: 60px;
+         padding-bottom: 0px; 
+        background-color: white;
+        justify-content: center;
+        flex-direction: column;
+    }
+
+    .jobViewMiddleContainer {
+     min-width: none;
+     max-width: none;
+     margin: none;
+    width: 100%;
+
+    }
+
+    .topSection {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .employerPictureContainer {
+            width: 100%;
+    text-align: center;
+    margin: none;
+    margin-bottom: 33px;
+    }
+
+    .socialLinksContainer {
+        margin-top: 12px;
+        /* float: right; */
+        width: 100%;
+    }
+
+    .headerInfoContainer {
+        width: 100%;
+        text-align: left;
+        padding-left: 25px;
+        padding-right: 25px;
+    }
+
+    .bodySectionContainer {
+            padding-left: 15px;
+    padding-right: 15px;
+    text-align: left;
+    margin-top: 54px;
+    font-size: 15px;
+    width: 100%;
+    }
+
+    .callToActionContainer > h1 {
+        color: #19a0ff;
+    margin-left: 12px;
+    margin-right: 12px;
+    }
+
+    .shareHeader {
+            font-size: 17px;
+        font-weight: bold;
+        margin-bottom: 14px;
+        text-align: center;
+    }
+
 }

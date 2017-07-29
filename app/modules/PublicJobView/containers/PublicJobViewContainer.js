@@ -19,6 +19,9 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as userActionCreators from 'redux/modules/user/user'
 import * as publicJobViewActionCreators from 'redux/modules/job/publicJobView'
+import * as signupFormActionCreators from 'redux/modules/signupForm/signupForm'
+import * as loginFormActionCreators from 'redux/modules/loginForm/loginForm'
+
 import employerProfileModal from 'redux/modules/dashboard/employerProfileModal'
 
 import PublicJobView from '../components/PublicJobView'
@@ -131,7 +134,12 @@ const PublicJobViewContainer = React.createClass({
   render () {
     return (
       <div>
-        <RegularNav/>
+        <RegularNav
+          dropDownActive={this.props.dropDownActive}
+          toggleDropdownMenu={this.props.toggleDropdownMenu}
+          router={this.context.router}
+          closeNavDropDown={this.props.closeNavDropDown}
+          />
         {
           this.props.publicJobView
             ? this.props.publicJobView.job 
@@ -174,12 +182,13 @@ const PublicJobViewContainer = React.createClass({
   },
 })
 
-function mapStateToProps({ job, dashboard, user }) {
+function mapStateToProps({ job, dashboard, user, signupForm }) {
   return {
     publicJobView: job.publicJobView ? job.publicJobView : {},
     employerProfileModal: dashboard.employerProfileModal ? dashboard.employerProfileModal : {},
     isAuthenticated: user.isAuthenticated ? user.isAuthenticated : false,
-    isAStudent: user.isAStudent ? user.isAStudent : false
+    isAStudent: user.isAStudent ? user.isAStudent : false,
+    dropDownActive: signupForm.dropDownActive ? signupForm.dropDownActive : false
   }
 }
 
@@ -187,6 +196,8 @@ function mapActionCreatorsToProps(dispatch) {
   return bindActionCreators({
     ...userActionCreators,
     ...publicJobViewActionCreators,
+    ...signupFormActionCreators,
+    ...loginFormActionCreators,
     ...employerProfileModal.actionCreators
   }, dispatch)
 }

@@ -37,17 +37,17 @@ const AboutPageContainer = React.createClass({
         document.body.scrollTop = document.documentElement.scrollTop = 0;
     },
     render () {
-      console.log(this.props, "props yo")
         return (
-            <div>
-               <RegularNav 
-                  dropDownActive={this.props.dropDownActive}
-                  toggleDropdownMenu={this.props.toggleDropdownMenu}
-                  router={this.context.router}
-                  closeNavDropDown={this.props.closeNavDropDown}/>
-               <AboutPage/> 
-               <Footer/>
-             </div>
+          <div>
+            <RegularNav 
+              dropDownActive={this.props.dropDownActive}
+              toggleDropdownMenu={this.props.toggleDropdownMenu}
+              router={this.context.router}
+              closeNavDropDown={this.props.closeNavDropDown}
+            />
+            <AboutPage/> 
+            <Footer/>
+          </div>
         )
     },
 })

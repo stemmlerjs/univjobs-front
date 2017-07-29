@@ -58,23 +58,19 @@
     <meta name="theme-color" content="#ffffff">
     
     <style>
+
       /* ========================== ROOT CSS ============================ */
         /* This is where most initial css should be placed to be provide a standard for all screens
-           and components
-         
+         * and components.
          */
+
         img, embed, object, video {
             max-width: 100%;
         }
 
-        nav, a, button {
+        nav, a {
             min-width: 48px;
             min-height: 48px;
-        
-        }
-    
-        h1, h2, h3, h4, h5 {
-            margin: 0;
         }
         
         header, nav, footer, section, article, div {
@@ -135,7 +131,7 @@
         display: block !important;
         flex-direction: column !important;
         transform: translate(-50%, -50%) !important;
-        padding-top: 33px !important;
+        padding-top: 15px !important;
       }
 
      /*
@@ -171,7 +167,7 @@
           height: 400px !important;
           position: absolute !important;
           left: 50% !important;
-          top: 70% !important; 
+          top: 80% !important;
           margin-left: 0px !important;
           background-color: rgb(255, 255, 255) !important;
           border-radius: 2px;
@@ -182,7 +178,52 @@
           transform: translate(-50%, -50%);
           text-align: center;
           display: block;
-          height: 566px !important;
+          height: 653px !important;
+        }
+      }
+
+      @media (max-width: 330px) {
+        #employer-signup-modal-wrapper .skylight-dialog {
+          width: 98% !important;
+          height: 400px !important;
+          position: absolute !important;
+          left: 50% !important;
+          top: 87% !important;
+          margin-left: 0px !important;
+          background-color: rgb(255, 255, 255) !important;
+          border-radius: 2px;
+          z-index: 100;
+          padding: 15px;
+          box-shadow: rgba(0, 0, 0, 0.14) 0px 0px 4px, rgba(0, 0, 0, 0.28) 0px 4px 8px;
+          font-size: 30px;
+          transform: translate(-50%, -50%);
+          text-align: center;
+          display: block;
+          height: 580px !important;
+          /* overflow: scroll; */
+          /* overflow-x: scroll; */
+          overflow-y: scroll;
+        }
+      }
+
+      @media (max-height: 580px) {
+        #employer-signup-modal-wrapper .skylight-dialog {
+          width: 98% !important;
+          height: 400px !important;
+          position: absolute !important;
+          left: 50% !important;
+          top: 93% !important;
+          margin-left: 0px !important;
+          background-color: rgb(255, 255, 255) !important;
+          border-radius: 2px;
+          z-index: 100;
+          padding: 15px;
+          box-shadow: rgba(0, 0, 0, 0.14) 0px 0px 4px, rgba(0, 0, 0, 0.28) 0px 4px 8px;
+          font-size: 30px;
+          transform: translate(-50%, -50%);
+          text-align: center;
+          display: block;
+          height: 653px !important;
         }
       }
 
