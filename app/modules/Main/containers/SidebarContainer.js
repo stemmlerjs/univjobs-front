@@ -31,13 +31,26 @@ const SidebarContainer = React.createClass({
   },
 
   render () {
+
     return (
       <div>
-        <Sidebar 
-          onLogout={this.handleLogout} 
-          isAStudent={this.props.isAStudent}
-          profilePicture={this.props.profilePicture}
-        />
+        { 
+
+         /*
+          * If we're working in a Mobile View, we're going to use the fancy
+          * mobile slider. Otherwise, we'll use the regular Sidebar for the 
+          * Univjobs Desktop app.
+          */
+
+          !this.props.isMobile
+            ? <Sidebar 
+                onLogout={this.handleLogout} 
+                isAStudent={this.props.isAStudent}
+                profilePicture={this.props.profilePicture}
+              />
+            : ''
+        }
+        
       </div>
     )
   },
