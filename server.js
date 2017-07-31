@@ -10,8 +10,9 @@ app.listen(8080, function() {
   console.log("[Node] Front-end server running on port 80")
 })
 
-app.use(express.static('dist'))
-//app.use(morgan('dev'));
+// app.use(express.static('dist'))
+app.use('/assets', express.static('dist'))
+app.use(morgan('dev'));
 
 app.get('*', function(req, res) {
   res.sendFile(path.join(__dirname + '/dist/index.html'));
