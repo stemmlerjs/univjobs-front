@@ -5,6 +5,7 @@ before_script:
   - npm install
 
 production:
+  only: prod
   script:
     - npm run production
 
