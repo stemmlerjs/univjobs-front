@@ -219,10 +219,17 @@ export default function StudentDashboard ({
                   </div>
                 </div>
 
-
+                
                 
                 <div className={flexibleCardContainer}>
   	                { 
+
+                      /*
+                       * [GHOST (Loading) CARDS]
+                       * 
+                       * While we're fetching cards, we want to show some sort of Ghost
+                       * Card like Facebook has when things are loading.
+                       */
 
                       isFetchingJobs 
                         ? (<div className={ghostFlexibleCardContainer}>

@@ -80,7 +80,7 @@
 }
 
 .picHorizontal {
-        width: 250px;
+        width: 230px;
     height: 25px;
     position: relative;
     top: -238px;
@@ -88,7 +88,7 @@
 }
 
 .picHorizontalUnder {
-    width: 250px;
+    width: 230px;
     height: 25px;
     position: relative;
     top: -228px;
@@ -104,7 +104,7 @@
 }
 
 .besideCompany {
-    width: 169px;
+    width: 149px;
     height: 25px;
     position: relative;
     top: -297px;
@@ -112,7 +112,7 @@
 }
 
 .underPicture {
-    width: 314px;
+        width: 306px;
     height: 12px;
     position: relative;
     top: -279px;
@@ -120,7 +120,7 @@
 }
 
 .besideTitle {
-    width: 159px;
+    width: 143px;
     height: 38px;
     position: relative;
     top: -279px;
@@ -128,7 +128,7 @@
 }
 
 .underTitle {
-    width: 314px;
+    width: 301px;
     height: 6px;
     position: relative;
     top: -297px;
@@ -136,7 +136,7 @@
 }
 
 .thingsBeside {
-    width: 208px;
+    width: 200px;
     height: 33px;
     position: relative;
     top: -297px;
@@ -152,7 +152,7 @@
 }
 
 .thiccpart {
-     width: 315px;
+        width: 302px;
     height: 16px;
     position: relative;
     top: -306px;
