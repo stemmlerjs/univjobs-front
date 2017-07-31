@@ -25,7 +25,7 @@ production:
 
     # Sync
     - echo $SSH_AWS_KEY > univjobs-dmz-server.pem
-    - rsync -avL --progress -e "ssh -i univjobs-dmz-server.pem" ./dist ubuntu@52.60.179.192:/home/ubuntu/univjobs/univjobs-front
+    - rsync -avL --rsync-path='/usr/bin/sudo /usr/bin/rsync' --progress -e "ssh -i univjobs-dmz-server.pem" ./dist ubuntu@52.60.179.192:/home/ubuntu/univjobs/univjobs-front
 
 
 
