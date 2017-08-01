@@ -47,7 +47,7 @@ export default function StudentHowSection () {
         <div className={processItemContainer}>
           <img className={notificationSvg} src="/assets/svg/bino.svg"/>
           <div className={processItemTitle}>Apply to jobs just for you</div>
-          <div>Based on your skills, experience, we attempt to match you with jobs that best suit where you are as a student or recent grad.</div>
+          <div>Based on your industry skills and experience, we attempt to match you with jobs that best suit where you are as a student or recent grad.</div>
           <div className={processItemAltBody}>You're totally free to search our entire bank of jobs as well.</div>
         </div>
         <div className={processItemContainer}>

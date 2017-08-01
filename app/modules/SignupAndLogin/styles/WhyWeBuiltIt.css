@@ -10,6 +10,8 @@
     font-weight: 300;
     color: #888683;
     margin-bottom: 31px;
+        padding-left: 24px;
+    padding-right: 24px;
 }
 
 .subTitle {
@@ -25,6 +27,8 @@ font-size: 20px;
     max-width: 600px;
     margin: 0 auto;
     margin-bottom: 21px;
+        padding-left: 24px;
+    padding-right: 24px;
 }
 
 .blueBold {
@@ -44,4 +48,125 @@ font-size: 20px;
     text-shadow: 2px 2px #e6e0e0;
         padding-left: 24px;
     padding-right: 24px;
+}
+
+.rocketSvg {
+        width: 61px;
+    margin-top: 24px;
+}
+
+.studentStorySection {
+    display: flex;
+    margin: 0 auto;
+    max-width: 666px;
+}
+
+.studentStory {
+     width: 70%;
+     text-align: right;
+}
+
+.clockSvg {
+        width: 64px;
+}
+
+.studentStoryImageContainer {
+    width: 30%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.better {
+
+}
+
+/*
+ * iPhone 5
+ * 
+ * Cutoff point #1
+ * (Width: 320px)
+ */
+
+@media (max-width: 320px) {
+    .bodySection {
+        max-width: 600px;
+        margin: 0 auto;
+        margin-bottom: 21px;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .title {
+         font-size: 34px;
+    font-weight: 300;
+    color: #888683;
+    margin-bottom: 31px;
+    padding-left: 15px;
+    padding-right: 15px;
+    }
+
+    .subTitle {
+            font-size: 20px;
+    font-weight: 300;
+    min-width: 0px;
+    margin-bottom: 14px;
+    }
+
+    .finalStatement {
+            font-size: 20px;
+    font-weight: 900;
+    min-width: 0px;
+    max-width: 1000px;
+    margin: 0 auto;
+    margin-bottom: 14px;
+    margin-top: 22px;
+    color: black;
+    text-shadow: 2px 2px #e6e0e0;
+    padding-left: 24px;
+    padding-right: 24px;
+    width: 100%;
+    }
+
+    .better {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+}
+
+@media (min-width: 321px) and (max-width:600px) {
+    .subTitle {
+            font-size: 20px;
+    font-weight: 300;
+    min-width: 0px;
+    max-width: 1000px;
+    margin: 0 auto;
+    margin-bottom: 14px;
+    width: 100%;
+    }
+
+    .finalStatement {
+            font-size: 20px;
+    font-weight: 900;
+    min-width: 0px;
+    max-width: 1000px;
+    margin: 0 auto;
+    margin-bottom: 14px;
+    margin-top: 22px;
+    color: black;
+    text-shadow: 2px 2px #e6e0e0;
+    padding-left: 24px;
+    padding-right: 24px;
+    width: 100%;
+    }
+
+    .bodySection {
+            max-width: 600px;
+    margin: 0 auto;
+    margin-bottom: 21px;
+    padding-left: 15px;
+    padding-right: 15px;
+
+    }
 }

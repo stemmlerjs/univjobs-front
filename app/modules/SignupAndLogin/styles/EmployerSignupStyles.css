@@ -28,6 +28,7 @@
 .header {
   text-align: center;
   composes: header from 'sharedStyles/styles.css';
+  text-shadow: 2px 2px #8eb0c3;
 }
 
 .subHeader {
