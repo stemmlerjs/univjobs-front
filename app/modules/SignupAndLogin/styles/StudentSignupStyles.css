@@ -21,7 +21,7 @@
     min-height: 700px;
     align-items: center;
     background-size: cover;
-    background-image: url("/assets/images/front/coffeelaptop.jpg");
+    background-image: url("https://univjobs.ca/assets/images/front/coffeelaptop.jpg");
 
     /*NOTE: overflow seems to fix the error I encountered on the phone from showing the gray background*/
     overflow: hidden;
