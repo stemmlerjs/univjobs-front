@@ -672,6 +672,7 @@ const EmployerProfileContainer = React.createClass({
     return (
       <div className={pageContainer}>
         <SidebarContainer 
+          isMobile={this.props.isMobile}
           isAStudent={false} 
           logoUrl={this.props.logoUrl}
           profilePicture={typeof this.props.profile.logoUrl == "object" && this.props.profile.logoUrl !== null

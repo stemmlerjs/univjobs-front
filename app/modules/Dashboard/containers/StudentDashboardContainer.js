@@ -39,7 +39,9 @@ var ToastMessageFactory = React.createFactory(ReactToastr.ToastMessage.animation
 
 // ================CSS IMPORTS============================== //
 import { pageContainer } from 'sharedStyles/sharedContainerStyles.css'
-import { applyButton, cancelBtn, applyButtonsContainer } from '../styles/StudentDashboardStyles.css'
+import { applyButton, cancelBtn, applyButtonsContainer, companyInfoSidebarWrapper, 
+  studentDashboardComponentWrapper } from '../styles/StudentDashboardStyles.css'
+
 
 let reloadJobs = ""
 
@@ -831,7 +833,7 @@ const StudentDashboardContainer = React.createClass({
 
   render () {
     return (
-      <div>
+      <div className={studentDashboardComponentWrapper}>
 
         {
          /*
@@ -841,19 +843,20 @@ const StudentDashboardContainer = React.createClass({
           * sidebar component opens up.
           */
         }
-
-        <CompanyInfoSideBar
-          onStateChange={ this.handleCompanyInfoSidebarStateChange }
-          isOpen={this.props.employerProfileModal.isOpen}
-          employerName={this.props.employerProfileModal.employerInfo ? this.props.employerProfileModal.employerInfo.employerName : null}
-          industry={this.props.employerProfileModal.employerInfo ? this.props.employerProfileModal.employerInfo.industry : null}
-          logoUrl={this.props.employerProfileModal.employerInfo ? this.props.employerProfileModal.employerInfo.logoUrl : null}
-          headquarters={this.props.employerProfileModal.employerInfo ? this.props.employerProfileModal.employerInfo.headquarters : null}
-          website={this.props.employerProfileModal.employerInfo ? this.props.employerProfileModal.employerInfo.website : null}
-          numEmployees={this.props.employerProfileModal.employerInfo ? this.props.employerProfileModal.employerInfo.numEmployees : null}
-          aboutSectionExpanded={this.props.employerProfileModal.isAboutSectionOpen ? this.props.employerProfileModal.isAboutSectionOpen : false}
-          handleToggleAboutSection={this.props.toggleAboutSection}
-          about={this.props.employerProfileModal.employerInfo ? this.props.employerProfileModal.employerInfo.about : null}/>
+        <div className={companyInfoSidebarWrapper}>
+          <CompanyInfoSideBar
+            onStateChange={ this.handleCompanyInfoSidebarStateChange }
+            isOpen={this.props.employerProfileModal.isOpen}
+            employerName={this.props.employerProfileModal.employerInfo ? this.props.employerProfileModal.employerInfo.employerName : null}
+            industry={this.props.employerProfileModal.employerInfo ? this.props.employerProfileModal.employerInfo.industry : null}
+            logoUrl={this.props.employerProfileModal.employerInfo ? this.props.employerProfileModal.employerInfo.logoUrl : null}
+            headquarters={this.props.employerProfileModal.employerInfo ? this.props.employerProfileModal.employerInfo.headquarters : null}
+            website={this.props.employerProfileModal.employerInfo ? this.props.employerProfileModal.employerInfo.website : null}
+            numEmployees={this.props.employerProfileModal.employerInfo ? this.props.employerProfileModal.employerInfo.numEmployees : null}
+            aboutSectionExpanded={this.props.employerProfileModal.isAboutSectionOpen ? this.props.employerProfileModal.isAboutSectionOpen : false}
+            handleToggleAboutSection={this.props.toggleAboutSection}
+            about={this.props.employerProfileModal.employerInfo ? this.props.employerProfileModal.employerInfo.about : null}/>
+        </div>
 
         {
          /*
@@ -862,7 +865,7 @@ const StudentDashboardContainer = React.createClass({
         }
 
         <div id="page-wrap" className={pageContainer} >
-            <SidebarContainer isAStudent={true} profilePicture={typeof this.props.profile.photo !== "object" 
+            <SidebarContainer isAStudent={true} isMobile={this.props.isMobile} profilePicture={typeof this.props.profile.photo !== "object" 
               ? config.mediaUrl + 'avatar/' + this.props.profile.photo
               : this.props.profile.photo ? this.props.profile.photo.preview : ''  }/>
 

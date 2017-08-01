@@ -123,7 +123,7 @@ const ApplicationsContainer = React.createClass({
   render () {
     return (
       <div className={pageContainer}>
-      <SidebarContainer isAStudent={this.props.user.isAStudent}/>
+      <SidebarContainer isMobile={this.props.isMobile} isAStudent={this.props.user.isAStudent}/>
        <Applications
        	  user={this.props.user}
        	  applications={this.props.applications}

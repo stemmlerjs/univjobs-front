@@ -59,7 +59,8 @@
     "redux-form": "^5.3.3",
     "redux-logger": "^2.7.4",
     "redux-thunk": "^2.1.0",
-    "request": "^2.73.0"
+    "request": "^2.73.0",
+    "slideout": "^1.0.1"
   },
   "devDependencies": {
     "babel-core": "^6.7.6",
