@@ -22,7 +22,7 @@ export default function StudentHowSection () {
           <span className={pipelineContact}>CONTACT</span>
           <span className={pipelineInterview}>INTERVIEW</span>
           <span className={pipelineHire}>HIRE</span>
-          <img className={pipelineSvg} src="/assets/images/front/pipeline.png"/>
+          <img className={pipelineSvg} src="https://univjobs.ca/assets/images/front/pipeline.png"/>
           {/* 
           <img className={handshakeSvg} src="/assets/svg/handshake.svg"/>
           <img className={writingSvg} src="/assets/svg/writing.svg"/>
