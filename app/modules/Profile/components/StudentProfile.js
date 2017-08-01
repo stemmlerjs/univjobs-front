@@ -307,7 +307,7 @@ console.log(props)
 			     />
 			  </li>
 			  <li>
-			    <i className="fa fa-info-circle fa-2x" aria-hidden="true" data-tip="Major not there? Please email us at univjobscanada@gmail.com and we will help you out"></i>
+			    <i className="fa fa-info-circle fa-2x" aria-hidden="true" data-tip="Major not there? Please email us at contact@univjobs.ca and we will help you out"></i>
 			    <ReactTooltip place="bottom"
 			    	type="warning"
 						effect="float"

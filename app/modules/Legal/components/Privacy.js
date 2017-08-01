@@ -78,7 +78,7 @@ const Privacy = () => (
                 </p>
 
                 <p>
-                    If you have any questions or need to contact us, we recommend you reach out to <a href="mailto:univjobscanada@gmail.com?" target="_top">univjobscanada@gmail.com</a> If your question is urgent, you may contact 647-779-8525
+                    If you have any questions or need to contact us, we recommend you reach out to <a href="mailto:contact@univjobs.ca?" target="_top">contact@univjobs.ca</a> If your question is urgent, you may contact 647-779-8525
                 </p>
             
                 <p>
