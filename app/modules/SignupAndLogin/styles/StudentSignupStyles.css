@@ -38,6 +38,8 @@
   text-align: center;
   composes: subHeader from 'sharedStyles/styles.css';
   margin-bottom:40px;
+    padding-left: 15px;
+    padding-right: 15px;
 }
 
 .btn {
