@@ -12,7 +12,6 @@ const LocationFooter = () => (
     <div className={locationContainer}>
       <div className={address}>Univjobs is a product of</div>
       <div className={companyName}>DCommons Inc.</div>
-      <div className={address}>Sheridan College - Trafalgar Campus</div>
       <div className={address}>Oakville, ON</div>
     </div>
   </div>
