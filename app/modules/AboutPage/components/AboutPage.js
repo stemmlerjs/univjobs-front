@@ -24,8 +24,8 @@ const AboutPage = () => (
         <div>
             <div className={flexContainer}>
               <div className={header}>
-                <div className={aboutUsTitle}>About us</div>
-                <p className={marginReduce}>We're on a mission to build a platform</p>
+                <div className={aboutUsTitle}>Our Mission</div>
+                <p className={marginReduce}>To build a platform</p>
                 <p className={marginReduce}>that connects employers to students and recent grads </p>
                 <p className={marginReduce}>for meaningful opportunities!</p>
               </div>
