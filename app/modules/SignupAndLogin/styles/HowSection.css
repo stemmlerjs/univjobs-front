@@ -238,7 +238,7 @@ width: 40px;
     }
 
     .rightsideContent div {
-       font-size: 19px;
+       font-size: 17px;
     }
 
     .subtleDivider {
@@ -382,6 +382,8 @@ width: 30px;
     background-color: #6f6f6f;
     margin-bottom: 84px;
     margin-top: 34px;
+        margin-right: 30px;
+    margin-left: 30px;
     }
 
     .processContainer {
