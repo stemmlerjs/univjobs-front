@@ -484,7 +484,7 @@ const CreateJobContainer = React.createClass({
         }
         
         <div id="page-wrap" className={pageContainer}>
-          <SidebarContainer isAStudent={false} profilePicture={typeof this.props.profile.logoUrl == "object" && this.props.profile.logoUrl !== null
+          <SidebarContainer isMobile={this.props.isMobile} isAStudent={false} profilePicture={typeof this.props.profile.logoUrl == "object" && this.props.profile.logoUrl !== null
             ? this.props.profile.logoUrl.preview
             : config.mediaUrl + this.props.profile.logoUrl}/>
             {(() => {

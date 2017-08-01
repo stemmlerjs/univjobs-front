@@ -818,11 +818,13 @@ const StudentProfileContainer = React.createClass({
     console.log("Student profile props", this.props)
     return (
       <div className={pageContainer}>
-        <SidebarContainer isAStudent={this.props.user.isAStudent} 
+
+        <SidebarContainer isMobile={this.props.isMobile} isAStudent={this.props.user.isAStudent} 
           profilePicture={typeof this.props.profile.photo == "object" && this.props.profile.photo !== null
             ? this.props.profile.photo.preview
             : config.mediaUrl + '/avatar/' + this.props.profile.photo
           } />
+          
         <StudentProfile
       	  emailPreferences={this.props.emailPreferences}
       	  emailPrefList={this.props.emailPrefList}

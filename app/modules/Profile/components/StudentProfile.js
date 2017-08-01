@@ -205,10 +205,11 @@ console.log(props)
 			</li>
 			</StudentProfileField>
 
-			{/*FIRST NAME, LAST NAME*, STATUS */}
+			{/* FIRST NAME, LAST NAME*, STATUS */}
 			<StudentProfileField title="My name is">
 			 <li>
 			    <input
+				   data-thing="input"
 			     className={props.propsErrorMap.firstName ? `${input} ${error} ${materialStyle}` : `${input} ${materialStyle}`}
            name="student[firstname]"
 			     type="text"
@@ -221,6 +222,7 @@ console.log(props)
 		 
 			 <li>
 			   <input
+				  data-thing="input"
 			    className={props.propsErrorMap.lastName ? `${input} ${materialStyle} ${error}` : `${input} ${materialStyle}`}
           name="student[lastname]"
 			    type="text"
@@ -231,7 +233,7 @@ console.log(props)
 			    </input>
 			 </li> 
 			</StudentProfileField>
-
+			
 			<StudentProfileField title="I am a ">
 			 
 			 {/* STATUS */}
@@ -352,6 +354,7 @@ console.log(props)
 			 styles={nameField}>
 			 <li>
 			  <input
+					data-thing="input"
 			    className={props.propsErrorMap.personalEmail 
 						? `${materialStyle} ${input} ${error}` 
 						: props.personalEmail != "" 
@@ -502,6 +505,7 @@ console.log(props)
 			<StudentProfileField title="I recently worked at "      styles={nameField}>
 			<li> 
 		        <input
+						data-thing="input"
 			   className={props.propsErrorMap.companyName ? `${materialStyle} ${input} ${error}` : `${materialStyle} ${input}` }
 			   type="text"
 			   placeholder="Company Name"
@@ -511,10 +515,11 @@ console.log(props)
 			  </input>
 			 </li>
 			  <li>
-			    <p>working as</p>
+			    <p>as a</p>
 			  </li>
 			  <li>
 			   <input
+				  data-thing="input"
 			    className={props.propsErrorMap.position ? `${materialStyle} ${input} ${error}` : `${materialStyle} ${input}`}
 			    type="text"
 			    placeholder="Position"
@@ -529,6 +534,7 @@ console.log(props)
 			<StudentProfileField title="A fun fact about me is ">
 			<li>
 			 <textarea
+			 	 data-thing="input"
 			   className={props.propsErrorMap.funFacts ? `${materialStyle} ${textArea} ${error}` : `${materialStyle} ${textArea}`}
 			   type="text"
 			   placeholder="Example: I backpacked to Europe by myself last summer"
@@ -552,6 +558,7 @@ console.log(props)
 			{/* CITY */}
 			<StudentProfileField title="My hometown is">
 			 <input
+			 	 data-thing="input"
 			   className={props.propsErrorMap.hometown ? `${materialStyle} ${input} ${error}` : `${materialStyle} ${input}`}
 			   type="text"
 			   placeholder="City"
@@ -565,6 +572,7 @@ console.log(props)
 			<StudentProfileField title="My favourite hobbies are"> 
 			 <li>
 			  <input
+				data-thing="input"
 			   className={props.propsErrorMap.hobbies ? `${materialStyle} ${shortInput} ${error}` : `${materialStyle} ${shortInput}`}
 			   type="text"
 			   placeholder="Playing guitar, Making movies, etc.."

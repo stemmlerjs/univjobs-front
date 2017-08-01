@@ -227,3 +227,9 @@
     font-weight: bold;
     margin-bottom: 26px;
 }
+
+@media (max-width: 400px) {
+    .rootComponentContainer {
+        position: initial;
+    }
+}
