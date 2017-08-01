@@ -4,6 +4,8 @@ import React, { PropTypes } from 'react'
 // ==============MADE COMPONENTS========================= //
 import StudentSignup from '../components/StudentSignup'
 import EmployerSignup from '../components/EmployerSignup'
+import StudentHowSection from '../components/StudentHowSection'
+import WhyWeBuiltItSection from '../components/WhyWeBuiltItSection'
 import { Navigation, Footer } from 'modules/SharedComponents'
 
 // ==============THIRD PARTY IMPORTS========================= //
@@ -319,6 +321,8 @@ const SignupContainer = React.createClass({
                 router={this.context.router}
                 isCreatingAccount={this.props.isCreatingAccount}
               />
+              <StudentHowSection/>
+              <WhyWeBuiltItSection/>
             </div>
             :
             <div>

@@ -1,0 +1,47 @@
+
+.whyWeBuiltItSectionContainer {
+    background-color:white;
+    padding-top: 60px;
+    padding-bottom: 60px;
+}
+
+.title {
+    font-size: 37px;
+    font-weight: 300;
+    color: #888683;
+    margin-bottom: 31px;
+}
+
+.subTitle {
+font-size: 20px;
+    font-weight: 300;
+    min-width: 500px;
+    max-width: 1000px;
+    margin: 0 auto;
+    margin-bottom: 14px;
+}
+
+.bodySection {
+    max-width: 600px;
+    margin: 0 auto;
+    margin-bottom: 21px;
+}
+
+.blueBold {
+    font-weight: 800;
+    color: #2296d6;
+}
+
+.finalStatement {
+        font-size: 20px;
+    font-weight: 900;
+    min-width: 500px;
+    max-width: 1000px;
+    margin: 0 auto;
+    margin-bottom: 14px;
+    margin-top: 22px;
+    color: black;
+    text-shadow: 2px 2px #e6e0e0;
+        padding-left: 24px;
+    padding-right: 24px;
+}

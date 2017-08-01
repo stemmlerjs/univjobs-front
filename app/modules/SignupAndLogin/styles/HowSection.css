@@ -1,0 +1,144 @@
+
+
+.howSectionContainer {
+    background-color: #434d52;
+    color: white;
+    padding-top: 72px;
+    padding-bottom: 72px;
+}
+
+.title {
+    font-size: 50px;
+    font-weight: 900;
+    color: #ffa8e2;
+    margin-bottom: 30px;
+    font-style: italic;
+    text-shadow: 2px 2px #9e2424;
+}
+
+.contentContainer {
+    margin: 0 auto;
+    min-width: 500px;
+    /* background-color: yellow; */
+    max-width: 1100px;
+        display: flex;
+    flex-direction: row;
+}
+
+.pipelineSvg {
+    width: 746px;
+}
+
+.handshakeSvg {
+    width: 49px;
+    position: relative;
+    top: -71px;
+    left: 175px;
+}
+
+.writingSvg {
+    width: 39px;
+    position: relative;
+    top: -72px;
+    left: -177px;
+}
+
+.imageContainer {
+    margin-right: 38px;
+} 
+
+.rightsideContent {
+    text-align: left;
+    padding-left: 35px;
+    font-size: 24px;
+    font-weight: 300;
+}
+
+.pipelineApply {
+    position: relative;
+    left: -35px;
+    top: -11px;
+    font-weight: 400;
+}
+
+.pipelineContact {
+    position: relative;
+    left: 5px;
+    top: -11px;
+    font-weight: 400;
+}
+
+.pipelineInterview {
+    position: relative;
+    left: 44px;
+    top: -11px;
+    font-weight: 400;
+}
+
+.pipelineHire {
+    position: relative;
+    left: 94px;
+    top: -11px;
+    font-weight: 400;
+}
+
+.subtleDivider {
+    margin: 0 auto;
+    min-width: 500px;
+    max-width: 1000px;
+    height: 1px;
+    background-color: #6f6f6f;
+    margin-bottom: 84px;
+    margin-top: 34px;
+}
+
+.processContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    max-width: 1100px;
+    min-width: 400px;
+    margin: 0 auto;
+}
+
+.processItemContainer {
+    max-width: 274px;
+}
+
+.profileSvg {
+    width: 63px;
+}
+
+.notificationSvg {
+    width: 63px;
+}
+
+.processItemTitle {
+    margin-top: 13px;
+    font-size: 17px;
+    margin-bottom: 7px;
+     font-weight: bold;
+}
+
+.processItemAltBody {
+    color: #cacaca;
+    margin-top: 6px;
+    font-style: italic;
+}
+
+.employerCallToAction {
+    margin-top: 62px;
+    font-size: 21px;
+}
+
+.employerCTALink {
+    padding-top: 9px;
+    color: #68beea;
+    /* text-decoration: underline; */
+    /* border-bottom: solid 1px; */
+    font-weight: 300;
+    width: 400px;
+    margin: 0 auto;
+    cursor: pointer;
+
+}
