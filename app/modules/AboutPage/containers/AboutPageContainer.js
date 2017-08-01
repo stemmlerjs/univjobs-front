@@ -4,6 +4,7 @@ import { Link } from 'react-router'
 
 // ============= MADE COMPONENTS========================== //
 import { AboutPage } from 'modules/AboutPage'
+import LocationFooter from '../components/LocationFooter'
 import { Footer, RegularNav } from 'modules/SharedComponents'
 
 // =============REDUX STATE & IMPORTS========================== //
@@ -46,6 +47,7 @@ const AboutPageContainer = React.createClass({
               closeNavDropDown={this.props.closeNavDropDown}
             />
             <AboutPage/> 
+            <LocationFooter/>
             <Footer/>
           </div>
         )
