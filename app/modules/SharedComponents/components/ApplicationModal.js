@@ -14,6 +14,7 @@ import { pageContainer, cardContainer, card, cardHeader,
  * 
  *FIXME: Answers from other students are showing, remove answers that are not related from the students
  * */
+
 export default function ApplicationModal({ application, industries, jobTypes}) { 
   return (
 		<div className={cardModalContainer}>

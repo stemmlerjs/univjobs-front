@@ -1,0 +1,19 @@
+
+.mobileStudentProfileBreadCrumbsContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    max-width: 80%;
+    margin: 0 auto;
+    margin-top: 24px;
+    margin-bottom: 40px;
+}
+
+.node {
+    height: 13px;
+    width: 13px;
+    border-radius: 20px;
+    background-color: #ececec;
+    border: solid 4px #1ea9d2;
+    cursor: pointer;
+}

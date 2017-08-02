@@ -435,3 +435,97 @@ export const extractSportsObject = (sports, profileInfo) => {
             'new': sports.filter((sport) => !sport.id).map((sport) => sport.sport)
     }
 }
+
+export const mobileProfileHelper = {
+
+  /*
+   * validateStudentProfilePage1
+   * 
+   * Validate all of the profile fields on Page 1 of the mobile
+   * version of the student profile.
+   */
+
+  validateStudentProfilePage1: (profileInfo, next) => {
+
+    let submitErrorsExist = false;
+    let profileFieldErrors = {
+      firstName: false,
+      lastName: false,
+      gender: false,
+      hometown: false,
+    }
+
+    /*
+     * Validate the fields that need validation
+     */
+
+    profileFieldErrors.firstName = validateFirstName(profileInfo.firstName) ? false : true
+    profileFieldErrors.lastName = validateLastName(profileInfo.lastName) ? false : true
+    profileFieldErrors.hometown = profileInfo.hometown != "" ? false : true
+
+    /*
+     * If an error exists in the map, then submitErrorsExist === true
+     */
+    
+    for (var attr in profileFieldErrors) {
+      if (profileFieldErrors[attr] === true) submitErrorsExist = true;
+    }
+  
+    /*
+     * Return the results.
+     */
+
+    next(submitErrorsExist, profileFieldErrors)
+
+  },
+
+  /*
+   * validateStudentProfilePage2
+   * 
+   * Validate all of the profile fields on Page 2 of the mobile
+   * version of the student profile.
+   */
+
+  validateStudentProfilePage2: (profileInfo, next) => {
+
+    let submitErrorsExist = false;
+    let profileFieldErrors = {
+      studentStatus: false,
+      educationLevel: false,
+      major: false
+    }
+
+    /*
+     * Validate the fields that need validation
+     */
+
+    profileFieldErrors.studentStatus = profileInfo.studentStatus != "" ? false : true
+    profileFieldErrors.educationLevel= profileInfo.educationLevel != "" ? false : true
+    profileFieldErrors.major = profileInfo.major != "" ? false : true
+
+    /*
+     * If an error exists in the map, then submitErrorsExist === true
+     */
+    
+    for (var attr in profileFieldErrors) {
+      if (profileFieldErrors[attr] === true) submitErrorsExist = true;
+    }
+  
+    /*
+     * Return the results.
+     */
+
+    next(submitErrorsExist, profileFieldErrors)
+
+  },
+
+  validateStudentProfilePage3: () => {
+
+  },
+
+  validateStudentProfilePage4: () => {
+
+  }
+}
+
+

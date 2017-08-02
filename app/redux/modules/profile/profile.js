@@ -2,7 +2,7 @@
 import { employerProfilePUT, employerProfilePATCH, validateEmployerProfileFields,
   studentProfilePUT, studentProfilePATCH, validateStudentProfileFields,
   compareToSnapshot, getUserInfo, extractLanguageId,
-  extractClubsObject, extractSportsObject } from 'helpers/profile'
+  extractClubsObject, extractSportsObject, mobileProfileHelper } from 'helpers/profile'
 import { toISO, hasCarBoolean } from 'helpers/utils'
 import profileAdviceModal from './profileAdviceModal'
 
@@ -28,9 +28,120 @@ const FETCHED_PROFILE_INFO_FAILURE = 'PROFILE.FETCHED_INFO_FAILURE'
 
 const PROFILE_ADVICE_PRESENTED = 'PROFILE_ADVICE_PRESENTED'
 
+const MOBILE_TRY_ADVANCE_STUDENT_PROFILE_NEXT_PAGE = 'MOBILE_TRY_ADVANCE_STUDENT_PROFILE_NEXT_PAGE'
+const MOBILE_STUDENT_PROFILE_NEXT_PAGE = 'MOBILE_STUDENT_PROFILE_NEXT_PAGE'
+const MOBILE_STUDENT_PROFILE_PAGE_BACK = 'MOBILE_STUDENT_PROFILE_PAGE_BACK'
+
 // =======================================================
 // ================== ACTION CREATORS ====================
 // =======================================================
+
+
+/*
+ * ========= MOBILE PROFILE ACTIONS ==========
+ */
+
+
+
+export function pageBack (currentPage) {
+  return function (dispatch) {
+
+    if (currentPage !== 1) {
+      dispatch({
+        type: MOBILE_STUDENT_PROFILE_PAGE_BACK
+      })
+    }
+
+  }
+}
+
+export function tryAdvanceStudentProfilePage(currentPage, props, failureCallback) {
+  return function (dispatch) {
+
+    /*
+     * Sort each advance by page.
+     * For page 1, we first need to validate each of the fields before trying to advance
+     */
+
+    if (currentPage == 1) {
+      mobileProfileHelper.validateStudentProfilePage1(props, (errorExist, profileFieldErrors) => {
+
+        /*
+         * If there were errors on the page somewhere, then
+         * we can't advance and we need to let the user know.
+         */
+
+        if(errorExist) {
+          handleErrorsExist(profileFieldErrors)
+    	  } 
+
+        /*
+         * If no errors were present on Page 1, we can advance to the next page.
+         */
+
+        else {
+          dispatch(nextStudentProfilePage())
+        }
+      })
+    }
+
+    else if (currentPage == 2) {
+      mobileProfileHelper.validateStudentProfilePage2(props, (errorExist, profileFieldErrors) => {
+
+        /*
+         * If there were errors on the page somewhere, then
+         * we can't advance and we need to let the user know.
+         */
+
+        if(errorExist) {
+          handleErrorsExist(profileFieldErrors)
+    	  } 
+
+        /*
+         * If no errors were present on Page 2, we can advance to the next page.
+         */
+
+        else {
+          dispatch(nextStudentProfilePage())
+        }
+      })
+    }
+
+    else if (currentPage == 3) {
+      dispatch(nextStudentProfilePage())
+    }
+
+    else if (currentPage == 4) {
+      dispatch(nextStudentProfilePage())
+    }
+
+    else if (currentPage == 5) {
+      dispatch(nextStudentProfilePage())
+    }
+    
+
+    function handleErrorsExist (profileFieldErrors) {
+      dispatch(savedProfileFailure(profileFieldErrors, [
+        "Couldn't save profile.",
+        "Please fill in missing fields"
+      ], true))
+
+      failureCallback('INVALID FIELDS')
+    }
+    
+  }
+}
+
+function nextStudentProfilePage() {
+  return {
+    type: MOBILE_STUDENT_PROFILE_NEXT_PAGE
+  }
+}
+
+/*
+ * ========= END OF MOBILE PROFILE ACTIONS ===
+ */
+
 
 export function presentProfileAdvice () {
   return {
@@ -656,7 +767,8 @@ const initialState = {
   submitSuccess: false,
   error: '',
   userProfileAdvicePresented: false,
-  profileAdviceModal: {}
+  profileAdviceModal: {},
+  mobileViewCurrentPage: 1,
 }
 
 
@@ -672,6 +784,26 @@ const initialState = {
 
 export default function profile (state = initialState, action) {
   switch(action.type) {
+
+    /*
+     * === Mobile Profile Actions ===
+     */
+
+    case MOBILE_STUDENT_PROFILE_PAGE_BACK:
+      return {
+        ...state,
+        mobileViewCurrentPage: state.mobileViewCurrentPage - 1
+      }
+
+    case MOBILE_STUDENT_PROFILE_NEXT_PAGE:
+      return {
+        ...state,
+        mobileViewCurrentPage: state.mobileViewCurrentPage + 1
+      }
+
+    /*
+     * ==============================
+     */
     case PROFILE_ADVICE_PRESENTED:
       return {
         ...state,
@@ -748,58 +880,6 @@ export default function profile (state = initialState, action) {
         }
       }
     case SAVED_PROFILE_INFO_SUCCESS:
-    // debugger;
-    //   var newSnapshot = Object.assign(state, action.updateInfo)
-
-    //   var sportsTagsSnapshot = state.snapshot.tags.sports;
-    //   var languagesTagsSnapshot = state.snapshot.tags.languages;
-    //   var clubsTagsSnapshot = state.snapshot.tags.clubs;
-
-    //   /*
-    //    * There are tags that need to be added to the new snapshot.
-    //    */
-
-    //   if (action.updateTags) {
-        
-    //     /*
-    //      * For each type of tag, we need to sync the tags from the update
-    //      * object to the new snapshot.
-    //      * 
-    //      * First, we will start with the sports tags.
-    //      */
-
-    //     if (action.updateTags.sports) {
-
-    //       /*
-    //        * For each of the new sports tags, we need to get the object 
-    //        * containing the id and the value for these and update the new 
-    //        * sports tag state with it.
-    //        */
-
-    //       var newSportsTagsState = action.updateTags.sports.ids 
-          
-    //       newSportsTagsState = newSportsTagsState.forEach((newSportsTag) => {
-
-    //         for (var i = 0; i < sportsTagsSnapshot.length; i++) {
-    //           if (newSportsTag == sportsTagsSnapshot[i].id) {
-    //             newSportsTag = sportsTagsSnapshot[i]
-              
-    //           }
-    //         }
-
-    //         return newSportsTag
-            
-    //       });
-
-    //       /*
-    //        * Now that we've got the new sports tag state, lets add it to our 
-    //        * new snapshot object.
-    //        */
-
-    //       newSnapshot.tags.sports = newSportsTagsState
-    //     }
-    //   }
-
       return {
         ...state,
         //snapshot: newSnapshot,
