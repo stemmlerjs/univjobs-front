@@ -6,7 +6,7 @@ import React, { PropTypes } from 'react'
 import { mobileNav, menuClass, menuSectionClass, panelClass, burgerMenuClass, univjobsLogo } from '../styles/MobileSlider.css'
 import { Link } from 'react-router'
 
-export default function MobileSlider ({ onSelectMenuItem, onToggleMenu, page, isAStudent, closeMenuOnRouteChange, children }) {
+export default function MobileSlider ({ onSelectMenuItem, onToggleMenu, page, isAStudent, closeMenuOnRouteChange, logout, children }) {
 
   let pageTitle = ""
 
@@ -80,6 +80,9 @@ export default function MobileSlider ({ onSelectMenuItem, onToggleMenu, page, is
                 ? <li><Link onClick={closeMenuOnRouteChange} to="/settings/st">Settings</Link></li>
                 : ''
             }
+
+            <li onClick={logout}>Logout</li>
+
  
           </ul>
         </section>
