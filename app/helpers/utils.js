@@ -70,7 +70,7 @@ export function validateStudentEmail(email, callback) {
   if(!re.test(email)){
     callback(false, "Please enter your school email address.")
   } else if (!/@sheridancollege.ca\s*$/.test(email)) {
-     callback(false, "Sorry, we are only currently available to Sheridan College students. Please contact us at univjobscanada@gmail.com if you'd like us to extend access to your institution.")
+     callback(false, "Sorry, we are only currently available to Sheridan College students. Please contact us at contact@univjobs.ca if you'd like us to extend access to your institution.")
   } else {
     callback(true)
   }
