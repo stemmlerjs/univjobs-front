@@ -3,6 +3,7 @@ import React, { PropTypes } from 'react'
 
 import MobileStudentProfileBreadCrumbs from './MobileStudentProfileBreadCrumbs'
 import { Combobox, DropdownList, DateTimePicker, Calendar, Multiselect, SelectList} from 'react-widgets'
+import { scrollToY, compressPicture } from 'helpers/utils'
 
 import { mobileStudentProfilePageContainer, largeHeader, profileItemsContainer, label,
   profileItem, textInput, dropdownInput, navigationButtonsContainer, nextButton, 
@@ -64,7 +65,11 @@ export default function MobileStudentProfilePage6 (
 
 		if (fileSizeBytes >= maxSizeBytes) {
 			console.log("way too large", fileSizeBytes, maxSizeBytes)
-			handleShowImageSizeTooLargeError()
+      compressPicture(files[0], (newCroppedPictureFile) => {
+
+        handleOpenPictureCropper(newCroppedPictureFile)
+
+      })
 		} 
 
 	 /*
@@ -103,6 +108,8 @@ export default function MobileStudentProfilePage6 (
 
 		if (fileSizeBytes >= maxSizeBytes) {
 			console.log("way too large", fileSizeBytes, maxSizeBytes)
+
+      compressPicture()
 			handleShowResumeSizeTooLargeError()
 		} 
 
@@ -124,7 +131,8 @@ export default function MobileStudentProfilePage6 (
 			document.getElementById('drag-dropResume').style.color = '#00BFFF'
 		}
   }
-
+  
+  scrollToY(0, 1500, 'easeInOutQuint');
   return (
     <div className={mobileStudentProfilePageContainer}>
 
@@ -145,7 +153,7 @@ export default function MobileStudentProfilePage6 (
                 </div>
 
                 <div className={profileItem}>
-                   <Dropzone id="dropResumeDiv" className={`${dropzoneBaseStyle} ${dropzoneResumeStyle}`} onDrop={onDropResume} accept='application/pdf' multiple={false}>
+                   <Dropzone data-maxwidth="300" data-maxheight="300" id="dropResumeDiv" className={`${dropzoneBaseStyle} ${dropzoneResumeStyle}`} onDrop={onDropResume} accept='application/pdf' multiple={false}>
                       { resume == "" ? 'Double-tap to upload your resume' : 'Got it! Ready to upload.'}
                     </Dropzone>
                 </div>

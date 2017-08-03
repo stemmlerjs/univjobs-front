@@ -228,7 +228,7 @@
     margin-bottom: 26px;
 }
 
-@media (max-width: 400px) {
+@media (max-width: 1000px) {
     .rootComponentContainer {
         position: initial;
     }
