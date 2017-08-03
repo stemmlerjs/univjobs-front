@@ -312,6 +312,8 @@ const SignupContainer = React.createClass({
           { this.props.isAStudent === true ?
             <div id="student-signup-modal-wrapper">
               <StudentSignup
+                handleOpenStudentSignupForm={this.props.openStudentSignupForm}
+                studentSignupFormOpen={this.props.studentSignupFormOpen}
                 emailText={this.props.studentEmail}
                 passwordText={this.props.studentPassword}
                 updateStudentSignupForm={this.props.updateStudentForm}
@@ -372,7 +374,8 @@ function mapStateToProps({user, signupForm, loginForm}) {
     loginFormPasswordText: loginForm.password ? loginForm.password : '',
     loginFormErrorText: loginForm.error ? loginForm.error : '',
     isLoggingIn: user.isLoggingIn ? user.isLoggingIn : false,
-    dropDownActive: signupForm.dropDownActive ? signupForm.dropDownActive : false
+    dropDownActive: signupForm.dropDownActive ? signupForm.dropDownActive : false,
+    studentSignupFormOpen: signupForm.studentSignupFormOpen ? signupForm.studentSignupFormOpen : false
   }
 }
 

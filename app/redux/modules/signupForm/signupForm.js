@@ -19,7 +19,15 @@ const SUBMIT_EMPLOYER_FORM_ERROR = 'SUBMIT_EMPLOYER_FORM_ERROR'
 const TOGGLE_DROPDOWN_MENU = 'TOGGLE_DROPDOWN_MENU'
 const CLOSE_NAV_DROP_DOWN = 'CLOSE_NAV_DROP_DOWN'
 
+const OPEN_STUDENT_SIGNUP_FORM = 'OPEN_STUDENT_SIGNUP_FORM'
+
 // ACTION CREATORS
+export function openStudentSignupForm () {
+  return {
+    type: OPEN_STUDENT_SIGNUP_FORM
+  }
+}
+
 export function closeNavDropDown () {
   return {
     type: CLOSE_NAV_DROP_DOWN
@@ -238,11 +246,17 @@ export function submitEmployerSignupForm(firstName, lastName, companyName, phone
 const initialState = {
   studentSignupForm: {},
   employerSignupForm: {},
-  dropDownActive: false
+  dropDownActive: false,
+  studentSignupFormOpen: false
 }
 
 export default function signupForm (state = initialState, action) {
   switch(action.type) {
+    case OPEN_STUDENT_SIGNUP_FORM:
+      return {
+        ...state,
+        studentSignupFormOpen: true
+      }
     case CLOSE_NAV_DROP_DOWN:
       return {
         ...state,
