@@ -32,7 +32,7 @@ export default function MobileStudentProfilePage2 (
   return (
     <div className={mobileStudentProfilePageContainer}>
 
-      <MobileStudentProfileBreadCrumbs/>
+      <MobileStudentProfileBreadCrumbs totalStates={8} currentState={2} />
 
       <div className={largeHeader}>Tell us a little bit about your schooling</div>
       <div className={profileItemsContainer}>

@@ -6,7 +6,7 @@ import { Combobox, DropdownList, DateTimePicker, Calendar, Multiselect, SelectLi
 
 import { mobileStudentProfilePageContainer, largeHeader, profileItemsContainer, label,
   profileItem, textInput, dropdownInput, navigationButtonsContainer, nextButton, 
-  longDropDown, backButton, multiselectDropdown, smallHeader, dropzoneContent, dropzoneBaseStyle } from '../styles/MobileStudentProfilePage.css'
+  longDropDown, backButton, multiselectDropdown, smallHeader, dropzoneContent, dropzoneBaseStyle, dropzoneResumeStyle } from '../styles/MobileStudentProfilePage.css'
 import { error } from 'sharedStyles/error.css' 
 
 import Dropzone from 'react-dropzone'
@@ -34,6 +34,7 @@ export default function MobileStudentProfilePage6 (
     onCreateNewTag,
     handleOpenPictureCropper,
     handleShowImageSizeTooLargeError,
+    handleShowResumeSizeTooLargeError,
     next,
     back
   }) {
@@ -55,7 +56,7 @@ export default function MobileStudentProfilePage6 (
 		*/
 
 		var fileSizeBytes = files[0].size
-		var maxSizeBytes = 1000000; // 1MB
+		var maxSizeBytes = 3000000; // 3MB
 
 	 /*
 		* Too large, present error.
@@ -77,10 +78,57 @@ export default function MobileStudentProfilePage6 (
 		}
   }
 
+   /*
+	* onDropResume
+	* 
+	* @param File[]
+	* Handle resume drop event.
+	*/
+
+  function onDropResume(files) {
+
+		/*
+		* If the resume is not over 2MB, then we'll move forward and use it.
+		*
+		* 54173  bytes (52.9 KB) OK
+		* 7577067 bytes (7.5 MB) NOT OK
+		*/
+
+		var fileSizeBytes = files[0].size
+		var maxSizeBytes = 2000000; // 2MB
+
+	 /*
+		* Too large, present error.
+		*/
+
+		if (fileSizeBytes >= maxSizeBytes) {
+			console.log("way too large", fileSizeBytes, maxSizeBytes)
+			handleShowResumeSizeTooLargeError()
+		} 
+
+	 /*
+		* Size OK, continue.
+		*/
+
+		else {
+			let dropResumeDiv = document.getElementById('dropResumeDiv')
+			updateProfileField('resume', files[0], true)
+			// Preview the image
+
+			// Preview the image
+			dropResumeDiv.style.borderStyle = "solid" // blob
+			dropResumeDiv.style.borderColor = "	#00BFFF" // blob
+			dropResumeDiv.style.backgroundSize = "cover"
+
+			document.getElementById('drag-dropResume').innerHTML = "Resume Attached ◕‿‿◕"
+			document.getElementById('drag-dropResume').style.color = '#00BFFF'
+		}
+  }
+
   return (
     <div className={mobileStudentProfilePageContainer}>
 
-      <MobileStudentProfileBreadCrumbs/>
+      <MobileStudentProfileBreadCrumbs totalStates={8} currentState={6} />
 
       {
         isUploadSupported()
@@ -96,6 +144,11 @@ export default function MobileStudentProfilePage6 (
                     </Dropzone>
                 </div>
 
+                <div className={profileItem}>
+                   <Dropzone id="dropResumeDiv" className={`${dropzoneBaseStyle} ${dropzoneResumeStyle}`} onDrop={onDropResume} accept='application/pdf' multiple={false}>
+                      { resume == "" ? 'Double-tap to upload your resume' : 'Got it! Ready to upload.'}
+                    </Dropzone>
+                </div>
         
                 <div className={navigationButtonsContainer}>
                   <div onClick={back} className={backButton}>Back</div>

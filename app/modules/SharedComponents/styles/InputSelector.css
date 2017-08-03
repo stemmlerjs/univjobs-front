@@ -52,10 +52,17 @@
 .selectorRow {
   display: flex;
   flex-direction: row;
+  height: 53px;
 }
 
 .selectorRow div:hover {
     background-color: #f7f7f7;
+}
+
+.selectorRow div {
+  display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .selected {

@@ -29,6 +29,7 @@ import { loadingFlexibleContainer } from 'sharedStyles/loading.css'
 import { FeedbackForm, LoadingSpinner } from 'modules/SharedComponents'
 import MobileSlider from '../components/MobileSlider'
 import * as feedbackFormActionCreators from 'redux/modules/feedback/feedback'
+import * as mobileLoadActionCreators from 'redux/modules/mobileLoad/mobileLoad'
 
 import Slideout from 'slideout'
 
@@ -255,6 +256,8 @@ const InitialOverlay = React.createClass({
         {
           this.detectMobile() && this.shouldRenderMobileSidebar()
             ? <MobileSlider
+                showMobileNotificationHeader={this.props.showMobileNotificationHeader}
+                hideMobileNotificationHeader={this.props.hideMobileNotificationHeader}
                 onSelectMenuItem={this.handleSelectMenuItem}
                 onToggleMenu={this.handleToggleMenu}
                 isAStudent={this.props.isAStudent}
@@ -277,6 +280,7 @@ function mapStateToProps({rootApplication, feedback, mobileLoad, user, routing }
     isOverlayActive: rootApplication.isOverlayActive ? true : false,
     feedback: feedback ? feedback : {},
     mobileLoad: mobileLoad.isMobileOverlayActive ? true : false,
+    showMobileNotificationHeader: mobileLoad.showMobileNotificationHeader ? mobileLoad.showMobileNotificationHeader : false,
     isAuthenticated: user.isAuthenticated ? user.isAuthenticated : false,
     isAStudent: user.isAStudent ? user.isAStudent : false,
     page: routing.locationBeforeTransitions ? routing.locationBeforeTransitions.pathname : ''
@@ -284,7 +288,10 @@ function mapStateToProps({rootApplication, feedback, mobileLoad, user, routing }
 }
 
 function mapActionCreatorsToProps(dispatch) {
-  return bindActionCreators(feedbackFormActionCreators, dispatch)
+  return bindActionCreators({
+    ...feedbackFormActionCreators,
+    ...mobileLoadActionCreators
+  }, dispatch)
 }
 
 export default connect(mapStateToProps, mapActionCreatorsToProps)(InitialOverlay)

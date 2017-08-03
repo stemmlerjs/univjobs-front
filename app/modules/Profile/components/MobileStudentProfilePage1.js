@@ -5,7 +5,7 @@ import MobileStudentProfileBreadCrumbs from './MobileStudentProfileBreadCrumbs'
 import { Combobox, DropdownList, DateTimePicker, Calendar, Multiselect, SelectList} from 'react-widgets'
 
 import { mobileStudentProfilePageContainer, largeHeader, profileItemsContainer, label,
-  profileItem, textInput, dropdownInput, navigationButtonsContainer, nextButton,
+  profileItem, textInput, dropdownInput, navigationButtonsContainer, nextButton, smallHeader,
   multiselectDropdown } from '../styles/MobileStudentProfilePage.css'
 import { error } from 'sharedStyles/error.css' 
 
@@ -16,6 +16,7 @@ export default function MobileStudentProfilePage1 (
     firstName,
     lastName,
     gender,
+    hometown,
     gendersList, 
     languages,
     languagesList,
@@ -26,20 +27,25 @@ export default function MobileStudentProfilePage1 (
   return (
     <div className={mobileStudentProfilePageContainer}>
 
-      <MobileStudentProfileBreadCrumbs/>
+      <MobileStudentProfileBreadCrumbs totalStates={8} currentState={1} />
 
       <div className={largeHeader}>Let's setup your profile!</div>
+      <div className={smallHeader}>It'll only take a moment, promise.</div>
       <div className={profileItemsContainer}>
 
         <div className={profileItem}>
           <div className={label}>First name</div>
-          <input className={propsErrorMap.firstName ? `${error} ${textInput}` : `${textInput}`} type="text" placeholder="Hugh"
+          <input className={propsErrorMap.firstName ? `${error} ${textInput}` : `${textInput}`} 
+            defaultValue={firstName}
+            type="text" placeholder="Erlich"
             onBlur={(e)=> updateProfileField('firstName', e.target.value, true)}/>
         </div>
 
         <div className={profileItem}>
           <div className={label}>Last name</div>
-          <input className={propsErrorMap.lastName ? `${error} ${textInput}` : `${textInput}`} type="text" placeholder="Mungus"
+          <input className={propsErrorMap.lastName ? `${error} ${textInput}` : `${textInput}`} 
+            defaultValue={lastName}
+            type="text" placeholder="Bachman"
           onBlur={(e)=> updateProfileField('lastName', e.target.value, true)}/>
         </div>
 
@@ -73,6 +79,7 @@ export default function MobileStudentProfilePage1 (
         <div className={profileItem}>
           <div className={label}>Hometown</div>
           <input className={propsErrorMap.hometown ? `${error} ${textInput}` : `${textInput}`} type="text" placeholder="Oakville"
+            defaultValue={hometown}
             onBlur={(e) => updateProfileField('hometown', e.target.value, true)}/>
         </div>
         

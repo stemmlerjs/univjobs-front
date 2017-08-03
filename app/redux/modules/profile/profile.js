@@ -55,7 +55,7 @@ export function pageBack (currentPage) {
   }
 }
 
-export function tryAdvanceStudentProfilePage(currentPage, props, failureCallback) {
+export function tryAdvanceStudentProfilePage(currentPage, props, successCallback, failureCallback) {
   return function (dispatch) {
 
     /*
@@ -108,15 +108,154 @@ export function tryAdvanceStudentProfilePage(currentPage, props, failureCallback
     }
 
     else if (currentPage == 3) {
-      dispatch(nextStudentProfilePage())
+      mobileProfileHelper.validateStudentProfilePage3(props, (errorExist, profileFieldErrors) => {
+
+        /*
+         * If there were errors on the page somewhere, then
+         * we can't advance and we need to let the user know.
+         */
+
+        if(errorExist) {
+          handleErrorsExist(profileFieldErrors)
+    	  } 
+
+        /*
+         * If no errors were present on Page 2, we can advance to the next page.
+         */
+
+        else {
+          dispatch(nextStudentProfilePage())
+        }
+      })
     }
 
     else if (currentPage == 4) {
-      dispatch(nextStudentProfilePage())
+      mobileProfileHelper.validateStudentProfilePage4(props, (errorExist, profileFieldErrors) => {
+
+        /*
+         * If there were errors on the page somewhere, then
+         * we can't advance and we need to let the user know.
+         */
+
+        if(errorExist) {
+          handleErrorsExist(profileFieldErrors)
+    	  } 
+
+        /*
+         * If no errors were present on Page 2, we can advance to the next page.
+         */
+
+        else {
+          dispatch(nextStudentProfilePage())
+        }
+      })
     }
 
     else if (currentPage == 5) {
       dispatch(nextStudentProfilePage())
+    }
+
+    else if (currentPage == 6) {
+      dispatch(nextStudentProfilePage())
+    }
+
+    else if (currentPage == 7) {
+      mobileProfileHelper.validateStudentProfilePage7(props, (errorExist, profileFieldErrors) => {
+
+        /*
+         * If there were errors on the page somewhere, then
+         * we can't advance and we need to let the user know.
+         */
+
+        if(errorExist) {
+          handleErrorsExist(profileFieldErrors)
+    	  } 
+
+        /*
+         * If no errors were present, we can move towards submitting.
+         */
+
+        else {
+          
+          /*
+           * Let redux know that we're submitting the student profile.
+           */
+
+          dispatch(savingProfileInfo(true))
+
+          /*
+           * Now we actually attempt to submit the profile first time.
+           */
+          var profileInfo = props;
+
+          var putData = {
+            "is_a_student": true,
+            "is_profile_completed": true,
+            // "email": user.email,
+            "first_name": profileInfo.firstName,
+            "last_name": profileInfo.lastName,
+            "is_active": true,
+            // "date_joined": user.dateJoined,
+            // "mobile": user.mobile,
+            "schoolName": profileInfo.school,
+            languages: btoa(JSON.stringify(extractLanguageId(profileInfo.languages))),
+            sports: btoa(JSON.stringify(extractSportsObject(profileInfo.sportsTeam, profileInfo))),
+            clubs: btoa(JSON.stringify(extractClubsObject(profileInfo.schoolClub, profileInfo))),
+            edu_level_id: profileInfo.educationLevel.id ? profileInfo.educationLevel.id : profileInfo.educationLevel,
+            email_pref: profileInfo.emailPreferences.id ? profileInfo.emailPreferences.id : profileInfo.emailPreferences,
+            status: profileInfo.studentStatus.id ? profileInfo.studentStatus.id : profileInfo.studentStatus,
+            enroll_date: toISO(profileInfo.enrollmentDate),
+            grad_date: toISO(profileInfo.graduationDate),
+            major_id: profileInfo.major.id ? profileInfo.major.id : profileInfo.major,
+            gpa: JSON.stringify(parseFloat(profileInfo.gpa)),
+            personal_email: profileInfo.personalEmail,
+            gender: profileInfo.gender.id ? profileInfo.gender.id : profileInfo.gender,
+              /*Converts the value to num*/
+            has_car: profileInfo.hasCar === true ? JSON.stringify(1) : JSON.stringify(0),
+            recent_company_name: profileInfo.companyName,
+            recent_company_position: profileInfo.position,
+            fun_fact: profileInfo.funFacts,
+            hometown: profileInfo.hometown,
+            hobbies: profileInfo.hobbies,
+            profilepicture: profileInfo.photo,
+            resume: profileInfo.resume,
+          }
+
+           /*
+            * Perform the HTTP put to /api/me to submit the profile for the first time.
+            */
+
+            studentProfilePUT(putData)
+
+             /*
+              * Successful PUT to /api/me.
+              * In the successCallback, we should make sure that we 
+              * reload the page (do this on every PUT or PATCH).
+              */
+
+              .then((res) => {
+                // DISPATCH - SAVE_PROFILE_SUCCESS
+                dispatch(savedProfileSuccess())
+
+                successCallback()
+              })
+
+             /*
+              * Something went wrong with updating the student profile.
+              */
+              
+              .catch((err) => {
+                console.log(err)
+                dispatch(savedProfileFailure({}, [
+                  'HTTP Error Occurred',
+                  err
+                ], true))
+
+                failureCallback('HTTP ERROR')
+              })
+
+        }
+      })
     }
     
 

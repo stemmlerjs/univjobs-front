@@ -3,10 +3,13 @@
 import React, { PropTypes } from 'react'
 
 // ================CSS IMPORTS============================== //
-import { mobileNav, menuClass, menuSectionClass, panelClass, burgerMenuClass, univjobsLogo } from '../styles/MobileSlider.css'
+import { mobileNav, menuClass, menuSectionClass, panelClass, burgerMenuClass, univjobsLogo,noticeHeader,
+    noticeHeaderCloseButton } from '../styles/MobileSlider.css'
 import { Link } from 'react-router'
 
-export default function MobileSlider ({ onSelectMenuItem, onToggleMenu, page, isAStudent, closeMenuOnRouteChange, logout, children }) {
+export default function MobileSlider ({ onSelectMenuItem, onToggleMenu, page, isAStudent, closeMenuOnRouteChange, logout, children, 
+  showMobileNotificationHeader,
+  hideMobileNotificationHeader }) {
 
   let pageTitle = ""
 
@@ -96,6 +99,18 @@ export default function MobileSlider ({ onSelectMenuItem, onToggleMenu, page, is
 
           <div>{pageTitle}</div>
         </header>
+
+        {
+          showMobileNotificationHeader && (page !== "/profile/st" && page !== "/profile/em")
+            ? <div className={noticeHeader}>
+                <div className={noticeHeaderCloseButton} 
+                  onClick={hideMobileNotificationHeader}><i className={"fa fa-times"} aria-hidden="true"></i></div>
+                <div>Hey, just a heads up. The mobile version of the site is still under construction.</div>
+                <div>For the current best experience, check out the site from your laptop.</div>
+              </div>
+            : ''
+        }
+        
 
         {
           /*

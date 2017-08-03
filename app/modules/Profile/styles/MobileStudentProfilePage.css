@@ -254,7 +254,7 @@ width: 15px;
     }
 
 .dropzoneBaseStyle {
-    width: 200px;
+    width: 185px;
     height: 200px;
     border-width: 2px;
     border-color: rgb(102, 102, 102);
@@ -273,6 +273,11 @@ width: 15px;
     font-weight: 400;
 }
 
+.dropzoneResumeStyle {
+        height: 75px;
+    border: solid 2px #a0a0a0;
+}
+
 .dropzoneContent {
   display: flex;
   justify-content: center;
@@ -280,4 +285,11 @@ width: 15px;
   flex-direction: column;
     width: 100%;
   height: 100%;
+}
+
+.special {
+        color: #1ea9d2;
+    font-weight: 700;
+    font-size: 18px;
+    cursor: pointer;
 }

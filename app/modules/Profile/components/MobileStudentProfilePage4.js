@@ -27,7 +27,7 @@ export default function MobileStudentProfilePage4 (
   return (
     <div className={mobileStudentProfilePageContainer}>
 
-      <MobileStudentProfileBreadCrumbs/>
+      <MobileStudentProfileBreadCrumbs totalStates={8} currentState={4} />
 
       <div className={largeHeader}>Tell us about your experiences!</div>
       <div className={profileItemsContainer}>
@@ -49,18 +49,25 @@ export default function MobileStudentProfilePage4 (
           <div className={label}>Do you drive?</div>
           <div className={containersContainer}>
             <div className={container}>
-              <input type="radio" name="hasCar" value="1" id="radio-1"/>
+              <input type="radio" name="hasCar" onClick={() => updateProfileField('hasCar', true, true)}value="1" id="radio-1"/>
               <label htmlFor="radio-1"><span className={radio}>Yes</span></label>
             </div>
             <div className={container}>
-              <input type="radio" name="hasCar" value="0" id="radio-2"/>
+              <input type="radio" name="hasCar" onClick={() => updateProfileField('hasCar', false, true)} defaultChecked value="0" id="radio-2"/>
               <label htmlFor="radio-2"><span className={radio}>No</span></label>
             </div>
           </div>
         </div>
 
         <div className={profileItem}>
-          <div className={label}>Got any hobbies? <span>(optional)</span></div>
+          <div className={label}>Tell us a fun fact about you</div>
+          <textarea className={propsErrorMap.funFacts ? `${error} ${textAreaInput}` : `${textAreaInput}`} 
+            type="text" placeholder="I've earned Employee of the Month award consecutively for 15 years straight at the Krusty Krab."
+            maxLength="140" onBlur={(e)=> updateProfileField('funFacts', e.target.value, true)}/>
+        </div>
+
+        <div className={profileItem}>
+          <div className={label}>What are your hobbies?</div>
           <textarea className={propsErrorMap.hobbies ? `${error} ${textAreaInput}` : `${textAreaInput}`} type="text" placeholder="Playing guitar, Making movies, etc.."
             onBlur={(e)=> updateProfileField('hobbies', e.target.value, true)}/>
         </div>

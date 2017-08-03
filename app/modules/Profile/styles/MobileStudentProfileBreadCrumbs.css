@@ -9,11 +9,47 @@
     margin-bottom: 40px;
 }
 
-.node {
-    height: 13px;
-    width: 13px;
+.uncompletedNode {
+    height: 22px;
+    width: 22px;
     border-radius: 20px;
-    background-color: #ececec;
-    border: solid 4px #1ea9d2;
+    background-color: #ffffff;
+    border: solid 1px #949595;
     cursor: pointer;
+}
+
+.completedNode {
+    height: 22px;
+    width: 22px;
+    border-radius: 20px;
+    background-color: #ffffff;
+    border: solid 1px #1ea9d2;
+    cursor: pointer;
+}
+
+.completedNode i {
+        color: #1ea9d2;
+    font-size: 14px;
+    position: relative;
+    top: -2px;
+}
+
+.completedLine {
+        /* position: absolute; */
+    position: inherit;
+    width: 8%;
+    height: 2px;
+    background-color: #1ea9d2;
+    position: relative;
+    top: 10px;
+}
+
+.incompleteLine {
+        /* position: absolute; */
+    position: inherit;
+    width: 8%;
+    height: 2px;
+    background-color: #949595;
+    position: relative;
+    top: 10px;
 }

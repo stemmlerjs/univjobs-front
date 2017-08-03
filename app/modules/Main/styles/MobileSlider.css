@@ -140,3 +140,17 @@
     outline: none;
     font-size:20px;
 }
+
+.noticeHeader {
+    /* height: 90px; */
+    background-color: #d65bc1;
+    padding: 33px;
+    color: white;
+    font-size: 14px;
+}
+
+.noticeHeaderCloseButton {
+        position: absolute;
+    right: 20px;
+    top: 81px;
+}

@@ -519,11 +519,92 @@ export const mobileProfileHelper = {
 
   },
 
-  validateStudentProfilePage3: () => {
+  validateStudentProfilePage3: (profileInfo, next) => {
+
+    let submitErrorsExist = false;
+    let profileFieldErrors = {
+      gpa: false
+    }
+
+    /*
+     * Validate the fields that need validation
+     */
+
+    profileFieldErrors.gpa = !validateGPA(profileInfo.gpa)
+
+    /*
+     * If an error exists in the map, then submitErrorsExist === true
+     */
+    
+    for (var attr in profileFieldErrors) {
+      if (profileFieldErrors[attr] === true) submitErrorsExist = true;
+    }
+  
+    /*
+     * Return the results.
+     */
+
+    next(submitErrorsExist, profileFieldErrors)
 
   },
 
-  validateStudentProfilePage4: () => {
+  validateStudentProfilePage4: (profileInfo, next) => {
+
+    let submitErrorsExist = false;
+    let profileFieldErrors = {
+      funFacts: false,
+      hobbies: false
+    }
+
+    /*
+     * Validate the fields that need validation
+     */
+
+    profileFieldErrors.funFacts = profileInfo.funFacts!= "" ? false : true
+    profileFieldErrors.hobbies= profileInfo.hobbies != "" ? false : true
+
+    /*
+     * If an error exists in the map, then submitErrorsExist === true
+     */
+    
+    for (var attr in profileFieldErrors) {
+      if (profileFieldErrors[attr] === true) submitErrorsExist = true;
+    }
+  
+    /*
+     * Return the results.
+     */
+
+    next(submitErrorsExist, profileFieldErrors)
+
+  },
+
+  validateStudentProfilePage7: (profileInfo, next) => {
+
+    let submitErrorsExist = false;
+    let profileFieldErrors = {
+      personalEmail: false
+    }
+
+    /*
+     * Validate the fields that need validation
+     */
+
+    profileFieldErrors.personalEmail = validatePersonalEmail(profileInfo.personalEmail) ? false : true
+
+    /*
+     * If an error exists in the map, then submitErrorsExist === true
+     */
+    
+    for (var attr in profileFieldErrors) {
+      if (profileFieldErrors[attr] === true) submitErrorsExist = true;
+    }
+  
+    /*
+     * Return the results.
+     */
+
+    next(submitErrorsExist, profileFieldErrors)
 
   }
 }
