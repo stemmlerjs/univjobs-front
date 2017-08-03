@@ -3,7 +3,7 @@ import { employerProfilePUT, employerProfilePATCH, validateEmployerProfileFields
   studentProfilePUT, studentProfilePATCH, validateStudentProfileFields,
   compareToSnapshot, getUserInfo, extractLanguageId,
   extractClubsObject, extractSportsObject, mobileProfileHelper } from 'helpers/profile'
-import { toISO, hasCarBoolean } from 'helpers/utils'
+import { toISO, hasCarBoolean, scrollToY } from 'helpers/utils'
 import profileAdviceModal from './profileAdviceModal'
 
 // =======================================================
@@ -12,6 +12,7 @@ import profileAdviceModal from './profileAdviceModal'
 
 
 // ********** Base form actions **************
+
 const UPDATE_PROFILE_FIELD = 'PROFILE.UPDATE_PROFILE_FIELD'
 
 const TOGGLE_BUTTON = 'PROFILE.TOGGLE_BUTTON'
@@ -929,12 +930,18 @@ export default function profile (state = initialState, action) {
      */
 
     case MOBILE_STUDENT_PROFILE_PAGE_BACK:
+
+      scrollToY(0, 1500, 'easeInOutQuint');
+
       return {
         ...state,
         mobileViewCurrentPage: state.mobileViewCurrentPage - 1
       }
 
     case MOBILE_STUDENT_PROFILE_NEXT_PAGE:
+      
+      scrollToY(0, 1500, 'easeInOutQuint');
+
       return {
         ...state,
         mobileViewCurrentPage: state.mobileViewCurrentPage + 1

@@ -3,3 +3,7 @@ npm-debug.log
 lib
 .DS_Store
 .tmp
+*.swp
+*.swm
+*.swo
+*.swn
