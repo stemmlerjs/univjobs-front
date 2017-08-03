@@ -582,11 +582,14 @@ const StudentProfileContainer = React.createClass({
 
                 if (isProfileCompleted == 0 && !isEmailVerified) {
 
-                  _thisContext.refs.container.info(
-                    "Click here to resend the verification email. Thanks!",
-                    "Before you can move on, we need you to finish your profile & confirm the email we sent to your student email.", {
-                      timeout: 3000
-                  });
+                  if (!window.isMobile) {
+                    _thisContext.refs.container.info(
+                      "Click here to resend the verification email. Thanks!",
+                      "Before you can move on, we need you to finish your profile & confirm the email we sent to your student email.", {
+                        timeout: 3000
+                    });
+                  }
+                  
                 }
 
               /*
@@ -594,11 +597,13 @@ const StudentProfileContainer = React.createClass({
                 */
 
                 else if (isProfileCompleted == 0) {
-                  _thisContext.refs.container.info(
-                    "Thanks!",
-                    "Before you can move on, we just need you to finish your profile.", {
-                      timeout: 3000
-                  });
+                  if (!window.isMobile) {
+                    _thisContext.refs.container.info(
+                      "Thanks!",
+                      "Before you can move on, we just need you to finish your profile.", {
+                        timeout: 3000
+                    });
+                  }
                 }
 
                 /*

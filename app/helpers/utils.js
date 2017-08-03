@@ -35,7 +35,14 @@ const DOMPurify = createDOMPurify(window);
 
 export function validatePassword(password) {
 
-  var upperCaseLowerCaseSymbolHasNumber = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/;
+  /*
+   * - 1 uppercase
+   * - 1 lowercase
+   * - 1 number OR 1 symbol 
+   * - minimim 8 characters
+   */
+
+  var upperCaseLowerCaseSymbolHasNumber = /^(?=.*[a-z])(?=.*[A-Z])(?=.*(_|[^A-Za-z ])).{8,}$/;
   let isMinimum8Chars = false;
   
   if (password.length >= 8) isMinimum8Chars = true;

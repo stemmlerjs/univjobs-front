@@ -136,17 +136,21 @@ const SignupContainer = React.createClass({
   * TODO: Hide console log in prod
   */
     handleStudentSignup(e) {
+
+      if (e) {
         e.preventDefault()
-      //  debugger;
-        this.props.submitStudentSignupForm(
-            this.props.studentEmail,
-            this.props.studentPassword
-        )
-        .then((actionResult) => {
-            if(actionResult) {
-                this.context.router.replace('/profile/st')
-          } 
-        }).catch((err) => console.log(err))
+      }
+
+      this.props.submitStudentSignupForm(
+          this.props.studentEmail,
+          this.props.studentPassword
+      )
+      .then((actionResult) => {
+          if(actionResult) {
+              this.context.router.replace('/profile/st')
+        } 
+      })
+      .catch((err) => console.log(err))
     },
 
 /**
@@ -317,7 +321,7 @@ const SignupContainer = React.createClass({
                 emailText={this.props.studentEmail}
                 passwordText={this.props.studentPassword}
                 updateStudentSignupForm={this.props.updateStudentForm}
-                submitSignupForm={this.props.submitStudentSignupForm}
+                submitSignupForm={this.handleStudentSignup}
                 onSubmitSignup={(e) => this.handleStudentSignup(e)}
                 error={this.props.studentFormError}
                 router={this.context.router}

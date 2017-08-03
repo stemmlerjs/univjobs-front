@@ -75,7 +75,7 @@ export default function StudentSignup ({ submitSignupForm, updateStudentSignupFo
                   console.log(studentSignupFormOpen)
 
                   if (studentSignupFormOpen) {
-                    submitSignupForm(emailText, passwordText)
+                    submitSignupForm(null)
                   }
 
                   else {
