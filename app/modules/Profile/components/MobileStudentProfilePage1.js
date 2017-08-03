@@ -8,7 +8,7 @@ import { mobileStudentProfilePageContainer, largeHeader, profileItemsContainer, 
   profileItem, textInput, dropdownInput, navigationButtonsContainer, nextButton, smallHeader,
   multiselectDropdown } from '../styles/MobileStudentProfilePage.css'
 import { error } from 'sharedStyles/error.css' 
-import { scrollToY } from 'helpers/utils'
+
 
 import InputSelector from 'modules/SharedComponents/components/InputSelector'
 
@@ -26,7 +26,7 @@ export default function MobileStudentProfilePage1 (
     next
   }) {
 
-    scrollToY(0, 1500, 'easeInOutQuint');
+    
 
   return (
     <div className={mobileStudentProfilePageContainer}>

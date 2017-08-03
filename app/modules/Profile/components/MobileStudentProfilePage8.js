@@ -3,7 +3,7 @@ import React, { PropTypes } from 'react'
 
 import MobileStudentProfileBreadCrumbs from './MobileStudentProfileBreadCrumbs'
 import { Combobox, DropdownList, DateTimePicker, Calendar, Multiselect, SelectList} from 'react-widgets'
-import { scrollToY } from 'helpers/utils'
+
 
 import { mobileStudentProfilePageContainer, largeHeader, profileItemsContainer, label,
   profileItem, textInput, dropdownInput, navigationButtonsContainer, nextButton, 
@@ -15,7 +15,7 @@ export default function MobileStudentProfilePage8 (
       resendEmail
   }) {
   
-  scrollToY(0, 1500, 'easeInOutQuint');
+  
   return (
     <div className={mobileStudentProfilePageContainer}>
       <MobileStudentProfileBreadCrumbs totalStates={8} currentState={8} />

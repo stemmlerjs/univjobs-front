@@ -3,7 +3,7 @@ import React, { PropTypes } from 'react'
 
 import MobileStudentProfileBreadCrumbs from './MobileStudentProfileBreadCrumbs'
 import { Combobox, DropdownList, DateTimePicker, Calendar, Multiselect, SelectList} from 'react-widgets'
-import { scrollToY } from 'helpers/utils'
+
 
 
 import { mobileStudentProfilePageContainer, largeHeader, profileItemsContainer, label,
@@ -32,7 +32,7 @@ export default function MobileStudentProfilePage2 (
     back
   }) {
 
-  scrollToY(0, 1500, 'easeInOutQuint'); 
+   
   return (
     <div className={mobileStudentProfilePageContainer}>
 
