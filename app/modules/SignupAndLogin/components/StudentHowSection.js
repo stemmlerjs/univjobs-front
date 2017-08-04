@@ -12,7 +12,7 @@ import { howSectionContainer, title, contentContainer, imageContainer, rightside
   processItemContainer, profileSvg, notificationSvg, processItemTitle, processItemAltBody,
   employerCallToAction, employerCTALink } from '../styles/HowSection.css'
 
-export default function StudentHowSection () {
+export default function StudentHowSection ({onSwitchUserType}) {
   return (
     <div className={howSectionContainer}>
       <div className={title}>How Univjobs works</div>  
@@ -59,7 +59,7 @@ export default function StudentHowSection () {
       </div>
 
       <div className={employerCallToAction}>Are you an employer?</div>
-      <div className={employerCTALink}>Learn about how we can help you find great local talent</div>
+      <div className={employerCTALink} onClick={onSwitchUserType}>Learn about how we can help you find great local talent</div>
       
 
       

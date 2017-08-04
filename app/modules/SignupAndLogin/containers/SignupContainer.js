@@ -327,7 +327,7 @@ const SignupContainer = React.createClass({
                 router={this.context.router}
                 isCreatingAccount={this.props.isCreatingAccount}
               />
-              <StudentHowSection/>
+              <StudentHowSection onSwitchUserType={this.handleSwitchUserType}/>
               <WhyWeBuiltItSection/>
             </div>
             :

@@ -26,7 +26,7 @@ export default function WeHelpYouSectionContainer () {
 
         <div className={weHelpYouItem}>
           <div className={helpItemImageContainer}>
-            <img className={helpItemImage} src="/assets/svg/clock.svg"/>
+            <img className={helpItemImage} src="/assets/svg/student.svg"/>
           </div>  
           <div className={processItemTitle}>GET QUALIFIED APPLICANTS</div>
           <div>Our built-in technology ensures that qualified students see your job postings, and enable them to apply to it.</div>
@@ -34,7 +34,7 @@ export default function WeHelpYouSectionContainer () {
 
         <div className={weHelpYouItem}>
           <div className={helpItemImageContainer}>
-            <img className={helpItemImage} src="/assets/svg/clock.svg"/>
+            <img className={helpItemImage} src="/assets/svg/visibility.svg"/>
           </div>  
           <div className={processItemTitle}>BRAND EXPOSURE</div>
           <div>Post jobs to reach multiple schools of your choice. Ensure that you have the natinoal brand exposure to young professionals.
