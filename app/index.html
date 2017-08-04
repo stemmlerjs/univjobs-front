@@ -751,21 +751,22 @@
     <!-- Sentry React Logging Error -->
     <script src="https://cdn.ravenjs.com/3.17.0/raven.min.js" crossorigin="anonymous"></script>
 
+
     <script>
-        Raven.config('https://4d4969c2e85e46598a45379cb0a0c176@sentry.io/199548', {
-            logger: 'my-logger',
-            whitelistUrls: [
-                /disqus\.com/,
-                /getsentry\.com/
-            ],
-            ignoreErrors: [
-                'fb_xd_fragment',
-                /ReferenceError:.*/
-            ],
-            includePaths: [
-                /https?:\/\/(www\.)?getsentry\.com/
-            ]
-        }).install();
+      Raven.config('https://10cfc8899913429fb9c9d3d5295e1f60@sentry.io/199562', {
+                logger: 'my-logger',
+                whitelistUrls: [
+                    /disqus\.com/,
+                    /getsentry\.com/
+                ],
+                ignoreErrors: [
+                    'fb_xd_fragment',
+                    /ReferenceError:.*/
+                ],
+                includePaths: [
+                    /https?:\/\/(www\.)?getsentry\.com/
+                ]
+            }).install();
     </script>
     <!-- Sentry React Logging Error -->
 </head>
