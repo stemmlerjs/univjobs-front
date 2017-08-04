@@ -266,7 +266,7 @@ export function tryAdvanceStudentProfilePage(currentPage, props, successCallback
         "Please fill in missing fields"
       ], true))
 
-      failureCallback('INVALID FIELDS')
+      failureCallback()
     }
     
   }

@@ -901,14 +901,28 @@ const StudentProfileContainer = React.createClass({
         * This is only important when we're submitting the profile the first time.
         */
 
-      () => {
+      (submitError) => {
 
         scrollToY(0, 1500, 'easeInOutQuint');
-        this.refs.container.error(
-          "Please try again a little later or let us know.",
-          "Darn. Something went wrong submitting your profile.", {
-            timeout: 3000
-        });
+
+        if (submitError) {
+          this.refs.container.error(
+            "Please try again a little later or let us know.",
+            "Darn. Something went wrong submitting your profile.", {
+              timeout: 3000
+          });
+        }
+
+        else {
+          this.refs.container.error(
+            "Ya gotta fix some of these fields to continue.",
+            "Hold your horses, deputy 🐎", {
+              timeout: 5000
+          });
+        }
+
+        
+        
 
       }
     )

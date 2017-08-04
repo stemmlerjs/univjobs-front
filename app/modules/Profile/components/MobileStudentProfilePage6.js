@@ -7,7 +7,8 @@ import { scrollToY, compressPicture } from 'helpers/utils'
 
 import { mobileStudentProfilePageContainer, largeHeader, profileItemsContainer, label,
   profileItem, textInput, dropdownInput, navigationButtonsContainer, nextButton, 
-  longDropDown, backButton, multiselectDropdown, smallHeader, dropzoneContent, dropzoneBaseStyle, dropzoneResumeStyle } from '../styles/MobileStudentProfilePage.css'
+  longDropDown, backButton, multiselectDropdown, smallHeader, dropzoneContent, dropzoneBaseStyle, 
+  dropzoneResumeStyle, linkForSite } from '../styles/MobileStudentProfilePage.css'
 import { error } from 'sharedStyles/error.css' 
 
 import Dropzone from 'react-dropzone'
@@ -156,7 +157,10 @@ export default function MobileStudentProfilePage6 (
                    <Dropzone data-maxwidth="300" data-maxheight="300" id="dropResumeDiv" className={`${dropzoneBaseStyle} ${dropzoneResumeStyle}`} onDrop={onDropResume} accept='application/pdf' multiple={false}>
                       { resume == "" ? 'Double-tap to upload your resume' : 'Got it! Ready to upload.'}
                     </Dropzone>
+
+                    <div className={linkForSite}>No resume? Check out <a target="_blank" href="http://ineedaresu.me/#/">ineedaresume.me</a>. {'They can help you make one super quick.'}</div>
                 </div>
+
         
                 <div className={navigationButtonsContainer}>
                   <div onClick={back} className={backButton}>Back</div>
