@@ -79,13 +79,13 @@ const EmployerSignup = React.createClass({
                     HIRE STUDENTS
                 </div>
                 <div className={subHeader}>
-                    Post jobs for students at any Canadian college/university
+                    Post jobs for students in Canadian Universities and Colleges
                 </div>
                 <button 
                     className={`${btn} ${material_1}`} 
                     onClick={() => this.refs.employerModal.show()}
                 >
-                    Employers - Post a job now
+                    Sign up and post a job
                 </button>
                 <div id="employer-signup-modal-wrapper">
                     <SkyLight 
