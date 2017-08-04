@@ -1,0 +1,21 @@
+
+.weHelpYouSectionContainer {
+    background-color: #2A2D34;
+    padding-top: 53px;
+    padding-bottom: 53px;
+    color: white;
+}
+
+.title {
+    font-size: 62px;
+}
+
+.weHelpYouItemsContainer {
+    margin-top: 42px;
+    display: flex;
+    flex-direction: row;
+}
+
+.weHelpYouItem {
+
+}

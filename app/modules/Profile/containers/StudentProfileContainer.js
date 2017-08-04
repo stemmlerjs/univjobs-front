@@ -740,7 +740,7 @@ const StudentProfileContainer = React.createClass({
         boundary: { width: 250, height: 250 },
         showZoomer: false,
         enableResize: false,
-        enableOrientation: false
+        enableOrientation: true
       });
 
       window.cropperInstance.bind({
@@ -749,6 +749,10 @@ const StudentProfileContainer = React.createClass({
 
     }, 50)
     
+  },
+
+  rotatePicture () {
+    window.cropperInstance.rotate(90)
   },
 
   /*
@@ -1160,6 +1164,7 @@ const StudentProfileContainer = React.createClass({
               <SkyLight ref="pictureCropper">
                 <PictureCropper 
                   onDoneCrop={this.cropAndAppendImage}
+                  rotate={this.rotatePicture}
                 />
               </SkyLight>
             </div>
