@@ -29,7 +29,7 @@ export default function StudentSignup ({ submitSignupForm, updateStudentSignupFo
 
   return (
       <div className={backgroundStyleFallback}>
-        <div className={studentCenteredContainer}>
+        <div id="student-hero" className={studentCenteredContainer}>
             <div className={header}>
                 GET HIRED
             </div>

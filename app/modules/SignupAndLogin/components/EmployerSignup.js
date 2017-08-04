@@ -72,10 +72,9 @@ const EmployerSignup = React.createClass({
     const {onSubmitSignup, updateEmployerSignupForm, firstNameText, lastNameText, companyNameText, phoneText, 
       emailText, passwordText, error, router, isCreatingAccount } = this.props
 
-
     return (
         <div className={backgroundStyleFallback}>
-            <div className={employerCenteredContainer}>
+            <div id="employer-hero" className={employerCenteredContainer}>
                 <div className={header}>
                     HIRE STUDENTS
                 </div>

@@ -30,3 +30,10 @@
 .helpItemImage {
     width: 96px;
 }
+
+@media (max-width:400px) {
+    .title {
+        font-size: 45px;
+    margin-bottom: 40px;
+    }
+}

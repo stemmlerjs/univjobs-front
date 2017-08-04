@@ -29,6 +29,7 @@ import { detectEnterPress } from 'helpers/utils'
 import { input, errorMessage, loginBtn, passwordRst } from '../styles/SignupContainerStyles.css'
 import { shine } from 'sharedStyles/animations.css'
 
+let visitedEmployerSide = false;
 const styles = {
   overlayStyles: {
     position: 'absolute',
@@ -228,6 +229,8 @@ const SignupContainer = React.createClass({
 
   componentDidMount() {
     window.scroll(0,0);
+
+    document.getElementById("student-hero").style.minHeight = window.screen.availHeight + "px"
   },
 
 /**
@@ -244,6 +247,7 @@ const SignupContainer = React.createClass({
       failureRedirect: null,
       restricted: null
     }
+
 
     authRedirectFilter(config, this.context.store, this.context.router)
       .then(() => {
@@ -268,6 +272,17 @@ const SignupContainer = React.createClass({
     if((this.props.loginFormEmailText !== "") && (this.props.loginFormPasswordText !== "")) {
       this.handleLoginAttempt()
     }
+  },
+
+  componentDidUpdate() {
+
+    if (!visitedEmployerSide) {
+      if (document.getElementById("employer-hero")) {
+        document.getElementById("employer-hero").style.minHeight = window.screen.availHeight + "px"
+        visitedEmployerSide == true;
+      }
+    }
+
   },
 
   render () {
