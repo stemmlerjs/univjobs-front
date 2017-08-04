@@ -8,14 +8,24 @@
 
 .title {
     font-size: 62px;
+    margin-bottom: 40px;
 }
 
 .weHelpYouItemsContainer {
     margin-top: 42px;
     display: flex;
     flex-direction: row;
+        justify-content: space-around;
 }
 
 .weHelpYouItem {
+        max-width: 274px;
+    margin-bottom: 60px;
+}
 
+.helpItemImageContainer {
+    margin-bottom: 28px;
+}
+.helpItemImage {
+    width: 96px;
 }
