@@ -641,13 +641,13 @@ const StudentProfileContainer = React.createClass({
                 * we verified the email and the user's profile is now complete overall. We redirect in that
                 * scenario.
                 */
-                
+
                 if (emailVerifiedThisInstance) {
                   console.log("[Univjobs]: Profile was completely verfied + completed in THIS instance of componentWillMount, redirect.")
 
                   setTimeout(() => {
-                    window.location.reload()
                     _thisContext.context.router.push('/dashboard/st')
+                    window.location.reload()
                   }, 3000)
 
                 }
