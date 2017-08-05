@@ -6,6 +6,9 @@ import StudentSignup from '../components/StudentSignup'
 import EmployerSignup from '../components/EmployerSignup'
 import StudentHowSection from '../components/StudentHowSection'
 import WhyWeBuiltItSection from '../components/WhyWeBuiltItSection'
+import WeHelpYouSection from '../components/WeHelpYouSection'
+import BenefitsSection from '../components/BenefitsSection'
+
 import { Navigation, Footer } from 'modules/SharedComponents'
 
 // ==============THIRD PARTY IMPORTS========================= //
@@ -370,6 +373,8 @@ const SignupContainer = React.createClass({
                 router={this.context.router}
                 isCreatingAccount={this.props.isCreatingAccount}
               />
+              <WeHelpYouSection/>
+              <BenefitsSection/>
             </div>
           }
         <Footer />

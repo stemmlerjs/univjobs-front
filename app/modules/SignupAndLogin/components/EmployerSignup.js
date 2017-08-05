@@ -8,14 +8,12 @@ import SkyLight from 'react-skylight'
 
 // ==============MADE COMPONENTS========================= //
 import { Footer } from 'modules/SharedComponents'
-import WeHelpYouSection from './WeHelpYouSection'
 
 // ================CSS IMPORTS============================== //
 import { employerCenteredContainer, header, subHeader, 
         modalContent, errorMessage, btn, input,
         overlayStyles, dialogStyles } from '../styles/EmployerSignupStyles.css'
 import { legalEmployer, gray, backgroundStyleFallback } from '../styles/SignupContainerStyles.css'
-
 
 import { ValidPasswordVerifier } from 'modules/SharedComponents'
 
@@ -168,7 +166,7 @@ const EmployerSignup = React.createClass({
                 </div>
               </div>
 
-              <WeHelpYouSection/>
+              
             </div>
     )
   }

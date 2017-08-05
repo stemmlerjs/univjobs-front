@@ -10,7 +10,7 @@ import { processContainer, processItemTitle} from '../styles/HowSection.css'
 export default function WeHelpYouSectionContainer () {
   return (
     <div className={weHelpYouSectionContainer}>
-      <div className={title}>We help you</div>
+      <div className={title}>We can help you</div>
 
       <div className={processContainer}>
 
