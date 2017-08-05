@@ -22,7 +22,7 @@ import { blackBackGround,flexContainer, flexRowContainer, flexRowItem,
 
 const AboutPage = () => (
         <div>
-            <div className={flexContainer}>
+            <div id="about-us-hero" className={flexContainer}>
               <div className={header}>
                 <div className={aboutUsTitle}>Our Mission</div>
                 <p className={marginReduce}>To build a platform</p>

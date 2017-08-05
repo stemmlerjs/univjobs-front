@@ -22,21 +22,33 @@ const actionCreators = {
       ...loginFormActionCreators
 }
 
+let visitedAboutPage = false;
 
 const AboutPageContainer = React.createClass({
     propTypes: {
-        //Insert variables with data types for typechecking  
-    
+      //Insert variables with data types for typechecking  
     },
+
     contextTypes: {
         router: PropTypes.object.isRequired,
         store: PropTypes.object.isRequired
     },
+
+    componentDidMount() {
+      if (!visitedAboutPage) {
+        if (document.getElementById("about-us-hero")) {
+          document.getElementById("about-us-hero").style.minHeight = window.screen.availHeight + "px"
+          visitedAboutPage == true;
+        }
+      }
+    },
+
     componentWillMount() {
         // Hide the overlay on mount if coming from direct URL
-        this.props.closeOverlay()
-        document.body.scrollTop = document.documentElement.scrollTop = 0;
+      this.props.closeOverlay()
+      document.body.scrollTop = document.documentElement.scrollTop = 0;
     },
+
     render () {
         return (
           <div>

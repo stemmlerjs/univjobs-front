@@ -37,7 +37,7 @@ export default function WeHelpYouSectionContainer () {
             <img className={helpItemImage} src="/assets/svg/visibility.svg"/>
           </div>  
           <div className={processItemTitle}>BRAND EXPOSURE</div>
-          <div>Post jobs to reach multiple schools of your choice. Ensure that you have the natinoal brand exposure to young professionals.
+          <div>Post jobs to reach multiple schools of your choice. Ensure that you have the national brand exposure to young professionals.
           We help you with branding by using social media targeting so that your job posting can be seen by passive students.</div>
         </div>
       </div>

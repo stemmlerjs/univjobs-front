@@ -265,10 +265,10 @@
 }
 
 .aboutUsTitle {
-    color: #52a7fa;
+    color: white;
     font-size: 103px;
     font-weight: 900;
-    text-shadow: 2px 2px #ffffff;
+    /* text-shadow: 2px 2px #ffffff; */
 }
 
 
