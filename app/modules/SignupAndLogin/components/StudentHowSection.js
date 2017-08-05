@@ -18,11 +18,13 @@ export default function StudentHowSection ({onSwitchUserType}) {
       <div className={title}>How Univjobs works</div>  
       <div className={contentContainer}>
         <div className={imageContainer}>
+        {/** 
           <span className={pipelineApply}>APPLY</span>
           <span className={pipelineContact}>CONTACT</span>
           <span className={pipelineInterview}>INTERVIEW</span>
           <span className={pipelineHire}>HIRE</span>
-          <img className={pipelineSvg} src="https://univjobs.ca/assets/images/front/pipeline.png"/>
+        */}
+          <img className={pipelineSvg} src="/assets/images/front/pipelinev2.png"/>
           {/* 
           <img className={handshakeSvg} src="/assets/svg/handshake.svg"/>
           <img className={writingSvg} src="/assets/svg/writing.svg"/>

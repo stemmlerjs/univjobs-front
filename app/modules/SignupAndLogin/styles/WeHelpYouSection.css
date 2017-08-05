@@ -7,8 +7,9 @@
 }
 
 .title {
-    font-size: 62px;
+font-size: 62px;
     margin-bottom: 40px;
+    font-weight: 500;
 }
 
 .weHelpYouItemsContainer {

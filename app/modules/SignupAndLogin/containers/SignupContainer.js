@@ -30,6 +30,9 @@ import { input, errorMessage, loginBtn, passwordRst } from '../styles/SignupCont
 import { shine } from 'sharedStyles/animations.css'
 
 let visitedEmployerSide = false;
+let visitedStudentSide = false;
+
+
 const styles = {
   overlayStyles: {
     position: 'absolute',
@@ -230,7 +233,7 @@ const SignupContainer = React.createClass({
   componentDidMount() {
     window.scroll(0,0);
 
-    document.getElementById("student-hero").style.minHeight = window.screen.availHeight + "px"
+    //document.getElementById("student-hero").style.minHeight = window.screen.availHeight + "px"
   },
 
 /**
@@ -280,6 +283,13 @@ const SignupContainer = React.createClass({
       if (document.getElementById("employer-hero")) {
         document.getElementById("employer-hero").style.minHeight = window.screen.availHeight + "px"
         visitedEmployerSide == true;
+      }
+    }
+
+    if (!visitedStudentSide) {
+      if (document.getElementById("student-hero")) {
+        document.getElementById("student-hero").style.minHeight = window.screen.availHeight + "px"
+        visitedStudentSide == true;
       }
     }
 
