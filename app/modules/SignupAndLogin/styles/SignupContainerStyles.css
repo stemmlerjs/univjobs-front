@@ -16,6 +16,12 @@
     font-size: 18px;
 }
 
+.backgroundStyleFallback {
+background: linear-gradient(#52a7fa, #406fbe);
+}
+
+
+
 /* Remove the Chrome auto-complete yellow styling */
 .input:-webkit-autofill {
   -webkit-box-shadow: 0 0 0px 1000px white inset;

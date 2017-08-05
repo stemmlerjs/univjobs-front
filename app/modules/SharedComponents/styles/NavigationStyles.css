@@ -11,7 +11,10 @@
     min-height: 100px;
     transition: min-height 0.3s;
     background-color: #52A7FA;
-    
+    position: fixed;
+    top: 0px;
+    left: 0;
+    right: 0;
 }
 
 .headerContainer {

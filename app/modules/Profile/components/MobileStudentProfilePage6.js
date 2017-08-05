@@ -171,7 +171,6 @@ export default function MobileStudentProfilePage6 (
 
 
 
-
           : <div>
               <div className={largeHeader}>Doesn't look like your device supports file uploads</div>
               <div className={smallHeader}>We wanted you to upload a photo and a resume. You can always do that from the desktop later.

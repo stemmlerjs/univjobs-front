@@ -19,7 +19,7 @@
     align-items: center;
     min-height: 700px;
     background-size: cover;
-    background-image: url("https://raw.githubusercontent.com/UnivJobs/univjobs-front/2f2b10f0aad76a85a5a643cdcdb07697af1370d3/images/front/meeting.jpg");
+    background-image: url("https://univjobs.ca/assets/images/front/employerfrontimage.png");
 
     /*NOTE: overflow seems to fix the error I encountered on the phone from showing the gray background*/
     overflow: hidden;
@@ -32,9 +32,14 @@
 }
 
 .subHeader {
-  text-align: center;
+
   composes: subHeader from 'sharedStyles/styles.css';
-  margin:30px;
+  text-align: center;
+    margin: 30px;
+    font-weight: 300;
+    margin-bottom:40px;
+    padding-left: 15px;
+    padding-right: 15px;
 }
 
 .btn {
@@ -48,6 +53,8 @@
     cursor: pointer;
     margin: 0 auto;
     min-height: 37px;
+    font-weight: 700;
+
 }
 
 .modalContent {

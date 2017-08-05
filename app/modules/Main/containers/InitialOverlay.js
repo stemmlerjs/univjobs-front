@@ -166,7 +166,7 @@ const InitialOverlay = React.createClass({
    * 
    */
 
-  shouldRenderMobileSidebar () {
+  shouldRenderMobileSidebar () { 
 
     var publicPages = ['/join', '/about-us', '/contact-us', '/posting', '/password/reset', '/password/confirm/']
     var render = true;

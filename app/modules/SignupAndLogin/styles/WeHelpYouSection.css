@@ -1,0 +1,39 @@
+
+.weHelpYouSectionContainer {
+    background-color: #2A2D34;
+    padding-top: 53px;
+    padding-bottom: 53px;
+    color: white;
+}
+
+.title {
+    font-size: 62px;
+    margin-bottom: 40px;
+}
+
+.weHelpYouItemsContainer {
+    margin-top: 42px;
+    display: flex;
+    flex-direction: row;
+        justify-content: space-around;
+}
+
+.weHelpYouItem {
+        max-width: 274px;
+    margin-bottom: 60px;
+    font-weight: 300;
+}
+
+.helpItemImageContainer {
+    margin-bottom: 28px;
+}
+.helpItemImage {
+    width: 96px;
+}
+
+@media (max-width:400px) {
+    .title {
+        font-size: 45px;
+    margin-bottom: 40px;
+    }
+}

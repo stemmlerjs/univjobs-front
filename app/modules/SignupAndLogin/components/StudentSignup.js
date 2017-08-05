@@ -5,7 +5,7 @@ import { Link } from 'react-router'
 // ================CSS IMPORTS============================== //
 import { studentCenteredContainer, header, subHeader, btn, btnContainer, inputContainerClosed,
  input, inputContainer, errorMessage } from '../styles/StudentSignupStyles.css'
-import { legal, white, passwordContainer } from '../styles/SignupContainerStyles.css'
+import { legal, white, passwordContainer, backgroundStyleFallback } from '../styles/SignupContainerStyles.css'
 
 import { ValidPasswordVerifier } from 'modules/SharedComponents'
 
@@ -24,13 +24,12 @@ StudentSignup.propTypes = {
 
 export default function StudentSignup ({ submitSignupForm, updateStudentSignupForm, onSubmitSignup, emailText, passwordText, error, router, isCreatingAccount, 
   studentSignupFormOpen,
-  handleOpenStudentSignupForm }) {
-
-  console.log(studentSignupFormOpen, "student signup")
+  handleOpenStudentSignupForm 
+}) {
 
   return (
-      <div>
-        <div className={studentCenteredContainer}>
+      <div className={backgroundStyleFallback}>
+        <div id="student-hero" className={studentCenteredContainer}>
             <div className={header}>
                 GET HIRED
             </div>
