@@ -17,9 +17,9 @@ import * as signupFormActionCreators from 'redux/modules/signupForm/signupForm'
 import * as loginFormActionCreators from 'redux/modules/loginForm/loginForm'
 
 const actionCreators = {
-      ...userActionCreators,
-      ...signupFormActionCreators,
-      ...loginFormActionCreators
+  ...userActionCreators,
+  ...signupFormActionCreators,
+  ...loginFormActionCreators
 }
 
 let visitedAboutPage = false;
@@ -50,19 +50,19 @@ const AboutPageContainer = React.createClass({
     },
 
     render () {
-        return (
-          <div>
-            <RegularNav 
-              dropDownActive={this.props.dropDownActive}
-              toggleDropdownMenu={this.props.toggleDropdownMenu}
-              router={this.context.router}
-              closeNavDropDown={this.props.closeNavDropDown}
-            />
-            <AboutPage/> 
-            <LocationFooter/>
-            <Footer/>
-          </div>
-        )
+      return (
+        <div>
+          <RegularNav 
+            dropDownActive={this.props.dropDownActive}
+            toggleDropdownMenu={this.props.toggleDropdownMenu}
+            router={this.context.router}
+            closeNavDropDown={this.props.closeNavDropDown}
+          />
+          <AboutPage/> 
+          <LocationFooter/>
+          <Footer/>
+        </div>
+      )
     },
 })
     function mapStateToProps({user, signupForm}) {
