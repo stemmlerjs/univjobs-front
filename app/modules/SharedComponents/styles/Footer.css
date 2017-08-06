@@ -54,8 +54,10 @@
 }
 
 .knowUs {
- font-size: 27px;
+    font-size: 27px;
     margin-bottom: 7px;
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
 .withLoveSection {

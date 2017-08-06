@@ -7,9 +7,10 @@
 }
 
 .title {
-font-size: 62px;
+    font-size: 45px;
     margin-bottom: 40px;
-    font-weight: 500;
+    margin-left: 15px;
+    margin-right: 15px;
 }
 
 .weHelpYouItemsContainer {

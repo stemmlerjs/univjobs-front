@@ -313,8 +313,8 @@ padding-left: 3px;
     .publicJobViewContainerStyle {
         display: flex;
         width: 100%;
-        padding-top: 60px;
-         padding-bottom: 0px; 
+        padding-top: 112px;
+        padding-bottom: 0px;
         background-color: white;
         justify-content: center;
         flex-direction: column;
