@@ -445,6 +445,13 @@ display: flex;
 
     .questionsContainer {
         width: 100%;
+        position: inherit; 
+         top: 0px; 
+        text-align: left;
+        font-size: 14px;
+         height: inherit; 
+         overflow-y: hidden; 
+        overflow-x: hidden;
     }
 
     .cardLeftTopContainer {
