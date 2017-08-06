@@ -383,7 +383,7 @@ display: flex;
     margin-right: 15px;
 }
 
-@media (max-width: 500px) {
+@media (max-width: 600px) {
     .cardModalContainer {
             display: flex;
     flex-direction: column;
@@ -410,6 +410,18 @@ display: flex;
     height: 203px;
     padding-top: 9px;
     padding-right: 9px;
+    }
+
+    .cardActionButtons {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        padding-left: 16px;
+        padding-right: 16px;
+        padding-bottom: 13px;
+         position: inherit; 
+        right: 19px;
+        bottom: 19px;
     }
 
     
