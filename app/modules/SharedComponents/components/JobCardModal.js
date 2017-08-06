@@ -295,7 +295,11 @@ export default function JobCardModal({
                 </div>
               </div>
 
-              {
+
+
+              <div className={cardBottomContainer}>
+
+            {
               
                /*
                 * If we're on mobile, we DO want it to render here.
@@ -315,7 +319,6 @@ export default function JobCardModal({
               
             }
 
-              <div className={cardBottomContainer}>
                 <div className={cardSectionOne}>
                     <div className={cardSectionTitle}>Description</div>
                     <div className={cardSectionText}>{job.description}</div>
