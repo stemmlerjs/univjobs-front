@@ -19,6 +19,81 @@ import ReactTooltip from 'react-tooltip'
 import config from 'config'
 import moment from 'moment'
 
+const QuestionsSubcomponent = ({ cardType, questions, job }) => (
+  <div> 
+    {
+      cardType !== 'createjob'
+
+        ? questions.length != 0 
+          ? <div className={questionsContainer}>
+
+              {
+                /* 
+                * In this case, we're on a regular job page and THERE ARE questions that need
+                * to be answered. We iterate over each one and 
+                * render the HTML for each question and it's answer.
+                */
+              }
+
+              { questions.map((question, index) => (
+                <div key={question.question_id}>
+                  <div><b>{"Question " + (index + 1) + ": "}</b>{question.text}</div>
+                  
+                  {
+                    cardType == "applications"
+                      ? <textarea className={answerTextFieldReadOnly} readOnly value={job.answers[index].text}></textarea>
+                      : <textarea className={answerTextField} onChange={(e) => {
+
+                          /* 
+                          * Update the answers on change.
+                          *
+                          * To do this, the following block of code figures out
+                          * which answer (1 or 2) is being answered and triggers
+                          * the update accordingly.
+                          */
+                          var _this = this;
+                          var q = questions;
+                          for (var i = 0; i < q.length; i++) {
+                            if (q[i].question_id == question.question_id) {
+                              updateAnswerText(i + 1, e.target.value)
+                            }
+                          }
+
+                        }} rows="1" cols="50"></textarea>
+                  }
+                </div>
+              ))}
+              
+            </div>
+            
+          : ''
+
+          : questions.question1 !== '' || questions.question2 !== ''
+
+            ? (<div className={questionsContainer}>
+
+                {
+                  questions.question1 !== ''
+                    ? <div>
+                        <div><b>{"Question " + 1 + ": "}</b>{questions.question1}</div>
+                        <textarea className={answerTextField} rows="1" cols="50"></textarea>
+                      </div>
+                    : ''
+                }
+                {
+                  questions.question2 !== ''
+                    ? <div>
+                        <div><b>{"Question " + 2 + ": "}</b>{questions.question2}</div>
+                        <textarea className={answerTextField} rows="1" cols="50"></textarea>
+                      </div>
+                    : ''
+                }
+                
+              </div>)
+            : ''
+    }
+  </div>
+)
 
 const SupplementalJobItemsInfo = ({ job, mapsLink, page }) => (
   <div className={window.isMobile ? mobilePadding : ''}>
@@ -270,6 +345,12 @@ export default function JobCardModal({
                   </div>
                   : ''}
                   
+                  {
+                    window.isMobile 
+                      ? <QuestionsSubcomponent cardType={cardType} questions={questions} job={job}/>
+                      : ''
+                  }
+
               </div>
             </div>
 
@@ -305,79 +386,13 @@ export default function JobCardModal({
               * If the cardtype IS 'createjob', then it's where we mock the modal. The way we rx 
               * the question text is different.
               */
+
+              window.isMobile 
+                ? ''
+                : <QuestionsSubcomponent cardType={cardType} questions={questions} job={job}/>
             }
-
-            {   
-              cardType !== 'createjob'
-
-               ? questions.length != 0 
-                  ? <div className={questionsContainer}>
-
-                      {
-                       /* 
-                        * In this case, we're on a regular job page and THERE ARE questions that need
-                        * to be answered. We iterate over each one and 
-                        * render the HTML for each question and it's answer.
-                        */
-                      }
-
-                      { questions.map((question, index) => (
-                        <div key={question.question_id}>
-                          <div><b>{"Question " + (index + 1) + ": "}</b>{question.text}</div>
-                          
-                          {
-                            cardType == "applications"
-                              ? <textarea className={answerTextFieldReadOnly} readOnly value={job.answers[index].text}></textarea>
-                              : <textarea className={answerTextField} onChange={(e) => {
-
-                                  /* 
-                                  * Update the answers on change.
-                                  *
-                                  * To do this, the following block of code figures out
-                                  * which answer (1 or 2) is being answered and triggers
-                                  * the update accordingly.
-                                  */
-                                  var _this = this;
-                                  var q = questions;
-                                  for (var i = 0; i < q.length; i++) {
-                                    if (q[i].question_id == question.question_id) {
-                                      updateAnswerText(i + 1, e.target.value)
-                                    }
-                                  }
-
-                                }} rows="1" cols="50"></textarea>
-                          }
-                        </div>
-                      ))}
-                      
-                    </div>
-                    
-                  : ''
-
-                 : questions.question1 !== '' || questions.question2 !== ''
-
-                    ? (<div className={questionsContainer}>
-
-                        {
-                          questions.question1 !== ''
-                            ? <div>
-                                <div><b>{"Question " + 1 + ": "}</b>{questions.question1}</div>
-                                <textarea className={answerTextField} rows="1" cols="50"></textarea>
-                              </div>
-                            : ''
-                        }
-                        {
-                          questions.question2 !== ''
-                            ? <div>
-                                <div><b>{"Question " + 2 + ": "}</b>{questions.question2}</div>
-                                <textarea className={answerTextField} rows="1" cols="50"></textarea>
-                              </div>
-                            : ''
-                        }
-                        
-                      </div>)
-                    : ''
-              }
+              
+              
 
               {
                /* 
