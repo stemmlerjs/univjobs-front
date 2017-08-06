@@ -299,25 +299,25 @@ export default function JobCardModal({
 
               <div className={cardBottomContainer}>
 
-            {
-              
-               /*
-                * If we're on mobile, we DO want it to render here.
-                * If we're on desktop, we don't want it to render here.
-                * 
-                * [JOB SPECIAL DETAILS RENDER]
-                * 
-                * If we're on the mobile phone, we don't want to show this
-                * information here.
-                * 
-                * We show it close to the top instead.
-                */
-              
-              window.isMobile 
-                ? <SupplementalJobItemsInfo job={job} mapsLink={mapsLink} page={page} />
-                : ''
-              
-            }
+              {
+                
+                /*
+                  * If we're on mobile, we DO want it to render here.
+                  * If we're on desktop, we don't want it to render here.
+                  * 
+                  * [JOB SPECIAL DETAILS RENDER]
+                  * 
+                  * If we're on the mobile phone, we don't want to show this
+                  * information here.
+                  * 
+                  * We show it close to the top instead.
+                  */
+                
+                window.isMobile 
+                  ? <SupplementalJobItemsInfo job={job} mapsLink={mapsLink} page={page} />
+                  : ''
+                
+              }
 
                 <div className={cardSectionOne}>
                     <div className={cardSectionTitle}>Description</div>

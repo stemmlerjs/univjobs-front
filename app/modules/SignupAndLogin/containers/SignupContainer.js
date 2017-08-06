@@ -32,6 +32,8 @@ import { detectEnterPress } from 'helpers/utils'
 import { input, errorMessage, loginBtn, passwordRst } from '../styles/SignupContainerStyles.css'
 import { shine } from 'sharedStyles/animations.css'
 
+import { scrollToY } from 'helpers/utils'
+
 let visitedEmployerSide = false;
 let visitedStudentSide = false;
 
@@ -113,6 +115,7 @@ const SignupContainer = React.createClass({
 
   handleSwitchUserType (e) {
     e.preventDefault()
+    scrollToY(0, 1500, 'easeInOutQuint');
     this.props.switchedUserType(this.props.isAStudent)
     this.props.closeNavDropDown();
   },
