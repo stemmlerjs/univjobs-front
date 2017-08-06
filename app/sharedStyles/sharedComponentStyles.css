@@ -233,3 +233,10 @@
         position: initial;
     }
 }
+
+@media (max-width: 500px) {
+    .marginBottom {
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+}
