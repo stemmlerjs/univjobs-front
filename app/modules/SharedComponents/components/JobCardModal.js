@@ -8,7 +8,7 @@ import { cardModalContainer, cardLeft, cardRight, cardLeftTopContainer, imgConta
         questionsContainer, answerTextField, answerTextFieldReadOnly, dateApplied,
         statusItem, statusIcon, statusText, statuses, statusHeaderText, notActive,
         notActiveStatusIcon, statusIconReject, statusItemRejected, locationIconNoHover,
-        divider1,
+        divider1, smallJobTypeTitle,
 
         cardSectionMain, companyInfo , clock, applicantsContainer, clock_0_50, clock_51_75, 
         clock_76_100, calendar, locationPin, applicationProgress, googleMapsLinkStyle,
@@ -258,7 +258,7 @@ export default function JobCardModal({
                   <div className={cardHeaderItemMainText}>{title}</div>
 
                   
-                  <div>{job.type === 1 
+                  <div className={window.isMobile ? smallJobTypeTitle : ''}>{job.type === 1 
                       ? 'One Time Gig' :
                       job.type === 2 
                       ? 'Summer' :
@@ -296,11 +296,11 @@ export default function JobCardModal({
                 </div>
               </div>
 
-              {
+              {/*
                 window.isMobile
                   ? <div className={divider1}></div>
                   : ''
-              }
+              */}
               
               <div className={cardBottomContainer}>
 

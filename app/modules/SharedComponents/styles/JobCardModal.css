@@ -155,8 +155,8 @@ display: flex;
 }
 
 .questionsContainer {
-    position: relative;
-    top: 46px;
+    /* position: relative; */
+    /* top: 51px; */
     text-align: left;
     font-size: 14px;
     height: 295px;
@@ -164,6 +164,7 @@ display: flex;
     width: 389px;
     overflow-x: hidden;
     height: 343px;
+    padding-top: 25px;
 }
 
 .questionsContainer::-webkit-scrollbar-track {
@@ -393,6 +394,10 @@ display: flex;
     top: 9px;
 }
 
+.smallJobTypeTitle {
+        font-size: 12px;
+}
+
 @media (max-width: 600px) {
     .cardModalContainer {
         display: flex;
@@ -431,7 +436,7 @@ display: flex;
     }
 
     .cardBottomContainer {
-            text-align: left;
+    text-align: left;
     margin-left: 16px;
     margin-right: 16px;
     margin-top: 11px;
@@ -439,9 +444,9 @@ display: flex;
     height: 203px;
     padding-top: 9px;
     padding-right: 9px;
-        margin-left: 23px;
+    margin-left: 23px;
     margin-right: 23px;
-     height: 80%;
+    height: 75%;
     }
 
     .cardActionButtons {
@@ -459,23 +464,30 @@ display: flex;
     .questionsContainer {
         width: 100%;
         position: inherit; 
-         top: 0px; 
+        top: 0px; 
         text-align: left;
         font-size: 14px;
-         height: inherit; 
-         overflow-y: hidden; 
+        height: inherit; 
+        overflow-y: hidden; 
         overflow-x: hidden;
     }
 
     .cardLeftTopContainer {
-            height: 20%;
-    margin-right: 23px;
-    margin-left: 23px;
+        margin-right: 23px;
+        margin-left: 23px;
+        max-height: 109px;
+    }
+    .imgContainer {
+        width: 32%;
     }
 
     .imgContainer > img {
-        height: 88px;
-        width: 88px;
+        height: 77px;
+        width: 77px;
+    }
+
+    .cardSectionMain {
+            width: 68%;
     }
 
     
