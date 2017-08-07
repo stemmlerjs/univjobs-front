@@ -8,6 +8,7 @@ import { cardModalContainer, cardLeft, cardRight, cardLeftTopContainer, imgConta
         questionsContainer, answerTextField, answerTextFieldReadOnly, dateApplied,
         statusItem, statusIcon, statusText, statuses, statusHeaderText, notActive,
         notActiveStatusIcon, statusIconReject, statusItemRejected, locationIconNoHover,
+        divider1,
 
         cardSectionMain, companyInfo , clock, applicantsContainer, clock_0_50, clock_51_75, 
         clock_76_100, calendar, locationPin, applicationProgress, googleMapsLinkStyle,
@@ -295,8 +296,12 @@ export default function JobCardModal({
                 </div>
               </div>
 
-
-
+              {
+                window.isMobile
+                  ? <div className={divider1}></div>
+                  : ''
+              }
+              
               <div className={cardBottomContainer}>
 
               {

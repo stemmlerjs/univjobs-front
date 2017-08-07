@@ -114,6 +114,18 @@ export function submitLoginForm(email, password) {
 
             let profileInfo = response.data.student !== undefined ? response.data.student : response.data.employer
             profileInfo.tags = profileInfo.is_a_student === 1 ? response.data.tags : ''
+            
+            /*
+             * Set the Sentry user context so that when we're authenticated, we know
+             * more about the errors.
+             * 
+             * We will know who is experiencing the error.
+             */
+
+            Raven.setUserContext({
+              email: email,
+              isAStudent: isAStudent
+            })
 
 
             //debugger
@@ -169,6 +181,13 @@ export function submitLoginForm(email, password) {
               dispatch(loginFailure("Can't find this user. Are you sure you signed up?"))
               break;
             default: 
+              
+              /*
+               * Capture errors when users try to login
+               */
+
+              Raven.captureException(err)
+
               // ACTION: DISPATCH (SUBMIT_LOGIN_FORM_ERROR)
               dispatch(submitLoginFormError("Couldn't connect to Univjobs. Please check your network connection."))
 

@@ -30,8 +30,15 @@ import { initializeBodyStyles } from 'helpers/styles'
  */
 
 import eventsMap from 'analytics'
+import Raven from 'raven-js';
 
+// Set React to be global
 window.React = React
+
+// Configure Raven 
+Raven
+    .config('https://10cfc8899913429fb9c9d3d5295e1f60@sentry.io/199562')
+    .install();
 
 // Initialize CSS Styles for BODY tag
 initializeBodyStyles();

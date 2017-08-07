@@ -818,28 +818,6 @@
     'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
     })(window,document,'script','dataLayer','GTM-53RBHNC');</script>
     <!-- End Google Tag Manager -->
-
-    <!-- Sentry React Logging Error -->
-    <script src="https://cdn.ravenjs.com/3.17.0/raven.min.js" crossorigin="anonymous"></script>
-
-
-    <script>
-      Raven.config('https://10cfc8899913429fb9c9d3d5295e1f60@sentry.io/199562', {
-                logger: 'my-logger',
-                whitelistUrls: [
-                    /disqus\.com/,
-                    /getsentry\.com/
-                ],
-                ignoreErrors: [
-                    'fb_xd_fragment',
-                    /ReferenceError:.*/
-                ],
-                includePaths: [
-                    /https?:\/\/(www\.)?getsentry\.com/
-                ]
-            }).install();
-    </script>
-    <!-- Sentry React Logging Error -->
 </head>
 
   <body style="background-color: #DDDEE0;">

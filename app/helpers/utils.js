@@ -514,7 +514,4 @@ export function compressPicture (file, callback) {
     return canvas.toDataURL("image/jpeg", 0.7); // get the data from canvas as 70% JPG (can be also PNG, etc.)
 
   }
-
-
-
 }
