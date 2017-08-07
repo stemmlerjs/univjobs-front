@@ -20,7 +20,7 @@ import ReactTooltip from 'react-tooltip'
 import config from 'config'
 import moment from 'moment'
 
-const QuestionsSubcomponent = ({ cardType, questions, job }) => (
+const QuestionsSubcomponent = ({ cardType, questions, job, updateAnswerText }) => (
   <div> 
     {
       cardType !== 'createjob'
@@ -355,7 +355,7 @@ export default function JobCardModal({
                   
                   {
                     window.isMobile 
-                      ? <QuestionsSubcomponent cardType={cardType} questions={questions} job={job}/>
+                      ? <QuestionsSubcomponent updateAnswerText={updateAnswerText} cardType={cardType} questions={questions} job={job}/>
                       : ''
                   }
 
@@ -397,7 +397,7 @@ export default function JobCardModal({
 
               window.isMobile 
                 ? ''
-                : <QuestionsSubcomponent cardType={cardType} questions={questions} job={job}/>
+                : <QuestionsSubcomponent updateAnswerText={updateAnswerText} cardType={cardType} questions={questions} job={job}/>
             }
               
               
