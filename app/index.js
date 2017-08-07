@@ -36,6 +36,7 @@ import Raven from 'raven-js';
 window.React = React
 
 // Configure Raven 
+window.Raven = Raven;
 Raven
     .config('https://10cfc8899913429fb9c9d3d5295e1f60@sentry.io/199562')
     .install();
