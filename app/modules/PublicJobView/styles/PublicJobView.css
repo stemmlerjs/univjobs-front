@@ -274,17 +274,16 @@ padding-left: 3px;
 
 @media (min-width: 646px) {
 
-.linksFlex {
+    .linksFlex {
         display: flex;
         flex-direction: row;
     }
 
     .publicJobViewContainerStyle {
-    display: flex;
+        display: flex;
         width: 100%;
-        padding-top: 60px;
-        /* padding-bottom: 60px; */
-        background-color: white;
+        padding-top: 135px;
+        background-color: #fff;
         justify-content: center;
         flex-direction: column;
     }
