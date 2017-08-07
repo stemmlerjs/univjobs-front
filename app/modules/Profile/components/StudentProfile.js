@@ -21,7 +21,8 @@ import { pageContainer, profileField, profileHeader,
         dropzoneContent, inlineDropzone, btn, 
         saveBtnContainer, saveBtnList, saveBtnClicked,  notActive, personalEmailStyle,
         saveBtn, space, hideInput, showInput, textArea, unselectedButton,
-				profilePictureDragDropAlt, savedResumeView, actualSaveBtn, pageItemsContainer, materialStyle } from '../styles/StudentProfileContainerStyles.css'
+				profilePictureDragDropAlt, savedResumeView, actualSaveBtn, pageItemsContainer, materialStyle,
+				optionalStyle } from '../styles/StudentProfileContainerStyles.css'
 
 import { shine } from 'sharedStyles/animations.css'
 import { error } from 'sharedStyles/error.css' 
@@ -502,7 +503,7 @@ console.log(props)
 			{/* EXPERIENCE
 			  Can be empty
 			*/} 
-			<StudentProfileField title="I recently worked at "      styles={nameField}>
+			<StudentProfileField title="I recently worked at " styles={nameField} required={ props.funFacts == "" ? true : false} message={'required if fun fact is blank'}>
 			<li> 
 		        <input
 						data-thing="input"
@@ -531,7 +532,7 @@ console.log(props)
 			</StudentProfileField>
 
 			{/* FUN FACTS */}
-			<StudentProfileField title="A fun fact about me is ">
+			<StudentProfileField title="A fun fact about me is " message={'required if experience not provided'} required={ props.companyName == "" || props.position == "" ? true : false}>
 			<li>
 			 <textarea
 			 	 data-thing="input"
@@ -585,7 +586,7 @@ console.log(props)
 
 			{/* PHOTO & RESUME */}
 
-			<StudentProfileField title="Take a business selfie">
+			<StudentProfileField title="Take a business selfie" optional={true}>
 				<Dropzone id="dropPhotoDiv" style={profilePic} className={props.propsErrorMap.photo ? dropzone + ' ' + error 
 					: props.photo == "" 
 						? dropzone 
@@ -596,7 +597,10 @@ console.log(props)
 					</div>
 					</Dropzone>
 
-					<p className={space}> here is my resume</p>
+					<div>
+						<p className={space}> here is my resume</p>
+						<p className={optionalStyle}>{'(optional)'}</p>
+					</div>
 
 					<Dropzone id="dropResumeDiv" className={props.propsErrorMap.resume ? dropzone + ' ' + error 
 						: props.resume == ""

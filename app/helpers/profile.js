@@ -229,7 +229,7 @@ export function validateStudentProfileFields(profileInfo, next) {
   profileFieldErrors.enrollmentDate = profileInfo.enrollmentDate != "" ? false : true
   profileFieldErrors.graduationDate = profileInfo.graduationDate != "" ? false : true
   profileFieldErrors.major = profileInfo.major != "" ? false : true
-  //debugger;
+
   profileFieldErrors.gpa = !validateGPA(profileInfo.gpa)
   profileFieldErrors.personalEmail = validatePersonalEmail(profileInfo.personalEmail) ? false : true
   //profileFieldErrors.gender = profileInfo.gender != "" ? false : true
@@ -239,9 +239,35 @@ export function validateStudentProfileFields(profileInfo, next) {
   /*NOTE: languages is not required, english is default*/
   profileFieldErrors.languages = validateLanguages(profileInfo.languages)
   //profileFieldErrors.hasCar = typeof profileInfo.hasCar == "boolean" ? false : true
-  //profileFieldErrors.companyName = profileInfo.companyName != "" ? false : true
-  //profileFieldErrors.position = profileInfo.position != "" ? false : true
-  profileFieldErrors.funFacts = profileInfo.funFacts!= "" ? false : true
+
+  /*
+   * If company name and position are not both included, then the user needs to provide
+   * a fun fact.
+   * 
+   */
+
+  if (profileInfo.companyName == "" || profileInfo.position == "") {
+
+    if (profileInfo.funFacts == "") profileFieldErrors.funFacts = true
+
+  }
+
+  /*
+   * Alternatively, if fun fact is included, then they need to provide both company name and position
+   */
+
+  if (profileInfo.funFacts == "") {
+
+    if (profileInfo.companyName == "") {
+      profileFieldErrors.companyName = true
+    }
+
+    if (profileInfo.position == "") {
+      profileFieldErrors.position = true
+    }
+
+  }
+
   profileFieldErrors.hometown = profileInfo.hometown != "" ? false : true
   profileFieldErrors.hobbies= profileInfo.hobbies != "" ? false : true
   // profileFieldErrors.photo = profileInfo.photo != "" ? false : true

@@ -313,6 +313,15 @@ outline: none
   border: #908f8f 1px solid !important;
 }
 
+.optionalStyle {
+      padding: 0px;
+    margin: 0px;
+    position: relative;
+    top: -17px;
+    font-weight: bold;
+    font-size: 16px;
+}
+
 /* ============= MEDIA QUERIES =============== */
 
 @media (max-width: 400px) {
