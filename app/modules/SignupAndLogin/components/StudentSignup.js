@@ -43,7 +43,7 @@ export default function StudentSignup ({ submitSignupForm, updateStudentSignupFo
                         value={emailText}
                         onChange={(e) => updateStudentSignupForm('email', e.target.value)}
                         type="email" 
-                        placeholder="Email"
+                        placeholder="Your school email"
                         onKeyUp={(e) => detectEnterPress(e, onSubmitSignup)}/>
                 <div className={passwordContainer}>
                   <input className={input} 
