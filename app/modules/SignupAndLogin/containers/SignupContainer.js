@@ -1,4 +1,5 @@
-// ==============REACT BUILTIN========================= //
+
+// ============== REACT BUILTIN ========================= //
 import React, { PropTypes } from 'react'
 
 // ==============MADE COMPONENTS========================= //

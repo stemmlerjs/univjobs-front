@@ -25,6 +25,7 @@
 .sidebarItemsContainer {
   width: 100%;
   text-align: center;
+      max-height: 80%;
 }
 
 .sidebarItem {

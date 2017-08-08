@@ -371,7 +371,9 @@ const StudentProfileContainer = React.createClass({
           this.refs.container.success(
             "",
             "Success. We went ahead and sent a new Verify Account email to your student email.", {
-              timeout: 6000
+              closeButton:true,
+              timeOut: 30000,
+              extendedTimeOut: 10000
             });
 
         },
@@ -385,7 +387,9 @@ const StudentProfileContainer = React.createClass({
           this.refs.container.error(
             "Please try again later or contact us.",
             "Uh oh. Looks like something went wrong trying to resend the Verify Account email.", {
-              timeout: 3000
+              closeButton:true,
+              timeOut: 30000,
+              extendedTimeOut: 10000
             });
 
         }
@@ -534,7 +538,9 @@ const StudentProfileContainer = React.createClass({
             this.refs.container.error(
               "Please try again.",
               "Verification link expired or invalid!", {
-                timeout: 5000
+                closeButton:true,
+                timeOut: 30000,
+                extendedTimeOut: 10000
             });
 
             regularComponentWillMountBehaviour(this)
@@ -586,7 +592,9 @@ const StudentProfileContainer = React.createClass({
                     _thisContext.refs.container.info(
                       "Click here to resend the verification email. Thanks!",
                       "Before you can move on, we need you to finish your profile & confirm the email we sent to your student email.", {
-                        timeout: 3000
+                        closeButton:true,
+                        timeOut: 30000,
+                        extendedTimeOut: 10000
                     });
                   }
                   
@@ -601,7 +609,9 @@ const StudentProfileContainer = React.createClass({
                     _thisContext.refs.container.info(
                       "Thanks!",
                       "Before you can move on, we just need you to finish your profile.", {
-                        timeout: 3000
+                      closeButton:true,
+                      timeOut: 30000,
+                      extendedTimeOut: 10000
                     });
                   }
                 }
@@ -616,7 +626,9 @@ const StudentProfileContainer = React.createClass({
                     _thisContext.refs.container.info(
                       "Click here to resend the verification email. Thanks!",
                       "Before you can move on, we just need you to confirm the email we sent to your student email.", {
-                        timeout: 3000
+                        closeButton:true,
+                        timeOut: 30000,
+                        extendedTimeOut: 10000
                     });
                   }
 
@@ -674,6 +686,10 @@ const StudentProfileContainer = React.createClass({
 
   },
 
+  componentDidMount() {
+
+  },
+
  /*
   * showImageSizeTooLargeError
   *
@@ -689,7 +705,8 @@ const StudentProfileContainer = React.createClass({
     this.refs.container.error(
       "Images need to be less than 1MB.",
       "Whoa. That's a big picture. Can you shrink that down a bit?", {
-        timeout: 3000
+        timeout: 10000,
+        closeButton: true
     });
   },
 
@@ -708,7 +725,8 @@ const StudentProfileContainer = React.createClass({
     this.refs.container.error(
       "The max size is 2MB.",
       "That resume is a little too hefty for us. Can you try another version?", {
-        timeout: 3000
+        timeout: 10000,
+        closeButton:true
     });
   },
 
