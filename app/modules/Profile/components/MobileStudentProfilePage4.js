@@ -46,7 +46,6 @@ export default function MobileStudentProfilePage4 (
           <input className={propsErrorMap.position ? `${error} ${textInput}` : `${textInput}`} type="text" placeholder="CEO"
             defaultValue={position}
             onBlur={(e)=> updateProfileField('position', e.target.value, true)}/>
-          
         </div>
 
         <div className={profileItem}>

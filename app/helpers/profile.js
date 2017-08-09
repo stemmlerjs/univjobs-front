@@ -632,6 +632,75 @@ export const mobileProfileHelper = {
 
     next(submitErrorsExist, profileFieldErrors)
 
+  },
+
+  validateEmployerProfilePage1: (profileInfo, next) => {
+
+    let submitErrorsExist = false;
+
+    let profileFieldErrors = {
+      companyName: false,
+      officeAddress: false,
+      officePostalCode: false,
+      officeCity: false
+    }
+
+    /*
+     * Validate the fields that need validation
+     */
+
+    profileFieldErrors.companyName = validateCompanyName(profileInfo.companyName) ? false : true
+    profileFieldErrors.officeAddress = validateAddress(profileInfo.officeAddress) && profileInfo.officeAddress != "" ? false : true
+    profileFieldErrors.officePostalCode = validatePostalCode(profileInfo.officePostalCode) ? false : true
+    profileFieldErrors.officeCity = validateCity(profileInfo.officeCity) ? false : true
+
+    /*
+     * If an error exists in the map, then submitErrorsExist === true
+     */
+    
+    for (var attr in profileFieldErrors) {
+      if (profileFieldErrors[attr] === true) submitErrorsExist = true;
+    }
+  
+    /*
+     * Return the results.
+     */
+
+    next(submitErrorsExist, profileFieldErrors)
+
+  },
+
+  validateEmployerProfilePage2: (profileInfo, next) => {
+
+    let submitErrorsExist = false;
+    let profileFieldErrors = {
+      industry: false,
+      employeeCount: false,
+      website: false
+    }
+
+    /*
+     * Validate the fields that need validation
+     */
+
+    profileFieldErrors.industry = profileInfo.industry != "" ? false : true
+    profileFieldErrors.employeeCount = profileInfo.employeeCount > 0 ? false : true
+    profileFieldErrors.website = validateWebURL(profileInfo.website) ? false : true
+    
+    /*
+     * If an error exists in the map, then submitErrorsExist === true
+     */
+    
+    for (var attr in profileFieldErrors) {
+      if (profileFieldErrors[attr] === true) submitErrorsExist = true;
+    }
+  
+    /*
+     * Return the results.
+     */
+
+    next(submitErrorsExist, profileFieldErrors)
+
   }
 }
 

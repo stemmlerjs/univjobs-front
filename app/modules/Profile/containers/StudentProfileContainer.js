@@ -941,10 +941,7 @@ const StudentProfileContainer = React.createClass({
             "Hold your horses, deputy 🐎", {
               timeout: 5000
           });
-        }
-
-        
-        
+        }        
 
       }
     )
@@ -959,12 +956,10 @@ const StudentProfileContainer = React.createClass({
    */
 
   MOBILE_back () {
-    this.props.pageBack(this.props.mobileViewCurrentPage)
+    this.props.pageBack(this.props.mobileViewCurrentPage, true)
   },
 
   render () {
-
-    console.log("profol;e", this.props.isProfileCompleted)
 
     return (
       <div className={pageContainer}>

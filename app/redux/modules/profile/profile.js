@@ -31,7 +31,9 @@ const PROFILE_ADVICE_PRESENTED = 'PROFILE_ADVICE_PRESENTED'
 
 const MOBILE_TRY_ADVANCE_STUDENT_PROFILE_NEXT_PAGE = 'MOBILE_TRY_ADVANCE_STUDENT_PROFILE_NEXT_PAGE'
 const MOBILE_STUDENT_PROFILE_NEXT_PAGE = 'MOBILE_STUDENT_PROFILE_NEXT_PAGE'
-const MOBILE_STUDENT_PROFILE_PAGE_BACK = 'MOBILE_STUDENT_PROFILE_PAGE_BACK'
+const MOBILE_STUDENT_PROFILE_PAGE_BACK = 'MOBILE_PROFILE_PAGE_BACK'
+
+const MOBILE_EMPLOYER_PROFILE_NEXT_PAGE = 'MOBILE_EMPLOYER_PROFILE_NEXT_PAGE'
 
 // =======================================================
 // ================== ACTION CREATORS ====================
@@ -51,6 +53,134 @@ export function pageBack (currentPage) {
       dispatch({
         type: MOBILE_STUDENT_PROFILE_PAGE_BACK
       })
+    }
+
+  }
+}
+
+export function tryAdvanceEmployerProfilePage (currentPage, props, successCallback, failureCallback) {
+  return function (dispatch) {
+
+    if (currentPage == 1) {
+      mobileProfileHelper.validateEmployerProfilePage1(props, (errorsExist, profileFieldErrors) => {
+
+        /*
+         * If there were errors on the page somewhere, then
+         * we can't advance and we need to let the user know.
+         */
+
+        if(errorsExist) {
+          handleErrorsExist(profileFieldErrors)
+    	  } 
+
+        /*
+         * If no errors were present on Page 1, we can advance to the next page.
+         */
+
+        else {
+          dispatch(nextEmployerProfilePage())
+        }
+
+      })
+    }
+
+    else if (currentPage == 2) {
+      mobileProfileHelper.validateEmployerProfilePage2(props, (errorsExist, profileFieldErrors) => {
+
+        /*
+         * If there were errors on the page somewhere, then
+         * we can't advance and we need to let the user know.
+         */
+
+        if(errorsExist) {
+          handleErrorsExist(profileFieldErrors)
+    	  } 
+
+        /*
+         * If no errors were present on Page 2, we can advance to the next page.
+         */
+
+        else {
+          dispatch(nextEmployerProfilePage())
+        }
+
+      })
+    }
+
+    /*
+     * If we're on page 3, this means that we're submitting the employer profile.
+     */
+
+    else if (currentPage == 3) {
+
+      /*
+        * Let the app know that we're saving profile info so we should 
+        * update the store.
+        */
+
+        var profileInfo = props
+        debugger;
+
+        dispatch(savingProfileInfo(false))
+
+          // No errors, proceed to /PUT on api/me
+          var putData = {
+            // "user-is_a_student": false,
+            // "user-is_profile_completed": true,
+            // "user-email": user.email,
+            // "user-first_name": user.firstName,
+            // "user-last_name": user.lastName,
+            // "user-is_active": true,
+            // "user-date_joined": user.dateJoined,
+            // "user-mobile": user.mobile,
+            // is_a_student: false,
+            // is_profile_completed: true, // set this flag to true so we know for next time
+            company_name: profileInfo.companyName,
+            logo: profileInfo.logoUrl,
+            office_address: profileInfo.officeAddress,
+            office_city: profileInfo.officeCity,
+            office_postal_code: profileInfo.officePostalCode,
+            description: profileInfo.description,
+            website: profileInfo.website,
+            employee_count: profileInfo.employeeCount,
+            industry: profileInfo.industry || profileInfo.industry.id,
+            // date_joined: user.dateJoined,
+            // first_name: user.firstName,
+            // last_name: user.lastName,
+            // email: user.email
+          }
+
+          employerProfilePUT(putData)
+          .then((res) => {
+
+              // DISPATCH - SAVED_PROFILE_SUCCESS
+              dispatch(savedProfileSuccess())
+
+              successCallback()
+              //doRedirect()
+            })
+            .catch((err) => {
+              // DISPATCH - SAVED_PROFILE_ERROR
+              dispatch(savedProfileFailure({}, [
+                  'HTTP Error Occurred.\n',
+                  err.message
+              ], false))
+
+              failureCallback('HTTP ERROR')
+
+            })
+
+
+      
+    }
+
+    function handleErrorsExist (profileFieldErrors) {
+      dispatch(savedProfileFailure(profileFieldErrors, [
+        "Couldn't save profile.",
+        "Please fill in missing fields"
+      ], true))
+
+      failureCallback()
     }
 
   }
@@ -275,6 +405,12 @@ export function tryAdvanceStudentProfilePage(currentPage, props, successCallback
 function nextStudentProfilePage() {
   return {
     type: MOBILE_STUDENT_PROFILE_NEXT_PAGE
+  }
+}
+
+function nextEmployerProfilePage () {
+  return {
+    type: MOBILE_EMPLOYER_PROFILE_NEXT_PAGE
   }
 }
 
@@ -928,6 +1064,15 @@ export default function profile (state = initialState, action) {
     /*
      * === Mobile Profile Actions ===
      */
+
+    case MOBILE_EMPLOYER_PROFILE_NEXT_PAGE:
+
+      scrollToY(0, 1500, 'easeInOutQuint');
+
+      return {
+        ...state,
+        mobileViewCurrentPage: state.mobileViewCurrentPage + 1
+      }
 
     case MOBILE_STUDENT_PROFILE_PAGE_BACK:
 

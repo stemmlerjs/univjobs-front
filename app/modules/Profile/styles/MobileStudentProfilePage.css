@@ -81,8 +81,9 @@ text-align: left;
 }
 
 .navigationButtonsContainer {
-        width: 85%;
+    width: 85%;
     margin-top: 20px;
+    margin-bottom: 40%;
 }
 
 .backButton {
