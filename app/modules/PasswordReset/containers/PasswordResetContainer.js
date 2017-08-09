@@ -22,6 +22,9 @@ import * as resetActionCreators from 'redux/modules/reset/reset'
 // ==============CSS IMPORTS============================= //
 import { pageContainer } from 'sharedStyles/sharedContainerStyles.css'
 
+var visitedPasswordReset = false;
+var visitedPasswordConfirm = false;
+
 const PasswordResetContainer = React.createClass({
 
   contextTypes: {
@@ -267,6 +270,37 @@ const PasswordResetContainer = React.createClass({
           timeout: 3000
       });
 
+    }
+  },
+
+  componentDidMount () {
+
+    /*
+     * If we're on the password reset page, make sure that the body is filled
+     * with extra spacing and that the footer is not in the middle of the page. 
+     */
+
+    if (this.props.route.path == "/password/reset") {
+      if (!visitedPasswordReset) {
+        if (document.getElementById("password-reset-hero")) {
+          document.getElementById("password-reset-hero").style.minHeight = (window.screen.availHeight * 0.65) + "px"
+          visitedPasswordReset == true;
+        }
+      }
+    }
+
+    /*
+     * If we're on the password confirm page, make sure that the body is filled
+     * with extra spacing and that the footer is not in the middle of the page. 
+     */
+
+    if (this.props.route.path.indexOf("/password/confirm") !== -1) {
+      if (!visitedPasswordConfirm) {
+        if (document.getElementById("password-confirm-hero")) {
+          document.getElementById("password-confirm-hero").style.minHeight = (window.screen.availHeight * 0.65) + "px"
+          visitedPasswordConfirm == true;
+        }
+      }
     }
   },
 

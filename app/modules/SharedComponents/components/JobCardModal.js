@@ -131,20 +131,26 @@ const SupplementalJobItemsInfo = ({ job, mapsLink, page }) => (
 
     {
       page !== 'applications'
-        ? <div className={applicantsContainer}>
-              <i className={`fa fa-clock-o ${clock} ${
-                  ((job.applicant_count / job.max_applicants) * 100) >= 0 && ((job.applicant_count / job.max_applicants) * 100) <= 50
-                      ? clock_0_50 :
-                  
-                  ((job.applicant_count / job.max_applicants) * 100) >= 51 && ((job.applicant_count / job.max_applicants) * 100) <= 75
-                      ? clock_51_75 :
-                  
-                    ((job.applicant_count / job.max_applicants) * 100) >= 76 && ((job.applicant_count / job.max_applicants) * 100) <= 100
-                      ? clock_76_100 :
-                  ''   
-              }`} aria-hidden="true"></i>
-              {`${job.max_applicants - job.applicant_count} of ${job.max_applicants} applicants left.`}
-            </div>
+        ? <div>
+          
+            {
+              /*<div className={applicantsContainer}>
+                <i className={`fa fa-clock-o ${clock} ${
+                    ((job.applicant_count / job.max_applicants) * 100) >= 0 && ((job.applicant_count / job.max_applicants) * 100) <= 50
+                        ? clock_0_50 :
+                    
+                    ((job.applicant_count / job.max_applicants) * 100) >= 51 && ((job.applicant_count / job.max_applicants) * 100) <= 75
+                        ? clock_51_75 :
+                    
+                      ((job.applicant_count / job.max_applicants) * 100) >= 76 && ((job.applicant_count / job.max_applicants) * 100) <= 100
+                        ? clock_76_100 :
+                    ''   
+                }`} aria-hidden="true"></i>
+                {`${job.max_applicants - job.applicant_count} of ${job.max_applicants} applicants left.`}
+              </div>*/
+            }
+
+          </div> 
 
         : (   
             <div className={job.state == "REJECTED" ? hideDisplay : statuses}>

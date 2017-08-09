@@ -8,7 +8,7 @@ import { container, title, subtext, emailContainer, emailInput, emailLabel,
 
 export default function ResetPassword ({ handleSubmit, handleUpdateField, email, submitSuccess, isSubmitting }) {
   return (
-    <div className={container}>
+    <div id="password-reset-hero" className={container}>
 
       <h1 className={title}>Password Reset</h1>
       {
