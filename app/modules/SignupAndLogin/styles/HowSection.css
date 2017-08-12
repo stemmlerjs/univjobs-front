@@ -1,0 +1,518 @@
+
+
+.howSectionContainer {
+    background-color: #2A2D34;
+    color: white;
+    padding-top: 72px;
+    padding-bottom: 72px;
+}
+
+.title {
+    font-size: 50px;
+    font-weight: 900;
+    color: #ffffff;
+    margin-bottom: 30px;
+    /* font-style: italic; */
+    /* text-shadow: 2px 2px #ffffff; */
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.contentContainer {
+    margin: 0 auto;
+    min-width: 500px;
+    /* background-color: yellow; */
+    max-width: 1100px;
+        display: flex;
+    flex-direction: row;
+}
+
+.pipelineSvg {
+    width: 900px;
+}
+
+.handshakeSvg {
+    width: 49px;
+    position: relative;
+    top: -71px;
+    left: 175px;
+}
+
+.writingSvg {
+    width: 39px;
+    position: relative;
+    top: -72px;
+    left: -177px;
+}
+
+.imageContainer {
+    margin-right: 38px;
+} 
+
+.rightsideContent {
+    text-align: left;
+    padding-left: 35px;
+    font-size: 24px;
+    font-weight: 300;
+}
+
+.pipelineApply {
+    position: relative;
+    left: -35px;
+    top: -11px;
+    font-weight: 400;
+}
+
+.pipelineContact {
+    position: relative;
+    left: 5px;
+    top: -11px;
+    font-weight: 400;
+}
+
+.pipelineInterview {
+    position: relative;
+    left: 44px;
+    top: -11px;
+    font-weight: 400;
+}
+
+.pipelineHire {
+    position: relative;
+    left: 94px;
+    top: -11px;
+    font-weight: 400;
+}
+
+.subtleDivider {
+    margin: 0 auto;
+    min-width: 500px;
+    max-width: 1000px;
+    height: 1px;
+    background-color: #6f6f6f;
+    margin-bottom: 84px;
+    margin-top: 34px;
+}
+
+.processContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    max-width: 1100px;
+    min-width: 400px;
+    margin: 0 auto;
+        padding-left: 24px;
+    padding-right: 24px;
+}
+
+.processItemContainer {
+    max-width: 274px;
+}
+
+.profileSvg {
+    width: 63px;
+}
+
+.notificationSvg {
+    width: 63px;
+}
+
+.processItemTitle {
+    margin-top: 13px;
+    font-size: 17px;
+    margin-bottom: 7px;
+     font-weight: bold;
+}
+
+.processItemAltBody {
+    color: #cacaca;
+    margin-top: 6px;
+    font-style: italic;
+}
+
+.employerCallToAction {
+    margin-top: 62px;
+    font-size: 21px;
+}
+
+.employerCTALink {
+    padding-top: 9px;
+    color: #68beea;
+    /* text-decoration: underline; */
+    /* border-bottom: solid 1px; */
+    font-weight: 300;
+    width: 400px;
+    margin: 0 auto;
+    cursor: pointer;
+
+}
+
+/*
+ * iPhone 5
+ * 
+ * Cutoff point #1
+ * (Width: 320px)
+ */
+
+@media (max-width: 334px) {
+
+    .title {
+            font-size: 45px;
+    font-weight: 900;
+    color: #ffa8e2;
+    margin-bottom: 30px;
+    font-style: italic;
+    text-shadow: 2px 2px #9e2424;
+    }
+
+    .contentContainer {
+    margin: 0 auto;
+    min-width: 0px;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column-reverse;
+    width: 100%;
+    }
+
+    .imageContainer {
+        margin: 0;
+    height: 175px;
+    }
+
+    /* PIPE LINE THING*/
+
+    .pipelineSvg {
+            width: 85%;
+    }
+
+    .pipelineApply {
+      position: relative;
+    left: -24px;
+    top: -11px;
+    font-weight: 400;
+    font-size: 14px;
+    }
+
+    .pipelineContact {
+    position: relative;
+    left: -7px;
+    top: -11px;
+    /* font-weight: 400; */
+    font-size: 14px;
+    }
+
+    .pipelineInterview {
+    position: relative;
+    left: 10px;
+    top: -11px;
+    font-weight: 400;
+    font-size: 14px;
+    }
+
+    .pipelineHire {
+    position: relative;
+    left: 29px;
+    top: -11px;
+    /* font-weight: 400; */
+    font-size: 14px;
+    }
+
+    .handshakeSvg {
+width: 40px;
+    position: relative;
+    top: -55px;
+    left: 78%;
+    display: block;
+    }
+
+    /* END PIPE LINE THING */
+
+    .rightsideContent {
+        padding-left: 15px;
+        font-size: 20px;
+        font-weight: 300;
+        padding-right: 15px;
+        /* margin-top: 43px; */
+        text-align: center;
+        margin-bottom: 56px;
+    }
+
+    .rightsideContent div {
+       font-size: 17px;
+    }
+
+    .subtleDivider {
+            margin: 0 auto;
+    min-width: 0px;
+    max-width: 1000px;
+    height: 1px;
+    background-color: #6f6f6f;
+    margin-bottom: 84px;
+    margin-top: 34px;
+    }
+
+    .processContainer {
+    display: flex;
+    flex-direction: column;
+    /* justify-content: space-around; */
+    max-width: 1000px;
+    min-width: 0px;
+    margin: 0 auto;
+    width: 100%;
+    align-items: center;
+    
+    }
+
+    .processItemContainer {
+        max-width: 274px;
+    margin-bottom: 60px;
+    }
+
+    .employerCallToAction {
+     margin-top: 0px;
+    font-size: 21px;
+    }
+
+    .employerCTALink {
+            padding-top: 9px;
+    color: #68beea;
+    /* text-decoration: underline; */
+    /* border-bottom: solid 1px; */
+    font-weight: 300;
+    /* width: 400px; */
+    margin: 0 auto;
+    cursor: pointer;
+    width: 78%;
+    }
+
+    .writingSvg {
+width: 30px;
+    position: relative;
+    top: -88px;
+    left: 12%;
+    display: block;
+    }
+}
+
+
+
+@media (min-width: 335px) and (max-width: 600px) {
+    .contentContainer {
+        margin: 0 auto;
+        min-width: 0px;
+        max-width: 500px;
+        display: flex;
+        flex-direction: column-reverse;
+        width: 100%;
+        }
+
+    .imageContainer {
+        margin: 0;
+    height: 175px;
+    }
+
+    /* PIPE LINE THING*/
+
+    .pipelineSvg {
+            width: 85%;
+    }
+
+    .pipelineApply {
+            position: relative;
+    left: -42px;
+    top: -11px;
+    font-weight: 400;
+    }
+
+    .pipelineContact {
+            position: relative;
+    left: -10px;
+    top: -11px;
+    /* font-weight: 400; */
+    }
+
+    .pipelineInterview {
+            position: relative;
+    left: 14px;
+    top: -11px;
+    font-weight: 400;
+    }
+
+    .pipelineHire {
+            position: relative;
+    left: 50px;
+    top: -11px;
+    /* font-weight: 400; */
+    }
+
+    .handshakeSvg {
+            width: 49px;
+    position: relative;
+    top: -67px;
+    left: 78%;
+    display: block;
+    }
+
+    .writingSvg {
+            width: 39px;
+    position: relative;
+    top: -111px;
+    left: 12%;
+    display: block;
+    }
+
+
+    /* END PIPE LINE THING */
+
+
+
+    .rightsideContent {
+    padding-left: 15px;
+    font-size: 20px;
+    font-weight: 300;
+    padding-right: 15px;
+    /* margin-top: 43px; */
+    text-align: center;
+    margin-bottom: 56px;
+    }
+
+    .subtleDivider {
+            margin: 0 auto;
+    min-width: 0px;
+    max-width: 1000px;
+    height: 1px;
+    background-color: #6f6f6f;
+    margin-bottom: 84px;
+    margin-top: 34px;
+        margin-right: 30px;
+    margin-left: 30px;
+    }
+
+    .processContainer {
+    display: flex;
+    flex-direction: column;
+    /* justify-content: space-around; */
+    max-width: 1000px;
+    min-width: 0px;
+    margin: 0 auto;
+    width: 100%;
+    align-items: center;
+    }
+
+    .processItemContainer {
+        max-width: 274px;
+    margin-bottom: 60px;
+    }
+
+    .employerCallToAction {
+     margin-top: 0px;
+    font-size: 21px;
+    }
+
+    .employerCTALink {
+            padding-top: 9px;
+    color: #68beea;
+    /* text-decoration: underline; */
+    /* border-bottom: solid 1px; */
+    font-weight: 300;
+    /* width: 400px; */
+    margin: 0 auto;
+    cursor: pointer;
+    width: 78%;
+    }
+
+}
+
+@media (min-width: 600px) and (max-width: 990px) {
+    .contentContainer {
+        margin: 0 auto;
+        min-width: 0px;
+        max-width: 500px;
+        display: flex;
+        flex-direction: column-reverse;
+        width: 100%;
+        }
+    .imageContainer {
+            margin-top: 65px;
+    }
+}
+
+/* VERY SPECIFIC MEDIA QUERIES TO GET THE ICONS IN THE IMAGE TO 
+   LINE UP FOR THE PIPELINE DIAGRAM.
+
+   THIS IS CANCER RIGHT HERE.
+
+
+@media (min-width: 320px) {
+    .handshakeSvg {
+        width: 40px !important;
+        position: relative !important;
+        top: -55px !important;
+        left: 78% !important;
+        display: block !important;
+    }
+
+    .writingSvg {
+        width: 30px !important;
+        position: relative !important;
+        top: -88px !important;
+        left: 12% !important;
+        display: block !important;
+    }
+}
+
+@media (min-width: 350px) {
+    .handshakeSvg {
+            width: 40px !important;
+    position: relative !important;
+    top: -58px !important;
+    left: 78% !important;
+    display: block !important;
+    }
+
+    
+    .pipelineHire {
+            position: relative;
+    left: 50px;
+    top: -11px;
+    }
+
+}
+
+@media (min-width: 380px) {
+    .writingSvg {
+            width: 30px !important;
+    position: relative !important;
+    top: -93px !important;
+    left: 13% !important;
+    display: block !important;
+    }
+
+    .handshakeSvg {
+            width: 40px !important;
+        position: relative !important;
+        top: -63px !important;
+        left: 79% !important;
+        display: block !important;
+    }
+}
+
+@media (min-width: 450px) and (max-width: 1200px) {
+    .writingSvg {
+        width: 36px !important;
+        position: relative !important;
+        top: -109px !important;
+        left: 13% !important;
+        display: block !important;
+    }
+
+    .handshakeSvg {
+            width: 49px !important;
+    position: relative !important;
+    top: -71px !important;
+    left: 79% !important;
+    display: block !important;
+    }
+}
+
+*/

@@ -1,3 +1,4 @@
+
 import React, { PropTypes } from 'react'
 import { Field, reduxForm } from 'redux-form'
 import { pageContainer, cardContainer, card, cardHeader, 
@@ -14,6 +15,7 @@ import { pageContainer, cardContainer, card, cardHeader,
  * 
  *FIXME: Answers from other students are showing, remove answers that are not related from the students
  * */
+
 export default function ApplicationModal({ application, industries, jobTypes}) { 
   return (
 		<div className={cardModalContainer}>

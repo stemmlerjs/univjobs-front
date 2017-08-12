@@ -17,6 +17,11 @@ import * as userActionCreators from 'redux/modules/user/user'
 import * as profileActionCreators from 'redux/modules/profile/profile'
 import * as listActionCreators from 'redux/modules/list/list'
 
+import MobileEmployerProfilePage1 from '../components/MobileEmployerProfilePage1'
+import MobileEmployerProfilePage2 from '../components/MobileEmployerProfilePage2'
+import MobileEmployerProfilePage3 from '../components/MobileEmployerProfilePage3'
+import MobileEmployerProfilePage4 from '../components/MobileEmployerProfilePage4'
+
 import SkyLight from 'react-skylight'
 import { userProfileAdviceTitle, userProfileAdviceBody, cancelBtn, acceptBtn } from 'sharedStyles/sharedComponentStyles.css'
 
@@ -548,7 +553,7 @@ const EmployerProfileContainer = React.createClass({
   },
 
 
-  /*
+ /*
   * openPictureCropper
   *
   * Opens a modal with the image to crop on it.
@@ -576,7 +581,7 @@ const EmployerProfileContainer = React.createClass({
         boundary: { width: 250, height: 250 },
         showZoomer: false,
         enableResize: false,
-        enableOrientation: false
+        enableOrientation: true
       });
 
       window.cropperInstance.bind({
@@ -585,6 +590,10 @@ const EmployerProfileContainer = React.createClass({
 
     }, 50)
     
+  },
+
+  rotatePicture () {
+    window.cropperInstance.rotate(90)
   },
 
   /*
@@ -656,8 +665,8 @@ const EmployerProfileContainer = React.createClass({
          */
 
         dropPhotoDiv.style.border = "0"
-        document.getElementById('fa-camera').style.visibility = "hidden"
-        document.getElementById('drag-drop').style.visibility = "hidden"
+        // document.getElementById('fa-camera').style.visibility = "hidden"
+        // document.getElementById('drag-drop').style.visibility = "hidden"
 
         /*
          * Finally, hide the picture cropper modal.
@@ -668,10 +677,106 @@ const EmployerProfileContainer = React.createClass({
 
   },
 
+  /*
+   * MOBILE_next
+   * 
+   * In an attempt to compartmentalize some of the logic required for the mobile version
+   * of the HTML5 page, this mobile Object will be populated with the various functions that the 
+   * mobile view demands.
+   */
+
+  MOBILE_next () {
+
+    /*
+      * If we're not on the last page, 
+      * we're going to have to check for errors before trying to advance.
+      */
+
+    this.props.tryAdvanceEmployerProfilePage(this.props.mobileViewCurrentPage, this.props, 
+
+       /*
+        * Success callback
+        * 
+        * The only time this is important to us is if we're submitting the profile
+        * at the end of this process.
+        * When we've successfully completed the profile, then we want to do something 
+        * else.
+        */
+
+      () => {
+
+        /*
+         * SET PROFILE TO COMPLETE
+         */
+
+        this.refs.container.success(
+        "Let's move on.",
+        "Done! Profile complete.", {
+          timeout: 4000
+        });
+
+       /*
+        * Reload everytime we update the profile.
+        * (We only redirect to /dashboard/em if 
+        * their email is verified and they are just 
+        * completing their profile for the first time).
+        * 
+        * KS
+        */
+          
+        setTimeout(() => {
+          this.context.router.push('/dashboard/em')
+          window.location.reload()
+        }, 3000)
+
+      },
+
+      /*
+        * Failure Callback
+        *
+        * This is only important when we're submitting the profile the first time.
+        */
+
+      (submitError) => {
+
+        scrollToY(0, 1500, 'easeInOutQuint');
+
+        if (submitError) {
+          this.refs.container.error(
+            "Please try again a little later or let us know.",
+            "Darn. Something went wrong submitting your profile.", {
+              timeout: 3000
+          });
+        }
+
+        else {
+          this.refs.container.error(
+            "Please correct the errors before moving forward.",
+            "Errors found.", {
+              timeout: 5000
+          });
+        }
+      }
+    )
+  },
+
+  /*
+   * MOBILE_back
+   * 
+   * In an attempt to compartmentalize some of the logic required for the mobile version
+   * of the HTML5 page, this mobile Object will be populated with the various functions that the 
+   * mobile view demands.
+   */
+
+  MOBILE_back () {
+    this.props.pageBack(this.props.mobileViewCurrentPage, false)
+  },
+
   render () {
     return (
       <div className={pageContainer}>
         <SidebarContainer 
+          isMobile={this.props.isMobile}
           isAStudent={false} 
           logoUrl={this.props.logoUrl}
           profilePicture={typeof this.props.profile.logoUrl == "object" && this.props.profile.logoUrl !== null
@@ -679,35 +784,95 @@ const EmployerProfileContainer = React.createClass({
             : config.mediaUrl + this.props.profile.logoUrl
           }
         />
-        <Title 
-            titleName="My business profile"
-            subHeading=""/>
-        <EmployerProfile
-          companyName={this.props.companyName}
-          industry={this.props.industry}
-          industryList={this.props.industryList}
-          website={this.props.website}
-          description={this.props.description}
-          employeeCount={this.props.employeeCount}
-          officeAddress={this.props.officeAddress}
-          officeCity={this.props.officeCity}
-          officePostalCode={this.props.officePostalCode}
-          logoUrl={this.props.logoUrl}
-          updateProfileField={this.props.updateProfileField}
-          onSubmit={this.handleSubmit}
-          submitErrorsExist={this.props.submitErrorsExist}
-          profileErrorsMap={this.props.profileErrorsMap}
-          email={this.props.user.email}
-          firstName={this.props.user.firstName}
-          lastName={this.props.user.lastName}
-          dateJoined={new Date(this.props.user.dateJoined)}
-          mobile={Number(this.props.user.mobile)}
-          onDragOver={this.onDragOver}
-          onDragLeave={this.onDragLeave}
-          isSubmittingForm={this.props.isSubmittingForm}
-          handleShowImageSizeTooLargeError={this.showImageSizeTooLargeError}
-          handleOpenPictureCropper={this.openPictureCropper}
-        />
+
+        {
+          !window.isMobile
+            ? <Title titleName="My business profile" subHeading=""/>
+            : ''
+        }
+
+        {
+          !window.isMobile
+
+            ? <EmployerProfile
+                companyName={this.props.companyName}
+                industry={this.props.industry}
+                industryList={this.props.industryList}
+                website={this.props.website}
+                description={this.props.description}
+                employeeCount={this.props.employeeCount}
+                officeAddress={this.props.officeAddress}
+                officeCity={this.props.officeCity}
+                officePostalCode={this.props.officePostalCode}
+                logoUrl={this.props.logoUrl}
+                updateProfileField={this.props.updateProfileField}
+                onSubmit={this.handleSubmit}
+                submitErrorsExist={this.props.submitErrorsExist}
+                profileErrorsMap={this.props.profileErrorsMap}
+                email={this.props.user.email}
+                firstName={this.props.user.firstName}
+                lastName={this.props.user.lastName}
+                dateJoined={new Date(this.props.user.dateJoined)}
+                mobile={Number(this.props.user.mobile)}
+                onDragOver={this.onDragOver}
+                onDragLeave={this.onDragLeave}
+                isSubmittingForm={this.props.isSubmittingForm}
+                handleShowImageSizeTooLargeError={this.showImageSizeTooLargeError}
+                handleOpenPictureCropper={this.openPictureCropper}
+              />
+
+            : this.props.isProfileCompleted == 1 && this.props.isEmailVerified == 0
+                ? <MobileEmployerProfilePage4 resendEmail={this.resendVerifyAccountEmail}/>
+                : (() => {
+                    switch(this.props.mobileViewCurrentPage) {
+                      case 1:
+                        return <MobileEmployerProfilePage1 
+                          companyName={this.props.companyName}
+                          officeAddress={this.props.officeAddress}
+                          officeCity={this.props.officeCity}
+                          officePostalCode={this.props.officePostalCode}
+                          propsErrorMap={this.props.profileErrorsMap}
+                          updateProfileField={this.props.updateProfileField}
+                          next={this.MOBILE_next}
+                        />
+                      case 2:
+                        return <MobileEmployerProfilePage2
+                          website={this.props.website}
+                          employeeCount={this.props.employeeCount}
+                          description={this.props.description}
+                          industry={this.props.industry}
+                          industryList={this.props.industryList}
+                          propsErrorMap={this.props.profileErrorsMap}
+                          updateProfileField={this.props.updateProfileField}
+                          next={this.MOBILE_next}
+                          back={this.MOBILE_back}
+                        />
+                      case 3:
+                        return <MobileEmployerProfilePage3
+                          logo={this.props.logo}
+                          propsErrorMap={this.props.propsErrorMap}
+                          updateProfileField={this.props.updateProfileField}
+                          handleShowImageSizeTooLargeError={this.showImageSizeTooLargeError}
+                          handleOpenPictureCropper={this.openPictureCropper}
+                          next={this.MOBILE_next}
+                          back={this.MOBILE_back}
+                        />
+                      case 4:
+                        return <MobileEmployerProfilePage4 resendEmail={this.resendVerifyAccountEmail} />
+                      default:
+                        return <MobileEmployerProfilePage1
+                          companyName={this.props.companyName}
+                          officeAddress={this.props.officeAddress}
+                          officeCity={this.props.officeCity}
+                          officePostalCode={this.props.officePostalCode}
+                          propsErrorMap={this.props.profileErrorsMap}
+                          updateProfileField={this.props.updateProfileField}
+                          next={this.MOBILE_next}
+                      />
+                    }
+                  })()
+        }
+        
         <ToastContainer ref="container"
           toastMessageFactory={ToastMessageFactory}
           className="toast-top-right"
@@ -754,6 +919,7 @@ const EmployerProfileContainer = React.createClass({
               <SkyLight ref="pictureCropper">
                 <PictureCropper 
                   onDoneCrop={this.cropAndAppendImage}
+                  rotate={this.rotatePicture}
                 />
               </SkyLight>
             </div>
@@ -779,6 +945,7 @@ function mapStateToProps({user, profile, list}) {
     officePostalCode: profile.employerProfile.officePostalCode ? profile.employerProfile.officePostalCode : '',
     logoUrl: profile.employerProfile.logoUrl ? profile.employerProfile.logoUrl : '',
     isProfileCompleted: profile.isProfileCompleted ? profile.isProfileCompleted : '',
+    isEmailVerified: user.emailVerified ? user.emailVerified : 0,
     submitErrorsExist: profile.submitErrorsExist ? profile.submitErrorsExist : false,
     profileErrorsMap: profile.employerProfile.propsErrorMap ? profile.employerProfile.propsErrorMap : {
       companyName: false,
@@ -795,7 +962,8 @@ function mapStateToProps({user, profile, list}) {
     submitSuccess: profile.submitSuccess ? profile.submitSuccess : false,
     isSubmittingForm: profile.isSubmittingForm ? profile.isSubmittingForm : false,
     openUserProfileAdvice: profile.openUserProfileAdvice ? profile.openUserProfileAdvice : false,
-    userProfileAdvicePresented: profile.userProfileAdvicePresented ? profile.userProfileAdvicePresented : false
+    userProfileAdvicePresented: profile.userProfileAdvicePresented ? profile.userProfileAdvicePresented : false,
+    mobileViewCurrentPage: profile.mobileViewCurrentPage ? profile.mobileViewCurrentPage : 1
   }
 }
 

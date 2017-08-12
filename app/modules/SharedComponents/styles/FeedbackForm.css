@@ -265,4 +265,8 @@ background-color:#4eaff3;
 }
 
 
-
+@media (max-width: 400px) {
+    .feedbackFormClosed {
+        width: 151px;
+    }
+}

@@ -19,7 +19,15 @@ const SUBMIT_EMPLOYER_FORM_ERROR = 'SUBMIT_EMPLOYER_FORM_ERROR'
 const TOGGLE_DROPDOWN_MENU = 'TOGGLE_DROPDOWN_MENU'
 const CLOSE_NAV_DROP_DOWN = 'CLOSE_NAV_DROP_DOWN'
 
+const OPEN_STUDENT_SIGNUP_FORM = 'OPEN_STUDENT_SIGNUP_FORM'
+
 // ACTION CREATORS
+export function openStudentSignupForm () {
+  return {
+    type: OPEN_STUDENT_SIGNUP_FORM
+  }
+}
+
 export function closeNavDropDown () {
   return {
     type: CLOSE_NAV_DROP_DOWN
@@ -123,10 +131,17 @@ export function submitStudentSignupForm(email, password) {
                                                             resp.data.student.is_a_student
                     ))
 
+                    Raven.setUserContext({
+                      email: email,
+                      isAStudent: true
+                    })
+
                     resolve(true)
 
                   })
                   .catch((err) => {
+
+                    Raven.captureException(err)
 
                     // ACTION: DISPATCH (CREATING_USER_ACCOUNT_FAILURE)
                     dispatch(submitStudentFormError(errorMsg(err)))
@@ -199,23 +214,32 @@ export function submitEmployerSignupForm(firstName, lastName, companyName, phone
         })
         .then(getUserInfo)
         .then((resp) => {
-            let profileInfo = _.cloneDeep(resp.data.employer)
-            
-            //login user
-            dispatch(
-                userActions.loginSuccess(getAccessToken(),
-                                         resp.data.employer.is_a_student,
-                                         resp.data.employer.is_profile_complete 
-                ))
-            //ACTION: PROFILE - DISPATCH (FETCHING_PROFILE_INFO_SUCCESS)
-                dispatch(profileActions.fetchedProfileInfoSuccess(
-                                                            resp.data.employer.is_profile_complete,
-                                                            profileInfo,
-                                                            resp.data.employer.is_a_student
-                ))
-            resolve(true)
+          let profileInfo = _.cloneDeep(resp.data.employer)
+          
+          //login user
+          dispatch(userActions.loginSuccess(getAccessToken(), resp.data.employer.is_a_student, resp.data.employer.is_profile_complete))
+
+          //ACTION: PROFILE - DISPATCH (FETCHING_PROFILE_INFO_SUCCESS)
+          dispatch(profileActions.fetchedProfileInfoSuccess(resp.data.employer.is_profile_complete, profileInfo, resp.data.employer.is_a_student))
+
+          /*
+           * Set the Sentry context.
+           */
+
+          Raven.setUserContext({
+            email: email,
+            isAStudent: false
+          })
+          
+          resolve(true)
         })
         .catch((err) => {
+
+          /*
+           * Capture errors when users try to signup
+           */
+
+          Raven.captureException(err)
 
           // ACTION: DISPATCH (CREATING_USER_ACCOUNT_FAILURE)
           dispatch(userActions.createUserAccountFailure(errorMsg(err)))
@@ -238,11 +262,17 @@ export function submitEmployerSignupForm(firstName, lastName, companyName, phone
 const initialState = {
   studentSignupForm: {},
   employerSignupForm: {},
-  dropDownActive: false
+  dropDownActive: false,
+  studentSignupFormOpen: false
 }
 
 export default function signupForm (state = initialState, action) {
   switch(action.type) {
+    case OPEN_STUDENT_SIGNUP_FORM:
+      return {
+        ...state,
+        studentSignupFormOpen: true
+      }
     case CLOSE_NAV_DROP_DOWN:
       return {
         ...state,

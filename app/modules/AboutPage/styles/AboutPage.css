@@ -40,6 +40,7 @@
     margin-bottom: 0px;
     margin-left: 15px;
     margin-right: 15px;
+        text-shadow: 2px 2px #000000;
 }
 
 .topMarginReduce {
@@ -114,7 +115,7 @@
     -webkit-justify-content: center;
     -webkit-align-items: center;
     width: 100%;
-    padding-top: 60px;
+    padding-top: 26px;
     padding-bottom: 60px;
     /*padding-left: 30px;
     padding-right: 30px;*/
@@ -135,7 +136,7 @@
     background-color: #ffffff;
     border: 1px solid #bdbbbb;
     margin: 10px;
-    min-height: 400px;
+    min-height: 441px;
 
 }
 
@@ -264,9 +265,10 @@
 }
 
 .aboutUsTitle {
-      color: #52a7fa;
+    color: white;
     font-size: 103px;
-    font-weight: bold;
+    font-weight: 900;
+    /* text-shadow: 2px 2px #ffffff; */
 }
 
 
@@ -302,10 +304,10 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    min-height: 56vh;
+    min-height: 0px;
     background-size: cover;
     background-image: url(https://user-images.githubusercontent.com/7959179/28506140-382e9068-6ff7-11e7-953f-76be897772e6.jpg);
-    height: 579px;
+        height: 466px;
   }
 
   .marginReduce {

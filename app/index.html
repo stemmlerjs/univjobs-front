@@ -3,30 +3,41 @@
 
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="cleartype" content="on">
+    <meta name="MobileOptimized" content="320">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+
+    <!--Microsoft Edge -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Univjobs - Simplifies Hiring Post-Secondary Students</title>
+    
+    <!--google verification-->
+    <meta name="google-site-verification" content="hnc0xMxaywTkrqjaD9-r57vX4SF8YTRpQtaiORbyuzk" />
 
+    <!--Facebook Tag -->
+    <meta property="fb:app_id" content="1897052653882765"/>
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://univjobs.ca/" />
+    <meta property="og:title" content="Jobs & Internships For College Students and Recent Grads" />
 
-  <!--Facebook Tag -->
-  <meta property="fb:app_id" content="1897052653882765"/>
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://univjobs.ca/" />
-  <meta property="og:title" content="Jobs & Internships For College Students and Recent Grads" />
-   <!--NOTE: Redacted until nginx fix-->
-   <!--meta property="og:image" content="https://univjobs.ca/assets/images/front/univjobs-logo-1024.png" />-->
-   <meta property="og:image" content="https://user-images.githubusercontent.com/7959179/28494764-132e7a90-6f06-11e7-9a67-10322b90489b.png"/>
-  <meta property="og:image:type" content="image/png" />
-  <meta property="og:image:width" content="200" />
-  <meta property="og:image:height" content="200" />
+      <!--NOTE: Redacted until nginx fix-->
+      <!--meta property="og:image" content="https://univjobs.ca/assets/images/front/univjobs-logo-1024.png" />-->
+    <meta property="og:image" content="https://user-images.githubusercontent.com/7959179/28494764-132e7a90-6f06-11e7-9a67-10322b90489b.png"/>
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="200" />
+    <meta property="og:image:height" content="200" />
 
-  <meta property="og:description" content="Find paid internships, part-time jobs, and entry-level opportunities at companies who want to hire students like you"/>
+    <meta property="og:description" content="Find paid internships, part-time jobs, and entry-level opportunities at companies who want to hire students like you"/>
 
-  <meta name="keywords" content="univjobs, studentjobs, internship, part-time work" />
-  <meta name="author" content="UnivJobs Team" />
+    <meta name="keywords" content="univjobs, studentjobs, internship, part-time work" />
+    <meta name="author" content="UnivJobs Team" />
 
     <!--CSS & JS & 3rd Party Libraries-->
-    <link href='https://fonts.googleapis.com/css?family=Roboto:400,900italic,900,700italic,700' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i,900" rel="stylesheet">
     <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
     <script src="https://code.jquery.com/jquery-3.0.0.min.js" integrity="sha256-JmvOoLtYsmqlsWxa7mDSLMwa6dZ9rrIdtrrVYRnDRH0=" crossorigin="anonymous"></script>
@@ -56,7 +67,7 @@
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
-    
+
     <style>
 
       /* ========================== ROOT CSS ============================ */
@@ -75,6 +86,19 @@
         
         header, nav, footer, section, article, div {
             box-sizing: border-box;
+        }
+
+        ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+              color: rgba(128, 128, 128, 0.55);
+        }
+        ::-moz-placeholder { /* Firefox 19+ */
+              color: rgba(128, 128, 128, 0.55);
+        }
+        :-ms-input-placeholder { /* IE 10+ */
+              color: rgba(128, 128, 128, 0.55);
+        }
+        :-moz-placeholder { /* Firefox 18- */
+              color: rgba(128, 128, 128, 0.55);
         }
 
       /* ========================= ANIMATIONS ========================= */
@@ -134,16 +158,39 @@
         padding-top: 15px !important;
       }
 
+      @media (max-height:580px) {
+        #login-modal-wrapper .skylight-dialog {
+          width: 330px !important;
+          height: 358px !important;
+          position: fixed !important;
+          top: 58% !important;
+          left: 50% !important;
+          margin-top: 0px !important;
+          margin-left: 0px !important;
+          background-color: rgb(255, 255, 255) !important;
+          border-radius: 2px !important;
+          z-index: 100 !important;
+          padding: 2px !important;
+          box-shadow: rgba(0, 0, 0, 0.137) 0px 0px 4px, rgba(0, 0, 0, 0.28) 0px 4px 8px !important;
+          font-size: 20px !important;
+          text-align: center !important;
+          display: block !important;
+          flex-direction: column !important;
+          transform: translate(-50%, -50%) !important;
+          padding-top: 15px !important;
+        }
+      }
+
      /*
       * Employer Signup Modal Wrapper
       */
 
       #employer-signup-modal-wrapper .skylight-dialog {
         width: 537px !important;
-        height: 400px !important;
+        width: 34% !important;
         position: absolute !important;
         left: 50% !important;
-       top: 70% !important; 
+        top: 80% !important; 
         margin-left: 0px !important;
         background-color: rgb(255, 255, 255) !important;
         border-radius: 2px;
@@ -154,20 +201,19 @@
         transform: translate(-50%, -50%);
         text-align: center;
         display: block;
-        height: 566px !important;
+            height: 659px !important;;
       }
 
      /*
       * Employer Signup Modal Wrapper (less than 565px)
+      * WIDTH
       */
 
-      @media (max-width: 565px) {
+      @media (max-width: 1450px) {
         #employer-signup-modal-wrapper .skylight-dialog {
-          width: 98% !important;
-          height: 400px !important;
+          width: 487px !important;
           position: absolute !important;
           left: 50% !important;
-          top: 80% !important;
           margin-left: 0px !important;
           background-color: rgb(255, 255, 255) !important;
           border-radius: 2px;
@@ -182,37 +228,11 @@
         }
       }
 
-      @media (max-width: 330px) {
+      @media (max-width: 500px) {
         #employer-signup-modal-wrapper .skylight-dialog {
-          width: 98% !important;
           height: 400px !important;
           position: absolute !important;
           left: 50% !important;
-          top: 87% !important;
-          margin-left: 0px !important;
-          background-color: rgb(255, 255, 255) !important;
-          border-radius: 2px;
-          z-index: 100;
-          padding: 15px;
-          box-shadow: rgba(0, 0, 0, 0.14) 0px 0px 4px, rgba(0, 0, 0, 0.28) 0px 4px 8px;
-          font-size: 30px;
-          transform: translate(-50%, -50%);
-          text-align: center;
-          display: block;
-          height: 580px !important;
-          /* overflow: scroll; */
-          /* overflow-x: scroll; */
-          overflow-y: scroll;
-        }
-      }
-
-      @media (max-height: 580px) {
-        #employer-signup-modal-wrapper .skylight-dialog {
-          width: 98% !important;
-          height: 400px !important;
-          position: absolute !important;
-          left: 50% !important;
-          top: 93% !important;
           margin-left: 0px !important;
           background-color: rgb(255, 255, 255) !important;
           border-radius: 2px;
@@ -224,6 +244,14 @@
           text-align: center;
           display: block;
           height: 653px !important;
+          width: 92% !important;
+        }
+      }
+      
+      @media (max-height: 680px) {
+        #employer-signup-modal-wrapper .skylight-dialog {
+          top: 71% !important;
+          margin-top: 143px !important;
         }
       }
 
@@ -458,6 +486,31 @@
         }
       }
 
+      @media (max-width: 600px) {
+        #job-app-modal-wrapper .skylight-dialog {
+          width: 330px !important;
+          /* height: 358px !important; */
+          position: fixed !important;
+          top: 50% !important;
+          left: 50% !important;
+          margin-top: 0px !important;
+          margin-left: 0px !important;
+          background-color: rgb(255, 255, 255) !important;
+          border-radius: 2px !important;
+          z-index: 100 !important;
+          padding: 2px !important;
+          box-shadow: rgba(0, 0, 0, 0.137) 0px 0px 4px, rgba(0, 0, 0, 0.28) 0px 4px 8px !important;
+          font-size: 20px !important;
+          text-align: center !important;
+          display: block !important;
+          flex-direction: column !important;
+          transform: translate(-50%, -50%) !important;
+          padding-top: 15px !important;
+          width: 94% !important;
+          height: 97% !important;
+        }
+      }
+
       
 
       /*
@@ -479,7 +532,7 @@
 
       #cropper-container-wrapper .skylight-dialog {
         width: 50% !important;
-        height: 447px !important;
+        height: 488px !important;
         position: fixed !important;
         top: 50% !important;
         left: 50% !important;
@@ -492,6 +545,25 @@
         box-shadow: rgba(0, 0, 0, 0.14) 0px 0px 4px, rgba(0, 0, 0, 0.28) 0px 4px 8px !important;
         display: block !important;
         font-size:15px;
+      }
+
+      @media (max-width:450px) {
+        #cropper-container-wrapper .skylight-dialog {
+            width: 90% !important;
+            height: 488px !important;
+            position: fixed !important;
+            top: 47% !important;
+            left: 30% !important;
+            margin-top: -200px !important;
+            margin-left: -25% !important;
+            background-color: rgb(255, 255, 255) !important;
+            border-radius: 2px !important;
+            z-index: 100 !important;
+            padding: 15px !important;
+            box-shadow: rgba(0, 0, 0, 0.14) 0px 0px 4px, rgba(0, 0, 0, 0.28) 0px 4px 8px !important;
+            display: block !important;
+            font-size: 15px;
+        }
       }
 
       #cropper-container-wrapper .cr-boundary {
@@ -622,7 +694,7 @@
       */
 
       #share-modal-wrapper .skylight-overlay {
-                opacity: 1;
+        opacity: 1;
         background-color: rgba(242,242,242,.9) !important;
         animation: fade 0.2s linear;
       }
@@ -645,6 +717,41 @@
         }
       }
 
+      @media (max-width:500px) {
+        #share-modal-wrapper .skylight-dialog {
+            width: 330px !important;
+            height: 410px !important;
+            position: fixed !important;
+            top: 50% !important;
+            left: 50% !important;
+            margin-top: 0px !important;
+            margin-left: 0px !important;
+            background-color: rgb(255, 255, 255) !important;
+            border-radius: 2px !important;
+            z-index: 100 !important;
+            padding: 2px !important;
+            box-shadow: rgba(0, 0, 0, 0.137) 0px 0px 4px, rgba(0, 0, 0, 0.28) 0px 4px 8px !important;
+            font-size: 20px !important;
+            text-align: center !important;
+            display: block !important;
+            flex-direction: column !important;
+            transform: translate(-50%, -50%) !important;
+            padding-top: 15px !important;
+            max-width: 95% !important;
+        }
+      }
+
+     /* ========================================
+      *   COMPANY INFO SIDEBAR - BM BURGER MENU
+      * ========================================
+      */
+
+      .bm-burger-button button {
+             position: initial !important; 
+           height: inherit !important; 
+           margin: 0px !important; 
+           padding: 0px !important; 
+      }
 
       /* In Chrome, fixes the underlines on the nav elements.*/
 
@@ -667,17 +774,14 @@
         ga('send', 'pageview');
     </script>
 
-    <!-- Hotjar Tracking Code for http://univjobs.ca/ -->
-    <script>
-    (function(h,o,t,j,a,r){
-            h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
-            h._hjSettings={hjid:550259,hjsv:5};
-            a=o.getElementsByTagName('head')[0];
-            r=o.createElement('script');r.async=1;
-            r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
-            a.appendChild(r);
-    })(window,document,'//static.hotjar.com/c/hotjar-','.js?sv=');
-    </script> 
+    <!-- start Mixpanel -->
+    <script type="text/javascript">
+        (function(e,a){if(!a.__SV){var b=window;try{var c,l,i,j=b.location,g=j.hash;c=function(a,b){return(l=a.match(RegExp(b+"=([^&]*)")))?l[1]:null};g&&c(g,"state")&&(i=JSON.parse(decodeURIComponent(c(g,"state"))),"mpeditor"===i.action&&(b.sessionStorage.setItem("_mpcehash",g),history.replaceState(i.desiredHash||"",e.title,j.pathname+j.search)))}catch(m){}var k,h;window.mixpanel=a;a._i=[];a.init=function(b,c,f){function e(b,a){var c=a.split(".");2==c.length&&(b=b[c[0]],a=c[1]);b[a]=function(){b.push([a].concat(Array.prototype.slice.call(arguments,
+        0)))}}var d=a;"undefined"!==typeof f?d=a[f]=[]:f="mixpanel";d.people=d.people||[];d.toString=function(b){var a="mixpanel";"mixpanel"!==f&&(a+="."+f);b||(a+=" (stub)");return a};d.people.toString=function(){return d.toString(1)+".people (stub)"};k="disable time_event track track_pageview track_links track_forms register register_once alias unregister identify name_tag set_config reset people.set people.set_once people.increment people.append people.union people.track_charge people.clear_charges people.delete_user".split(" ");
+        for(h=0;h<k.length;h++)e(d,k[h]);a._i.push([b,c,f])};a.__SV=1.2;b=e.createElement("script");b.type="text/javascript";b.async=!0;b.src="undefined"!==typeof MIXPANEL_CUSTOM_LIB_URL?MIXPANEL_CUSTOM_LIB_URL:"file:"===e.location.protocol&&"//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js".match(/^\/\//)?"https://cdn.mxpnl.com/libs/mixpanel-2-latest.min.js":"//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js";c=e.getElementsByTagName("script")[0];c.parentNode.insertBefore(b,c)}})(document,window.mixpanel||[]);
+        mixpanel.init("d9d9264aba2a581bbeb9844b688ece5f");
+    </script>
+    <!-- end Mixpanel -->
 
     <!-- FACEBOOK API -->
     <script>
@@ -708,6 +812,35 @@
     })(window,document,'script','dataLayer','GTM-53RBHNC');</script>
     <!-- End Google Tag Manager -->
 
+    <script type="text/javascript" src="//platform.linkedin.com/in.js">
+        api_key: 786aanr24pcbza
+        authorize: true
+        onLoad: onLinkedInLoad
+    </script>
+
+    <script type="text/javascript">
+    
+        // Setup an event listener to make an API call once auth is complete
+        function onLinkedInLoad() {
+            IN.Event.on(IN, "auth", getProfileData);
+        }
+
+        // Handle the successful return from the API call
+        function onSuccess(data) {
+            console.log(data);
+        }
+
+        // Handle an error response from the API call
+        function onError(error) {
+            console.log(error);
+        }
+
+        // Use the API call wrapper to request the member's basic profile data
+        function getProfileData() {
+            IN.API.Raw("/people/~").result(onSuccess).error(onError);
+        }
+
+    </script>
 </head>
 
   <body style="background-color: #DDDEE0;">

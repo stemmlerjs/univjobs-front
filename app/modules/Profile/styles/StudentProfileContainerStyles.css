@@ -312,3 +312,49 @@ outline: none
   composes: material_1 from 'sharedStyles/material.css';
   border: #908f8f 1px solid !important;
 }
+
+.optionalStyle {
+      padding: 0px;
+    margin: 0px;
+    position: relative;
+    top: -17px;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+/* ============= MEDIA QUERIES =============== */
+
+@media (max-width: 400px) {
+  .pageContainer {
+    width: 100%;
+    text-align: center;
+    display: flex;
+    flex-direction: row-reverse;
+    margin: 0px;
+    padding:0px;
+  }
+
+  .pageItemsContainer {
+    width: 100%;
+    padding-bottom: 70px;
+  }
+
+  .profileHeader {
+        font-size: 30px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+  }
+
+  .mediumDropDown {
+    width: 90%;
+    margin: 0 auto;
+  }
+
+  .dropDown {
+    width: 89%;
+  }
+
+  .longDropDown {
+        width: 89%;
+  }
+}

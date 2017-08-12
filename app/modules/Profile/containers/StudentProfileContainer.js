@@ -11,6 +11,17 @@ import { authRedirectFilter } from 'config/routes'
 import { StudentProfile } from 'modules/Profile' 
 import { SidebarContainer } from 'modules/Main' 
 import { FeedbackForm, PictureCropper } from 'modules/SharedComponents'
+import MobileStudentProfilePage1 from '../components/MobileStudentProfilePage1'
+import MobileStudentProfilePage2 from '../components/MobileStudentProfilePage2'
+import MobileStudentProfilePage3 from '../components/MobileStudentProfilePage3'
+import MobileStudentProfilePage4 from '../components/MobileStudentProfilePage4'
+import MobileStudentProfilePage5 from '../components/MobileStudentProfilePage5'
+import MobileStudentProfilePage6 from '../components/MobileStudentProfilePage6'
+import MobileStudentProfilePage7 from '../components/MobileStudentProfilePage7'
+import MobileStudentProfilePage8 from '../components/MobileStudentProfilePage8'
+
+import { scrollToY } from 'helpers/utils'
+
 import SkyLight from 'react-skylight'
 import Croppie from 'croppie'
 
@@ -216,7 +227,7 @@ const StudentProfileContainer = React.createClass({
 
               this.refs.container.success(
                 "Check your student email.",
-                "Nice! Profile completed. We just need you to verify your email now.", {
+                "Nice! Profile completed. Please verify your email now.", {
                   timeout: 3000
               });
 
@@ -360,7 +371,9 @@ const StudentProfileContainer = React.createClass({
           this.refs.container.success(
             "",
             "Success. We went ahead and sent a new Verify Account email to your student email.", {
-              timeout: 6000
+              closeButton:true,
+              timeOut: 30000,
+              extendedTimeOut: 10000
             });
 
         },
@@ -374,7 +387,9 @@ const StudentProfileContainer = React.createClass({
           this.refs.container.error(
             "Please try again later or contact us.",
             "Uh oh. Looks like something went wrong trying to resend the Verify Account email.", {
-              timeout: 3000
+              closeButton:true,
+              timeOut: 30000,
+              extendedTimeOut: 10000
             });
 
         }
@@ -419,15 +434,16 @@ const StudentProfileContainer = React.createClass({
   setDefaultValues () {
     return new Promise((resolve, reject) => {
 
-      document.getElementById('student_funFact').value = this.props.funFacts
-      document.getElementById('student_hometown').value = this.props.hometown
-      document.getElementById('student_hobbies').value = this.props.hobbies
-      document.getElementById('student_position').value = this.props.position
-      document.getElementById('student_companyName').value = this.props.companyName
-      document.getElementById('student_personalEmail').value = this.props.personalEmail
-      document.getElementById('student_lastName').value = this.props.lastName
-      document.getElementById('student_firstName').value = this.props.firstName
-
+      if (!window.isMobile) {
+        document.getElementById('student_funFact').value = this.props.funFacts
+        document.getElementById('student_hometown').value = this.props.hometown
+        document.getElementById('student_hobbies').value = this.props.hobbies
+        document.getElementById('student_position').value = this.props.position
+        document.getElementById('student_companyName').value = this.props.companyName
+        document.getElementById('student_personalEmail').value = this.props.personalEmail
+        document.getElementById('student_lastName').value = this.props.lastName
+        document.getElementById('student_firstName').value = this.props.firstName
+      }
       resolve()
     })
 
@@ -522,7 +538,9 @@ const StudentProfileContainer = React.createClass({
             this.refs.container.error(
               "Please try again.",
               "Verification link expired or invalid!", {
-                timeout: 5000
+                closeButton:true,
+                timeOut: 30000,
+                extendedTimeOut: 10000
             });
 
             regularComponentWillMountBehaviour(this)
@@ -569,11 +587,17 @@ const StudentProfileContainer = React.createClass({
                 */
 
                 if (isProfileCompleted == 0 && !isEmailVerified) {
-                  _thisContext.refs.container.info(
-                    "Click here to resend the verification email. Thanks!",
-                    "Before you can move on, we need you to finish your profile & confirm the email we sent to your student email.", {
-                      timeout: 3000
-                  });
+
+                  if (!window.isMobile) {
+                    _thisContext.refs.container.info(
+                      "Click here to resend the verification email. Thanks!",
+                      "Before you can move on, we need you to finish your profile & confirm the email we sent to your student email.", {
+                        closeButton:true,
+                        timeOut: 30000,
+                        extendedTimeOut: 10000
+                    });
+                  }
+                  
                 }
 
               /*
@@ -581,11 +605,15 @@ const StudentProfileContainer = React.createClass({
                 */
 
                 else if (isProfileCompleted == 0) {
-                  _thisContext.refs.container.info(
-                    "Thanks!",
-                    "Before you can move on, we just need you to finish your profile.", {
-                      timeout: 3000
-                  });
+                  if (!window.isMobile) {
+                    _thisContext.refs.container.info(
+                      "Thanks!",
+                      "Before you can move on, we just need you to finish your profile.", {
+                      closeButton:true,
+                      timeOut: 30000,
+                      extendedTimeOut: 10000
+                    });
+                  }
                 }
 
                 /*
@@ -593,11 +621,18 @@ const StudentProfileContainer = React.createClass({
                 */
 
                 else {
-                  _thisContext.refs.container.info(
-                    "Click here to resend the verification email. Thanks!",
-                    "Before you can move on, we just need you to confirm the email we sent to your student email.", {
-                      timeout: 3000
-                  });
+
+                  if (!window.isMobile) {
+                    _thisContext.refs.container.info(
+                      "Click here to resend the verification email. Thanks!",
+                      "Before you can move on, we just need you to confirm the email we sent to your student email.", {
+                        closeButton:true,
+                        timeOut: 30000,
+                        extendedTimeOut: 10000
+                    });
+                  }
+
+                  
                 }
 
                 resolve()
@@ -618,13 +653,13 @@ const StudentProfileContainer = React.createClass({
                 * we verified the email and the user's profile is now complete overall. We redirect in that
                 * scenario.
                 */
-                
+
                 if (emailVerifiedThisInstance) {
                   console.log("[Univjobs]: Profile was completely verfied + completed in THIS instance of componentWillMount, redirect.")
 
                   setTimeout(() => {
-                    window.location.reload()
                     _thisContext.context.router.push('/dashboard/st')
+                    window.location.reload()
                   }, 3000)
 
                 }
@@ -651,6 +686,10 @@ const StudentProfileContainer = React.createClass({
 
   },
 
+  componentDidMount() {
+
+  },
+
  /*
   * showImageSizeTooLargeError
   *
@@ -662,10 +701,12 @@ const StudentProfileContainer = React.createClass({
   */
 
   showImageSizeTooLargeError () {
+    scrollToY(0, 1500, 'easeInOutQuint');
     this.refs.container.error(
       "Images need to be less than 1MB.",
       "Whoa. That's a big picture. Can you shrink that down a bit?", {
-        timeout: 3000
+        timeout: 10000,
+        closeButton: true
     });
   },
 
@@ -680,10 +721,12 @@ const StudentProfileContainer = React.createClass({
   */
 
   showResumeSizeTooLargeError () {
+    scrollToY(0, 1500, 'easeInOutQuint');
     this.refs.container.error(
       "The max size is 2MB.",
       "That resume is a little too hefty for us. Can you try another version?", {
-        timeout: 3000
+        timeout: 10000,
+        closeButton:true
     });
   },
 
@@ -715,7 +758,7 @@ const StudentProfileContainer = React.createClass({
         boundary: { width: 250, height: 250 },
         showZoomer: false,
         enableResize: false,
-        enableOrientation: false
+        enableOrientation: true
       });
 
       window.cropperInstance.bind({
@@ -724,6 +767,10 @@ const StudentProfileContainer = React.createClass({
 
     }, 50)
     
+  },
+
+  rotatePicture () {
+    window.cropperInstance.rotate(90)
   },
 
   /*
@@ -786,18 +833,22 @@ const StudentProfileContainer = React.createClass({
         * Place a preview of the image on the Student Profile
         * picture div.
         */
+        try {
+          let dropPhotoDiv = document.getElementById('dropPhotoDiv')
+          dropPhotoDiv.style.backgroundImage = `url('${croppedFile.preview}')` // blob
+          dropPhotoDiv.style.backgroundSize = "cover"
 
-         let dropPhotoDiv = document.getElementById('dropPhotoDiv')
-        dropPhotoDiv.style.backgroundImage = `url('${croppedFile.preview}')` // blob
-        dropPhotoDiv.style.backgroundSize = "cover"
+          /*
+          * Hide icon, text and border
+          */
 
-        /*
-         * Hide icon, text and border
-         */
-
-        dropPhotoDiv.style.border = "0"
-        document.getElementById('fa-user').style.visibility = "hidden"
-        document.getElementById('drag-dropPhoto').style.visibility = "hidden"
+          dropPhotoDiv.style.border = "0"
+          document.getElementById('fa-user').style.visibility = "hidden"
+          document.getElementById('drag-dropPhoto').style.visibility = "hidden"
+        } 
+        catch (err) {
+          console.log(err)
+        }
 
         /*
          * Finally, hide the picture cropper modal.
@@ -810,67 +861,277 @@ const StudentProfileContainer = React.createClass({
 
   componentWillUnmount() {
 
+  },
 
+  /*
+   * MOBILE_next
+   * 
+   * In an attempt to compartmentalize some of the logic required for the mobile version
+   * of the HTML5 page, this mobile Object will be populated with the various functions that the 
+   * mobile view demands.
+   */
 
+  MOBILE_next () {
+
+    /*
+      * If we're not on the last page, 
+      * we're going to have to check for errors before trying to advance.
+      */
+
+    this.props.tryAdvanceStudentProfilePage(this.props.mobileViewCurrentPage, this.props, 
+
+       /*
+        * Success callback
+        * 
+        * The only time this is important to us is if we're submitting the profile
+        * at the end of this process.
+        * When we've successfully completed the profile, then we want to do something 
+        * else.
+        */
+
+      () => {
+
+        /*
+         * SET PROFILE TO COMPLETE
+         */
+
+        this.refs.container.success(
+        "Great work :) ",
+        "Profile completed!!!!1one", {
+          timeout: 4000
+        });
+
+       /*
+        * Reload everytime we update the profile.
+        * (We only redirect to /dashboard/st if 
+        * their email is verified and they are just 
+        * completing their profile for the first time).
+        * 
+        * KS
+        */
+          
+        setTimeout(() => {
+          this.context.router.push('/dashboard/st')
+          window.location.reload()
+        }, 3000)
+
+      },
+
+      /*
+        * Failure Callback
+        *
+        * This is only important when we're submitting the profile the first time.
+        */
+
+      (submitError) => {
+
+        scrollToY(0, 1500, 'easeInOutQuint');
+
+        if (submitError) {
+          this.refs.container.error(
+            "Please try again a little later or let us know.",
+            "Darn. Something went wrong submitting your profile.", {
+              timeout: 3000
+          });
+        }
+
+        else {
+          this.refs.container.error(
+            "Ya gotta fix some of these fields to continue.",
+            "Hold your horses, deputy 🐎", {
+              timeout: 5000
+          });
+        }        
+
+      }
+    )
+  },
+
+  /*
+   * MOBILE_back
+   * 
+   * In an attempt to compartmentalize some of the logic required for the mobile version
+   * of the HTML5 page, this mobile Object will be populated with the various functions that the 
+   * mobile view demands.
+   */
+
+  MOBILE_back () {
+    this.props.pageBack(this.props.mobileViewCurrentPage, true)
   },
 
   render () {
-    console.log("Student profile props", this.props)
+
     return (
       <div className={pageContainer}>
-        <SidebarContainer isAStudent={this.props.user.isAStudent} 
+
+        <SidebarContainer isMobile={this.props.isMobile} isAStudent={this.props.user.isAStudent} 
           profilePicture={typeof this.props.profile.photo == "object" && this.props.profile.photo !== null
             ? this.props.profile.photo.preview
             : config.mediaUrl + '/avatar/' + this.props.profile.photo
           } />
-        <StudentProfile
-      	  emailPreferences={this.props.emailPreferences}
-      	  emailPrefList={this.props.emailPrefList}
-      	  firstName={this.props.firstName}
-      	  lastName={this.props.lastName}
-      	  studentStatus={this.props.studentStatus}
-      	  studentStatusList={this.props.studentStatusList}
-      	  educationLevel={this.props.educationLevel}
-      	  educationLevelList={this.props.educationLevelList}
-      	  school={this.props.school}
-      	  enrollmentDate={this.props.enrollmentDate}
-      	  graduationDate={this.props.graduationDate}
-      	  major={this.props.major}
-      	  majorsList={this.props.majorsList}
-      	  gpa={this.props.gpa}
-      	  personalEmail={this.props.personalEmail}
-      	  gender={this.props.gender}
-      	  gendersList={this.props.gendersList}
-      	  sportsTeam={this.props.sportsTeam}
-          sportsList={this.props.sportsList}
-      	  schoolClub={this.props.schoolClub}
-          schoolClubList={this.props.schoolClubList}
-      	  languages={this.props.languages}
-      	  languagesList={this.props.languagesList}
-      	  hasCar={this.props.hasCar}
-      	  companyName={this.props.companyName}
-      	  position={this.props.position}
-      	  funFacts={this.props.funFacts ? this.props.funFacts : ''}
-      	  hometown={this.props.hometown}
-      	  hobbies={this.props.hobbies}
-      	  photo={this.props.photo}
-      	  resume={this.props.resume}
-      	  onSubmit={this.handleSubmit}
-      	  updateProfileField={this.props.updateProfileField}
-          sportsToggle={this.props.sportsToggle}
-          clubsToggle={this.props.clubsToggle}
-          languagesToggle={this.props.languagesToggle}
-          gpaToggle={this.props.gpaToggle}
-          emailToggle={this.props.emailToggle}
-          onHandleButtonToggle={this.handleButtonToggle}
-          onCreateNewTag={this.createNewTag}
-      	  propsErrorMap={this.props.propsErrorMap}
-          isSubmittingForm={this.props.isSubmittingForm}
-      	  snapshot={this.props.snapshot}
-          handleShowImageSizeTooLargeError={this.showImageSizeTooLargeError}
-          handleShowResumeSizeTooLargeError={this.showResumeSizeTooLargeError}
-          handleOpenPictureCropper={this.openPictureCropper}
-        />
+
+        { 
+          /*
+           * DESKTOP version or MOBILE version.
+           */
+
+          !window.isMobile
+
+            ? <StudentProfile
+                emailPreferences={this.props.emailPreferences}
+                emailPrefList={this.props.emailPrefList}
+                firstName={this.props.firstName}
+                lastName={this.props.lastName}
+                studentStatus={this.props.studentStatus}
+                studentStatusList={this.props.studentStatusList}
+                educationLevel={this.props.educationLevel}
+                educationLevelList={this.props.educationLevelList}
+                school={this.props.school}
+                enrollmentDate={this.props.enrollmentDate}
+                graduationDate={this.props.graduationDate}
+                major={this.props.major}
+                majorsList={this.props.majorsList}
+                gpa={this.props.gpa}
+                personalEmail={this.props.personalEmail}
+                gender={this.props.gender}
+                gendersList={this.props.gendersList}
+                sportsTeam={this.props.sportsTeam}
+                sportsList={this.props.sportsList}
+                schoolClub={this.props.schoolClub}
+                schoolClubList={this.props.schoolClubList}
+                languages={this.props.languages}
+                languagesList={this.props.languagesList}
+                hasCar={this.props.hasCar}
+                companyName={this.props.companyName}
+                position={this.props.position}
+                funFacts={this.props.funFacts ? this.props.funFacts : ''}
+                hometown={this.props.hometown}
+                hobbies={this.props.hobbies}
+                photo={this.props.photo}
+                resume={this.props.resume}
+                onSubmit={this.handleSubmit}
+                updateProfileField={this.props.updateProfileField}
+                sportsToggle={this.props.sportsToggle}
+                clubsToggle={this.props.clubsToggle}
+                languagesToggle={this.props.languagesToggle}
+                gpaToggle={this.props.gpaToggle}
+                emailToggle={this.props.emailToggle}
+                onHandleButtonToggle={this.handleButtonToggle}
+                onCreateNewTag={this.createNewTag}
+                propsErrorMap={this.props.propsErrorMap}
+                isSubmittingForm={this.props.isSubmittingForm}
+                snapshot={this.props.snapshot}
+                handleShowImageSizeTooLargeError={this.showImageSizeTooLargeError}
+                handleShowResumeSizeTooLargeError={this.showResumeSizeTooLargeError}
+                handleOpenPictureCropper={this.openPictureCropper}
+              />
+              
+            : this.props.isProfileCompleted == 1 && this.props.isEmailVerified == 0
+                ? <MobileStudentProfilePage8 resendEmail={this.resendVerifyAccountEmail}/>
+                : (() => {
+                    switch(this.props.mobileViewCurrentPage) {
+                      case 1:
+                        return <MobileStudentProfilePage1
+                          hometown={this.props.hometown}
+                          firstName={this.props.firstName}
+                          lastName={this.props.lastName}
+                          gender={this.props.gender}
+                          gendersList={this.props.gendersList}
+                          languages={this.props.languages}
+                          languagesList={this.props.languagesList}
+                          propsErrorMap={this.props.propsErrorMap}
+                          updateProfileField={this.props.updateProfileField}
+                          next={this.MOBILE_next}
+                        />
+                      case 2:
+                        return <MobileStudentProfilePage2
+                          studentStatus={this.props.studentStatus}
+                          studentStatusList={this.props.studentStatusList}
+                          educationLevel={this.props.educationLevel}
+                          educationLevelList={this.props.educationLevelList}
+                          school={this.props.school}
+                          major={this.props.major}
+                          majorsList={this.props.majorsList}
+                          propsErrorMap={this.props.propsErrorMap}
+                          updateProfileField={this.props.updateProfileField}
+                          next={this.MOBILE_next}
+                          back={this.MOBILE_back}
+                        />
+                      case 3:
+                        return <MobileStudentProfilePage3
+                          studentStatus={this.props.studentStatus}
+                          enrollmentDate={this.props.enrollmentDate}
+                          graduationDate={this.props.graduationDate}
+                          gpa={this.props.gpa}
+                          propsErrorMap={this.props.propsErrorMap}
+                          updateProfileField={this.props.updateProfileField}
+                          next={this.MOBILE_next}
+                          back={this.MOBILE_back}
+                        />
+                      case 4:
+                        return <MobileStudentProfilePage4
+                          companyName={this.props.companyName}
+                          position={this.props.position}
+                          funFacts={this.props.funFacts ? this.props.funFacts : ''}
+                          hasCar={this.props.hasCar}
+                          hobbies={this.props.hobbies}
+                          propsErrorMap={this.props.propsErrorMap}
+                          updateProfileField={this.props.updateProfileField}
+                          onCreateNewTag={this.createNewTag}
+                          next={this.MOBILE_next}
+                          back={this.MOBILE_back}
+                        />
+                      case 5:
+                        return <MobileStudentProfilePage5
+                          schoolClub={this.props.schoolClub}
+                          schoolClubList={this.props.schoolClubList}
+                          sportsTeam={this.props.sportsTeam}
+                          sportsList={this.props.sportsList}
+                          propsErrorMap={this.props.propsErrorMap}
+                          updateProfileField={this.props.updateProfileField}
+                          onCreateNewTag={this.createNewTag}
+                          next={this.MOBILE_next}
+                          back={this.MOBILE_back}
+                        />
+                      case 6:
+                        return <MobileStudentProfilePage6
+                          photo={this.props.photo}
+                          resume={this.props.resume}
+                          propsErrorMap={this.props.propsErrorMap}
+                          updateProfileField={this.props.updateProfileField}
+                          handleShowImageSizeTooLargeError={this.showImageSizeTooLargeError}
+                          handleShowResumeSizeTooLargeError={this.showResumeSizeTooLargeError}
+                          handleOpenPictureCropper={this.openPictureCropper}
+                          next={this.MOBILE_next}
+                          back={this.MOBILE_back}
+                        />
+                      case 7:
+                        return <MobileStudentProfilePage7
+                          emailPreferences={this.props.emailPreferences}
+                          emailPrefList={this.props.emailPrefList}
+                          personalEmail={this.props.personalEmail}
+                          propsErrorMap={this.props.propsErrorMap}
+                          updateProfileField={this.props.updateProfileField}
+                          isSubmittingForm={this.props.isSubmittingForm}
+                          next={this.MOBILE_next}
+                          back={this.MOBILE_back}
+                        />
+                      case 8:
+                        return <MobileStudentProfilePage8 resendEmail={this.resendVerifyAccountEmail}/>
+                      default:
+                        return <MobileStudentProfilePage1
+                          firstName={this.props.firstName}
+                          lastName={this.props.lastName}
+                          gender={this.props.gender}
+                          gendersList={this.props.gendersList}
+                          propsErrorMap={this.props.propsErrorMap}
+                          updateProfileField={this.props.updateProfileField}
+                          next={this.MOBILE_next}
+                        />
+                    }
+                  })()
+        }
+        
       	<ToastContainer ref="container"
       	  toastMessageFactory={ToastMessageFactory}
       	  className="toast-top-right"
@@ -915,6 +1176,7 @@ const StudentProfileContainer = React.createClass({
               <SkyLight ref="pictureCropper">
                 <PictureCropper 
                   onDoneCrop={this.cropAndAppendImage}
+                  rotate={this.rotatePicture}
                 />
               </SkyLight>
             </div>
@@ -1024,7 +1286,8 @@ function mapStateToProps({user, profile, list, feedback}) {
     error: profile.error ? profile.error : '',
     submitSuccess: profile.submitSuccess ? profile.submitSuccess : false,
     isSubmittingForm: profile.isSubmittingForm ? profile.isSubmittingForm : false,
-    userProfileAdvicePresented: profile.userProfileAdvicePresented ? profile.userProfileAdvicePresented : false
+    userProfileAdvicePresented: profile.userProfileAdvicePresented ? profile.userProfileAdvicePresented : false,
+    mobileViewCurrentPage: profile.mobileViewCurrentPage ? profile.mobileViewCurrentPage : 1
   }
 }
 

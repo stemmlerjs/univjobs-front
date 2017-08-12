@@ -227,3 +227,16 @@
     font-weight: bold;
     margin-bottom: 26px;
 }
+
+@media (max-width: 600px) {
+    .rootComponentContainer {
+        position: initial;
+    }
+}
+
+@media (max-width: 500px) {
+    .marginBottom {
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+}

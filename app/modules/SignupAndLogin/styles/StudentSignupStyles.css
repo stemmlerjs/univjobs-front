@@ -21,7 +21,7 @@
     min-height: 700px;
     align-items: center;
     background-size: cover;
-    background-image: url("https://github.com/UnivJobs/univjobs-front/blob/master/images/front/coffeelaptop.jpg?raw=true");
+    background-image: url("https://univjobs.ca/assets/images/front/coffeelaptop.jpg");
 
     /*NOTE: overflow seems to fix the error I encountered on the phone from showing the gray background*/
     overflow: hidden;
@@ -31,12 +31,16 @@
 .header {
   text-align: center;
   composes: header from 'sharedStyles/styles.css';
+    text-shadow: 2px 2px #8eb0c3;
 }
 
 .subHeader {
   text-align: center;
   composes: subHeader from 'sharedStyles/styles.css';
   margin-bottom:40px;
+    padding-left: 15px;
+    padding-right: 15px;
+    font-weight: 300;
 }
 
 .btn {
@@ -77,9 +81,24 @@
 
 .inputContainer {
   display: flex;
+  height: auto;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  opacity: 1;
+  transition: opacity 0.25s ease-in;
+}
+
+.inputContainerClosed {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 0px;
+    /* display: none; */
+    opacity: 0;
+    overflow: hidden;
+    transition: opacity 0.25s ease-in;
 }
 
 .errorMessage {

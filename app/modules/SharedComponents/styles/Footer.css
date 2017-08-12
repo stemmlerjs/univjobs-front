@@ -25,7 +25,13 @@
 }
 
 .flexMediaItems {
-   margin: 0px 20px 0px 0px; 
+ margin-left: 5px;
+    margin-right: 5px;
+}
+
+.flexMediaItems i {
+    cursor: pointer;
+    font-size: 40px;
 }
 
 
@@ -49,11 +55,21 @@
 
 .knowUs {
     font-size: 27px;
+    margin-bottom: 7px;
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
 .withLoveSection {
-    background-color: #52a7fa;
+      background-color: #0f1010;
 }
+
+.socialMediaCTA {
+        font-size: 17px;
+    margin: 0;
+}
+
+
 
 /* ===========================================Media Queiries===================================*/
 /*  TIDBIT: Start from the smallest screen and work your way up as a best practice

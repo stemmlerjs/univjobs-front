@@ -87,7 +87,7 @@ class ContactPageContainer extends React.Component {
                 }
             })
             .catch((err) => {
-                toastr.error('Error found, please directly email us at univjobscanada@gmail.com')
+                toastr.error('Error found, please directly email us at contact@univjobs.ca')
                 toastr.error('Sorry for the inconvenience')
 
                 //TODO: Since we don't know an error occurred here, we need a notification 

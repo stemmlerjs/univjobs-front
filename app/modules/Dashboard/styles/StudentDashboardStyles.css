@@ -182,3 +182,32 @@ padding-left:7px;
     border: 1px solid #8b8b8b;
     border-radius: 4px;
 }
+
+.companyInfoSidebarWrapper {
+
+}
+
+.studentDashboardComponentWrapper {
+
+}
+
+/* MEDIA QUERIES */
+
+@media (max-width: 400px) {
+    
+   /*
+    * When we're in the mobile view, the company info
+    * sidebar invisible button is always covering the entire screen.
+    * This obviously isn't good for when we need to click other buttons
+    * because it overlaps ontop of each button and none of them will 
+    * work because we'll always be clicking this.
+    *
+    * We needed to do a little logic here to make it so that this doesn't 
+    * ALWAYS cover everything.
+    */
+    .studentDashboardComponentWrapper .companyInfoSidebarWrapper {
+        display: none !important;
+        overflow: hidden !important;
+    }
+
+}

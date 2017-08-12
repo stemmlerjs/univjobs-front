@@ -13,8 +13,7 @@ import { Footer } from 'modules/SharedComponents'
 import { employerCenteredContainer, header, subHeader, 
         modalContent, errorMessage, btn, input,
         overlayStyles, dialogStyles } from '../styles/EmployerSignupStyles.css'
-import { legalEmployer, gray } from '../styles/SignupContainerStyles.css'
-
+import { legalEmployer, gray, backgroundStyleFallback } from '../styles/SignupContainerStyles.css'
 
 import { ValidPasswordVerifier } from 'modules/SharedComponents'
 
@@ -71,21 +70,20 @@ const EmployerSignup = React.createClass({
     const {onSubmitSignup, updateEmployerSignupForm, firstNameText, lastNameText, companyNameText, phoneText, 
       emailText, passwordText, error, router, isCreatingAccount } = this.props
 
-
     return (
-        <div>
-            <div className={employerCenteredContainer}>
+        <div className={backgroundStyleFallback}>
+            <div id="employer-hero" className={employerCenteredContainer}>
                 <div className={header}>
                     HIRE STUDENTS
                 </div>
                 <div className={subHeader}>
-                    Post jobs for students at any Canadian college/university
+                    Post jobs for students in Canadian Universities and Colleges
                 </div>
                 <button 
                     className={`${btn} ${material_1}`} 
                     onClick={() => this.refs.employerModal.show()}
                 >
-                    Employers - Post a job now
+                    Sign up and post a job
                 </button>
                 <div id="employer-signup-modal-wrapper">
                     <SkyLight 
@@ -167,6 +165,8 @@ const EmployerSignup = React.createClass({
                     </SkyLight>
                 </div>
               </div>
+
+              
             </div>
     )
   }

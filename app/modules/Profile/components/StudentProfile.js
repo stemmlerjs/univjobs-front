@@ -21,7 +21,8 @@ import { pageContainer, profileField, profileHeader,
         dropzoneContent, inlineDropzone, btn, 
         saveBtnContainer, saveBtnList, saveBtnClicked,  notActive, personalEmailStyle,
         saveBtn, space, hideInput, showInput, textArea, unselectedButton,
-				profilePictureDragDropAlt, savedResumeView, actualSaveBtn, pageItemsContainer, materialStyle } from '../styles/StudentProfileContainerStyles.css'
+				profilePictureDragDropAlt, savedResumeView, actualSaveBtn, pageItemsContainer, materialStyle,
+				optionalStyle } from '../styles/StudentProfileContainerStyles.css'
 
 import { shine } from 'sharedStyles/animations.css'
 import { error } from 'sharedStyles/error.css' 
@@ -205,10 +206,11 @@ console.log(props)
 			</li>
 			</StudentProfileField>
 
-			{/*FIRST NAME, LAST NAME*, STATUS */}
+			{/* FIRST NAME, LAST NAME*, STATUS */}
 			<StudentProfileField title="My name is">
 			 <li>
 			    <input
+				   data-thing="input"
 			     className={props.propsErrorMap.firstName ? `${input} ${error} ${materialStyle}` : `${input} ${materialStyle}`}
            name="student[firstname]"
 			     type="text"
@@ -221,6 +223,7 @@ console.log(props)
 		 
 			 <li>
 			   <input
+				  data-thing="input"
 			    className={props.propsErrorMap.lastName ? `${input} ${materialStyle} ${error}` : `${input} ${materialStyle}`}
           name="student[lastname]"
 			    type="text"
@@ -231,7 +234,7 @@ console.log(props)
 			    </input>
 			 </li> 
 			</StudentProfileField>
-
+			
 			<StudentProfileField title="I am a ">
 			 
 			 {/* STATUS */}
@@ -307,7 +310,7 @@ console.log(props)
 			     />
 			  </li>
 			  <li>
-			    <i className="fa fa-info-circle fa-2x" aria-hidden="true" data-tip="Major not there? Please email us at univjobscanada@gmail.com and we will help you out"></i>
+			    <i className="fa fa-info-circle fa-2x" aria-hidden="true" data-tip="Major not there? Please email us at contact@univjobs.ca and we will help you out"></i>
 			    <ReactTooltip place="bottom"
 			    	type="warning"
 						effect="float"
@@ -352,6 +355,7 @@ console.log(props)
 			 styles={nameField}>
 			 <li>
 			  <input
+					data-thing="input"
 			    className={props.propsErrorMap.personalEmail 
 						? `${materialStyle} ${input} ${error}` 
 						: props.personalEmail != "" 
@@ -499,9 +503,10 @@ console.log(props)
 			{/* EXPERIENCE
 			  Can be empty
 			*/} 
-			<StudentProfileField title="I recently worked at "      styles={nameField}>
+			<StudentProfileField title="I recently worked at " styles={nameField} required={ props.funFacts == "" ? true : false} message={'required if fun fact is blank'}>
 			<li> 
 		        <input
+						data-thing="input"
 			   className={props.propsErrorMap.companyName ? `${materialStyle} ${input} ${error}` : `${materialStyle} ${input}` }
 			   type="text"
 			   placeholder="Company Name"
@@ -511,10 +516,11 @@ console.log(props)
 			  </input>
 			 </li>
 			  <li>
-			    <p>working as</p>
+			    <p>as a</p>
 			  </li>
 			  <li>
 			   <input
+				  data-thing="input"
 			    className={props.propsErrorMap.position ? `${materialStyle} ${input} ${error}` : `${materialStyle} ${input}`}
 			    type="text"
 			    placeholder="Position"
@@ -526,9 +532,10 @@ console.log(props)
 			</StudentProfileField>
 
 			{/* FUN FACTS */}
-			<StudentProfileField title="A fun fact about me is ">
+			<StudentProfileField title="A fun fact about me is " message={'required if experience not provided'} required={ props.companyName == "" || props.position == "" ? true : false}>
 			<li>
 			 <textarea
+			 	 data-thing="input"
 			   className={props.propsErrorMap.funFacts ? `${materialStyle} ${textArea} ${error}` : `${materialStyle} ${textArea}`}
 			   type="text"
 			   placeholder="Example: I backpacked to Europe by myself last summer"
@@ -552,6 +559,7 @@ console.log(props)
 			{/* CITY */}
 			<StudentProfileField title="My hometown is">
 			 <input
+			 	 data-thing="input"
 			   className={props.propsErrorMap.hometown ? `${materialStyle} ${input} ${error}` : `${materialStyle} ${input}`}
 			   type="text"
 			   placeholder="City"
@@ -565,6 +573,7 @@ console.log(props)
 			<StudentProfileField title="My favourite hobbies are"> 
 			 <li>
 			  <input
+				data-thing="input"
 			   className={props.propsErrorMap.hobbies ? `${materialStyle} ${shortInput} ${error}` : `${materialStyle} ${shortInput}`}
 			   type="text"
 			   placeholder="Playing guitar, Making movies, etc.."
@@ -577,7 +586,7 @@ console.log(props)
 
 			{/* PHOTO & RESUME */}
 
-			<StudentProfileField title="Take a business selfie">
+			<StudentProfileField title="Take a business selfie" optional={true}>
 				<Dropzone id="dropPhotoDiv" style={profilePic} className={props.propsErrorMap.photo ? dropzone + ' ' + error 
 					: props.photo == "" 
 						? dropzone 
@@ -588,7 +597,10 @@ console.log(props)
 					</div>
 					</Dropzone>
 
-					<p className={space}> here is my resume</p>
+					<div>
+						<p className={space}> here is my resume</p>
+						<p className={optionalStyle}>{'(optional)'}</p>
+					</div>
 
 					<Dropzone id="dropResumeDiv" className={props.propsErrorMap.resume ? dropzone + ' ' + error 
 						: props.resume == ""

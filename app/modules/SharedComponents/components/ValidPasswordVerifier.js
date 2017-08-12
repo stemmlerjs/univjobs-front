@@ -35,19 +35,11 @@ const ValidPasswordVerifier = ({passwordText}) => (
           </div>
           <div>
             {
-              /^(.*[0-9].*)$/.test(passwordText)
+              /^(?=[\w!@#$%^&*()+]{6,})(?:.*[!@#$%^&*()+]+.*)$/.test(passwordText) ||  /.*[0-9].*/.test(passwordText)
                 ? <i className={`fa fa-check ${good}`} aria-hidden="true"></i>
                 : <i className={`fa fa-times ${bad}`} aria-hidden="true"></i>
             }
-            Include one digit
-          </div>
-          <div>
-            {
-              /[-!$%^&*()_+|~=`{}\[\]:";'<>?,.\/]/.test(passwordText)
-                ? <i className={`fa fa-check ${good}`} aria-hidden="true"></i>
-                : <i className={`fa fa-times ${bad}`} aria-hidden="true"></i>
-            }
-          Include one symbol
+            Include one digit or one symbol
           </div>
         </div>
       </div>

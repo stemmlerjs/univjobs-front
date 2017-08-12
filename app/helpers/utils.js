@@ -35,7 +35,14 @@ const DOMPurify = createDOMPurify(window);
 
 export function validatePassword(password) {
 
-  var upperCaseLowerCaseSymbolHasNumber = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/;
+  /*
+   * - 1 uppercase
+   * - 1 lowercase
+   * - 1 number OR 1 symbol 
+   * - minimim 8 characters
+   */
+
+  var upperCaseLowerCaseSymbolHasNumber = /^(?=.*[a-z])(?=.*[A-Z])(?=.*(_|[^A-Za-z ])).{8,}$/;
   let isMinimum8Chars = false;
   
   if (password.length >= 8) isMinimum8Chars = true;
@@ -70,7 +77,7 @@ export function validateStudentEmail(email, callback) {
   if(!re.test(email)){
     callback(false, "Please enter your school email address.")
   } else if (!/@sheridancollege.ca\s*$/.test(email)) {
-     callback(false, "Sorry, we are only currently available to Sheridan College students. Please contact us at univjobscanada@gmail.com if you'd like us to extend access to your institution.")
+     callback(false, "Sorry, we are only currently available to Sheridan College students. Please contact us at contact@univjobs.ca if you'd like us to extend access to your institution.")
   } else {
     callback(true)
   }
@@ -238,4 +245,273 @@ export function validateJobLocation (location) {
 export function validateCompensation (comp) {
   let re = /^[a-z0-9 ,+=$/.'-]{2,380}$/i // numbers, letters and spaces only
   return re.test(comp)
+}
+
+window.requestAnimFrame = (function(){
+  return  window.requestAnimationFrame       ||
+          window.webkitRequestAnimationFrame ||
+          window.mozRequestAnimationFrame    ||
+          function( callback ){
+            window.setTimeout(callback, 1000 / 60);
+          };
+})();
+
+export function scrollToY (scrollTargetY, speed, easing) {
+    // scrollTargetY: the target scrollY property of the window
+    // speed: time in pixels per second
+    // easing: easing equation to use
+
+    var scrollY = window.scrollY || document.documentElement.scrollTop,
+        scrollTargetY = scrollTargetY || 0,
+        speed = speed || 2000,
+        easing = easing || 'easeOutSine',
+        currentTime = 0;
+
+    // min time .1, max time .8 seconds
+    var time = Math.max(.1, Math.min(Math.abs(scrollY - scrollTargetY) / speed, .8));
+
+    // easing equations from https://github.com/danro/easing-js/blob/master/easing.js
+    var easingEquations = {
+            easeOutSine: function (pos) {
+                return Math.sin(pos * (Math.PI / 2));
+            },
+            easeInOutSine: function (pos) {
+                return (-0.5 * (Math.cos(Math.PI * pos) - 1));
+            },
+            easeInOutQuint: function (pos) {
+                if ((pos /= 0.5) < 1) {
+                    return 0.5 * Math.pow(pos, 5);
+                }
+                return 0.5 * (Math.pow((pos - 2), 5) + 2);
+            }
+        };
+
+    // add animation loop
+    function tick() {
+        currentTime += 1 / 60;
+
+        var p = currentTime / time;
+        var t = easingEquations[easing](p);
+
+        if (p < 1) {
+            requestAnimFrame(tick);
+
+            window.scrollTo(0, scrollY + ((scrollTargetY - scrollY) * t));
+        } else {
+            console.log('scroll done');
+            window.scrollTo(0, scrollTargetY);
+        }
+    }
+
+    // call it once to get started
+    tick();
+}
+
+
+export function createCookie(name,value,days) {
+    var expires = "";
+    if (days) {
+        var date = new Date();
+        date.setTime(date.getTime() + (days*24*60*60*1000));
+        expires = "; expires=" + date.toUTCString();
+    }
+    document.cookie = name + "=" + value + expires + "; path=/";
+}
+
+export function readCookie(name) {
+    var nameEQ = name + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0;i < ca.length;i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1,c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+    }
+    return null;
+}
+
+export function eraseCookie(name) {
+    createCookie(name,"",-1);
+}
+
+/*
+ * compressPicture
+ * 
+ * Compresses picture before file uploads.
+ * "blob:http://localhost:8080/b8448b64-5083-40ac-8f16-e367e09d3288""
+ */
+
+export function compressPicture (file, callback) {
+
+  /*
+   * Get important metadata about the file so that when we have to 
+   * reparse it into a file, we'll be able to fill in the blanks about how to 
+   * create it again.
+   */
+
+  var max_width = 600;
+  var max_height = 600;
+  var preview = document.getElementById('preview');
+  
+  processfile(file)
+
+  function processfile(file) {
+
+    if( !( /image/i ).test( file.type ) ){
+      alert( "File "+ file.name +" is not an image." );
+      return false;
+    }
+
+    // Read the file in as an array buffer.
+    var reader = new FileReader();
+    reader.readAsArrayBuffer(file);
+    
+    reader.onload = function (event) {
+      // blob stuff
+      var blob = new Blob([event.target.result]); // create blob...
+      window.URL = window.URL || window.webkitURL;
+      var blobURL = window.URL.createObjectURL(blob); // and get it's URL
+      
+      // helper Image object
+      var image = new Image();
+      image.src = blobURL;
+      //preview.appendChild(image); // preview commented out, I am using the canvas instead
+      image.onload = function() {
+
+        /*
+          * After resizing, we're left with a data url.
+          * We need to turn this back into a file with the same mimetypes that it
+          * had initially.
+          */
+        debugger;
+        var resizedDataUrl = resizeMe(image);
+        var blob = dataURItoBlob(resizedDataUrl);
+        var previewUrl = window.URL.createObjectURL(blob)
+
+        var resizedFile = new File([blob], 
+        "newphoto_" + new Date().toDateString() + "." + blob.type,
+        {
+          type: blob.type
+        });
+
+        resizedFile.preview = previewUrl
+
+        callback(resizedFile)
+      }
+    };
+  }
+
+  function dataURItoBlob(dataURI) {
+    // convert base64 to raw binary data held in a string
+    // doesn't handle URLEncoded DataURIs - see SO answer #6850276 for code that does this
+    var byteString = atob(dataURI.split(',')[1]);
+
+    // separate out the mime component
+    var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+
+    // write the bytes of the string to an ArrayBuffer
+    var ab = new ArrayBuffer(byteString.length);
+    var ia = new Uint8Array(ab);
+    for (var i = 0; i < byteString.length; i++) {
+        ia[i] = byteString.charCodeAt(i);
+    }
+
+    //Old Code
+    //write the ArrayBuffer to a blob, and you're done
+    //var bb = new BlobBuilder();
+    //bb.append(ab);
+    //return bb.getBlob(mimeString);
+
+    //New Code
+    return new Blob([ab], {type: mimeString});
+
+  }
+
+  function readfile(files) {
+    
+    // remove the existing canvases and hidden inputs if user re-selects new pics
+    var existinginputs = document.getElementsByName('images[]');
+    var existingcanvases = document.getElementsByTagName('canvas');
+    while (existinginputs.length > 0) { // it's a live list so removing the first element each time
+      // DOMNode.prototype.remove = function() {this.parentNode.removeChild(this);}
+      form.removeChild(existinginputs[0]);
+      preview.removeChild(existingcanvases[0]);
+    } 
+  
+    for (var i = 0; i < files.length; i++) {
+      processfile(files[i]); // process each file at once
+    }
+    fileinput.value = ""; //remove the original files from fileinput
+    // TODO remove the previous hidden inputs if user selects other files
+  }
+
+  // === RESIZE ====
+
+  function resizeMe(img) {
+    
+    var canvas = document.createElement('canvas');
+
+    var width = img.width;
+    var height = img.height;
+
+    // calculate the width and height, constraining the proportions
+    if (width > height) {
+      if (width > max_width) {
+        //height *= max_width / width;
+        height = Math.round(height *= max_width / width);
+        width = max_width;
+      }
+    } else {
+      if (height > max_height) {
+        //width *= max_height / height;
+        width = Math.round(width *= max_height / height);
+        height = max_height;
+      }
+    }
+    
+    // resize the canvas and draw the image data into it
+    canvas.width = width;
+    canvas.height = height;
+    var ctx = canvas.getContext("2d");
+    ctx.drawImage(img, 0, 0, width, height);
+
+    /*
+     * Rotate the image because for some reason, it's rotated -90 degrees.
+     */
+
+    var cw = img.width;
+    var ch = img.height;
+    var cx = 0;
+    var cy = 0;
+
+    var degree = 90
+
+    //   Calculate new canvas size and x/y coorditates for image
+    switch (degree){
+        case 90:
+          cw = img.height;
+          ch = img.width;
+          cy = img.height * (-1);
+          break;
+        case 180:
+          cx = img.width * (-1);
+          cy = img.height * (-1);
+          break;
+        case 270:
+          cw = img.height;
+          ch = img.width;
+          cx = img.width * (-1);
+          break;
+    }
+
+    //  Rotate image
+    canvas.setAttribute('width', cw);
+    canvas.setAttribute('height', ch);
+    ctx.rotate(degree * Math.PI / 180);
+    ctx.drawImage(img, cx, cy);
+    
+    // preview.appendChild(canvas); // do the actual resized preview
+    
+    return canvas.toDataURL("image/jpeg", 0.7); // get the data from canvas as 70% JPG (can be also PNG, etc.)
+
+  }
 }

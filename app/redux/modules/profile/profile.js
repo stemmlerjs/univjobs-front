@@ -2,8 +2,8 @@
 import { employerProfilePUT, employerProfilePATCH, validateEmployerProfileFields,
   studentProfilePUT, studentProfilePATCH, validateStudentProfileFields,
   compareToSnapshot, getUserInfo, extractLanguageId,
-  extractClubsObject, extractSportsObject } from 'helpers/profile'
-import { toISO, hasCarBoolean } from 'helpers/utils'
+  extractClubsObject, extractSportsObject, mobileProfileHelper } from 'helpers/profile'
+import { toISO, hasCarBoolean, scrollToY } from 'helpers/utils'
 import profileAdviceModal from './profileAdviceModal'
 
 // =======================================================
@@ -12,6 +12,7 @@ import profileAdviceModal from './profileAdviceModal'
 
 
 // ********** Base form actions **************
+
 const UPDATE_PROFILE_FIELD = 'PROFILE.UPDATE_PROFILE_FIELD'
 
 const TOGGLE_BUTTON = 'PROFILE.TOGGLE_BUTTON'
@@ -28,9 +29,395 @@ const FETCHED_PROFILE_INFO_FAILURE = 'PROFILE.FETCHED_INFO_FAILURE'
 
 const PROFILE_ADVICE_PRESENTED = 'PROFILE_ADVICE_PRESENTED'
 
+const MOBILE_TRY_ADVANCE_STUDENT_PROFILE_NEXT_PAGE = 'MOBILE_TRY_ADVANCE_STUDENT_PROFILE_NEXT_PAGE'
+const MOBILE_STUDENT_PROFILE_NEXT_PAGE = 'MOBILE_STUDENT_PROFILE_NEXT_PAGE'
+const MOBILE_STUDENT_PROFILE_PAGE_BACK = 'MOBILE_PROFILE_PAGE_BACK'
+
+const MOBILE_EMPLOYER_PROFILE_NEXT_PAGE = 'MOBILE_EMPLOYER_PROFILE_NEXT_PAGE'
+
 // =======================================================
 // ================== ACTION CREATORS ====================
 // =======================================================
+
+
+/*
+ * ========= MOBILE PROFILE ACTIONS ==========
+ */
+
+
+
+export function pageBack (currentPage) {
+  return function (dispatch) {
+
+    if (currentPage !== 1) {
+      dispatch({
+        type: MOBILE_STUDENT_PROFILE_PAGE_BACK
+      })
+    }
+
+  }
+}
+
+export function tryAdvanceEmployerProfilePage (currentPage, props, successCallback, failureCallback) {
+  return function (dispatch) {
+
+    if (currentPage == 1) {
+      mobileProfileHelper.validateEmployerProfilePage1(props, (errorsExist, profileFieldErrors) => {
+
+        /*
+         * If there were errors on the page somewhere, then
+         * we can't advance and we need to let the user know.
+         */
+
+        if(errorsExist) {
+          handleErrorsExist(profileFieldErrors)
+    	  } 
+
+        /*
+         * If no errors were present on Page 1, we can advance to the next page.
+         */
+
+        else {
+          dispatch(nextEmployerProfilePage())
+        }
+
+      })
+    }
+
+    else if (currentPage == 2) {
+      mobileProfileHelper.validateEmployerProfilePage2(props, (errorsExist, profileFieldErrors) => {
+
+        /*
+         * If there were errors on the page somewhere, then
+         * we can't advance and we need to let the user know.
+         */
+
+        if(errorsExist) {
+          handleErrorsExist(profileFieldErrors)
+    	  } 
+
+        /*
+         * If no errors were present on Page 2, we can advance to the next page.
+         */
+
+        else {
+          dispatch(nextEmployerProfilePage())
+        }
+
+      })
+    }
+
+    /*
+     * If we're on page 3, this means that we're submitting the employer profile.
+     */
+
+    else if (currentPage == 3) {
+
+      /*
+        * Let the app know that we're saving profile info so we should 
+        * update the store.
+        */
+
+        var profileInfo = props
+        debugger;
+
+        dispatch(savingProfileInfo(false))
+
+          // No errors, proceed to /PUT on api/me
+          var putData = {
+            // "user-is_a_student": false,
+            // "user-is_profile_completed": true,
+            // "user-email": user.email,
+            // "user-first_name": user.firstName,
+            // "user-last_name": user.lastName,
+            // "user-is_active": true,
+            // "user-date_joined": user.dateJoined,
+            // "user-mobile": user.mobile,
+            // is_a_student: false,
+            // is_profile_completed: true, // set this flag to true so we know for next time
+            company_name: profileInfo.companyName,
+            logo: profileInfo.logoUrl,
+            office_address: profileInfo.officeAddress,
+            office_city: profileInfo.officeCity,
+            office_postal_code: profileInfo.officePostalCode,
+            description: profileInfo.description,
+            website: profileInfo.website,
+            employee_count: profileInfo.employeeCount,
+            industry: profileInfo.industry || profileInfo.industry.id,
+            // date_joined: user.dateJoined,
+            // first_name: user.firstName,
+            // last_name: user.lastName,
+            // email: user.email
+          }
+
+          employerProfilePUT(putData)
+          .then((res) => {
+
+              // DISPATCH - SAVED_PROFILE_SUCCESS
+              dispatch(savedProfileSuccess())
+
+              successCallback()
+              //doRedirect()
+            })
+            .catch((err) => {
+              // DISPATCH - SAVED_PROFILE_ERROR
+              dispatch(savedProfileFailure({}, [
+                  'HTTP Error Occurred.\n',
+                  err.message
+              ], false))
+
+              failureCallback('HTTP ERROR')
+
+            })
+
+
+      
+    }
+
+    function handleErrorsExist (profileFieldErrors) {
+      dispatch(savedProfileFailure(profileFieldErrors, [
+        "Couldn't save profile.",
+        "Please fill in missing fields"
+      ], true))
+
+      failureCallback()
+    }
+
+  }
+}
+
+export function tryAdvanceStudentProfilePage(currentPage, props, successCallback, failureCallback) {
+  return function (dispatch) {
+
+    /*
+     * Sort each advance by page.
+     * For page 1, we first need to validate each of the fields before trying to advance
+     */
+
+    if (currentPage == 1) {
+      mobileProfileHelper.validateStudentProfilePage1(props, (errorExist, profileFieldErrors) => {
+
+        /*
+         * If there were errors on the page somewhere, then
+         * we can't advance and we need to let the user know.
+         */
+
+        if(errorExist) {
+          handleErrorsExist(profileFieldErrors)
+    	  } 
+
+        /*
+         * If no errors were present on Page 1, we can advance to the next page.
+         */
+
+        else {
+          dispatch(nextStudentProfilePage())
+        }
+      })
+    }
+
+    else if (currentPage == 2) {
+      mobileProfileHelper.validateStudentProfilePage2(props, (errorExist, profileFieldErrors) => {
+
+        /*
+         * If there were errors on the page somewhere, then
+         * we can't advance and we need to let the user know.
+         */
+
+        if(errorExist) {
+          handleErrorsExist(profileFieldErrors)
+    	  } 
+
+        /*
+         * If no errors were present on Page 2, we can advance to the next page.
+         */
+
+        else {
+          dispatch(nextStudentProfilePage())
+        }
+      })
+    }
+
+    else if (currentPage == 3) {
+      mobileProfileHelper.validateStudentProfilePage3(props, (errorExist, profileFieldErrors) => {
+
+        /*
+         * If there were errors on the page somewhere, then
+         * we can't advance and we need to let the user know.
+         */
+
+        if(errorExist) {
+          handleErrorsExist(profileFieldErrors)
+    	  } 
+
+        /*
+         * If no errors were present on Page 2, we can advance to the next page.
+         */
+
+        else {
+          dispatch(nextStudentProfilePage())
+        }
+      })
+    }
+
+    else if (currentPage == 4) {
+      mobileProfileHelper.validateStudentProfilePage4(props, (errorExist, profileFieldErrors) => {
+
+        /*
+         * If there were errors on the page somewhere, then
+         * we can't advance and we need to let the user know.
+         */
+
+        if(errorExist) {
+          handleErrorsExist(profileFieldErrors)
+    	  } 
+
+        /*
+         * If no errors were present on Page 2, we can advance to the next page.
+         */
+
+        else {
+          dispatch(nextStudentProfilePage())
+        }
+      })
+    }
+
+    else if (currentPage == 5) {
+      dispatch(nextStudentProfilePage())
+    }
+
+    else if (currentPage == 6) {
+      dispatch(nextStudentProfilePage())
+    }
+
+    else if (currentPage == 7) {
+      mobileProfileHelper.validateStudentProfilePage7(props, (errorExist, profileFieldErrors) => {
+
+        /*
+         * If there were errors on the page somewhere, then
+         * we can't advance and we need to let the user know.
+         */
+
+        if(errorExist) {
+          handleErrorsExist(profileFieldErrors)
+    	  } 
+
+        /*
+         * If no errors were present, we can move towards submitting.
+         */
+
+        else {
+          
+          /*
+           * Let redux know that we're submitting the student profile.
+           */
+
+          dispatch(savingProfileInfo(true))
+
+          /*
+           * Now we actually attempt to submit the profile first time.
+           */
+          var profileInfo = props;
+
+          var putData = {
+            "is_a_student": true,
+            "is_profile_completed": true,
+            // "email": user.email,
+            "first_name": profileInfo.firstName,
+            "last_name": profileInfo.lastName,
+            "is_active": true,
+            // "date_joined": user.dateJoined,
+            // "mobile": user.mobile,
+            "schoolName": profileInfo.school,
+            languages: btoa(JSON.stringify(extractLanguageId(profileInfo.languages))),
+            sports: btoa(JSON.stringify(extractSportsObject(profileInfo.sportsTeam, profileInfo))),
+            clubs: btoa(JSON.stringify(extractClubsObject(profileInfo.schoolClub, profileInfo))),
+            edu_level_id: profileInfo.educationLevel.id ? profileInfo.educationLevel.id : profileInfo.educationLevel,
+            email_pref: profileInfo.emailPreferences.id ? profileInfo.emailPreferences.id : profileInfo.emailPreferences,
+            status: profileInfo.studentStatus.id ? profileInfo.studentStatus.id : profileInfo.studentStatus,
+            enroll_date: toISO(profileInfo.enrollmentDate),
+            grad_date: toISO(profileInfo.graduationDate),
+            major_id: profileInfo.major.id ? profileInfo.major.id : profileInfo.major,
+            gpa: JSON.stringify(parseFloat(profileInfo.gpa)),
+            personal_email: profileInfo.personalEmail,
+            gender: profileInfo.gender.id ? profileInfo.gender.id : profileInfo.gender,
+              /*Converts the value to num*/
+            has_car: profileInfo.hasCar === true ? JSON.stringify(1) : JSON.stringify(0),
+            recent_company_name: profileInfo.companyName,
+            recent_company_position: profileInfo.position,
+            fun_fact: profileInfo.funFacts,
+            hometown: profileInfo.hometown,
+            hobbies: profileInfo.hobbies,
+            profilepicture: profileInfo.photo,
+            resume: profileInfo.resume,
+          }
+
+           /*
+            * Perform the HTTP put to /api/me to submit the profile for the first time.
+            */
+
+            studentProfilePUT(putData)
+
+             /*
+              * Successful PUT to /api/me.
+              * In the successCallback, we should make sure that we 
+              * reload the page (do this on every PUT or PATCH).
+              */
+
+              .then((res) => {
+                // DISPATCH - SAVE_PROFILE_SUCCESS
+                dispatch(savedProfileSuccess())
+
+                successCallback()
+              })
+
+             /*
+              * Something went wrong with updating the student profile.
+              */
+              
+              .catch((err) => {
+                console.log(err)
+                dispatch(savedProfileFailure({}, [
+                  'HTTP Error Occurred',
+                  err
+                ], true))
+
+                failureCallback('HTTP ERROR')
+              })
+
+        }
+      })
+    }
+    
+
+    function handleErrorsExist (profileFieldErrors) {
+      dispatch(savedProfileFailure(profileFieldErrors, [
+        "Couldn't save profile.",
+        "Please fill in missing fields"
+      ], true))
+
+      failureCallback()
+    }
+    
+  }
+}
+
+function nextStudentProfilePage() {
+  return {
+    type: MOBILE_STUDENT_PROFILE_NEXT_PAGE
+  }
+}
+
+function nextEmployerProfilePage () {
+  return {
+    type: MOBILE_EMPLOYER_PROFILE_NEXT_PAGE
+  }
+}
+
+/*
+ * ========= END OF MOBILE PROFILE ACTIONS ===
+ */
+
 
 export function presentProfileAdvice () {
   return {
@@ -656,7 +1043,8 @@ const initialState = {
   submitSuccess: false,
   error: '',
   userProfileAdvicePresented: false,
-  profileAdviceModal: {}
+  profileAdviceModal: {},
+  mobileViewCurrentPage: 1,
 }
 
 
@@ -672,6 +1060,41 @@ const initialState = {
 
 export default function profile (state = initialState, action) {
   switch(action.type) {
+
+    /*
+     * === Mobile Profile Actions ===
+     */
+
+    case MOBILE_EMPLOYER_PROFILE_NEXT_PAGE:
+
+      scrollToY(0, 1500, 'easeInOutQuint');
+
+      return {
+        ...state,
+        mobileViewCurrentPage: state.mobileViewCurrentPage + 1
+      }
+
+    case MOBILE_STUDENT_PROFILE_PAGE_BACK:
+
+      scrollToY(0, 1500, 'easeInOutQuint');
+
+      return {
+        ...state,
+        mobileViewCurrentPage: state.mobileViewCurrentPage - 1
+      }
+
+    case MOBILE_STUDENT_PROFILE_NEXT_PAGE:
+      
+      scrollToY(0, 1500, 'easeInOutQuint');
+
+      return {
+        ...state,
+        mobileViewCurrentPage: state.mobileViewCurrentPage + 1
+      }
+
+    /*
+     * ==============================
+     */
     case PROFILE_ADVICE_PRESENTED:
       return {
         ...state,
@@ -748,58 +1171,6 @@ export default function profile (state = initialState, action) {
         }
       }
     case SAVED_PROFILE_INFO_SUCCESS:
-    // debugger;
-    //   var newSnapshot = Object.assign(state, action.updateInfo)
-
-    //   var sportsTagsSnapshot = state.snapshot.tags.sports;
-    //   var languagesTagsSnapshot = state.snapshot.tags.languages;
-    //   var clubsTagsSnapshot = state.snapshot.tags.clubs;
-
-    //   /*
-    //    * There are tags that need to be added to the new snapshot.
-    //    */
-
-    //   if (action.updateTags) {
-        
-    //     /*
-    //      * For each type of tag, we need to sync the tags from the update
-    //      * object to the new snapshot.
-    //      * 
-    //      * First, we will start with the sports tags.
-    //      */
-
-    //     if (action.updateTags.sports) {
-
-    //       /*
-    //        * For each of the new sports tags, we need to get the object 
-    //        * containing the id and the value for these and update the new 
-    //        * sports tag state with it.
-    //        */
-
-    //       var newSportsTagsState = action.updateTags.sports.ids 
-          
-    //       newSportsTagsState = newSportsTagsState.forEach((newSportsTag) => {
-
-    //         for (var i = 0; i < sportsTagsSnapshot.length; i++) {
-    //           if (newSportsTag == sportsTagsSnapshot[i].id) {
-    //             newSportsTag = sportsTagsSnapshot[i]
-              
-    //           }
-    //         }
-
-    //         return newSportsTag
-            
-    //       });
-
-    //       /*
-    //        * Now that we've got the new sports tag state, lets add it to our 
-    //        * new snapshot object.
-    //        */
-
-    //       newSnapshot.tags.sports = newSportsTagsState
-    //     }
-    //   }
-
       return {
         ...state,
         //snapshot: newSnapshot,

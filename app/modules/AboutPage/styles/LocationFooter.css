@@ -1,0 +1,48 @@
+
+.locationFooterContainer {
+    background-color: #2a2d34;
+    border-top: solid 71px #dddee0;
+}
+
+.circle {
+width: 310px;
+    margin: 0 auto;
+    border: solid 5px #2a2d34;
+    border-radius: 397px;
+    overflow: hidden;
+    position: relative;
+    top: -74px;
+    height: 310px;
+}
+
+.circle img {
+        max-width: 100%;
+    /* width: 369px; */
+    /* height: 351px; */
+    height: 310px;
+    width: 310px;
+}
+
+.locationContainer {
+    background: #2a2d34;
+    border: 1px solid #8a8a8a;
+    border-radius: 6px;
+    display: table;
+    font-style: normal;
+    line-height: 1.4;
+    margin: 15px auto 0;
+    padding: 15px;
+    color: white;
+    max-width: 206px;
+        position: relative;
+    top: -64px;
+}
+
+.companyName {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.address {
+        font-weight: 100;
+}

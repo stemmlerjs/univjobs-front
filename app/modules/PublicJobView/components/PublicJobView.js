@@ -91,7 +91,7 @@ export default function PublicJobView ({ info, handleOpenEmployerProfileModal, s
                 }</div>
               </div>
 
-              <div className={applicantsContainer}>
+              {/*<div className={applicantsContainer}>
                 <i className={`fa fa-clock-o ${clock} ${
                     ((info.applicant_count / info.max_applicants) * 100) >= 0 && ((info.applicant_count / info.max_applicants) * 100) <= 50
                         ? clock_0_50 :
@@ -104,7 +104,7 @@ export default function PublicJobView ({ info, handleOpenEmployerProfileModal, s
                     ''   
                 }`} aria-hidden="true"></i>
                 {`${info.max_applicants - info.applicant_count} of ${info.max_applicants} applicants left.`}
-              </div>
+              </div>*/}
 
               <div className={applicantsContainer}>
                 <i className={`fa fa-usd ${moneyIcon}`} aria-hidden="true"></i> 

@@ -12,7 +12,7 @@ export default function ConfirmPassword ({ isVerifying, verifySuccess, newPasswo
     handleUpdateField
 }) {
   return (
-    <div className={container}>
+    <div id="password-confirm-hero" className={container}>
 
       {
         !verifySuccess

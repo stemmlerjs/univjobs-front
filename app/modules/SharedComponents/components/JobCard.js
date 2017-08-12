@@ -103,7 +103,7 @@ export default function JobCard ({logoUrl, pinned, jobObject, jobId, title, jobT
           </div>
         </div>
            
-
+      {/*
         <div className={applicantsContainer}>
           <i className={`fa fa-clock-o ${clock} ${
               ((jobObject.applicant_count / jobObject.max_applicants) * 100) >= 0 && ((jobObject.applicant_count / jobObject.max_applicants) * 100) <= 50
@@ -118,6 +118,9 @@ export default function JobCard ({logoUrl, pinned, jobObject, jobId, title, jobT
           }`} aria-hidden="true"></i>
           {`${jobObject.max_applicants - jobObject.applicant_count} of ${jobObject.max_applicants} applicants left.`}
         </div>
+        */}
+
+
         <div className={cardBottomContainer}>
           
           <div className={cardActionButtons}>

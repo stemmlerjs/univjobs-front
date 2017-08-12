@@ -4,6 +4,7 @@ import { Link } from 'react-router'
 
 // ============= MADE COMPONENTS========================== //
 import { AboutPage } from 'modules/AboutPage'
+import LocationFooter from '../components/LocationFooter'
 import { Footer, RegularNav } from 'modules/SharedComponents'
 
 // =============REDUX STATE & IMPORTS========================== //
@@ -16,39 +17,52 @@ import * as signupFormActionCreators from 'redux/modules/signupForm/signupForm'
 import * as loginFormActionCreators from 'redux/modules/loginForm/loginForm'
 
 const actionCreators = {
-      ...userActionCreators,
-      ...signupFormActionCreators,
-      ...loginFormActionCreators
+  ...userActionCreators,
+  ...signupFormActionCreators,
+  ...loginFormActionCreators
 }
 
+let visitedAboutPage = false;
 
 const AboutPageContainer = React.createClass({
     propTypes: {
-        //Insert variables with data types for typechecking  
-    
+      //Insert variables with data types for typechecking  
     },
+
     contextTypes: {
         router: PropTypes.object.isRequired,
         store: PropTypes.object.isRequired
     },
+
+    componentDidMount() {
+      if (!visitedAboutPage) {
+        if (document.getElementById("about-us-hero")) {
+          document.getElementById("about-us-hero").style.minHeight = window.screen.availHeight + "px"
+          visitedAboutPage == true;
+        }
+      }
+    },
+
     componentWillMount() {
         // Hide the overlay on mount if coming from direct URL
-        this.props.closeOverlay()
-        document.body.scrollTop = document.documentElement.scrollTop = 0;
+      this.props.closeOverlay()
+      document.body.scrollTop = document.documentElement.scrollTop = 0;
     },
+
     render () {
-        return (
-          <div>
-            <RegularNav 
-              dropDownActive={this.props.dropDownActive}
-              toggleDropdownMenu={this.props.toggleDropdownMenu}
-              router={this.context.router}
-              closeNavDropDown={this.props.closeNavDropDown}
-            />
-            <AboutPage/> 
-            <Footer/>
-          </div>
-        )
+      return (
+        <div>
+          <RegularNav 
+            dropDownActive={this.props.dropDownActive}
+            toggleDropdownMenu={this.props.toggleDropdownMenu}
+            router={this.context.router}
+            closeNavDropDown={this.props.closeNavDropDown}
+          />
+          <AboutPage/> 
+          <LocationFooter/>
+          <Footer/>
+        </div>
+      )
     },
 })
     function mapStateToProps({user, signupForm}) {

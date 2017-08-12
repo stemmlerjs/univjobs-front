@@ -15,6 +15,7 @@ var { ToastContainer } = ReactToastr;
 var ToastMessageFactory = React.createFactory(ReactToastr.ToastMessage.animation);
 
 // =============REDUX STATE & IMPORTS========================== //
+
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as userActionCreators from 'redux/modules/user/user'
@@ -41,7 +42,8 @@ const PublicJobViewContainer = React.createClass({
 		store: PropTypes.object.isRequired
 	},
 
-  /** doRedirectionFilter
+  /* 
+   * doRedirectionFilter
    *
    * The redirection filter is the process that occurs each time we enter this container.
    * Used in every higher order component and supplied with a config, it ensures that the

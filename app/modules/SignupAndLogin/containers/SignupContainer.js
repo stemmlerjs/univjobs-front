@@ -1,9 +1,15 @@
-// ==============REACT BUILTIN========================= //
+
+// ============== REACT BUILTIN ========================= //
 import React, { PropTypes } from 'react'
 
 // ==============MADE COMPONENTS========================= //
 import StudentSignup from '../components/StudentSignup'
 import EmployerSignup from '../components/EmployerSignup'
+import StudentHowSection from '../components/StudentHowSection'
+import WhyWeBuiltItSection from '../components/WhyWeBuiltItSection'
+import WeHelpYouSection from '../components/WeHelpYouSection'
+import BenefitsSection from '../components/BenefitsSection'
+
 import { Navigation, Footer } from 'modules/SharedComponents'
 
 // ==============THIRD PARTY IMPORTS========================= //
@@ -26,6 +32,12 @@ import { detectEnterPress } from 'helpers/utils'
 // ================CSS IMPORTS============================== //
 import { input, errorMessage, loginBtn, passwordRst } from '../styles/SignupContainerStyles.css'
 import { shine } from 'sharedStyles/animations.css'
+
+import { scrollToY } from 'helpers/utils'
+
+let visitedEmployerSide = false;
+let visitedStudentSide = false;
+
 
 const styles = {
   overlayStyles: {
@@ -104,6 +116,7 @@ const SignupContainer = React.createClass({
 
   handleSwitchUserType (e) {
     e.preventDefault()
+    scrollToY(0, 1500, 'easeInOutQuint');
     this.props.switchedUserType(this.props.isAStudent)
     this.props.closeNavDropDown();
   },
@@ -134,17 +147,21 @@ const SignupContainer = React.createClass({
   * TODO: Hide console log in prod
   */
     handleStudentSignup(e) {
+
+      if (e) {
         e.preventDefault()
-      //  debugger;
-        this.props.submitStudentSignupForm(
-            this.props.studentEmail,
-            this.props.studentPassword
-        )
-        .then((actionResult) => {
-            if(actionResult) {
-                this.context.router.replace('/profile/st')
-          } 
-        }).catch((err) => console.log(err))
+      }
+
+      this.props.submitStudentSignupForm(
+          this.props.studentEmail,
+          this.props.studentPassword
+      )
+      .then((actionResult) => {
+          if(actionResult) {
+              this.context.router.replace('/profile/st')
+        } 
+      })
+      .catch((err) => console.log(err))
     },
 
 /**
@@ -222,6 +239,8 @@ const SignupContainer = React.createClass({
 
   componentDidMount() {
     window.scroll(0,0);
+
+    //document.getElementById("student-hero").style.minHeight = window.screen.availHeight + "px"
   },
 
 /**
@@ -238,6 +257,7 @@ const SignupContainer = React.createClass({
       failureRedirect: null,
       restricted: null
     }
+
 
     authRedirectFilter(config, this.context.store, this.context.router)
       .then(() => {
@@ -262,6 +282,24 @@ const SignupContainer = React.createClass({
     if((this.props.loginFormEmailText !== "") && (this.props.loginFormPasswordText !== "")) {
       this.handleLoginAttempt()
     }
+  },
+
+  componentDidUpdate() {
+
+    if (!visitedEmployerSide) {
+      if (document.getElementById("employer-hero")) {
+        document.getElementById("employer-hero").style.minHeight = window.screen.availHeight + "px"
+        visitedEmployerSide == true;
+      }
+    }
+
+    if (!visitedStudentSide) {
+      if (document.getElementById("student-hero")) {
+        document.getElementById("student-hero").style.minHeight = window.screen.availHeight + "px"
+        visitedStudentSide == true;
+      }
+    }
+
   },
 
   render () {
@@ -310,15 +348,19 @@ const SignupContainer = React.createClass({
           { this.props.isAStudent === true ?
             <div id="student-signup-modal-wrapper">
               <StudentSignup
+                handleOpenStudentSignupForm={this.props.openStudentSignupForm}
+                studentSignupFormOpen={this.props.studentSignupFormOpen}
                 emailText={this.props.studentEmail}
                 passwordText={this.props.studentPassword}
                 updateStudentSignupForm={this.props.updateStudentForm}
-                submitSignupForm={this.props.submitStudentSignupForm}
+                submitSignupForm={this.handleStudentSignup}
                 onSubmitSignup={(e) => this.handleStudentSignup(e)}
                 error={this.props.studentFormError}
                 router={this.context.router}
                 isCreatingAccount={this.props.isCreatingAccount}
               />
+              <StudentHowSection onSwitchUserType={this.handleSwitchUserType}/>
+              <WhyWeBuiltItSection/>
             </div>
             :
             <div>
@@ -335,6 +377,8 @@ const SignupContainer = React.createClass({
                 router={this.context.router}
                 isCreatingAccount={this.props.isCreatingAccount}
               />
+              <WeHelpYouSection/>
+              <BenefitsSection/>
             </div>
           }
         <Footer />
@@ -368,7 +412,8 @@ function mapStateToProps({user, signupForm, loginForm}) {
     loginFormPasswordText: loginForm.password ? loginForm.password : '',
     loginFormErrorText: loginForm.error ? loginForm.error : '',
     isLoggingIn: user.isLoggingIn ? user.isLoggingIn : false,
-    dropDownActive: signupForm.dropDownActive ? signupForm.dropDownActive : false
+    dropDownActive: signupForm.dropDownActive ? signupForm.dropDownActive : false,
+    studentSignupFormOpen: signupForm.studentSignupFormOpen ? signupForm.studentSignupFormOpen : false
   }
 }
 
