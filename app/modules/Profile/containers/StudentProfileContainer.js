@@ -227,7 +227,7 @@ const StudentProfileContainer = React.createClass({
 
               this.refs.container.success(
                 "Check your student email.",
-                "Nice! Profile completed. We just need you to verify your email now.", {
+                "Nice! Profile completed. Please verify your email now.", {
                   timeout: 3000
               });
 
