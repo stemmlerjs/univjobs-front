@@ -1131,7 +1131,6 @@ const StudentProfileContainer = React.createClass({
                     }
                   })()
         }
-
         
       	<ToastContainer ref="container"
       	  toastMessageFactory={ToastMessageFactory}

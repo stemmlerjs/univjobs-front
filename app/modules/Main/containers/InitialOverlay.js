@@ -13,6 +13,7 @@ import React, { PropTypes } from 'react'
 
 // ==============THIRD PARTY IMPORTS========================= //
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+import { ModalContainer, ModalDialog } from 'react-modal-dialog'
 
 // =============REDUX STATE & IMPORTS========================= //
 import { connect } from 'react-redux'
@@ -30,6 +31,7 @@ import { FeedbackForm, LoadingSpinner } from 'modules/SharedComponents'
 import MobileSlider from '../components/MobileSlider'
 import * as feedbackFormActionCreators from 'redux/modules/feedback/feedback'
 import * as mobileLoadActionCreators from 'redux/modules/mobileLoad/mobileLoad'
+import * as globalModalActionCreators from 'redux/modules/globalModal/globalModal'
 
 import Slideout from 'slideout'
 
@@ -147,6 +149,10 @@ const InitialOverlay = React.createClass({
     slideout.close()
   },
 
+  handleClose () {
+    console.log("closed")
+  },
+
   
   handleLogout() {
     /*Note: The destructuring assignment syntax is a JavaScript expression that makes 
@@ -195,9 +201,13 @@ const InitialOverlay = React.createClass({
     const childrenWithProps = React.Children.map(this.props.children,
      (child) => React.cloneElement(child, {
        closeOverlay: this.closeOverlay,
-       isMobile: this.detectMobile()
+       isMobile: this.detectMobile(),
+       globalModal: {
+         open: this.props.openGlobalModal,
+         close: this.props.closeGlobalModal
+       }
      })
-    );
+    )
 
     return (
       <div style={styles.main}>
@@ -237,6 +247,27 @@ const InitialOverlay = React.createClass({
           }
           
         </ReactCSSTransitionGroup>
+        
+
+
+        {
+
+          /*
+           * =============================
+           * [GLOBAL MODAL]
+           * =============================
+           */
+
+          this.props.globalModal.isModalOpen
+            ? <ModalContainer onClose={this.props.closeGlobalModal}>
+                <ModalDialog onClose={this.props.closeGlobalModal}>
+                  <h1>{this.props.globalModal ? this.props.globalModal.modalHeaderText : ''}</h1>
+                  <p>{this.props.globalModal ? this.props.globalModal.modalBodyText : ''}</p>
+                </ModalDialog>
+              </ModalContainer>
+            : ''
+        }
+        
 
         {
         /*
@@ -275,7 +306,7 @@ const InitialOverlay = React.createClass({
 })
 
 // We should have a new value on the user called 'isOverlayActive'
-function mapStateToProps({rootApplication, feedback, mobileLoad, user, routing }) {
+function mapStateToProps({rootApplication, feedback, mobileLoad, user, routing, globalModal }) {
   return {
     isOverlayActive: rootApplication.isOverlayActive ? true : false,
     feedback: feedback ? feedback : {},
@@ -283,13 +314,15 @@ function mapStateToProps({rootApplication, feedback, mobileLoad, user, routing }
     showMobileNotificationHeader: mobileLoad.showMobileNotificationHeader ? mobileLoad.showMobileNotificationHeader : false,
     isAuthenticated: user.isAuthenticated ? user.isAuthenticated : false,
     isAStudent: user.isAStudent ? user.isAStudent : false,
-    page: routing.locationBeforeTransitions ? routing.locationBeforeTransitions.pathname : ''
+    page: routing.locationBeforeTransitions ? routing.locationBeforeTransitions.pathname : '',
+    globalModal: globalModal ? globalModal : {}
   }
 }
 
 function mapActionCreatorsToProps(dispatch) {
   return bindActionCreators({
     ...feedbackFormActionCreators,
+    ...globalModalActionCreators,
     ...mobileLoadActionCreators
   }, dispatch)
 }
