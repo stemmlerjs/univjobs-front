@@ -10,6 +10,9 @@ import { Title, PictureCropper } from 'modules/SharedComponents'
 import Croppie from 'croppie'
 import config from 'config'
 
+// We can now require stylesheets and put them into the global scope.
+// require('../styles/test.css')
+
 // ====== REDUX AND STATE IMPORTS =======
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'

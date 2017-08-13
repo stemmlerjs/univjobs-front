@@ -167,14 +167,15 @@ const PublicJobViewContainer = React.createClass({
         {
          /*
           * Metadata
-          */
-        }
+          
 
         <meta property="og:url"           content={window.location.href} />
         <meta property="og:type"          content="website" />
         <meta property="og:title"         content={window.document.title} />
         <meta property="og:description"   content={this.props.publicJobView.job ? this.props.publicJobView.job.responsibilities : ''} />
-
+          */
+        }
+        
         <ToastContainer ref="container"
               toastMessageFactory={ToastMessageFactory}
               className="toast-top-right" />
