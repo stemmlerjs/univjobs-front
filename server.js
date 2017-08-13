@@ -4,6 +4,7 @@
 var express = require('express')
 var path = require('path')
 var morgan = require('morgan')
+var meta = require('./meta')
 var serverPort = 8080
 
 app = express();
@@ -29,6 +30,32 @@ app.use(morgan('dev'));
   app.set('view engine', 'html');
   app.set('views', path.join(__dirname + '/dist'));
 
+
+  /*
+   * REACT APP WILDCARD ROUTE
+   *
+   * This rule is a wildcard so that each request that asks for the
+   * bundle, no matter what relative url- returns the bundle.
+   *
+   * This happens when we ask for https://univjobs.ca/posting/:jobId because
+   * the index.html asks for "/index_bundle.js" which gets resolved to the absolute
+   * url of: "https://univjobs.ca/posting/index_bundle.js" which does not exist.
+   *
+   * Therefore, this route is a necessary wildcard route that always serves the
+   * index_bundle.js if it is asked for- regardless of path.
+   */
+
+  app.get('/*index_bundle.js', function (req, res) {
+    console.log(`[Route]: Serving index_bundle.js to absolute route: ${req.url}`)
+    res.sendFile(path.join(__dirname + '/dist/index_bundle.js'))
+  })
+
+  /*
+   * HTML TEMPLATE WILDCARD ROUTE
+   *
+   * If we make a request to anywhere in our app. It should always return
+   * the index.html so that client side routing can occur.
+   */
 
   app.get('*', function(req, res) {
 
@@ -57,6 +84,14 @@ app.use(morgan('dev'));
      */
 
     else {
+      res.render('index.html', {
+        title: meta.standard.title,
+        url: meta.standard.url,
+        description: meta.standard.description,
+        image: meta.standard.image,
+        type: meta.standard.type
+      })
+
       res.sendFile(path.join(__dirname + '/dist/index.html'))
     }
   })
