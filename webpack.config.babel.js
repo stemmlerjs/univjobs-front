@@ -24,9 +24,9 @@ const HTMLWebpackPluginConfig = new HtmlWebpackPlugin({
  /* =============================================================
   * ======= SET ENVIRONMENT VARIABLES FOR COMPILED CODE =========
   *
-  * When we want to build for prod, we can use webpack.DefinePlugin to 
+  * When we want to build for prod, we can use webpack.DefinePlugin to
   * define an object that should be global to the scope of our app.
-  * 
+  *
   * This setting is going to set process.env.CURRENT_ENV to 'prod' inside
   * of the code that webpack is going to compile for us.
   *
@@ -50,8 +50,9 @@ const base = {
   },
   module: {
     loaders: [
-      {test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader'},
-      {test: /\.css$/, loader: 'style!css?sourceMap&modules&localIdentName=[name]__[local]___[hash:base64:5]'},
+      { test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader'},
+      { test: /\.css$/, loader: 'style!css?sourceMap&modules&localIdentName=[name]__[local]___[hash:base64:5]'},
+      { test: /\.css$/, include: /node_modules/, loader: 'style!css'},
       { test: /\.less$/, loader: 'style-loader!css-loader!less-loader'},
       { test: /\.gif$/, loader: 'url-loader?mimetype=image/png' },
       { test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: "url-loader?limit=10000&mimetype=application/font-woff" },
@@ -69,20 +70,20 @@ const developmentConfig = {
     contentBase: PATHS.build,
     hot: true,
     inline: true,
-    progress: true,
-    proxy: {
-      '/api/**': {
-	     target: 'http://127.0.0.1:8000/',   // Charles' local server
-        secure: false,
-        changeOrigin: true,
-        protocolRewrite: true,
-        bypass: function(req, res, proxyOptions) {
-          // console.log("RESPONSE", res)
-        }
-      }
-    }
+    progress: true
+    // proxy: {
+    //   '/api/**': {
+	   //   target: 'http://127.0.0.1:8000/',   // Charles' local server
+    //     secure: false,
+    //     changeOrigin: true,
+    //     protocolRewrite: true,
+    //     bypass: function(req, res, proxyOptions) {
+    //       // console.log("RESPONSE", res)
+    //     }
+    //   }
+    // }
   },
-  plugins: [HTMLWebpackPluginConfig, 
+  plugins: [HTMLWebpackPluginConfig,
             new webpack.HotModuleReplacementPlugin(),
             new webpack.DefinePlugin({
               'process.env': {
@@ -95,7 +96,7 @@ const developmentConfig = {
 const productionConfig = {
   devtool: 'cheap-module-source-map',
   plugins: [HTMLWebpackPluginConfig,
-   productionPlugin, 
+   productionPlugin,
    new BundleTracker({filename: './webpack-stats.json'}),
    new webpack.optimize.DedupePlugin(),
    new webpack.optimize.OccurrenceOrderPlugin(),

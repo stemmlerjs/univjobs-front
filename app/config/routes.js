@@ -1,3 +1,4 @@
+
 import React from 'react'
 import { Router, Route, hashHistory, IndexRoute, browserHistory } from 'react-router'
 import { ApplicationsContainer, CategoriesContainer, CreateJobContainer, ContactPageContainer, 
@@ -9,9 +10,10 @@ import { ApplicationsContainer, CategoriesContainer, CreateJobContainer, Contact
 import { checkIfAuthed } from 'helpers/auth'
 import { syncHistoryWithStore } from 'react-router-redux'
 
+
 // Purpose of IndexRoute - if none of the routes match, we go here
 export default function getRoutes(store) {
-  const history = syncHistoryWithStore(hashHistory, store)
+  const history = syncHistoryWithStore(browserHistory, store)
   return (
     <Router history={history} >
         <Route path='/' component={InitialOverlay}>
