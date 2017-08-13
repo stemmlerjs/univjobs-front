@@ -90,6 +90,20 @@ const InitialOverlay = React.createClass({
     }
 
     /*
+     * Moving out of using HashHistory, we have to ensure that the old hash urls still
+     * work and don't break out app.
+     * 
+     * Rewrite the urls to the new BrowserHistory urls.
+     */
+
+    else if (window.location.href.indexOf('/#') !== -1) {
+
+      var newUrl = window.location.href.split('/#').join("")
+      window.location.assign(newUrl)
+
+    }
+
+    /*
      * If we're on a Mobile Screen, we're going to 
      * create an instance of the slideout menu 
      * and we'll add it to 'this' === SidebarContainer.
