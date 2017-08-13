@@ -76,7 +76,13 @@ app.use(morgan('dev'));
       *  res.render('index.html', { title: 'The index page!' })
       */
 
-      res.sendFile(path.join(__dirname + '/dist/index.html'))
+      res.render('index.html', {
+        title: meta.standard.title,
+        url: meta.standard.url,
+        description: meta.standard.description,
+        image: meta.standard.image,
+        type: meta.standard.type
+      })
     }
 
     /*
@@ -92,6 +98,6 @@ app.use(morgan('dev'));
         type: meta.standard.type
       })
 
-      res.sendFile(path.join(__dirname + '/dist/index.html'))
+      // res.sendFile(path.join(__dirname + '/dist/index.html'))
     }
   })
