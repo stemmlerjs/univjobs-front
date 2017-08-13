@@ -12,7 +12,7 @@ app.listen(serverPort, function() {
   console.log(`[Node] Front-end server running on port ${serverPort}`)
 })
 
-app.use(express.static('dist'))
+//app.use(express.static('dist'))
 app.use('/assets', express.static('dist'))
 app.use(morgan('dev'));
 
