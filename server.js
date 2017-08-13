@@ -5,6 +5,7 @@ var express = require('express')
 var path = require('path')
 var morgan = require('morgan')
 var meta = require('./meta')
+var axios = require('axios')
 var serverPort = 8080
 
 app = express();
@@ -12,7 +13,7 @@ app.listen(serverPort, function() {
   console.log(`[Node] Front-end server running on port ${serverPort}`)
 })
 
-app.use(express.static('dist'))
+// app.use(express.static('dist'))
 app.use('/assets', express.static('dist'))
 app.use(morgan('dev'));
 
@@ -57,9 +58,34 @@ app.use(morgan('dev'));
    * the index.html so that client side routing can occur.
    */
 
+
+  function getJobIdFromPublicPageRequest(requestUrl) {
+    const matchesArr = requestUrl.match(/(\/[0-9]*)+\d(?!p)/g);
+
+    if (matchesArr.length !== 0) {
+      return matchesArr[0].split("/").join("")
+    }
+
+    else {
+      return null
+    }
+  }
+
+  function renderStandardMetaTags (req) {
+    res.render('index.html', {
+      title: meta.standard['og:title'],
+      url: meta.standard['og:url'],
+      description: meta.standard['og:description'],
+      image: meta.standard['og:image'],
+      type: meta.standard['og:type']
+    })
+  }
+
   app.get('*', function(req, res) {
 
     const requestUrl = req.url
+
+    console.log(requestUrl)
 
     /*
      * Public Postings Page
@@ -70,19 +96,58 @@ app.use(morgan('dev'));
     if (requestUrl.indexOf("posting") !== -1) {
       console.log("we should dynamically render")
 
-     /*
-      *  <meta property="og:title" content="<%= title %>"/>
-      *
-      *  res.render('index.html', { title: 'The index page!' })
-      */
+      var jobId = getJobIdFromPublicPageRequest(requestUrl)
+      console.log("Extracted Job id = ", jobId)
 
-      res.render('index.html', {
-        title: meta.standard['og:title'],
-        url: meta.standard['og:url'],
-        description: meta.standard['og:description'],
-        image: meta.standard['og:image'],
-        type: meta.standard['og:type']
-      })
+      /*
+       * If we can't extract the job id for this job posting, 
+       * then we'll just go ahead and return the regular meta
+       * tags for the website.
+       */
+
+      if (jobId === null) {
+
+        renderStandardMetaTags(req)
+      }
+
+      /*
+       * If we've got the jobId, then we need to get the details
+       * from the API for this job.
+       */
+
+      else {  
+
+        axios(`http://localhost:8000/api/public/job/${jobId}`)
+          .then((response) => {
+
+            var job = response.data.job;
+
+            var title = job.title;
+            var url = 'https://univjobs.ca' + requestUrl
+            var description = job.description
+            var image = "https://api.univjobs.ca/" + job.logo_url;
+            debugger;
+
+            res.render('index.html', {
+              title: title,
+              url: url,
+              description: description,
+              image: image,
+              type: meta.standard['og:type']
+            })
+
+          })
+          .catch((err) => {
+
+            console.log("Error trying to request job info.")
+            
+            renderStandardMetaTags(req)
+
+          })
+
+      }
+
+      
     }
 
     /*
@@ -90,13 +155,9 @@ app.use(morgan('dev'));
      */
 
     else {
-      res.render('index.html', {
-        title: meta.standard['og:title'],
-        url: meta.standard['og:url'],
-        description: meta.standard['og:description'],
-        image: meta.standard['og:image'],
-        type: meta.standard['og:type']
-      })
+      console.log("basic render")
+
+      renderStandardMetaTags(req)
 
       // res.sendFile(path.join(__dirname + '/dist/index.html'))
     }
