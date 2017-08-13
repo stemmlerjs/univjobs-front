@@ -77,11 +77,11 @@ app.use(morgan('dev'));
       */
 
       res.render('index.html', {
-        title: meta.standard.title,
-        url: meta.standard.url,
-        description: meta.standard.description,
-        image: meta.standard.image,
-        type: meta.standard.type
+        title: meta.standard['og:title'],
+        url: meta.standard['og:url'],
+        description: meta.standard['og:description'],
+        image: meta.standard['og:image'],
+        type: meta.standard['og:type']
       })
     }
 
@@ -91,11 +91,11 @@ app.use(morgan('dev'));
 
     else {
       res.render('index.html', {
-        title: meta.standard.title,
-        url: meta.standard.url,
-        description: meta.standard.description,
-        image: meta.standard.image,
-        type: meta.standard.type
+        title: meta.standard['og:title'],
+        url: meta.standard['og:url'],
+        description: meta.standard['og:description'],
+        image: meta.standard['og:image'],
+        type: meta.standard['og:type']
       })
 
       // res.sendFile(path.join(__dirname + '/dist/index.html'))
