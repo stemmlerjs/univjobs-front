@@ -29,7 +29,7 @@ app.use(morgan('dev'));
 
   app.engine('html', require('ejs').renderFile);
   app.set('view engine', 'html');
-  app.set('views', path.join(__dirname + '/dist'));
+  app.set('views', path.join(__dirname + '/dist/views'));
 
 
   /*
@@ -122,11 +122,10 @@ app.use(morgan('dev'));
 
             var job = response.data.job;
 
-            var title = job.title;
+            var title = `${job.title} @ ${job.company_name}`
             var url = 'https://univjobs.ca' + requestUrl
             var description = job.description
             var image = "https://api.univjobs.ca/" + job.logo_url;
-            debugger;
 
             res.render('index.html', {
               title: title,
