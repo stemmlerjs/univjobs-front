@@ -84,7 +84,7 @@ const InitialOverlay = React.createClass({
     *    to the appropriate page.
     */
 
-    if (window.location.href === "https://univjobs.ca") {
+    if (window.location.href === "https://univjobs.ca/") {
       console.log('[Univjobs]: At main page. Redirecting to /join.')
       window.location.assign('/join')
     }
