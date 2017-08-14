@@ -6,7 +6,6 @@ import { weHelpYouSectionContainer, title, weHelpYouItemsContainer,
 
 import { processContainer, processItemTitle} from '../styles/HowSection.css'
 
-
 export default function WeHelpYouSectionContainer () {
   return (
     <div className={weHelpYouSectionContainer}>

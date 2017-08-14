@@ -70,38 +70,70 @@ const InitialOverlay = React.createClass({
 
   componentDidMount() {
 
-   /*
-    * [ "/" page redirection fix]
-    *
-    * If the user goes to "/", we want one of two things to happen.
-    * 
-    * a) The user is NOT logged in, they should go to /join and have the opportunity to login.
-    *
-    * b) The user IS logged in. We want them to go to the appropriate login page for their account type.
-    *    Students go to "dashboard/st" while Employers go to "dashboard/em".
-    *   
-    *    If we redirect them to "/join", the authRedirectionFilter() there will run and they will get routed
-    *    to the appropriate page.
-    */
-
-    if (window.location.href === "https://univjobs.ca/") {
-      console.log('[Univjobs]: At main page. Redirecting to /join.')
-      window.location.assign('/join')
-    }
-
     /*
-     * Moving out of using HashHistory, we have to ensure that the old hash urls still
-     * work and don't break out app.
-     * 
-     * Rewrite the urls to the new BrowserHistory urls.
+     * For PROD, we want to remove the use of all hashHistory routing from old urls 
+     * and whatnot so that becomes a concern in this next block of code.
      */
 
-    else if (window.location.href.indexOf('/#') !== -1) {
+    if (process.env.CURRENT_ENV == 'prod') {
 
-      var newUrl = window.location.href.split('/#').join("")
-      window.location.assign(newUrl)
+     /*
+      * [ "/" page redirection fix]
+      *
+      * If the user goes to "/", we want one of two things to happen.
+      * 
+      * a) The user is NOT logged in, they should go to /join and have the opportunity to login.
+      *
+      * b) The user IS logged in. We want them to go to the appropriate login page for their account type.
+      *    Students go to "dashboard/st" while Employers go to "dashboard/em".
+      *   
+      *    If we redirect them to "/join", the authRedirectionFilter() there will run and they will get routed
+      *    to the appropriate page.
+      */
 
+      if (window.location.href === "https://univjobs.ca/") {
+        console.log('[Univjobs]: At main page. Redirecting to /join. Prod version.')
+        window.location.assign('/join')
+      }
+
+      /*
+      * Moving out of using HashHistory, we have to ensure that the old hash urls still
+      * work and don't break out app.
+      * 
+      * Rewrite the urls to the new BrowserHistory urls.
+      */
+
+      else if (window.location.href.indexOf('/#') !== -1) {
+        
+        var newUrl = window.location.href.split('/#').join("")
+        window.location.assign(newUrl)
+
+      }
     }
+
+    else {
+
+     /*
+      * [ "/" page redirection fix]
+      *
+      * If the user goes to "/", we want one of two things to happen.
+      * 
+      * a) The user is NOT logged in, they should go to /join and have the opportunity to login.
+      *
+      * b) The user IS logged in. We want them to go to the appropriate login page for their account type.
+      *    Students go to "dashboard/st" while Employers go to "dashboard/em".
+      *   
+      *    If we redirect them to "/join", the authRedirectionFilter() there will run and they will get routed
+      *    to the appropriate page.
+      */
+
+      if (window.location.href.indexOf("/#/?") !== -1) {
+        console.log('[Univjobs]: At main page. Redirecting to #/join. Dev version.')
+        window.location.assign('#/join')
+      }
+    }
+
+    
 
     /*
      * If we're on a Mobile Screen, we're going to 

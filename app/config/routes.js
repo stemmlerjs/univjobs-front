@@ -10,10 +10,12 @@ import { ApplicationsContainer, CategoriesContainer, CreateJobContainer, Contact
 import { checkIfAuthed } from 'helpers/auth'
 import { syncHistoryWithStore } from 'react-router-redux'
 
+const processHistory = process.env.CURRENT_ENV == 'dev' ? hashHistory : browserHistory
+
 
 // Purpose of IndexRoute - if none of the routes match, we go here
 export default function getRoutes(store) {
-  const history = syncHistoryWithStore(browserHistory, store)
+  const history = syncHistoryWithStore(processHistory, store)
   return (
     <Router history={history} >
         <Route path='/' component={InitialOverlay}>
