@@ -139,6 +139,43 @@ export function validatePostalCode(postalcode) {
   }
 }
 
+/*
+ * postalCodeCheck
+ * 
+ * Postal code check. 
+ * This checks American and Canadian Postal Codes.
+ */
+
+export function postalCodeCheck (postalCode, type) {
+
+    if (!postalCode) {
+        return false;
+    }
+
+    postalCode = postalCode.toString().trim();
+
+    var us = new RegExp("^\\d{5}(-{0,1}\\d{4})?$");
+   // var ca  = new RegExp(/^((?!.*[DFIOQU])[A-VXY][0-9][A-Z])|(?!.*[DFIOQU])[A-VXY][0-9][A-Z]\ ?[0-9][A-Z][0-9]$/i);
+    var ca = new RegExp(/^[ABCEGHJKLMNPRSTVXY]\d[ABCEGHJKLMNPRSTVWXYZ]( )?\d[ABCEGHJKLMNPRSTVWXYZ]\d$/i);
+
+    if(type == "us"){
+        if (us.test(postalCode.toString())) {
+            console.log(postalCode);
+            return true;
+        }
+    }
+
+    if(type == "ca")
+    {
+        if (ca.test(postalCode.toString())) {
+            console.log(postalCode);
+            return true;
+        }
+    }
+
+    return false;
+}
+
 export function validateCity(city) {
   let re = /^[a-z ,.'-]{2,30}$/i
   return re.test(city)

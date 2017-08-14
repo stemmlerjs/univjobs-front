@@ -330,10 +330,10 @@ console.log(props)
 			     className={props.propsErrorMap.gpa ? `${input} ${error} ${materialStyle}` 
 					 	: props.gpa == null || props.gpa == 0 || props.gpa == "0.00" ? `${input} ${notActive}  ${materialStyle}` : `${input} ${materialStyle}`}
 			     type="number"
-			     step="0.01"
 			     max="4"
 			     placeholder="GPA(0.00 - 4.00)" 
-			     onChange={(e) => {props.updateProfileField('gpa', e.target.value, true); props.onHandleButtonToggle(false, 'gpaToggle')}} 
+			     onChange={(e) => {props.updateProfileField('gpa', e.target.value, true); 
+					 props.onHandleButtonToggle(false, 'gpaToggle')}} 
 			     value={props.gpa}
 			     />
 			 </li>

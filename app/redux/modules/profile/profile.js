@@ -943,6 +943,8 @@ export function updateProfile(userTypeInt, profileInfo, user, snapshot, successC
               'Please fill in missing fields'
             ], false))
 
+            failureCallback('INVALID FIELDS')
+
           } 
 
           else {

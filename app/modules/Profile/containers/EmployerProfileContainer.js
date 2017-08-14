@@ -470,11 +470,21 @@ const EmployerProfileContainer = React.createClass({
         
         (error) => {
 
-          this.refs.container.error(
-            error,
-            "Something went wrong while trying to submit", {
-            timeOut: 3000
-          });
+          if (error === 'INVALID FIELDS') {
+            this.refs.container.error(
+              "Please try again after correcting the input.",
+              "Looks like there's some invalid.", {
+              timeOut: 3000
+            });
+          }
+
+          else {
+            this.refs.container.error(
+              error,
+              "Something went wrong while trying to submit", {
+              timeOut: 3000
+            });
+          }
 
         })
       )

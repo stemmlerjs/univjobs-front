@@ -243,11 +243,9 @@ function placePhoto(element, url) {
           value={props.officeCity}
           onChange={(e) => props.updateProfileField('officeCity', e.target.value, false)}>
         </input>
-        <MaskedTextInput
-          mask={[/[A-Z]/i, /\d/, /[A-Z]/i, ' ', /\d/, /[A-Z]/i, /\d/]}
+        <input
           className={props.profileErrorsMap.officePostalCode ? input + ' ' + postalcode + ' ' + citypostalcoderelative + ' ' + error : input + ' ' + postalcode + ' ' + citypostalcoderelative}
           placeholder="M5V 3E3"
-          guide={false}
           value={props.officePostalCode}
           onChange={(e) => props.updateProfileField('officePostalCode', e.target.value, false)}
         />
