@@ -17,7 +17,7 @@ const PATHS = {
 
 const HTMLWebpackPluginConfig = new HtmlWebpackPlugin({
   template: "!!raw-loader!" + PATHS.app + '/index.html',
-  filename: 'index.html',
+  filename: 'views/index.html',
   inject: 'body'
 })
 

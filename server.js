@@ -13,8 +13,7 @@ app.listen(serverPort, function() {
   console.log(`[Node] Front-end server running on port ${serverPort}`)
 })
 
-// app.use(express.static('dist'))
-app.use('/assets', express.static('dist'))
+app.use(express.static('dist'))
 app.use(morgan('dev'));
 
 /*
@@ -30,7 +29,6 @@ app.use(morgan('dev'));
   app.engine('html', require('ejs').renderFile);
   app.set('view engine', 'html');
   app.set('views', path.join(__dirname + '/dist/views'));
-
 
   /*
    * REACT APP WILDCARD ROUTE
