@@ -331,12 +331,13 @@ export default function JobCardModal({
               }
 
               {
+                
                 /*
                  * We don't need to show Description on the Job Card Modal.
                  * This is redundant information. You can just click the company name 
                  * and see more about them that way.
                  */
-                 
+
                 !window.isMobile
                   ? ''
                   : <div className={cardSectionOne}>
