@@ -330,10 +330,21 @@ export default function JobCardModal({
                 
               }
 
-                <div className={cardSectionOne}>
-                    <div className={cardSectionTitle}>Description</div>
-                    <div className={cardSectionText}>{job.description}</div>
-                </div>
+              {
+                /*
+                 * We don't need to show Description on the Job Card Modal.
+                 * This is redundant information. You can just click the company name 
+                 * and see more about them that way.
+                 */
+                 
+                !window.isMobile
+                  ? ''
+                  : <div className={cardSectionOne}>
+                      <div className={cardSectionTitle}>About {job.company_name}</div>
+                      <div className={cardSectionText}>{job.description}</div>
+                    </div>
+              }
+                
                 <div className={cardSectionOne}>
                     <div className={cardSectionTitle}>Responsibilities</div>
                     <div className={cardSectionText}>{job.responsibilities}</div>
