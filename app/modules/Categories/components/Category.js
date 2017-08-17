@@ -62,30 +62,43 @@ const Category = function({heading, subHeading, divStyle, type}) {
      } else if(type == 'rep') {
          return (
             <Link to={`/job/create/${type}`}>
-                  <div className={category} style={divStyle.rep}>
-                    <img className={images} src={divStyle.rep.backgroundImage}></img>
-                        <div className={categoryText + " " + campusSpacing}>
-                            <h3 className={headingStyle}>{heading}</h3>
-                            <p className={subHeadingStyle}>{subHeading}</p>
-                        </div>
+              <div className={category} style={divStyle.rep}>
+                <img className={images} src={divStyle.rep.backgroundImage}></img>
+                  <div className={categoryText + " " + campusSpacing}>
+                    <h3 className={headingStyle}>{heading}</h3>
+                    <p className={subHeadingStyle}>{subHeading}</p>
                   </div>
-                </Link>
+              </div>
+            </Link>
          )
      } else if(type == 'pt') {
          return (
             <Link to={`/job/create/${type}`}>
-                  <div className={category} style={divStyle.partTime}>
-                    <img className={images} src={divStyle.partTime.backgroundImage}></img>
-                        <div className={categoryText}>
-                            <h3 className={headingStyle}>{heading}</h3>
-                            <p className={subHeadingStyle}>{subHeading}</p>
-                        </div>
+              <div className={category} style={divStyle.partTime}>
+                <img className={images} src={divStyle.partTime.backgroundImage}></img>
+                  <div className={categoryText}>
+                    <h3 className={headingStyle}>{heading}</h3>
+                    <p className={subHeadingStyle}>{subHeading}</p>
                   </div>
-                </Link>
+              </div>
+            </Link>
+         )
+
+    } else if(type == 'ft') {
+         return (
+            <Link to={`/job/create/${type}`}>
+              <div className={category} style={divStyle.fullTime}>
+                <img className={images} src={divStyle.fullTime.backgroundImage}></img>
+                  <div className={categoryText}>
+                    <h3 className={headingStyle}>{heading}</h3>
+                    <p className={subHeadingStyle}>{subHeading}</p>
+                  </div>
+              </div>
+            </Link>
          )
     } else {
         return (
-            <div>Error</div>
+            <div>''</div>
         )
     }
 }

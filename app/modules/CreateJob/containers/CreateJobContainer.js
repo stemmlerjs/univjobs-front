@@ -452,7 +452,9 @@ const CreateJobContainer = React.createClass({
       jobType = 5;
     } else if (route.indexOf("pt") !== -1) {
       jobType = 6;
-    } 
+    } else if (route.indexOf("ft") !== -1) {
+      jobType = 7;
+    }
 
     return (
       <div>

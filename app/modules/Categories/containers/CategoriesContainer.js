@@ -56,6 +56,12 @@ const divStyle = {
         backgroundSize:`contain`,
         backgroundPosition:`center`,
     },
+    fullTime: {
+      backgroundImage: `https://user-images.githubusercontent.com/6892666/29432798-ebe2ecea-836a-11e7-8c77-8de9a7b355ac.png`,
+      backgroundRepeat:`no-repeat`,
+      backgroundSize:`contain`,
+      backgroundPosition:`center`
+    },
 }
 
 /*categoryList
@@ -64,6 +70,20 @@ const divStyle = {
  *
  * */
 const categoryList = [{
+  key: 7,
+  heading: 'Full-time work',
+  subHeadingForEmp: 'Jobs/Internships for recent grads',
+  divStyle,
+  type: 'ft'
+},
+{
+  key: 6,
+  heading: 'Part-time work',
+  subHeadingForEmp: 'Jobs/Internships for students during school',
+  divStyle,
+  type: 'pt'
+},
+{
   key: 1,
   heading: 'One-Time Gig',
   subHeadingForEmp: 'Tasks that can be done within a 24-hour period',
@@ -93,12 +113,6 @@ const categoryList = [{
   subHeadingForEmp: 'Let students promote your product and brand',
   divStyle,
   type: 'rep'
-}, {
-  key: 6,
-  heading: 'Part-time work',
-  subHeadingForEmp: 'Jobs/Internships for students during school',
-  divStyle,
-  type: 'pt'
 }]
 
 
