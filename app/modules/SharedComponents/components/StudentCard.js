@@ -101,7 +101,8 @@ const StudentCard = ({pictureUrl, resumeUrl, name, major, funFact, recentCompany
             </div>
             <div className={cardHeaderContainer}>
                 <div className={cardHeaderItemMainText}>{name}</div>
-                <div className={cardHeaderItemSecondaryText}>{lists.majors[major]}</div>
+                <div className={cardHeaderItemSecondaryText}>{major}
+                </div>
                 <div className={cardHeaderItemAltItemText}>{schoolName} {gradDate.getFullYear()}</div>
                 <div className={cardHeaderItemContainer}>
                   {
