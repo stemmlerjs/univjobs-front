@@ -70,6 +70,8 @@ export default function CreateJobFormPage4 (props) {
                       ? 'Campus Rep' :
                       props.jobType === 6
                       ? 'Part-time' :
+                      props.jobType === 7
+                      ? 'Full-time' :
                       ''
                     }
             logoUrl={config.mediaUrl + props.logoUrl}

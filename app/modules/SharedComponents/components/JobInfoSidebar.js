@@ -74,6 +74,8 @@ export default function JobCardModal({ isOpen, onStateChange, logoUrl, info,
                       ? 'Campus Rep' :
                       info.jobType === 6
                       ? 'Part-time' :
+                      info.jobType === 7
+                      ? 'Full-time' :
                       ''}
             </div>
           

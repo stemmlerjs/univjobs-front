@@ -93,6 +93,8 @@ export default function PinJobs ({jobs,
                                     ? 'Campus Rep' :
                                     job.type === 6
                                     ? 'Part-time' :
+                                    job.type === 7
+                                    ? 'Full-time' :
                                     ''
                                   }
                         paid={job.paid}

@@ -126,6 +126,9 @@ export function createNewJob(props, jobType, successCallback, failureCallback) {
       case "pt":
         jobTypeInt = 6;
         break
+      case "ft":
+        jobTypeInt = 7;
+        break
     }
 
     // ACTION: DISPATCH (SUBMITTING_JOB)
