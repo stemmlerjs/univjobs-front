@@ -69,7 +69,7 @@ app.use(morgan('dev'));
     }
   }
 
-  function renderStandardMetaTags (req) {
+  function renderStandardMetaTags (res) {
     res.render('index.html', {
       title: meta.standard['og:title'],
       url: meta.standard['og:url'],
@@ -105,7 +105,7 @@ app.use(morgan('dev'));
 
       if (jobId === null) {
 
-        renderStandardMetaTags(req)
+        renderStandardMetaTags(res)
       }
 
       /*
@@ -138,7 +138,7 @@ app.use(morgan('dev'));
 
             console.log("Error trying to request job info.")
             
-            renderStandardMetaTags(req)
+            renderStandardMetaTags(res)
 
           })
 
@@ -154,7 +154,7 @@ app.use(morgan('dev'));
     else {
       console.log("basic render")
 
-      renderStandardMetaTags(req)
+      renderStandardMetaTags(res)
 
       // res.sendFile(path.join(__dirname + '/dist/index.html'))
     }
