@@ -7,7 +7,8 @@ import { mobileNav, menuClass, menuSectionClass, panelClass, burgerMenuClass, un
     noticeHeaderCloseButton } from '../styles/MobileSlider.css'
 import { Link } from 'react-router'
 
-export default function MobileSlider ({ onSelectMenuItem, onToggleMenu, page, isAStudent, closeMenuOnRouteChange, logout, children, 
+export default function MobileSlider ({ onSelectMenuItem, onToggleMenu, page, 
+  isAStudent, closeMenuOnRouteChange, logout, children, 
   showMobileNotificationHeader,
   hideMobileNotificationHeader }) {
 

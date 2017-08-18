@@ -272,12 +272,15 @@ const EmployerProfileContainer = React.createClass({
 
             })
           })
-          .then(_thisContext.retrieveAllLists())
+          .then(_thisContext.retrieveAllLists)
+          // .then(_thisContext.setDefaultValues)
           .then(_thisContext.finallyDisableOverlay)
 
       }
 
   },
+
+
 
    /**
     * resendVerifyAccountEmail
@@ -324,6 +327,24 @@ const EmployerProfileContainer = React.createClass({
 
     }
    },
+
+     /*
+   * We're setting default values for some fields because we noticed that
+   * they are really too slow to type in the way we're doing.
+   * 
+   * So we've added onBlur to these fields.
+   */
+
+  setDefaultValues () {
+    return new Promise((resolve, reject) => {
+
+      if (!window.isMobile) {
+        document.getElementById('employer_industry').value = this.props.industry
+      }
+      resolve()
+    })
+
+  },
 
    continueSaveProfile () {
      this.closeUserProfileAdvice()

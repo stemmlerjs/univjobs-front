@@ -679,7 +679,7 @@ const StudentProfileContainer = React.createClass({
 
             })
           })
-          .then(_thisContext.retrieveAllLists())
+          .then(_thisContext.retrieveAllLists)
           .then(_thisContext.setDefaultValues)
           .then(_thisContext.finallyDisableOverlay)
       }

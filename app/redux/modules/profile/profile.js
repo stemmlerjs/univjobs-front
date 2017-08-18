@@ -757,7 +757,7 @@ export function submitProfileFirstTime(userTypeInt, profileInfo, user, successCa
                 description: profileInfo.description,
                 website: profileInfo.website,
                 employee_count: profileInfo.employeeCount,
-                industry: profileInfo.industry || profileInfo.industry.id,
+                industry: profileInfo.industry.id,
                 date_joined: user.dateJoined,
                 first_name: user.firstName,
                 last_name: user.lastName,
@@ -970,7 +970,7 @@ export function updateProfile(userTypeInt, profileInfo, user, snapshot, successC
               description: profileInfo.description,
               website: profileInfo.website,
               employee_count: profileInfo.employeeCount,
-              industry: profileInfo.industry.id ? profileInfo.industry.id : profileInfo.industry,
+              industry: profileInfo.industry.id
             }
 
            /*

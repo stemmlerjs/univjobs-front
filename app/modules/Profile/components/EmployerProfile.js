@@ -173,9 +173,9 @@ function placePhoto(element, url) {
           valueField="id"
           filter="contains"
           data={props.industryList}
-          messages={messages}
-          onChange={value => props.updateProfileField('industry', value.id, false)}
+          onChange={value => props.updateProfileField('industry', value, false)}
           value={props.industry}
+          id="employer_industry"
         />
       </ProfileField>
 
