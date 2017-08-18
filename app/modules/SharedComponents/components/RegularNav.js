@@ -59,7 +59,7 @@ const RegularNav = ({ dropDownActive, toggleDropdownMenu, router, closeNavDropDo
                         <li onClick={() => {
                           closeNavDropDown()                          
                           router.push("/join")
-                        }}>Sigup</li>
+                        }}>Signup</li>
                       </ul>
                     </div>
                 </div>

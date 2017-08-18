@@ -51,11 +51,13 @@ export default function SideBar ({onLogout, isAStudent, profilePicture}) {
                     </div>
                   </Link>
                 : <Link to="/profile/em" className={noDecoration}>
-                    <div className={profilePicture == "" ? `${sidebarItem} ${paddingTop}` : sidebarItem}>
+                    <div className={sidebarItem}>
                       { 
                         profilePicture.indexOf("undefined") === -1 && profilePicture.indexOf("null") === -1
                           ? <img className={profileImg + " " + animationItem8} src={profilePicture}></img>
-                          : <div><i className={" fa fa-user"} aria-hidden="true"></i></div>
+                          : <div className={marginTop}>
+                              <i className={" fa fa-user"} aria-hidden="true"></i>
+                            </div>
                       }
                       <div className={animationTxt2}>Profile</div>
                       <div className={animateLine2}></div>
