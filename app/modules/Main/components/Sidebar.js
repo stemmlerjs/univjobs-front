@@ -19,7 +19,7 @@ import { sidebar, sidebarLogo, sidebarItemsContainer,
         animationItem4, animationTxt4, animationItem5, 
         animationTxt5, animationItem6, animationTxt6, 
         animationItem7, animationTxt7, animationItem8, 
-        animationTxt8, sidebarUnivjobsLogo, marginTop } from 'sharedStyles/sidebar.css'
+        animationTxt8, sidebarUnivjobsLogo, marginTop, paddingTop } from 'sharedStyles/sidebar.css'
 
 export default function SideBar ({onLogout, isAStudent, profilePicture}) {
   return (
@@ -51,7 +51,7 @@ export default function SideBar ({onLogout, isAStudent, profilePicture}) {
                     </div>
                   </Link>
                 : <Link to="/profile/em" className={noDecoration}>
-                    <div className={sidebarItem}>
+                    <div className={profilePicture == "" ? `${sidebarItem} ${paddingTop}` : sidebarItem}>
                       { 
                         profilePicture.indexOf("undefined") === -1 && profilePicture.indexOf("null") === -1
                           ? <img className={profileImg + " " + animationItem8} src={profilePicture}></img>
@@ -61,8 +61,6 @@ export default function SideBar ({onLogout, isAStudent, profilePicture}) {
                       <div className={animateLine2}></div>
                     </div>
                   </Link>
-          
-        
         }
 
         {isAStudent 

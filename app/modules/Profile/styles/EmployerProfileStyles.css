@@ -1,9 +1,9 @@
 .profileContainer {
-  width: 630px;
-  text-align:center;
-  margin: auto;
-  margin-top: 4%;
-  margin-bottom: 3%;
+    text-align: center;
+    margin: auto;
+    margin-top: 4%;
+    margin-bottom: 3%;
+    max-width: 730px;
 }
 
 .profileHeader {
