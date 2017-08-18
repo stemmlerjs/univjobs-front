@@ -15,6 +15,11 @@ const PATHS = {
   images: path.join(__dirname, 'images')
 }
 
+/*
+ * The index.html file will be copied to the /views folder
+ * in dist after it's built.
+ */
+
 const HTMLWebpackPluginConfig = new HtmlWebpackPlugin({
   template: "!!raw-loader!" + PATHS.app + '/index.html',
   filename: 'views/index.html',
