@@ -701,7 +701,7 @@ export function submitProfileFirstTime(userTypeInt, profileInfo, user, successCa
 
       case 1:
         console.log("SUBMITTING EMPLOYER PROFILE FIRST TIME")
-
+        
         validateEmployerProfileFields(profileInfo, (errorsExist, profileFieldErrors) => {
           if(errorsExist) {
 
