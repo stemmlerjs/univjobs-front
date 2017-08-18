@@ -41,35 +41,10 @@ let visitedStudentSide = false;
 
 const styles = {
   overlayStyles: {
-    position: 'absolute',
-    top: '0px',
-    left: '0px',
-    right: '0px',
-    bottom: '0px',
-    zIndex: 99,
-    backgroundColor: 'rgba(0,0,0,0.3)'
+    zIndex: '99'
   },
   dialogStyles: {
-    // Overriden styles
-    marginLeft: '0px',
-    marginTop: '0px',
-
-    // Custom Styles
-    width: '330px',
-    height: '358px',
-    zIndex: '100',
-    padding: '2px',
-    borderRadius: '2px',
-    boxShadow: 'rgba(0, 0, 0, 0.137255) 0px 0px 4px, rgba(0, 0, 0, 0.278431) 0px 4px 8px',
-    fontSize: '20px',
-    textAlign: 'center',
-    display: 'flex',
-    flexDirection: 'column',
-    backgroundColor: 'rgb(255, 255, 255)',
-    position: 'fixed',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    top: '50%'
+    zIndex: '100'
   }
 };
 
@@ -132,6 +107,7 @@ const SignupContainer = React.createClass({
 
   openLoginModal (e) {
     e.preventDefault()
+
     this.refs.loginModal.show()
     this.props.closeNavDropDown();
   },
@@ -315,6 +291,8 @@ const SignupContainer = React.createClass({
         />
         <div id="login-modal-wrapper">
           <SkyLight
+              overlayStyles={styles.overlayStyles} 
+              dialogStyles={styles.dialogStyles}
               closeButtonStyle={styles.closeButtonStyle}
               hideOnOverlayClicked
               ref="loginModal"

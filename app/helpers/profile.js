@@ -3,7 +3,7 @@ import config from 'config'
 import { getAccessToken, getCSRFToken } from 'helpers/auth'
 import { validatePersonalEmail, validateFirstName, validateLastName,
 	validateCompanyName, validateAddress, validateCity,
-	validatePostalCode, validateGPA, validateLanguages,
+	postalCodeCheck, validateGPA, validateLanguages,
     validateWebURL, sanitize } from 'helpers/utils'
 
 //********************** EMPLOYER *************************//
@@ -116,7 +116,7 @@ export function validateEmployerProfileFields(profileInfo, next) {
   profileFieldErrors.industry = profileInfo.industry != "" ? false : true
   profileFieldErrors.employeeCount = profileInfo.employeeCount > 0 ? false : true
   profileFieldErrors.officeAddress = validateAddress(profileInfo.officeAddress) && profileInfo.officeAddress != "" ? false : true
-  profileFieldErrors.officePostalCode = validatePostalCode(profileInfo.officePostalCode) ? false : true
+  profileFieldErrors.officePostalCode = postalCodeCheck(profileInfo.officePostalCode, 'ca') ? false : true
   profileFieldErrors.officeCity = validateCity(profileInfo.officeCity) ? false : true
   // profileFieldErrors.logoUrl =  profileInfo.logoUrl != "" ? false : true
   profileFieldErrors.website = validateWebURL(profileInfo.website) ? false : true
@@ -651,7 +651,7 @@ export const mobileProfileHelper = {
 
     profileFieldErrors.companyName = validateCompanyName(profileInfo.companyName) ? false : true
     profileFieldErrors.officeAddress = validateAddress(profileInfo.officeAddress) && profileInfo.officeAddress != "" ? false : true
-    profileFieldErrors.officePostalCode = validatePostalCode(profileInfo.officePostalCode) ? false : true
+    profileFieldErrors.officePostalCode = postalCodeCheck(profileInfo.officePostalCode, 'ca') ? false : true
     profileFieldErrors.officeCity = validateCity(profileInfo.officeCity) ? false : true
 
     /*

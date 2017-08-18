@@ -124,7 +124,7 @@
         color: #43a0c5 !important;
         border: 2px solid #43a0c5 !important;
         background-color: white !important;
-        box-shadow: 1px 1px 15px #43A0C !important;
+        box-shadow: 1px 1px 15px #43A0C3 !important;
         transition: all 0.3s ease-out;
       }
 
@@ -136,6 +136,10 @@
       * Login Modal for the app
       */
 
+      #login-modal-wrapper .skylight-overlay {
+        z-index: 199 !important;
+      }
+
       #login-modal-wrapper .skylight-dialog {
         width: 330px !important;
         height: 358px !important;
@@ -146,7 +150,7 @@
         margin-left: 0px !important;
         background-color: rgb(255, 255, 255) !important;
         border-radius: 2px !important;
-        z-index: 100 !important;
+        z-index: 200 !important;
         padding: 2px !important;
         box-shadow: rgba(0, 0, 0, 0.137) 0px 0px 4px, rgba(0, 0, 0, 0.28) 0px 4px 8px !important;
         font-size: 20px !important;
@@ -168,7 +172,6 @@
           margin-left: 0px !important;
           background-color: rgb(255, 255, 255) !important;
           border-radius: 2px !important;
-          z-index: 100 !important;
           padding: 2px !important;
           box-shadow: rgba(0, 0, 0, 0.137) 0px 0px 4px, rgba(0, 0, 0, 0.28) 0px 4px 8px !important;
           font-size: 20px !important;
@@ -177,12 +180,17 @@
           flex-direction: column !important;
           transform: translate(-50%, -50%) !important;
           padding-top: 15px !important;
+          z-index: 200 !important;
         }
       }
 
      /*
       * Employer Signup Modal Wrapper
       */
+
+      #employer-signup-modal-wrapper .skylight-overlay {
+        z-index: 99 !important;
+      }
 
       #employer-signup-modal-wrapper .skylight-dialog {
         width: 537px !important;
@@ -193,7 +201,7 @@
         margin-left: 0px !important;
         background-color: rgb(255, 255, 255) !important;
         border-radius: 2px;
-        z-index: 100;
+        z-index: 100 !important;
         padding: 15px;
         box-shadow: rgba(0, 0, 0, 0.14) 0px 0px 4px, rgba(0, 0, 0, 0.28) 0px 4px 8px;
         font-size: 30px;
@@ -216,7 +224,6 @@
           margin-left: 0px !important;
           background-color: rgb(255, 255, 255) !important;
           border-radius: 2px;
-          z-index: 100;
           padding: 15px;
           box-shadow: rgba(0, 0, 0, 0.14) 0px 0px 4px, rgba(0, 0, 0, 0.28) 0px 4px 8px;
           font-size: 30px;
@@ -235,7 +242,6 @@
           margin-left: 0px !important;
           background-color: rgb(255, 255, 255) !important;
           border-radius: 2px;
-          z-index: 100;
           padding: 15px;
           box-shadow: rgba(0, 0, 0, 0.14) 0px 0px 4px, rgba(0, 0, 0, 0.28) 0px 4px 8px;
           font-size: 30px;

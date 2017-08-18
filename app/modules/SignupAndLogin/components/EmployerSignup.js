@@ -29,7 +29,7 @@ const styles = {
     left: '0px',
     right: '0px',
     bottom: '0px',
-    zIndex: 99,
+    zIndex: '89',
     backgroundColor: 'rgba(0,0,0,0.3)'
   },
   dialogStyles: {
@@ -37,7 +37,7 @@ const styles = {
     fontSize:'30px',
     backgroundColor: '#fff',
     borderRadius: '2px',
-    zIndex: 100,
+    zIndex: '90',
     padding: '15px',
     boxShadow: '0 0 4px rgba(0,0,0,.14),0 4px 8px rgba(0,0,0,.28)',
     position: 'absolute',
