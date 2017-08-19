@@ -135,6 +135,14 @@ const SignupContainer = React.createClass({
       .then((actionResult) => {
           if(actionResult) {
               this.context.router.replace('/profile/st')
+
+          /*
+            * SERVICEANNOUNCEMENT
+            * TODO: Remove this when we don't need it.
+            */
+
+            this.props.globalModal.open('Service update', "Our email service is temporarily down for maintainence. If you're waiting on an email from us (like a verification email), it may take a little while to send. We apologize for any inconvenience.")
+          
         } 
       })
       .catch((err) => console.log(err))
@@ -161,6 +169,14 @@ const SignupContainer = React.createClass({
         .then((actionResult) => {
             if(actionResult) {
                 this.context.router.replace('/profile/em')
+
+           /*
+            * SERVICEANNOUNCEMENT
+            * TODO: Remove this when we don't need it.
+            */
+
+            this.props.globalModal.open('Service update', "Our email service is temporarily down for maintainence. If you're waiting on an email from us (like a verification email), it may take a little while to send. We apologize for any inconvenience.")
+          
           } 
         }).catch((err) => console.log(err))
     },
@@ -202,6 +218,16 @@ const SignupContainer = React.createClass({
         this.context.router.replace('/profile/em')
 
       }
+
+      /*
+       * SERVICEANNOUNCEMENT
+       * TODO: Remove this when we don't need it.
+       */
+
+      this.props.globalModal.open('Service update', `Our email service is temporarily down for maintainence. 
+      If you're waiting on an email from us (like a verification email), it may take a little while to send. 
+      
+      We apologize for any inconvenience.`)
     })
     .catch((err) => {
       console.log("Could not login", err)
