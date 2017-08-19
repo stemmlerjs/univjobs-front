@@ -257,7 +257,7 @@ const InitialOverlay = React.createClass({
 
     return (
       <div style={styles.main}>
-        { this.props.isAuthenticated 
+        { this.props.isAuthenticated && window.CURRENT_ENV == 'dev'
           ? <FeedbackForm 
               isOpen={this.props.feedback.isOpen} 
               title={this.props.feedback.title}
