@@ -30,7 +30,7 @@ export default function PublicJobView ({ info, handleOpenEmployerProfileModal, s
               ? info.logo_url.indexOf("null") !== -1 || info.logo_url.indexOf("avatar") === -1 || info.logo_url === undefined
                 ? <div className={noProfilePictureClass}><i className={'fa fa-building-o'} aria-hidden="true"></i></div>
                 : <img className={employerPicture} src={config.mediaUrl + info.logo_url}/>
-              : ''
+              : <div className={noProfilePictureClass}><i className={'fa fa-building-o'} aria-hidden="true"></i></div>
             }
 
             {
