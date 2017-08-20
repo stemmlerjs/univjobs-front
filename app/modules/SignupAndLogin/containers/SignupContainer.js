@@ -92,6 +92,19 @@ const SignupContainer = React.createClass({
   handleSwitchUserType (e) {
     e.preventDefault()
     scrollToY(0, 1500, 'easeInOutQuint');
+
+    /*
+     * Set a url for the employer view when we switch between
+     * employer and user.
+     */
+
+    if (this.props.isAStudent) {
+      window.history.pushState('', 'Yes', '/join/employers')
+    }
+    else {
+      window.history.pushState('', 'Yes', '/join')
+    }
+
     this.props.switchedUserType(this.props.isAStudent)
     this.props.closeNavDropDown();
   },
@@ -219,7 +232,10 @@ const SignupContainer = React.createClass({
   componentDidMount() {
     window.scroll(0,0);
 
-    //document.getElementById("student-hero").style.minHeight = window.screen.availHeight + "px"
+    if (this.props.location.pathname == '/join/employers') {
+      this.props.switchedUserType(this.props.isAStudent)
+    }
+
   },
 
 /**

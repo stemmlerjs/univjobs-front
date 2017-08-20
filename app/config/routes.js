@@ -20,6 +20,8 @@ export default function getRoutes(store) {
     <Router history={history} >
         <Route path='/' component={InitialOverlay}>
           <Route path='/join' component={SignupContainer} />
+          <Route path='/join/employers' component={SignupContainer} />
+          <Route path='/join/students' component={SignupContainer} />
           <Route path='/password/reset' component={PasswordResetContainer}/>
           <Route path='/password/confirm/:code' component={PasswordResetContainer} />
 
