@@ -182,7 +182,34 @@ const InitialOverlay = React.createClass({
    */
 
   handleToggleMenu (e) {
-    slideout.toggle();
+
+    /*
+     * If:
+     * 1. We were on the login page
+     * 2. We login
+     * 3. We get to dashboard
+     * 4. We attempt to click the slideout
+     * 
+     * It will fail because the slideout will have been null.
+     * 
+     * To fix this, we'll just instantiate a new Slideout object
+     * if it hasn't been created already.
+     */
+
+    if (slideout === null) {
+      slideout = new Slideout({
+        'panel': document.getElementById('panel'),
+        'menu': document.getElementById('menu'),
+        'padding': 256,
+        'tolerance': 70
+      });
+
+      slideout.toggle();
+    } 
+    else {
+      slideout.toggle();
+    }
+    
   },
 
   /*
@@ -327,6 +354,10 @@ const InitialOverlay = React.createClass({
          * 
          * The decision is based on whether or not the detectMobile()
          * function finds the Mobile objects in the window of the browser.
+         *
+         *
+         * The Mobile Slider shows for internal pages in the app on mobile. Its what
+         * opens up the sidebar and shows the nav menu (BOTH)
          */
         }
 

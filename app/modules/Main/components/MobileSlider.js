@@ -102,6 +102,12 @@ export default function MobileSlider ({ onSelectMenuItem, onToggleMenu, page,
         </header>
 
         {
+          /*
+           * [MOBILE NOTIFICATION HEADER]
+           *
+           * Use this section here to show a mobile notification header.
+           */
+
           showMobileNotificationHeader && (page !== "/profile/st" && page !== "/profile/em")
             ? <div className={noticeHeader}>
                 <div className={noticeHeaderCloseButton} 
