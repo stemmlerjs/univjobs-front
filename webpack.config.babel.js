@@ -55,7 +55,11 @@ const base = {
   },
   module: {
     loaders: [
-      { test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader'},
+      { 
+        test: /\.js$/, 
+        exclude: /node_modules\/(?!(react-toastr))/,
+        loader: 'babel-loader'
+      },
       { test: /\.css$/, loader: 'style!css?sourceMap&modules&localIdentName=[name]__[local]___[hash:base64:5]'},
       { test: /\.css$/, include: /node_modules/, loader: 'style!css'},
       { test: /\.less$/, loader: 'style-loader!css-loader!less-loader'},
