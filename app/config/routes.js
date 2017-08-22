@@ -4,9 +4,9 @@ import { Router, Route, hashHistory, IndexRoute, browserHistory } from 'react-ro
 import { ApplicationsContainer, CategoriesContainer, CreateJobContainer, ContactPageContainer, 
          EmployerProfileContainer, EmployerDashboardContainer, InitialOverlay,
         SignupContainer, StudentDashboardContainer, StudentProfileContainer,
-        AboutPageContainer, PinJobsContainer, MyListingsContainer,
+        AboutPageContainer, PinJobsContainer,
         ApplicantsContainer, PasswordResetContainer, PageNotFoundContainer,
-        Terms, Privacy, StudentSettingsContainer, PublicJobViewContainer } from 'modules'
+        Terms, Privacy, StudentSettingsContainer, PublicJobViewContainer, MyPostingsContainer } from 'modules'
 import { checkIfAuthed } from 'helpers/auth'
 import { syncHistoryWithStore } from 'react-router-redux'
 
@@ -54,12 +54,11 @@ export default function getRoutes(store) {
           <Route path='/invitations'              page={'invitations'} component={StudentDashboardContainer} />
           <Route path='/invitations/:jobId'       page={'invitations'} component={StudentDashboardContainer} />
 
-          <Route path='/mypostings'               page={'postings-open'} component={ApplicantsContainer} />
-          <Route path='/mypostings/open'          page={'postings-open'} component={ApplicantsContainer} />
-          <Route path='/mypostings/closed'        page={'postings-closed'} component={ApplicantsContainer} />
-          <Route path='/mypostings/approval'      page={'postings-approval'} component={ApplicantsContainer} />
+          <Route path='/mypostings'               page={'postings-open'} component={MyPostingsContainer} />
+          <Route path='/mypostings/open'          page={'postings-open'} component={MyPostingsContainer} />
+          <Route path='/mypostings/closed'        page={'postings-closed'} component={MyPostingsContainer} />
+          <Route path='/mypostings/approval'      page={'postings-approval'} component={MyPostingsContainer} />
           
-          <Route path='/mylistings/em'            page={'mylistings'} component={MyListingsContainer} />
           <Route path='/settings/st'              page={'settings'} component={StudentSettingsContainer} />
 
           {

@@ -20,7 +20,14 @@
     right: 0px;
 }
 
-
+.rootSidebarOpenComponentContainer {
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    left: 321px;
+    right: 0px;
+    min-width: 1000px;
+}
 
 .margins {
     margin-left: 3%;

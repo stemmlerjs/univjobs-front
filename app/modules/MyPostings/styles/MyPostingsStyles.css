@@ -1,0 +1,106 @@
+
+.headerSection {
+height: 73px;
+    background-color: white;
+    box-shadow: 0 1px 0 rgba(0,0,0,.1);
+    padding: 12px;
+    text-align: left;
+    padding-left: 45px;
+    padding-right: 45px;
+
+}
+.headerJobTitle {
+  font-weight: 600;
+    font-size: 20px;
+}
+
+.headerJobsSelectionContainer {
+  padding-top: 2px;
+      display: flex;
+}
+
+.headerNumberJobs {
+      color: #3697db;
+    font-weight: 300;
+}
+
+.headerJobSelectButton {
+  margin-left: 12px;
+
+      border: 1px solid #afa3bb;
+    box-shadow: 0 1px 1px rgba(0,0,0,.08);
+    border-radius: 50%;
+    height: 21px;
+    width: 21px;
+    line-height: 21px;
+    position: relative;
+    top: -1px;
+    margin-left: 10px;
+    display: inline-block;
+    vertical-align: middle;
+    cursor: pointer;
+    transition: color .3s linear;
+    text-decoration: none;
+    padding-left: 4px;
+}
+
+.headerJobSelectButton:hover {
+    background: #f7f8f9;
+    border-color: #8b9ca0;
+    color: black;
+}
+
+
+/* 
+ * BODY 
+ */
+
+.bodySection {
+  margin: 25px;
+  display: flex;
+}
+
+.bodySectionColumn {
+  width: 50%;
+  text-align: left;
+    margin-right: 45px;
+}
+
+.sectionContainer {
+    margin-bottom: 45px;
+}
+
+.sectionTitle {
+    font-size: 26px;
+    font-weight: 100;
+}
+
+.sectionContainerHeader {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.standardButton {
+    padding: 10px 15px 10px 15px;
+    border-radius: 3px;
+    border: 0;
+    background: #3697DB;
+    font-size: 14px;
+    color: white;
+    text-shadow: 1px 1px 0px rgba(0, 0, 0, .1);
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.box {
+    background: #ffffff;
+    border: 1px solid #b2b0b4;
+    border-radius: 3px;
+    margin: 0 0 20px;
+    box-shadow: 0 1px 0 rgba(0,0,0,.03);
+    margin-top: 16px;
+    padding: 19px;
+    font-size: 14px;
+}
