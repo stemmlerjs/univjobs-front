@@ -93,7 +93,10 @@ const MyListingsContainer = React.createClass({
   render () {
     return (
       <div className={pageContainer} >
-        <SidebarContainer isMobile={this.props.isMobile} isAStudent={false} profilePicture={config.mediaUrl + this.props.profile.employerProfile.logoUrl}/>
+        <SidebarContainer isMobile={this.props.isMobile} isAStudent={false} 
+          page={this.props.route.page}
+          profilePicture={config.mediaUrl + this.props.profile.employerProfile.logoUrl}
+        />
         <MyListings
             handleCardClick={this.showModal}
             jobs={this.props.job ? this.props.job : ''}

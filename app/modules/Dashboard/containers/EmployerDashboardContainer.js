@@ -331,7 +331,9 @@ const EmployerDashboardContainer = React.createClass({
       <div className={pageContainer}>
         <SidebarContainer isMobile={this.props.isMobile} isAStudent={false} profilePicture={typeof this.props.profile.logoUrl == "object" && this.props.profile.logoUrl !== null
             ? this.props.profile.logoUrl.preview
-            : config.mediaUrl + this.props.profile.logoUrl}/>
+            : config.mediaUrl + this.props.profile.logoUrl}
+            page={this.props.route.page}
+        />
 
         
         <EmployerDashboard 

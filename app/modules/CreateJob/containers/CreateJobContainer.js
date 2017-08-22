@@ -488,7 +488,8 @@ const CreateJobContainer = React.createClass({
         <div id="page-wrap" className={pageContainer}>
           <SidebarContainer isMobile={this.props.isMobile} isAStudent={false} profilePicture={typeof this.props.profile.logoUrl == "object" && this.props.profile.logoUrl !== null
             ? this.props.profile.logoUrl.preview
-            : config.mediaUrl + this.props.profile.logoUrl}/>
+            : config.mediaUrl + this.props.profile.logoUrl}
+            page={this.props.route.page}/>
             {(() => {
               switch(this.props.currentPage) {
                 case 1:

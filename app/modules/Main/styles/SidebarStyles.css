@@ -1,19 +1,62 @@
 /* SIDEBAR STYLES */
 .sidebar {
-  position: fixed;
-  top: 0px;
-  bottom: 0px;
-  left: 0px;
-  width: 87px;
-  background-color: #414A51;
-  display: flex;
-  align-items: center;
-  flex-direction: row;
-  display: flex;
-  align-items: center;
-  flex-direction: row;
-  z-index:4;
+    position: fixed;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    width: 54px;
+    background-color: #414A51;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    z-index: 5;
+    transition: all 250ms ease-out;
+    overflow: hidden;
 }
+
+.sidebar:hover {
+  width:260px;
+}
+
+.sidebarItemName {
+    color: #959fa9;
+    /* position: relative; */
+    /* left: 60px; */
+    margin-left: 68px;
+        width: 100%;
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 15px;
+    font-weight: 500;
+    text-align: left;
+    padding-top:23px;
+    transition: all 250ms ease-out;
+}
+
+.sidebarItemName:hover {
+  color: white;
+}
+
+.sidebarListItemContainer {
+  height: 62px;
+    /* width: 260px; */
+    overflow: hidden;
+    display: flex;
+    /* flex-direction: row; */
+}
+
+.subSidebarListItemContainer {
+    height: 62px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+}
+  
 
 .sidebarLogo {
   position: absolute;
@@ -29,7 +72,8 @@
 }
 
 .sidebarItem {
-  height: 86px;
+  height: 62px;
+    width: 54px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -37,11 +81,67 @@
   /*padding-top: */
   color: white;
   font-size: 29px;
-  border-top: solid #707980 1px;
   cursor: pointer;
   margin: auto;
   font-weight: 100;
+      position: absolute;
+  color: #959fa9;
+  transition: all 250ms ease-out;
 }
+
+.sidebarItem:hover {
+  color:white;
+}
+
+.sidebarItem:hover ~ .sidebarItemName {
+    color:white;
+}
+
+.sidebarItemName:hover ~ .sidebarItem {
+    color:white;
+}
+
+.currentPageActiveStyle {
+    background-color: #595f64;
+}
+
+.currentPageActiveStyle i {
+  color: white;
+}
+
+.cursorPointer {
+  cursor:pointer;
+}
+
+.subSidebar {
+    width: 267px;
+    background-color: #595f64;
+    /* height: 100%; */
+    position: fixed;
+    top: 0px;
+    bottom: 0px;
+    left: 54px;
+    z-index: 4;
+    align-items: center;
+    flex-direction: row;
+    z-index: 4;
+    transition: all 250ms ease-out;
+    overflow: hidden;
+}
+
+.sidebar:hover ~ .subSidebar {
+      padding-left: 208px;
+}
+
+.selectedSubSidebarItem {
+  background-color: #767d83;
+    /* padding: 5px; */
+    height: 35px;
+    width: 35px;
+    border-radius: 3px;
+    color: white;
+}
+
 /* ======================================================
    ================= Sidebar Animations ================= 
    ======================================================
@@ -298,11 +398,10 @@
 }
 
 .sidebarUnivjobsLogo {
-    width: 63px;
-    height: 38px;
+    height: 65px;
     position: absolute;
     top: 14px;
-    left: 10px;
+    left: 63px;
 }
 
   /* Keyframes */

@@ -168,6 +168,7 @@ const CategoriesContainer = React.createClass({
             profilePicture={typeof this.props.profile.logoUrl == "object" && this.props.profile.logoUrl !== null
             ? this.props.profile.logoUrl.preview
             : config.mediaUrl + this.props.profile.logoUrl}
+            page={this.props.route.page}
         />
         <Title 
             titleName="I want to post a job for..."

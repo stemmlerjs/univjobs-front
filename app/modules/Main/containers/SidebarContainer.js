@@ -47,6 +47,7 @@ const SidebarContainer = React.createClass({
                 onLogout={this.handleLogout} 
                 isAStudent={this.props.isAStudent}
                 profilePicture={this.props.profilePicture}
+                page={this.props.page}
               />
             : ''
         }
