@@ -16,7 +16,7 @@ export default function JobQuestions ({questions}) {
               {
                 questions.map((question, index) => {
                   return (
-                    <div>{(index + 1) + ". " + question.text}</div>
+                    <div key={index}>{(index + 1) + ". " + question.text}</div>
                   )
                 })
               }

@@ -1,0 +1,27 @@
+
+.applicantsjobsCountHeader {
+    display: flex;
+    font-size: 15px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    width: 61%;
+    margin: auto;
+    color: #828282;
+}
+
+.applicantsjobsCount {
+    display: flex;
+    font-size: 50px;
+    /* font-weight: bold; */
+    flex-direction: row;
+    justify-content: center;
+    font-weight: bold;
+    margin-top: 13px;
+}
+
+.divide {
+    padding-left: 43px;
+    padding-right: 21px;
+    padding-right: 43px;
+}

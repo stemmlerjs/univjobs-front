@@ -1,0 +1,46 @@
+
+.container {
+    
+}
+
+.invitationsContainer {
+        overflow-y: scroll;
+    height: 350px;
+}
+
+.invitedStudentRow {
+display: flex;
+    margin-bottom: 12px;
+}
+
+.invitedStudentImageContainer {
+margin-right: 15px;
+    height: 50px;
+}
+
+.invitedStudentImageContainer img {
+    height: 48px;
+    border-radius: 4px;
+}
+
+.invitedStudentDetailsContainer {
+    min-width: 49%;
+} 
+
+.invitedStudentName {
+    font-weight: 700;
+    font-size: 18px;
+}
+
+.invitedStudentSchool {
+    color: #606060;
+}
+
+.invitedStudentAppliedContainer {
+    text-align: right;
+    width: 37%;
+}
+
+.invitedStudentAppliedContainer img {
+    height: 36px;
+}

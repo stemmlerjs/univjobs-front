@@ -3,7 +3,7 @@ import React, { Component, PropTypes } from 'react'
 
 // ==============MADE COMPONENTS========================= //
 import { SidebarContainer } from 'modules/Main'
-import { MyPostings } from 'modules/MyPostings'
+import { MyPostings, MyClosedPostings, MyAwaitingPostings } from 'modules/MyPostings'
 
 import config from 'config'
 
@@ -25,6 +25,17 @@ import { authRedirectFilter } from 'config/routes'
 
 // ==============CSS IMPORTS============================= //
 import { pageContainer } from 'sharedStyles/sharedContainerStyles.css'
+
+var jobs = [
+  {
+    jobId: 1,
+    title: 'Marketing Street Team - Brampton'
+  },
+  {
+    jobId: 2,
+    title: 'Post-Punk Guitarist'
+  }
+]
 
 const MyPostingsContainer = React.createClass({
 	contextTypes: {
@@ -73,7 +84,33 @@ const MyPostingsContainer = React.createClass({
           page={this.props.route.page}
           profilePicture={config.mediaUrl + this.props.profile.employerProfile.logoUrl}
         />
-        <MyPostings/>
+
+        {
+
+          /*
+           * My Open Postings
+           * My Closed Postings
+           * My Awaiting Postings
+           */
+
+          this.props.route.page === "postings-open"
+            ? <MyPostings 
+                jobs={jobs}
+                selectedJobId={null}
+              />
+            : this.props.route.page === "postings-closed"
+            ? <MyClosedPostings 
+                jobs={jobs}
+                selectedJobId={null}
+              />
+            : this.props.route.page === "postings-approval"
+            ? <MyAwaitingPostings 
+                jobs={jobs}
+                selectedJobId={null}
+              />
+            : ''
+        }
+        
     </div>
     )
   },

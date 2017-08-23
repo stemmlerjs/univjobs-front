@@ -50,6 +50,11 @@ height: 73px;
     color: black;
 }
 
+.linkStyle {
+    font-weight: 200;
+    color: #3697db;
+}
+
 
 /* 
  * BODY 
@@ -58,6 +63,12 @@ height: 73px;
 .bodySection {
   margin: 25px;
   display: flex;
+}
+
+.bodySectionNoJobs {
+    margin: 25px;
+    font-size: 20px;
+    font-weight: 300;
 }
 
 .bodySectionColumn {
@@ -73,6 +84,11 @@ height: 73px;
 .sectionTitle {
     font-size: 26px;
     font-weight: 100;
+}
+
+.sectionTitleAlt {
+    font-size: 14px;
+    font-weight: 500;
 }
 
 .sectionContainerHeader {
@@ -103,4 +119,24 @@ height: 73px;
     margin-top: 16px;
     padding: 19px;
     font-size: 14px;
+}
+
+.altBox {
+    background: #cdd0f4;
+    border: 1px solid #acacac;
+    border-radius: 3px;
+    margin: 0 0 20px;
+    box-shadow: 0 1px 0 rgba(0,0,0,.03);
+    margin-top: 16px;
+    padding: 19px;
+    font-size: 14px;
+}
+
+.comingSoon {
+        background-color: #ececec;
+    border-radius: 4px;
+    color: #757575;
+    padding: 28px;
+    font-size: 25px;
+    font-weight: 100;
 }

@@ -56,8 +56,11 @@ export default function getRoutes(store) {
 
           <Route path='/mypostings'               page={'postings-open'} component={MyPostingsContainer} />
           <Route path='/mypostings/open'          page={'postings-open'} component={MyPostingsContainer} />
-          <Route path='/mypostings/closed'        page={'postings-closed'} component={MyPostingsContainer} />
-          <Route path='/mypostings/approval'      page={'postings-approval'} component={MyPostingsContainer} />
+          <Route path='/mypostings/open/:jobId'   page={'postings-open'} component={MyPostingsContainer} />
+          <Route path='/mypostings/closed'          page={'postings-closed'} component={MyPostingsContainer} />
+          <Route path='/mypostings/closed/:jobId'   page={'postings-closed'} component={MyPostingsContainer} />
+          <Route path='/mypostings/approval'        page={'postings-approval'} component={MyPostingsContainer} />
+          <Route path='/mypostings/approval/:jobId' page={'postings-approval'} component={MyPostingsContainer} />
           
           <Route path='/settings/st'              page={'settings'} component={StudentSettingsContainer} />
 

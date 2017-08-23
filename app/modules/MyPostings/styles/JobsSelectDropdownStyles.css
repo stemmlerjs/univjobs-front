@@ -1,0 +1,32 @@
+.box {
+    background-color: white;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+    padding: 19px;
+    position: relative;
+    top: 22px;
+    left: -12px;
+    border-radius: 2px;
+    font-weight: 400;
+        max-width: 333px;
+}
+.jobItem {
+    border-bottom: solid 1px #f1f1f1;
+    padding: 5px;
+    cursor: pointer;
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    transition: all 250ms ease-out;
+    border-radius: 4px;
+    padding-left: 14px;
+    padding-right: 14px;
+}
+.jobItem:last-of-type {
+    border-bottom: solid 1px white;
+}
+
+.jobItem:hover {
+        background-color: #f3f3f3;
+}
