@@ -45,7 +45,8 @@ export default function EmployerDashboard ({students, lists, industriesList, pro
     filterStudents
     
 }) {
-
+window.lists = lists;
+window.students = students;
   return (
     <div className={rootComponentContainer}>
 
@@ -149,6 +150,8 @@ export default function EmployerDashboard ({students, lists, industriesList, pro
                                         : student.filter_show === true 
                                             ? false 
                                             : true;
+
+                                            console.log(student)
                 if (!shouldFilterOut) return student
               })
               
@@ -167,7 +170,9 @@ export default function EmployerDashboard ({students, lists, industriesList, pro
                     languages={student.languages}
                     clubs={student.clubs}
                     sports={student.sports}
-                    major={lists.majors[student.major].length > 35 ? lists.majors[student.major].substring(0,35) + "..." : lists.majors[student.major]}
+                    major={lists.majors[student.major] 
+                      ? lists.majors[student.major].length > 35 ? lists.majors[student.major].substring(0,35) + "..." : lists.majors[student.major]
+                      : lists.majors[student.major]}
                     gpa={student.gpa}
                     gradDate={new Date(student.grad_date)}
                     schoolName={student.school_name}
