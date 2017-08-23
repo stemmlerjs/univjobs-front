@@ -93,6 +93,10 @@
   color:white;
 }
 
+.white {
+  color: white;
+}
+
 .sidebarItem:hover ~ .sidebarItemName {
     color:white;
 }

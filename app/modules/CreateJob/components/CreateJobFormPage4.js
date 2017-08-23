@@ -84,7 +84,7 @@ export default function CreateJobFormPage4 (props) {
             address={props.address}
             compensation={props.compensation}
             createdAt={props.createdAt}
-            industry={props.industries[props.employerProfile.industry]}
+            industry={props.industries[props.employerProfile.industry.id]}
             remoteWork={props.remoteWork ? 1 : 0}
             paid={props.paid ? 1 : 0}
             questions={props.questions}

@@ -95,7 +95,7 @@ const MyPostingsContainer = React.createClass({
 
           this.props.route.page === "postings-open"
             ? <MyPostings 
-                jobs={jobs}
+                jobs={[]}
                 selectedJobId={null}
               />
             : this.props.route.page === "postings-closed"

@@ -22,7 +22,7 @@ import { sidebar, sidebarLogo, sidebarItemsContainer,
 
 
         currentPageActiveStyle, sidebarItemName, sidebarListItemContainer, 
-        subSidebarListItemContainer, selectedSubSidebarItem,
+        subSidebarListItemContainer, selectedSubSidebarItem, white,
         cursorPointer, subSidebar } from '../styles/SidebarStyles.css'
 
 export default function SideBar ({ onLogout, isAStudent, profilePicture, page }) {
@@ -215,7 +215,7 @@ export default function SideBar ({ onLogout, isAStudent, profilePicture, page })
 
           <Link to="/mypostings/open" className={noDecoration}>
             <div className={subSidebarListItemContainer}>
-              <div className={sidebarItemName}>Open</div>
+              <div className={page === "postings-open" ? `${sidebarItemName} ${white}` : sidebarItemName}>Open</div>
               <div className={sidebarItem}>
                 <div className={page === "postings-open" ? selectedSubSidebarItem : ''}>
                   <i className={" fa fa-circle-o "} aria-hidden="true"></i>
@@ -226,7 +226,7 @@ export default function SideBar ({ onLogout, isAStudent, profilePicture, page })
 
           <Link to="/mypostings/closed" className={noDecoration}>
             <div className={subSidebarListItemContainer}>
-              <div className={sidebarItemName}>Closed</div>
+              <div className={page === "postings-closed" ? `${sidebarItemName} ${white}` : sidebarItemName}>Closed</div>
               <div className={sidebarItem}>
                 <div className={page === "postings-closed" ? selectedSubSidebarItem : ''}>
                   <i className={" fa fa-times-circle"} aria-hidden="true"></i>
@@ -237,7 +237,7 @@ export default function SideBar ({ onLogout, isAStudent, profilePicture, page })
 
           <Link to="/mypostings/approval" className={noDecoration}>
             <div className={subSidebarListItemContainer}>
-              <div className={sidebarItemName}>Awaiting Approval</div>
+              <div className={page === "postings-approval" ? `${sidebarItemName} ${white}` : sidebarItemName}>Awaiting Approval</div>
               <div className={sidebarItem}>
                 <div className={page === "postings-approval" ? selectedSubSidebarItem : ''}>
                   <i className={" fa fa-clock-o"} aria-hidden="true"></i>
