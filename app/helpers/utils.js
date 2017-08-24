@@ -182,7 +182,7 @@ export function validateCity(city) {
 }
 
 export function validateAddress(address) {
-  let re = /^[a-z0-9 #,.'-]{2,30}$/i // numbers, letters and spaces only
+  let re = /^[a-z0-9 #,.'-]{2,50}$/i // numbers, letters and spaces only
   return re.test(address)
 }
 
