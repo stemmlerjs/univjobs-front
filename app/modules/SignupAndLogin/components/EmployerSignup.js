@@ -83,7 +83,7 @@ const EmployerSignup = React.createClass({
                     className={`${btn} ${material_1}`} 
                     onClick={() => this.refs.employerModal.show()}
                 >
-                    Sign up and post a job
+                    Post a job for free
                 </button>
                 <div id="employer-signup-modal-wrapper">
                     <SkyLight 
