@@ -204,7 +204,7 @@ export function validateJobTitle(jobTitle) {
 }
 
 export function validateWebURL(value){
-  return /^(http\:\/\/|https\:\/\/)?([a-z0-9][a-z0-9\-]*\.)+[a-z0-9][a-z0-9\-]*$/.test(value.toLowerCase())
+  return /^(http\:\/\/|https\:\/\/)?([a-z0-9][a-z0-9\-]*\.)+[a-z0-9][a-z0-9\-\/]*$/.test(value.toLowerCase())  
 }
  /*
  * return false if it's an array 
