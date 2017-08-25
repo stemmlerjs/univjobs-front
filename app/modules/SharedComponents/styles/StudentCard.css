@@ -355,7 +355,6 @@ width: 117px;
 .imgContainer > img {
 height: 106px;
     width: 106px;
-    border: 1px solid #4d5050;
 }
 
 .cardHeaderContainer {
@@ -474,7 +473,6 @@ height: 106px;
 .altImageContainer {
     height: 106px;
     width: 106px;
-    border: 1px solid #4d5050;
     background-color: #dddee0;
     display: flex;
     flex-direction: column;
