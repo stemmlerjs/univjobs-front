@@ -151,7 +151,6 @@ window.students = students;
                                             ? false 
                                             : true;
 
-                                            console.log(student)
                 if (!shouldFilterOut) return student
               })
               
