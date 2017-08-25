@@ -24,7 +24,7 @@ display: flex;
 }
 
 .imgContainer {
-
+    width: 136px;
 }
 
 .imgContainer > img {
