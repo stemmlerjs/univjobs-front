@@ -15,7 +15,7 @@ import React, { PropTypes } from 'react'
 import config from 'config'
 import ReactTooltip from 'react-tooltip'
 
-import { studentProfileModalContainer, studentProfileLeftContainer, stProfileHeader, stProfileImageContainer,
+import { studentProfileModalContainer, studentProfileLeftContainer, stProfileHeader, stProfileImageContainer, stProfileImageContainerAlt,
   stProfileNameAndSchool, stProfileName, stProfileProgram, studenProfileRightContainer, stProfileGrad, itemIcon, experienceHobbiesEtc,
   listItemContainer, itemIconGPA, supplementalItemsContainer, supplementalItemsDetail, invite, leftsideDetails,
   buttons, whiteTxt, questionText, questionHeader, questionContainer, buttonsContainer, questionsAndAnswersContainer,
@@ -42,7 +42,7 @@ const StudentProfileModal = ({ pictureUrl, name, major, sportsString, languagesS
           */
         }
         <div className={stProfileHeader}>
-          <div className={stProfileImageContainer}>
+          <div className={pictureUrl.indexOf("null") === -1 ? stProfileImageContainer : stProfileImageContainerAlt}>
 
               {
                 pictureUrl.indexOf("null") === -1

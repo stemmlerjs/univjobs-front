@@ -11,8 +11,18 @@
     flex-direction: row;
     text-align: left;
 } 
+
+.stProfileImageContainerAlt {
+    
+} 
+
+
+.stProfileImageContainerAlt img {
+    width: 232px;
+} 
+
 .stProfileImageContainer{
-    width: 172px;
+    width: 232px;
 } 
 
 .stProfileImageContainer img {
