@@ -342,12 +342,21 @@ const StudentDashboardContainer = React.createClass({
   */
 
   openJobAppModal(e, selectedJob) {
+    debugger;
     if (e !== null) e.preventDefault()
 
     var jobId = selectedJob.job_id;
     var jobTitle = selectedJob.title;
-    var url = window.location.href.substring(0, window.location.href.indexOf("?")) + "/" + jobId
 
+    // var url;
+    // if (window.CURRENT_ENV == "dev") {
+    //   url = window.location.href.substring(0, window.location.href.indexOf("?")) + "/" + jobId
+    // }
+
+    // else {
+    //   url = window.location.href + "/" + jobId
+    // }
+    
     document.title = jobTitle + " - Univjobs";
     
     var path = this.props.route.path 
@@ -514,6 +523,10 @@ const StudentDashboardContainer = React.createClass({
     this.refs.confirmApplyModal.hide()
   },
 
+  componentDidMount () {
+    console.log("OK, component mounted")
+  },
+
  /*
   * componentDidMount
   * 
@@ -551,7 +564,7 @@ const StudentDashboardContainer = React.createClass({
               * find the job that this id belongs to from the view and then we're 
               * going to have to open the modal for it.
               */
-
+               
                 if (shouldOpenModal) {
                   var jobFound = false;
                   console.log(`[Univjobs]: About to attempt to open job_id=${jobId} from external link.`)
@@ -568,7 +581,8 @@ const StudentDashboardContainer = React.createClass({
                      */
 
                     if (job.job_id == jobId) {
-
+                      
+                      console.log(`[Univjobs]:Found job job_id=${jobId} on componentWillMount. We should load this into the job app modal on componentDidMount().`)
                       jobFound = true;
                       this.props.openJobAppModal(job)
                       this.refs.jobAppModal.show()
