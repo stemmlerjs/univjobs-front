@@ -60,6 +60,11 @@ height: 73px;
  * BODY 
  */
 
+.bodySectionInnerMapRender {
+     width: 100%;
+    display: flex;
+}
+
 .bodySection {
   margin: 25px;
   display: flex;
@@ -98,6 +103,10 @@ height: 73px;
     align-items: center;
 }
 
+/*
+ * Standard Button
+ */
+
 .standardButton {
     padding: 10px 15px 10px 15px;
     border-radius: 3px;
@@ -108,6 +117,52 @@ height: 73px;
     text-shadow: 1px 1px 0px rgba(0, 0, 0, .1);
     cursor: pointer;
     margin-left: 10px;
+    transition: all 100ms ease-out;
+    outline: none;
+}
+
+.standardButton:hover {
+    background-color: #63b7f2;
+}
+
+/*
+ * Standard Red Button
+ */
+
+.standardButtonRed {
+    padding: 10px 15px 10px 15px;
+    border-radius: 3px;
+    border: 0;
+    background: #db3636;
+    font-size: 14px;
+    color: white;
+    text-shadow: 1px 1px 0px rgba(0, 0, 0, .1);
+    cursor: pointer;
+    margin-left: 10px;
+    transition: all 100ms ease-out;
+    outline: none;
+}
+
+.standardButtonRed:hover {
+    background: #ff7878;
+}
+
+/*
+ * Standard Inactive Button
+ */
+
+.standardButtonInactive {
+    padding: 10px 15px 10px 15px;
+    border-radius: 3px;
+    border: 0;
+    background: #777777;
+    font-size: 14px;
+    color: #e4e4e4;
+    text-shadow: 1px 1px 0px rgba(0, 0, 0, .1);
+    margin-left: 10px;
+    transition: all 100ms ease-out;
+    opacity: 0.6;
+    outline: none;
 }
 
 .box {
@@ -139,4 +194,59 @@ height: 73px;
     padding: 28px;
     font-size: 25px;
     font-weight: 100;
+}
+
+.twenty {
+    font-size:20px;
+    font-weight: 400;
+}
+
+/*
+ * Editable Box
+ */
+
+.editableArea {
+    color: #1c1c1c;
+    width: 100%;
+    font-family: 'Roboto';
+    padding: 11px;
+     resize: none; 
+    border-radius: 4px;
+    box-sizing: border-box;
+    border: solid 1px #d6d6d6;
+    background: #f9f9f9;
+    font-size: 14px;
+}
+
+.editableAreaResizeable {
+        color: #1c1c1c;
+    width: 100%;
+    font-family: 'Roboto';
+    padding: 11px;
+    border-radius: 4px;
+    box-sizing: border-box;
+    border: solid 1px #d6d6d6;
+    background: #f9f9f9;
+    font-size: 14px;
+    resize: vertical; 
+    min-height: 107px;
+}
+
+.editableTitleArea {
+    font-size: 25px;
+    font-weight: 700;
+    color: #1c1c1c;
+    width: 100%;
+    font-family: 'Roboto';
+    padding: 11px;
+    resize: vertical;
+    border-radius: 4px;
+    box-sizing: border-box;
+    border: solid 1px #d6d6d6;
+    background: #f9f9f9;
+}
+
+.saveButtonsContainer {
+        margin-top: 25px;
+    text-align: center;
 }

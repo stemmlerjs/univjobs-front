@@ -13,7 +13,6 @@ import { createMiddleware } from 'redux-beacon';
 import { GoogleAnalytics } from 'redux-beacon/targets/google-analytics';
 import { GoogleTagManager } from 'redux-beacon/targets/google-tag-manager';
 
-
 import { logger } from 'redux-beacon/extensions/logger';
 
 //Forms and toastr

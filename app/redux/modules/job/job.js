@@ -607,9 +607,10 @@ export default function job (state = initialJobState, action) {
         publicJobView: publicJobView.reducers.publicJobView(state.publicJobView, action)
       }
 
-   /*
-    * Student actions
-    */
+  /* ===================================
+   * PUBLIC JOB VIEW ACTIONS
+   * ===================================
+   */
 
     case UPDATE_FILTERED_JOBS:
       return {

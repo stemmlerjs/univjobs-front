@@ -76,4 +76,40 @@ export function getPublicJobViewById (jobId) {
 	})
 }
 
+/*
+ * getAllInvitesForJob
+ * 
+ * Gets all of the student invite objects for a specific job.
+ */
+
+export function getAllInvitesForJob (jobId) {
+  const accessToken = getAccessToken()
+
+  return axios({
+    method: 'get',
+    url: config.baseUrl + 'jobs/invite/' + jobId,
+		headers: {
+			'Authorization':  accessToken
+		}
+  })
+}
+
+/*
+ * closeJob
+ * 
+ * Closes a job.
+ */
+
+export function closeJob (jobId) {
+  const accessToken = getAccessToken()
+
+  return axios({
+    method: 'post',
+    url: config.baseUrl + 'jobs/close/' + jobId,
+		headers: {
+			'Authorization':  accessToken
+		}
+  })
+}
+
 

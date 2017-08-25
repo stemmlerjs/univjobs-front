@@ -4,38 +4,100 @@ import React, { PropTypes } from 'react'
 import { ApplicantCount, StartDateComponent, PaidJobComponent, LocationComponent }  from 'modules/SharedComponents'
 
 import { textDetailsTitle, textDetailsField, title, jobTypeText } from '../styles/JobDetailsStyles.css'
-import { box } from '../styles/MyPostingsStyles.css'
+import { box, editableArea, editableAreaResizeable, editableTitleArea, standardButton, 
+    standardButtonRed, standardButtonInactive, saveButtonsContainer } from '../styles/MyPostingsStyles.css'
 
-export default function JobDetails ({}) {
+export default function JobDetails ({ 
+  jobTitle, 
+  paid, 
+  compensation, 
+  desiredSkills, 
+  location, 
+  qualifications, 
+  remoteWork, 
+  responsibilities, 
+  startDate, 
+  createdAt, 
+  updatedAt,
+  jobType,
+  page,
+
+  editViewEnabled,
+  handleUpdateJobDetailsField
+}) {
 
   return (
     <div className={box}>
       
-      <div className={title}>Marketing Street Team</div>
-      <div className={jobTypeText}>Part-time</div>
+      {
+        !editViewEnabled
+          ? <div className={title}>{jobTitle}</div>
+          : <textarea onBlur={(e) => handleUpdateJobDetailsField(e.target.value, 'title', page)} 
+            defaultValue={jobTitle} className={editableTitleArea}></textarea>
+      }
       
-      <StartDateComponent date={new Date()}/>
-      <LocationComponent location={'12 Echo Villa Avenue, Brantford ON'} remoteWork={false}/>
-      <PaidJobComponent paid={true}/>
+      <div className={jobTypeText}>{
+          jobType === 1 
+          ? 'One Time Gig' :
+          jobType === 2 
+          ? 'Summer' :
+          jobType === 3 
+          ? 'Winter' :
+          jobType === 4
+          ? 'Freelance' :
+          jobType === 5
+          ? 'Campus Rep' :
+          jobType === 6
+          ? 'Part-time' :
+          jobType === 7 
+          ? 'Full-time' :
+          ''
+        }
+      </div>
+      
+      <StartDateComponent date={new Date(startDate)}/>
+      <LocationComponent location={location} remoteWork={remoteWork}/>
+      <PaidJobComponent paid={paid}/>
 
       <div className={textDetailsTitle}>Responsibilities</div>
-      <div className={textDetailsField}>The Boys Next Door's best known song, "Shivers", written by Howard, 
-        and first performed and recorded by his band The Young Charlatans, was banned by radio stations because of a reference to suicide. 
-        After recordings and moderate success in Australia (including hundreds of live shows) they headed for London in 1980, changed their name to The Birthday Party and launched into a period of innovative and aggressive music-making. Some sources say the band took its new name from the Harold Pinter play The Birthday Party;[8] others (including Ian Johnston's Cave biography) state it was prompted by Cave misremembering, or intentionally misattributing, the name to a non-existent birthday party scene in the Dostoyevsky novel Crime and Punishment. In a 2008 interview, Rowland S. Howard gave his own recollection: "The name The Birthday Party came up in conversation between Nick and myself. There's this apocryphal story about it coming from a Dostoyevsky novel. It may have had various connotations, but what he and I spoke about was a sense of celebration and making things into more an occasion and ritual".[9] They resided in London, with trips back to Australia and tours through Europe and the U.S. before relocating to West Berlin in 1982.</div>
+      {
+        !editViewEnabled
+          ? <div className={textDetailsField}>{responsibilities}</div>
+          : <textarea onBlur={(e) => handleUpdateJobDetailsField(e.target.value, 'responsibilities', page)} defaultValue={responsibilities} className={editableAreaResizeable}></textarea>
+      }
 
       <div className={textDetailsTitle}>Qualifications</div>
-      <div className={textDetailsField}>Band members
-Nick Cave – vocals, saxophone (1976–1983)
-Mick Harvey – guitar, drums, keyboards (1976–1983)
-Rowland S. Howard – guitar, vocals (1978–1983; died 2009)
-Tracy Pew – bass, clarinet (1976–1982, 1982–1983; died 1986)
-Phill Calvert – drums (1976–1982)</div>
+      {
+        !editViewEnabled
+          ? <div className={textDetailsField}>{qualifications}</div>
+          : <textarea onBlur={(e) => handleUpdateJobDetailsField(e.target.value, 'qualification', page)} defaultValue={qualifications} className={editableAreaResizeable}></textarea>
+      }
+
 
       <div className={textDetailsTitle}>Desired Skills</div>
-      <div className={textDetailsField}>HTML, CSS, JavaScript, other</div>
-
+      {
+        !editViewEnabled
+          ? <div className={textDetailsField}>{desiredSkills}</div>
+          : <textarea onBlur={(e) => handleUpdateJobDetailsField(e.target.value, 'desired_skills', page)} defaultValue={desiredSkills} className={editableArea}></textarea>
+      }
+      
       <div className={textDetailsTitle}>Compensation</div>
-      <div className={textDetailsField}>20/hr every single day</div>
+      {
+        !editViewEnabled
+          ? <div className={textDetailsField}>{compensation}</div>
+          : <textarea onBlur={(e) => handleUpdateJobDetailsField(e.target.value, 'compensation', page)} defaultValue={compensation} className={editableArea}></textarea>
+      }
+
+      {
+        editViewEnabled
+          ? <div className={saveButtonsContainer}>
+              <button className={standardButtonRed}>Cancel</button>
+              <button className={standardButton}>Save changes</button>
+            </div>
+          : ''
+      }
+      
+      
     </div>
   )
 }

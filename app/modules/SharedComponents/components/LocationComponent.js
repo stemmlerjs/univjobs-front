@@ -11,6 +11,8 @@ import { calendarContainer, locationIconNoHover } from '../styles/LocationCompon
 
 export default function LocationComponent ({remoteWork, location}) {
 
+  console.log(remoteWork, location)
+
   return (
     <div className={calendarContainer}>
       <i className={`fa fa-map-marker ${locationIconNoHover}`} aria-hidden="true"></i>

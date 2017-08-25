@@ -4,8 +4,8 @@
 }
 
 .invitationsContainer {
-        overflow-y: scroll;
-    height: 350px;
+    overflow-y: scroll;
+    max-height: 300px;
 }
 
 .invitedStudentRow {
@@ -39,8 +39,15 @@ margin-right: 15px;
 .invitedStudentAppliedContainer {
     text-align: right;
     width: 37%;
+    padding-right: 20px;
 }
 
 .invitedStudentAppliedContainer img {
     height: 36px;
+}
+
+.special {
+    color: #0790f0;
+    font-weight: 700;
+    text-decoration: none;
 }

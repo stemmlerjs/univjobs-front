@@ -7,7 +7,7 @@ import { altBox } from '../styles/MyPostingsStyles.css'
 
 import { applicantsjobsCountHeader, applicantsjobsCount, divide } from '../styles/JobApplicantsSummaryStyles.css'
 
-export default function JobApplicantsSummary ({ maxApplicants, numPositions }) {
+export default function JobApplicantsSummary ({ maxApplicants, numApplicants }) {
 
   return (
     <div className={altBox}>
@@ -16,7 +16,7 @@ export default function JobApplicantsSummary ({ maxApplicants, numPositions }) {
         <div># of applicant slots available</div>
       </div>
       <div className={applicantsjobsCount}>
-        <div>{numPositions}</div>
+        <div>{numApplicants}</div>
         <div className={divide}>{" / "}</div>
         <div>{maxApplicants}</div>
       </div>

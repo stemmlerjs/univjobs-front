@@ -443,7 +443,7 @@ const EmployerDashboardContainer = React.createClass({
                       filter="contains"
                       itemComponent={InviteListItem}
                       data={this.props.inviteStudentModal.jobInvitesForSelectedStudent ? this.props.inviteStudentModal.jobInvitesForSelectedStudent.filter((job) => {
-                        return job.active !== 0
+                        return job.active !== 0 && job.verified == 1
                       }) : this.props.inviteStudentModal.jobInvitesForSelectedStudent}
                       onChange={(value) => {
                         this.selectInviteJob(value)

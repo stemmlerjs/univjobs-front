@@ -167,7 +167,10 @@ export default function EmployerDashboard ({students, lists, industriesList, pro
                     languages={student.languages}
                     clubs={student.clubs}
                     sports={student.sports}
-                    major={lists.majors[student.major].length > 35 ? lists.majors[student.major].substring(0,35) + "..." : lists.majors[student.major]}
+                    major={lists.majors[student.major]
+                      ? lists.majors[student.major].length > 35 ? lists.majors[student.major].substring(0,35) + "..." : lists.majors[student.major]
+                      : lists.majors[student.major]
+                    }
                     gpa={student.gpa}
                     gradDate={new Date(student.grad_date)}
                     schoolName={student.school_name}

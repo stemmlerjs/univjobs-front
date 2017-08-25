@@ -9,50 +9,110 @@ import JobInvitations from './JobInvitations'
 import JobMetrics from './JobMetrics'
 import JobSettings from './JobSettings'
 import MyPostingsHeader from './MyPostingsHeader'
+import JobPostingsListView from './JobPostingsListView'
+
+import ReactTooltip from 'react-tooltip'  
 
 import { Link } from 'react-router'
 
 import { bodySection, bodySectionNoJobs, bodySectionColumn,
   linkStyle,
-  sectionContainer, sectionTitle, standardButton,
-  sectionContainerHeader, sectionTitleAlt, box, altBox } from '../styles/MyPostingsStyles.css'
+  sectionContainer, sectionTitle, standardButton, standardButtonRed, standardButtonInactive,
+  sectionContainerHeader, sectionTitleAlt, box, altBox,
+  bodySectionInnerMapRender } from '../styles/MyPostingsStyles.css'
 
-export default function MyPostings ({ jobs, selectedJobId }) {
+export default function MyPostings ({ 
+    jobs, 
+    selectedJob, 
+    selectedOpenJobInvites,
+    jobSelectDropdownIsOpen,
+    editViewEnabled,
 
-    const JobDetailsSectionMyPostingsOpen = () => {
+    handleOpenJobSelect,
+    handleChangeSelectedJob,
+    handleCloseJob,
+    handleEnterEditJobDetailsView,
+    handleUpdateJobDetailsField
+  }) {
+
+    /*
+     * All of the job details and stuff.
+     */
+
+    const JobDetailsSectionMyPostingsOpen = ({ job, handleCloseJob, handleEnterEditJobDetailsView, handleUpdateJobDetailsField, editViewEnabled }) => {
       return (
         <div className={sectionContainer}>
           <div className={sectionContainerHeader}>
             <div className={sectionTitle}>Details</div>
             <div>
-              <button className={standardButton}><i className={"fa fa-pencil-square-o"} aria-hidden="true"></i></button>
-              <button className={standardButton}>View Public Posting</button>
+              <Link to={`/posting/${job.job_id}`}><button className={standardButton}>View Public Posting</button></Link>
+
+              {
+                job.applicants.length == 0
+                  ? <button data-tip={'Edit job'} onClick={handleEnterEditJobDetailsView} className={standardButton}>
+                      <i  className={"fa fa-pencil-square-o"} aria-hidden="true"></i>
+                    </button>
+                  : <button data-tip={'Edit job - unavailable after students have applied.'} className={standardButtonInactive}>
+                      <i  className={"fa fa-pencil-square-o"} aria-hidden="true"></i>
+                    </button>
+              }
+              
+              <button data-tip={'Close job'} onClick={() => handleCloseJob(job.job_id)} className={standardButtonRed}>
+                <i className={"fa fa-times"} aria-hidden="true"></i>
+              </button>
+              <ReactTooltip delayHide={100} delayShow={20} place="bottom" effect="float"/>
             </div>
           </div>
-          <JobDetails/>
+          <JobDetails
+            jobTitle={job.title}
+            desiredSkills={job.desired_skills}
+            location={job.location}
+            qualifications={job.qualification}
+            remoteWork={job.remote_work}
+            responsibilities={job.responsibilities}
+            startDate={job.start_date}
+            createdAt={job.createdAt}
+            updatedAt={job.updatedAt}
+            paid={job.paid}
+            compensation={job.compensation}
+            jobType={job.type}
+            editViewEnabled={editViewEnabled}
+            handleUpdateJobDetailsField={handleUpdateJobDetailsField}
+            page={'open'}
+          />
         </div>
       )
     }
 
-    const JobQuestionSectionMyPostingsOpen = () => { 
+    /*
+     * All of the questions for this job.
+     */
+
+    const JobQuestionSectionMyPostingsOpen = ({ questions, numApplicants }) => { 
       return (
         <div className={sectionContainer}>
           <div className={sectionContainerHeader}>
             <div className={sectionTitle}>Questions</div>
             <div>
-              <button className={standardButton}><i className={"fa fa-pencil-square-o"} aria-hidden="true"></i></button>
+              {
+                numApplicants == 0
+                  ? <button data-tip={'Edit questions'} className={standardButton}>
+                      <i className={"fa fa-pencil-square-o"} aria-hidden="true"></i>
+                    </button>
+                  : <button data-tip={'Edit questions - unavailable after students have applied.'} className={standardButtonInactive}>
+                      <i className={"fa fa-pencil-square-o"} aria-hidden="true"></i>
+                    </button>
+              }
             </div>
           </div>
-          <JobQuestions questions={[{
-            text: 'What is your favourite thing to do?'
-          }, {
-            text: 'What is your second favourite thing to do?'
-          }]}/>
+          <JobQuestions questions={questions}/>
         </div>
       )
     }
 
-    const JobApplicantsSummarySectionMyPostingsOpen = () => {
+
+
+    const JobApplicantsSummarySectionMyPostingsOpen = ({ maxApplicants, numApplicants }) => {
       return (
         <div className={sectionContainer}>
           <div className={sectionContainerHeader}>
@@ -61,74 +121,36 @@ export default function MyPostings ({ jobs, selectedJobId }) {
               <button className={standardButton}>Go to applicants</button>
             </div>
           </div>
-          <JobApplicantsSummary maxApplicants={40} numPositions={20}/>
+          <JobApplicantsSummary maxApplicants={maxApplicants} numApplicants={numApplicants}/>
         </div>
       )
     }
 
-    const JobNumPositionsSectionMyPostingsOpen = () => {
+    const JobNumPositionsSectionMyPostingsOpen = ({ numApplicants, numPositions }) => {
       return (
         <div className={sectionContainer}>
           <div className={sectionContainerHeader}>
             <div className={sectionTitleAlt}># OF POSITIONS</div>
           </div>
           <div className={box}>
-            This jobs has a total of 2 positions, 0 of which are currently filled.
+            {
+              numPositions == 1
+                ? `This job has ${numPositions} position. It has not yet been filled.`
+                : `This job has a total ${numPositions} of positions, ${numApplicants} of which are currently filled.`
+            }
           </div>
         </div>
       )
     }
 
-    const JobInvitationsSectionMyPostingsOpen = () => {
+    const JobInvitationsSectionMyPostingsOpen = ({invitedStudents}) => {
+      console.log("JobInvitationsSectionMyPostingsOpen", invitedStudents)
       return (
         <div className={sectionContainer}>
           <div className={sectionContainerHeader}>
             <div className={sectionTitle}>Invitations</div>
           </div>
-          <JobInvitations students={[
-            {
-              profilePictureUrl: 'https://api.univjobs.ca/avatar/profilepicture-1502902338450.png',
-              name: "Khalil Stemmler",
-              school: 'Sheridan College',
-              applied: false
-            },
-            {
-              profilePictureUrl: 'https://api.univjobs.ca/avatar/profilepicture-1501633682826.png',
-              name: "Alysha O'Connor",
-              school: 'Sheridan College',
-              applied: true
-            },
-            {
-              profilePictureUrl: 'https://api.univjobs.ca/avatar/profilepicture-1501633682826.png',
-              name: "Alysha O'Connor",
-              school: 'Sheridan College',
-              applied: true
-            },
-            {
-              profilePictureUrl: 'https://api.univjobs.ca/avatar/profilepicture-1501633682826.png',
-              name: "Alysha O'Connor",
-              school: 'Sheridan College',
-              applied: true
-            },
-            {
-              profilePictureUrl: 'https://api.univjobs.ca/avatar/profilepicture-1501633682826.png',
-              name: "Alysha O'Connor",
-              school: 'Sheridan College',
-              applied: true
-            },
-            {
-              profilePictureUrl: 'https://api.univjobs.ca/avatar/profilepicture-1501633682826.png',
-              name: "Alysha O'Connor",
-              school: 'Sheridan College',
-              applied: true
-            },
-            {
-              profilePictureUrl: 'https://api.univjobs.ca/avatar/profilepicture-1501633682826.png',
-              name: "Alysha O'Connor",
-              school: 'Sheridan College',
-              applied: true
-            }
-          ]}/>
+          <JobInvitations students={invitedStudents}/>
         </div>
       )
     }
@@ -161,64 +183,77 @@ export default function MyPostings ({ jobs, selectedJobId }) {
       <div className={rootSidebarOpenComponentContainer}>
 
         {/* My Postings Header */}
-        <MyPostingsHeader page={"postings-open"} jobs={jobs} />
+        <MyPostingsHeader 
+          page={"postings-open"} 
+          jobs={jobs} 
+          jobSelectDropdownIsOpen={jobSelectDropdownIsOpen}
+          handleOpenJobSelect={handleOpenJobSelect}
+          handleChangeSelectedJob={handleChangeSelectedJob}
+          selectedJob={selectedJob}
+        />
         { 
 
           /*
            * When no job is selected, 
            */
 
-          selectedJobId == null || selectedJobId == undefined || selectedJobId == ""
+          selectedJob.job_id == undefined 
             ? jobs.length === 0 
-              ? <div className={bodySectionNoJobs}>You don't have any open jobs yet. <Link className={linkStyle} to="/categories">Post your first job</Link> and we'll let you know when it's approved!</div>
-              : <div className={bodySectionNoJobs}>Select a job from the dropdown above to see a detailed breakdown.</div>
+              ? <div className={bodySectionNoJobs}>You don't have any open jobs yet. <Link className={linkStyle} to="/categories">Post a job</Link> and we'll let you know when it's approved!</div>
+              : <div className={bodySectionNoJobs}>
+                  <div>Select a job to see a detailed breakdown.</div>
+                  <JobPostingsListView jobs={jobs} page={"open"} handleChangeSelectedJob={handleChangeSelectedJob}/>
+                </div>
             : jobs.length === 0
-              ? <div className={bodySectionNoJobs}>You don't have any open jobs yet. <Link className={linkStyle} to="/categories">Post your first job</Link> and we'll let you know when it's approved!</div>
+              ? <div className={bodySectionNoJobs}>You don't have any open jobs yet. <Link className={linkStyle} to="/categories">Post a job</Link> and we'll let you know when it's approved!</div>
               : <div className={bodySection}>
 
-              {
-              /*
-                * =====================
-                * ======= LEFT ========
-                * =====================
-                *
-                * - Job Details
-                * - Job Questions
-                */
-              }
+                  {
+                    /*
+                      * =====================
+                      * ======= LEFT ========
+                      * =====================
+                      *
+                      * - Job Details
+                      * - Job Questions
+                      */
+                    }
 
-              <div className={bodySectionColumn}>
-                <JobDetailsSectionMyPostingsOpen/>
-                <JobQuestionSectionMyPostingsOpen/>
-              </div>
+                    <div className={bodySectionColumn}>
+                      <JobDetailsSectionMyPostingsOpen 
+                        job={selectedJob} 
+                        handleCloseJob={handleCloseJob} 
+                        editViewEnabled={editViewEnabled}
+                        handleEnterEditJobDetailsView={handleEnterEditJobDetailsView}
+                        handleUpdateJobDetailsField={handleUpdateJobDetailsField}
+                      />
+                      <JobQuestionSectionMyPostingsOpen questions={selectedJob.questions} numApplicants={selectedJob.applicants.length}/>
+                    </div>
 
-              {
-              /*
-                * =====================
-                * ====== RIGHT ========
-                * =====================
-                *
-                * - Applicants
-                * - # Positions
-                * - Invitations
-                * - Metrics
-                * - Settings
-                */
-              }
+                    {
+                    /*
+                      * =====================
+                      * ====== RIGHT ========
+                      * =====================
+                      *
+                      * - Applicants
+                      * - # Positions
+                      * - Invitations
+                      * - Metrics
+                      * - Settings
+                      */
+                    }
 
-              <div className={bodySectionColumn}>
-                <JobApplicantsSummarySectionMyPostingsOpen/>
-                <JobNumPositionsSectionMyPostingsOpen/>
-                <JobInvitationsSectionMyPostingsOpen/>
-                <JobMetricsSectionMyPostingsOpen/>
-                <JobSettingsSectionMyPostingsOpen/>
-              </div>
+                    <div className={bodySectionColumn}>
+                      <JobApplicantsSummarySectionMyPostingsOpen maxApplicants={selectedJob.max_applicants} numApplicants={selectedJob.applicants.length}/>
+                      <JobNumPositionsSectionMyPostingsOpen numApplicants={selectedJob.applicants.length} numPositions={selectedJob.num_positions}/>
+                      <JobInvitationsSectionMyPostingsOpen invitedStudents={selectedOpenJobInvites}/>
+                      <JobMetricsSectionMyPostingsOpen/>
+                      <JobSettingsSectionMyPostingsOpen/>
+                    </div>
 
             </div>
         }
-
-        
-          
       </div>
     )
 }

@@ -8,9 +8,7 @@ export default function JobSettings ({ notificationSettings }) {
 
   return (
     <div className={box}>
-      settings dude
-
-      
+      Settings are not yet available.
     </div>
   )
 }

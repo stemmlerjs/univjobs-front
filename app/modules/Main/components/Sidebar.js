@@ -25,7 +25,7 @@ import { sidebar, sidebarLogo, sidebarItemsContainer,
         subSidebarListItemContainer, selectedSubSidebarItem, white,
         cursorPointer, subSidebar } from '../styles/SidebarStyles.css'
 
-export default function SideBar ({ onLogout, isAStudent, profilePicture, page }) {
+export default function SideBar ({ onLogout, isAStudent, profilePicture, page, handleClearSelectedJob }) {
 
   /*
    * Sub-sidebar views
@@ -168,6 +168,7 @@ export default function SideBar ({ onLogout, isAStudent, profilePicture, page })
                       <div className={sidebarItem}>
                     <i className={animationItem7 + " fa fa-envelope"} aria-hidden="true"></i>
                   </div>
+                  <div className={sidebarItemName}>Job Invitations</div>
                 </div>
               </Link>
             : <Link to="/categories" className={noDecoration}>
@@ -213,7 +214,9 @@ export default function SideBar ({ onLogout, isAStudent, profilePicture, page })
           */
         }
 
-          <Link to="/mypostings/open" className={noDecoration}>
+          <Link to="/mypostings/open" onClick={() => {
+            handleClearSelectedJob('open')
+          }} className={noDecoration}>
             <div className={subSidebarListItemContainer}>
               <div className={page === "postings-open" ? `${sidebarItemName} ${white}` : sidebarItemName}>Open</div>
               <div className={sidebarItem}>
@@ -224,7 +227,9 @@ export default function SideBar ({ onLogout, isAStudent, profilePicture, page })
             </div>
           </Link>
 
-          <Link to="/mypostings/closed" className={noDecoration}>
+          <Link to="/mypostings/closed" onClick={() => {
+            handleClearSelectedJob('closed')
+          }} className={noDecoration}>
             <div className={subSidebarListItemContainer}>
               <div className={page === "postings-closed" ? `${sidebarItemName} ${white}` : sidebarItemName}>Closed</div>
               <div className={sidebarItem}>
@@ -235,7 +240,9 @@ export default function SideBar ({ onLogout, isAStudent, profilePicture, page })
             </div>
           </Link>
 
-          <Link to="/mypostings/approval" className={noDecoration}>
+          <Link to="/mypostings/approval" onClick={() => {
+            handleClearSelectedJob('awaiting')
+          }} className={noDecoration}>
             <div className={subSidebarListItemContainer}>
               <div className={page === "postings-approval" ? `${sidebarItemName} ${white}` : sidebarItemName}>Awaiting Approval</div>
               <div className={sidebarItem}>
@@ -389,6 +396,7 @@ export default function SideBar ({ onLogout, isAStudent, profilePicture, page })
                   <div className={sidebarItem}>
                 <i className={animationItem7 + " fa fa-envelope"} aria-hidden="true"></i>
               </div>
+              <div className={sidebarItemName}>Job Invitations</div>
             </div>
           </Link>
         : <Link to="/categories" className={noDecoration}>
