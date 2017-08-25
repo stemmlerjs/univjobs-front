@@ -15,6 +15,56 @@ import { bodySection, bodySectionColumn,  linkStyle,
   sectionContainer, sectionTitle, standardButton, bodySectionNoJobs, standardButtonInactive,
   sectionContainerHeader, sectionTitleAlt, box, altBox } from '../styles/MyPostingsStyles.css'
 
+
+const JobDetailsSectionMyPostingsClosed = ({job}) => {
+  return (
+    <div className={sectionContainer}>
+      <div className={sectionContainerHeader}>
+        <div className={sectionTitle}>Details</div>
+        <div>
+          <button className={standardButtonInactive}>Repost Job</button>
+        </div>
+      </div>
+      <JobDetails
+        jobTitle={job.title}
+        desiredSkills={job.desired_skills}
+        location={job.location}
+        qualifications={job.qualification}
+        remoteWork={job.remote_work}
+        responsibilities={job.responsibilities}
+        startDate={job.start_date}
+        createdAt={job.createdAt}
+        updatedAt={job.updatedAt}
+        paid={job.paid}
+        compensation={job.compensation}
+        jobType={job.type}/>
+    </div>
+  )
+}
+
+const JobQuestionSectionMyPostingsClosed = ({ questions }) => {
+  return (
+    <div className={sectionContainer}>
+      <div className={sectionContainerHeader}>
+        <div className={sectionTitle}>Questions</div>
+      </div>
+      <JobQuestions questions={questions}/>
+    </div>
+  )
+}
+
+const JobMetricsSectionMyPostingsClosed = () => {
+  return (
+    <div className={sectionContainer}>
+      <div className={sectionContainerHeader}>
+        <div className={sectionTitle}>Metrics</div>
+      </div>
+      <JobMetrics/>
+    </div>
+  )
+}
+
+
 export default function MyClosedPostings ({ 
     jobs, 
     jobSelectDropdownIsOpen,
@@ -23,54 +73,6 @@ export default function MyClosedPostings ({
     handleOpenJobSelect,
     handleChangeSelectedJob
  }) {
-
-    const JobDetailsSectionMyPostingsClosed = ({job}) => {
-      return (
-        <div className={sectionContainer}>
-          <div className={sectionContainerHeader}>
-            <div className={sectionTitle}>Details</div>
-            <div>
-              <button className={standardButtonInactive}>Repost Job</button>
-            </div>
-          </div>
-          <JobDetails
-            jobTitle={job.title}
-            desiredSkills={job.desired_skills}
-            location={job.location}
-            qualifications={job.qualification}
-            remoteWork={job.remote_work}
-            responsibilities={job.responsibilities}
-            startDate={job.start_date}
-            createdAt={job.createdAt}
-            updatedAt={job.updatedAt}
-            paid={job.paid}
-            compensation={job.compensation}
-            jobType={job.type}/>
-        </div>
-      )
-    }
-
-    const JobQuestionSectionMyPostingsClosed = ({ questions }) => {
-      return (
-        <div className={sectionContainer}>
-          <div className={sectionContainerHeader}>
-            <div className={sectionTitle}>Questions</div>
-          </div>
-          <JobQuestions questions={questions}/>
-        </div>
-      )
-    }
-
-    const JobMetricsSectionMyPostingsClosed = () => {
-      return (
-        <div className={sectionContainer}>
-          <div className={sectionContainerHeader}>
-            <div className={sectionTitle}>Metrics</div>
-          </div>
-          <JobMetrics/>
-        </div>
-      )
-    }
 
     return (
       <div className={rootSidebarOpenComponentContainer}>

@@ -5,9 +5,11 @@ import { DropdownList, DateTimePicker } from 'react-widgets'
 import Toggle from 'react-toggle'
 import { ApplicantCount, StartDateComponent, PaidJobComponent, LocationComponent }  from 'modules/SharedComponents'
 
-import { textDetailsTitle, textDetailsField, title, jobTypeText } from '../styles/JobDetailsStyles.css'
+import { textDetailsTitle, textDetailsField, title, jobTypeText, disabledInput } from '../styles/JobDetailsStyles.css'
 import { box, editableArea, editableAreaResizeable, editableTitleArea, standardButton, editableInput,
     standardButtonRed, standardButtonInactive, saveButtonsContainer, reactWidgetStyle, toggleContainer, flex } from '../styles/MyPostingsStyles.css'
+
+import { shine } from 'sharedStyles/animations.css'
 
 import InputSelector from 'modules/SharedComponents/components/InputSelector'
 
@@ -49,9 +51,14 @@ export default function JobDetails ({
   updatedAt,
   jobType,
   page,
+  isSavingChanges,
 
   editViewEnabled,
-  handleUpdateJobDetailsField
+  wereJobDetailsEditsMade,
+
+  handleUpdateJobDetailsField,
+  handleCancelJobDetailsEdits,
+  handleSaveJobDetailsEdits
 }) {
 
   return (
@@ -90,9 +97,10 @@ export default function JobDetails ({
                 className={reactWidgetStyle}
                 valueField="type" textField="text"
                 data={jobTypeList}
-                value={jobType}
                 defaultValue={jobType}
-                onChange={value => handleUpdateJobDetailsField(value.type, 'type', page)}
+                onChange={value => {
+                  handleUpdateJobDetailsField(value.type, 'type', page)
+                }}
               />
             </div>
       }
@@ -107,7 +115,7 @@ export default function JobDetails ({
                 time={false}
                 format='LL'
                 onChange={value => handleUpdateJobDetailsField(value, 'start_date', page)}
-                value={typeof startDate === "string" ? new Date(startDate) : startDate}
+                defaultValue={typeof startDate === "string" ? new Date(startDate) : startDate}
               />
           </div>
       }
@@ -128,11 +136,15 @@ export default function JobDetails ({
                     <Toggle
                       defaultChecked={remoteWork === 0 ? false : true}
                       onChange={(e) => {
-                        console.log(e.target.value)
-                      }} />
+                      handleUpdateJobDetailsField(e.target.checked === true ? 1 : 0, 'remote_work', page)
+                    }} />
                   </label>
                 </div>
-                <input className={editableInput} defaultValue={location}/>
+                <input
+                 className={remoteWork == 1 ? editableInput : `${editableInput} ${disabledInput}`} 
+                 defaultValue={location}
+                 onBlur={value => handleUpdateJobDetailsField(value, 'location', page)}
+                 />
               </div>
             </div>
       }
@@ -151,7 +163,7 @@ export default function JobDetails ({
                   <Toggle
                     defaultChecked={paid === 0 ? false : true}
                     onChange={(e) => {
-                      console.log(e.target.value)
+                      handleUpdateJobDetailsField(e.target.checked === true ? 1 : 0, 'paid', page)
                     }} />
                 </label>
               </div>
@@ -162,7 +174,10 @@ export default function JobDetails ({
       {
         !editViewEnabled
           ? <div className={textDetailsField}>{responsibilities}</div>
-          : <textarea onBlur={(e) => handleUpdateJobDetailsField(e.target.value, 'responsibilities', page)} defaultValue={responsibilities} className={editableAreaResizeable}></textarea>
+          : <textarea 
+              onChange={(e) => handleUpdateJobDetailsField(e.target.value, 'responsibilities', page)} 
+              defaultValue={responsibilities} 
+              className={editableAreaResizeable}></textarea>
       }
 
       <div className={textDetailsTitle}>Qualifications</div>
@@ -190,8 +205,11 @@ export default function JobDetails ({
       {
         editViewEnabled
           ? <div className={saveButtonsContainer}>
-              <button className={standardButtonRed}>Cancel</button>
-              <button className={standardButton}>Save changes</button>
+              <button onClick={handleCancelJobDetailsEdits} className={standardButtonRed}>Cancel</button>
+              <button onClick={() => {
+                console.log("lets go")
+                handleSaveJobDetailsEdits()  
+              }} className={isSavingChanges ? `${shine} ${standardButton}` : standardButton}>Save changes</button>
             </div>
           : ''
       }

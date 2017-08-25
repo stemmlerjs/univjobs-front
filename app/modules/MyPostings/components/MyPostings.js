@@ -19,7 +19,173 @@ import { bodySection, bodySectionNoJobs, bodySectionColumn,
   linkStyle,
   sectionContainer, sectionTitle, standardButton, standardButtonRed, standardButtonInactive,
   sectionContainerHeader, sectionTitleAlt, box, altBox,
-  bodySectionInnerMapRender } from '../styles/MyPostingsStyles.css'
+  bodySectionInnerMapRender, displayNone, inlineBlock } from '../styles/MyPostingsStyles.css'
+
+
+/*
+  * All of the job details and stuff.
+  */
+
+const JobDetailsSectionMyPostingsOpen = ({ job, 
+  editViewEnabled,
+  wereJobDetailsEditsMade,
+  isSavingChanges,
+
+  handleCloseJob, 
+  handleSaveJobDetailsEdits, 
+  handleEnterEditJobDetailsView, 
+  handleUpdateJobDetailsField, 
+  handleCancelJobDetailsEdits }) => {
+  return (
+    <div className={sectionContainer}>
+      <div className={sectionContainerHeader}>
+        <div className={sectionTitle}>Details</div>
+        <div>
+          <Link to={`/posting/${job.job_id}`}><button className={editViewEnabled ? displayNone : standardButton}>View Public Posting</button></Link>
+
+          {
+            job.applicants.length == 0
+              ? <div className={inlineBlock}>
+                  {
+                    !editViewEnabled
+                      ? <button data-tip={'Edit job'} onClick={handleEnterEditJobDetailsView} className={standardButton}>
+                          <i  className={"fa fa-pencil-square-o"} aria-hidden="true"></i>
+                        </button>
+                      : <button data-tip={'Cancel editing'} onClick={handleCancelJobDetailsEdits} className={standardButtonRed}>
+                          Cancel
+                        </button>
+                  }
+                </div>
+              : <button data-tip={'Edit job - unavailable after students have applied.'} className={standardButtonInactive}>
+                  <i  className={"fa fa-pencil-square-o"} aria-hidden="true"></i>
+                </button>
+          }
+          
+          <button data-tip={'Close job'} onClick={() => handleCloseJob(job.job_id)} className={editViewEnabled ? displayNone : standardButtonRed}>
+            <i className={"fa fa-times"} aria-hidden="true"></i>
+          </button>
+          <ReactTooltip delayHide={100} delayShow={20} place="bottom" effect="float"/>
+        </div>
+      </div>
+      <JobDetails
+        jobTitle={job.title}
+        desiredSkills={job.desired_skills}
+        location={job.location}
+        qualifications={job.qualification}
+        remoteWork={job.remote_work}
+        responsibilities={job.responsibilities}
+        startDate={job.start_date}
+        createdAt={job.createdAt}
+        updatedAt={job.updatedAt}
+        paid={job.paid}
+        compensation={job.compensation}
+        jobType={job.type}
+        editViewEnabled={editViewEnabled}
+        wereJobDetailsEditsMade={wereJobDetailsEditsMade}
+        isSavingChanges={isSavingChanges}
+        handleUpdateJobDetailsField={handleUpdateJobDetailsField}
+        handleCancelJobDetailsEdits={handleCancelJobDetailsEdits}
+        handleSaveJobDetailsEdits={handleSaveJobDetailsEdits}
+        page={'open'}
+      />
+    </div>
+  )
+}
+
+/*
+  * All of the questions for this job.
+  */
+
+const JobQuestionSectionMyPostingsOpen = ({ questions, numApplicants }) => { 
+  return (
+    <div className={sectionContainer}>
+      <div className={sectionContainerHeader}>
+        <div className={sectionTitle}>Questions</div>
+        <div>
+          {
+            numApplicants == 0
+              ? <button data-tip={'Edit questions'} className={standardButton}>
+                  <i className={"fa fa-pencil-square-o"} aria-hidden="true"></i>
+                </button>
+              : <button data-tip={'Edit questions - unavailable after students have applied.'} className={standardButtonInactive}>
+                  <i className={"fa fa-pencil-square-o"} aria-hidden="true"></i>
+                </button>
+          }
+        </div>
+      </div>
+      <JobQuestions questions={questions}/>
+    </div>
+  )
+}
+
+
+
+const JobApplicantsSummarySectionMyPostingsOpen = ({ maxApplicants, numApplicants }) => {
+  return (
+    <div className={sectionContainer}>
+      <div className={sectionContainerHeader}>
+        <div className={sectionTitleAlt}>APPLICANTS</div>
+        <div>
+          <button className={standardButton}>Go to applicants</button>
+        </div>
+      </div>
+      <JobApplicantsSummary maxApplicants={maxApplicants} numApplicants={numApplicants}/>
+    </div>
+  )
+}
+
+const JobNumPositionsSectionMyPostingsOpen = ({ numApplicants, numPositions }) => {
+  return (
+    <div className={sectionContainer}>
+      <div className={sectionContainerHeader}>
+        <div className={sectionTitleAlt}># OF POSITIONS</div>
+      </div>
+      <div className={box}>
+        {
+          numPositions == 1
+            ? `This job has ${numPositions} position. It has not yet been filled.`
+            : `This job has a total ${numPositions} of positions, ${numApplicants} of which are currently filled.`
+        }
+      </div>
+    </div>
+  )
+}
+
+const JobInvitationsSectionMyPostingsOpen = ({invitedStudents}) => {
+  console.log("JobInvitationsSectionMyPostingsOpen", invitedStudents)
+  return (
+    <div className={sectionContainer}>
+      <div className={sectionContainerHeader}>
+        <div className={sectionTitle}>Invitations</div>
+      </div>
+      <JobInvitations students={invitedStudents}/>
+    </div>
+  )
+}
+
+const JobMetricsSectionMyPostingsOpen = () => {
+  return (
+    <div className={sectionContainer}>
+      <div className={sectionContainerHeader}>
+        <div className={sectionTitle}>Metrics</div>
+      </div>
+      <JobMetrics/>
+    </div>
+  )
+}
+
+const JobSettingsSectionMyPostingsOpen = () => {
+  return (
+    <div className={sectionContainer}>
+      <div className={sectionContainerHeader}>
+        <div className={sectionTitle}>Settings</div>
+      </div>
+      <JobSettings notificationSettings={{
+        onApply: true
+      }}/>
+    </div>
+  )
+}
 
 export default function MyPostings ({ 
     jobs, 
@@ -27,157 +193,19 @@ export default function MyPostings ({
     selectedOpenJobInvites,
     jobSelectDropdownIsOpen,
     editViewEnabled,
+    wereJobDetailsEditsMade,
+    isSavingChanges,
 
     handleOpenJobSelect,
     handleChangeSelectedJob,
     handleCloseJob,
     handleEnterEditJobDetailsView,
-    handleUpdateJobDetailsField
+    handleUpdateJobDetailsField,
+    handleCancelJobDetailsEdits,
+    handleSaveJobDetailsEdits
   }) {
 
-    /*
-     * All of the job details and stuff.
-     */
 
-    const JobDetailsSectionMyPostingsOpen = ({ job, handleCloseJob, handleEnterEditJobDetailsView, handleUpdateJobDetailsField, editViewEnabled }) => {
-      return (
-        <div className={sectionContainer}>
-          <div className={sectionContainerHeader}>
-            <div className={sectionTitle}>Details</div>
-            <div>
-              <Link to={`/posting/${job.job_id}`}><button className={standardButton}>View Public Posting</button></Link>
-
-              {
-                job.applicants.length == 0
-                  ? <button data-tip={'Edit job'} onClick={handleEnterEditJobDetailsView} className={standardButton}>
-                      <i  className={"fa fa-pencil-square-o"} aria-hidden="true"></i>
-                    </button>
-                  : <button data-tip={'Edit job - unavailable after students have applied.'} className={standardButtonInactive}>
-                      <i  className={"fa fa-pencil-square-o"} aria-hidden="true"></i>
-                    </button>
-              }
-              
-              <button data-tip={'Close job'} onClick={() => handleCloseJob(job.job_id)} className={standardButtonRed}>
-                <i className={"fa fa-times"} aria-hidden="true"></i>
-              </button>
-              <ReactTooltip delayHide={100} delayShow={20} place="bottom" effect="float"/>
-            </div>
-          </div>
-          <JobDetails
-            jobTitle={job.title}
-            desiredSkills={job.desired_skills}
-            location={job.location}
-            qualifications={job.qualification}
-            remoteWork={job.remote_work}
-            responsibilities={job.responsibilities}
-            startDate={job.start_date}
-            createdAt={job.createdAt}
-            updatedAt={job.updatedAt}
-            paid={job.paid}
-            compensation={job.compensation}
-            jobType={job.type}
-            editViewEnabled={editViewEnabled}
-            handleUpdateJobDetailsField={handleUpdateJobDetailsField}
-            page={'open'}
-          />
-        </div>
-      )
-    }
-
-    /*
-     * All of the questions for this job.
-     */
-
-    const JobQuestionSectionMyPostingsOpen = ({ questions, numApplicants }) => { 
-      return (
-        <div className={sectionContainer}>
-          <div className={sectionContainerHeader}>
-            <div className={sectionTitle}>Questions</div>
-            <div>
-              {
-                numApplicants == 0
-                  ? <button data-tip={'Edit questions'} className={standardButton}>
-                      <i className={"fa fa-pencil-square-o"} aria-hidden="true"></i>
-                    </button>
-                  : <button data-tip={'Edit questions - unavailable after students have applied.'} className={standardButtonInactive}>
-                      <i className={"fa fa-pencil-square-o"} aria-hidden="true"></i>
-                    </button>
-              }
-            </div>
-          </div>
-          <JobQuestions questions={questions}/>
-        </div>
-      )
-    }
-
-
-
-    const JobApplicantsSummarySectionMyPostingsOpen = ({ maxApplicants, numApplicants }) => {
-      return (
-        <div className={sectionContainer}>
-          <div className={sectionContainerHeader}>
-            <div className={sectionTitleAlt}>APPLICANTS</div>
-            <div>
-              <button className={standardButton}>Go to applicants</button>
-            </div>
-          </div>
-          <JobApplicantsSummary maxApplicants={maxApplicants} numApplicants={numApplicants}/>
-        </div>
-      )
-    }
-
-    const JobNumPositionsSectionMyPostingsOpen = ({ numApplicants, numPositions }) => {
-      return (
-        <div className={sectionContainer}>
-          <div className={sectionContainerHeader}>
-            <div className={sectionTitleAlt}># OF POSITIONS</div>
-          </div>
-          <div className={box}>
-            {
-              numPositions == 1
-                ? `This job has ${numPositions} position. It has not yet been filled.`
-                : `This job has a total ${numPositions} of positions, ${numApplicants} of which are currently filled.`
-            }
-          </div>
-        </div>
-      )
-    }
-
-    const JobInvitationsSectionMyPostingsOpen = ({invitedStudents}) => {
-      console.log("JobInvitationsSectionMyPostingsOpen", invitedStudents)
-      return (
-        <div className={sectionContainer}>
-          <div className={sectionContainerHeader}>
-            <div className={sectionTitle}>Invitations</div>
-          </div>
-          <JobInvitations students={invitedStudents}/>
-        </div>
-      )
-    }
-
-    const JobMetricsSectionMyPostingsOpen = () => {
-      return (
-        <div className={sectionContainer}>
-          <div className={sectionContainerHeader}>
-            <div className={sectionTitle}>Metrics</div>
-          </div>
-          <JobMetrics/>
-        </div>
-      )
-    }
-
-    const JobSettingsSectionMyPostingsOpen = () => {
-      return (
-        <div className={sectionContainer}>
-          <div className={sectionContainerHeader}>
-            <div className={sectionTitle}>Settings</div>
-          </div>
-          <JobSettings notificationSettings={{
-            onApply: true
-          }}/>
-        </div>
-      )
-    }
 
     return (
       <div className={rootSidebarOpenComponentContainer}>
@@ -222,10 +250,14 @@ export default function MyPostings ({
                     <div className={bodySectionColumn}>
                       <JobDetailsSectionMyPostingsOpen 
                         job={selectedJob} 
+                        isSavingChanges={isSavingChanges}
                         handleCloseJob={handleCloseJob} 
                         editViewEnabled={editViewEnabled}
+                        wereJobDetailsEditsMade={wereJobDetailsEditsMade}
                         handleEnterEditJobDetailsView={handleEnterEditJobDetailsView}
                         handleUpdateJobDetailsField={handleUpdateJobDetailsField}
+                        handleCancelJobDetailsEdits={handleCancelJobDetailsEdits}
+                        handleSaveJobDetailsEdits={handleSaveJobDetailsEdits}
                       />
                       <JobQuestionSectionMyPostingsOpen questions={selectedJob.questions} numApplicants={selectedJob.applicants.length}/>
                     </div>

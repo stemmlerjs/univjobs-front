@@ -266,6 +266,7 @@ height: 73px;
     border: solid 1px #d6d6d6;
     background: #f9f9f9;
     font-size: 14px;
+    transition: all 100ms ease-out;
 }
 
 .toggleContainer {
@@ -276,4 +277,12 @@ height: 73px;
 
 .flex {
     display: flex;
+}
+
+.displayNone {
+    display: none;
+}
+
+.inlineBlock {
+    display: inline-block;
 }

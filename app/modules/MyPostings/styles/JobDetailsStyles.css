@@ -21,3 +21,7 @@
 .textDetailsField {
     color: #1c1c1c;
 }
+
+.disabledInput {
+    background: #eaeaea !important;
+}

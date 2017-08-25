@@ -18,6 +18,72 @@ import { bodySection, bodySectionColumn, linkStyle,
   sectionContainer, sectionTitle, standardButton, bodySectionNoJobs, standardButtonRed,
   sectionContainerHeader, sectionTitleAlt, box, altBox } from '../styles/MyPostingsStyles.css'
 
+  const JobDetailsSectionMyPostingsAwaiting = ({job}) => {
+    return (
+      <div className={sectionContainer}>
+        <div className={sectionContainerHeader}>
+          <div className={sectionTitle}>Details</div>
+          <div>
+            <button className={standardButton}><i className={"fa fa-pencil-square-o"} aria-hidden="true"></i></button>
+            <button className={standardButtonRed}><i className={"fa fa-times"} aria-hidden="true"></i></button>
+          </div>
+        </div>
+        <JobDetails
+          jobTitle={job.title}
+          desiredSkills={job.desired_skills}
+          location={job.location}
+          qualifications={job.qualification}
+          remoteWork={job.remote_work}
+          responsibilities={job.responsibilities}
+          startDate={job.start_date}
+          createdAt={job.createdAt}
+          updatedAt={job.updatedAt}
+          paid={job.paid}
+          compensation={job.compensation}
+          jobType={job.type}
+        />
+      </div>
+    )
+  }
+
+  const JobQuestionSectionMyPostingsAwaiting = ({ questions }) => {
+    return (
+      <div className={sectionContainer}>
+        <div className={sectionContainerHeader}>
+          <div className={sectionTitle}>Questions</div>
+          <div>
+            <button className={standardButton}><i className={"fa fa-pencil-square-o"} aria-hidden="true"></i></button>
+          </div>
+        </div>
+        <JobQuestions questions={questions}/>
+      </div>
+    )
+  }
+
+  const JobSettingsSectionMyPostingsAwaiting = () => {
+    return (
+      <div className={sectionContainer}>
+        <div className={sectionContainerHeader}>
+          <div className={sectionTitle}>Settings</div>
+        </div>
+        <JobSettings notificationSettings={{
+          onApply: true
+        }}/>
+      </div>
+    )
+  }
+
+  const JobStatusMyPostingsAwaiting = () => {
+    return (
+      <div className={sectionContainer}>
+        <div className={sectionContainerHeader}>
+          <div className={sectionTitleAlt}>STATUS</div>
+        </div>
+        <JobAwaitingStatus/>
+      </div>
+    )
+  }
+
 export default function MyAwaitingPostings ({ 
     jobs, 
     selectedJob, 
@@ -26,73 +92,6 @@ export default function MyAwaitingPostings ({
     handleOpenJobSelect,
     handleChangeSelectedJob
  }) {
-
-    const JobDetailsSectionMyPostingsAwaiting = ({job}) => {
-      return (
-        <div className={sectionContainer}>
-          <div className={sectionContainerHeader}>
-            <div className={sectionTitle}>Details</div>
-            <div>
-              <button className={standardButton}><i className={"fa fa-pencil-square-o"} aria-hidden="true"></i></button>
-              <button className={standardButtonRed}><i className={"fa fa-times"} aria-hidden="true"></i></button>
-            </div>
-          </div>
-          <JobDetails
-            jobTitle={job.title}
-            desiredSkills={job.desired_skills}
-            location={job.location}
-            qualifications={job.qualification}
-            remoteWork={job.remote_work}
-            responsibilities={job.responsibilities}
-            startDate={job.start_date}
-            createdAt={job.createdAt}
-            updatedAt={job.updatedAt}
-            paid={job.paid}
-            compensation={job.compensation}
-            jobType={job.type}
-          />
-        </div>
-      )
-    }
-
-    const JobQuestionSectionMyPostingsAwaiting = ({ questions }) => {
-      return (
-        <div className={sectionContainer}>
-          <div className={sectionContainerHeader}>
-            <div className={sectionTitle}>Questions</div>
-            <div>
-              <button className={standardButton}><i className={"fa fa-pencil-square-o"} aria-hidden="true"></i></button>
-            </div>
-          </div>
-          <JobQuestions questions={questions}/>
-        </div>
-      )
-    }
-
-    const JobSettingsSectionMyPostingsAwaiting = () => {
-      return (
-        <div className={sectionContainer}>
-          <div className={sectionContainerHeader}>
-            <div className={sectionTitle}>Settings</div>
-          </div>
-          <JobSettings notificationSettings={{
-            onApply: true
-          }}/>
-        </div>
-      )
-    }
-
-    const JobStatusMyPostingsAwaiting = () => {
-      return (
-        <div className={sectionContainer}>
-          <div className={sectionContainerHeader}>
-            <div className={sectionTitleAlt}>STATUS</div>
-          </div>
-          <JobAwaitingStatus/>
-        </div>
-      )
-    }
-
     return (
       <div className={rootSidebarOpenComponentContainer}>
 

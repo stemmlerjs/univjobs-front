@@ -1,5 +1,6 @@
 
-import { getJobs, getAllInvitesForJob, closeJob as closeJobHTTP  } from 'helpers/job'
+import { getJobs, getAllInvitesForJob, closeJob as closeJobHTTP, updateJobDetails as updateJobDetailsHTTP  } from 'helpers/job'
+import { validateEditJobDetails, compareJobDetailsSnapshot } from 'helpers/createjob'
 
 const GET_ALL_MY_POSTINGS_JOBS = 'GET_ALL_MY_POSTINGS_JOBS'
 const GET_ALL_MY_POSTINGS_JOBS_SUCCESS = 'GET_ALL_MY_POSTINGS_JOBS_SUCCESS'
@@ -30,6 +31,9 @@ const initialMyPostingsState = {
   isFetchingInvitesFailure: false,
   
   editViewEnabled: false,
+  wereJobDetailsEditsMade: false,
+  jobDetailsSnapshot: {},
+
   isSavingChanges: false,
   isSavingChangesSucces: false,
   isSavingChangesFailure: false
@@ -479,9 +483,10 @@ function savingDetailsSuccess () {
   }
 }
 
-function savingDetailsFailure () {
+function savingDetailsFailure (propsErrorMap) {
   return {
-    type: SAVING_DETAILS_CHANGES_FAILURE
+    type: SAVING_DETAILS_CHANGES_FAILURE,
+    propsErrorMap
   }
 }
 
@@ -495,16 +500,9 @@ export function enterEditJobDetailsView () {
   }
 }
 
-function doExitJobDetailsView () {
+export function exitJobDetailsView () {
   return {
     type: LEAVE_EDIT_JOB_DETAILS_VIEW
-  }
-}
-
-export function exitJobDetailsView () {
-  return function (dispatch) {
-
-
   }
 }
 
@@ -517,16 +515,167 @@ export function updateJobDetailsField (newValue, fieldName, page) {
   }
 }
 
-export function saveJobDetailsChanges () {
+export function saveJobDetailsChanges (selectedJob, snapshot, successCallback, failureCallback) {
   return function (dispatch) {
 
     /*
-     * Save
+     * Validate fields
      */
+    validateEditJobDetails (selectedJob, (errorsExist, propsErrorMap) => {
+
+      /*
+       * Errors exist in the edit job fields screen.
+       * We need to go ahead and present what these errors are.
+       */
+      
+      if (errorsExist) {
+
+        console.log('[Univjobs]: Could not save job because field errors have occurred.')
+
+        dispatch(savingDetailsFailure(propsErrorMap))
+
+        failureCallback('FIELD_ERRORS_EXIST');
+        
+      }
+
+      /*
+       * No errors were present in these fields.
+       * Next, determine if anything was different + get the different fields.
+       * 
+       * Compare the snapshot with the edited selected job.
+       */
+
+      else {
+
+        compareJobDetailsSnapshot(snapshot, selectedJob, (changes) => {
+
+          /*
+           * There were no changes.
+           * No need to save.
+           */
+          
+          if (Object.keys(changes).length === 0) {
+
+            console.log('[Univjobs]: No changes to save.')
+
+          }
+
+          /*
+           * There are changes to save.
+           * Let's PATCH it.
+           */
+
+          else {
+
+           /*
+            * Do the HTTP request
+            */
+
+            console.log('[Univjobs]: Changes to save found for the job, ', changes)
+
+            dispatch(savingDetails())
+
+            updateJobDetailsHTTP(selectedJob.job_id, changes)
+
+              .then((result) => {
+
+                dispatch(savingDetailsSuccess())
+
+                successCallback()
+              })
+
+              .catch((err) => {
+
+                dispatch(savingDetailsFailure())
+
+                failureCallback('HTTP ERROR')
+              })
+
+          }
+
+        })
+
+      }
+
+    })
+
+    
+    
+
+    /*
+     * Show the callback
+     */
+    
 
   }
 }
 
+/*
+ * =================================================================
+ *  SELECTED OPEN JOB 
+ * =================================================================
+ */
+
+const initialSelectedOpenJobState = {}
+
+function selectedOpenJob (state = initialSelectedOpenJobState, action) {
+  switch (action.type) {
+    case UPDATE_JOB_DETAILS_FIELD:
+
+      /*
+       * If the field that changes is remote work, then we'll 
+       * clear location.
+       */
+
+      if (action.fieldName == "remote_work" && action.newValue == 0) {
+        return {
+          ...state,
+          location: "",
+          [action.fieldName]: action.newValue
+        }
+      }
+
+      /*
+       * If it's any other field, we'll simply update.
+       */
+
+      else {
+        return {
+          ...state,
+          [action.fieldName]: action.newValue
+        }
+      }
+  }
+}
+
+/*
+ * =================================================================
+ *  SELECTED AWAITING JOB 
+ * =================================================================
+ */
+
+const initialSelectedAwaitingJobState = {}
+
+function selectedAwaitingJob (state = initialSelectedAwaitingJobState, action) {
+  switch (action.type) {
+    case UPDATE_JOB_DETAILS_FIELD:
+
+      if (action.fieldName == "remote_work" && action.newValue == 0) {
+        return {
+          ...state,
+          location: "",
+          [action.fieldName]: action.newValue
+        }
+      }
+
+      else {
+        return {
+          ...state,
+          [action.fieldName]: action.newValue
+        }
+      }
+  }
+}
 
 export default function mypostings (state = initialMyPostingsState, action) {
   switch(action.type) {
@@ -538,26 +687,60 @@ export default function mypostings (state = initialMyPostingsState, action) {
     case UPDATE_JOB_DETAILS_FIELD:
       switch(action.page) {
         case "open":
-          let selectedOpenJob = state.selectedOpenJob;
-          selectedOpenJob[action.fieldName] = action.newValue
 
+          /*
+           * DEVELOPER NOTE:
+           * 
+           * Whenever we're updating an {} on the redux state, we can't 
+           * change the value of an attribute and expect redux to update.
+           * 
+           * It doesn't update because Redux only updates when the reference to 
+           * the object changes. It doesn't change if we just change the value of a field
+           * because objects are immutable in Redux.
+           * 
+           * Therefore, we need to create an entirely new object from the old one 
+           * so that Redux updates the {} with an entirely newly referenced one.
+           * 
+           * This explains the var newObjectOnStore =  Object.assign({}, oldObjectOnStore)
+           */
           return {
             ...state,
-            selectedOpenJob: selectedOpenJob
+            selectedOpenJob: selectedOpenJob(state.selectedOpenJob, action),
+            wereJobDetailsEditsMade: true
           }
         case "awaiting":
-          let selectedAwaitingJob = state.selectedAwaitingJob;
-          selectedAwaitingJob[action.fieldName] = action.newValue
-
           return {
             ...state,
-            selectedAwaitingJob: selectedAwaitingJob
+            selectedOpenJob: selectedAwaitingJob(state.selectedOpenJob, action),
+            wereJobDetailsEditsMade: true
           }
       }
-    case ENTER_EDIT_JOB_DETAILS_VIEW:
+    case LEAVE_EDIT_JOB_DETAILS_VIEW:
       return {
         ...state,
-        editViewEnabled: true
+        selectedOpenJob: state.jobDetailsSnapshot,
+        editViewEnabled: false,
+        wereJobDetailsEditsMade: false
+      }
+    case ENTER_EDIT_JOB_DETAILS_VIEW:
+
+      /*
+       * Only enter the view if you're not already in the
+       * view because we also set the snapshot by doing this.
+       * 
+       * We don't want to lose the snapshot.
+       * It holds the initial state of the job from before we entered
+       * the view.
+       */
+
+      if (!state.editViewEnabled) {
+        //TODO: set this up for selectedClosedJob as well.
+        // TODO: restrain being able to open this up if the job has an applicant already
+        return {
+          ...state,
+          editViewEnabled: true,
+          jobDetailsSnapshot: state.selectedOpenJob
+        }
       }
 
     /*

@@ -191,3 +191,72 @@ export function validateCreateJobFields(currentPage, pageProps, next) {
   }
 
 }
+
+export function validateEditJobDetails (jobDetails, next) {
+
+  let errorsExist = false;
+  debugger;
+  let editJobPageDetails = {
+    jobTitle: false,
+    isPayingJob: false,
+    startDate: false,
+    responsibilities: false,
+    qualifications: false,
+    desiredSkills: false,
+    internshipLocation: false,
+    remoteWork: false,
+    compensation: false,
+  }
+
+  // Validate each field in it's own unique way
+  editJobPageDetails.jobTitle = validateJobTitle(jobDetails.title) ? false : true
+  editJobPageDetails.startDate = jobDetails.start_date != "" ? false : true
+  editJobPageDetails.responsibilities = validateResponsibilities(jobDetails.responsibilities) ? false : true
+  editJobPageDetails.qualifications = validateQualifications(jobDetails.qualification) ? false : true
+  editJobPageDetails.desiredSkills = validateDesiredSkills(jobDetails.desired_skills) ? false : true
+
+  /*
+  * If remote work is selected === true, then this means that we don't need to validate
+  * the internshipLocation.
+  */
+
+  if (jobDetails.remote_work == 1) {
+    editJobPageDetails.internshipLocation = false;
+  }
+  else {
+    editJobPageDetails.internshipLocation = validateJobLocation(jobDetails.location) ? false : true
+  }
+
+  editJobPageDetails.compensation = validateCompensation(jobDetails.compensation) ? false : true
+
+  // If an error exists in the map, then errorsExist === true
+  for (var attr in editJobPageDetails) {
+    if (editJobPageDetails[attr] === true) errorsExist = true;
+  }
+
+  next(errorsExist, editJobPageDetails)
+}
+
+export function compareJobDetailsSnapshot (snapshot, newJobDetails, callback) {
+
+  /*
+   * If the attribute in the newJobDetails is different from the one
+   * in the snapshot, add the one in the newJobDetails to the return
+   * object.
+   */
+
+  var retObj = {}
+
+  debugger;
+
+  Object.keys(snapshot).forEach((key) => {
+
+    if (snapshot[key] !== newJobDetails[key]) {
+      retObj[key] = newJobDetails[key]
+    }
+    
+  })
+
+  callback(retObj)
+
+}

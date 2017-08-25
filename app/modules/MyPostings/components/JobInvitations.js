@@ -13,9 +13,6 @@ import { box } from '../styles/MyPostingsStyles.css'
 import config from 'config'
 
 export default function JobInvitations ({ students }) {
-
-  console.log("Here are the invites I have", students)
-
   return (
     <div className={box}>
       {

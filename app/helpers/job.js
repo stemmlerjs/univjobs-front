@@ -4,7 +4,7 @@ import { getAccessToken, getCSRFToken } from 'helpers/auth'
 import { sanitize } from 'helpers/utils'
 
 /*NOTE: Reference to dashboard.js and lists.js
- * 	
+ *
  * 	- Since this functions are used in different containers
  * 	  In what way could we refactor these functions to be reusable to each container
  * 	  which uses different action creators for the associated reducers?
@@ -32,15 +32,15 @@ import { sanitize } from 'helpers/utils'
 
  /*
   *
-  * getJobs 
+  * getJobs
   *
   * [Employer]: as an employer, this API call returns:
   *   - all of the jobs that this user has posted
-  *   - all of the questions on this job 
-  *   - all of the answers to the questions on this job 
+  *   - all of the questions on this job
+  *   - all of the answers to the questions on this job
   *
-  * [Student]: as a student, this API call returns: 
-  *   - all of the jobs that employers have posted 
+  * [Student]: as a student, this API call returns:
+  *   - all of the jobs that employers have posted
   *   - all of the questions for each job
   *
   * @return Promise
@@ -62,7 +62,7 @@ export function getJobs() {
 
 /*
  * getPublicJobViewById
- * 
+ *
  * @param jobId - job id of the public job view that we want to
  * view.
  * @desc This method only returns the public job view. Used in the
@@ -78,7 +78,7 @@ export function getPublicJobViewById (jobId) {
 
 /*
  * getAllInvitesForJob
- * 
+ *
  * Gets all of the student invite objects for a specific job.
  */
 
@@ -96,7 +96,7 @@ export function getAllInvitesForJob (jobId) {
 
 /*
  * closeJob
- * 
+ *
  * Closes a job.
  */
 
@@ -109,6 +109,42 @@ export function closeJob (jobId) {
 		headers: {
 			'Authorization':  accessToken
 		}
+  })
+}
+
+/*
+ * updateJobDetails
+ *
+ */
+
+export function updateJobDetails (jobId, changes) {
+  const accessToken = getAccessToken()
+
+  for(let key in changes) {
+    var lineItem = changes[key];
+
+    /*
+     * Sanitize all fields that aren't files.
+     */
+
+    if (typeof changes[key] == "number") {
+        changes[key] = sanitize(JSON.stringify(lineItem))
+    }
+
+    else {
+        changes[key] = sanitize(lineItem)
+    }
+
+
+  }
+
+  return axios({
+    method: 'patch',
+    url: config.baseUrl + 'jobs/' + jobId + "/edit",
+		headers: {
+			'Authorization':  accessToken
+    },
+    data: changes
   })
 }
 
