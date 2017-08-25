@@ -250,3 +250,30 @@ height: 73px;
         margin-top: 25px;
     text-align: center;
 }
+
+.reactWidgetStyle {
+        margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.editableInput {
+    color: #1c1c1c;
+    width: 75%;
+    font-family: 'Roboto';
+    padding: 11px;
+    border-radius: 4px;
+    box-sizing: border-box;
+    border: solid 1px #d6d6d6;
+    background: #f9f9f9;
+    font-size: 14px;
+}
+
+.toggleContainer {
+        margin-right: 33px;
+    padding-top: 10px;
+    padding-left: 10px;
+}
+
+.flex {
+    display: flex;
+}

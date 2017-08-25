@@ -509,7 +509,6 @@ export function exitJobDetailsView () {
 }
 
 export function updateJobDetailsField (newValue, fieldName, page) {
-  console.log("update", newValue, fieldName, page)
   return {
     type: UPDATE_JOB_DETAILS_FIELD,
     newValue,

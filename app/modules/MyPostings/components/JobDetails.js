@@ -1,13 +1,15 @@
 
 import React, { PropTypes } from 'react'
 
-import { Combobox, DropdownList, DateTimePicker, Calendar, Multiselect, SelectList} from 'react-widgets'
+import { DropdownList, DateTimePicker } from 'react-widgets'
+import Toggle from 'react-toggle'
 import { ApplicantCount, StartDateComponent, PaidJobComponent, LocationComponent }  from 'modules/SharedComponents'
 
 import { textDetailsTitle, textDetailsField, title, jobTypeText } from '../styles/JobDetailsStyles.css'
-import { box, editableArea, editableAreaResizeable, editableTitleArea, standardButton, 
-    standardButtonRed, standardButtonInactive, saveButtonsContainer } from '../styles/MyPostingsStyles.css'
+import { box, editableArea, editableAreaResizeable, editableTitleArea, standardButton, editableInput,
+    standardButtonRed, standardButtonInactive, saveButtonsContainer, reactWidgetStyle, toggleContainer, flex } from '../styles/MyPostingsStyles.css'
 
+import InputSelector from 'modules/SharedComponents/components/InputSelector'
 
 const jobTypeList = [
 {
@@ -82,20 +84,79 @@ export default function JobDetails ({
                   ''
                 }
               </div>
-          : <DropdownList
-              
-              valueField="type" textField="text"
-              data={jobTypeList}
-              value={jobType}
-              defaultValue={jobType}
-              onChange={value => handleUpdateJobDetailsField(value.type, 'responsibilities', page)}
-            />
+          : <div>
+              <div className={textDetailsTitle}>Job Type</div>
+              <DropdownList
+                className={reactWidgetStyle}
+                valueField="type" textField="text"
+                data={jobTypeList}
+                value={jobType}
+                defaultValue={jobType}
+                onChange={value => handleUpdateJobDetailsField(value.type, 'type', page)}
+              />
+            </div>
+      }
+
+      {
+        !editViewEnabled
+          ? <StartDateComponent date={new Date(startDate)}/>
+          : <div>
+              <div className={textDetailsTitle}>Start Date</div>
+              <DateTimePicker
+                className={reactWidgetStyle}
+                time={false}
+                format='LL'
+                onChange={value => handleUpdateJobDetailsField(value, 'start_date', page)}
+                value={typeof startDate === "string" ? new Date(startDate) : startDate}
+              />
+          </div>
       }
       
       
-      <StartDateComponent date={new Date(startDate)}/>
-      <LocationComponent location={location} remoteWork={remoteWork}/>
-      <PaidJobComponent paid={paid}/>
+      {
+        /*
+         * Remote work
+         */
+
+        !editViewEnabled
+          ? <LocationComponent location={location} remoteWork={remoteWork}/>
+          : <div>
+              <div className={textDetailsTitle}>Remote Work?</div>
+              <div className={flex}>
+                <div className={toggleContainer}>
+                  <label>
+                    <Toggle
+                      defaultChecked={remoteWork === 0 ? false : true}
+                      onChange={(e) => {
+                        console.log(e.target.value)
+                      }} />
+                  </label>
+                </div>
+                <input className={editableInput} defaultValue={location}/>
+              </div>
+            </div>
+      }
+
+      {
+        /*
+         *  Paid job
+         */
+
+        !editViewEnabled
+          ? <PaidJobComponent paid={paid}/>
+          : <div>
+              <div className={textDetailsTitle}>Paid job?</div>
+              <div className={toggleContainer}>
+                <label>
+                  <Toggle
+                    defaultChecked={paid === 0 ? false : true}
+                    onChange={(e) => {
+                      console.log(e.target.value)
+                    }} />
+                </label>
+              </div>
+            </div>
+      }
 
       <div className={textDetailsTitle}>Responsibilities</div>
       {

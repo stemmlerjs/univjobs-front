@@ -58,6 +58,7 @@
     "react-skylight": "^0.4.0",
     "react-text-mask": "^0.17.2",
     "react-toastr": "^2.8.1",
+    "react-toggle": "^4.0.1",
     "react-tooltip": "^3.1.6",
     "react-widgets": "^3.4.4",
     "redux": "^3.5.2",
