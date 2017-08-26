@@ -198,7 +198,7 @@ export function getAllJobsMyPostings (currentJobId, page) {
             openJobs.push(job)
           }
 
-          else if (job.verified === 1 && job.active === 0) {
+          else if (job.active === 0) {
             closedJobs.push(job)
           }
 
