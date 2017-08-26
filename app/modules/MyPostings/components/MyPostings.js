@@ -48,7 +48,9 @@ const JobDetailsSectionMyPostingsOpen = ({ job,
               ? <div className={inlineBlock}>
                   {
                     !editViewEnabled
-                      ? <button data-tip={'Edit job'} onClick={handleEnterEditJobDetailsView} className={standardButton}>
+                      ? <button data-tip={'Edit job'} onClick={() => {
+                            handleEnterEditJobDetailsView('open')
+                          }} className={standardButton}>
                           <i  className={"fa fa-pencil-square-o"} aria-hidden="true"></i>
                         </button>
                       : <button data-tip={'Cancel editing'} onClick={handleCancelJobDetailsEdits} className={standardButtonRed}>
@@ -105,7 +107,7 @@ const JobQuestionSectionMyPostingsOpen = ({ questions, numApplicants }) => {
         <div>
           {
             numApplicants == 0
-              ? <button data-tip={'Edit questions'} className={standardButton}>
+              ? <button data-tip={'Edit questions'} className={standardButtonInactive}>
                   <i className={"fa fa-pencil-square-o"} aria-hidden="true"></i>
                 </button>
               : <button data-tip={'Edit questions - unavailable after students have applied.'} className={standardButtonInactive}>

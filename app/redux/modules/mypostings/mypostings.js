@@ -506,15 +506,17 @@ function savingDetailsFailure (propsErrorMap) {
  * Initiates the enter job details view.
  */
 
-export function enterEditJobDetailsView () {
+export function enterEditJobDetailsView (page) {
   return {
-    type: ENTER_EDIT_JOB_DETAILS_VIEW
+    type: ENTER_EDIT_JOB_DETAILS_VIEW,
+    page
   }
 }
 
 export function exitJobDetailsView (page) {
   return {
-    type: LEAVE_EDIT_JOB_DETAILS_VIEW
+    type: LEAVE_EDIT_JOB_DETAILS_VIEW,
+    page
   }
 }
 
@@ -738,6 +740,7 @@ export default function mypostings (state = initialMyPostingsState, action) {
           }
       }
     case LEAVE_EDIT_JOB_DETAILS_VIEW:
+      debugger;
       switch (action.page) {
         case "open":
           return {
@@ -764,16 +767,25 @@ export default function mypostings (state = initialMyPostingsState, action) {
        * It holds the initial state of the job from before we entered
        * the view.
        */
-
-      if (!state.editViewEnabled) {
-        //TODO: set this up for selectedClosedJob as well.
-        // TODO: restrain being able to open this up if the job has an applicant already
-        return {
-          ...state,
-          editViewEnabled: true,
-          jobDetailsSnapshot: state.selectedOpenJob
-        }
+      switch (action.page) {
+        case "open":
+          if (!state.editViewEnabled) {
+            return {
+              ...state,
+              editViewEnabled: true,
+              jobDetailsSnapshot: state.selectedOpenJob
+            }
+          }
+        case "awaiting":
+          if (!state.editViewEnabled) {
+            return {
+              ...state,
+              editViewEnabled: true,
+              jobDetailsSnapshot: state.selectedAwaitingJob
+            }
+          }
       }
+      
 
     /*
      * FETCH INVITES

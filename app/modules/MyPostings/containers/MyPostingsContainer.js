@@ -207,7 +207,10 @@ const MyPostingsContainer = React.createClass({
    */
 
   closeJob () {
-    const jobIdOfJobToClose = this.props.selectedOpenJob.job_id;
+
+    const page = this.getPageType()
+    const jobIdOfJobToClose = page == "open" ? this.props.selectedOpenJob.job_id : this.props.selectedAwaitingJob.job_id;
+
     this.props.closeJob(jobIdOfJobToClose, 
 
       /*
@@ -217,12 +220,25 @@ const MyPostingsContainer = React.createClass({
       () => {
         this.closeCloseJobModal();
 
-        this.refs.container.success(
-          "Applicants notified of closure",
-          "Job closed.",
-          {
-            timeout: 3000
-        });
+        if (page == "open") {
+          this.refs.container.success(
+            "Applicants notified of closure.",
+            "Job closed.",
+            {
+              timeout: 3000
+          });
+        }
+
+        else {
+          this.refs.container.success(
+            "Removed from processing.",
+            "Job closed.",
+            {
+              timeout: 3000
+          });
+        }
+
+        
 
         setTimeout(() => {
           window.location.reload()
@@ -259,7 +275,7 @@ const MyPostingsContainer = React.createClass({
   */
 
   handleCancelJobDetailsEdits (resetSnapshot) {
-
+    debugger;
     var page = this.getPageType()
     
     /*

@@ -44,7 +44,9 @@ import { bodySection, bodySectionNoJobs, bodySectionColumn,
             <div className={inlineBlock}>
               {
                 !editViewEnabled
-                  ? <button data-tip={'Edit job'} onClick={handleEnterEditJobDetailsView} className={standardButton}>
+                  ? <button data-tip={'Edit job'} onClick={() => {
+                      handleEnterEditJobDetailsView('awaiting')
+                    }} className={standardButton}>
                       <i  className={"fa fa-pencil-square-o"} aria-hidden="true"></i>
                     </button>
                   : <button data-tip={'Cancel editing'} onClick={handleCancelJobDetailsEdits} className={standardButtonRed}>
@@ -90,7 +92,7 @@ import { bodySection, bodySectionNoJobs, bodySectionColumn,
         <div className={sectionContainerHeader}>
           <div className={sectionTitle}>Questions</div>
           <div>
-            <button className={standardButton}><i className={"fa fa-pencil-square-o"} aria-hidden="true"></i></button>
+            <button className={standardButtonInactive}><i className={"fa fa-pencil-square-o"} aria-hidden="true"></i></button>
           </div>
         </div>
         <JobQuestions questions={questions}/>

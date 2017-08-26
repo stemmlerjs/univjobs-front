@@ -5,7 +5,9 @@ import { DropdownList, DateTimePicker } from 'react-widgets'
 import Toggle from 'react-toggle'
 import { ApplicantCount, StartDateComponent, PaidJobComponent, LocationComponent }  from 'modules/SharedComponents'
 
-import { textDetailsTitle, textDetailsField, title, jobTypeText, disabledInput, fieldTitleFlexContainer, charCount } from '../styles/JobDetailsStyles.css'
+import { textDetailsTitle, textDetailsField, title, jobTypeText, 
+  disabledInput, fieldTitleFlexContainer, charCount } from '../styles/JobDetailsStyles.css'
+  
 import { box, editableArea, editableAreaResizeable, editableTitleArea, standardButton, editableInput,
     standardButtonRed, standardButtonInactive, saveButtonsContainer, reactWidgetStyle, toggleContainer, 
     error, flex } from '../styles/MyPostingsStyles.css'
