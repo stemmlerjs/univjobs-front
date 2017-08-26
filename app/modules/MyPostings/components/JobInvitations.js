@@ -6,7 +6,7 @@ import { container, invitedStudentRow, invitedStudentImageContainer,
   special } from '../styles/JobInvitationStyles.css'
 
 
-import ReactTooltip from 'react-tooltip'  
+import ReactTooltip from 'react-tooltip'
 import { Link } from 'react-router'
 import { box } from '../styles/MyPostingsStyles.css'
 
@@ -33,7 +33,6 @@ export default function JobInvitations ({ students }) {
                           student.applied
                             ? <div>
                                 <img data-tip={`This student has applied to the job.`} src="https://image.flaticon.com/icons/svg/226/226972.svg" />
-                                <ReactTooltip delayHide={100} delayShow={20} place="left" effect="float"/>
                               </div>
                             : ''
                         }

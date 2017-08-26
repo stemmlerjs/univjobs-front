@@ -49,7 +49,7 @@ export function submitLoginForm(email, password) {
     const promise = new Promise((resolve, reject) => {
 
 
-     /* 
+     /*
       * Validate the employer email before trying to login.
       * (Must be an email)
       */
@@ -77,8 +77,8 @@ export function submitLoginForm(email, password) {
         .then((response) => {
 
          /*
-          * If login successful, take the token 
-          * and save it to local storage. Now we can use 
+          * If login successful, take the token
+          * and save it to local storage. Now we can use
           * the token to make subsequent requests.
           */
 
@@ -101,9 +101,9 @@ export function submitLoginForm(email, password) {
 
             // User Details
             const dateJoined = response.data.student !== undefined ? null : response.data.employer.createdAt
-            const email = response.data.student !== undefined ? response.data.student.user_email : response.data.employer.user_email 
+            const email = response.data.student !== undefined ? response.data.student.user_email : response.data.employer.user_email
             const firstName = response.data.student !== undefined ? response.data.student.user_firstname : response.data.employer.user_firstName
-            const lastName = response.data.student !== undefined ? response.data.student.user_lastname : response.data.employer.user_lastName 
+            const lastName = response.data.student !== undefined ? response.data.student.user_lastname : response.data.employer.user_lastName
             const mobile = response.data.student !== undefined ? null : response.data.employer.user_mobile
 
             // Profile Details
@@ -114,11 +114,11 @@ export function submitLoginForm(email, password) {
 
             let profileInfo = response.data.student !== undefined ? response.data.student : response.data.employer
             profileInfo.tags = profileInfo.is_a_student === 1 ? response.data.tags : ''
-            
+
             /*
              * Set the Sentry user context so that when we're authenticated, we know
              * more about the errors.
-             * 
+             *
              * We will know who is experiencing the error.
              */
 
@@ -159,34 +159,35 @@ export function submitLoginForm(email, password) {
           console.log(err.status)
 
           switch (err.status) {
-            case 400: 
+            case 400:
               // ACTION: DISPATCH (SUBMIT_LOGIN_FORM_ERROR)
               dispatch(submitLoginFormError('Either username or password is incorrect.'))
 
               // ACTION: DISPATCH (LOGIN_FAILURE)
               dispatch(loginFailure('Either username or password is incorrect.'))
               break;
-            case 401: 
+            case 401:
               // ACTION: DISPATCH (SUBMIT_LOGIN_FORM_ERROR)
               dispatch(submitLoginFormError('Either username or password is incorrect.'))
 
               // ACTION: DISPATCH (LOGIN_FAILURE)
               dispatch(loginFailure('Either username or password is incorrect.'))
               break;
-            case 404: 
+            case 404:
               // ACTION: DISPATCH (SUBMIT_LOGIN_FORM_ERROR)
               dispatch(submitLoginFormError("Can't find this user. Are you sure you signed up?"))
 
               // ACTION: DISPATCH (LOGIN_FAILURE)
               dispatch(loginFailure("Can't find this user. Are you sure you signed up?"))
               break;
-            default: 
-              
+            default:
+
               /*
                * Capture errors when users try to login
                */
+              console.log(err)
+              if (window.CURRENT_ENV == "prod") Raven.captureException(err)
 
-              Raven.captureException(err)
 
               // ACTION: DISPATCH (SUBMIT_LOGIN_FORM_ERROR)
               dispatch(submitLoginFormError("Couldn't connect to Univjobs. Please check your network connection."))
