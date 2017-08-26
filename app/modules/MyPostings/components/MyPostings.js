@@ -11,7 +11,7 @@ import JobSettings from './JobSettings'
 import MyPostingsHeader from './MyPostingsHeader'
 import JobPostingsListView from './JobPostingsListView'
 
-import ReactTooltip from 'react-tooltip'  
+import ReactTooltip from 'react-tooltip'
 
 import { Link } from 'react-router'
 
@@ -21,7 +21,6 @@ import { bodySection, bodySectionNoJobs, bodySectionColumn,
   sectionContainerHeader, sectionTitleAlt, box, altBox,
   bodySectionInnerMapRender, displayNone, inlineBlock } from '../styles/MyPostingsStyles.css'
 
-
 /*
   * All of the job details and stuff.
   */
@@ -30,6 +29,7 @@ const JobDetailsSectionMyPostingsOpen = ({ job,
   editViewEnabled,
   wereJobDetailsEditsMade,
   isSavingChanges,
+  jobDetailsPropsErrorMap,
 
   handleCloseJob, 
   handleSaveJobDetailsEdits, 
@@ -83,6 +83,7 @@ const JobDetailsSectionMyPostingsOpen = ({ job,
         editViewEnabled={editViewEnabled}
         wereJobDetailsEditsMade={wereJobDetailsEditsMade}
         isSavingChanges={isSavingChanges}
+        jobDetailsPropsErrorMap={jobDetailsPropsErrorMap}
         handleUpdateJobDetailsField={handleUpdateJobDetailsField}
         handleCancelJobDetailsEdits={handleCancelJobDetailsEdits}
         handleSaveJobDetailsEdits={handleSaveJobDetailsEdits}
@@ -152,7 +153,6 @@ const JobNumPositionsSectionMyPostingsOpen = ({ numApplicants, numPositions }) =
 }
 
 const JobInvitationsSectionMyPostingsOpen = ({invitedStudents}) => {
-  console.log("JobInvitationsSectionMyPostingsOpen", invitedStudents)
   return (
     <div className={sectionContainer}>
       <div className={sectionContainerHeader}>
@@ -195,6 +195,7 @@ export default function MyPostings ({
     editViewEnabled,
     wereJobDetailsEditsMade,
     isSavingChanges,
+    jobDetailsPropsErrorMap,
 
     handleOpenJobSelect,
     handleChangeSelectedJob,
@@ -253,6 +254,7 @@ export default function MyPostings ({
                         isSavingChanges={isSavingChanges}
                         handleCloseJob={handleCloseJob} 
                         editViewEnabled={editViewEnabled}
+                        jobDetailsPropsErrorMap={jobDetailsPropsErrorMap}
                         wereJobDetailsEditsMade={wereJobDetailsEditsMade}
                         handleEnterEditJobDetailsView={handleEnterEditJobDetailsView}
                         handleUpdateJobDetailsField={handleUpdateJobDetailsField}

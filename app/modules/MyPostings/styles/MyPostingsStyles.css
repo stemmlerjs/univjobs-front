@@ -286,3 +286,8 @@ height: 73px;
 .inlineBlock {
     display: inline-block;
 }
+
+.error {
+    border: 1px red solid;
+    box-shadow: 1px 1px 1px 1px #e8e8e8;
+}

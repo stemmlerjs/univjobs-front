@@ -29,20 +29,32 @@ const initialMyPostingsState = {
   isFetchingInvites: false,
   isFetchingInvitesSuccess: false,
   isFetchingInvitesFailure: false,
-  
+
   editViewEnabled: false,
   wereJobDetailsEditsMade: false,
   jobDetailsSnapshot: {},
 
   isSavingChanges: false,
   isSavingChangesSucces: false,
-  isSavingChangesFailure: false
+  isSavingChangesFailure: false,
+
+  jobDetailsPropsErrorMap: {
+    jobTitle: false,
+    isPayingJob: false,
+    startDate: false,
+    responsibilities: false,
+    qualifications: false,
+    desiredSkills: false,
+    internshipLocation: false,
+    remoteWork: false,
+    compensation: false,
+  }
 }
 
 /*
  * ============================================
  * ======== 1. GETTING ALL JOBS ===============
- * ============================================ 
+ * ============================================
  */
 
 function getAllEmployerJobs () {
@@ -68,7 +80,7 @@ function getAllEmployerJobsFailure () {
 
 /*
  * getAllJobsMyPostings
- * 
+ *
  * Gets all jobs required for My Postings, sorts them by
  * open, closed and awaiting.
  */
@@ -81,7 +93,7 @@ export function getAllJobsMyPostings (currentJobId, page) {
    */
 
   return function (dispatch) {
-    
+
 
     /*
      * First, we dispatch our intention to fetch all jobs.
@@ -94,11 +106,11 @@ export function getAllJobsMyPostings (currentJobId, page) {
      */
 
     getJobs()
-      
+
     /*
      * On successful HTTP request.
      */
-      
+
       .then((result) => {
 
         /*
@@ -116,10 +128,10 @@ export function getAllJobsMyPostings (currentJobId, page) {
         for(var i = 0; i < jobs.length; i++) {
 
          /*
-          * For each job, place the answers and questions onto 
+          * For each job, place the answers and questions onto
           * the job object.
           */
-          
+
           jobs[i].questions = []
           jobs[i].answers = []
           jobs[i].applicants = []
@@ -132,7 +144,7 @@ export function getAllJobsMyPostings (currentJobId, page) {
               }
             })
           }
-          
+
           if (answers !== undefined) {
             answers.forEach(function(answer) {
               if (answer.job_id == jobs[i].job_id) {
@@ -140,7 +152,7 @@ export function getAllJobsMyPostings (currentJobId, page) {
               }
             })
           }
-          
+
           if (applicants !== undefined) {
             applicants.forEach(function(applicant) {
               if (applicant.job_id == jobs[i].job_id) {
@@ -148,7 +160,7 @@ export function getAllJobsMyPostings (currentJobId, page) {
               }
             })
           }
-          
+
           // if (invites !== undefined) {
           //   invites.forEach(function(invite) {
           //     if (invite.job_id == jobs[i].job_id) {
@@ -156,7 +168,7 @@ export function getAllJobsMyPostings (currentJobId, page) {
           //     }
           //   })
           // }
-          
+
         }
 
         /*
@@ -172,7 +184,7 @@ export function getAllJobsMyPostings (currentJobId, page) {
         jobs.forEach((job) => {
 
           /*
-           * If we're visiting this off of a refresh, 
+           * If we're visiting this off of a refresh,
            * we need to get the current job for this current job id.
            */
 
@@ -200,7 +212,7 @@ export function getAllJobsMyPostings (currentJobId, page) {
         console.log(openJobs, closedJobs, awaitingJobs)
 
         dispatch(getAllEmployerJobsSuccess(openJobs, closedJobs, awaitingJobs))
-        
+
         /*
          * If we found the current job from refreshing the page,
          * also set the current job.
@@ -209,7 +221,7 @@ export function getAllJobsMyPostings (currentJobId, page) {
         if (currentJob !== null) {
           console.log(`[Univjobs]: My Postings - Current job selected`, currentJob)
         }
-        
+
         dispatch(changeSelectedJob(currentJob, page))
 
       })
@@ -231,7 +243,7 @@ export function getAllJobsMyPostings (currentJobId, page) {
 /*
  * ============================================
  * ============ 2. DROPDOWN BOX ===============
- * ============================================ 
+ * ============================================
  */
 
 export function openJobSelect () {
@@ -251,7 +263,7 @@ function deferredChangeSelectedJob (newSelectedJob, page) {
 }
 
 function asyncGetInvitesForSelectedJob (dispatch, newSelectedJob) {
- 
+
   /*
   * 1. GET INVITES for current selected job
   */
@@ -276,7 +288,7 @@ function asyncGetInvitesForSelectedJob (dispatch, newSelectedJob) {
       invites.sort((a, b) => {
         if (a.applied == 0 && b.applied == 1) {
           return 1
-        } 
+        }
         if (a.applied == 1 && b.applied == 0) {
           return -1
         }
@@ -319,7 +331,7 @@ export function changeSelectedJob (newSelectedJob, page) {
        */
 
       dispatch(deferredChangeSelectedJob(newSelectedJob, page))
-      
+
     }
   }
 
@@ -333,7 +345,7 @@ export function changeSelectedJob (newSelectedJob, page) {
       newSelectedJob,
       page
     }
-  }  
+  }
 }
 
 export function clearSelectedJob (page) {
@@ -346,7 +358,7 @@ export function clearSelectedJob (page) {
 /*
  * ============================================
  * ============ 3. MISC DATA    ===============
- * ============================================ 
+ * ============================================
  */
 
 const FETCHING_JOB_INVITES = 'FETCHING_JOB_INVITES'
@@ -375,7 +387,7 @@ function fetchingInvitesFailure () {
 /*
  * ============================================
  * ============ 4. CLOSING A JOB    ===============
- * ============================================ 
+ * ============================================
  */
 
 const CLOSING_JOB = 'CLOSING_JOB'
@@ -402,7 +414,7 @@ function closeJobFailure () {
 
 /*
  * closeJob
- * 
+ *
  * @param {Number} the job id of the job you wish to close
  * @param {Function} what to do after successfully closing the job
  * @param {Function} what to do if it fails to close the job
@@ -427,7 +439,7 @@ export function closeJob (jobId, successCallback, failureCallback) {
        * On successful close of the job,
        * dispatch functions and success callback
        */
-      
+
       .then((result) => {
 
         console.log('[Univjobs]: Closed job.')
@@ -439,7 +451,7 @@ export function closeJob (jobId, successCallback, failureCallback) {
       })
 
       /*
-       * On failed close of the job, 
+       * On failed close of the job,
        * determine what the error was and show an
        * error message.
        */
@@ -460,7 +472,7 @@ export function closeJob (jobId, successCallback, failureCallback) {
 /*
  * ============================================
  * ============ 5. EDIT JOB DETAILS    ===============
- * ============================================ 
+ * ============================================
  */
 
 const SAVING_DETAILS_CHANGES = 'SAVING_DETAILS_CHANGES'
@@ -500,7 +512,7 @@ export function enterEditJobDetailsView () {
   }
 }
 
-export function exitJobDetailsView () {
+export function exitJobDetailsView (page) {
   return {
     type: LEAVE_EDIT_JOB_DETAILS_VIEW
   }
@@ -527,21 +539,23 @@ export function saveJobDetailsChanges (selectedJob, snapshot, successCallback, f
        * Errors exist in the edit job fields screen.
        * We need to go ahead and present what these errors are.
        */
-      
+
       if (errorsExist) {
 
         console.log('[Univjobs]: Could not save job because field errors have occurred.')
 
+        console.log(propsErrorMap)
+
         dispatch(savingDetailsFailure(propsErrorMap))
 
         failureCallback('FIELD_ERRORS_EXIST');
-        
+
       }
 
       /*
        * No errors were present in these fields.
        * Next, determine if anything was different + get the different fields.
-       * 
+       *
        * Compare the snapshot with the edited selected job.
        */
 
@@ -553,7 +567,7 @@ export function saveJobDetailsChanges (selectedJob, snapshot, successCallback, f
            * There were no changes.
            * No need to save.
            */
-          
+
           if (Object.keys(changes).length === 0) {
 
             console.log('[Univjobs]: No changes to save.')
@@ -578,7 +592,7 @@ export function saveJobDetailsChanges (selectedJob, snapshot, successCallback, f
             updateJobDetailsHTTP(selectedJob.job_id, changes)
 
               .then((result) => {
-
+  
                 dispatch(savingDetailsSuccess())
 
                 successCallback()
@@ -599,20 +613,20 @@ export function saveJobDetailsChanges (selectedJob, snapshot, successCallback, f
 
     })
 
-    
-    
+
+
 
     /*
      * Show the callback
      */
-    
+
 
   }
 }
 
 /*
  * =================================================================
- *  SELECTED OPEN JOB 
+ *  SELECTED OPEN JOB
  * =================================================================
  */
 
@@ -623,14 +637,16 @@ function selectedOpenJob (state = initialSelectedOpenJobState, action) {
     case UPDATE_JOB_DETAILS_FIELD:
 
       /*
-       * If the field that changes is remote work, then we'll 
+       * If the field that changes is remote work, then we'll
        * clear location.
        */
 
       if (action.fieldName == "remote_work" && action.newValue == 0) {
+        var newObj = Object.assign({}, state)
+        newObj.location = ""
+
         return {
-          ...state,
-          location: "",
+          ...newObj,
           [action.fieldName]: action.newValue
         }
       }
@@ -650,7 +666,7 @@ function selectedOpenJob (state = initialSelectedOpenJobState, action) {
 
 /*
  * =================================================================
- *  SELECTED AWAITING JOB 
+ *  SELECTED AWAITING JOB
  * =================================================================
  */
 
@@ -660,11 +676,11 @@ function selectedAwaitingJob (state = initialSelectedAwaitingJobState, action) {
   switch (action.type) {
     case UPDATE_JOB_DETAILS_FIELD:
 
-      if (action.fieldName == "remote_work" && action.newValue == 0) {
+      if (action.fieldName == "remote_work" && action.newValue == 1) {
         return {
           ...state,
-          location: "",
-          [action.fieldName]: action.newValue
+          "location": "",
+          [action.fieldName]: action.newValue,
         }
       }
 
@@ -683,51 +699,67 @@ export default function mypostings (state = initialMyPostingsState, action) {
     /*
      * EDIT JOB
      */
-
+    case SAVING_DETAILS_CHANGES_FAILURE:
+      return {
+        ...state,
+        jobDetailsPropsErrorMap: action.propsErrorMap
+      }
     case UPDATE_JOB_DETAILS_FIELD:
       switch(action.page) {
         case "open":
 
           /*
            * DEVELOPER NOTE:
-           * 
-           * Whenever we're updating an {} on the redux state, we can't 
+           *
+           * Whenever we're updating an {} on the redux state, we can't
            * change the value of an attribute and expect redux to update.
-           * 
-           * It doesn't update because Redux only updates when the reference to 
+           *
+           * It doesn't update because Redux only updates when the reference to
            * the object changes. It doesn't change if we just change the value of a field
            * because objects are immutable in Redux.
-           * 
-           * Therefore, we need to create an entirely new object from the old one 
+           *
+           * Therefore, we need to create an entirely new object from the old one
            * so that Redux updates the {} with an entirely newly referenced one.
-           * 
+           *
            * This explains the var newObjectOnStore =  Object.assign({}, oldObjectOnStore)
            */
           return {
             ...state,
             selectedOpenJob: selectedOpenJob(state.selectedOpenJob, action),
+            jobDetailsPropsErrorMap: initialMyPostingsState.jobDetailsPropsErrorMap,
             wereJobDetailsEditsMade: true
           }
         case "awaiting":
           return {
             ...state,
-            selectedOpenJob: selectedAwaitingJob(state.selectedOpenJob, action),
+            selectedAwaitingJob: selectedAwaitingJob(state.selectedAwaitingJob, action),
+            jobDetailsPropsErrorMap: initialMyPostingsState.jobDetailsPropsErrorMap,
             wereJobDetailsEditsMade: true
           }
       }
     case LEAVE_EDIT_JOB_DETAILS_VIEW:
-      return {
-        ...state,
-        selectedOpenJob: state.jobDetailsSnapshot,
-        editViewEnabled: false,
-        wereJobDetailsEditsMade: false
+      switch (action.page) {
+        case "open":
+          return {
+            ...state,
+            selectedOpenJob: state.jobDetailsSnapshot,
+            editViewEnabled: false,
+            wereJobDetailsEditsMade: false
+          }
+        case "awaiting":
+          return {
+            ...state,
+            selectedAwaitingJob: state.jobDetailsSnapshot,
+            editViewEnabled: false,
+            wereJobDetailsEditsMade: false
+          }
       }
     case ENTER_EDIT_JOB_DETAILS_VIEW:
 
       /*
        * Only enter the view if you're not already in the
        * view because we also set the snapshot by doing this.
-       * 
+       *
        * We don't want to lose the snapshot.
        * It holds the initial state of the job from before we entered
        * the view.
@@ -769,7 +801,7 @@ export default function mypostings (state = initialMyPostingsState, action) {
         isFetchingJobsSuccess: false,
         isFetchingJobsFailure: true
       }
-    
+
     /*
      * CHANGE JOBS
      */
@@ -821,7 +853,7 @@ export default function mypostings (state = initialMyPostingsState, action) {
             jobSelectDropdownIsOpen: false
           }
       }
-    
+
     /*
      * GET ALL JOBS
      */

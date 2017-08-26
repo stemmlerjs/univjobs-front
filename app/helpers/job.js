@@ -122,7 +122,7 @@ export function updateJobDetails (jobId, changes) {
 
   for(let key in changes) {
     var lineItem = changes[key];
-
+    
     /*
      * Sanitize all fields that aren't files.
      */

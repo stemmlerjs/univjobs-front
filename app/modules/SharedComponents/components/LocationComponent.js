@@ -10,9 +10,6 @@ import React, { PropTypes } from 'react'
 import { calendarContainer, locationIconNoHover } from '../styles/LocationComponentStyles.css'
 
 export default function LocationComponent ({remoteWork, location}) {
-
-  console.log(remoteWork, location)
-
   return (
     <div className={calendarContainer}>
       <i className={`fa fa-map-marker ${locationIconNoHover}`} aria-hidden="true"></i>

@@ -259,6 +259,8 @@ const MyPostingsContainer = React.createClass({
   */
 
   handleCancelJobDetailsEdits (resetSnapshot) {
+
+    var page = this.getPageType()
     
     /*
      * Open the modal if any changes were detected.
@@ -274,7 +276,8 @@ const MyPostingsContainer = React.createClass({
      */
 
     else if (this.props.wereJobDetailsEditsMade && resetSnapshot === true) {
-      this.props.exitJobDetailsView();
+      
+      this.props.exitJobDetailsView(page);
       this.closeCloseEditJobViewModal();
     }
 
@@ -283,7 +286,7 @@ const MyPostingsContainer = React.createClass({
      */
 
     else {
-      this.props.exitJobDetailsView()
+      this.props.exitJobDetailsView(page)
     }
   },
 
@@ -345,6 +348,7 @@ const MyPostingsContainer = React.createClass({
   },
 
   render () {
+    console.log(this.props.selectedOpenJob, " lkjlkjlkj ")
     return (
       <div className={pageContainer} >
         <SidebarContainer isMobile={this.props.isMobile} isAStudent={false} 
@@ -369,6 +373,7 @@ const MyPostingsContainer = React.createClass({
                 editViewEnabled={this.props.editViewEnabled}
                 wereJobDetailsEditsMade={this.props.wereJobDetailsEditsMade}
                 isSavingChanges={this.props.isSavingChanges}
+                jobDetailsPropsErrorMap={this.props.jobDetailsPropsErrorMap}
 
                 handleChangeSelectedJob={this.props.changeSelectedJob}
                 handleOpenJobSelect={this.props.openJobSelect}
@@ -394,10 +399,19 @@ const MyPostingsContainer = React.createClass({
                 jobs={this.props.awaitingJobs}
                 selectedJob={this.props.selectedAwaitingJob}
                 jobSelectDropdownIsOpen={this.props.jobSelectDropdownIsOpen}
+                editViewEnabled={this.props.editViewEnabled}
+                wereJobDetailsEditsMade={this.props.wereJobDetailsEditsMade}
+                isSavingChanges={this.props.isSavingChanges}
+                jobDetailsPropsErrorMap={this.props.jobDetailsPropsErrorMap}
 
                 handleChangeSelectedJob={this.props.changeSelectedJob}
                 handleOpenJobSelect={this.props.openJobSelect}
                 handleChangeSelectedJob={this.changeUrlAndSetSelectedJob}
+                handleCloseJob={this.openCloseJobModal}
+                handleEnterEditJobDetailsView={this.props.enterEditJobDetailsView}
+                handleUpdateJobDetailsField={this.props.updateJobDetailsField}
+                handleCancelJobDetailsEdits={this.handleCancelJobDetailsEdits}
+                handleSaveJobDetailsEdits={this.handleSaveJobDetailsEdits}
               />
             : ''
         }
@@ -488,7 +502,8 @@ function mapStateToProps({user, job, list, profile, mypostings}) {
     editViewEnabled: mypostings.editViewEnabled ? mypostings.editViewEnabled : false,
     wereJobDetailsEditsMade: mypostings.wereJobDetailsEditsMade ? mypostings.wereJobDetailsEditsMade : false,
     jobDetailsSnapshot: mypostings.jobDetailsSnapshot ? mypostings.jobDetailsSnapshot : {},
-    isSavingChanges: mypostings.isSavingChanges ? mypostings.isSavingChanges : false
+    isSavingChanges: mypostings.isSavingChanges ? mypostings.isSavingChanges : false,
+    jobDetailsPropsErrorMap: mypostings.jobDetailsPropsErrorMap ? mypostings.jobDetailsPropsErrorMap : {}
   }
 }
 

@@ -5,7 +5,6 @@ import { container, questionHeader, questionBody } from '../styles/JobQuestionsS
 import { box } from '../styles/MyPostingsStyles.css'
 
 export default function JobQuestions ({ questions }) {
-  console.log(questions)
   return (
     <div className={box}>
        {

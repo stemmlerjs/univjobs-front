@@ -195,7 +195,7 @@ export function validateCreateJobFields(currentPage, pageProps, next) {
 export function validateEditJobDetails (jobDetails, next) {
 
   let errorsExist = false;
-  debugger;
+
   let editJobPageDetails = {
     jobTitle: false,
     isPayingJob: false,
@@ -246,8 +246,6 @@ export function compareJobDetailsSnapshot (snapshot, newJobDetails, callback) {
    */
 
   var retObj = {}
-
-  debugger;
 
   Object.keys(snapshot).forEach((key) => {
 

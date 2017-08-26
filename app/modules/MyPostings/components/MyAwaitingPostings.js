@@ -14,18 +14,48 @@ import JobPostingsListView from './JobPostingsListView'
 
 import { Link } from 'react-router'
 
-import { bodySection, bodySectionColumn, linkStyle,
-  sectionContainer, sectionTitle, standardButton, bodySectionNoJobs, standardButtonRed,
-  sectionContainerHeader, sectionTitleAlt, box, altBox } from '../styles/MyPostingsStyles.css'
+import ReactTooltip from 'react-tooltip'  
 
-  const JobDetailsSectionMyPostingsAwaiting = ({job}) => {
+import { bodySection, bodySectionNoJobs, bodySectionColumn,
+  linkStyle,
+  sectionContainer, sectionTitle, standardButton, standardButtonRed, standardButtonInactive,
+  sectionContainerHeader, sectionTitleAlt, box, altBox,
+  bodySectionInnerMapRender, displayNone, inlineBlock } from '../styles/MyPostingsStyles.css'
+
+
+  const JobDetailsSectionMyPostingsAwaiting = ({
+    job, 
+    editViewEnabled,
+    wereJobDetailsEditsMade,
+    isSavingChanges,
+    jobDetailsPropsErrorMap,
+
+    handleCloseJob, 
+    handleSaveJobDetailsEdits, 
+    handleEnterEditJobDetailsView, 
+    handleUpdateJobDetailsField, 
+    handleCancelJobDetailsEdits
+  }) => {
     return (
       <div className={sectionContainer}>
         <div className={sectionContainerHeader}>
           <div className={sectionTitle}>Details</div>
           <div>
-            <button className={standardButton}><i className={"fa fa-pencil-square-o"} aria-hidden="true"></i></button>
-            <button className={standardButtonRed}><i className={"fa fa-times"} aria-hidden="true"></i></button>
+            <div className={inlineBlock}>
+              {
+                !editViewEnabled
+                  ? <button data-tip={'Edit job'} onClick={handleEnterEditJobDetailsView} className={standardButton}>
+                      <i  className={"fa fa-pencil-square-o"} aria-hidden="true"></i>
+                    </button>
+                  : <button data-tip={'Cancel editing'} onClick={handleCancelJobDetailsEdits} className={standardButtonRed}>
+                      Cancel
+                    </button>
+              }
+            </div>
+            <button data-tip={'Close job'} onClick={() => handleCloseJob(job.job_id)} className={editViewEnabled ? displayNone : standardButtonRed}>
+              <i className={"fa fa-times"} aria-hidden="true"></i>
+            </button>
+            <ReactTooltip delayHide={100} delayShow={20} place="bottom" effect="float"/>
           </div>
         </div>
         <JobDetails
@@ -41,6 +71,14 @@ import { bodySection, bodySectionColumn, linkStyle,
           paid={job.paid}
           compensation={job.compensation}
           jobType={job.type}
+          editViewEnabled={editViewEnabled}
+          wereJobDetailsEditsMade={wereJobDetailsEditsMade}
+          isSavingChanges={isSavingChanges}
+          jobDetailsPropsErrorMap={jobDetailsPropsErrorMap}
+          handleUpdateJobDetailsField={handleUpdateJobDetailsField}
+          handleCancelJobDetailsEdits={handleCancelJobDetailsEdits}
+          handleSaveJobDetailsEdits={handleSaveJobDetailsEdits}
+          page={'awaiting'}
         />
       </div>
     )
@@ -88,9 +126,18 @@ export default function MyAwaitingPostings ({
     jobs, 
     selectedJob, 
     jobSelectDropdownIsOpen,
+    editViewEnabled,
+    wereJobDetailsEditsMade,
+    isSavingChanges,
+    jobDetailsPropsErrorMap,
 
     handleOpenJobSelect,
-    handleChangeSelectedJob
+    handleChangeSelectedJob,
+    handleCloseJob,
+    handleEnterEditJobDetailsView,
+    handleUpdateJobDetailsField,
+    handleCancelJobDetailsEdits,
+    handleSaveJobDetailsEdits
  }) {
     return (
       <div className={rootSidebarOpenComponentContainer}>
@@ -132,8 +179,21 @@ export default function MyAwaitingPostings ({
                     */
                   }
 
+                                          
+
                 <div className={bodySectionColumn}>
-                  <JobDetailsSectionMyPostingsAwaiting job={selectedJob}/>
+                  <JobDetailsSectionMyPostingsAwaiting 
+                    job={selectedJob} 
+                    isSavingChanges={isSavingChanges}
+                    handleCloseJob={handleCloseJob} 
+                    editViewEnabled={editViewEnabled}
+                    jobDetailsPropsErrorMap={jobDetailsPropsErrorMap}
+                    wereJobDetailsEditsMade={wereJobDetailsEditsMade}
+                    handleEnterEditJobDetailsView={handleEnterEditJobDetailsView}
+                    handleUpdateJobDetailsField={handleUpdateJobDetailsField}
+                    handleCancelJobDetailsEdits={handleCancelJobDetailsEdits}
+                    handleSaveJobDetailsEdits={handleSaveJobDetailsEdits}
+                    />
                   <JobQuestionSectionMyPostingsAwaiting questions={selectedJob.questions}/>
                 </div>
 

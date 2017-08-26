@@ -12,6 +12,7 @@
     min-width: 300px;
     transition: all 250ms ease-out;
     opacity: 1;
+    z-index: 99;
 }
 
 .invisible {

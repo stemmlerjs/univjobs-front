@@ -5,9 +5,10 @@ import { DropdownList, DateTimePicker } from 'react-widgets'
 import Toggle from 'react-toggle'
 import { ApplicantCount, StartDateComponent, PaidJobComponent, LocationComponent }  from 'modules/SharedComponents'
 
-import { textDetailsTitle, textDetailsField, title, jobTypeText, disabledInput } from '../styles/JobDetailsStyles.css'
+import { textDetailsTitle, textDetailsField, title, jobTypeText, disabledInput, fieldTitleFlexContainer, charCount } from '../styles/JobDetailsStyles.css'
 import { box, editableArea, editableAreaResizeable, editableTitleArea, standardButton, editableInput,
-    standardButtonRed, standardButtonInactive, saveButtonsContainer, reactWidgetStyle, toggleContainer, flex } from '../styles/MyPostingsStyles.css'
+    standardButtonRed, standardButtonInactive, saveButtonsContainer, reactWidgetStyle, toggleContainer, 
+    error, flex } from '../styles/MyPostingsStyles.css'
 
 import { shine } from 'sharedStyles/animations.css'
 
@@ -52,6 +53,7 @@ export default function JobDetails ({
   jobType,
   page,
   isSavingChanges,
+  jobDetailsPropsErrorMap,
 
   editViewEnabled,
   wereJobDetailsEditsMade,
@@ -61,14 +63,24 @@ export default function JobDetails ({
   handleSaveJobDetailsEdits
 }) {
 
+  console.log(jobDetailsPropsErrorMap, "props error map")
+
   return (
     <div className={box}>
       
       {
         !editViewEnabled
           ? <div className={title}>{jobTitle}</div>
-          : <textarea onBlur={(e) => handleUpdateJobDetailsField(e.target.value, 'title', page)} 
-            defaultValue={jobTitle} className={editableTitleArea}></textarea>
+          : <div>
+              <div className={fieldTitleFlexContainer}>
+                <div className={textDetailsTitle}>Job Title</div>
+                <div className={charCount}>[{jobTitle.length} / 30 chars]</div>
+              </div>
+              <textarea
+              onChange={(e) => handleUpdateJobDetailsField(e.target.value, 'title', page)} 
+              defaultValue={jobTitle} 
+              className={jobDetailsPropsErrorMap.jobTitle ? `${editableTitleArea} ${error}` : editableTitleArea}></textarea>
+            </div>
       }
 
       {
@@ -129,7 +141,14 @@ export default function JobDetails ({
         !editViewEnabled
           ? <LocationComponent location={location} remoteWork={remoteWork}/>
           : <div>
-              <div className={textDetailsTitle}>Remote Work?</div>
+              <div className={fieldTitleFlexContainer}>
+                <div className={textDetailsTitle}>Remote Work?</div>
+                {
+                  location == null || location == undefined 
+                    ? ''
+                    : <div className={charCount}>[{location.length} / 55 chars]</div>
+                }
+              </div>
               <div className={flex}>
                 <div className={toggleContainer}>
                   <label>
@@ -141,9 +160,14 @@ export default function JobDetails ({
                   </label>
                 </div>
                 <input
-                 className={remoteWork == 1 ? editableInput : `${editableInput} ${disabledInput}`} 
+                 className={remoteWork == 0 
+                  ? jobDetailsPropsErrorMap.internshipLocation 
+                      ? `${editableInput} ${error}` 
+                      : editableInput
+                  : `${editableInput} ${disabledInput}`} 
                  defaultValue={location}
-                 onBlur={value => handleUpdateJobDetailsField(value, 'location', page)}
+                 value={location}
+                 onChange={e => handleUpdateJobDetailsField(e.target.value, 'location', page)}
                  />
               </div>
             </div>
@@ -170,51 +194,105 @@ export default function JobDetails ({
             </div>
       }
 
-      <div className={textDetailsTitle}>Responsibilities</div>
+
+      {
+        /*
+         * Responsibilities
+         */
+
+        !editViewEnabled
+          ? <div className={textDetailsTitle}>Responsibilities</div>
+          : <div className={fieldTitleFlexContainer}>
+                <div className={textDetailsTitle}>Responsibilities</div>
+                <div className={charCount}>[{responsibilities.length} / 5500 chars]</div>
+              </div>
+      }
+
       {
         !editViewEnabled
           ? <div className={textDetailsField}>{responsibilities}</div>
           : <textarea 
               onChange={(e) => handleUpdateJobDetailsField(e.target.value, 'responsibilities', page)} 
               defaultValue={responsibilities} 
-              className={editableAreaResizeable}></textarea>
+              className={jobDetailsPropsErrorMap.responsibilities ? `${editableAreaResizeable} ${error}` : editableAreaResizeable}></textarea>
       }
 
-      <div className={textDetailsTitle}>Qualifications</div>
+      {
+        /*
+         * Qualifications
+         */
+
+        !editViewEnabled
+          ? <div className={textDetailsTitle}>Qualifications</div>
+          : <div className={fieldTitleFlexContainer}>
+              <div className={textDetailsTitle}>Qualifications</div>
+              <div className={charCount}>[{qualifications.length} / 1400 chars]</div>
+            </div>
+      }
+      
       {
         !editViewEnabled
           ? <div className={textDetailsField}>{qualifications}</div>
-          : <textarea onBlur={(e) => handleUpdateJobDetailsField(e.target.value, 'qualification', page)} defaultValue={qualifications} className={editableAreaResizeable}></textarea>
+          : <textarea onChange={(e) => handleUpdateJobDetailsField(e.target.value, 'qualification', page)} 
+              defaultValue={qualifications} 
+              className={jobDetailsPropsErrorMap.qualifications ? `${editableAreaResizeable} ${error}` : editableAreaResizeable}></textarea>
       }
+      
+      {
+        /*
+         * Desired Skills
+         */
 
-
-      <div className={textDetailsTitle}>Desired Skills</div>
+        !editViewEnabled
+          ? <div className={textDetailsTitle}>Desired Skills</div>
+          : <div className={fieldTitleFlexContainer}>
+              <div className={textDetailsTitle}>Desired Skills</div>
+              <div className={charCount}>[{desiredSkills.length} / 200 chars]</div>
+            </div>
+      }
+      
       {
         !editViewEnabled
           ? <div className={textDetailsField}>{desiredSkills}</div>
-          : <textarea onBlur={(e) => handleUpdateJobDetailsField(e.target.value, 'desired_skills', page)} defaultValue={desiredSkills} className={editableArea}></textarea>
+          : <textarea onChange={(e) => handleUpdateJobDetailsField(e.target.value, 'desired_skills', page)} 
+            defaultValue={desiredSkills} 
+            className={jobDetailsPropsErrorMap.desiredSkills ? `${editableArea} ${error}` : editableArea}></textarea>
+      }
+
+      {
+        /*
+         * Compensation
+         */
+        
+        !editViewEnabled
+          ? <div className={textDetailsTitle}>Compensation</div>
+          : <div className={fieldTitleFlexContainer}>
+              <div className={textDetailsTitle}>Compensation</div>
+              <div className={charCount}>[{compensation.length} / 500 chars]</div>
+            </div>
       }
       
-      <div className={textDetailsTitle}>Compensation</div>
       {
         !editViewEnabled
           ? <div className={textDetailsField}>{compensation}</div>
-          : <textarea onBlur={(e) => handleUpdateJobDetailsField(e.target.value, 'compensation', page)} defaultValue={compensation} className={editableArea}></textarea>
+          : <textarea onChange={(e) => handleUpdateJobDetailsField(e.target.value, 'compensation', page)} 
+              defaultValue={compensation} 
+              className={jobDetailsPropsErrorMap.compensation ? `${editableArea} ${error}` : editableArea}></textarea>
       }
 
       {
         editViewEnabled
           ? <div className={saveButtonsContainer}>
               <button onClick={handleCancelJobDetailsEdits} className={standardButtonRed}>Cancel</button>
-              <button onClick={() => {
-                console.log("lets go")
-                handleSaveJobDetailsEdits()  
-              }} className={isSavingChanges ? `${shine} ${standardButton}` : standardButton}>Save changes</button>
+              <button 
+                onClick={wereJobDetailsEditsMade ? handleSaveJobDetailsEdits : () => {}} 
+                className={wereJobDetailsEditsMade 
+                            ? isSavingChanges ? `${shine} ${standardButton}` : standardButton
+                            : standardButtonInactive}>Save changes</button>
             </div>
           : ''
       }
-      
-      
+     
     </div>
   )
 }

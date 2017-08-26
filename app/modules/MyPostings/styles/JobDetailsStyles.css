@@ -25,3 +25,18 @@
 .disabledInput {
     background: #eaeaea !important;
 }
+
+.fieldTitleFlexContainer {
+display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.charCount {
+    margin-top: 25px;
+    font-size: 12px;
+    font-weight: 500;
+    margin-bottom: 7px;
+}
+
+    
