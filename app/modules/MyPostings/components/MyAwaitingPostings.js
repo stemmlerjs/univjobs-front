@@ -163,7 +163,7 @@ export default function MyAwaitingPostings ({
             ? jobs.length === 0 
               ? <div className={bodySectionNoJobs}>You don't have any jobs awaiting approval. <Link className={linkStyle} to="/categories">Post a new job</Link> and we'll let you know when it's approved!</div>
               : <div className={bodySectionNoJobs}>
-                  <div>Select a job from the dropdown above to see a detailed breakdown.</div>
+                  <div>Select a job to see a detailed breakdown.</div>
                   <JobPostingsListView jobs={jobs} page={"awaiting"} handleChangeSelectedJob={handleChangeSelectedJob}/>
                 </div>
             : jobs.length === 0

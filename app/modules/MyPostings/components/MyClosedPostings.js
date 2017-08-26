@@ -96,7 +96,7 @@ export default function MyClosedPostings ({
             ? jobs.length === 0 
               ? <div className={bodySectionNoJobs}>You don't currently have any closed jobs.</div>
               : <div className={bodySectionNoJobs}>
-                  <div>Select a job from the dropdown above to see a detailed breakdown.</div>
+                  <div>Select a job to see a detailed breakdown.</div>
                   <JobPostingsListView jobs={jobs} page={"closed"} handleChangeSelectedJob={handleChangeSelectedJob}/>
                 </div>
             : jobs.length === 0
