@@ -19,7 +19,7 @@ export default function MyPostingsHeader ({ page, jobs, jobSelectDropdownIsOpen,
   if (page === "postings-open") {
     return (
       <div className={headerSection}>
-        <div className={headerJobTitle}>{selectedJob.title ? selectedJob.title : 'No job selected'}</div>
+        <div className={headerJobTitle}>{selectedJob.title ? selectedJob.title : 'My Postings'}</div>
         <div className={headerJobsSelectionContainer}>
           <div className={headerNumberJobs}>{jobs.length === 0 ? '0 open jobs' : jobs.length + " open jobs"}</div>
           <div className={headerJobSelectButton} onClick={handleOpenJobSelect}>
@@ -39,7 +39,7 @@ export default function MyPostingsHeader ({ page, jobs, jobSelectDropdownIsOpen,
   else if (page === "postings-closed") {
     return (
       <div className={headerSection}>
-        <div className={headerJobTitle}>{selectedJob.title ? selectedJob.title : 'No job selected'}</div>
+        <div className={headerJobTitle}>{selectedJob.title ? selectedJob.title : 'My Postings'}</div>
         <div className={headerJobsSelectionContainer}>
           <div className={headerNumberJobs}>{jobs.length === 0 ? '0 closed jobs' : jobs.length + " closed jobs"}</div>
           <div className={headerJobSelectButton} onClick={handleOpenJobSelect}>
@@ -58,7 +58,7 @@ export default function MyPostingsHeader ({ page, jobs, jobSelectDropdownIsOpen,
   else {
     return (
       <div className={headerSection}>
-        <div className={headerJobTitle}>{selectedJob.title ? selectedJob.title : 'No job selected'}</div>
+        <div className={headerJobTitle}>{selectedJob.title ? selectedJob.title : 'My Postings'}</div>
         <div className={headerJobsSelectionContainer}>
           <div className={headerNumberJobs}>{jobs.length === 0 ? '0 jobs waiting approval' : jobs.length + " jobs waiting approval"}</div>
           <div className={headerJobSelectButton} onClick={handleOpenJobSelect}>

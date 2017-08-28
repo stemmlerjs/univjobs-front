@@ -141,7 +141,7 @@ export default function SideBar ({ onLogout, isAStudent, profilePicture, page, h
                       : sidebarListItemContainer
                   }>
                     <div className={sidebarItem}>
-                      <i className={animationItem3 + " fa fa-address-card-o"} aria-hidden="true"></i>
+                      <i className={animationItem3 + " fa fa-file-text "} aria-hidden="true"></i>
                     </div>
                     <div className={sidebarItemName}>My Postings</div>
                   </div>
@@ -158,7 +158,14 @@ export default function SideBar ({ onLogout, isAStudent, profilePicture, page, h
                   <div className={sidebarItemName}>Pinned Jobs</div>
                 </div>
               </Link>
-            : <span></span>
+            : <Link to="/myapplicants" className={noDecoration}>
+                  <div className={page == "applications" ? `${sidebarListItemContainer} ${currentPageActiveStyle}` : sidebarListItemContainer}>
+                      <div className={sidebarItem}>
+                      <i className={animationItem3 + " fa fa-address-card-o"} aria-hidden="true"></i>
+                    </div>
+                    <div className={sidebarItemName}>My Applicants</div>
+                  </div>
+                </Link>
           }
 
           {/* INVITATIONS / POST A LISTING */}
@@ -369,7 +376,7 @@ export default function SideBar ({ onLogout, isAStudent, profilePicture, page, h
                   : sidebarListItemContainer
               }>
                 <div className={sidebarItem}>
-                  <i className={animationItem3 + " fa fa-address-card-o"} aria-hidden="true"></i>
+                  <i className={animationItem3 + " fa fa-file-text"} aria-hidden="true"></i>
                 </div>
                 <div className={sidebarItemName}>My Postings</div>
               </div>
@@ -386,7 +393,14 @@ export default function SideBar ({ onLogout, isAStudent, profilePicture, page, h
               <div className={sidebarItemName}>Pinned Jobs</div>
             </div>
           </Link>
-        : <span></span>
+        : <Link to="/myapplicants" className={noDecoration}>
+            <div className={page == "applications" ? `${sidebarListItemContainer} ${currentPageActiveStyle}` : sidebarListItemContainer}>
+                <div className={sidebarItem}>
+                <i className={animationItem3 + " fa  fa-address-card-o "} aria-hidden="true"></i>
+              </div>
+              <div className={sidebarItemName}>My Applicants</div>
+            </div>
+          </Link>
       }
 
       {/* INVITATIONS / POST A LISTING */}

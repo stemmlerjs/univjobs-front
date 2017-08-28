@@ -21,3 +21,4 @@ export GenericCard, { APPLICATIONS_CARD_TYPE, DASHBOARD_CARD_TYPE, PINNED_JOBS_C
 export PasswordResetContainer from './PasswordReset/containers/PasswordResetContainer'
 export PageNotFoundContainer from './PageNotFound/containers/PageNotFoundContainer'
 export PublicJobViewContainer from './PublicJobView/containers/PublicJobViewContainer'
+export MyApplicantsContainer from './MyApplicants/containers/MyApplicantsContainer'

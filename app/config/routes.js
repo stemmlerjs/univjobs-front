@@ -6,7 +6,8 @@ import { ApplicationsContainer, CategoriesContainer, CreateJobContainer, Contact
         SignupContainer, StudentDashboardContainer, StudentProfileContainer,
         AboutPageContainer, PinJobsContainer,
         ApplicantsContainer, PasswordResetContainer, PageNotFoundContainer,
-        Terms, Privacy, StudentSettingsContainer, PublicJobViewContainer, MyPostingsContainer } from 'modules'
+        Terms, Privacy, StudentSettingsContainer, PublicJobViewContainer, MyPostingsContainer,
+        MyApplicantsContainer } from 'modules'
 import { checkIfAuthed } from 'helpers/auth'
 import { syncHistoryWithStore } from 'react-router-redux'
 
@@ -24,9 +25,6 @@ export default function getRoutes(store) {
           <Route path='/join/students' component={SignupContainer} />
           <Route path='/password/reset' component={PasswordResetContainer}/>
           <Route path='/password/confirm/:code' component={PasswordResetContainer} />
-
-
-
 
           {
             /*
@@ -61,6 +59,8 @@ export default function getRoutes(store) {
           <Route path='/mypostings/closed/:jobId'   page={'postings-closed'} component={MyPostingsContainer} />
           <Route path='/mypostings/approval'        page={'postings-approval'} component={MyPostingsContainer} />
           <Route path='/mypostings/approval/:jobId' page={'postings-approval'} component={MyPostingsContainer} />
+
+          <Route path='/myapplicants'               page={'applicants'} component={MyApplicantsContainer} />
           
           <Route path='/settings/st'              page={'settings'} component={StudentSettingsContainer} />
 
