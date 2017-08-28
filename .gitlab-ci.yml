@@ -10,6 +10,9 @@ production:
   script:
     - npm run production
 
+    # Remote index.html from ./dist because it's being rendered instead of /views/index.html for server side-rendering (2017-08-28)
+    - rm -rf ./dist/index.html
+
     # Install ssh-agent if not already installed, it is required by Docker.
     # (change apt-get to yum if you use a CentOS-based image)
     - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
