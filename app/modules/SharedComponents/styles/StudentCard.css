@@ -433,9 +433,6 @@ height: 106px;
     color:white;
 }
 
-.cardActionButtons > button:hover a {
-    color:white;
-}
 
 .whiteTxt {
     color: #5396E4;
@@ -483,4 +480,21 @@ height: 106px;
     font-size: 56px;
     color: #5396e4;
     text-align: center;
+}
+
+.grayButton {
+    background-color: white;
+    border: none;
+    color: #A9A9A9;
+    font-weight: bold;
+    font-size: 13px;
+    width: 109px;
+    height: 51px;
+    cursor: pointer;
+    outline: none;
+    transition: 0.1s ease-in;
+}
+.grayButton:hover {
+   background-color: #A9A9A9;
+   color:white;
 }

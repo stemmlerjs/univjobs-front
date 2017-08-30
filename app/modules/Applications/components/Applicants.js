@@ -31,13 +31,16 @@ Applicants.propTypes = {
 
 
 export default function Applicants (props) {
+    console.log("IS THIS WORKING")
+    console.log(props)
+    debugger
   return (
   <div className={rootComponentContainer}>
     <div className={margins}>
 
         {/* TITLE */}
         <Title titleName='My applicants'
-               subHeading="Hire students who've applied to jobs you've posted">
+               subHeading="Select a job below, and hire students">
         </Title>
 
         {
@@ -56,6 +59,7 @@ export default function Applicants (props) {
                 textField="title"
                 valueField="job_id"
                 filter="contains"
+                defaultValue={props.jobs.length == 0 ? '' : props.jobs[0].title}
                 data={props.jobs.filter((job) => {
                   return job.active == 1
                 })}
