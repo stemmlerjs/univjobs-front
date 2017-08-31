@@ -263,8 +263,8 @@ export function openStudentProfileAndAnswersModal (studentObject) {
 // =======================================================
 
 const initialApplicationsState = {
-	currentSelectedJob: {},
-	currentSelectedStudent: {},
+  currentSelectedJob: {},
+  currentSelectedStudent: {},
   hiddenStudents: [],
   isRejecting: false,
   rejectSuccess: false,
