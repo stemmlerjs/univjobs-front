@@ -1,0 +1,37 @@
+
+ /*
+  * ======================================
+  *        MY APPLICANTS DASHBOARD 
+  * ======================================
+  */
+
+  .dashboardContainer {
+    display: flex;
+    max-width: 1130px;
+    margin: 0 auto;
+    margin-top: 40px;
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+
+  .smallHeader {
+          text-align: left;
+    font-size: 14px;
+    font-weight: 700;
+    color: #4b4a4c;
+  }
+
+  .dashboardListContainer {
+
+  }
+
+  .dashboardColumnLeft {
+        width: 70%;
+    margin-right: 40px;
+  }
+  
+  .dashboardColumnRight {
+    width: 30%;
+  } 
+  
+  .dashboardRecentActivityContainer {}

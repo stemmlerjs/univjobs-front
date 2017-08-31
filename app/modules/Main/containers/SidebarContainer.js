@@ -6,6 +6,7 @@ import { Sidebar } from 'modules/Main'
 
 // ==============OTHER IMPORTS========================= //
 import { logout } from 'helpers/auth'
+import { clearSelectedJob } from 'redux/modules/mypostings/mypostings'
 
 const SidebarContainer = React.createClass({
   propTypes: {
@@ -30,6 +31,16 @@ const SidebarContainer = React.createClass({
     logout(store, router)
   },
 
+  /*
+   * clearSelectedJob
+   * 
+   * 
+   */
+  
+  MY_POSTINGS_clearSelectedJob (jobType) {
+    this.context.store.dispatch(clearSelectedJob(jobType))
+  },
+
   render () {
 
     return (
@@ -47,6 +58,8 @@ const SidebarContainer = React.createClass({
                 onLogout={this.handleLogout} 
                 isAStudent={this.props.isAStudent}
                 profilePicture={this.props.profilePicture}
+                page={this.props.page}
+                handleClearSelectedJob={this.MY_POSTINGS_clearSelectedJob}
               />
             : ''
         }

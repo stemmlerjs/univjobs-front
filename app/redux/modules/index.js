@@ -13,4 +13,4 @@ export reset from './reset/reset'
 export feedback from './feedback/feedback'
 export mobileLoad from './mobileLoad/mobileLoad'
 export globalModal from './globalModal/globalModal'
-
+export mypostings from './mypostings/mypostings'

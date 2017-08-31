@@ -13,7 +13,6 @@ import { createMiddleware } from 'redux-beacon';
 import { GoogleAnalytics } from 'redux-beacon/targets/google-analytics';
 import { GoogleTagManager } from 'redux-beacon/targets/google-tag-manager';
 
-
 import { logger } from 'redux-beacon/extensions/logger';
 
 //Forms and toastr
@@ -35,11 +34,14 @@ import Raven from 'raven-js';
 // Set React to be global
 window.React = React
 
+if (window.CURRENT_ENV !== "dev") {
 // Configure Raven 
 window.Raven = Raven;
 Raven
     .config('https://10cfc8899913429fb9c9d3d5295e1f60@sentry.io/199562')
     .install();
+}
+
 
 // Initialize CSS Styles for BODY tag
 initializeBodyStyles();

@@ -4,9 +4,10 @@ import { Router, Route, hashHistory, IndexRoute, browserHistory } from 'react-ro
 import { ApplicationsContainer, CategoriesContainer, CreateJobContainer, ContactPageContainer, 
          EmployerProfileContainer, EmployerDashboardContainer, InitialOverlay,
         SignupContainer, StudentDashboardContainer, StudentProfileContainer,
-        AboutPageContainer, PinJobsContainer, MyListingsContainer,
+        AboutPageContainer, PinJobsContainer,
         ApplicantsContainer, PasswordResetContainer, PageNotFoundContainer,
-        Terms, Privacy, StudentSettingsContainer, PublicJobViewContainer } from 'modules'
+        Terms, Privacy, StudentSettingsContainer, PublicJobViewContainer, MyPostingsContainer,
+        MyApplicantsContainer } from 'modules'
 import { checkIfAuthed } from 'helpers/auth'
 import { syncHistoryWithStore } from 'react-router-redux'
 
@@ -25,28 +26,49 @@ export default function getRoutes(store) {
           <Route path='/password/reset' component={PasswordResetContainer}/>
           <Route path='/password/confirm/:code' component={PasswordResetContainer} />
 
-          <Route path='/profile/st' component={StudentProfileContainer} />
-          <Route path='/profile/st/token/:token' component={StudentProfileContainer} />
-          <Route path='/profile/em' component={EmployerProfileContainer} />
-          <Route path='/profile/em/token/:token' component={EmployerProfileContainer} />
-
-          <Route path='/categories' component={CategoriesContainer} />
-          <Route path='/job/create/:jobtype' page={'createjob'} component={CreateJobContainer} />
-
-
           {
             /*
              * Private Job view urls
              */
           }
-	        <Route path='/dashboard/st' page={'dashboard'} component={StudentDashboardContainer} />
-          <Route path='/dashboard/st/:jobId' component={StudentDashboardContainer} />
-          <Route path='/myapplications/st' page={'applications'} component={StudentDashboardContainer} />
+          <Route path='/profile/st'               page={'profile'} component={StudentProfileContainer} />
+          <Route path='/profile/st/token/:token'  page={'profile'} component={StudentProfileContainer} />
+          <Route path='/profile/em'               page={'profile'} component={EmployerProfileContainer} />
+          <Route path='/profile/em/token/:token'  page={'profile'} component={EmployerProfileContainer} />
+
+          <Route path='/categories'               page={'createjob'} component={CategoriesContainer} />
+          <Route path='/job/create/:jobtype'      page={'createjob'} component={CreateJobContainer} />
+
+	        <Route path='/dashboard/st'             page={'dashboard'} component={StudentDashboardContainer} />
+          <Route path='/dashboard/st/:jobId'      page={'dashboard'} component={StudentDashboardContainer} />
+          <Route path='/dashboard/em'             page={'dashboard'} component={EmployerDashboardContainer} />
+
+          <Route path='/myapplications/st'        page={'applications'} component={StudentDashboardContainer} />
           <Route path='/myapplications/st/:jobId' page={'applications'} component={StudentDashboardContainer} />
-          <Route path='/pinnedjobs' page={'pinnedjobs'} component={StudentDashboardContainer} />
-          <Route path='/pinnedjobs/:jobId' page={'pinnedjobs'} component={StudentDashboardContainer} />
-          <Route path='/invitations' page={'invitations'} component={StudentDashboardContainer} />
-          <Route path='/invitations/:jobId' page={'invitations'} component={StudentDashboardContainer} />
+
+          <Route path='/pinnedjobs'               page={'pinnedjobs'} component={StudentDashboardContainer} />
+          <Route path='/pinnedjobs/:jobId'        page={'pinnedjobs'} component={StudentDashboardContainer} />
+
+          <Route path='/invitations'              page={'invitations'} component={StudentDashboardContainer} />
+          <Route path='/invitations/:jobId'       page={'invitations'} component={StudentDashboardContainer} />
+
+          <Route path='/mypostings'               page={'postings-open'} component={MyPostingsContainer} />
+          <Route path='/mypostings/open'          page={'postings-open'} component={MyPostingsContainer} />
+          <Route path='/mypostings/open/:jobId'   page={'postings-open'} component={MyPostingsContainer} />
+          <Route path='/mypostings/closed'          page={'postings-closed'} component={MyPostingsContainer} />
+          <Route path='/mypostings/closed/:jobId'   page={'postings-closed'} component={MyPostingsContainer} />
+          <Route path='/mypostings/approval'        page={'postings-approval'} component={MyPostingsContainer} />
+          <Route path='/mypostings/approval/:jobId' page={'postings-approval'} component={MyPostingsContainer} />
+
+
+          {/* OLD MY APPLICANTS SCREEN */}
+          <Route path ="/myapplicants/em"           component={ApplicantsContainer} />
+
+          {/* NEW MY APPLICANTS SCREEN 
+          <Route path='/myapplicants'               page={'applicants'} component={MyApplicantsContainer} />
+          */}
+          
+          <Route path='/settings/st'              page={'settings'} component={StudentSettingsContainer} />
 
           {
             /*
@@ -54,13 +76,8 @@ export default function getRoutes(store) {
              */
           }
 
-          <Route path='/posting/:jobId' component={PublicJobViewContainer} />
+          <Route path='/posting/:jobId'  component={PublicJobViewContainer} />
 
-          <Route path='/dashboard/em' component={EmployerDashboardContainer} />
-          <Route path='/myapplicants/em' component={ApplicantsContainer} />
-          
-          <Route path='/mylistings/em' component={MyListingsContainer} />
-          <Route path='/settings/st' component={StudentSettingsContainer} />
           <Route path='contact-us' component={ContactPageContainer} />
           <Route path='about-us' component={AboutPageContainer} />
           <Route path='terms' component={Terms} />

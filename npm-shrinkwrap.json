@@ -4938,6 +4938,11 @@
         }
       }
     },
+    "react-toggle": {
+      "version": "4.0.1",
+      "from": "react-toggle@latest",
+      "resolved": "https://registry.npmjs.org/react-toggle/-/react-toggle-4.0.1.tgz"
+    },
     "react-tooltip": {
       "version": "3.3.0",
       "from": "react-tooltip@>=3.1.6 <4.0.0",

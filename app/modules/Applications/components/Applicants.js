@@ -167,7 +167,10 @@ export default function Applicants (props) {
                         languages={applicant.languages}
                         clubs={applicant.clubs}
                         sports={applicant.sports}
-                        major={applicant.major}
+                        major={props.lists.majors[applicant.major]
+                          ? props.lists.majors[applicant.major].length > 35 ? props.lists.majors[applicant.major].substring(0,35) + "..." : props.lists.majors[applicant.major]
+                          : props.lists.majors[applicant.major]
+                        }
                         gpa={applicant.gpa}
                         gradDate={new Date(applicant.grad_date)}
                         schoolName={applicant.school_name}

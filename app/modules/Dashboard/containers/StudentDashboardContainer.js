@@ -881,7 +881,9 @@ const StudentDashboardContainer = React.createClass({
         <div id="page-wrap" className={pageContainer} >
             <SidebarContainer isAStudent={true} isMobile={this.props.isMobile} profilePicture={typeof this.props.profile.photo !== "object" 
               ? config.mediaUrl + 'avatar/' + this.props.profile.photo
-              : this.props.profile.photo ? this.props.profile.photo.preview : ''  }/>
+              : this.props.profile.photo ? this.props.profile.photo.preview : ''  }
+              page={this.props.route.page}
+            />
 
             {
               this.props.route.page === "dashboard"

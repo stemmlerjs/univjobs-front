@@ -1,0 +1,502 @@
+/* SIDEBAR STYLES */
+.sidebar {
+    position: fixed;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    width: 54px;
+    background-color: #414A51;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    z-index: 5;
+    transition: all 250ms ease-out;
+    overflow: hidden;
+}
+
+.sidebar:hover {
+  width:260px;
+}
+
+.sidebarItemName {
+    color: #959fa9;
+    /* position: relative; */
+    /* left: 60px; */
+    margin-left: 68px;
+        width: 100%;
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 15px;
+    font-weight: 500;
+    text-align: left;
+    padding-top:23px;
+    transition: all 250ms ease-out;
+}
+
+.sidebarItemName:hover {
+  color: white;
+}
+
+.sidebarListItemContainer {
+  height: 62px;
+    /* width: 260px; */
+    overflow: hidden;
+    display: flex;
+    /* flex-direction: row; */
+}
+
+.subSidebarListItemContainer {
+    height: 62px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+}
+  
+
+.sidebarLogo {
+  position: absolute;
+    top: 30px;
+    left: 21px;
+    color: white;
+} 
+
+.sidebarItemsContainer {
+  width: 100%;
+  text-align: center;
+      max-height: 80%;
+}
+
+.sidebarItem {
+  height: 62px;
+    width: 54px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  /*padding-top: */
+  color: white;
+  font-size: 29px;
+  cursor: pointer;
+  margin: auto;
+  font-weight: 100;
+      position: absolute;
+  color: #959fa9;
+  transition: all 250ms ease-out;
+}
+
+.sidebarItem:hover {
+  color:white;
+}
+
+.white {
+  color: white;
+}
+
+.sidebarItem:hover ~ .sidebarItemName {
+    color:white;
+}
+
+.sidebarItemName:hover ~ .sidebarItem {
+    color:white;
+}
+
+.currentPageActiveStyle {
+    background-color: #595f64;
+}
+
+.currentPageActiveStyle i {
+  color: white;
+}
+
+.cursorPointer {
+  cursor:pointer;
+}
+
+.subSidebar {
+    width: 267px;
+    background-color: #595f64;
+    /* height: 100%; */
+    position: fixed;
+    top: 0px;
+    bottom: 0px;
+    left: 54px;
+    z-index: 4;
+    align-items: center;
+    flex-direction: row;
+    z-index: 4;
+    transition: all 250ms ease-out;
+    overflow: hidden;
+}
+
+.sidebar:hover ~ .subSidebar {
+      padding-left: 208px;
+}
+
+.selectedSubSidebarItem {
+  background-color: #767d83;
+    /* padding: 5px; */
+    height: 35px;
+    width: 35px;
+    border-radius: 3px;
+    color: white;
+}
+
+/* ======================================================
+   ================= Sidebar Animations ================= 
+   ======================================================
+*/
+  /* 1) Profile Picture Animation */
+
+  .marginTop {
+        margin-top: 15px;
+  }
+
+  .paddingTop {
+    padding-top: 12px;
+  }
+
+  .animationItem8 {
+    transition: 0.3s ease-in;
+    border: white solid 1px;
+  }
+
+  .sidebarItem:hover .animationItem8 {
+    width:40%;
+    height: auto;
+  }
+
+  .animationTxt8 {
+    font-size: 10px;
+    opacity:0;
+    transition: 0.3s ease;
+  }
+  .sidebarItem:hover .animationTxt8 {
+    opacity:1;
+  }
+
+  .animateItem1 {
+    position: absolute;
+    width: 0px;
+    height: 77px;
+    background-color: #52A7FA;
+    right: 0px;
+    margin-top: -5px;
+    color: white;
+    font-size: 19px;
+    font-weight: 500;
+    display: flex;
+    justify-content: center;
+    transition: 0.6s ease;
+    border-top: white solid 1px;
+  }
+
+  .profileTxt {
+    font-size: 0px;
+  }
+
+  .sidebarItem:hover .animateItem1 {
+    right: 0px;
+    width: 87px;
+  }
+
+  .sidebarItem:hover .profileTxt {
+    font-size: 19px;
+  }
+
+  .animateLine1 {
+    transition: 0.3s ease;
+    height:2px;
+    background-color: white;
+    width:80px;
+    left: -84px;
+    transition: 0.3s ease;
+    visibility: hidden;
+  }
+
+  .sidebarItem:hover .animateLine1 {
+    left: 3px;
+    visibility: visible;
+  }
+
+  /* 2) Dashboard Animation */
+
+  .animationItem2 {
+    margin: auto;
+    margin-top: 2vh;    
+    /*position: absolute;*/
+  }
+
+  .sidebarItem:hover .animationItem2 {
+    animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+    transition: 0.3s ease;
+  }
+
+  .animateLine2 {
+    height:2px;
+    background-color: #52A7FA;
+    width:80px;
+    left: -84px;
+    transition: 0.3s ease;
+    position: relative;
+    margin: auto;
+  }
+
+  .sidebarItem:hover .animateLine2 {
+    left: 2px;
+    margin: auto;
+    margin-right: 5px;
+
+  }
+
+  .animationTxt2 {
+    font-size: 10px;
+    /*height: 0px;*/
+  }
+
+  .sidebarItem:hover .animationTxt2 {
+    transition: 0.3s ease;
+    font-size: 12px;
+  }
+
+  /* 3) Applications Animation */
+
+  .animationItem3 {
+    margin: auto;
+    margin-top: 2vh;    
+  }
+
+  .sidebarItem:hover .animationItem3 {
+    animation: kick 0.82s cubic-bezier(.36,.07,.19,.97) both;
+    transform: translate3d(0, 0, 0);
+    transition: 0.2s ease; 
+  }
+
+  .animationTxt3 {
+    font-size: 10px;
+    transition: 0.2s ease; 
+  }
+
+  .sidebarItem:hover .animationTxt3 {
+   font-size: 12px ;
+  }
+
+
+  .animationLine3 {
+    transition: 0.2s ease;
+    width:0px;
+    height: 2px;
+    background-color: #52A7FA;
+    position: relative;
+    margin-top: 16px;
+   -webkit-margin-before: 80px; /*Safari*/
+  }
+
+
+  /* 4) Settings */
+
+  .animationItem4 {
+    transition: 0.3s ease;
+    margin: auto;
+    margin-top: 2vh;
+  }
+
+  .sidebarItem:hover .animationItem4 {
+    animation: spin 0.82s cubic-bezier(.36,.07,.19,.97) both;
+    transform: translate3d(0, 0, 0);
+  }
+
+  .animationTxt4 {
+    font-size: 10px;
+  }
+
+  .sidebarItem:hover .animationTxt4 {
+    transition: 0.3s ease;
+    font-size: 12px;
+  }
+  
+  /* 5) My Pinned Jobs */
+
+  .animationItem5 {
+    transition: 0.3s ease;
+    margin: auto;
+    margin-top: 2vh;    
+  }
+
+  .sidebarItem:hover .animationItem5 {
+    animation: pin 0.3s cubic-bezier(.36,.07,.19,.97) both;
+    animation-timing-function: ease-out;
+  }
+
+  .animationTxt5 {
+    font-size: 10px;
+  }
+
+  .sidebarItem:hover .animationTxt5 {
+    transition: 0.3s ease;
+    font-size: 12px;
+  }
+
+  /* 6) Logout */
+
+  .animationItem6 {
+    transition: 0.3s ease;
+    margin: auto;
+    margin-top: 2vh;
+    /*position: absolute;*/
+  }
+  .sidebarItem:hover .animationItem6 {
+    animation: pulse 0.5s infinite;
+    animation-delay: 0;
+    animation-direction: alternate;
+  }
+
+  .animationTxt6 {
+    font-size: 10px;
+  }
+
+  .sidebarItem:hover .animationTxt6 {
+    transition: 0.2s ease;
+    font-size: 12px;
+  }
+
+  /* 7) Invitations */
+
+  .animationItem7 {
+    margin: auto;
+    margin-top: 2vh;
+    /*position:absolute;*/
+  }
+
+  .sidebarItem:hover .animationItem7 {
+    animation: shimmy 0.3s cubic-bezier(.36,.07,.19,.97) both;
+    animation-timing-function: ease-out;
+  }
+
+  .animationTxt7 {
+    font-size: 10px;
+  }
+
+
+  .sidebarItem:hover .animationTxt7 {
+    transition: 0.2s ease;
+    font-size: 12px;
+  }
+
+.sidebarItem:nth-of-type(6) {
+  border-bottom: solid #707980 1px;
+}
+
+.profileImg {
+    margin: auto;
+    margin-top: 1vh;
+    width: 50%;
+    height: auto;
+}
+
+.sidebarUnivjobsLogo {
+    height: 65px;
+    position: absolute;
+    top: 14px;
+    left: 63px;
+}
+
+  /* Keyframes */
+  @keyframes shake {
+    10%, 90% {
+      transform: translate3d(-1px, 0, 0);
+    }
+    
+    20%, 80% {
+      transform: translate3d(2px, 0, 0);
+    }
+
+    30%, 50%, 70% {
+      transform: translate3d(-4px, 0, 0);
+    }
+
+    40%, 60% {
+      transform: translate3d(4px, 0, 0);
+    }
+  }
+
+  @keyframes kick {
+    10% {
+      transform: rotate(25deg);
+      transform: translate3d(-4px, 0, 0);
+    }
+    40% {
+      transform: rotate(60deg);
+    }
+    60% {
+      transform: rotate(-25deg);
+    }
+    80% {
+      transform: rotate(-60deg);
+      transform: translate3d(4px, 0, 0);
+    }
+    100% {
+      transform: rotate(0deg);
+    }
+  }
+
+  @keyframes spin {
+    20% {
+      transform: rotate(70deg);
+    }
+    40% {
+      transform: rotate(140deg);
+    }
+    60% {
+      transform: rotate(210deg);
+    }
+    80% {
+      transform: rotate(280deg);
+    }
+    90% {
+      transform: rotate(360deg);
+    }
+    100% {
+      transform: rotate(330deg);
+    }
+  }
+
+  @keyframes pin {
+    70% {
+      transform: translate3d(0, -28px, 0);
+    }
+    100% {
+      transform: translate3d(0, -16px, 0);
+    }
+  }
+
+  @keyframes pulse {
+    0% {
+      color: white;
+    }
+    100% {
+      color: #52a7fa;
+    }
+  }
+
+  @keyframes shimmy {
+    35% {
+      transform: translate3d(-5px, 0, 0);
+    }
+
+    75% {
+      transform: translate3d(5px, 0, 0);
+    }
+
+    100% {
+      transform: translate3d(0px, 0, 0);
+    }
+  }
+

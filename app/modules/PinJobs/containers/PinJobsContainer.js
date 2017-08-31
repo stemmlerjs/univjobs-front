@@ -202,7 +202,8 @@ const PinJobsContainer = React.createClass({
     return (
       <div className={pageContainer} >
           <SidebarContainer isMobile={this.props.isMobile} isAStudent={true} 
-            profilePicture={config.mediaUrl + '/avatar/' + this.props.profile.photo}/>
+            profilePicture={config.mediaUrl + '/avatar/' + this.props.profile.photo}
+            page={this.props.route.page}/>
             
           <PinJobs
             handleCardClick={this.openJobAppModal}

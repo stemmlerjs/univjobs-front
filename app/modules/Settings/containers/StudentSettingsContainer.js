@@ -91,7 +91,8 @@ const StudentSettingsContainer = React.createClass({
   render () {
     return (
       <div className={pageContainer} >
-        <SidebarContainer isMobile={this.props.isMobile} isAStudent={true} profilePicture={config.mediaUrl + '/avatar/' + this.props.profile.photo}/>
+        <SidebarContainer isMobile={this.props.isMobile} isAStudent={true} profilePicture={config.mediaUrl + '/avatar/' + this.props.profile.photo}
+          page={this.props.route.page}/>
         <StudentSettings
           handleConfirmDeactivateAccount={this.confirmDeactivateAccount}/>
 

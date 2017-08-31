@@ -968,7 +968,9 @@ const StudentProfileContainer = React.createClass({
           profilePicture={typeof this.props.profile.photo == "object" && this.props.profile.photo !== null
             ? this.props.profile.photo.preview
             : config.mediaUrl + '/avatar/' + this.props.profile.photo
-          } />
+          } 
+          page={this.props.route.page}
+          />
 
         { 
           /*

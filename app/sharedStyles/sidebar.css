@@ -40,6 +40,7 @@
   border-top: solid #707980 1px;
   cursor: pointer;
   margin: auto;
+  font-weight: 100;
 }
 /* ======================================================
    ================= Sidebar Animations ================= 
@@ -291,7 +292,6 @@
 
 .profileImg {
     margin: auto;
-    margin-top: 1vh;
     width: 50%;
     height: auto;
 }

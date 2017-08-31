@@ -1,0 +1,42 @@
+
+
+.title {
+    font-size: 25px;
+    font-weight: 700;
+}
+
+.jobTypeText {
+    margin-bottom:20px;
+}
+
+
+.textDetailsTitle {
+    margin-top: 21px;
+    font-size: 17px;
+    font-weight: 500;
+    margin-bottom: 7px;
+    color: black;
+} 
+
+.textDetailsField {
+    color: #1c1c1c;
+}
+
+.disabledInput {
+    background: #eaeaea !important;
+}
+
+.fieldTitleFlexContainer {
+display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.charCount {
+    margin-top: 25px;
+    font-size: 12px;
+    font-weight: 500;
+    margin-bottom: 7px;
+}
+
+    

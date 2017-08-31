@@ -817,6 +817,7 @@ const EmployerProfileContainer = React.createClass({
             ? this.props.profile.logoUrl.preview
             : config.mediaUrl + this.props.profile.logoUrl
           }
+          page={this.props.route.page}
         />
 
         {
