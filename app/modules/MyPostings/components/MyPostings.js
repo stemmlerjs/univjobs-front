@@ -18,7 +18,7 @@ import { Link } from 'react-router'
 import { bodySection, bodySectionNoJobs, bodySectionColumn,
   linkStyle,
   sectionContainer, sectionTitle, standardButton, standardButtonRed, standardButtonInactive,
-  sectionContainerHeader, sectionTitleAlt, box, altBox,
+  sectionContainerHeader, sectionTitleAlt, box, altBox, white,
   bodySectionInnerMapRender, displayNone, inlineBlock } from '../styles/MyPostingsStyles.css'
 
 /*
@@ -129,7 +129,7 @@ const JobApplicantsSummarySectionMyPostingsOpen = ({ maxApplicants, numApplicant
       <div className={sectionContainerHeader}>
         <div className={sectionTitleAlt}>APPLICANTS</div>
         <div>
-          <button className={standardButton}>Go to applicants</button>
+          <button className={standardButton}><Link to="/myapplicants/em" className={white}>Go to applicants</Link></button>
         </div>
       </div>
       <JobApplicantsSummary maxApplicants={maxApplicants} numApplicants={numApplicants}/>

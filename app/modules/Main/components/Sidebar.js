@@ -158,7 +158,7 @@ export default function SideBar ({ onLogout, isAStudent, profilePicture, page, h
                   <div className={sidebarItemName}>Pinned Jobs</div>
                 </div>
               </Link>
-            : <Link to="/myapplicants" className={noDecoration}>
+            : <Link to="/myapplicants/em" className={noDecoration}>
                   <div className={page == "applications" ? `${sidebarListItemContainer} ${currentPageActiveStyle}` : sidebarListItemContainer}>
                       <div className={sidebarItem}>
                       <i className={animationItem3 + " fa fa-address-card-o"} aria-hidden="true"></i>
@@ -393,7 +393,7 @@ export default function SideBar ({ onLogout, isAStudent, profilePicture, page, h
               <div className={sidebarItemName}>Pinned Jobs</div>
             </div>
           </Link>
-        : <Link to="/myapplicants" className={noDecoration}>
+        : <Link to="/myapplicants/em" className={noDecoration}>
             <div className={page == "applications" ? `${sidebarListItemContainer} ${currentPageActiveStyle}` : sidebarListItemContainer}>
                 <div className={sidebarItem}>
                 <i className={animationItem3 + " fa  fa-address-card-o "} aria-hidden="true"></i>

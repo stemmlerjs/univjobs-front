@@ -60,7 +60,13 @@ export default function getRoutes(store) {
           <Route path='/mypostings/approval'        page={'postings-approval'} component={MyPostingsContainer} />
           <Route path='/mypostings/approval/:jobId' page={'postings-approval'} component={MyPostingsContainer} />
 
+
+          {/* OLD MY APPLICANTS SCREEN */}
+          <Route path ="/myapplicants/em"           component={ApplicantsContainer} />
+
+          {/* NEW MY APPLICANTS SCREEN 
           <Route path='/myapplicants'               page={'applicants'} component={MyApplicantsContainer} />
+          */}
           
           <Route path='/settings/st'              page={'settings'} component={StudentSettingsContainer} />
 
