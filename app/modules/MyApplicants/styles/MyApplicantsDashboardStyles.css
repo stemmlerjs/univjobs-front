@@ -5,6 +5,15 @@
   * ======================================
   */
 
+  .dashboardContainer {
+    display: flex;
+    max-width: 1130px;
+    margin: 0 auto;
+    margin-top: 40px;
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+
   .smallHeader {
           text-align: left;
     font-size: 14px;
@@ -13,25 +22,16 @@
   }
 
   .dashboardListContainer {
-    margin: 40px;
+
   }
 
-  .dashboardListItem {
-    width: 60%;
-    background: white;
-    margin: 20px;
-    min-height: 104px;
-    border-radius: 3px;
-    border-radius: 6px;
-    border: solid 1px #b8b8b8;
-    box-shadow: 0 1px 0 rgba(0,0,0,.03);
+  .dashboardColumnLeft {
+        width: 70%;
+    margin-right: 40px;
   }
-
-  .dashboardListItemHeader {
-          text-align: left;
-    margin-top: 15px;
-    margin-left: 47px;
-    font-size: 22px;
-    font-weight: 500;
-    margin-bottom: 15px;
-  }
+  
+  .dashboardColumnRight {
+    width: 30%;
+  } 
+  
+  .dashboardRecentActivityContainer {}

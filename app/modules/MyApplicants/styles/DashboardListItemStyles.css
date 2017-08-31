@@ -1,0 +1,96 @@
+
+.dashboardListItemContainer {
+    background: white;
+    margin: 20px;
+    min-height: 132px;
+    border-radius: 3px;
+    border-radius: 6px;
+    border: solid 1px #b8b8b8;
+    box-shadow: 0 1px 0 rgba(0,0,0,.03);
+    display: flex;
+        padding-left: 15px;
+    padding-right: 15px;
+        min-width: 548px;
+} 
+
+.infoSectionContainer {
+    text-align: left;
+    /* margin-top: 15px; */
+    /* margin-left: 47px; */
+    font-size: 22px;
+    font-weight: 500;
+    /* margin-bottom: 15px; */
+    width: 45%;
+        padding: 20px;
+}
+
+.titleText {}
+
+.jobTypeText {
+    font-size: 15px;
+    font-weight: 300;
+    color: #747474;
+}
+
+
+
+
+ .dashboardListItem {
+
+  }
+
+  .dashboardListItemHeader {
+
+  }
+
+  /*
+  * ======== NODES =======
+  */
+
+  .stateSectionContainer  {
+width: 55%;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+  .statesContainer {
+display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  .stateNodes {
+    height: 50%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: 23px;
+    margin-right: 9px;
+  }
+  
+  .node {
+    background-color: #8e5ddb;
+    height: 15px;
+    width: 15px;
+    border-radius: 40px;
+  }
+  
+  .line {
+height: 2px;
+    background: #bcbcbc;
+    width: 34%;
+  } 
+  
+  .nodeCounts{
+        display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  
+  .nodeCountSection {} 
+  .nodeTypeName {
+          font-weight: 400;
+    font-size: 13px;
+  }
+  .nodeValue {}
