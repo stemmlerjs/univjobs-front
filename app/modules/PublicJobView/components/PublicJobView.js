@@ -44,7 +44,7 @@ export default function PublicJobView ({ info, handleOpenEmployerProfileModal, s
                 <SocialLinks 
                   jobTitle={info.title}
                   responsibilities={info.responsibilities}
-                  socialShareUrl={'https://univjobs.ca/#/posting/' + info.job_id}
+                  socialShareUrl={'https://univjobs.ca/posting/' + info.job_id}
                 />
               </div>
 
