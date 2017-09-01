@@ -130,7 +130,7 @@ const StudentProfileModal = ({ pictureUrl, name, major, sportsString, languagesS
                 {
                   studentObj.status
                     ? <div>
-                        <div><b>Students status</b></div>
+                        <div><b>Student Status</b></div>
                         <div className={supplementalItemsDetail}>{ lists.studentStatus[studentObj.status] }</div>
                       </div>
                     : ''
