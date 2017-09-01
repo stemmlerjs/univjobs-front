@@ -22,7 +22,7 @@
 } 
 
 .stProfileImageContainer{
-    width: 232px;
+        min-width: 106px;
 } 
 
 .stProfileImageContainer img {
