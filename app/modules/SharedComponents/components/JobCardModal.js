@@ -345,6 +345,15 @@ export default function JobCardModal({
                       <div className={cardSectionText}>{job.description}</div>
                     </div>
               }
+
+                  {
+                      job.compensation !== ""
+                      ? <div className={cardSectionOne}>
+                            <div className={cardSectionTitle}>Compensation</div>
+                            <div className={cardSectionText}>{job.compensation}</div>
+                        </div>
+                    : ''
+                  }
                 
                 <div className={cardSectionOne}>
                     <div className={cardSectionTitle}>Responsibilities</div>
@@ -364,12 +373,6 @@ export default function JobCardModal({
                     ''
                 }
 
-                  {job.compensation !== ""
-                  ? <div className={cardSectionOne}>
-                      <div className={cardSectionTitle}>Compensation</div>
-                      <div className={cardSectionText}>{job.compensation}</div>
-                  </div>
-                  : ''}
                   
                   {
                     window.isMobile 
