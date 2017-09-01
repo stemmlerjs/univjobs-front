@@ -136,6 +136,8 @@ export default function PublicJobView ({ info, handleOpenEmployerProfileModal, s
           <div className={bodyTitleHeader}>Company Description</div>
           <div className={bodySection}>{info.description}</div>
         */}
+          <div className={bodyTitleHeader}>Compensation</div>
+          <div className={bodySection}>{info.compensation}</div>
 
           <div className={bodyTitleHeader}>Responsibilities</div>
           <div className={bodySection}>{info.responsibilities}</div>
@@ -146,8 +148,6 @@ export default function PublicJobView ({ info, handleOpenEmployerProfileModal, s
           <div className={bodyTitleHeader}>Desired Skills</div>
           <div className={bodySection}>{info.desired_skills}</div>
 
-          <div className={bodyTitleHeader}>Compensation</div>
-          <div className={bodySection}>{info.compensation}</div>
 
           <div className={bodyTitleHeader}>About {info.company_name}</div>
           <div className={bodySection}>{info.description}</div>
