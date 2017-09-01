@@ -111,6 +111,30 @@ const StudentProfileModal = ({ pictureUrl, name, major, sportsString, languagesS
                       </div>
                     : ''
                 }
+                {
+                  studentObj.edu_level
+                    ? <div>
+                        <div><b>Degree Type</b></div>
+                        <div className={supplementalItemsDetail}>{ lists.educationLevels[studentObj.edu_level] }</div>
+                      </div>
+                    : ''
+                }
+                {
+                  gradDate
+                    ? <div>
+                        <div><b>Graduation Date</b></div>
+                        <div className={supplementalItemsDetail}>{ gradDate.getFullYear() }</div>
+                      </div>
+                    : ''
+                }
+                {
+                  studentObj.status
+                    ? <div>
+                        <div><b>Students status</b></div>
+                        <div className={supplementalItemsDetail}>{ lists.studentStatus[studentObj.status] }</div>
+                      </div>
+                    : ''
+                }
               </div>
         </div>
       </div>
