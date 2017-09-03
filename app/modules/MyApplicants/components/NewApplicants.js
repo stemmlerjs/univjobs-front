@@ -7,9 +7,13 @@
 import React, { PropTypes } from 'react'
 import ReactTooltip from 'react-tooltip'
 import MyApplicantsHeader from './MyApplicantsHeader'
+import MyApplicantsSubNavbar from './MyApplicantsSubNavbar'
+
+import ApplicantCard from './ApplicantCard'
 
 import { rootComponentContainer } from 'sharedStyles/sharedComponentStyles.css'
 
+import { applicantsPageBody, applicantsBodyLeft, applicantsBodyRight } from '../styles/MyApplicantsStyles.css'
 import {  } from '../styles/NewApplicantsStyles.css'
 
 import { Link } from 'react-router'
@@ -17,9 +21,57 @@ import { Link } from 'react-router'
 export default function NewApplicants ({ jobs, selectedJob }) {
   return (
     <div className={rootComponentContainer}>
-      <MyApplicantsHeader jobs={jobs} selectedJob={selectedJob}/>
+      
+      {
+        /*
+        * =======================
+        *   Header + Sub navbar
+        * =======================
+        */
+      }
 
-      new apps and shit
+      <MyApplicantsHeader jobs={jobs} selectedJob={selectedJob}/>
+      <MyApplicantsSubNavbar />
+
+      {
+       /*
+        * =====================
+        *         Body
+        * =====================
+        */
+      }
+      
+      <div className={applicantsPageBody}>
+
+        {
+          /*
+          * =========================
+          *     Applicant cards
+          * =========================
+          */
+        }
+        <div className={applicantsBodyLeft}>
+          {
+            selectedJob.applicants.map((applicant, index) => {
+              return (
+                <ApplicantCard key={index} applicant={applicant}/>
+              )
+            })
+          }
+        </div>
+        
+        {
+          /*
+          * ============================
+          *   Rightside action section
+          * ============================
+          */
+        }
+        <div className={applicantsBodyRight}>
+          
+        </div>
+
+      </div>
     </div>
   )
 }

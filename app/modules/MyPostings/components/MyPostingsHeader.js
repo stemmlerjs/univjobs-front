@@ -21,7 +21,11 @@ export default function MyPostingsHeader ({ page, jobs, jobSelectDropdownIsOpen,
       <div className={headerSection}>
         <div className={headerJobTitle}>{selectedJob.title ? selectedJob.title : 'My Postings'}</div>
         <div className={headerJobsSelectionContainer}>
-          <div className={headerNumberJobs}>{jobs.length === 0 ? '0 open jobs' : jobs.length + " open jobs"}</div>
+          <div className={headerNumberJobs}>{jobs.length === 0 
+            ? '0 open jobs' 
+            : jobs.length == 1
+              ? '1 open job'
+              : jobs.length + " open jobs"}</div>
           <div className={headerJobSelectButton} onClick={handleOpenJobSelect}>
             <i data-tip={`Select a job to display`} className={"fa fa-angle-down"} aria-hidden="true"></i>
           </div>
@@ -41,7 +45,11 @@ export default function MyPostingsHeader ({ page, jobs, jobSelectDropdownIsOpen,
       <div className={headerSection}>
         <div className={headerJobTitle}>{selectedJob.title ? selectedJob.title : 'My Postings'}</div>
         <div className={headerJobsSelectionContainer}>
-          <div className={headerNumberJobs}>{jobs.length === 0 ? '0 closed jobs' : jobs.length + " closed jobs"}</div>
+          <div className={headerNumberJobs}>{jobs.length === 0 
+            ? '0 closed jobs' 
+            : jobs.length == 1
+              ? '1 closed job'
+              : jobs.length + " closed jobs"}</div>
           <div className={headerJobSelectButton} onClick={handleOpenJobSelect}>
             <i data-tip={`Select a job to display`} className={"fa fa-angle-down"} aria-hidden="true"></i>
           </div>
@@ -60,7 +68,11 @@ export default function MyPostingsHeader ({ page, jobs, jobSelectDropdownIsOpen,
       <div className={headerSection}>
         <div className={headerJobTitle}>{selectedJob.title ? selectedJob.title : 'My Postings'}</div>
         <div className={headerJobsSelectionContainer}>
-          <div className={headerNumberJobs}>{jobs.length === 0 ? '0 jobs waiting approval' : jobs.length + " jobs waiting approval"}</div>
+          <div className={headerNumberJobs}>{jobs.length === 0 
+            ? '0 jobs waiting approval' 
+            : jobs.length == 1
+              ? '1 job waiting for approval'
+              : jobs.length + " jobs waiting approval"}</div>
           <div className={headerJobSelectButton} onClick={handleOpenJobSelect}>
             <i data-tip={`Select a job to display`} className={"fa fa-angle-down"} aria-hidden="true"></i>
           </div>

@@ -7,15 +7,19 @@
 import React, { PropTypes } from 'react'
 import ReactTooltip from 'react-tooltip'
 
-import { recentActivityContainer, card, cardType1, cardType2, cardType3, cardType4, end, activityTime } from '../styles/RecentActivityStyles.css'
+import { recentActivityContainer, card, cardType1, cardType2, cardType3, cardType4, end, activityTime,
+comingSoon } from '../styles/RecentActivityStyles.css'
 
 import { Link } from 'react-router'
+
+const isReadyForProd = false;
 
 export default function RecentActivity ({ activities }) {
   return (
     <div className={recentActivityContainer}>
       {
-        activities.length == 0
+        isReadyForProd
+        ? activities.length == 0
           ? 'no activity'
           : <div>
               {
@@ -50,8 +54,13 @@ export default function RecentActivity ({ activities }) {
                   )
                 })
               }
-              
             </div>
+        : <div className={comingSoon}>
+             <h3>Coming soon</h3>
+             <div>This section will show all recent activity. 
+               Examples include when a student applies to a job, when you've rejected a student, 
+               when you've moved a student into the potential hire "pool", etc.</div>
+          </div>
       }
     </div>
   )

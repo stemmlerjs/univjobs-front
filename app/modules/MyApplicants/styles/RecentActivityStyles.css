@@ -67,3 +67,24 @@ background: white;
     color: #949494;
     margin-top: 6px;
 }
+
+.comingSoon {
+background: #dbdada;
+    width: 100%;
+    margin-top: 11px;
+    margin-bottom: 11px;
+    border-radius: 3px;
+    color: #a2a2a2;
+    font-size: 14px;
+    padding: 19px;
+}
+
+.comingSoon div {
+    text-align: left;
+}
+
+.comingSoon h3 {
+        font-weight: 100;
+    font-size: 25px;
+        margin-top: 5px;
+}

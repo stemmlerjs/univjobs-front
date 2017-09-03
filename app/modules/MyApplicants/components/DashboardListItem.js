@@ -24,20 +24,26 @@ export default function DashboardListItem ({ job, index }) {
             <button className={button}>View Applicants</button>
           </Link>
           <Link to={`/mypostings/open/${job.job_id}`}>
-            <button className={button}><i  className={"fa fa-pencil-square-o"} aria-hidden="true"></i></button>
+            <button className={button}><i data-tip={'View in My Postings'} className={"fa fa-file-text"} aria-hidden="true"></i></button>
           </Link>
         </div>
 
       </div>
       <div className={stateSectionContainer}>
         <div className={statesContainer}>
-
+          <ReactTooltip delayHide={100} delayShow={20} place="top" effect="float"/>
           <div className={stateNodes}>
-            <div className={`${node} ${node1}`}></div>
+            <Link to={`/myapplicants/new/${job.job_id}`}>
+              <div data-tip={'Review all new applicants'} className={`${node} ${node1}`}></div>
+            </Link>
             <div className={line}></div>
-            <div className={`${node} ${node2}`}></div>
+            <Link to={`/myapplicants/pool/${job.job_id}`}>
+              <div data-tip={'Review all applicants in your potential hires pool'} className={`${node} ${node2}`}></div>
+            </Link>
             <div className={line}></div>
-            <div className={`${node} ${node3}`}></div>
+            <Link to={`/myapplicants/hired/${job.job_id}`}>
+              <div data-tip={'Review all your hired applicants'} className={`${node} ${node3}`}></div>
+            </Link>
           </div>
 
           <div className={nodeCounts}>

@@ -16,7 +16,7 @@ import { subTitle } from '../styles/MyApplicantsHeaderStyles.css'
 
 import JobsSelectDropdown from 'modules/MyPostings/components/JobsSelectDropdown'
 
-export default function MyApplicantsHeader ({ jobs, jobSelectDropdownIsOpen, handleOpenJobSelect, handleChangeSelectedJob, selectedJob }) {
+export default function MyApplicantsHeader ({ jobs, jobSelectDropdownIsOpen, handleOpenJobSelect, handleChangeSelectedJob, selectedJob, page }) {
   return (
     <div className={headerSection}>
       {

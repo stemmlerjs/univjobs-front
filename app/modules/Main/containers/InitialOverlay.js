@@ -37,6 +37,7 @@ import Slideout from 'slideout'
 
 // Mobile Slider
 let slideout = null
+let showFeedbackForm = false;
 
 const styles = {
   main: {
@@ -284,7 +285,7 @@ const InitialOverlay = React.createClass({
 
     return (
       <div style={styles.main}>
-        { this.props.isAuthenticated && window.CURRENT_ENV == 'dev'
+        { this.props.isAuthenticated && window.CURRENT_ENV == 'dev' && showFeedbackForm
           ? <FeedbackForm 
               isOpen={this.props.feedback.isOpen} 
               title={this.props.feedback.title}
