@@ -6,10 +6,48 @@ import ReactTooltip from 'react-tooltip'
 
 import MyApplicantsHeader from './MyApplicantsHeader'
 import DashboardListItem from './DashboardListItem'
+import RecentActivity from './RecentActivity'
+
 import { Link } from 'react-router'
 
 import { dashboardContainer, dashboardListContainer,
   smallHeader, dashboardColumnLeft, dashboardColumnRight, dashboardRecentActivityContainer } from '../styles/MyApplicantsDashboardStyles.css'
+
+  /*
+  * Activity types
+  * 
+  * 1 == applied
+  * 2 == accepted invite + applied
+  * 3 == moved to contact
+  * 4 == hired
+  * 5 == rejected
+  */
+
+let activities = [
+  {
+    student_name: "Khalil Stemmler",
+    job_id: 1,
+    title: "Marking Associate",
+    activityType: 1
+  }, {
+    student_name: "Asia Ferriera",
+    job_id: 4,
+    title: "Service Representative",
+    activityType: 2
+  }, {
+    student_name: "Charles Javelona",
+    job_id: 2,
+    title: "Full-stack Web Developer",
+    activityType: 1
+  },{
+    student_name: "Josh Homme",
+    job_id: 5,
+    title: "Dancer",
+    activityType: 3
+  },
+
+
+];
 
 export default function MyApplicantsDashboard ({ 
     jobs, 
@@ -60,7 +98,7 @@ export default function MyApplicantsDashboard ({
           }
           <div className={dashboardColumnRight}>
             <div className={smallHeader}>Recent activity</div>
-            <div className={dashboardRecentActivityContainer}></div>
+            <RecentActivity activities={activities}/>
 
           </div>
         </div>

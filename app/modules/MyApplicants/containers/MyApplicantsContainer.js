@@ -6,6 +6,7 @@ import config from 'config'
 import SkyLight from 'react-skylight'
 
 import MyApplicantsDashboard from '../components/MyApplicantsDashboard'
+import NewApplicants from '../components/NewApplicants'
 
 var ReactToastr = require("react-toastr");
 var { ToastContainer } = ReactToastr;
@@ -69,6 +70,13 @@ const MyApplicantsContainer = React.createClass({
     //   currentJobId = this.props.params.jobId;
     // }
 
+    /*
+
+    this.props.page == "applicants-dash"
+            ? <MyApplicantsDashboard jobs={jobs} selectedJob={{}}/>
+            :
+    */
+
     this.doRedirectionFilter()
       //.then(this.props.getAllJobsMyPostings(currentJobId, this.getPageType()))
       .then(this.props.handleGetIndustries)
@@ -83,8 +91,19 @@ const MyApplicantsContainer = React.createClass({
           page={this.props.route.page}
           profilePicture={config.mediaUrl + this.props.profile.employerProfile.logoUrl}
         />
+
+        {
+          (() => {
+            switch (this.props.route.page) {
+              case "applicants-dash":
+                return <MyApplicantsDashboard jobs={jobs} selectedJob={{}}/>
+              case "applicants-new":
+                return <NewApplicants jobs={jobs} selectedJob={{}}/>
+            }
+          })()
+        }
         
-        <MyApplicantsDashboard jobs={jobs} selectedJob={{}}/>
+        
           
         <ToastContainer ref="container"
           toastMessageFactory={ToastMessageFactory}

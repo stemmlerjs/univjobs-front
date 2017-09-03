@@ -129,7 +129,7 @@ const JobApplicantsSummarySectionMyPostingsOpen = ({ maxApplicants, numApplicant
       <div className={sectionContainerHeader}>
         <div className={sectionTitleAlt}>APPLICANTS</div>
         <div>
-          <button className={standardButton}><Link to="/myapplicants/em" className={white}>Go to applicants</Link></button>
+          <button className={standardButton}><Link to="/myapplicants" className={white}>Go to applicants</Link></button>
         </div>
       </div>
       <JobApplicantsSummary maxApplicants={maxApplicants} numApplicants={numApplicants}/>

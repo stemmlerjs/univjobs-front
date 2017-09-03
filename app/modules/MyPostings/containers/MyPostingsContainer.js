@@ -114,6 +114,10 @@ const MyPostingsContainer = React.createClass({
 
   },
 
+  componentWillUnmount () {
+    this.props.clearSelectedJob(this.getPageType())
+  },
+
 
   /*
    * changeUrlAndSetSelectedJob
