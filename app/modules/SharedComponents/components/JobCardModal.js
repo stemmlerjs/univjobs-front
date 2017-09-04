@@ -350,18 +350,18 @@ export default function JobCardModal({
                       job.compensation !== ""
                       ? <div className={cardSectionOne}>
                             <div className={cardSectionTitle}>Compensation</div>
-                            <div className={cardSectionText}>{job.compensation}</div>
+                            <div className={cardSectionText}><pre>{job.compensation}</pre></div>
                         </div>
                     : ''
                   }
                 
                 <div className={cardSectionOne}>
                     <div className={cardSectionTitle}>Responsibilities</div>
-                    <div className={cardSectionText}>{job.responsibilities}</div>
+                    <div className={cardSectionText}><pre>{job.responsibilities}</pre></div>
                 </div>
                 <div className={cardSectionOne}>
                     <div className={cardSectionTitle}>Qualifications</div>
-                    <div className={cardSectionText}>{job.qualification}</div>
+                    <div className={cardSectionText}><pre>{job.qualification}</pre></div>
                 </div>
                 {
                   job.desired_skills !== null && job.desired_skills !== ''
