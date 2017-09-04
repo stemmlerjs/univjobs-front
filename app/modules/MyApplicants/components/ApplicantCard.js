@@ -25,7 +25,9 @@ export default function ApplicantCard ({ applicant }) {
         <div className={applicantSchoolText}>Sheridan College</div>
         <div className={applicantMajorText}>Computing and Network Telecommunications</div>
       </div>
-      <div className={applicantButtonCorner}></div>
+      <div className={applicantButtonCorner}>
+        <i className={"fa fa-square-o"} aria-hidden="true"></i>
+      </div>
     </div>
   )
 }

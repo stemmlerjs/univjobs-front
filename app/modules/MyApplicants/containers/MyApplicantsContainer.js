@@ -18,6 +18,7 @@ import { bindActionCreators } from 'redux'
 import * as userActionCreators from 'redux/modules/user/user'
 import * as jobActionCreators from 'redux/modules/job/job'
 import * as listActionCreators from 'redux/modules/list/list'
+import * as myApplicantsActionCreators from 'redux/modules/myapplicants/myapplicants'
 
 import { pageContainer } from 'sharedStyles/sharedContainerStyles.css'
 import { authRedirectFilter } from 'config/routes'
@@ -145,7 +146,7 @@ const MyApplicantsContainer = React.createClass({
     */
 
     this.doRedirectionFilter()
-      //.then(this.props.getAllJobsMyPostings(currentJobId, this.getPageType()))
+      .then(this.props.getAllJobsMyApplicants())
       .then(this.props.handleGetIndustries)
       .then(this.props.handleGetJobTypes)
       .then(this.props.closeOverlay)
@@ -229,7 +230,8 @@ function mapActionCreatorsToProps(dispatch) {
   return bindActionCreators({
     ...jobActionCreators,
     ...listActionCreators,
-    ...userActionCreators
+    ...userActionCreators,
+    ...myApplicantsActionCreators
   }, dispatch)
 }
 

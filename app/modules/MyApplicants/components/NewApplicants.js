@@ -10,6 +10,7 @@ import MyApplicantsHeader from './MyApplicantsHeader'
 import MyApplicantsSubNavbar from './MyApplicantsSubNavbar'
 
 import ApplicantCard from './ApplicantCard'
+import ApplicantSidebar from './ApplicantSidebar'
 
 import { rootComponentContainer } from 'sharedStyles/sharedComponentStyles.css'
 
@@ -63,13 +64,12 @@ export default function NewApplicants ({ jobs, selectedJob }) {
         {
           /*
           * ============================
-          *   Rightside action section
+          *   Rightside action section (void)
           * ============================
           */
         }
-        <div className={applicantsBodyRight}>
-          
-        </div>
+        
+        <ApplicantSidebar isOpen={false} selectedApplicant={{}}/>
 
       </div>
     </div>

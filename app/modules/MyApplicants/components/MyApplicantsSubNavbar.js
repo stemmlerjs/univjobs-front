@@ -15,7 +15,7 @@ import { Link } from 'react-router'
 export default function MyApplicantsSubNavbar ({  }) {
   return (
     <div className={subNavbarContainer}>
-      yo we're a navbar
+      
     </div>
   )
 }
