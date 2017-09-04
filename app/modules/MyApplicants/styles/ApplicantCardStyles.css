@@ -11,8 +11,8 @@
     margin-bottom: 20px;
     height: 115px;
     max-width: 644px;
-    width: 625px;
     transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+        min-width: 554px;
 } 
 
 /*

@@ -1,14 +1,57 @@
 
 .applicantSidebarContainer {
-        width: 35%;
+    width: 35%;
     position: absolute;
     bottom: 0px;
     background: white;
     top: 122px;
     right: 0px;
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    min-width: 554px;
+    padding: 22px;
 }
 
 .hide {
     display: none;
+}
+
+.sidebarContainer {
+    
+}
+
+.headerContainer {
+    display: flex;
+    flex-direction: row;
+}
+
+.imgContainer {
+    height: 151px;
+    width: 151px;
+}
+
+.imgContainer img {
+    height: 151px;
+    width: 151px;
+}
+
+.headerDetailsContainer {
+    text-align: left;
+    margin-left: 19px;
+}
+
+.profileNameText {
+        font-size: 20px;
+}
+
+.programNameText {
+    font-size: 15px;
+}
+
+.schoolText {
+        font-size: 13px;
+    color: gray;
+}
+
+.bodyContainer {
+
 }

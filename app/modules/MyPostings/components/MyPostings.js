@@ -41,7 +41,9 @@ const JobDetailsSectionMyPostingsOpen = ({ job,
       <div className={sectionContainerHeader}>
         <div className={sectionTitle}>Details</div>
         <div>
-          <Link to={`/posting/${job.job_id}`}><button className={editViewEnabled ? displayNone : standardButton}>View Public Posting</button></Link>
+          <Link to={`/posting/${job.job_id}`}>
+            <button className={editViewEnabled ? displayNone : standardButton}>View Public Posting</button>
+          </Link>
 
           {
             job.applicants.length == 0
@@ -123,13 +125,15 @@ const JobQuestionSectionMyPostingsOpen = ({ questions, numApplicants }) => {
 
 
 
-const JobApplicantsSummarySectionMyPostingsOpen = ({ maxApplicants, numApplicants }) => {
+const JobApplicantsSummarySectionMyPostingsOpen = ({ maxApplicants, numApplicants, jobId }) => {
   return (
     <div className={sectionContainer}>
       <div className={sectionContainerHeader}>
         <div className={sectionTitleAlt}>APPLICANTS</div>
         <div>
-          <button className={standardButton}><Link to="/myapplicants" className={white}>Go to applicants</Link></button>
+          <button className={standardButton}>
+            <Link to={`/myapplicants/new/${jobId}`} className={white}>Go to applicants</Link>
+          </button>
         </div>
       </div>
       <JobApplicantsSummary maxApplicants={maxApplicants} numApplicants={numApplicants}/>
@@ -281,7 +285,7 @@ export default function MyPostings ({
                     }
 
                     <div className={bodySectionColumn}>
-                      <JobApplicantsSummarySectionMyPostingsOpen maxApplicants={selectedJob.max_applicants} numApplicants={selectedJob.applicants.length}/>
+                      <JobApplicantsSummarySectionMyPostingsOpen jobId={selectedJob.job_id} maxApplicants={selectedJob.max_applicants} numApplicants={selectedJob.applicants.length}/>
                       <JobNumPositionsSectionMyPostingsOpen numApplicants={selectedJob.applicants.length} numPositions={selectedJob.num_positions}/>
                       <JobInvitationsSectionMyPostingsOpen invitedStudents={selectedOpenJobInvites}/>
                       <JobMetricsSectionMyPostingsOpen/>

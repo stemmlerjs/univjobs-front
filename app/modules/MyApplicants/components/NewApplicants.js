@@ -47,7 +47,7 @@ export default function NewApplicants ({ jobs, selectedJob,
         */
       }
       
-      <div className={applicantsPageBody} onClick={handleClearCurrentApplicantDetails}>
+      <div className={applicantsPageBody}>
 
         {
           /*
@@ -56,7 +56,7 @@ export default function NewApplicants ({ jobs, selectedJob,
           * =========================
           */
         }
-        <div className={applicantsBodyLeft} >
+        <div className={applicantsBodyLeft} onClick={handleClearCurrentApplicantDetails}>
           {
             selectedJob.applicants 
               ? selectedJob.applicants.map((applicant, index) => {
