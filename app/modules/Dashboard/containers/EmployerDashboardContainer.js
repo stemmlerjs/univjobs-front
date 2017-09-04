@@ -473,7 +473,7 @@ const EmployerDashboardContainer = React.createClass({
              }
               
 
-        /*NOTE: Combining below code to the first check causes error, will revisit in the future*/
+        {/*NOTE: Combining below code to the first check causes error, will revisit in the future*/}
         
             { Object.keys(this.props.jobs) == 1 ?    
                   <div className={inviteStudentModalButtonsContainer}>
