@@ -201,7 +201,9 @@ handleCloseStudentProfileAndAnswersModal
                 : <div>
                     <div className={cardSectionTitle}>Previous Work Experience</div>
                     <div className={cardSectionText}>
-                        {recentPosition} at {recentCompanyName}
+                        { recentPosition.length >= 35 
+                            ? recentPosition.substring(0, 35) + "..." 
+                            : recentPosition } at {recentCompanyName}
                     </div>
                   </div>
             }
