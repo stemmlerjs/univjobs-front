@@ -19,7 +19,12 @@ import {  } from '../styles/NewApplicantsStyles.css'
 
 import { Link } from 'react-router'
 
-export default function NewApplicants ({ jobs, selectedJob }) {
+export default function NewApplicants ({ jobs, selectedJob, 
+  page, 
+  selectedApplicant,
+
+  handleViewApplicantDetails,
+  handleClearCurrentApplicantDetails }) {
   return (
     <div className={rootComponentContainer}>
       
@@ -42,7 +47,7 @@ export default function NewApplicants ({ jobs, selectedJob }) {
         */
       }
       
-      <div className={applicantsPageBody}>
+      <div className={applicantsPageBody} onClick={handleClearCurrentApplicantDetails}>
 
         {
           /*
@@ -51,13 +56,18 @@ export default function NewApplicants ({ jobs, selectedJob }) {
           * =========================
           */
         }
-        <div className={applicantsBodyLeft}>
+        <div className={applicantsBodyLeft} >
           {
-            selectedJob.applicants.map((applicant, index) => {
-              return (
-                <ApplicantCard key={index} applicant={applicant}/>
-              )
-            })
+            selectedJob.applicants 
+              ? selectedJob.applicants.map((applicant, index) => {
+                return (
+                  <ApplicantCard key={index} 
+                    applicant={applicant} 
+                    selectedApplicant={selectedApplicant}
+                    handleViewApplicantDetails={handleViewApplicantDetails}/>
+                )
+              })
+            : ''
           }
         </div>
         
@@ -69,7 +79,7 @@ export default function NewApplicants ({ jobs, selectedJob }) {
           */
         }
         
-        <ApplicantSidebar isOpen={false} selectedApplicant={{}}/>
+        <ApplicantSidebar selectedApplicant={selectedApplicant}/>
 
       </div>
     </div>

@@ -1,6 +1,12 @@
 
 import { getJobs } from 'helpers/job'
 
+/*
+ * =============================================
+ *  1. Getting jobs and selecting current jobs
+ * =============================================
+ */
+
 const GET_ALL_MY_APPLICANTS_JOBS = 'GET_ALL_MY_APPLICANTS_JOBS'
 const GET_ALL_MY_APPLICANTS_JOBS_SUCCESS = 'GET_ALL_MY_APPLICANTS_JOBS_SUCCESS'
 const GET_ALL_MY_APPLICANTS_JOBS_FAILURE = 'GET_ALL_MY_APPLICANTS_JOBS_FAILURE'
@@ -28,7 +34,7 @@ function getAllJobsFailure () {
   }
 }
 
-export function getAllJobsMyApplicants () {
+export function getAllJobsMyApplicants (currentJobId) {
   return function (dispatch) {
 
     /*
@@ -108,6 +114,19 @@ export function getAllJobsMyApplicants () {
 
         dispatch(getAllJobsSuccess(jobs))
 
+        // If current jobId was present in the request, set
+        // the current job to it.
+
+        if (currentJobId) {
+
+          for (var i = 0; i < jobs.length; i++) {
+            if (jobs[i].job_id == currentJobId) {
+              dispatch(changeSelectedJob(jobs[i]))
+            }
+          }
+
+        }
+
       })
 
       /*
@@ -123,16 +142,80 @@ export function getAllJobsMyApplicants () {
   }
 }
 
+export function changeSelectedJob (job) {
+  return {
+    type: CHANGE_SELECTED_JOB,
+    job
+  }
+}
+
+export function clearSelectedJob () {
+  return {
+    type: CLEAR_SELECTED_JOB
+  }
+}
+
+/*
+ * =============================================
+ *  2. Selecting applicants
+ * =============================================
+ */
+
+const VIEW_APPLICANT_DETAILS = "VIEW_APPLICANT_DETAILS"
+const CLEAR_CURRENT_APPLICANT_DETAILS = "CLEAR_CURRENT_APPLICANT_DETAILS"
+
+export function viewApplicantDetails (applicant) {
+  return {
+    type: VIEW_APPLICANT_DETAILS,
+    applicant
+  }
+}
+
+export function clearCurrentApplicantDetails () {
+  return {
+    type: CLEAR_CURRENT_APPLICANT_DETAILS
+  }
+}
+
 const initialMyApplicantsState = {
   jobs: [],
   selectedJob: {},
   isFetchingJobs: false,
   isFetchingJobsSuccess: false,
-  isFetchingJobsFailure: false
+  isFetchingJobsFailure: false,
+
+  selectedApplicant: {},
+  multiSelectedApplicants: [],
+
 }
 
 export default function myapplicants (state = initialMyApplicantsState, action) {
   switch (action.type) {
+    case CLEAR_CURRENT_APPLICANT_DETAILS:
+      return {
+        ...state,
+        selectedApplicant: {}
+      }
+    case VIEW_APPLICANT_DETAILS:
+      return {
+        ...state,
+        selectedApplicant: action.applicant
+      }
+
+    /*
+     * SELECTING JOBS 
+     */
+
+    case CLEAR_SELECTED_JOB:
+      return {
+        ...state,
+        selectedJob: {}
+      }
+    case CHANGE_SELECTED_JOB:
+      return {
+        ...state,
+        selectedJob: action.job
+      }
     case GET_ALL_MY_APPLICANTS_JOBS:
       return {
         ...state,

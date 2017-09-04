@@ -13,14 +13,16 @@ import { dashboardListItemContainer, infoSectionContainer, titleText, jobTypeTex
 
 import { Link } from 'react-router'
 
-export default function DashboardListItem ({ job, index }) {
+export default function DashboardListItem ({ job, index, handleChangeSelectedJob }) {
   return (
     <div className={dashboardListItemContainer}>
       <div className={infoSectionContainer}>
         <div className={titleText}>{job.title}</div>
         <div className={jobTypeText}>Part-time</div>
         <div>
-          <Link to={`/myapplicants/new/${job.job_id}`}>
+          <Link onClick={() => {
+            handleChangeSelectedJob(job)
+          }} to={`/myapplicants/new/${job.job_id}`}>
             <button className={button}>View Applicants</button>
           </Link>
           <Link to={`/mypostings/open/${job.job_id}`}>
@@ -33,7 +35,9 @@ export default function DashboardListItem ({ job, index }) {
         <div className={statesContainer}>
           <ReactTooltip delayHide={100} delayShow={20} place="top" effect="float"/>
           <div className={stateNodes}>
-            <Link to={`/myapplicants/new/${job.job_id}`}>
+            <Link onClick={() => {
+              handleChangeSelectedJob(job)
+            }} to={`/myapplicants/new/${job.job_id}`}>
               <div data-tip={'Review all new applicants'} className={`${node} ${node1}`}></div>
             </Link>
             <div className={line}></div>

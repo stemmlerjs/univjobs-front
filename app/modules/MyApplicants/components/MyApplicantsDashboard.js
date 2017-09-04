@@ -52,7 +52,9 @@ let activities = [
 export default function MyApplicantsDashboard ({ 
     jobs, 
     selectedJob,
-    page
+    page,
+
+    handleChangeSelectedJob
   }) {
     return (
       <div className={rootComponentContainer}>
@@ -84,7 +86,8 @@ export default function MyApplicantsDashboard ({
 
                       jobs.map((job, index) => {
                         return (
-                          <DashboardListItem key={index} job={job} />
+                          <DashboardListItem key={index} job={job} 
+                            handleChangeSelectedJob={handleChangeSelectedJob}/>
                         )
                       })
                     }
@@ -106,7 +109,6 @@ export default function MyApplicantsDashboard ({
                 <div className={dashboardColumnRight}>
                   <div className={smallHeader}>Recent activity</div>
                   <RecentActivity activities={activities}/>
-
                 </div>
               </div>
         }

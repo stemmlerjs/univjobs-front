@@ -13,6 +13,7 @@
 
 .applicantsPageBody {
     display: flex;
+        min-height: 77%;
 }
 
 .applicantsBodyLeft {
