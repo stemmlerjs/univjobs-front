@@ -53,13 +53,22 @@ export default function MyApplicantsDashboard ({
     jobs, 
     selectedJob,
     page,
+    jobSelectDropdownIsOpen,
 
+    handleOpenJobSelect,
     handleChangeSelectedJob
   }) {
     return (
       <div className={rootComponentContainer}>
         
-        <MyApplicantsHeader jobs={jobs} selectedJob={selectedJob} page={page}/>
+        <MyApplicantsHeader 
+          jobs={jobs} 
+          selectedJob={selectedJob} 
+          page={page}
+          jobSelectDropdownIsOpen={jobSelectDropdownIsOpen} 
+          handleOpenJobSelect={handleOpenJobSelect} 
+          handleChangeSelectedJob={handleChangeSelectedJob}
+        />
 
         {
           jobs.length == 0

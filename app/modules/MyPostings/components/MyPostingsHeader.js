@@ -34,6 +34,7 @@ export default function MyPostingsHeader ({ page, jobs, jobSelectDropdownIsOpen,
             jobs={jobs} 
             visible={jobSelectDropdownIsOpen} 
             handleChangeSelectedJob={handleChangeSelectedJob}
+            type={"mypostings"}
           />
         </div>
       </div>
@@ -57,7 +58,8 @@ export default function MyPostingsHeader ({ page, jobs, jobSelectDropdownIsOpen,
             currentJobId={selectedJob.job_id} 
             jobs={jobs} 
             visible={jobSelectDropdownIsOpen} 
-            handleChangeSelectedJob={handleChangeSelectedJob}/>
+            handleChangeSelectedJob={handleChangeSelectedJob}
+            type={"mypostings"}/>
         </div>
       </div>
     )
@@ -81,6 +83,7 @@ export default function MyPostingsHeader ({ page, jobs, jobSelectDropdownIsOpen,
             jobs={jobs} 
             visible={jobSelectDropdownIsOpen} 
             handleChangeSelectedJob={handleChangeSelectedJob}
+            type={"mypostings"}
           />
         </div>
       </div>

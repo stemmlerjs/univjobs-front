@@ -165,13 +165,19 @@ const MyApplicantsContainer = React.createClass({
                         jobs={this.props.jobs} 
                         selectedJob={this.props.selectedJob} 
                         page={this.props.route.page}
-                        handleChangeSelectedJob={this.props.changeSelectedJob}/>
+                        handleChangeSelectedJob={this.props.changeSelectedJob}
+                        handleOpenJobSelect={this.props.openJobSelect}
+                        jobSelectDropdownIsOpen={this.props.jobSelectDropdownIsOpen}/>
               case "applicants-new":
                 return <NewApplicants 
                         jobs={this.props.jobs} 
                         selectedJob={this.props.selectedJob} 
                         page={this.props.route.page}
                         lists={this.props.lists}
+
+                        handleChangeSelectedJob={this.props.changeSelectedJob}
+                        handleOpenJobSelect={this.props.openJobSelect}
+                        jobSelectDropdownIsOpen={this.props.jobSelectDropdownIsOpen}
 
                         selectedApplicant={this.props.selectedApplicant}
                         multiSelectViewActive={this.props.multiSelectViewActive}
@@ -190,6 +196,7 @@ const MyApplicantsContainer = React.createClass({
 
                           this.props.multiSelectSelectAll(ids)
                         }}
+                        handleClearSelectedJob={this.props.clearSelectedJob}
                         />
               case "applicants-pool":
                 return <PooledApplicants
@@ -198,6 +205,10 @@ const MyApplicantsContainer = React.createClass({
                         page={this.props.route.page}
                         lists={this.props.lists}
 
+                        handleChangeSelectedJob={this.props.changeSelectedJob}
+                        handleOpenJobSelect={this.props.openJobSelect}
+                        jobSelectDropdownIsOpen={this.props.jobSelectDropdownIsOpen}
+
                         selectedApplicant={this.props.selectedApplicant}
                         multiSelectViewActive={this.props.multiSelectViewActive}
                         multiSelectedApplicantIds={this.props.multiSelectedApplicantIds}
@@ -215,6 +226,7 @@ const MyApplicantsContainer = React.createClass({
 
                           this.props.multiSelectSelectAll(ids)
                         }}
+                        handleClearSelectedJob={this.props.clearSelectedJob}
                   />
               case "applicants-hired":
                 return <HiredApplicants
@@ -223,6 +235,10 @@ const MyApplicantsContainer = React.createClass({
                         page={this.props.route.page}
                         lists={this.props.lists}
 
+                        handleChangeSelectedJob={this.props.changeSelectedJob}
+                        handleOpenJobSelect={this.props.openJobSelect}
+                        jobSelectDropdownIsOpen={this.props.jobSelectDropdownIsOpen}
+
                         selectedApplicant={this.props.selectedApplicant}
                         multiSelectViewActive={this.props.multiSelectViewActive}
                         multiSelectedApplicantIds={this.props.multiSelectedApplicantIds}
@@ -240,6 +256,7 @@ const MyApplicantsContainer = React.createClass({
 
                           this.props.multiSelectSelectAll(ids)
                         }}
+                        handleClearSelectedJob={this.props.clearSelectedJob}
                   />
             }
           })()
@@ -272,7 +289,8 @@ function mapStateToProps({user, job, list, profile, myapplicants}) {
 
     selectedApplicant: myapplicants.selectedApplicant ? myapplicants.selectedApplicant : {},
     multiSelectViewActive: myapplicants.multiSelectViewActive ? myapplicants.multiSelectViewActive : false,
-    multiSelectedApplicantIds: myapplicants.multiSelectedApplicantIds ? myapplicants.multiSelectedApplicantIds : []
+    multiSelectedApplicantIds: myapplicants.multiSelectedApplicantIds ? myapplicants.multiSelectedApplicantIds : [],
+    jobSelectDropdownIsOpen: myapplicants.jobSelectDropdownIsOpen ? myapplicants.jobSelectDropdownIsOpen : false
   }
 }
 

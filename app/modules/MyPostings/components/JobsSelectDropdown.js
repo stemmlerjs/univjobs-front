@@ -2,7 +2,7 @@
 import React, { PropTypes } from 'react'
 import { box, invisible, jobItem } from '../styles/JobsSelectDropdownStyles.css'
 
-export default function JobsSelectDropdown ({ jobs, visible, handleChangeSelectedJob, currentJobId }) {
+export default function JobsSelectDropdown ({ jobs, visible, handleChangeSelectedJob, currentJobId, type }) {
   return (
     <div className={visible ? box : `${box} ${invisible}`}>
       {
@@ -11,7 +11,12 @@ export default function JobsSelectDropdown ({ jobs, visible, handleChangeSelecte
             return (
               <div 
                 onClick={() => {
-                  handleChangeSelectedJob(job.job_id)
+                  if (type == "myapplicants") {
+                    handleChangeSelectedJob(job)
+                  }
+                  else {
+                    handleChangeSelectedJob(job.job_id)
+                  }
                 }} 
                 className={jobItem} 
                 key={index}>{job.title}

@@ -50,6 +50,7 @@ export default function ApplicantCard ({
         <i onClick={
           (e) => {
 
+            console.log(multiSelectedApplicantIds)
             if (multiSelectedApplicantIds.indexOf(applicant.student_id) == -1) {
               console.log("multiselecting " + applicant.student_id)
               handleMultiSelectAddApplicant(applicant.student_id)

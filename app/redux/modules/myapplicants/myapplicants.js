@@ -268,6 +268,20 @@ export function multiSelectRemove (applicantId) {
   }
 }
 
+/*
+ * =============================================
+ *  4. Dropdown Change Jobs
+ * =============================================
+ */
+
+const TOGGLE_JOB_SELECT = 'TOGGLE_JOB_SELECT'
+
+export function openJobSelect () {
+  return {
+    type: TOGGLE_JOB_SELECT
+  }
+}
+
 const initialMyApplicantsState = {
   jobs: [],
   selectedJob: {},
@@ -280,10 +294,18 @@ const initialMyApplicantsState = {
   multiSelectViewActive: false,
   multiSelectedApplicantIds: [], // these are student ids
 
+  jobSelectDropdownIsOpen: false,
+
 }
 
 export default function myapplicants (state = initialMyApplicantsState, action) {
   switch (action.type) {
+
+    case TOGGLE_JOB_SELECT:
+      return {
+        ...state,
+        jobSelectDropdownIsOpen: !state.jobSelectDropdownIsOpen,
+      }
 
     /*
      * MULTI SELECT APPLICANTS
@@ -327,7 +349,7 @@ export default function myapplicants (state = initialMyApplicantsState, action) 
        */
 
       var multiSelectedApplicantIds = state.multiSelectedApplicantIds;
-      var multiSelectViewActive = state.multiSelectViewActive;
+      var multiSelectViewActive = true;
       
       var removeIndex = multiSelectedApplicantIds.indexOf(action.applicantId)
 
@@ -335,13 +357,16 @@ export default function myapplicants (state = initialMyApplicantsState, action) 
         multiSelectedApplicantIds.splice(removeIndex, 1);
       }
 
-      if (multiSelectedApplicantIds.length == 0) {
-        multiSelectViewActive: false
+      // new reference
+      var newIds = multiSelectedApplicantIds.slice();
+
+      if (newIds.length == 0) {
+        multiSelectViewActive = false
       }
 
       return {
         ...state,
-        multiSelectedApplicantIds: multiSelectedApplicantIds,
+        multiSelectedApplicantIds: newIds,
         multiSelectViewActive: multiSelectViewActive
       }
     
@@ -367,12 +392,20 @@ export default function myapplicants (state = initialMyApplicantsState, action) 
     case CLEAR_SELECTED_JOB:
       return {
         ...state,
-        selectedJob: {}
+        selectedJob: {},
+        jobSelectDropdownIsOpen: false,
+        multiSelectedApplicantIds: [],
+        multiSelectViewActive: false,
+        selectedApplicant: {}
       }
     case CHANGE_SELECTED_JOB:
       return {
         ...state,
-        selectedJob: action.job
+        selectedJob: action.job,
+        jobSelectDropdownIsOpen: false,
+        multiSelectedApplicantIds: [],
+        multiSelectViewActive: false,
+        selectedApplicant: {}
       }
     case GET_ALL_MY_APPLICANTS_JOBS:
       return {

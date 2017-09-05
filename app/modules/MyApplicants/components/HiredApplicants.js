@@ -28,6 +28,11 @@ export default function HiredApplicants ({ jobs, selectedJob,
   multiSelectViewActive,
   multiSelectedApplicantIds,
 
+  jobSelectDropdownIsOpen,
+  handleOpenJobSelect,
+  handleChangeSelectedJob,
+  handleClearSelectedJob,
+
   handleViewApplicantDetails,
   handleClearCurrentApplicantDetails,
   handleMultiSelectAddApplicant,
@@ -46,7 +51,13 @@ export default function HiredApplicants ({ jobs, selectedJob,
         */
       }
 
-      <MyApplicantsHeader jobs={jobs} selectedJob={selectedJob}/>
+      <MyApplicantsHeader 
+        jobs={jobs} 
+        page={page}
+        jobSelectDropdownIsOpen={jobSelectDropdownIsOpen} 
+        handleOpenJobSelect={handleOpenJobSelect} 
+        handleChangeSelectedJob={handleChangeSelectedJob}
+        selectedJob={selectedJob}/>
       <MyApplicantsSubNavbar 
         multiSelectViewActive={multiSelectViewActive}
         handleMultiSelectAll={handleMultiSelectAll}
@@ -108,7 +119,9 @@ export default function HiredApplicants ({ jobs, selectedJob,
             : <div>
                 <div className={headerTextStyle1}>No hired applicants yet.</div>
                 <div className={applicantPageInstructions}>Hire a student by moving an applicant from the Potential Hires pool to Hired.</div>
-                <div className={returnButtonContainer}><Link className={returnButton} to="/myapplicants">Back to My Applicants Dashboard</Link></div>
+                <div className={returnButtonContainer}>
+                  <Link onClick={handleClearSelectedJob} className={returnButton} to="/myapplicants">Back to My Applicants Dashboard</Link>
+                </div>
               </div>
           }
         </div>

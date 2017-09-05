@@ -27,6 +27,11 @@ export default function PooledApplicants ({ jobs, selectedJob,
   multiSelectViewActive,
   multiSelectedApplicantIds,
 
+  jobSelectDropdownIsOpen,
+  handleOpenJobSelect,
+  handleChangeSelectedJob,
+  handleClearSelectedJob,
+
   handleViewApplicantDetails,
   handleClearCurrentApplicantDetails,
   handleMultiSelectAddApplicant,
@@ -45,7 +50,14 @@ export default function PooledApplicants ({ jobs, selectedJob,
         */
       }
 
-      <MyApplicantsHeader jobs={jobs} selectedJob={selectedJob}/>
+      <MyApplicantsHeader 
+        jobs={jobs} 
+        selectedJob={selectedJob}
+        page={page}
+        jobSelectDropdownIsOpen={jobSelectDropdownIsOpen} 
+        handleOpenJobSelect={handleOpenJobSelect} 
+        handleChangeSelectedJob={handleChangeSelectedJob}
+      />
       <MyApplicantsSubNavbar 
         multiSelectViewActive={multiSelectViewActive}
         handleMultiSelectAll={handleMultiSelectAll}
@@ -107,7 +119,9 @@ export default function PooledApplicants ({ jobs, selectedJob,
             : <div>
                 <div className={headerTextStyle1}>No applicants in the Potential Hires pool.</div>
                 <div className={applicantPageInstructions}>When you want to contact a student, move them into here to contact them.</div>
-                <div className={returnButtonContainer}><Link className={returnButton} to="/myapplicants">Back to My Applicants Dashboard</Link></div>
+                <div className={returnButtonContainer}>
+                  <Link onClick={handleClearSelectedJob} className={returnButton} to="/myapplicants">Back to My Applicants Dashboard</Link>
+                </div>
               </div>
           }
         </div>

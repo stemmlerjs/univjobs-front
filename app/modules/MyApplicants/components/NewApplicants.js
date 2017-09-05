@@ -28,6 +28,11 @@ export default function NewApplicants ({ jobs, selectedJob,
   multiSelectViewActive,
   multiSelectedApplicantIds,
 
+  jobSelectDropdownIsOpen,
+  handleOpenJobSelect,
+  handleChangeSelectedJob,
+  handleClearSelectedJob,
+
   handleViewApplicantDetails,
   handleClearCurrentApplicantDetails,
   handleMultiSelectAddApplicant,
@@ -47,7 +52,14 @@ export default function NewApplicants ({ jobs, selectedJob,
         */
       }
 
-      <MyApplicantsHeader jobs={jobs} selectedJob={selectedJob}/>
+      <MyApplicantsHeader 
+        jobs={jobs} 
+        selectedJob={selectedJob}
+        page={page}
+        jobSelectDropdownIsOpen={jobSelectDropdownIsOpen} 
+        handleOpenJobSelect={handleOpenJobSelect} 
+        handleChangeSelectedJob={handleChangeSelectedJob}
+      />
       <MyApplicantsSubNavbar 
         multiSelectViewActive={multiSelectViewActive}
         handleMultiSelectAll={handleMultiSelectAll}
@@ -109,7 +121,9 @@ export default function NewApplicants ({ jobs, selectedJob,
             : <div>
                 <div className={headerTextStyle1}>No new applicants yet.</div>
                 <div className={applicantPageInstructions}>When someone applies to your posting, you'll see them here first.</div>
-                <div className={returnButtonContainer}><Link className={returnButton} to="/myapplicants">Back to My Applicants Dashboard</Link></div>
+                <div className={returnButtonContainer}>
+                  <Link onClick={handleClearSelectedJob} className={returnButton} to="/myapplicants">Back to My Applicants Dashboard</Link>
+                </div>
               </div>
           }
         </div>
