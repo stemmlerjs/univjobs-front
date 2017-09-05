@@ -145,6 +145,7 @@ const MyApplicantsContainer = React.createClass({
                         jobs={this.props.jobs} 
                         selectedJob={this.props.selectedJob} 
                         page={this.props.route.page}
+                        lists={this.props.lists}
                         selectedApplicant={this.props.selectedApplicant}
                         handleViewApplicantDetails={this.props.viewApplicantDetails}
                         handleClearCurrentApplicantDetails={this.props.clearCurrentApplicantDetails}/>
@@ -175,6 +176,7 @@ function mapStateToProps({user, job, list, profile, myapplicants}) {
     industryList: list.industries ? list.industries : [],
     jobTypes: list.jobTypes ? list.jobTypes : [],
     selectedJob: myapplicants.selectedJob ? myapplicants.selectedJob : {},
+    lists: list ? list : {},
 
     selectedApplicant: myapplicants.selectedApplicant ? myapplicants.selectedApplicant : {}
   }

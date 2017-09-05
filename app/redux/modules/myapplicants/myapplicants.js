@@ -87,18 +87,38 @@ export function getAllJobsMyApplicants (currentJobId) {
             })
           }
 
-          if (answers !== undefined) {
-            answers.forEach(function(answer) {
-              if (answer.job_id == jobs[i].job_id) {
-                jobs[i].answers.push(answer)
-              }
-            })
-          }
-
           if (applicants !== undefined) {
             applicants.forEach(function(applicant) {
               if (applicant.job_id == jobs[i].job_id) {
                 jobs[i].applicants.push(applicant)
+              }
+            })
+          }
+          
+          /*
+           * Put the answers to jobs in the corresponding 
+           * applicant object.
+           */
+
+          if (answers !== undefined) {
+            answers.forEach(function(answer) {
+              if (answer.job_id == jobs[i].job_id) {
+
+                // Add it to all answers
+                jobs[i].answers.push(answer)
+
+                // Also add it to the corresponding applicant
+                jobs[i].applicants.map((jobApplicant) => {
+                  if (jobApplicant.student_id == answer.student) {
+                    
+                    if (jobApplicant.answers == undefined) {
+                      jobApplicant.answers = []
+                    }
+
+                    jobApplicant.answers.push(answer)
+                  }
+                  return jobApplicant;
+                }) 
               }
             })
           }
@@ -134,7 +154,7 @@ export function getAllJobsMyApplicants (currentJobId) {
        */
 
       .catch((err) => {
-
+        console.log(err)
         dispatch(getAllJobsFailure())
 
       })

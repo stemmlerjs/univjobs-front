@@ -22,9 +22,11 @@ import { Link } from 'react-router'
 export default function NewApplicants ({ jobs, selectedJob, 
   page, 
   selectedApplicant,
+  lists,
 
   handleViewApplicantDetails,
   handleClearCurrentApplicantDetails }) {
+    console.log("selected jpob", selectedJob);
   return (
     <div className={rootComponentContainer}>
       
@@ -79,7 +81,10 @@ export default function NewApplicants ({ jobs, selectedJob,
           */
         }
         
-        <ApplicantSidebar selectedApplicant={selectedApplicant}/>
+        <ApplicantSidebar 
+          lists={lists} 
+          selectedApplicant={selectedApplicant} 
+          questions={selectedJob.questions}/>
 
       </div>
     </div>

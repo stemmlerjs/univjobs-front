@@ -9,6 +9,7 @@
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
     min-width: 554px;
     padding: 22px;
+    overflow-y: hidden;
 }
 
 .hide {
@@ -16,22 +17,24 @@
 }
 
 .sidebarContainer {
-    
+    height: 100%;
+    overflow: hidden;
 }
 
 .headerContainer {
     display: flex;
     flex-direction: row;
+        height: 27%;
 }
 
 .imgContainer {
-    height: 151px;
-    width: 151px;
+    height: 175px;
+    width: 175px;
 }
 
 .imgContainer img {
-    height: 151px;
-    width: 151px;
+    height: 175px;
+    width: 175px;
 }
 
 .headerDetailsContainer {
@@ -53,5 +56,37 @@
 }
 
 .bodyContainer {
+    text-align: left;
+    /* padding: 20px; */
+    margin-top: 20px;
+    font-size: 15px;
+    overflow-y: scroll;
+    height: 70%;
+}
 
+.studentDetailHeader {
+        font-weight: bold;
+}
+
+.studentDetailText {
+    margin-bottom: 10px;
+}
+
+.questionsOverview {
+        font-size: 19px;
+    font-weight: 100;
+    margin-bottom: 10px;
+}
+
+.divider {
+border-top: solid 1px #d5d4d4;
+    /* margin-bottom: 19px; */
+    margin-top: 17px;
+    padding-top: 17px;
+}
+
+.answerText {
+        margin-left: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
