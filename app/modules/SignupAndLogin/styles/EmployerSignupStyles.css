@@ -25,6 +25,12 @@
     overflow: hidden;
 }
 
+.flexInputs {
+   display: flex;
+   width: 92%;
+   padding-left: 38px;
+}
+
 .header {
   text-align: center;
   composes: header from 'sharedStyles/styles.css';
