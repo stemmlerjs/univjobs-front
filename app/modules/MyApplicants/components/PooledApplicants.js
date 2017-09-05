@@ -37,7 +37,8 @@ export default function PooledApplicants ({ jobs, selectedJob,
   handleMultiSelectAddApplicant,
   handleMultiSelectRemoveApplicant,
   handleMultiSelectDeselectAll,
-  handleMultiSelectAll
+  handleMultiSelectAll,
+  handleMultiSelectRejectApplicants
 }) {
   return (
     <div className={rootComponentContainer}>
@@ -61,7 +62,8 @@ export default function PooledApplicants ({ jobs, selectedJob,
       <MyApplicantsSubNavbar 
         multiSelectViewActive={multiSelectViewActive}
         handleMultiSelectAll={handleMultiSelectAll}
-        handleMultiSelectDeselectAll={handleMultiSelectDeselectAll}/>
+        handleMultiSelectDeselectAll={handleMultiSelectDeselectAll}
+        handleMultiSelectRejectApplicants={handleMultiSelectRejectApplicants}/>
 
       {
        /*

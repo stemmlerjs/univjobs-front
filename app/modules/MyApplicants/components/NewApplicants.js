@@ -38,7 +38,9 @@ export default function NewApplicants ({ jobs, selectedJob,
   handleMultiSelectAddApplicant,
   handleMultiSelectRemoveApplicant,
   handleMultiSelectDeselectAll,
-  handleMultiSelectAll
+  handleMultiSelectAll,
+  handleMultiSelectRejectApplicants,
+  handleMultiSelectAdvanceApplicants
 }) {
     console.log("selected jpob", selectedJob);
   return (
@@ -63,7 +65,9 @@ export default function NewApplicants ({ jobs, selectedJob,
       <MyApplicantsSubNavbar 
         multiSelectViewActive={multiSelectViewActive}
         handleMultiSelectAll={handleMultiSelectAll}
-        handleMultiSelectDeselectAll={handleMultiSelectDeselectAll}/>
+        handleMultiSelectDeselectAll={handleMultiSelectDeselectAll}
+        handleMultiSelectRejectApplicants={handleMultiSelectRejectApplicants}
+        handleMultiSelectAdvanceApplicants={handleMultiSelectAdvanceApplicants}/>
 
       {
        /*

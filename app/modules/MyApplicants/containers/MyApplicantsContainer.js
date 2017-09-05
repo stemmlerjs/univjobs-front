@@ -22,6 +22,8 @@ import * as jobActionCreators from 'redux/modules/job/job'
 import * as listActionCreators from 'redux/modules/list/list'
 import * as myApplicantsActionCreators from 'redux/modules/myapplicants/myapplicants'
 
+import { standardButton, standardButtonRed, standardButtonNeutral, rejectModalInnerContainer, modalTextTitle } from '../styles/MyApplicantsStyles.css'
+
 import { pageContainer } from 'sharedStyles/sharedContainerStyles.css'
 import { authRedirectFilter } from 'config/routes'
 
@@ -148,6 +150,22 @@ const MyApplicantsContainer = React.createClass({
 
   },
 
+  openConfirmMultiApplicantRejectModal () {
+    this.refs.confirmMultiApplicantRejectModal.show();
+  },
+
+  closeConfirmMultiApplicantRejectModal () {
+    this.refs.confirmMultiApplicantRejectModal.hide();
+  },
+
+  openConfirmMultiApplicantContactModal () {
+    this.refs.confirmMultiApplicantContactModal.show();
+  },
+
+  closeConfirmMultiApplicantContactModal () {
+    this.refs.confirmMultiApplicantContactModal.hide();
+  },
+
   render () {
     console.log(this.props)
     return (
@@ -197,6 +215,8 @@ const MyApplicantsContainer = React.createClass({
                           this.props.multiSelectSelectAll(ids)
                         }}
                         handleClearSelectedJob={this.props.clearSelectedJob}
+                        handleMultiSelectRejectApplicants={this.openConfirmMultiApplicantRejectModal}
+                        handleMultiSelectAdvanceApplicants={this.openConfirmMultiApplicantContactModal}
                         />
               case "applicants-pool":
                 return <PooledApplicants
@@ -227,6 +247,7 @@ const MyApplicantsContainer = React.createClass({
                           this.props.multiSelectSelectAll(ids)
                         }}
                         handleClearSelectedJob={this.props.clearSelectedJob}
+                        handleMultiSelectRejectApplicants={this.openConfirmMultiApplicantRejectModal}
                   />
               case "applicants-hired":
                 return <HiredApplicants
@@ -261,13 +282,73 @@ const MyApplicantsContainer = React.createClass({
             }
           })()
         }
+
+        {
+          /*
+            * ================================================
+            *        Confirm Multi Applicant Reject Modal 
+            * ================================================
+            *
+            * When the user wants to reject multiple applicants.
+            */
+          }
+          
+          <div id="confirm-multi-applicant-reject-modal-wrapper">
+            <SkyLight
+                  ref="confirmMultiApplicantRejectModal"
+                  title="">
+                  <div className={rejectModalInnerContainer}>
+                    <div className={modalTextTitle}>Reject these {this.props.multiSelectedApplicantIds ? this.props.multiSelectedApplicantIds.length : ''} applicant(s)?</div>
+                    <div>
+                      <button 
+                        className={standardButtonRed} 
+                        onClick={() => {
+                          this.props.rejectApplicants(this.props.selectedJob.job_id, this.props.multiSelectedApplicantIds)
+                        }}>Reject selected</button>
+                      <button 
+                        className={standardButtonNeutral} 
+                        onClick={this.closeConfirmMultiApplicantRejectModal}>Cancel</button>
+                    </div>
+                </div>
+            </SkyLight>
+          </div>
+
+        {
+          /*
+            * ================================================
+            *        Confirm Multi Applicant contact Modal 
+            * ================================================
+            *
+            * When the user wants to contact multiple applicants.
+            */
+          }
+          
+          <div id="confirm-multi-applicant-contact-modal-wrapper">
+            <SkyLight
+                ref="confirmMultiApplicantContactModal"
+                title="">
+                <div className={rejectModalInnerContainer}>
+                  <div className={modalTextTitle}>Contact {this.props.multiSelectedApplicantIds ? this.props.multiSelectedApplicantIds.length : ''} applicant(s)?</div>
+                  <div>
+                    <button 
+                      className={standardButton} 
+                      onClick={() => {
+                        this.props.multiSelectAdvanceToPoolSelected(this.props.multiSelectedApplicantIds)
+                      }}>Contact selected</button>
+                    <button 
+                      className={standardButtonNeutral} 
+                      onClick={this.closeConfirmMultiApplicantContactModal}>Cancel</button>
+                  </div>
+                </div>
+            </SkyLight>
+          </div>
         
         <ToastContainer ref="container"
           toastMessageFactory={ToastMessageFactory}
           className="toast-top-right" />
         
     </div>
-    )
+    ) 
   },
 })
 
@@ -290,7 +371,13 @@ function mapStateToProps({user, job, list, profile, myapplicants}) {
     selectedApplicant: myapplicants.selectedApplicant ? myapplicants.selectedApplicant : {},
     multiSelectViewActive: myapplicants.multiSelectViewActive ? myapplicants.multiSelectViewActive : false,
     multiSelectedApplicantIds: myapplicants.multiSelectedApplicantIds ? myapplicants.multiSelectedApplicantIds : [],
-    jobSelectDropdownIsOpen: myapplicants.jobSelectDropdownIsOpen ? myapplicants.jobSelectDropdownIsOpen : false
+    jobSelectDropdownIsOpen: myapplicants.jobSelectDropdownIsOpen ? myapplicants.jobSelectDropdownIsOpen : false,
+
+    isRejectingApplicants: myapplicants.isRejectingApplicants ? myapplicants.isRejectingApplicants : false,
+    isRejectingApplicantsSuccess: myapplicants.isRejectingApplicantsSuccess ? myapplicants.isRejectingApplicantsSuccess : false,
+    isRejectingApplicantsFailure: myapplicants.isRejectingApplicantsFailure ? myapplicants.isRejectingApplicantsFailure : false,
+    
+    
   }
 }
 

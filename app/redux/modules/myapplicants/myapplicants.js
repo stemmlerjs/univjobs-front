@@ -1,5 +1,6 @@
 
 import { getJobs } from 'helpers/job'
+import { rejectApplicants as rejectApplicantsHTTP } from 'helpers/applicant'
 
 /*
  * =============================================
@@ -282,6 +283,79 @@ export function openJobSelect () {
   }
 }
 
+/*
+ * =============================================
+ *  5. Reject applicants
+ * =============================================
+ */
+
+const REJECTING_APPLICANTS = 'REJECTING_APPLICANTS'
+const REJECTING_APPLICANTS_SUCCESS = "REJECTING_APPLICANTS_SUCCESS"
+const REJECTING_APPLICANTS_FAILURE = "REJECTING_APPLICANTS_FAILURE"
+
+function rejectApplicantsSuccess () {
+  return {
+    type: REJECTING_APPLICANTS_SUCCESS
+  }
+}
+
+function rejectApplicantsFailure () {
+  return {
+    type: REJECTING_APPLICANTS_FAILURE
+  }
+}
+
+/*
+ * rejectApplicants
+ * 
+ * @desc This redux thunk allows us to reject multiple applicants all at the 
+ * same time by passing in the ids of the applicants and the job id of the
+ * job that the applicants belong to.
+ * 
+ * @param {Number} jobId
+ * @param {Array} applicantIds
+ */
+
+export function rejectApplicants (jobId, applicantIds) {
+  return function (dispatch) {
+
+    /*
+     * Signal intent
+     */
+
+    dispatch({
+      type: REJECTING_APPLICANTS
+    })
+
+    /*
+     * Attempt http call to reject the applicants from this job.
+     */
+
+    rejectApplicantsHTTP(jobId, applicantIds)
+
+      /*
+       * Successfully rejected applicants
+       */
+
+      .then((result) => {
+        console.log("successfully rejected these applicants", result)
+
+        dispatch(rejectApplicantsSuccess())
+        
+      })
+
+      /*
+       * Failed to reject applicants
+       */
+
+      .catch((err) => {
+        console.log(err)
+
+        dispatch(rejectApplicantsFailure())
+      })
+  }
+}
+
 const initialMyApplicantsState = {
   jobs: [],
   selectedJob: {},
@@ -296,11 +370,39 @@ const initialMyApplicantsState = {
 
   jobSelectDropdownIsOpen: false,
 
+  isRejectingApplicants: false,
+  isRejectingApplicantsSuccess: false,
+  isRejectingApplicantsFailure: false
 }
 
 export default function myapplicants (state = initialMyApplicantsState, action) {
   switch (action.type) {
 
+    /*
+     * REJECTING APPLICANTS
+     */
+
+    case REJECTING_APPLICANTS:
+      return {
+        ...state,
+        isRejectingApplicants: true,
+        isRejectingApplicantsSuccess: false,
+        isRejectingApplicantsFailure: false
+      }
+    case REJECTING_APPLICANTS_SUCCESS:
+      return {
+        ...state,
+        isRejectingApplicants: false,
+        isRejectingApplicantsSuccess: true,
+        isRejectingApplicantsFailure: false
+      }
+    case REJECTING_APPLICANTS_FAILURE:
+      return {
+        ...state,
+        isRejectingApplicants: false,
+        isRejectingApplicantsSuccess: false,
+        isRejectingApplicantsFailure: true
+      }
     case TOGGLE_JOB_SELECT:
       return {
         ...state,

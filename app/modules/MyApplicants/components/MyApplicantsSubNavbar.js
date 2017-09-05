@@ -16,14 +16,16 @@ import { Link } from 'react-router'
 export default function MyApplicantsSubNavbar ({ 
   handleMultiSelectDeselectAll,
   handleMultiSelectAll,
-  multiSelectViewActive 
+  multiSelectViewActive,
+  handleMultiSelectRejectApplicants,
+  handleMultiSelectAdvanceApplicants
 }) {
   return (
     <div className={multiSelectViewActive ? `${subNavbarContainer} ${active}` : subNavbarContainer}>
       <button className={standardButtonNeutral} onClick={handleMultiSelectAll}>Select All</button>
       <button className={standardButtonNeutral} onClick={handleMultiSelectDeselectAll}>Deselect All</button>
-      <button className={standardButton}>Contact Student(s)</button>
-      <button className={standardButtonRed}>Reject Student(s)</button>
+      <button className={standardButton} onClick={handleMultiSelectAdvanceApplicants}>Contact Student(s)</button>
+      <button className={standardButtonRed} onClick={handleMultiSelectRejectApplicants}>Reject Student(s)</button>
     </div>
   )
 }

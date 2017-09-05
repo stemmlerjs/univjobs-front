@@ -137,3 +137,17 @@
     color: #639adb;
     box-shadow: 0 2px 0 rgba(0,0,0,.1);
 }
+
+.rejectModalInnerContainer {
+    height: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.modalTextTitle {
+    font-weight: 100;
+    font-size: 28px;
+    margin-bottom: 19px;
+}

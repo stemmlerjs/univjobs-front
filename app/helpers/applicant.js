@@ -40,3 +40,18 @@ export function hireStudent (jobId, studentId) {
 	})	
 }
 
+export function rejectApplicants(jobId, studentIds) {
+  const accessToken = getAccessToken()
+
+	return axios({
+		method: 'post',
+		url: config.baseUrl + 'applicants/reject/' + sanitize(jobId),
+		headers: {
+			'Authorization':  accessToken
+    },
+    data: {
+      ids: studentIds
+    }
+	})
+}
+
