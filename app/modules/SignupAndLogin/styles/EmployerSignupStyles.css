@@ -27,8 +27,8 @@
 
 .flexInputs {
    display: flex;
-   width: 92%;
-   padding-left: 38px;
+   padding-left: 8%;
+   padding-right: 8%;
 }
 
 .header {
