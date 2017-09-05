@@ -90,6 +90,37 @@ export function getAllJobsMyApplicants (currentJobId) {
           if (applicants !== undefined) {
             applicants.forEach(function(applicant) {
               if (applicant.job_id == jobs[i].job_id) {
+
+                /*
+                * We need to count the number of applicant types for each job.
+                */
+
+                const state = applicant.state;
+                
+                switch (state) {
+                  case "INITIAL":
+                    if (jobs[i].applicants_INITIAL == undefined) {
+                      jobs[i].applicants_INITIAL = [];
+                    }
+                    
+                    jobs[i].applicants_INITIAL.push(applicant)
+                    break;
+                  case "CONTACT":
+                    if (jobs[i].applicants_POOLED == undefined) {
+                      jobs[i].applicants_POOLED = [];
+                    }
+
+                    jobs[i].applicants_POOLED.push(applicant)
+                    break;
+                  case "HIRED":
+                    if (jobs[i].applicants_HIRED == undefined) {
+                      jobs[i].applicants_HIRED = [];
+                    }
+                    
+                    jobs[i].applicants_HIRED.push(applicant)
+                    break;
+                }
+
                 jobs[i].applicants.push(applicant)
               }
             })
@@ -130,6 +161,7 @@ export function getAllJobsMyApplicants (currentJobId) {
               }
             })
           }
+
         }
 
         dispatch(getAllJobsSuccess(jobs))
@@ -197,6 +229,45 @@ export function clearCurrentApplicantDetails () {
   }
 }
 
+/*
+ * =============================================
+ *  3. Multi-Selecting applicants
+ * =============================================
+ */
+
+const MULTI_SELECT_APPLICANT_ADD = "MULTI_SELECT_APPLICANT_ADD"
+const MULTI_SELECT_APPLICANT_REMOVE = "MULTI_SELECT_APPLICANT_REMOVE"
+const MULTI_SELECT_SELECT_ALL = "MULTI_SELECT_SELECT_ALL"
+const MULTI_SELECT_DESELECT_ALL = "MULTI_SELECT_DESELECT_ALL"
+
+export function multiSelectSelectAll (ids) {
+  return {
+    type: MULTI_SELECT_SELECT_ALL,
+    ids
+  }
+}
+
+export function multiSelectDeselectAll () {
+  return {
+    type: MULTI_SELECT_DESELECT_ALL
+  }
+}
+
+export function multiSelectAdd (applicantId) {
+  return {
+    type: MULTI_SELECT_APPLICANT_ADD,
+    applicantId
+  }
+}
+
+export function multiSelectRemove (applicantId) {
+
+  return {
+    type: MULTI_SELECT_APPLICANT_REMOVE,
+    applicantId
+  }
+}
+
 const initialMyApplicantsState = {
   jobs: [],
   selectedJob: {},
@@ -205,12 +276,79 @@ const initialMyApplicantsState = {
   isFetchingJobsFailure: false,
 
   selectedApplicant: {},
-  multiSelectedApplicants: [],
+
+  multiSelectViewActive: false,
+  multiSelectedApplicantIds: [], // these are student ids
 
 }
 
 export default function myapplicants (state = initialMyApplicantsState, action) {
   switch (action.type) {
+
+    /*
+     * MULTI SELECT APPLICANTS
+     */
+
+    case MULTI_SELECT_SELECT_ALL:
+      return {
+        ...state,
+        multiSelectedApplicantIds: action.ids
+      }
+
+    case MULTI_SELECT_DESELECT_ALL:
+      return {
+        ...state,
+        multiSelectedApplicantIds: [],
+        multiSelectViewActive: false
+      }
+
+    case MULTI_SELECT_APPLICANT_ADD:
+
+      /*
+       * Add the aplicant id to the list of selected applicants
+       * if it has not already been added.
+       */
+
+      var multiSelectedApplicantIds = state.multiSelectedApplicantIds.slice();
+
+      if (multiSelectedApplicantIds.indexOf(action.applicantId) == -1) multiSelectedApplicantIds.push(action.applicantId)
+
+      return {
+        ...state,
+        multiSelectViewActive: true,
+        multiSelectedApplicantIds: multiSelectedApplicantIds
+      }
+    case MULTI_SELECT_APPLICANT_REMOVE:
+
+      /*
+       * Remove the applicant id from the list of multiselected
+       * applicant ids and set the multiselect view active to false
+       * if there are no more selected items.
+       */
+
+      var multiSelectedApplicantIds = state.multiSelectedApplicantIds;
+      var multiSelectViewActive = state.multiSelectViewActive;
+      
+      var removeIndex = multiSelectedApplicantIds.indexOf(action.applicantId)
+
+      if (removeIndex !== -1) {
+        multiSelectedApplicantIds.splice(removeIndex, 1);
+      }
+
+      if (multiSelectedApplicantIds.length == 0) {
+        multiSelectViewActive: false
+      }
+
+      return {
+        ...state,
+        multiSelectedApplicantIds: multiSelectedApplicantIds,
+        multiSelectViewActive: multiSelectViewActive
+      }
+    
+    /*
+     * Selecting Applicants
+     */
+
     case CLEAR_CURRENT_APPLICANT_DETAILS:
       return {
         ...state,

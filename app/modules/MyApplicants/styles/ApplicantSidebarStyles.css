@@ -4,12 +4,16 @@
     position: absolute;
     bottom: 0px;
     background: white;
-    top: 122px;
+    top: 78px;
     right: 0px;
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-    min-width: 554px;
+    /* min-width: 554px; */
     padding: 22px;
     overflow-y: hidden;
+}
+
+.multiSelectActive {
+    top: 140px;
 }
 
 .hide {
@@ -62,6 +66,7 @@
     font-size: 15px;
     overflow-y: scroll;
     height: 70%;
+    padding-right: 24px;
 }
 
 .studentDetailHeader {

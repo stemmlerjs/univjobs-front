@@ -62,3 +62,26 @@ font-size: 14px;
     font-size: 22px;
     color: #989b9e;
 }
+
+/*
+ * A multiselected card is a card that is
+ * selected in the multiselect view. A group action
+ * can be performed on multiselected cards.
+ *
+ * - reject
+ * - advance
+ * - deselect
+ */
+
+.multiselectedCard {
+    border: solid 2px #007ac1;
+}
+
+.multiselectedCard i {
+    color: #007ac1;
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+}
+
+.multiselectedCard i:hover {
+    color: #83b9d9;
+}

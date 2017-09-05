@@ -1,6 +1,6 @@
 
 /*
- * HiredApplicants.js
+ * PooledApplicants
  * 
  */
 
@@ -16,11 +16,10 @@ import { rootComponentContainer } from 'sharedStyles/sharedComponentStyles.css'
 
 import { applicantsPageBody, applicantsBodyLeft, applicantsBodyRight, headerTextStyle1,
   applicantCardsContainerDiv, applicantPageInstructions, returnButton, returnButtonContainer } from '../styles/MyApplicantsStyles.css'
-import {  } from '../styles/NewApplicantsStyles.css'
 
 import { Link } from 'react-router'
 
-export default function HiredApplicants ({ jobs, selectedJob, 
+export default function PooledApplicants ({ jobs, selectedJob, 
   page, 
   selectedApplicant,
   lists,
@@ -81,14 +80,14 @@ export default function HiredApplicants ({ jobs, selectedJob,
           }
 
           {
-            selectedJob.applicants_HIRED 
+            selectedJob.applicants_POOLED 
               ? <div>
-                  <div className={headerTextStyle1}>Showing {selectedJob.applicants_HIRED.length} of {selectedJob.applicants_HIRED.length} hired applicants.</div>
-                  <div className={applicantPageInstructions}>Review your hired applicants.</div>
+                  <div className={headerTextStyle1}>Showing {selectedJob.applicants_POOLED.length} of {selectedJob.applicants_POOLED.length} potential hires.</div>
+                  <div className={applicantPageInstructions}>Sort through your potential hires and choose the right hires for the job!</div>
 
                   <div className={applicantCardsContainerDiv}>
                     {
-                      selectedJob.applicants_HIRED.map((applicant, index) => {
+                      selectedJob.applicants_POOLED.map((applicant, index) => {
                         return (
                           <ApplicantCard key={index} 
                             applicant={applicant} 
@@ -106,8 +105,8 @@ export default function HiredApplicants ({ jobs, selectedJob,
                   </div>
               </div>
             : <div>
-                <div className={headerTextStyle1}>No hired applicants yet.</div>
-                <div className={applicantPageInstructions}>Hire a student by moving an applicant from the Potential Hires pool to Hired.</div>
+                <div className={headerTextStyle1}>No applicants in the Potential Hires pool.</div>
+                <div className={applicantPageInstructions}>When you want to contact a student, move them into here to contact them.</div>
                 <div className={returnButtonContainer}><Link className={returnButton} to="/myapplicants">Back to My Applicants Dashboard</Link></div>
               </div>
           }

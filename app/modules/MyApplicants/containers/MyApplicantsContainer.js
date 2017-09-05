@@ -7,6 +7,8 @@ import SkyLight from 'react-skylight'
 
 import MyApplicantsDashboard from '../components/MyApplicantsDashboard'
 import NewApplicants from '../components/NewApplicants'
+import PooledApplicants from '../components/PooledApplicants'
+import HiredApplicants from '../components/HiredApplicants'
 
 var ReactToastr = require("react-toastr");
 var { ToastContainer } = ReactToastr;
@@ -108,6 +110,29 @@ const MyApplicantsContainer = React.createClass({
       .then(this.props.closeOverlay)
   },
 
+  componentWillReceiveProps(nextProps) {
+
+    // Deselect all applicants
+    // Remove current applicant details
+    let shouldClearDetails = false;
+
+    if (this.props.route.page !== nextProps.route.page) {
+      shouldClearDetails = true;
+    }
+
+    if (this.props.params.jobId !== undefined && nextProps.params.jobId !== undefined) {
+      if (this.props.params.jobId !== nextProps.params.jobId) {
+        shouldClearDetails = true;
+      }
+    }
+
+    if (shouldClearDetails) {
+      this.props.multiSelectDeselectAll();
+      this.props.clearCurrentApplicantDetails();
+    }
+
+  },
+
   componentDidMount () {
 
     try {
@@ -124,6 +149,7 @@ const MyApplicantsContainer = React.createClass({
   },
 
   render () {
+    console.log(this.props)
     return (
       <div className={pageContainer} >
         <SidebarContainer isMobile={this.props.isMobile} isAStudent={false} 
@@ -146,9 +172,75 @@ const MyApplicantsContainer = React.createClass({
                         selectedJob={this.props.selectedJob} 
                         page={this.props.route.page}
                         lists={this.props.lists}
+
                         selectedApplicant={this.props.selectedApplicant}
+                        multiSelectViewActive={this.props.multiSelectViewActive}
+                        multiSelectedApplicantIds={this.props.multiSelectedApplicantIds}
+
                         handleViewApplicantDetails={this.props.viewApplicantDetails}
-                        handleClearCurrentApplicantDetails={this.props.clearCurrentApplicantDetails}/>
+                        handleClearCurrentApplicantDetails={this.props.clearCurrentApplicantDetails}
+                        handleMultiSelectAddApplicant={this.props.multiSelectAdd}
+                        handleMultiSelectRemoveApplicant={this.props.multiSelectRemove}
+                        handleMultiSelectDeselectAll={this.props.multiSelectDeselectAll}
+                        handleMultiSelectAll={() => {
+
+                          var ids = this.props.selectedJob.applicants.map((applicant) => {
+                            return applicant.student_id
+                          })
+
+                          this.props.multiSelectSelectAll(ids)
+                        }}
+                        />
+              case "applicants-pool":
+                return <PooledApplicants
+                        jobs={this.props.jobs} 
+                        selectedJob={this.props.selectedJob} 
+                        page={this.props.route.page}
+                        lists={this.props.lists}
+
+                        selectedApplicant={this.props.selectedApplicant}
+                        multiSelectViewActive={this.props.multiSelectViewActive}
+                        multiSelectedApplicantIds={this.props.multiSelectedApplicantIds}
+
+                        handleViewApplicantDetails={this.props.viewApplicantDetails}
+                        handleClearCurrentApplicantDetails={this.props.clearCurrentApplicantDetails}
+                        handleMultiSelectAddApplicant={this.props.multiSelectAdd}
+                        handleMultiSelectRemoveApplicant={this.props.multiSelectRemove}
+                        handleMultiSelectDeselectAll={this.props.multiSelectDeselectAll}
+                        handleMultiSelectAll={() => {
+
+                          var ids = this.props.selectedJob.applicants.map((applicant) => {
+                            return applicant.student_id
+                          })
+
+                          this.props.multiSelectSelectAll(ids)
+                        }}
+                  />
+              case "applicants-hired":
+                return <HiredApplicants
+                        jobs={this.props.jobs} 
+                        selectedJob={this.props.selectedJob} 
+                        page={this.props.route.page}
+                        lists={this.props.lists}
+
+                        selectedApplicant={this.props.selectedApplicant}
+                        multiSelectViewActive={this.props.multiSelectViewActive}
+                        multiSelectedApplicantIds={this.props.multiSelectedApplicantIds}
+
+                        handleViewApplicantDetails={this.props.viewApplicantDetails}
+                        handleClearCurrentApplicantDetails={this.props.clearCurrentApplicantDetails}
+                        handleMultiSelectAddApplicant={this.props.multiSelectAdd}
+                        handleMultiSelectRemoveApplicant={this.props.multiSelectRemove}
+                        handleMultiSelectDeselectAll={this.props.multiSelectDeselectAll}
+                        handleMultiSelectAll={() => {
+
+                          var ids = this.props.selectedJob.applicants.map((applicant) => {
+                            return applicant.student_id
+                          })
+
+                          this.props.multiSelectSelectAll(ids)
+                        }}
+                  />
             }
           })()
         }
@@ -178,7 +270,9 @@ function mapStateToProps({user, job, list, profile, myapplicants}) {
     selectedJob: myapplicants.selectedJob ? myapplicants.selectedJob : {},
     lists: list ? list : {},
 
-    selectedApplicant: myapplicants.selectedApplicant ? myapplicants.selectedApplicant : {}
+    selectedApplicant: myapplicants.selectedApplicant ? myapplicants.selectedApplicant : {},
+    multiSelectViewActive: myapplicants.multiSelectViewActive ? myapplicants.multiSelectViewActive : false,
+    multiSelectedApplicantIds: myapplicants.multiSelectedApplicantIds ? myapplicants.multiSelectedApplicantIds : []
   }
 }
 

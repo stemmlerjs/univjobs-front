@@ -24,3 +24,116 @@
     margin-top: 45px;
     border-right: solid 1px #b8b8b8;
 }
+
+.headerTextStyle1 {
+    text-align: left;
+    font-size: 14px;
+    font-weight: 700;
+    color: #4b4a4c;
+    font-size: 26px;
+    font-weight: 100;
+}
+
+.applicantCardsContainerDiv {
+    margin-top: 32px;
+}
+
+.applicantPageInstructions {
+       font-weight: 500;
+    margin-top: 6px; 
+}
+
+/*
+ * Standard Button
+ */
+
+.standardButton {
+    padding: 10px 15px 10px 15px;
+    border-radius: 3px;
+    border: 0;
+    background: #3697DB;
+    font-size: 14px;
+    color: white;
+    text-shadow: 1px 1px 0px rgba(0, 0, 0, .1);
+    cursor: pointer;
+    margin-left: 10px;
+    transition: all 100ms ease-out;
+    outline: none;
+}
+
+.standardButton:hover {
+    background-color: #63b7f2;
+}
+
+/*
+ * Standard Red Button
+ */
+
+.standardButtonRed {
+    padding: 10px 15px 10px 15px;
+    border-radius: 3px;
+    border: 0;
+    background: #db3636;
+    font-size: 14px;
+    color: white;
+    text-shadow: 1px 1px 0px rgba(0, 0, 0, .1);
+    cursor: pointer;
+    margin-left: 10px;
+    transition: all 100ms ease-out;
+    outline: none;
+}
+
+.standardButtonRed:hover {
+    background: #ff7878;
+}
+
+/*
+ * Standard Inactive Button
+ */
+
+.standardButtonInactive {
+    padding: 10px 15px 10px 15px;
+    border-radius: 3px;
+    border: 0;
+    background: #777777;
+    font-size: 14px;
+    color: #e4e4e4;
+    text-shadow: 1px 1px 0px rgba(0, 0, 0, .1);
+    margin-left: 10px;
+    transition: all 100ms ease-out;
+    opacity: 0.6;
+    outline: none;
+}
+
+.standardButtonNeutral {
+    padding: 10px 15px 10px 15px;
+    border-radius: 3px;
+    border: 0;
+    background: #414a51;
+    font-size: 14px;
+    color: white;
+    text-shadow: 1px 1px 0px rgba(0, 0, 0, .1);
+    cursor: pointer;
+    margin-left: 10px;
+    transition: all 100ms ease-out;
+    outline: none;
+}
+
+.standardButtonNeutral:hover {
+    background: #787d81;
+}
+
+.returnButtonContainer {
+   margin-top: 46px;
+    text-align: left;
+    font-size: 14px;
+    font-weight: 500; 
+}
+
+.returnButton {
+    background: white;
+    padding: 10px;
+    border-radius: 4px;
+    color: #639adb;
+    box-shadow: 0 2px 0 rgba(0,0,0,.1);
+}

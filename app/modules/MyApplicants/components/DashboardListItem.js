@@ -14,6 +14,7 @@ import { dashboardListItemContainer, infoSectionContainer, titleText, jobTypeTex
 import { Link } from 'react-router'
 
 export default function DashboardListItem ({ job, index, handleChangeSelectedJob }) {
+  console.log("this is the job", job)
   return (
     <div className={dashboardListItemContainer}>
       <div className={infoSectionContainer}>
@@ -53,15 +54,15 @@ export default function DashboardListItem ({ job, index, handleChangeSelectedJob
           <div className={nodeCounts}>
             <div className={`${nodeCountSection} ${appRelativeStyle}`}>
               <div className={nodeTypeName}>New</div>
-              <div className={nodeValue}>3</div>
+              <div className={nodeValue}>{job.applicants_INITIAL ? job.applicants_INITIAL.length : 0}</div>
             </div>
             <div className={nodeCountSection}>
               <div className={nodeTypeName}>Pool</div>
-              <div className={nodeValue}>6</div>
+              <div className={nodeValue}>{job.applicants_POOLED ? job.applicants_POOLED.length : 0}</div>
             </div>
             <div className={nodeCountSection}>
               <div className={nodeTypeName}>Hired</div>
-              <div className={nodeValue}>1</div>
+              <div className={nodeValue}>{job.applicants_HIRED ? job.applicants_HIRED.length : 0}</div>
             </div>
           </div>
         </div>

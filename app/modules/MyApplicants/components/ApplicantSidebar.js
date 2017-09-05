@@ -12,17 +12,23 @@ import { craftSportsString, craftClubsString, craftLanguagesString } from 'helpe
 
 import { applicantSidebarContainer, hide, sidebarContainer, headerContainer, imgContainer,
   headerDetailsContainer, bodyContainer, profileNameText, programNameText, schoolText, studentDetailHeader,
-  studentDetailText, questionsOverview, divider, answerText } from '../styles/ApplicantSidebarStyles.css'
+  studentDetailText, questionsOverview, divider, answerText, multiSelectActive } from '../styles/ApplicantSidebarStyles.css'
 
 import StudentProfileIcons from 'modules/SharedComponents/components/StudentProfileIcons'
 
 import config from 'config'
 import moment from 'moment'
 
-export default function ApplicantSidebar ({ selectedApplicant, lists, questions }) {
+export default function ApplicantSidebar ({ selectedApplicant, lists, questions, multiSelectViewActive }) {
   console.log("qust", questions)
   return (
-    <div className={selectedApplicant.job_id ? applicantSidebarContainer : `${applicantSidebarContainer} ${hide}`}>
+    <div className={selectedApplicant.job_id 
+      ? multiSelectViewActive
+        ? `${applicantSidebarContainer} ${multiSelectActive}`
+        : applicantSidebarContainer 
+      : multiSelectViewActive
+        ? `${applicantSidebarContainer} ${hide} ${multiSelectActive}`
+        : `${applicantSidebarContainer} ${hide}`}>
 
       {
         /*
@@ -51,7 +57,43 @@ export default function ApplicantSidebar ({ selectedApplicant, lists, questions 
         
         <div className={bodyContainer}>
 
-          <div className={questionsOverview}>Profile</div>
+          { 
+
+           /*
+            * Questions
+            */
+
+            questions !== null && questions !== undefined
+              ? <div>
+                  <div className={questionsOverview}>Answers</div>
+                  {
+                    questions.map((question, index) => {
+                      return (
+                        <div key={index}>
+                          <div className={studentDetailHeader}>{question.text}</div>
+                          
+                          {
+                            selectedApplicant.answers !== null && selectedApplicant.answers !== undefined 
+                              ? selectedApplicant.answers.map((answer, index) => {
+                                if (answer.question_id == question.question_id) {
+                                  return (
+                                    <div key={index} className={answerText}>"{answer.text}"</div>
+                                  )
+                                }
+                              })
+                            : ''
+                          }
+
+                        </div>
+                      )
+                    })
+                  }
+                </div>
+              : 'sdfsd'
+          }
+
+          <div className={divider}></div>
+          <div className={questionsOverview}>Profile Details</div>
 
           <StudentProfileIcons 
               hasCar={selectedApplicant.has_car} 
@@ -88,40 +130,7 @@ export default function ApplicantSidebar ({ selectedApplicant, lists, questions 
           <div className={studentDetailHeader}>Student Status</div>
           <div className={studentDetailText}>{lists.studentStatus[selectedApplicant.status]}</div>
 
-          { 
-
-           /*
-            * Questions
-            */
-
-            questions !== null && questions !== undefined
-              ? <div className={divider}>
-                  <div className={questionsOverview}>Answers</div>
-                  {
-                    questions.map((question, index) => {
-                      return (
-                        <div key={index}>
-                          <div className={studentDetailHeader}>{question.text}</div>
-                          
-                          {
-                            selectedApplicant.answers !== null && selectedApplicant.answers !== undefined 
-                              ? selectedApplicant.answers.map((answer) => {
-                                if (answer.question_id == question.question_id) {
-                                  return (
-                                    <div className={answerText}>"{answer.text}"</div>
-                                  )
-                                }
-                              })
-                            : ''
-                          }
-
-                        </div>
-                      )
-                    })
-                  }
-                </div>
-              : 'sdfsd'
-          }
+          
         </div>
       </div>
 

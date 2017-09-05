@@ -12,7 +12,7 @@
     display: flex;
     align-items: center;
     flex-direction: row;
-    z-index: 5;
+    z-index:32;
     transition: all 250ms ease-out;
     overflow: hidden;
 }

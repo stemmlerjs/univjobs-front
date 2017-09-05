@@ -1,12 +1,14 @@
 
 .headerSection {
-    height: 77px;
+height: 77px;
     background-color: white;
     box-shadow: 0 1px 0 rgba(0,0,0,.1);
     padding: 12px;
     text-align: left;
     padding-left: 45px;
     padding-right: 45px;
+    position: relative;
+    z-index: 31;
 }
 
 .headerSectionMyApplicants {
