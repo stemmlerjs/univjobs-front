@@ -1,10 +1,13 @@
-
+pre {
+    white-space: pre-wrap;
+    font-family: Roboto, sans-serif;
+}
 
 .cardModalContainer {
-display: flex;
+    display: flex;
     flex-direction: row;
     height: 477px;
-        padding-left: 8px;
+    padding-left: 8px;
 } 
 
 .cardLeft {

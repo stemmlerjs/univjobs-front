@@ -137,16 +137,16 @@ export default function PublicJobView ({ info, handleOpenEmployerProfileModal, s
           <div className={bodySection}>{info.description}</div>
         */}
           <div className={bodyTitleHeader}>Compensation</div>
-          <div className={bodySection}>{info.compensation}</div>
+          <div className={bodySection}><pre>{info.compensation}</pre></div>
 
           <div className={bodyTitleHeader}>Responsibilities</div>
-          <div className={bodySection}>{info.responsibilities}</div>
+          <div className={bodySection}><pre>{info.responsibilities}</pre></div>
 
           <div className={bodyTitleHeader}>Qualifications</div>
-          <div className={bodySection}>{info.qualification}</div>
+          <div className={bodySection}><pre>{info.qualification}</pre></div>
 
           <div className={bodyTitleHeader}>Desired Skills</div>
-          <div className={bodySection}>{info.desired_skills}</div>
+          <div className={bodySection}><pre>{info.desired_skills}</pre></div>
 
 
           <div className={bodyTitleHeader}>About {info.company_name}</div>

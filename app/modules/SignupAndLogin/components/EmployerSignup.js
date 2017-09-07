@@ -12,7 +12,8 @@ import { Footer } from 'modules/SharedComponents'
 // ================CSS IMPORTS============================== //
 import { employerCenteredContainer, header, subHeader, 
         modalContent, errorMessage, btn, input,
-        overlayStyles, dialogStyles } from '../styles/EmployerSignupStyles.css'
+        overlayStyles, dialogStyles, flexInputs } from '../styles/EmployerSignupStyles.css'
+
 import { legalEmployer, gray, backgroundStyleFallback } from '../styles/SignupContainerStyles.css'
 
 import { ValidPasswordVerifier } from 'modules/SharedComponents'
@@ -96,40 +97,7 @@ const EmployerSignup = React.createClass({
                         title="Hey there!">
                         <div className={modalContent}>
                             <h3>Sign up below to get started</h3>
-                            <input className={input} 
-                                    name="employer[firstname]"
-                                    value={firstNameText}
-                                    onChange={(e) => updateEmployerSignupForm('firstName', e.target.value)}
-                                    type="text" 
-                                    placeholder="First Name"
-                                    onKeyUp={(e) => detectEnterPress(e, onSubmitSignup)}
-                            />
-                            <input className={input} 
-                                    name="employer[lastname]"
-                                    value={lastNameText}
-                                    onChange={(e) => updateEmployerSignupForm('lastName', e.target.value)}
-                                    type="text" 
-                                    placeholder="Last Name"
-                                    onKeyUp={(e) => detectEnterPress(e, onSubmitSignup)}
-                            />
-                            <input className={input} 
-                                    name="employer[companyName]"
-                                    value={companyNameText}
-                                    onChange={(e) => updateEmployerSignupForm('companyName', e.target.value)}
-                                    type="text" 
-                                    placeholder="Company"
-                                    onKeyUp={(e) => detectEnterPress(e, onSubmitSignup)}
-                            />
-                            <input className={input} 
-                                    name="employer[phone]"
-                                    value={companyNameText}
-                                    value={phoneText}
-                                    onChange={(e) => updateEmployerSignupForm('phone', e.target.value)}
-                                    type="text" 
-                                    placeholder="Phone #"
-                                    onKeyUp={(e) => detectEnterPress(e, onSubmitSignup)}
-                            />
-                            <input className={input} 
+                             <input className={input} 
                                     name="employer[email]"
                                     value={companyNameText}
                                     value={emailText}
@@ -138,15 +106,53 @@ const EmployerSignup = React.createClass({
                                     placeholder="Email"
                                     onKeyUp={(e) => detectEnterPress(e, onSubmitSignup)}
                             />
-                            <input className={input} 
-                                    name="employer[password]"
-                                    value={companyNameText}
-                                    value={passwordText}
-                                    onChange={(e) => updateEmployerSignupForm('password', e.target.value)}
-                                    type="password" 
-                                    placeholder="Password"
-                                    onKeyUp={(e) => detectEnterPress(e, onSubmitSignup)}
-                            />
+                            <div className={flexInputs}>
+                                <input className={input} 
+                                        name="employer[firstname]"
+                                        value={firstNameText}
+                                        onChange={(e) => updateEmployerSignupForm('firstName', e.target.value)}
+                                        type="text" 
+                                        placeholder="First Name"
+                                        onKeyUp={(e) => detectEnterPress(e, onSubmitSignup)}
+                                />
+                                <input className={input} 
+                                        name="employer[lastname]"
+                                        value={lastNameText}
+                                        onChange={(e) => updateEmployerSignupForm('lastName', e.target.value)}
+                                        type="text" 
+                                        placeholder="Last Name"
+                                        onKeyUp={(e) => detectEnterPress(e, onSubmitSignup)}
+                                />
+                            </div>
+
+                            <div className={flexInputs}>
+                                <input className={input} 
+                                        name="employer[companyName]"
+                                        value={companyNameText}
+                                        onChange={(e) => updateEmployerSignupForm('companyName', e.target.value)}
+                                        type="text" 
+                                        placeholder="Company"
+                                        onKeyUp={(e) => detectEnterPress(e, onSubmitSignup)}
+                                />
+                                <input className={input} 
+                                        name="employer[phone]"
+                                        value={companyNameText}
+                                        value={phoneText}
+                                        onChange={(e) => updateEmployerSignupForm('phone', e.target.value)}
+                                        type="text" 
+                                        placeholder="Phone #"
+                                        onKeyUp={(e) => detectEnterPress(e, onSubmitSignup)}
+                                />
+                            </div>
+                               <input className={input} 
+                                        name="employer[password]"
+                                        value={companyNameText}
+                                        value={passwordText}
+                                        onChange={(e) => updateEmployerSignupForm('password', e.target.value)}
+                                        type="password" 
+                                        placeholder="Password"
+                                        onKeyUp={(e) => detectEnterPress(e, onSubmitSignup)}
+                                />
                             <ValidPasswordVerifier passwordText={passwordText}/>
                             <p className={legalEmployer}>By registering you agree to our 
                                 <Link to="/terms" className={gray}> Terms & Services </Link> 
