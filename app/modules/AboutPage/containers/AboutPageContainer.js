@@ -30,8 +30,28 @@ const AboutPageContainer = React.createClass({
     },
 
     contextTypes: {
-        router: PropTypes.object.isRequired,
-        store: PropTypes.object.isRequired
+      router: PropTypes.object.isRequired,
+      store: PropTypes.object.isRequired
+    },
+
+    getInitialState: () => {
+      return {
+        cardsOpen: {
+          charles: false,
+          khalil: false,
+          george: false,
+          julio: false
+        }
+      };
+    },
+
+    toggleCardOpen (name) {
+      this.setState({
+        cardsOpen: {
+          ...this.state.cardsOpen,
+          [name]: !this.state.cardsOpen[name]
+        }
+      })
     },
 
     componentDidMount() {
@@ -50,6 +70,7 @@ const AboutPageContainer = React.createClass({
     },
 
     render () {
+      console.log(this)
       return (
         <div>
           <RegularNav 
@@ -58,7 +79,8 @@ const AboutPageContainer = React.createClass({
             router={this.context.router}
             closeNavDropDown={this.props.closeNavDropDown}
           />
-          <AboutPage/> 
+          <AboutPage 
+            toggleCardOpen={this.toggleCardOpen} cardsState={this.state.cardsOpen}/> 
           <LocationFooter/>
           <Footer/>
         </div>
