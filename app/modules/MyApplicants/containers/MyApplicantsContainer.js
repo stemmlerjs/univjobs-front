@@ -1,4 +1,35 @@
 
+
+/*
+ * FINAL THINGS TO DO:
+ * 
+ * - Student Profile Sidebar
+ *   - lay information out nicely
+ *   - add the ability to see CONTACT info if the applicant was contacted
+ *     - ensure that this information is only returned in the API call if the applicant
+ *       was "CONTACTED". Check the main jobs api calls as well and make sure they don't 
+ *       include sensitive information.
+ *   - add the ability to see Resume if it was included. Also, they need to see that there
+ *     wasn't a resume if the student doesn't include it.
+ *     (use the student card button style for these, to keep it consistent)
+ * 
+ * - Hook up the Hire Student button
+ *  - needs redux, needs modal, needs backend api work
+ * 
+ * - Show a loader or something in the modals when we're doing some action and we're waiting for it to fulfill.
+ * 
+ * - Do the subnavbar on the Final Page.
+ *  - On the final page, all they're really allowed to do is
+ *    view each of the applicants that they've hired- there are no actions.
+ *  - Also, include a link to CLOSE the job and:
+ *      - show MAX_HIRES vs NUM_HIRES + progress on this final page..
+ * 
+ * - Figure out how to Show current state page better
+ * - Figure out colour scheme for the State Nodes
+ * - Put state nodes in the Navbar.
+ * - Render the default profile picture for students that don't have profile pictures
+ */
+
 import React, { Component, PropTypes } from 'react'
 import { SidebarContainer } from 'modules/Main'
 
@@ -150,6 +181,21 @@ const MyApplicantsContainer = React.createClass({
 
   },
 
+  reloadDataAfterChange () {
+    var currentJobId = null
+
+    /*
+     * Check if a job id was preset in the route parameters.
+     */
+
+    if (this.props.route.path.indexOf(':jobId') !== -1) {
+      currentJobId = this.props.params.jobId;
+    }
+
+    this.props.getAllJobsMyApplicants(currentJobId)
+
+  },
+
   openConfirmMultiApplicantRejectModal () {
     this.refs.confirmMultiApplicantRejectModal.show();
   },
@@ -164,6 +210,88 @@ const MyApplicantsContainer = React.createClass({
 
   closeConfirmMultiApplicantContactModal () {
     this.refs.confirmMultiApplicantContactModal.hide();
+  },
+
+  handleRejectApplicants () {
+    this.props.rejectApplicants(this.props.selectedJob.job_id, this.props.multiSelectedApplicantIds,
+
+      /*
+       * Success Callback
+       */
+
+      (alteredRowCount) => {
+
+        this.refs.container.success(
+          `Rejected ${alteredRowCount} applicants from this posting.`,
+          `Rejection success`,
+          {
+            timeout: 3000
+        });
+        
+        this.reloadDataAfterChange();
+
+        this.closeConfirmMultiApplicantRejectModal();
+
+      },
+
+      /*
+       * Failure Callback
+       */
+    
+      () => {
+
+        this.refs.container.error(
+          `Something went wrong. Please reload and try again.`,
+          "Action failed",
+          {
+            timeout: 3000
+        });
+
+        this.closeConfirmMultiApplicantRejectModal();
+
+      }
+    )
+  },
+
+  handleContactApplicants () {
+    this.props.contactApplicants(this.props.selectedJob.job_id, this.props.multiSelectedApplicantIds,
+      
+      /*
+       * Success Callback
+       */
+
+      (alteredRowCount) => {
+
+        this.refs.container.success(
+          `Moved ${alteredRowCount} applicants to Potential Hires Pool`,
+          `Contact success!`,
+          {
+            timeout: 3000
+        });
+        
+        this.reloadDataAfterChange();
+
+        this.closeConfirmMultiApplicantContactModal();
+
+      },
+      
+      /*
+       * Failure Callback 
+       */
+
+      () => {
+
+        this.refs.container.error(
+          `Something went wrong. Please reload and try again.`,
+          "Action failed",
+          {
+            timeout: 3000
+        });
+
+        this.closeConfirmMultiApplicantContactModal();
+
+      }
+    )
   },
 
   render () {
@@ -302,9 +430,7 @@ const MyApplicantsContainer = React.createClass({
                     <div>
                       <button 
                         className={standardButtonRed} 
-                        onClick={() => {
-                          this.props.rejectApplicants(this.props.selectedJob.job_id, this.props.multiSelectedApplicantIds)
-                        }}>Reject selected</button>
+                        onClick={this.handleRejectApplicants}>Reject selected</button>
                       <button 
                         className={standardButtonNeutral} 
                         onClick={this.closeConfirmMultiApplicantRejectModal}>Cancel</button>
@@ -332,9 +458,7 @@ const MyApplicantsContainer = React.createClass({
                   <div>
                     <button 
                       className={standardButton} 
-                      onClick={() => {
-                        this.props.multiSelectAdvanceToPoolSelected(this.props.multiSelectedApplicantIds)
-                      }}>Contact selected</button>
+                      onClick={this.handleContactApplicants}>Contact selected</button>
                     <button 
                       className={standardButtonNeutral} 
                       onClick={this.closeConfirmMultiApplicantContactModal}>Cancel</button>

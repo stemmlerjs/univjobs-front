@@ -67,7 +67,8 @@ export default function NewApplicants ({ jobs, selectedJob,
         handleMultiSelectAll={handleMultiSelectAll}
         handleMultiSelectDeselectAll={handleMultiSelectDeselectAll}
         handleMultiSelectRejectApplicants={handleMultiSelectRejectApplicants}
-        handleMultiSelectAdvanceApplicants={handleMultiSelectAdvanceApplicants}/>
+        handleMultiSelectAdvanceApplicants={handleMultiSelectAdvanceApplicants}
+        page={page}/>
 
       {
        /*

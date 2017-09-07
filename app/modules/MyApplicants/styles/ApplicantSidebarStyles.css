@@ -34,6 +34,7 @@
 .imgContainer {
     height: 175px;
     width: 175px;
+    min-width: 175px;
 }
 
 .imgContainer img {

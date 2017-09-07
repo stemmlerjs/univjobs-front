@@ -63,7 +63,8 @@ export default function PooledApplicants ({ jobs, selectedJob,
         multiSelectViewActive={multiSelectViewActive}
         handleMultiSelectAll={handleMultiSelectAll}
         handleMultiSelectDeselectAll={handleMultiSelectDeselectAll}
-        handleMultiSelectRejectApplicants={handleMultiSelectRejectApplicants}/>
+        handleMultiSelectRejectApplicants={handleMultiSelectRejectApplicants}
+        page={page}/>
 
       {
        /*

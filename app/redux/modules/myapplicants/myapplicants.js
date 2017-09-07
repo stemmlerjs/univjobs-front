@@ -1,6 +1,6 @@
 
 import { getJobs } from 'helpers/job'
-import { rejectApplicants as rejectApplicantsHTTP } from 'helpers/applicant'
+import { rejectApplicants as rejectApplicantsHTTP, contactStudents as contactStudentsHTTP } from 'helpers/applicant'
 
 /*
  * =============================================
@@ -106,7 +106,7 @@ export function getAllJobsMyApplicants (currentJobId) {
                     
                     jobs[i].applicants_INITIAL.push(applicant)
                     break;
-                  case "CONTACT":
+                  case "CONTACTED":
                     if (jobs[i].applicants_POOLED == undefined) {
                       jobs[i].applicants_POOLED = [];
                     }
@@ -316,7 +316,7 @@ function rejectApplicantsFailure () {
  * @param {Array} applicantIds
  */
 
-export function rejectApplicants (jobId, applicantIds) {
+export function rejectApplicants (jobId, applicantIds, successCallback, failureCallback) {
   return function (dispatch) {
 
     /*
@@ -340,7 +340,11 @@ export function rejectApplicants (jobId, applicantIds) {
       .then((result) => {
         console.log("successfully rejected these applicants", result)
 
+        var affectedRowCount = result.data.affectedIds.length;
+
         dispatch(rejectApplicantsSuccess())
+
+        successCallback(affectedRowCount)
         
       })
 
@@ -352,6 +356,87 @@ export function rejectApplicants (jobId, applicantIds) {
         console.log(err)
 
         dispatch(rejectApplicantsFailure())
+
+        failureCallback()
+      })
+  }
+}
+
+/*
+ * =============================================
+ *  6. Contact applicants
+ * =============================================
+ */
+
+const CONTACTING_APPLICANTS = 'CONTACTING_APPLICANTS'
+const CONTACTING_APPLICANTS_SUCCESS = "CONTACTING_APPLICANTS_SUCCESS"
+const CONTACTING_APPLICANTS_FAILURE = "CONTACTING_APPLICANTS_FAILURE"
+
+function contactApplicantsSuccess () {
+  return {
+    type: CONTACTING_APPLICANTS_SUCCESS
+  }
+}
+
+function contactApplicantsFailure () {
+  return {
+    type: CONTACTING_APPLICANTS_FAILURE
+  }
+}
+
+/*
+ * contactApplicants
+ * 
+ * @desc This redux thunk allows us to contact multiple applicants all at the 
+ * same time by passing in the ids of the applicants and the job id of the
+ * job that the applicants belong to.
+ * 
+ * @param {Number} jobId
+ * @param {Array} applicantIds
+ */
+
+export function contactApplicants (jobId, applicantIds, successCallback, failureCallback) {
+  return function (dispatch) {
+
+    /*
+     * Signal intent
+     */
+
+    dispatch({
+      type: CONTACTING_APPLICANTS
+    })
+
+    /*
+     * Attempt http call to contact the applicants from this job.
+     */
+
+    contactStudentsHTTP(jobId, applicantIds)
+
+      /*
+       * Successfully contacted applicants
+       */
+
+      .then((result) => {
+        console.log("successfully contacted these applicants", result)
+
+        var affectedRowCount = result.data.affectedIds.length;
+
+        dispatch(contactApplicantsSuccess())
+
+        successCallback(affectedRowCount);
+        
+      })
+
+      /*
+       * Failed to contact applicants
+       */
+
+      .catch((err) => {
+        console.log(err)
+
+        dispatch(contactApplicantsFailure())
+
+        failureCallback();
       })
   }
 }
@@ -372,11 +457,41 @@ const initialMyApplicantsState = {
 
   isRejectingApplicants: false,
   isRejectingApplicantsSuccess: false,
-  isRejectingApplicantsFailure: false
+  isRejectingApplicantsFailure: false,
+
+  isContactingApplicants: false,
+  isContactingApplicantsSuccess: false,
+  isContactingApplicantsFailure: false
 }
 
 export default function myapplicants (state = initialMyApplicantsState, action) {
   switch (action.type) {
+
+    /*
+     * CONTACTING APPLICANTS
+     */
+
+    case CONTACTING_APPLICANTS:
+      return {
+        ...state,
+        isContactingApplicants: true,
+        isContactingApplicantsSuccess: false,
+        isContactingApplicantsFailure: false
+      }
+    case CONTACTING_APPLICANTS_SUCCESS:
+      return {
+        ...state,
+        isContactingApplicants: false,
+        isContactingApplicantsSuccess: true,
+        isContactingApplicantsFailure: false
+      }
+    case CONTACTING_APPLICANTS_FAILURE:
+      return {
+        ...state,
+        isContactingApplicants: false,
+        isContactingApplicantsSuccess: false,
+        isContactingApplicantsFailure: true
+      }
 
     /*
      * REJECTING APPLICANTS
@@ -403,6 +518,11 @@ export default function myapplicants (state = initialMyApplicantsState, action) 
         isRejectingApplicantsSuccess: false,
         isRejectingApplicantsFailure: true
       }
+
+    /*
+     * JOB SELECTION
+     */
+
     case TOGGLE_JOB_SELECT:
       return {
         ...state,
@@ -522,7 +642,11 @@ export default function myapplicants (state = initialMyApplicantsState, action) 
         jobs: action.jobs,
         isFetchingJobs: false,
         isFetchingJobsSuccess: true,
-        isFetchingJobsFailure: false
+        isFetchingJobsFailure: false,
+        selectedJob: {},
+        multiSelectViewActive: false,
+        multiSelectedApplicantIds: []
+
       }
     case GET_ALL_MY_APPLICANTS_JOBS_FAILURE:
       return {

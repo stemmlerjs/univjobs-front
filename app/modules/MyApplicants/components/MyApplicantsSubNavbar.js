@@ -18,16 +18,32 @@ export default function MyApplicantsSubNavbar ({
   handleMultiSelectAll,
   multiSelectViewActive,
   handleMultiSelectRejectApplicants,
-  handleMultiSelectAdvanceApplicants
+  handleMultiSelectAdvanceApplicants,
+  page
 }) {
-  return (
-    <div className={multiSelectViewActive ? `${subNavbarContainer} ${active}` : subNavbarContainer}>
-      <button className={standardButtonNeutral} onClick={handleMultiSelectAll}>Select All</button>
-      <button className={standardButtonNeutral} onClick={handleMultiSelectDeselectAll}>Deselect All</button>
-      <button className={standardButton} onClick={handleMultiSelectAdvanceApplicants}>Contact Student(s)</button>
-      <button className={standardButtonRed} onClick={handleMultiSelectRejectApplicants}>Reject Student(s)</button>
-    </div>
-  )
+
+  if (page == "applicants-new") {
+    return (
+      <div className={multiSelectViewActive ? `${subNavbarContainer} ${active}` : subNavbarContainer}>
+        <button className={standardButtonNeutral} onClick={handleMultiSelectAll}>Select All</button>
+        <button className={standardButtonNeutral} onClick={handleMultiSelectDeselectAll}>Deselect All</button>
+        <button className={standardButton} onClick={handleMultiSelectAdvanceApplicants}>Contact Student(s)</button>
+        <button className={standardButtonRed} onClick={handleMultiSelectRejectApplicants}>Reject Student(s)</button>
+      </div>
+    )
+  } 
+
+  else if (page == "applicants-pool") {
+    return (
+      <div className={multiSelectViewActive ? `${subNavbarContainer} ${active}` : subNavbarContainer}>
+        <button className={standardButtonNeutral} onClick={handleMultiSelectAll}>Select All</button>
+        <button className={standardButtonNeutral} onClick={handleMultiSelectDeselectAll}>Deselect All</button>
+        <button className={standardButton} onClick={handleMultiSelectAdvanceApplicants}>Hire Student(s)</button>
+        <button className={standardButtonRed} onClick={handleMultiSelectRejectApplicants}>Reject Student(s)</button>
+      </div>
+    )
+  }
+  
 }
 
 

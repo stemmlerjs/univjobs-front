@@ -8,7 +8,7 @@
 import React, { PropTypes } from 'react'
 
 // ==============MADE COMPONENTS========================= //
-import { StudentCard, Title, LoadingCard } from 'modules/SharedComponents'
+import { StudentCard, Title, LoadingCards } from 'modules/SharedComponents'
 import config from 'config'
 
 // ==============THIRD PARTY IMPORTS========================= //
@@ -18,7 +18,7 @@ import { Combobox } from 'react-widgets'
 // ================CSS IMPORTS============================== //
 import { rootComponentContainer, title, margins, overflowFix } from 'sharedStyles/sharedComponentStyles.css'
 import { btn, input, pageFiltersAndSearch } from 'sharedStyles/widgets.css'
-import { flexibleCardContainer } from 'sharedStyles/cardContainer.css'
+import { flexibleCardContainer, ghostFlexibleCardContainer } from 'sharedStyles/cardContainer.css'
 
 
 import { filterJobTypeContainer, filterTitle, filterJobTypeColumnContainer, filterJobTypeColumn, 
@@ -42,7 +42,8 @@ export default function EmployerDashboard ({students, lists, industriesList, pro
     handleToggleFilterMenu,
     handleDoInviteStudent,
     updateFilterSettings,
-    filterStudents
+    filterStudents,
+    isFetchingStudents
     
 }) {
 window.lists = lists;
@@ -143,8 +144,21 @@ window.students = students;
           <div className={flexibleCardContainer}>
 
             {
-             
-              students.length > 0 ? students.filter((student) => {
+             /*
+              * [GHOST (Loading) CARDS]
+              * 
+              * While we're fetching cards, we want to show some sort of Ghost
+              * Card like Facebook has when things are loading.
+              */
+
+            isFetchingStudents 
+              ? (<div className={ghostFlexibleCardContainer}>
+                  <LoadingCards/>
+                  <LoadingCards/>
+                  <LoadingCards/>
+                </div>
+                )
+              : students.length > 0 ? students.filter((student) => {
                 var shouldFilterOut = student.filter_show === undefined 
                                         ? false 
                                         : student.filter_show === true 

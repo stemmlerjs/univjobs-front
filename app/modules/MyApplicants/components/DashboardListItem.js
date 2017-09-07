@@ -42,11 +42,15 @@ export default function DashboardListItem ({ job, index, handleChangeSelectedJob
               <div data-tip={'Review all new applicants'} className={`${node} ${node1}`}></div>
             </Link>
             <div className={line}></div>
-            <Link to={`/myapplicants/pool/${job.job_id}`}>
+            <Link onClick={() => {
+              handleChangeSelectedJob(job)
+            }} to={`/myapplicants/pool/${job.job_id}`}>
               <div data-tip={'Review all applicants in your potential hires pool'} className={`${node} ${node2}`}></div>
             </Link>
             <div className={line}></div>
-            <Link to={`/myapplicants/hired/${job.job_id}`}>
+            <Link onClick={() => {
+              handleChangeSelectedJob(job)
+            }} to={`/myapplicants/hired/${job.job_id}`}>
               <div data-tip={'Review all your hired applicants'} className={`${node} ${node3}`}></div>
             </Link>
           </div>

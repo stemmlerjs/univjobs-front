@@ -57,6 +57,12 @@ export default function ApplicantSidebar ({ selectedApplicant, lists, questions,
         
         <div className={bodyContainer}>
 
+          include a section here that says "Contact Details hidden until you contact the applicant",
+          or rather "Select this applicant then Contact them to view their contact information".
+
+          Also, we should have a button that says "Resume" and maybe one that says "Contact",
+          it will select this applicant in the multi select.
+
           { 
 
            /*
@@ -89,7 +95,7 @@ export default function ApplicantSidebar ({ selectedApplicant, lists, questions,
                     })
                   }
                 </div>
-              : 'sdfsd'
+              : ''
           }
 
           <div className={divider}></div>

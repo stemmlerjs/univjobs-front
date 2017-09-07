@@ -380,6 +380,7 @@ const EmployerDashboardContainer = React.createClass({
             this.props.toggleFilterMenu(false)
           }}
           filterMenuOpen={this.props.filterMenuOpen}
+          isFetchingStudents={this.props.isFetchingStudents}
         />
 
         {/* =======================================
@@ -545,6 +546,7 @@ function mapStateToProps({user, profile, dashboard, job, list}) {
     user: user ? user : {},
     profile: profile.employerProfile ? profile.employerProfile : {},
     students: dashboard.employerDashboard.students ? dashboard.employerDashboard.students : [],
+    isFetchingStudents: dashboard.employerDashboard.isFetching ? dashboard.employerDashboard.isFetching : false,
     inviteStudentModal: dashboard.employerDashboard.inviteStudentModal ? dashboard.employerDashboard.inviteStudentModal : {},
     studentProfileModal: dashboard.employerDashboard.studentProfileModal ? dashboard.employerDashboard.studentProfileModal: {},
     jobs: job.employerJobs ? job.employerJobs :  [],
