@@ -1,0 +1,139 @@
+
+.applicantSidebarContainer {
+    width: 35%;
+    position: absolute;
+    bottom: 0px;
+    background: white;
+    top: 78px;
+    right: 0px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    /* min-width: 554px; */
+    padding: 22px;
+    overflow-y: hidden;
+}
+
+.multiSelectActive {
+    top: 140px;
+}
+
+.hide {
+    display: none;
+}
+
+.sidebarContainer {
+    height: 100%;
+    overflow: hidden;
+    width: 90%;
+    margin: 0 auto;
+}
+
+.headerContainer {
+display: flex;
+    flex-direction: row;
+    height: 27%;
+    max-height: 175px;
+}
+
+.imgContainer {
+    height: 175px;
+    width: 175px;
+    min-width: 175px;
+}
+
+.imgContainer img {
+    height: 175px;
+    width: 175px;
+}
+
+.altImageContainer {
+    height: 175px;
+    width: 175px;
+    background-color: #dddee0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.altImageContainer > i {
+    font-size: 8vw;
+    color: #5396e4;
+    text-align: center;
+}
+
+.headerDetailsContainer {
+    text-align: left;
+    margin-left: 19px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.profileNameText {
+        font-size: 20px;
+}
+
+.programNameText {
+    font-size: 15px;
+}
+
+.schoolText {
+        font-size: 13px;
+    color: gray;
+}
+
+.bodyContainer {
+    text-align: left;
+    /* padding: 20px; */
+    margin-top: 20px;
+    font-size: 15px;
+    overflow-y: scroll;
+    height: 70%;
+    padding-right: 24px;
+}
+
+.studentDetailHeader {
+        font-weight: bold;
+}
+
+.studentDetailText {
+    margin-bottom: 10px;
+    font-weight: 100
+}
+
+.questionsOverview {
+        font-size: 19px;
+    font-weight: 100;
+    margin-bottom: 10px;
+}
+
+.divider {
+border-top: solid 1px #d5d4d4;
+    /* margin-bottom: 19px; */
+    margin-top: 17px;
+    padding-top: 17px;
+}
+
+.answerText {
+    margin-left: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-weight: 100;
+}
+
+.sectionHeader {
+    font-size: 24px;
+    font-weight: 100;
+}
+
+.contactSectionOmmitted {
+        background: #e4e4e4;
+    border-radius: 2px;
+    padding: 8px;
+    text-align: center;
+    color: #5396e4;
+}
+
+.sectionContainer {
+    margin-bottom: 44px;
+    margin-top: 8px;
+}

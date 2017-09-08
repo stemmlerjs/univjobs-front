@@ -114,6 +114,10 @@ const MyPostingsContainer = React.createClass({
 
   },
 
+  componentWillUnmount () {
+    this.props.clearSelectedJob(this.getPageType())
+  },
+
 
   /*
    * changeUrlAndSetSelectedJob
@@ -275,7 +279,6 @@ const MyPostingsContainer = React.createClass({
   */
 
   handleCancelJobDetailsEdits (resetSnapshot) {
-    debugger;
     var page = this.getPageType()
     
     /*

@@ -16,27 +16,38 @@ import { subTitle } from '../styles/MyApplicantsHeaderStyles.css'
 
 import JobsSelectDropdown from 'modules/MyPostings/components/JobsSelectDropdown'
 
-export default function MyApplicantsHeader ({ jobs, jobSelectDropdownIsOpen, handleOpenJobSelect, handleChangeSelectedJob, selectedJob }) {
+export default function MyApplicantsHeader ({ jobs, jobSelectDropdownIsOpen, handleOpenJobSelect, handleChangeSelectedJob, selectedJob, page }) {
+
   return (
     <div className={headerSection}>
       {
         selectedJob.title
           ? <div className={headerJobTitle}>{selectedJob.title}</div>
-          : <div className={headerJobTitle}>My Applicants<span className={subTitle}>Hire students that've applied to your postings</span></div>
+          : <div>
+              <div className={headerJobTitle}>My Applicants</div>
+              <div className={subTitle}>Hire students that've applied to your postings</div>
+            </div>
+      }
+
+      {
+        page != "applicants-dash"
+          ? <div className={headerJobsSelectionContainer}>
+              <div className={headerNumberJobs}>{jobs.length === 0 ? '0 jobs' : jobs.length + " jobs"}</div>
+              <div className={headerJobSelectButton} onClick={handleOpenJobSelect}>
+                <i data-tip={`Select a job to display`} className={"fa fa-angle-down"} aria-hidden="true"></i>
+              </div>
+              <JobsSelectDropdown 
+                currentJobId={selectedJob.job_id} 
+                type={"myapplicants"}
+                jobs={jobs} 
+                visible={jobSelectDropdownIsOpen} 
+                handleChangeSelectedJob={handleChangeSelectedJob}
+              />
+            </div>
+          : ''
       }
       
-      <div className={headerJobsSelectionContainer}>
-        <div className={headerNumberJobs}>{jobs.length === 0 ? '0 jobs' : jobs.length + " jobs"}</div>
-        <div className={headerJobSelectButton} onClick={handleOpenJobSelect}>
-          <i data-tip={`Select a job to display`} className={"fa fa-angle-down"} aria-hidden="true"></i>
-        </div>
-        <JobsSelectDropdown 
-          currentJobId={selectedJob.job_id} 
-          jobs={jobs} 
-          visible={jobSelectDropdownIsOpen} 
-          handleChangeSelectedJob={handleChangeSelectedJob}
-        />
-      </div>
+      
     </div>
   )
 }

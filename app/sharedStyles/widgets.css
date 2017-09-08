@@ -31,6 +31,7 @@
   width: 156px;
   margin-left: 7px;
 }
+
      
 .maxButton {
 	background-color: #229AD6;
@@ -91,4 +92,51 @@
     align-items: center; 
     margin-left: 25px; 
     margin-right: 25px;
+}
+
+
+/* =====================================
+
+*/
+
+.univjobsButton {
+    background-color: white;
+    border: none;
+    color: #5396E4;
+    font-weight: bold;
+    font-size: 13px;
+    width: 109px;
+    height: 51px;
+    cursor: pointer;
+    outline: none;
+    transition: 0.1s ease-in;
+    margin: 0 auto;
+}
+
+.univjobsButton:hover {
+    background-color: #5396E4;
+    color:white;
+}
+
+.univjobsButton:hover a {
+    color:white;
+}
+
+.univjobsButtonInactive {
+    border: none;
+    font-weight: bold;
+    font-size: 13px;
+    width: 109px;
+    height: 51px;
+    cursor: pointer;
+    outline: none;
+    transition: 0.1s ease-in;
+    margin: 0 auto;
+    background: #e4e4e4;
+    color: white;
+}
+
+.whiteTxt {
+    color: white !important;
+    text-decoration: none;
 }

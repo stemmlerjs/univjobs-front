@@ -7,46 +7,42 @@
 import React, { PropTypes } from 'react'
 import ReactTooltip from 'react-tooltip'
 
-import { dashboardListItemContainer, infoSectionContainer, titleText, jobTypeText, stateSectionContainer, statesContainer,
-  stateNodes, node, line, nodeCounts, nodeCountSection, nodeTypeName, nodeValue } from '../styles/DashboardListItemStyles.css'
+import StateNodes from './StateNodes'
 
-export default function DashboardListItem ({ job, index }) {
+import { dashboardListItemContainer, infoSectionContainer, titleText, jobTypeText, stateSectionContainer, statesContainer,
+  stateNodes, node, line, nodeCounts, nodeCountSection, nodeTypeName, nodeValue, appRelativeStyle,
+  button, node1, node2, node3 } from '../styles/DashboardListItemStyles.css'
+
+import { Link } from 'react-router'
+
+export default function DashboardListItem ({ job, index, handleChangeSelectedJob }) {
+  console.log("this is the job", job)
   return (
     <div className={dashboardListItemContainer}>
       <div className={infoSectionContainer}>
         <div className={titleText}>{job.title}</div>
         <div className={jobTypeText}>Part-time</div>
         <div>
-
+          <Link onClick={() => {
+            handleChangeSelectedJob(job)
+          }} to={`/myapplicants/new/${job.job_id}`}>
+            <button className={button}>View Applicants</button>
+          </Link>
+          <Link to={`/mypostings/open/${job.job_id}`}>
+            <button className={button}><i data-tip={'View in My Postings'} className={"fa fa-file-text"} aria-hidden="true"></i></button>
+          </Link>
         </div>
 
       </div>
       <div className={stateSectionContainer}>
-        <div className={statesContainer}>
-
-          <div className={stateNodes}>
-            <div className={node}></div>
-            <div className={line}></div>
-            <div className={node}></div>
-            <div className={line}></div>
-            <div className={node}></div>
-          </div>
-
-          <div className={nodeCounts}>
-            <div className={nodeCountSection}>
-              <div className={nodeTypeName}>New Apps</div>
-              <div className={nodeValue}>3</div>
-            </div>
-            <div className={nodeCountSection}>
-              <div className={nodeTypeName}>Contact Pool</div>
-              <div className={nodeValue}>6</div>
-            </div>
-            <div className={nodeCountSection}>
-              <div className={nodeTypeName}>Hired</div>
-              <div className={nodeValue}>1</div>
-            </div>
-          </div>
-        </div>
+          <StateNodes 
+            job={job}
+            initialApplicants={job.applicants_INITIAL} 
+            pooledApplicants={job.applicants_POOLED} 
+            hiredApplicants={job.applicants_HIRED}
+            handleChangeSelectedJob={handleChangeSelectedJob}
+            page={"applicants-dash"}
+          />
       </div>
     </div>
   )

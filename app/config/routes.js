@@ -61,14 +61,17 @@ export default function getRoutes(store) {
           <Route path='/mypostings/approval/:jobId' page={'postings-approval'} component={MyPostingsContainer} />
 
 
-          {/* OLD MY APPLICANTS SCREEN */}
+          {/* OLD MY APPLICANTS SCREEN
           <Route path ="/myapplicants/em"           component={ApplicantsContainer} />
+           */}
 
-          {/* NEW MY APPLICANTS SCREEN 
-          <Route path='/myapplicants'               page={'applicants'} component={MyApplicantsContainer} />
-          */}
+          {/* NEW MY APPLICANTS SCREEN */}
+          <Route path='/myapplicants'                page={'applicants-dash'} component={MyApplicantsContainer} />
+          <Route path='/myapplicants/new/:jobId'     page={'applicants-new'} component={MyApplicantsContainer} />
+          <Route path='/myapplicants/pool/:jobId'    page={'applicants-pool'} component={MyApplicantsContainer} />
+          <Route path='/myapplicants/hired/:jobId'    page={'applicants-hired'} component={MyApplicantsContainer} />
           
-          <Route path='/settings/st'              page={'settings'} component={StudentSettingsContainer} />
+          <Route path='/settings/st'                page={'settings'} component={StudentSettingsContainer} />
 
           {
             /*

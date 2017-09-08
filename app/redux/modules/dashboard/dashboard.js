@@ -12,9 +12,9 @@ import shareJobModal from './shareJobModal'
 // ====================== ACTIONS ========================
 // =======================================================
 
-const GET_STUDENTS = 'EMPLOYER.GET_STUDENTS'
-const GET_STUDENTS_SUCCESS = 'EMPLOYER.GET_STUDENTS_SUCCESS'
-const GET_STUDENTS_FAILURE = 'EMPLOYER.GET_STUDENTS_FAILURE'
+const GET_STUDENTS = 'DASHBOARD_FETCHING_STUDENTS'
+const GET_STUDENTS_SUCCESS = 'DASHBOARD_FETCHING_STUDENT_SUCCESS'
+const GET_STUDENTS_FAILURE = 'DASHBOARD_FETCHING_STUDENT_FAILURE'
 
 /*NOTE: 
  *   Might have to rename the strings passed into variables,
@@ -285,6 +285,7 @@ const initialDashboardState = {
 
 const initialEmployerDashboardState = {
 	students: [],
+	isFetching: false,
 	inviteStudentModal: {},
 	studentProfileModal: {},
 	searchField: '',
@@ -491,10 +492,21 @@ function employerDashboard(state = initialEmployerDashboardState, action) {
 				...state,
 				studentProfileModal: studentProfileModal(state.studentProfileModal, action)
 			}
+		case GET_STUDENTS:
+			return {
+				...state,
+				isFetching: true
+			}
 		case GET_STUDENTS_SUCCESS:
 			return {
 				...state,
-				students: action.students
+				students: action.students,
+				isFetching: false,
+			}
+		case GET_STUDENTS_FAILURE:
+			return {
+				...state,
+				isFetching: false,
 			}
 		default:
 			return state
@@ -757,6 +769,16 @@ export default function dashboard(state = initialDashboardState, action) {
 				...state,
 				error: action.error
 			}
+		
+		/*
+		 * EMPLOYER (FETCHING STUDENTS)
+		 */
+		
+		case GET_STUDENTS:
+			return {
+				...state,
+				employerDashboard: employerDashboard(state.employerDashboard, action)
+			}
 		case GET_STUDENTS_SUCCESS:
 			return {
 				...state,
@@ -765,6 +787,7 @@ export default function dashboard(state = initialDashboardState, action) {
 		case GET_STUDENTS_FAILURE:
 			return {
 				...state,
+				employerDashboard: employerDashboard(state.employerDashboard, action),
 				error: action.error
 			}
 		default:

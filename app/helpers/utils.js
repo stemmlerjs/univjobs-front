@@ -551,3 +551,8 @@ export function compressPicture (file, callback) {
 
   }
 }
+
+export function attrExists(attr) {
+  if (attr !== undefined && attr !== "" && attr !== null) return true;
+  return false;
+}

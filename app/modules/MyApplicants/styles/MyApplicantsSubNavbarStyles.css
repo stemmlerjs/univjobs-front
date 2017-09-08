@@ -1,0 +1,25 @@
+
+.subNavbarContainer {
+    z-index: 30;
+    background: #f3f3f3;
+    height: 62px;
+    box-shadow: 0 1px 0 rgba(0,0,0,.1);
+    display: flex;
+    align-items: center;
+    position: relative;
+    top: -63px;
+    transition: all 100ms ease-out;
+}
+
+.invisibleSubNavbarContainer {
+    height: 62px;
+}
+
+.active {
+    top: 0px;
+}
+
+.numSelectedApplicants {
+     margin-left: 25px;
+    color: #5396e4;
+}

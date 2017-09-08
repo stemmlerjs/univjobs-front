@@ -41,7 +41,9 @@ const JobDetailsSectionMyPostingsOpen = ({ job,
       <div className={sectionContainerHeader}>
         <div className={sectionTitle}>Details</div>
         <div>
-          <Link to={`/posting/${job.job_id}`}><button className={editViewEnabled ? displayNone : standardButton}>View Public Posting</button></Link>
+          <Link to={`/posting/${job.job_id}`}>
+            <button className={editViewEnabled ? displayNone : standardButton}>View Public Posting</button>
+          </Link>
 
           {
             job.applicants.length == 0
@@ -123,13 +125,15 @@ const JobQuestionSectionMyPostingsOpen = ({ questions, numApplicants }) => {
 
 
 
-const JobApplicantsSummarySectionMyPostingsOpen = ({ maxApplicants, numApplicants }) => {
+const JobApplicantsSummarySectionMyPostingsOpen = ({ maxApplicants, numApplicants, jobId }) => {
   return (
     <div className={sectionContainer}>
       <div className={sectionContainerHeader}>
         <div className={sectionTitleAlt}>APPLICANTS</div>
         <div>
-          <button className={standardButton}><Link to="/myapplicants/em" className={white}>Go to applicants</Link></button>
+          <button className={standardButton}>
+            <Link to={`/myapplicants/new/${jobId}`} className={white}>Go to applicants</Link>
+          </button>
         </div>
       </div>
       <JobApplicantsSummary maxApplicants={maxApplicants} numApplicants={numApplicants}/>
@@ -137,7 +141,9 @@ const JobApplicantsSummarySectionMyPostingsOpen = ({ maxApplicants, numApplicant
   )
 }
 
-const JobNumPositionsSectionMyPostingsOpen = ({ numApplicants, numPositions }) => {
+const JobNumPositionsSectionMyPostingsOpen = ({ hiredApplicants, numPositions }) => {
+  console.log("This job has applicants", hiredApplicants)
+  console.log("This job has max positinos", numPositions)
   return (
     <div className={sectionContainer}>
       <div className={sectionContainerHeader}>
@@ -146,8 +152,12 @@ const JobNumPositionsSectionMyPostingsOpen = ({ numApplicants, numPositions }) =
       <div className={box}>
         {
           numPositions == 1
-            ? `This job has ${numPositions} position. It has not yet been filled.`
-            : `This job has a total ${numPositions} of positions, ${numApplicants} of which are currently filled.`
+            ? hiredApplicants.length == 0
+              ? `This job has 1 position. It has not yet been filled.`
+              : `This single job position has been fulfilled.`
+            : numPositions == hiredApplicants.length 
+              ? `This job has filled all ${numPositions}.`
+              : `This job has a total ${numPositions} of positions, ${hiredApplicants.length} of which are currently filled.`
         }
       </div>
     </div>
@@ -281,8 +291,11 @@ export default function MyPostings ({
                     }
 
                     <div className={bodySectionColumn}>
-                      <JobApplicantsSummarySectionMyPostingsOpen maxApplicants={selectedJob.max_applicants} numApplicants={selectedJob.applicants.length}/>
-                      <JobNumPositionsSectionMyPostingsOpen numApplicants={selectedJob.applicants.length} numPositions={selectedJob.num_positions}/>
+                      <JobApplicantsSummarySectionMyPostingsOpen jobId={selectedJob.job_id} maxApplicants={selectedJob.max_applicants} numApplicants={selectedJob.applicants.length}/>
+                      <JobNumPositionsSectionMyPostingsOpen 
+                        hiredApplicants={selectedJob.applicants_HIRED} 
+                        numPositions={selectedJob.num_positions}
+                      />
                       <JobInvitationsSectionMyPostingsOpen invitedStudents={selectedOpenJobInvites}/>
                       <JobMetricsSectionMyPostingsOpen/>
                       <JobSettingsSectionMyPostingsOpen/>

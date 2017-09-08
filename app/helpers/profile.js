@@ -704,4 +704,65 @@ export const mobileProfileHelper = {
   }
 }
 
+/*
+ * craftSportsString
+ * 
+ * @param {Object} object from student profile containing
+ * all of the sports for a student.
+ */
+
+export function craftSportsString (sportsObject) {
+  var sportsString = "";
+
+  if (sportsObject !== null && sportsObject !== undefined) {
+    var sportsKeys = Object.keys(sportsObject);
+  
+    for (var i = 0; i < sportsKeys.length; i++) {
+      if (i !== sportsKeys.length - 1) {
+        sportsString = sportsString + sportsObject[sportsKeys[i]] + ", "
+      } else {
+        sportsString = sportsString + sportsObject[sportsKeys[i]]
+      }
+    }
+  }
+
+
+  return sportsString;
+}
+
+export function craftClubsString (clubsObject) {
+  var clubsString = "";
+
+  if (clubsObject !== null && clubsObject !== undefined) {
+    var clubKeys = Object.keys(clubsObject);
+  
+    for (var i = 0; i < clubKeys.length; i++) {
+      if (i !== clubKeys.length - 1) {
+        clubsString = clubsString + clubsObject[clubKeys[i]] + ", "
+      } else {
+        clubsString = clubsString + clubsObject[clubKeys[i]]
+      }
+    }
+  }
+
+  return clubsString;
+} 
+
+export function craftLanguagesString (languagesObject) {
+  var languagesString = "";
+
+  if (languagesObject !== null && languagesObject !== undefined) {
+    var languageKeys = Object.keys(languagesObject);
+  
+    for (var i = 0; i < languageKeys.length; i++) {
+      if (i !== languageKeys.length - 1) {
+        languagesString = languagesString + languagesObject[languageKeys[i]] + ", "
+      } else {
+        languagesString = languagesString + languagesObject[languageKeys[i]]
+      }
+    }
+  }
+
+  return languagesString;
+}
 
