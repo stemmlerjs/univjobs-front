@@ -327,6 +327,27 @@ export function changeSelectedJob (newSelectedJob, page) {
       asyncGetInvitesForSelectedJob(dispatch, newSelectedJob)
 
       /*
+       * Also, we're going to need to know how many students have actually
+       * been hired.
+       */
+
+      if (newSelectedJob.applicants.length !== 0) {
+
+        let hiredApplicants = []
+
+        newSelectedJob.applicants.forEach((applicant) => {
+
+          if (applicant.state == "HIRED") {
+            hiredApplicants.push(applicant)
+          }
+
+        })
+
+        newSelectedJob.applicants_HIRED = hiredApplicants;
+        
+      }
+
+      /*
        * Finally, dispatch.
        */
 

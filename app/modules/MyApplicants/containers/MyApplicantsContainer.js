@@ -3,18 +3,6 @@
 /*
  * FINAL THINGS TO DO:
  * 
- * - Student Profile Sidebar
- *   - lay information out nicely
- *   - add the ability to see CONTACT info if the applicant was contacted
- *     - ensure that this information is only returned in the API call if the applicant
- *       was "CONTACTED". Check the main jobs api calls as well and make sure they don't 
- *       include sensitive information.
- *   - add the ability to see Resume if it was included. Also, they need to see that there
- *     wasn't a resume if the student doesn't include it.
- *     (use the student card button style for these, to keep it consistent)
- * 
- * - Hook up the Hire Student button
- *  - needs redux, needs modal, needs backend api work
  * 
  * - Show a loader or something in the modals when we're doing some action and we're waiting for it to fulfill.
  * 
@@ -23,11 +11,6 @@
  *    view each of the applicants that they've hired- there are no actions.
  *  - Also, include a link to CLOSE the job and:
  *      - show MAX_HIRES vs NUM_HIRES + progress on this final page..
- * 
- * - Figure out how to Show current state page better
- * - Figure out colour scheme for the State Nodes
- * - Put state nodes in the Navbar.
- * - Render the default profile picture for students that don't have profile pictures
  */
 
 import React, { Component, PropTypes } from 'react'
@@ -52,6 +35,8 @@ import * as userActionCreators from 'redux/modules/user/user'
 import * as jobActionCreators from 'redux/modules/job/job'
 import * as listActionCreators from 'redux/modules/list/list'
 import * as myApplicantsActionCreators from 'redux/modules/myapplicants/myapplicants'
+
+import { attrExists } from 'helpers/utils'
 
 import { standardButton, standardButtonRed, standardButtonNeutral, rejectModalInnerContainer, modalTextTitle } from '../styles/MyApplicantsStyles.css'
 
@@ -212,6 +197,14 @@ const MyApplicantsContainer = React.createClass({
     this.refs.confirmMultiApplicantContactModal.hide();
   },
 
+  openConfirmMultiApplicantHireModal () {
+    this.refs.confirmMultiApplicantHireModal.show();
+  },
+
+  closeConfirmMultiApplicantHireModal () {
+    this.refs.confirmMultiApplicantHireModal.hide();
+  },
+
   handleRejectApplicants () {
     this.props.rejectApplicants(this.props.selectedJob.job_id, this.props.multiSelectedApplicantIds,
 
@@ -283,7 +276,7 @@ const MyApplicantsContainer = React.createClass({
 
         this.refs.container.error(
           `Something went wrong. Please reload and try again.`,
-          "Action failed",
+          "Action (Contact) failed",
           {
             timeout: 3000
         });
@@ -294,8 +287,123 @@ const MyApplicantsContainer = React.createClass({
     )
   },
 
+  preOpenHireModal () {
+    var numPositionsAvailable;
+    var numCurrentHires;
+    var numSelectedApplicants;
+
+    /*
+     * See if any students have been hired.
+     */
+
+    if (attrExists(this.props.selectedJob.applicants_HIRED)) {
+
+      /*
+       * Students have been hired. We'll only open
+       * the modal to hire these students max_applicants is less than
+       * # of multiSelectedApplicants + applicants_HIRED.
+       */
+
+      numPositionsAvailable = this.props.selectedJob.num_positions;
+      numCurrentHires = this.props.selectedJob.applicants_HIRED.length;
+      numSelectedApplicants = this.props.multiSelectedApplicantIds.length;
+
+      /*
+       * OK. 
+       */
+
+      if (numSelectedApplicants + numCurrentHires <= numPositionsAvailable) {
+        this.openConfirmMultiApplicantHireModal()
+      }
+
+      /*
+       * We can't open the modal. Too many applicants selected for hire.
+       */
+
+      else {
+
+        var message = numPositionsAvailable == 1 ? 'This job only has 1 position available.' : `This job only has ${numPositionsAvailable - numCurrentHires} positions available.`
+        this.refs.container.error(
+          message,
+          "Can't hire this many applicants.",
+          {
+            timeout: 3000
+        });
+
+      }
+
+    }
+
+    /*
+     * There haven't been any students hired yet.
+     * If the # of multiSelectedApplicants is less than the num_positions,
+     * then we'll open the modal
+     */
+
+    else {
+
+      numPositionsAvailable = this.props.selectedJob.num_positions;
+      numSelectedApplicants = this.props.multiSelectedApplicantIds.length;
+
+      if (numSelectedApplicants <= numPositionsAvailable) {
+        this.openConfirmMultiApplicantHireModal()
+      }
+
+      var message = numPositionsAvailable == 1 ? `This job only has 1 position available.` : `This job only has ${numPositionsAvailable} positions available.`
+
+      this.refs.container.error(
+        message,
+        "Can't hire this many applicants.",
+        {
+          timeout: 3000
+      });
+
+    }
+
+  },
+
+  handleHireApplicants () {
+    this.props.hireApplicants(this.props.selectedJob.job_id, this.props.multiSelectedApplicantIds,
+      
+      /*
+       * Success Callback
+       */
+
+      (alteredRowCount) => {
+
+        this.refs.container.success(
+          `You just hired ${alteredRowCount} students for this job. Congrats.`,
+          `Hire success!`,
+          {
+            timeout: 3000
+        });
+        
+        this.reloadDataAfterChange();
+
+        this.closeConfirmMultiApplicantHireModal();
+
+      },
+      
+      /*
+       * Failure Callback 
+       */
+
+      () => {
+
+        this.refs.container.error(
+          `Something went wrong. Please reload and try again.`,
+          "Action (Hire) failed",
+          {
+            timeout: 3000
+        });
+
+        this.closeConfirmMultiApplicantHireModal();
+
+      }
+    )
+  },
+
   render () {
-    console.log(this.props)
     return (
       <div className={pageContainer} >
         <SidebarContainer isMobile={this.props.isMobile} isAStudent={false} 
@@ -376,6 +484,7 @@ const MyApplicantsContainer = React.createClass({
                         }}
                         handleClearSelectedJob={this.props.clearSelectedJob}
                         handleMultiSelectRejectApplicants={this.openConfirmMultiApplicantRejectModal}
+                        handleMultiSelectHireApplicants={this.preOpenHireModal}
                   />
               case "applicants-hired":
                 return <HiredApplicants
@@ -462,6 +571,34 @@ const MyApplicantsContainer = React.createClass({
                     <button 
                       className={standardButtonNeutral} 
                       onClick={this.closeConfirmMultiApplicantContactModal}>Cancel</button>
+                  </div>
+                </div>
+            </SkyLight>
+          </div>
+
+        {
+          /*
+            * ================================================
+            *        Confirm Multi Applicant Hire Modal 
+            * ================================================
+            *
+            * When the user wants to hire multiple applicants.
+            */
+          }
+          
+          <div id="confirm-multi-applicant-hire-modal-wrapper">
+            <SkyLight
+                ref="confirmMultiApplicantHireModal"
+                title="">
+                <div className={rejectModalInnerContainer}>
+                  <div className={modalTextTitle}>Hire {this.props.multiSelectedApplicantIds ? this.props.multiSelectedApplicantIds.length : ''} applicant(s)?</div>
+                  <div>
+                    <button 
+                      className={standardButton} 
+                      onClick={this.handleHireApplicants}>Hire selected</button>
+                    <button 
+                      className={standardButtonNeutral} 
+                      onClick={this.closeConfirmMultiApplicantHireModal}>Cancel</button>
                   </div>
                 </div>
             </SkyLight>

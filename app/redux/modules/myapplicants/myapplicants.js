@@ -1,6 +1,8 @@
 
 import { getJobs } from 'helpers/job'
-import { rejectApplicants as rejectApplicantsHTTP, contactStudents as contactStudentsHTTP } from 'helpers/applicant'
+import { rejectApplicants as rejectApplicantsHTTP, 
+  contactStudents as contactStudentsHTTP,
+  hireStudents as hireStudentsHTTP } from 'helpers/applicant'
 
 /*
  * =============================================
@@ -441,6 +443,86 @@ export function contactApplicants (jobId, applicantIds, successCallback, failure
   }
 }
 
+/*
+ * =============================================
+ *  6. Hire applicants
+ * =============================================
+ */
+
+const HIRING_APPLICANTS = 'HIRING_APPLICANTS'
+const HIRING_APPLICANTS_SUCCESS = "HIRING_APPLICANTS_SUCCESS"
+const HIRING_APPLICANTS_FAILURE = "HIRING_APPLICANTS_FAILURE"
+
+function hireApplicantsSuccess () {
+  return {
+    type: HIRING_APPLICANTS_SUCCESS
+  }
+}
+
+function hireApplicantsFailure () {
+  return {
+    type: HIRING_APPLICANTS_FAILURE
+  }
+}
+
+/*
+ * hireApplicants
+ * 
+ * @desc This redux thunk allows us to hire multiple applicants all at the 
+ * same time by passing in the ids of the applicants and the job id of the
+ * job that the applicants belong to.
+ * 
+ * @param {Number} jobId
+ * @param {Array} applicantIds
+ */
+
+export function hireApplicants (jobId, applicantIds, successCallback, failureCallback) {
+  return function (dispatch) {
+
+    /*
+     * Signal intent
+     */
+
+    dispatch({
+      type: HIRING_APPLICANTS
+    })
+
+    /*
+     * Attempt http call to contact the applicants from this job.
+     */
+
+    hireStudentsHTTP(jobId, applicantIds)
+
+      /*
+       * Successfully hire applicants
+       */
+
+      .then((result) => {
+        console.log("successfully hired these applicants", result)
+
+        var affectedRowCount = result.data.affectedIds.length;
+
+        dispatch(hireApplicantsSuccess())
+
+        successCallback(affectedRowCount);
+        
+      })
+
+      /*
+       * Failed to hire applicants
+       */
+
+      .catch((err) => {
+        console.log(err)
+
+        dispatch(hireApplicantsFailure())
+
+        failureCallback();
+      })
+  }
+}
+
+
 const initialMyApplicantsState = {
   jobs: [],
   selectedJob: {},
@@ -461,11 +543,41 @@ const initialMyApplicantsState = {
 
   isContactingApplicants: false,
   isContactingApplicantsSuccess: false,
-  isContactingApplicantsFailure: false
+  isContactingApplicantsFailure: false,
+
+  isHiringApplicants: false,
+  isHiringApplicantsSuccess: false,
+  isHiringApplicantsFailure: false
 }
 
 export default function myapplicants (state = initialMyApplicantsState, action) {
   switch (action.type) {
+
+    /*
+     * HIRING APPLICANTS
+     */
+
+    case HIRING_APPLICANTS:
+      return {
+        ...state,
+        isHiringApplicants: true,
+        isHiringApplicantsSuccess: false,
+        isHiringApplicantsFailure: false
+      }
+    case HIRING_APPLICANTS_SUCCESS:
+      return {
+        ...state,
+        isHiringApplicants: false,
+        isHiringApplicantsSuccess: true,
+        isHiringApplicantsFailure: false,
+      }
+    case HIRING_APPLICANTS_FAILURE:
+      return {
+        ...state,
+        isHiringApplicants: false,
+        isHiringApplicantsSuccess: false,
+        isHiringApplicantsFailure: true
+      }
 
     /*
      * CONTACTING APPLICANTS

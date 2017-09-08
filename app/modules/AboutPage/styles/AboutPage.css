@@ -286,6 +286,7 @@
     text-overflow: ellipsis;
     transition: all 200ms ease-out;
 }
+
 .seeMoreButton {
     background-color: white;
     border: none;

@@ -70,3 +70,17 @@ export function contactStudents(jobId, studentIds) {
 	})
 }
 
+export function hireStudents(jobId, studentIds) {
+  const accessToken = getAccessToken()
+
+	return axios({
+		method: 'post',
+		url: config.baseUrl + 'applicants/hire/' + sanitize(jobId),
+		headers: {
+			'Authorization':  accessToken
+    },
+    data: {
+      ids: JSON.stringify(studentIds)
+    }
+	})
+}

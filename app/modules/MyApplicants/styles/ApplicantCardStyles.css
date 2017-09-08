@@ -29,6 +29,11 @@
 width: 20%;
 } 
 
+.altApplicantImageContainer {
+    width: 20%;
+        padding: 17px;
+}
+
 .applicantImageContainer img {
     width: 72px;
     height: 72px;
@@ -84,4 +89,19 @@ font-size: 14px;
 
 .multiselectedCard i:hover {
     color: #83b9d9;
+}
+
+.altImageContainer {
+    width:100%;
+    height:100%;
+    background-color: #dddee0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.altImageContainer > i {
+    font-size: 34px;
+    color: #5396e4;
+    text-align: center;
 }

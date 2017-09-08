@@ -11,11 +11,13 @@ import MyApplicantsSubNavbar from './MyApplicantsSubNavbar'
 
 import ApplicantCard from './ApplicantCard'
 import ApplicantSidebar from './ApplicantSidebar'
+import StateNodes from './StateNodes'
 
 import { rootComponentContainer } from 'sharedStyles/sharedComponentStyles.css'
 
 import { applicantsPageBody, applicantsBodyLeft, applicantsBodyRight, headerTextStyle1,
-  applicantCardsContainerDiv, applicantPageInstructions, returnButton, returnButtonContainer } from '../styles/MyApplicantsStyles.css'
+  applicantCardsContainerDiv, applicantPageInstructions, returnButton, returnButtonContainer,
+  stateNodesComponentContainer, pageTitleContainer, pageTitle } from '../styles/MyApplicantsStyles.css'
 import {  } from '../styles/NewApplicantsStyles.css'
 
 import { Link } from 'react-router'
@@ -68,6 +70,7 @@ export default function NewApplicants ({ jobs, selectedJob,
         handleMultiSelectDeselectAll={handleMultiSelectDeselectAll}
         handleMultiSelectRejectApplicants={handleMultiSelectRejectApplicants}
         handleMultiSelectAdvanceApplicants={handleMultiSelectAdvanceApplicants}
+        multiSelectedApplicantIds={multiSelectedApplicantIds}
         page={page}/>
 
       {
@@ -97,6 +100,19 @@ export default function NewApplicants ({ jobs, selectedJob,
              * there can be a thing that say "Show me how" that opens it up.
              */
           }
+
+          <div className={pageTitleContainer}>
+            <div className={pageTitle}>New Applicants</div>
+            <div className={stateNodesComponentContainer}>
+              <StateNodes 
+                initialApplicants={selectedJob.applicants_INITIAL} 
+                pooledApplicants={selectedJob.applicants_POOLED} 
+                hiredApplicants={selectedJob.applicants_HIRED}
+                handleChangeSelectedJob={handleChangeSelectedJob}
+                job={selectedJob}
+              />
+            </div>
+          </div>
 
           {
             selectedJob.applicants_INITIAL 

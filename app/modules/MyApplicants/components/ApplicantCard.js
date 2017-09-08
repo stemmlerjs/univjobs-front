@@ -7,8 +7,10 @@
 import React, { PropTypes } from 'react'
 import ReactTooltip from 'react-tooltip'
 
+import { attrExists } from 'helpers/utils'
+
 import { applicantCardContainer, applicantImageContainer, applicantDetailsContainer, applicantNameText, applicantButtonCorner,
-  applicantSchoolText, applicantMajorText, selectedCard, multiselectedCard } from '../styles/ApplicantCardStyles.css'
+  applicantSchoolText, applicantMajorText, selectedCard, multiselectedCard, altImageContainer, altApplicantImageContainer } from '../styles/ApplicantCardStyles.css'
 
 import config from 'config'
 
@@ -38,9 +40,13 @@ export default function ApplicantCard ({
           ? `${applicantCardContainer} ${multiselectedCard}`
           : applicantCardContainer
       }>
-      <div className={applicantImageContainer}>
-        <img src={`${config.mediaUrl}avatar/${applicant.photo_url}`}/>
-      </div>
+      
+        {
+          attrExists(applicant.photo_url)
+            ? <div className={applicantImageContainer}><img src={`${config.mediaUrl}avatar/${applicant.photo_url}`}/></div>
+            : <div className={altApplicantImageContainer}><div className={altImageContainer}><i className={'fa fa-user'} aria-hidden="true"></i></div></div>
+        }
+        
       <div className={applicantDetailsContainer}>
         <div className={applicantNameText}>{ `${applicant.user_firstName} ${applicant.user_lastName}` }</div>
         <div className={applicantSchoolText}>{`${applicant.school_name} ${new Date(applicant.grad_date).getFullYear()}`}</div>
