@@ -70,6 +70,14 @@ export function getAllJobsMyApplicants (currentJobId) {
         var applicants = result.data.applicants;
         var invites = result.data.invites
 
+        /*
+         * Only show active jobs
+         */
+
+        jobs = jobs.filter((job) => {
+          if (job.active == 1) return job
+        })
+
         for(var i = 0; i < jobs.length; i++) {
 
          /*
