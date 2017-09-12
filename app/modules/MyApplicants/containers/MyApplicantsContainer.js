@@ -403,6 +403,20 @@ const MyApplicantsContainer = React.createClass({
     )
   },
 
+  /*
+   * selectAndContactApplicant
+   * 
+   * This function:
+   * - 1. Multi-selects the current
+   * - 2. 
+   */
+
+  selectAndContactApplicant () {
+    var selectedApplicant = this.props.selectedApplicant;
+
+    console.log("The selected applicant is: ", selectedApplicant)
+  },
+
   render () {
     return (
       <div className={pageContainer} >
@@ -453,6 +467,7 @@ const MyApplicantsContainer = React.createClass({
                         handleClearSelectedJob={this.props.clearSelectedJob}
                         handleMultiSelectRejectApplicants={this.openConfirmMultiApplicantRejectModal}
                         handleMultiSelectAdvanceApplicants={this.openConfirmMultiApplicantContactModal}
+                        handleSelectAndContactApplicant={this.selectAndContactApplicant}
                         />
               case "applicants-pool":
                 return <PooledApplicants

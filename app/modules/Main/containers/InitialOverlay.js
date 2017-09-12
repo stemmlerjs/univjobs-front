@@ -92,7 +92,7 @@ const InitialOverlay = React.createClass({
       *    to the appropriate page.
       */
 
-      if (window.location.href === "https://univjobs.ca/") {
+      if (window.location.href === "https://univjobs.ca/" || window.location.href === "https://www.univjobs.ca/") {
         console.log('[Univjobs]: At main page. Redirecting to /join. Prod version.')
         window.location.assign('/join')
       }
@@ -101,7 +101,7 @@ const InitialOverlay = React.createClass({
       * Moving out of using HashHistory, we have to ensure that the old hash urls still
       * work and don't break out app.
       * 
-      * Rewrite the urls to the new BrowserHistory urls.
+      * Rewrite the urls to the new BrowserHistory urls
       */
 
       else if (window.location.href.indexOf('/#') !== -1) {
@@ -132,6 +132,7 @@ const InitialOverlay = React.createClass({
         console.log('[Univjobs]: At main page. Redirecting to #/join. Dev version.')
         window.location.assign('#/join')
       }
+      
     }
 
     

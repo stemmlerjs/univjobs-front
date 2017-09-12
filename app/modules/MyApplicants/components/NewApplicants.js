@@ -42,9 +42,9 @@ export default function NewApplicants ({ jobs, selectedJob,
   handleMultiSelectDeselectAll,
   handleMultiSelectAll,
   handleMultiSelectRejectApplicants,
-  handleMultiSelectAdvanceApplicants
+  handleMultiSelectAdvanceApplicants,
+  handleSelectAndContactApplicant
 }) {
-    console.log("selected jpob", selectedJob);
   return (
     <div className={rootComponentContainer}>
       
@@ -161,7 +161,8 @@ export default function NewApplicants ({ jobs, selectedJob,
           lists={lists} 
           selectedApplicant={selectedApplicant} 
           questions={selectedJob.questions}
-          multiSelectViewActive={multiSelectViewActive}/>
+          multiSelectViewActive={multiSelectViewActive}
+          handleSelectAndContactApplicant={handleSelectAndContactApplicant}/>
 
       </div>
     </div>

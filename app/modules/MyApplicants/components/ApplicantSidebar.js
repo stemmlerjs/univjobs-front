@@ -24,7 +24,11 @@ import StudentProfileIcons from 'modules/SharedComponents/components/StudentProf
 import config from 'config'
 import moment from 'moment'
 
-export default function ApplicantSidebar ({ selectedApplicant, lists, questions, multiSelectViewActive }) {
+export default function ApplicantSidebar ({ selectedApplicant, lists, questions, 
+  multiSelectViewActive, 
+  page, 
+  handleSelectAndContactApplicant 
+}) {
   return (
     <div className={selectedApplicant.job_id 
       ? multiSelectViewActive
@@ -48,6 +52,7 @@ export default function ApplicantSidebar ({ selectedApplicant, lists, questions,
       <div className={sidebarContainer}>
         <div className={headerContainer}>
           <div className={imgContainer}>
+
             {
               attrExists(selectedApplicant.photo_url)
                 ? <img src={config.mediaUrl + "avatar/" + selectedApplicant.photo_url}/>
@@ -81,8 +86,8 @@ export default function ApplicantSidebar ({ selectedApplicant, lists, questions,
               ? <div className={sectionContainer}>
                   <div className={contactSectionOmmitted}>Email: { selectedApplicant.preferred_email }</div>
                 </div>
-              : <div className={sectionContainer}>
-                  <div className={contactSectionOmmitted}>Omitted until you express intent to Contact this applicant.</div>
+              : <div onClick={handleSelectAndContactApplicant} className={`${sectionContainer}`}>
+                  <div className={contactSectionOmmitted}>Click to acquire contact information.</div>
                 </div>
           }
           
