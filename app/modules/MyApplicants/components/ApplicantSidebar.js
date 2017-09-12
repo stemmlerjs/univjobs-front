@@ -15,7 +15,7 @@ import { craftSportsString, craftClubsString, craftLanguagesString } from 'helpe
 import { applicantSidebarContainer, hide, sidebarContainer, headerContainer, imgContainer,
   headerDetailsContainer, bodyContainer, profileNameText, programNameText, schoolText, studentDetailHeader,
   studentDetailText, questionsOverview, divider, answerText, multiSelectActive, sectionHeader,
-  contactSectionOmmitted, sectionContainer, altImageContainer } from '../styles/ApplicantSidebarStyles.css'
+  contactSectionOmmitted, sectionContainer, altImageContainer, hiredSectionContactDetails, lastUpdated } from '../styles/ApplicantSidebarStyles.css'
 
 import { univjobsButton, univjobsButtonInactive, whiteTxt } from 'sharedStyles/widgets.css'
 
@@ -27,8 +27,10 @@ import moment from 'moment'
 export default function ApplicantSidebar ({ selectedApplicant, lists, questions, 
   multiSelectViewActive, 
   page, 
-  handleSelectAndContactApplicant 
+  handleSelectAndContactApplicant,
+  handleSelectAndHireApplicant
 }) {
+  console.log("Selected applicant yee", selectedApplicant)
   return (
     <div className={selectedApplicant.job_id 
       ? multiSelectViewActive
@@ -82,13 +84,20 @@ export default function ApplicantSidebar ({ selectedApplicant, lists, questions,
           {/* Contact Details (omitted on the first state) */}
           <div className={sectionHeader}>Contact Details</div>
           {
-            attrExists(selectedApplicant.preferred_email) 
-              ? <div className={sectionContainer}>
-                  <div className={contactSectionOmmitted}>Email: { selectedApplicant.preferred_email }</div>
-                </div>
-              : <div onClick={handleSelectAndContactApplicant} className={`${sectionContainer}`}>
-                  <div className={contactSectionOmmitted}>Click to acquire contact information.</div>
-                </div>
+            page == "applicants-pool"
+              ? <div onClick={handleSelectAndHireApplicant} className={sectionContainer}>
+                    <div className={hiredSectionContactDetails}>Email: { selectedApplicant.preferred_email }</div>
+                    <div className={contactSectionOmmitted}>Click to hire.</div>
+                  </div>
+          : page == "applicants-hired"
+                ? <div onClick={handleSelectAndHireApplicant} className={sectionContainer}>
+                    <div className={hiredSectionContactDetails}>Email: { selectedApplicant.preferred_email }</div>
+                  </div>
+          : page == "applicants-new"
+                ? <div onClick={handleSelectAndContactApplicant} className={`${sectionContainer} `}>
+                    <div className={contactSectionOmmitted}>Click to acquire contact information.</div>
+                  </div>
+              : ''
           }
           
           
@@ -181,6 +190,17 @@ export default function ApplicantSidebar ({ selectedApplicant, lists, questions,
 
           
         </div>
+
+        {
+          page == "applicants-new"
+            ? <div className={lastUpdated}>{`${selectedApplicant.user_firstName} applied ${moment(selectedApplicant.applicant_created_at).fromNow()}`}</div>
+            : page == "applicants-pool"
+              ? <div className={lastUpdated}>{`You signaled intent to contact ${selectedApplicant.user_firstName} ${moment(selectedApplicant.applicant_updated_at).fromNow()}`}</div>
+              : page == "applicants-hired"
+                ? <div className={lastUpdated}>{`You hired ${selectedApplicant.user_firstName} ${moment(selectedApplicant.applicant_updated_at).fromNow()}`}</div>
+                : ''
+        }
+        
       </div>
 
 

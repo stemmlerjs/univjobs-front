@@ -17,7 +17,7 @@ import { rootComponentContainer } from 'sharedStyles/sharedComponentStyles.css'
 
 import { applicantsPageBody, applicantsBodyLeft, applicantsBodyRight, headerTextStyle1,
   applicantCardsContainerDiv, applicantPageInstructions, returnButton, returnButtonContainer,
-  pageTitleContainer, pageTitle, stateNodesComponentContainer } from '../styles/MyApplicantsStyles.css'
+  pageTitleContainer, pageTitle, stateNodesComponentContainer, leftBody } from '../styles/MyApplicantsStyles.css'
 import {  } from '../styles/NewApplicantsStyles.css'
 
 import { Link } from 'react-router'
@@ -102,13 +102,14 @@ export default function HiredApplicants ({ jobs, selectedJob,
                 hiredApplicants={selectedJob.applicants_HIRED}
                 handleChangeSelectedJob={handleChangeSelectedJob}
                 job={selectedJob}
+                page={page}
               />
             </div>
           </div>
 
           {
             selectedJob.applicants_HIRED 
-              ? <div>
+              ? <div className={leftBody}>
                   <div className={headerTextStyle1}>Showing {selectedJob.applicants_HIRED.length} of {selectedJob.applicants_HIRED.length} hired applicants.</div>
                   <div className={applicantPageInstructions}>Review your hired applicants.</div>
 
@@ -131,7 +132,7 @@ export default function HiredApplicants ({ jobs, selectedJob,
                     }
                   </div>
               </div>
-            : <div>
+            : <div className={leftBody}>
                 <div className={headerTextStyle1}>No hired applicants yet.</div>
                 <div className={applicantPageInstructions}>Hire a student by moving an applicant from the Potential Hires pool to Hired.</div>
                 <div className={returnButtonContainer}>
@@ -153,8 +154,9 @@ export default function HiredApplicants ({ jobs, selectedJob,
           lists={lists} 
           selectedApplicant={selectedApplicant} 
           questions={selectedJob.questions}
-          multiSelectViewActive={multiSelectViewActive}/>
-
+          multiSelectViewActive={multiSelectViewActive}
+          page={page}/>
+          
       </div>
     </div>
   )

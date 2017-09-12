@@ -28,7 +28,7 @@ export default function BenefitsSection () {
 
         <div className={`${weHelpYouItem} ${benefitItem}`}>
           <img className={`${helpItemImage} ${benefitItemImage}`} src="/assets/svg/school.svg"/>
-          <div className={benefitItemText}>Post one job to multiple schools</div>
+          <div className={benefitItemText}>Post jobs to multiple schools</div>
         </div>
 
       </div>

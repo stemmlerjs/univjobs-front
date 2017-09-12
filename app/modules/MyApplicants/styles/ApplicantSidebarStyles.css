@@ -131,9 +131,35 @@ border-top: solid 1px #d5d4d4;
     padding: 8px;
     text-align: center;
     color: #5396e4;
+    cursor:pointer;
+}
+
+.hiredSectionContactDetails {
+        background: #ffffff;
+    border-radius: 2px;
+    padding: 8px;
+    text-align: center;
+    color: #5396e4;
+    cursor: pointer;
+    border: #5396e4 solid 3px;
+        margin-bottom: 12px;
+}
+
+.contactSectionOmmitted:hover {
+    background: #f3f3f3;
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
 }
 
 .sectionContainer {
     margin-bottom: 44px;
     margin-top: 8px;
+}
+
+.lastUpdated {
+    font-size: 14px;
+    font-weight: 400;
+    color: grey;
+    text-align: right;
+    margin-top: 15px;
+    margin-right: 20px;
 }

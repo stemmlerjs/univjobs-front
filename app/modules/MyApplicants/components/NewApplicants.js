@@ -17,7 +17,7 @@ import { rootComponentContainer } from 'sharedStyles/sharedComponentStyles.css'
 
 import { applicantsPageBody, applicantsBodyLeft, applicantsBodyRight, headerTextStyle1,
   applicantCardsContainerDiv, applicantPageInstructions, returnButton, returnButtonContainer,
-  stateNodesComponentContainer, pageTitleContainer, pageTitle } from '../styles/MyApplicantsStyles.css'
+  stateNodesComponentContainer, pageTitleContainer, pageTitle, leftBody } from '../styles/MyApplicantsStyles.css'
 import {  } from '../styles/NewApplicantsStyles.css'
 
 import { Link } from 'react-router'
@@ -43,7 +43,9 @@ export default function NewApplicants ({ jobs, selectedJob,
   handleMultiSelectAll,
   handleMultiSelectRejectApplicants,
   handleMultiSelectAdvanceApplicants,
-  handleSelectAndContactApplicant
+  handleSelectAndContactApplicant,
+
+  isContactingApplicantsSuccess
 }) {
   return (
     <div className={rootComponentContainer}>
@@ -110,13 +112,15 @@ export default function NewApplicants ({ jobs, selectedJob,
                 hiredApplicants={selectedJob.applicants_HIRED}
                 handleChangeSelectedJob={handleChangeSelectedJob}
                 job={selectedJob}
+                page={page}
+                isContactingApplicantsSuccess={isContactingApplicantsSuccess}
               />
             </div>
           </div>
 
           {
             selectedJob.applicants_INITIAL 
-              ? <div>
+              ? <div className={leftBody}>
                   <div className={headerTextStyle1}>Showing {selectedJob.applicants_INITIAL.length} of {selectedJob.applicants_INITIAL.length} new applicants.</div>
                   <div className={applicantPageInstructions}>Browse new applicants and move candidates you like to the Potential Hires Pool.</div>
 
@@ -139,7 +143,7 @@ export default function NewApplicants ({ jobs, selectedJob,
                     }
                   </div>
               </div>
-            : <div>
+            : <div className={leftBody}>
                 <div className={headerTextStyle1}>No new applicants yet.</div>
                 <div className={applicantPageInstructions}>When someone applies to your posting, you'll see them here first.</div>
                 <div className={returnButtonContainer}>
@@ -162,7 +166,8 @@ export default function NewApplicants ({ jobs, selectedJob,
           selectedApplicant={selectedApplicant} 
           questions={selectedJob.questions}
           multiSelectViewActive={multiSelectViewActive}
-          handleSelectAndContactApplicant={handleSelectAndContactApplicant}/>
+          handleSelectAndContactApplicant={handleSelectAndContactApplicant}
+          page={page}/>
 
       </div>
     </div>

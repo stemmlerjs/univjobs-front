@@ -18,7 +18,7 @@ import { rootComponentContainer } from 'sharedStyles/sharedComponentStyles.css'
 
 import { applicantsPageBody, applicantsBodyLeft, applicantsBodyRight, headerTextStyle1,
   applicantCardsContainerDiv, applicantPageInstructions, returnButton, returnButtonContainer, 
-  stateNodesComponentContainer, pageTitleContainer, pageTitle } from '../styles/MyApplicantsStyles.css'
+  stateNodesComponentContainer, pageTitleContainer, pageTitle, leftBody } from '../styles/MyApplicantsStyles.css'
 
 import { Link } from 'react-router'
 
@@ -42,7 +42,10 @@ export default function PooledApplicants ({ jobs, selectedJob,
   handleMultiSelectDeselectAll,
   handleMultiSelectAll,
   handleMultiSelectRejectApplicants,
-  handleMultiSelectHireApplicants
+  handleMultiSelectHireApplicants,
+  handleSelectAndHireApplicant,
+
+  isHiringApplicantsSuccess
 }) {
   return (
     <div className={rootComponentContainer}>
@@ -101,7 +104,7 @@ export default function PooledApplicants ({ jobs, selectedJob,
           }
 
           <div className={pageTitleContainer}>
-            <div className={pageTitle}>Potential Hires</div>
+            <div className={pageTitle}>Contacted Applicants</div>
             <div className={stateNodesComponentContainer}>
               <StateNodes 
                 initialApplicants={selectedJob.applicants_INITIAL} 
@@ -109,15 +112,17 @@ export default function PooledApplicants ({ jobs, selectedJob,
                 hiredApplicants={selectedJob.applicants_HIRED}
                 handleChangeSelectedJob={handleChangeSelectedJob}
                 job={selectedJob}
+                page={page}
+                isHiringApplicantsSuccess={isHiringApplicantsSuccess}
               />
             </div>
           </div>
 
           {
             selectedJob.applicants_POOLED 
-              ? <div>
-                  <div className={headerTextStyle1}>Showing {selectedJob.applicants_POOLED.length} of {selectedJob.applicants_POOLED.length} potential hires.</div>
-                  <div className={applicantPageInstructions}>Sort through your potential hires and choose the right hires for the job!</div>
+              ? <div className={leftBody}>
+                  <div className={headerTextStyle1}>Showing {selectedJob.applicants_POOLED.length} of {selectedJob.applicants_POOLED.length} contacted applicants/potential hires.</div>
+                  <div className={applicantPageInstructions}>Sort through your applicants and choose the right hires for the job!</div>
 
                   <div className={applicantCardsContainerDiv}>
                     {
@@ -132,13 +137,13 @@ export default function PooledApplicants ({ jobs, selectedJob,
                             handleViewApplicantDetails={handleViewApplicantDetails}
                             handleMultiSelectAddApplicant={handleMultiSelectAddApplicant}
                             handleMultiSelectRemoveApplicant={handleMultiSelectRemoveApplicant}
-                            />
+                          />
                         )
                       })
                     }
                   </div>
               </div>
-            : <div>
+            : <div className={leftBody}>
                 <div className={headerTextStyle1}>No applicants in the Potential Hires pool.</div>
                 <div className={applicantPageInstructions}>When you want to contact a student, move them into here to contact them.</div>
                 <div className={returnButtonContainer}>
@@ -160,8 +165,10 @@ export default function PooledApplicants ({ jobs, selectedJob,
           lists={lists} 
           selectedApplicant={selectedApplicant} 
           questions={selectedJob.questions}
-          multiSelectViewActive={multiSelectViewActive}/>
-
+          multiSelectViewActive={multiSelectViewActive}
+          handleSelectAndHireApplicant={handleSelectAndHireApplicant}
+          page={page}/>
+          
       </div>
     </div>
   )

@@ -92,12 +92,13 @@ font-size: 14px;
 }
 
 .altImageContainer {
-    width:100%;
-    height:100%;
     background-color: #dddee0;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    height: 72px;
+    margin: 0 auto;
+    width: 72px;
 }
 
 .altImageContainer > i {

@@ -39,8 +39,9 @@
 }
 
 .applicantPageInstructions {
-       font-weight: 500;
-    margin-top: 6px; 
+    font-weight: 500;
+    margin-top: 6px;
+    text-align: left;
 }
 
 /*
@@ -162,9 +163,9 @@
 }
 
 .pageTitleContainer {
-        display: flex;
+    display: flex;
     width: 73%;
-    justify-content: center;
+    justify-content: left;
     flex-direction: row;
     align-items: center;
     margin-bottom: 18px;
@@ -174,4 +175,9 @@
     font-size: 41px;
     font-weight: 100;
     width: 50%;
+    text-align: left;
+}
+
+.leftBody {
+        width: 73%;
 }

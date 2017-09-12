@@ -349,14 +349,16 @@ const MyApplicantsContainer = React.createClass({
         this.openConfirmMultiApplicantHireModal()
       }
 
-      var message = numPositionsAvailable == 1 ? `This job only has 1 position available.` : `This job only has ${numPositionsAvailable} positions available.`
+      else {
+        var message = numPositionsAvailable == 1 ? `This job only has 1 position available.` : `This job only has ${numPositionsAvailable} positions available.`
 
-      this.refs.container.error(
-        message,
-        "Can't hire this many applicants.",
-        {
-          timeout: 3000
-      });
+        this.refs.container.error(
+          message,
+          "Can't hire this many applicants.",
+          {
+            timeout: 3000
+        });
+      }
 
     }
 
@@ -407,14 +409,22 @@ const MyApplicantsContainer = React.createClass({
    * selectAndContactApplicant
    * 
    * This function:
-   * - 1. Multi-selects the current
-   * - 2. 
+   * - 1. Multi-selects the current applicant
+   * - 2. opens the modal with this applicant
    */
 
   selectAndContactApplicant () {
     var selectedApplicant = this.props.selectedApplicant;
+    this.props.multiSelectDeselectAll();
+    this.props.multiSelectAdd(selectedApplicant.student_id);
+    this.openConfirmMultiApplicantContactModal();
+  },
 
-    console.log("The selected applicant is: ", selectedApplicant)
+  selectAndHireApplicant () {
+    var selectedApplicant = this.props.selectedApplicant;
+    this.props.multiSelectDeselectAll();
+    this.props.multiSelectAdd(selectedApplicant.student_id);
+    this.preOpenHireModal();
   },
 
   render () {
@@ -468,6 +478,8 @@ const MyApplicantsContainer = React.createClass({
                         handleMultiSelectRejectApplicants={this.openConfirmMultiApplicantRejectModal}
                         handleMultiSelectAdvanceApplicants={this.openConfirmMultiApplicantContactModal}
                         handleSelectAndContactApplicant={this.selectAndContactApplicant}
+
+                        isContactingApplicantsSuccess={this.props.isContactingApplicantsSuccess}
                         />
               case "applicants-pool":
                 return <PooledApplicants
@@ -500,6 +512,8 @@ const MyApplicantsContainer = React.createClass({
                         handleClearSelectedJob={this.props.clearSelectedJob}
                         handleMultiSelectRejectApplicants={this.openConfirmMultiApplicantRejectModal}
                         handleMultiSelectHireApplicants={this.preOpenHireModal}
+                        handleSelectAndHireApplicant={this.selectAndHireApplicant}
+                        isHiringApplicantsSuccess={this.props.isHiringApplicantsSuccess}
                   />
               case "applicants-hired":
                 return <HiredApplicants
@@ -649,11 +663,18 @@ function mapStateToProps({user, job, list, profile, myapplicants}) {
     multiSelectedApplicantIds: myapplicants.multiSelectedApplicantIds ? myapplicants.multiSelectedApplicantIds : [],
     jobSelectDropdownIsOpen: myapplicants.jobSelectDropdownIsOpen ? myapplicants.jobSelectDropdownIsOpen : false,
 
+    
+    isContactingApplicants: myapplicants.isContactingApplicants ? myapplicants.isContactingApplicants :  false,
+    isContactingApplicantsSuccess: myapplicants.isContactingApplicantsSuccess ? myapplicants.isContactingApplicantsSuccess: false,
+    isContactingApplicantsFailure: myapplicants.isContactingApplicantsFailure ? myapplicants.isContactingApplicantsFailure : false,
+
     isRejectingApplicants: myapplicants.isRejectingApplicants ? myapplicants.isRejectingApplicants : false,
     isRejectingApplicantsSuccess: myapplicants.isRejectingApplicantsSuccess ? myapplicants.isRejectingApplicantsSuccess : false,
     isRejectingApplicantsFailure: myapplicants.isRejectingApplicantsFailure ? myapplicants.isRejectingApplicantsFailure : false,
     
-    
+    isHiringApplicants: myapplicants.isHiringApplicants ? myapplicants.isHiringApplicants : false,
+    isHiringApplicantsSuccess: myapplicants.isHiringApplicantsSuccess ? myapplicants.isHiringApplicantsSuccess : false,
+    isHiringApplicantsFailure:  myapplicants.isHiringApplicantsFailure ? myapplicants.isHiringApplicantsFailure : false
   }
 }
 
