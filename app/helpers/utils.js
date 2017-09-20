@@ -68,19 +68,58 @@ export function validateResetPasswords (password, confirmPassword) {
     }
 }
 
-export function validateStudentEmail(email, callback) {
+export function validateStudentEmail(email, schools, callback) {
   // Strip spaces and make lowercase
   email = email.replace(/^\s+|\s+$/g, '').toLowerCase()
 
   var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   
+  /*
+   * Ensure the user entered an email address.
+   */
+
   if(!re.test(email)){
     callback(false, "Please enter your school email address.")
-  } else if (!/@sheridancollege.ca\s*$/.test(email)) {
-     callback(false, "Sorry, we are only currently available to Sheridan College students. Please contact us at contact@univjobs.ca if you'd like us to extend access to your institution.")
-  } else {
-    callback(true)
+  } 
+
+  /*
+   * Next, ensure that the user's email is one of the 
+   * emails that we're open to.
+   */
+
+  else {
+
+    /*
+     * School is active
+     */
+
+    if (isSchoolAdded()) {
+      callback(true)
+    }
+
+    /*
+     * Not one of the schools we support yet.
+     */
+
+    else {
+      callback(false, "Sorry, we are only currently available to certain schools. Please contact us at contact@univjobs.ca if you'd like us to extend access to your institution.")
+    }
   }
+
+  function isSchoolAdded () {
+
+    var isFound = false;
+
+    for (var i = 0; i < schools.length; i++) {
+      if (email.indexOf(schools[i].email_suffix) !== -1) {
+        isFound = true;
+      }
+    }
+
+    return isFound;
+
+  }
+
 }
 
 export function validateEmployerEmail(email) {

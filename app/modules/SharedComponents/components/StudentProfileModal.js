@@ -25,7 +25,7 @@ import { altImageContainer } from '../styles/StudentCard.css'
 
 const StudentProfileModal = ({ pictureUrl, name, major, sportsString, languagesString,
   schoolName, hometown, hasCar, clubsString, gradDate, lists, gpa, funFact, hobbies,
-  handleOpenInviteStudentModal, studentObj, recentCompanyName, recentCompanyPosition, 
+  handleOpenInviteStudentModal, studentObj, recentCompanyName, recentCompanyPosition,  program,
   
   isDashboardCard, resumeUrl, questions, answers, isContacting, preferredEmail,
   isHiring,
@@ -53,7 +53,7 @@ const StudentProfileModal = ({ pictureUrl, name, major, sportsString, languagesS
           </div>
           <div className={stProfileNameAndSchool}>
             <div className={stProfileName}>{name}</div>
-            <div className={stProfileProgram}>{lists.majors[major]}</div>
+            <div className={stProfileProgram}>{lists.programsObj[program]}</div>
             <div className={stProfileGrad}>{schoolName} {gradDate.getFullYear()}</div>
           </div>
         </div>

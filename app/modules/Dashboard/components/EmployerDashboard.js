@@ -183,9 +183,9 @@ window.students = students;
                     languages={student.languages}
                     clubs={student.clubs}
                     sports={student.sports}
-                    major={lists.majors[student.major]
-                      ? lists.majors[student.major].length > 35 ? lists.majors[student.major].substring(0,35) + "..." : lists.majors[student.major]
-                      : lists.majors[student.major]
+                    program={lists.programsObj[student.program]
+                      ? lists.programsObj[student.program].length > 35 ? lists.programsObj[student.program].substring(0,35) + "..." : lists.programsObj[student.program]
+                      : lists.programsObj[student.program]
                     }
                     gpa={student.gpa}
                     gradDate={new Date(student.grad_date)}

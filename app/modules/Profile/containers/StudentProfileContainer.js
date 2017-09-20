@@ -993,6 +993,12 @@ const StudentProfileContainer = React.createClass({
                 graduationDate={this.props.graduationDate}
                 major={this.props.major}
                 majorsList={this.props.majorsList}
+
+                programs={this.props.programs.filter((program) => {
+                  if (this.props.schoolId == program.school_id) return program
+                })}
+                program={this.props.program}
+                
                 gpa={this.props.gpa}
                 personalEmail={this.props.personalEmail}
                 gender={this.props.gender}
@@ -1286,6 +1292,9 @@ function mapStateToProps({user, profile, list, feedback}) {
         gpaToggle: false,
     },
     error: profile.error ? profile.error : '',
+    programs: list.programs ? list.programs : [],
+    program: profile.studentProfile.program ? profile.studentProfile.program : '',
+    schoolId: profile.studentProfile.schoolId ? profile.studentProfile.schoolId : '',
     submitSuccess: profile.submitSuccess ? profile.submitSuccess : false,
     isSubmittingForm: profile.isSubmittingForm ? profile.isSubmittingForm : false,
     userProfileAdvicePresented: profile.userProfileAdvicePresented ? profile.userProfileAdvicePresented : false,

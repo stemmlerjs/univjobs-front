@@ -407,6 +407,7 @@ const EmployerDashboardContainer = React.createClass({
                       sportsString={this.props.studentProfileModal.student.sportsString}
                       languagesString={this.props.studentProfileModal.student.languagesString}
                       major={this.props.studentProfileModal.student.major}
+                      program={this.props.studentProfileModal.student.program}
                       gpa={this.props.studentProfileModal.student.gpa}
                       gradDate={new Date(this.props.studentProfileModal.student.grad_date)}
                       schoolName={this.props.studentProfileModal.student.school_name}

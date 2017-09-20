@@ -25,7 +25,8 @@ export default function ApplicantCard ({
     handleMultiSelectAddApplicant,
     handleMultiSelectRemoveApplicant
   }) {
-  console.log("applicant", applicant)
+  console.log("PROGRAM OBJE", lists.programsObj)
+  console.log("PROGRAM", applicant.program)
   return (
     <div 
       onClick={(e) => {
@@ -50,7 +51,13 @@ export default function ApplicantCard ({
       <div className={applicantDetailsContainer}>
         <div className={applicantNameText}>{ `${applicant.user_firstName} ${applicant.user_lastName}` }</div>
         <div className={applicantSchoolText}>{`${applicant.school_name} ${new Date(applicant.grad_date).getFullYear()}`}</div>
-        <div className={applicantMajorText}>{lists.majors[applicant.major]}</div>
+        <div className={applicantMajorText}>{
+            lists.programsObj
+              ? lists.programsObj[applicant.program]
+                ? lists.programsObj[applicant.program].length > 35 ? lists.programsObj[applicant.program].substring(0,35) + "..." : lists.programsObj[applicant.program]
+                : lists.programsObj[applicant.program]
+              : ''
+          }</div>
       </div>
       <div className={applicantButtonCorner}>
         <i onClick={

@@ -93,6 +93,7 @@ export function getAllStaticLists () {
         var emailPreferences = {}
         var jobTypes = {}
         var studentStatus = {}
+        var programsObj = {}
 
        /*
         * Some of these, we want to keep as arrays.
@@ -140,6 +141,10 @@ export function getAllStaticLists () {
         lists.studentStatus.forEach((sstatus) => {
           studentStatus[sstatus.id] = sstatus.status_text
         })
+        
+        lists.programs.forEach((program) => {
+          programsObj[program.id] = program.name
+        })
 
        /*
         * Add the object lists to the dispatch object.
@@ -152,6 +157,7 @@ export function getAllStaticLists () {
         lists.emailPref = emailPreferences
         lists.jobTypes = jobTypes
         lists.studentStatus = studentStatus
+        lists.programsObj = programsObj
 
        /*
         * Add the array lists to the dispatch object.
@@ -549,10 +555,12 @@ const initialState = {
   emailPreferences: [],
   languages: [],
   majors: [],
+  programs: [],
   studentStatus: [],
   sports: [],
   schoolClubs: [],
   jobTypes: [],
+  schools: [],
   isFetching: false,
   error: ''
 }
@@ -585,6 +593,8 @@ export default function list (state = initialState, action) {
         studentStatus: action.lists.studentStatus,
         jobTypes: action.lists.jobTypes,
         emailPreferences: action.lists.emailPref,
+        programs: action.lists.programs,
+        programsObj: action.lists.programsObj,
 
        /*
         * These lists (which have the same data as above) are stored
@@ -598,6 +608,7 @@ export default function list (state = initialState, action) {
         majorsArray: action.lists.majorsArray,
         gendersArray: action.lists.gendersArray,
         studentStatusArray: action.lists.studentStatusArray,
+        schools: action.lists.schools,
         isFetching: false
       }
     case LIST_GET_ALL_STATIC_LISTS_FAILURE:

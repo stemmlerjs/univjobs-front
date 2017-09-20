@@ -70,12 +70,12 @@ export function submitEmployerFormError(error) {
   }
 }
 
-export function submitStudentSignupForm(email, password) {
+export function submitStudentSignupForm(email, password, schools) {
   return function(dispatch) {
     const promise = new Promise((resolve, reject) => {
       // Do form validation
 
-        validateStudentEmail(email, (success, message) => {
+        validateStudentEmail(email, schools, (success, message) => {
           // EMAIL IS NOT VALID
           if(!success) {
 

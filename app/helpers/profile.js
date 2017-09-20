@@ -203,7 +203,7 @@ export function validateStudentProfileFields(profileInfo, next) {
       school: false,
       enrollmentDate: false,
       graduationDate: false,
-	  major: false,
+	  program: false,
       gpa: false,
       personalEmail: false,
 	  gender: false,
@@ -228,7 +228,7 @@ export function validateStudentProfileFields(profileInfo, next) {
   profileFieldErrors.school= profileInfo.school != "" ? false : true
   profileFieldErrors.enrollmentDate = profileInfo.enrollmentDate != "" ? false : true
   profileFieldErrors.graduationDate = profileInfo.graduationDate != "" ? false : true
-  profileFieldErrors.major = profileInfo.major != "" ? false : true
+  profileFieldErrors.program = profileInfo.program != "" ? false : true
 
   profileFieldErrors.gpa = !validateGPA(profileInfo.gpa)
   profileFieldErrors.personalEmail = validatePersonalEmail(profileInfo.personalEmail) ? false : true
@@ -518,7 +518,7 @@ export const mobileProfileHelper = {
     let profileFieldErrors = {
       studentStatus: false,
       educationLevel: false,
-      major: false
+      program: false
     }
 
     /*
@@ -527,7 +527,7 @@ export const mobileProfileHelper = {
 
     profileFieldErrors.studentStatus = profileInfo.studentStatus != "" ? false : true
     profileFieldErrors.educationLevel= profileInfo.educationLevel != "" ? false : true
-    profileFieldErrors.major = profileInfo.major != "" ? false : true
+    profileFieldErrors.program = profileInfo.program != "" ? false : true
 
     /*
      * If an error exists in the map, then submitErrorsExist === true

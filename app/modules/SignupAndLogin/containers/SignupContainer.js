@@ -143,7 +143,8 @@ const SignupContainer = React.createClass({
 
       this.props.submitStudentSignupForm(
           this.props.studentEmail,
-          this.props.studentPassword
+          this.props.studentPassword,
+          this.props.schools
       )
       .then((actionResult) => {
           if(actionResult) {
@@ -391,7 +392,7 @@ const SignupContainer = React.createClass({
 
 // The entire redux store is passed in here,
 // Return an object defining which values you want to bind to props
-function mapStateToProps({user, signupForm, loginForm}) {
+function mapStateToProps({user, signupForm, loginForm, list }) {
   return {
     isAStudent: user.isAStudent ? true : false,
     isProfileCompleted: user.isProfileCompleted ? true : false,
@@ -410,7 +411,9 @@ function mapStateToProps({user, signupForm, loginForm}) {
     loginFormErrorText: loginForm.error ? loginForm.error : '',
     isLoggingIn: user.isLoggingIn ? user.isLoggingIn : false,
     dropDownActive: signupForm.dropDownActive ? signupForm.dropDownActive : false,
-    studentSignupFormOpen: signupForm.studentSignupFormOpen ? signupForm.studentSignupFormOpen : false
+    studentSignupFormOpen: signupForm.studentSignupFormOpen ? signupForm.studentSignupFormOpen : false,
+
+    schools: list.schools ? list.schools : []
   }
 }
 

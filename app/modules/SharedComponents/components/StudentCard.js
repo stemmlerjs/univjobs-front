@@ -65,6 +65,7 @@ schoolName,
 hometown,
 hobbies,
 state,
+program,
 handleOpenStudentProfileModal,
 handleCloseStudentProfileModal,
 handleOpenInviteStudentModal,
@@ -101,7 +102,7 @@ handleCloseStudentProfileAndAnswersModal
         </div>
         <div className={cardHeaderContainer}>
             <div className={cardHeaderItemMainText}>{name}</div>
-            <div className={cardHeaderItemSecondaryText}>{typeof major == "string" ? major : lists.majors[major]}
+            <div className={cardHeaderItemSecondaryText}>{typeof program == "string" ? program : lists.programsObj[program]}
             </div>
             <div className={cardHeaderItemAltItemText}>{schoolName} {gradDate.getFullYear()}</div>
             <div className={cardHeaderItemContainer}>

@@ -299,18 +299,18 @@ console.log(props)
 			  styles={nameField}>
 			  <li>
 			    <Combobox
-			      className={props.propsErrorMap.major ? `${longDropDown} ${error} ${materialStyle}` : `${longDropDown} ${materialStyle}`} 
-                  textField="major_text"
+			      className={props.propsErrorMap.program ? `${longDropDown} ${error} ${materialStyle}` : `${longDropDown} ${materialStyle}`} 
+            textField="name"
 			      valueField="id" 
-                  filter="contains"
-			      data={props.majorsList}
-                  messages={messages}
-			      onChange={value => props.updateProfileField('major', value, true)}
-			      value={props.major}
+            filter="contains"
+			      data={props.programs}
+            messages={messages}
+			      onChange={value => props.updateProfileField('program', value, true)}
+			      value={props.program}
 			     />
 			  </li>
 			  <li>
-			    <i className="fa fa-info-circle fa-2x" aria-hidden="true" data-tip="Major not there? Please email us at contact@univjobs.ca and we will help you out"></i>
+			    <i className="fa fa-info-circle fa-2x" aria-hidden="true" data-tip="Program not there? Please email us at contact@univjobs.ca and we will help you out"></i>
 			    <ReactTooltip place="bottom"
 			    	type="warning"
 						effect="float"

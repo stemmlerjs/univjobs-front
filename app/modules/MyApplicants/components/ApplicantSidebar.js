@@ -65,7 +65,10 @@ export default function ApplicantSidebar ({ selectedApplicant, lists, questions,
           <div className={headerDetailsContainer}>
             <div>
               <div className={profileNameText}>{`${selectedApplicant.user_firstName} ${selectedApplicant.user_lastName}`}</div>
-              <div className={programNameText}>{lists.majors[selectedApplicant.major]}</div>
+              <div className={programNameText}>{lists.programsObj
+                ? lists.programsObj[selectedApplicant.program]
+                : ''}
+              </div>
               <div className={schoolText}>{`${selectedApplicant.school_name} ${new Date(selectedApplicant.grad_date).getFullYear()}`}</div>
             </div>
             
