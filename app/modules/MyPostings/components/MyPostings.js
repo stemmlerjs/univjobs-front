@@ -293,7 +293,7 @@ export default function MyPostings ({
                     <div className={bodySectionColumn}>
                       <JobApplicantsSummarySectionMyPostingsOpen jobId={selectedJob.job_id} maxApplicants={selectedJob.max_applicants} numApplicants={selectedJob.applicants.length}/>
                       <JobNumPositionsSectionMyPostingsOpen 
-                        hiredApplicants={selectedJob.applicants_HIRED} 
+                        hiredApplicants={selectedJob.applicants_HIRED ? selectedJob.applicants_HIRED : 0} 
                         numPositions={selectedJob.num_positions}
                       />
                       <JobInvitationsSectionMyPostingsOpen invitedStudents={selectedOpenJobInvites}/>
