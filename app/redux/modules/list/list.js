@@ -52,6 +52,22 @@ const LIST_GET_ALL_STATIC_LISTS = 'LIST_GET_ALL_STATIC_LISTS'
 const LIST_GET_ALL_STATIC_LISTS_SUCCESS = 'LIST_GET_ALL_STATIC_LISTS_SUCCESS'
 const LIST_GET_ALL_STATIC_LISTS_FAILURE = 'LIST_GET_ALL_STATIC_LISTS_FAILURE'
 
+const UPDATE_SKILLS_DROPDOWN = 'UPDATE_SKILLS_DROPDOWN'
+const QUERYING_SKILLS = 'QUERYING_SKILLS'
+
+export function queryingSkills () {
+  return {
+    type: QUERYING_SKILLS
+  }
+}
+
+export function updateSkillsDropdown (skills) {
+  return {
+    type: UPDATE_SKILLS_DROPDOWN,
+    skills
+  }
+}
+
 function gettingAllLists () {
   return {
     type: LIST_GET_ALL_STATIC_LISTS
@@ -561,6 +577,8 @@ const initialState = {
   schoolClubs: [],
   jobTypes: [],
   schools: [],
+  skillsList: [], // dynamic
+  queryingSkillsList: false,
   isFetching: false,
   error: ''
 }
@@ -571,6 +589,19 @@ const initialState = {
 
 export default function list (state = initialState, action) {
   switch(action.type) {
+
+    case QUERYING_SKILLS:
+      return {
+        ...state,
+        queryingSkillsList: true
+      }
+
+    case UPDATE_SKILLS_DROPDOWN:
+      return {
+        ...state,
+        skillsList: action.skills,
+        queryingSkillsList: false
+      }
 
    /*
     * Bulk lists acquiry

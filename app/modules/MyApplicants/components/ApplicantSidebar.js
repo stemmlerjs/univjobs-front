@@ -19,10 +19,29 @@ import { applicantSidebarContainer, hide, sidebarContainer, headerContainer, img
 
 import { univjobsButton, univjobsButtonInactive, whiteTxt } from 'sharedStyles/widgets.css'
 
+import { studentSkillsTag, skillsContainer, skillsHeader, skillsTagContainer } from 'modules/SharedComponents/styles/StudentSkillsTags.css'
+
 import StudentProfileIcons from 'modules/SharedComponents/components/StudentProfileIcons'
 
 import config from 'config'
 import moment from 'moment'
+
+const StudentSkills = ({ skills }) => {
+  return (
+    <div className={skillsContainer}>
+      <div className={skillsHeader}>Skills</div>
+      <div className={skillsTagContainer}>
+        { Object.keys(skills).map((key, index) => {
+          return (
+            <span className={studentSkillsTag} key={index}>
+              { skills[key] }
+            </span>
+          )
+        })}
+      </div>
+    </div>
+  )
+}
 
 export default function ApplicantSidebar ({ selectedApplicant, lists, questions, 
   multiSelectViewActive, 
@@ -188,6 +207,14 @@ export default function ApplicantSidebar ({ selectedApplicant, lists, questions,
               languagesString={craftLanguagesString(selectedApplicant.languages)}
               renderTooltips={true}
             />
+
+            {
+              selectedApplicant.skills
+                ? Object.keys(selectedApplicant.skills).length !== 0
+                  ? <StudentSkills skills={selectedApplicant.skills}/>
+                  : ''
+                : ''
+            }
           </div>
 
 

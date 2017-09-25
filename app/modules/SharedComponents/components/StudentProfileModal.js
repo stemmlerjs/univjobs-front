@@ -23,10 +23,30 @@ import { studentProfileModalContainer, studentProfileLeftContainer, stProfileHea
 
 import { altImageContainer } from '../styles/StudentCard.css'
 
+import { studentSkillsTag, skillsContainer, skillsHeader, skillsTagContainer } from '../styles/StudentSkillsTags.css'
+
+
+const StudentSkills = ({ skills }) => {
+  return (
+    <div className={skillsContainer}>
+      <div className={skillsHeader}>Skills</div>
+      <div className={skillsTagContainer}>
+        { Object.keys(skills).map((key, index) => {
+          return (
+            <span className={studentSkillsTag} key={index}>
+              { skills[key] }
+            </span>
+          )
+        })}
+      </div>
+    </div>
+  )
+}
+
 const StudentProfileModal = ({ pictureUrl, name, major, sportsString, languagesString,
   schoolName, hometown, hasCar, clubsString, gradDate, lists, gpa, funFact, hobbies,
   handleOpenInviteStudentModal, studentObj, recentCompanyName, recentCompanyPosition,  program,
-  
+  skills,
   isDashboardCard, resumeUrl, questions, answers, isContacting, preferredEmail,
   isHiring,
   handleOpenConfirmRejectStudentModal,
@@ -142,47 +162,55 @@ const StudentProfileModal = ({ pictureUrl, name, major, sportsString, languagesS
 
       <div className={studenProfileRightContainer}>
         <div className={experienceHobbiesEtc}>
-        { hasCar == 1
-                ? <div className={listItemContainer}>
-                    <ReactTooltip delayHide={100} delayShow={100} place="bottom" effect="float"/>
-                    <img data-tip={'Transportation availability'} className={itemIcon} src={`${config.assetUrl}components/cards/student/actions/a/has_car_active_24px.svg`}/>
-                    <div>Daily access to a vehicle</div>
-                  </div>
-                : ''
-            }
-            { sportsString !== ""
-                ? <div className={listItemContainer}>
-                    <ReactTooltip delayHide={100} delayShow={100} place="bottom" effect="float"/>
-                    <img data-tip={'Sports'} className={itemIcon} src={`${config.assetUrl}components/cards/student/actions/a/sports_active_24px.svg`}/>
-                    <div>{sportsString}</div>
-                  </div>
-                : ''
-            }
-            { clubsString !== ""
-                ? <div className={listItemContainer}>
-                    <ReactTooltip delayHide={100} delayShow={100} place="bottom" effect="float"/>
-                    <img data-tip={'Clubs'} className={itemIcon} src={`${config.assetUrl}components/cards/student/actions/a/clubs_active_24px.svg`}/>
-                    <div>{clubsString}</div>
-                  </div>
-                : ''
-            }
-            { gpa 
-                ? <div className={listItemContainer}>
-                    <ReactTooltip delayHide={100} delayShow={100} place="bottom" effect="float"/>
-                    <div data-tip={'GPA'} className={`${itemIcon} ${itemIconGPA}`}>{Number(gpa).toFixed(2)}</div>
-                    <div>GPA of {Number(gpa).toFixed(2)}</div>
-                  </div>
-                : ''
-            }
-            { languagesString !== ""
-                ? <div className={listItemContainer}>
-                    <ReactTooltip delayHide={100} delayShow={100} place="bottom" effect="float"/>
-                    <i data-tip={'Languages'} aria-hidden="true" className={`fa fa-language ${languagesItemIcon}`}></i>
-                    <div>{languagesString}</div>
-                  </div>
-                : ''
-            }
+          { hasCar == 1
+                  ? <div className={listItemContainer}>
+                      <ReactTooltip delayHide={100} delayShow={100} place="bottom" effect="float"/>
+                      <img data-tip={'Transportation availability'} className={itemIcon} src={`${config.assetUrl}components/cards/student/actions/a/has_car_active_24px.svg`}/>
+                      <div>Daily access to a vehicle</div>
+                    </div>
+                  : ''
+              }
+              { sportsString !== ""
+                  ? <div className={listItemContainer}>
+                      <ReactTooltip delayHide={100} delayShow={100} place="bottom" effect="float"/>
+                      <img data-tip={'Sports'} className={itemIcon} src={`${config.assetUrl}components/cards/student/actions/a/sports_active_24px.svg`}/>
+                      <div>{sportsString}</div>
+                    </div>
+                  : ''
+              }
+              { clubsString !== ""
+                  ? <div className={listItemContainer}>
+                      <ReactTooltip delayHide={100} delayShow={100} place="bottom" effect="float"/>
+                      <img data-tip={'Clubs'} className={itemIcon} src={`${config.assetUrl}components/cards/student/actions/a/clubs_active_24px.svg`}/>
+                      <div>{clubsString}</div>
+                    </div>
+                  : ''
+              }
+              { gpa 
+                  ? <div className={listItemContainer}>
+                      <ReactTooltip delayHide={100} delayShow={100} place="bottom" effect="float"/>
+                      <div data-tip={'GPA'} className={`${itemIcon} ${itemIconGPA}`}>{Number(gpa).toFixed(2)}</div>
+                      <div>GPA of {Number(gpa).toFixed(2)}</div>
+                    </div>
+                  : ''
+              }
+              { languagesString !== ""
+                  ? <div className={listItemContainer}>
+                      <ReactTooltip delayHide={100} delayShow={100} place="bottom" effect="float"/>
+                      <i data-tip={'Languages'} aria-hidden="true" className={`fa fa-language ${languagesItemIcon}`}></i>
+                      <div>{languagesString}</div>
+                    </div>
+                  : ''
+              }
           </div>
+
+          {/* SKILLS  */}
+          
+           { 
+            skills != undefined && skills !== null && Object.keys(skills).length !== 0
+            ? <StudentSkills skills={skills}/>
+            : ''
+          } 
 
         {
          /* =====================================

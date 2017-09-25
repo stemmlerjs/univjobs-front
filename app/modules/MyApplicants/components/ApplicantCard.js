@@ -25,8 +25,7 @@ export default function ApplicantCard ({
     handleMultiSelectAddApplicant,
     handleMultiSelectRemoveApplicant
   }) {
-  console.log("PROGRAM OBJE", lists.programsObj)
-  console.log("PROGRAM", applicant.program)
+
   return (
     <div 
       onClick={(e) => {

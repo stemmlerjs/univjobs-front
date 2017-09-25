@@ -373,6 +373,7 @@ height: 106px;
 
 .cardHeaderItemSecondaryText {
         font-size: 15px;
+        font-weight: 100;
 }
 
 .cardHeaderItemAltItemText {
@@ -405,6 +406,7 @@ height: 106px;
 
 .cardSectionText {
     font-size: 15px;
+    font-weight: 100;
 }
 
 .cardActionButtons {

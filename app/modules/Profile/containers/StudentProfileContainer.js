@@ -21,6 +21,7 @@ import MobileStudentProfilePage7 from '../components/MobileStudentProfilePage7'
 import MobileStudentProfilePage8 from '../components/MobileStudentProfilePage8'
 
 import { scrollToY } from 'helpers/utils'
+import SkillsHelper from 'helpers/skills'
 
 import SkyLight from 'react-skylight'
 import Croppie from 'croppie'
@@ -69,14 +70,15 @@ const StudentProfileContainer = React.createClass({
   :*
   */
    createNewTag(newValue, list, textField, updateProfileFieldName) {
+
        let pickList = {
           //Master list
           'schoolClubList': this.props.schoolClubList,
           'sportsList': this.props.sportsList,
           //propTypes, pushed to the database
           'schoolClub': this.props.schoolClub,
-          'sportsTeam': this.props.sportsTeam
-
+          'sportsTeam': this.props.sportsTeam,
+          'studentSkills': this.props.studentSkills
        }
 
        //Create a new tag array object
@@ -688,6 +690,19 @@ const StudentProfileContainer = React.createClass({
 
   componentDidMount() {
 
+    /*
+     * Setup Event Listeners
+     * 
+     * 1. SkillsHelper listens for %like% query results to pass into 
+     * a skillsList.
+     */
+
+    SkillsHelper.listener.on('data', (data) => {
+      var skills = data.skills;
+
+      this.props.updateSkillsDropdown(skills);
+    })
+
   },
 
  /*
@@ -1032,6 +1047,13 @@ const StudentProfileContainer = React.createClass({
                 handleShowImageSizeTooLargeError={this.showImageSizeTooLargeError}
                 handleShowResumeSizeTooLargeError={this.showResumeSizeTooLargeError}
                 handleOpenPictureCropper={this.openPictureCropper}
+                
+                // Skills list
+                skillsHelper={SkillsHelper}
+                skillsList={this.props.skillsList}
+                studentSkills={this.props.studentSkills}
+                handleQuerySkills={this.props.queryingSkills}
+                queryingSkillsList={this.props.queryingSkillsList}
               />
               
             : this.props.isProfileCompleted == 1 && this.props.isEmailVerified == 0
@@ -1298,7 +1320,12 @@ function mapStateToProps({user, profile, list, feedback}) {
     submitSuccess: profile.submitSuccess ? profile.submitSuccess : false,
     isSubmittingForm: profile.isSubmittingForm ? profile.isSubmittingForm : false,
     userProfileAdvicePresented: profile.userProfileAdvicePresented ? profile.userProfileAdvicePresented : false,
-    mobileViewCurrentPage: profile.mobileViewCurrentPage ? profile.mobileViewCurrentPage : 1
+    mobileViewCurrentPage: profile.mobileViewCurrentPage ? profile.mobileViewCurrentPage : 1,
+
+    // Student skills
+    skillsList: list.skillsList ? list.skillsList : [],
+    studentSkills: profile.studentProfile.studentSkills ? profile.studentProfile.studentSkills : [],
+    queryingSkillsList: list.queryingSkillsList ? list.queryingSkillsList : false
   }
 }
 

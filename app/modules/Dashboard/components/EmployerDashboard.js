@@ -183,9 +183,11 @@ window.students = students;
                     languages={student.languages}
                     clubs={student.clubs}
                     sports={student.sports}
-                    program={lists.programsObj[student.program]
-                      ? lists.programsObj[student.program].length > 35 ? lists.programsObj[student.program].substring(0,35) + "..." : lists.programsObj[student.program]
-                      : lists.programsObj[student.program]
+                    program={lists.programsObj
+                      ? lists.programsObj[student.program]
+                        ? lists.programsObj[student.program].length > 35 ? lists.programsObj[student.program].substring(0,35) + "..." : lists.programsObj[student.program]
+                        : lists.programsObj[student.program]
+                      : ''
                     }
                     gpa={student.gpa}
                     gradDate={new Date(student.grad_date)}

@@ -766,3 +766,9 @@ export function craftLanguagesString (languagesObject) {
   return languagesString;
 }
 
+export function extractSkillsObject (skills) {
+  return {
+    'ids': skills.filter((skill) => skill.id).map((skill) => skill.id),
+    'new': skills.filter((skill) => !skill.id).map((skill) => skill.name)
+  }
+}

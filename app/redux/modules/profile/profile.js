@@ -2,7 +2,7 @@
 import { employerProfilePUT, employerProfilePATCH, validateEmployerProfileFields,
   studentProfilePUT, studentProfilePATCH, validateStudentProfileFields,
   compareToSnapshot, getUserInfo, extractLanguageId,
-  extractClubsObject, extractSportsObject, mobileProfileHelper } from 'helpers/profile'
+  extractClubsObject, extractSportsObject, extractSkillsObject, mobileProfileHelper } from 'helpers/profile'
 import { toISO, hasCarBoolean, scrollToY } from 'helpers/utils'
 import profileAdviceModal from './profileAdviceModal'
 
@@ -635,6 +635,7 @@ export function submitProfileFirstTime(userTypeInt, profileInfo, user, successCa
                 languages: btoa(JSON.stringify(extractLanguageId(profileInfo.languages))),
                 sports: btoa(JSON.stringify(extractSportsObject(profileInfo.sportsTeam, profileInfo))),
                 clubs: btoa(JSON.stringify(extractClubsObject(profileInfo.schoolClub, profileInfo))),
+                skills: btoa(JSON.stringify(extractSkillsObject(profileInfo.studentSkills))),
                 edu_level_id: profileInfo.educationLevel.id ? profileInfo.educationLevel.id : profileInfo.educationLevel,
                 email_pref: profileInfo.emailPreferences.id ? profileInfo.emailPreferences.id : profileInfo.emailPreferences,
                 status: profileInfo.studentStatus.id ? profileInfo.studentStatus.id : 1,
@@ -806,6 +807,7 @@ export function updateProfile(userTypeInt, profileInfo, user, snapshot, successC
       */
 
       case 0:
+      debugger;
         console.log("UPDATING STUDENT PROFILE")
 
        /*
@@ -870,40 +872,43 @@ export function updateProfile(userTypeInt, profileInfo, user, snapshot, successC
               hobbies: profileInfo.hobbies,
               profilepicture: profileInfo.photo,
               resume: profileInfo.resume,
-        	  }
+              skills: btoa(JSON.stringify(extractSkillsObject(profileInfo.studentSkills)))
+            }
+            
             compareToSnapshot(snapshot, changedData, (result) => {
 
-                //changed photo_url & resume_url to reflect backend data
-                result.p
-              studentProfilePATCH(result)
-                .then((res) => {
+              if (result) {
+                studentProfilePATCH(result)
+                  .then((res) => {
 
-                 /*
-                  * Here, after successfully updating the profile, we should update
-                  * the snapshot for any subsequent updates because the state will have changed.
-                  * TODO:
-                  */
+                  /*
+                    * Here, after successfully updating the profile, we should update
+                    * the snapshot for any subsequent updates because the state will have changed.
+                    * TODO:
+                    */
 
-                  
-                  var updatedStudent = res.data.result.updatedStudent
-                  var updatedTags = res.data.request.updateTags
+                    
+                    var updatedStudent = res.data.result.updatedStudent
+                    var updatedTags = res.data.request.updateTags
 
-                  // DISPATCH - SAVE_PROFILE_SUCCESS
-                  dispatch(savedProfileSuccess(true, updatedStudent, updatedTags))
+                    // DISPATCH - SAVE_PROFILE_SUCCESS
+                    dispatch(savedProfileSuccess(true, updatedStudent, updatedTags))
 
-                  successCallback()
+                    successCallback()
 
-                })
-                .catch((err) => {
+                  })
+                  .catch((err) => {
 
-                  // DISPATCH - SAVE_PROFILE_ERROR
-                  dispatch(savedProfileFailure({}, [
-                     'HTTP Error Occurred',
-                     err
-                  ], false))
+                    // DISPATCH - SAVE_PROFILE_ERROR
+                    dispatch(savedProfileFailure({}, [
+                      'HTTP Error Occurred',
+                      err
+                    ], false))
 
-                  failureCallback('Some error occurred trying to update!')
-                })
+                    failureCallback('Some error occurred trying to update!')
+                  })
+              }
+
              })
             }
           })
@@ -1307,6 +1312,7 @@ const initialStudentProfileState = {
   languagesToggle: false,
   gpaToggle: false,
   emailToggle: false,
+  studentSkills: [],
   propsErrorMap: {}
 }
 
@@ -1371,7 +1377,8 @@ function studentProfile(state = initialStudentProfileState, action) {
               // Additional school details
               schoolAddress: action.profileInfo.school_address + ', ' + action.profileInfo.school_city + ' ' + action.profileInfo.school_postal_code,
               schoolId: action.profileInfo.school_id,
-              program: action.profileInfo.program
+              program: action.profileInfo.program,
+              studentSkills: action.profileInfo.tags ? action.profileInfo.tags.skills : []
           }
     default:
       return state

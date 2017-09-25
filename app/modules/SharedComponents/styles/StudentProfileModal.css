@@ -38,6 +38,7 @@
 } 
 .stProfileProgram {
   font-size: 15px;
+  font-weight: 100;
 } 
 
 .stProfileGrad {
@@ -68,6 +69,7 @@
 .experienceHobbiesEtc {
   text-align: left;
 height: 111px;
+    font-weight: 100;
 }
 .listItemContainer {
   display: flex;
@@ -93,6 +95,7 @@ height: 111px;
     text-align: left;
     padding-left: 19px;
     height: 345px;
+    font-weight: 100;
 }
 
 .leftsideDetails::-webkit-scrollbar-track {

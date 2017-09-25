@@ -22,7 +22,7 @@ import { pageContainer, profileField, profileHeader,
         saveBtnContainer, saveBtnList, saveBtnClicked,  notActive, personalEmailStyle,
         saveBtn, space, hideInput, showInput, textArea, unselectedButton,
 				profilePictureDragDropAlt, savedResumeView, actualSaveBtn, pageItemsContainer, materialStyle,
-				optionalStyle } from '../styles/StudentProfileContainerStyles.css'
+				optionalStyle, separator, skillsSelect, minWidths } from '../styles/StudentProfileContainerStyles.css'
 
 import { shine } from 'sharedStyles/animations.css'
 import { error } from 'sharedStyles/error.css' 
@@ -38,7 +38,12 @@ var momentLocalizer = require('react-widgets/lib/localizers/moment')
 momentLocalizer(Moment)
 
 export default function StudentProfile (props) {
-console.log(props)
+ //console.log(props)
+
+const skillsMessage = {
+	emptyList: "Search for a skill and press [Enter] to add it.",
+	createOption: "Add this skill?"
+}
 
  const messages = {
     emptyFilter: "Can't find your industry? Let us know at theunivjobs@gmail.com."
@@ -192,19 +197,15 @@ console.log(props)
     <div id="st_profile" className={pageItemsContainer}>
     	<div className={profileHeader}>Complete your profile so we can find you a job today!</div>
 
-			{/* EMAIL NOTIFICATIONS */}
-			<StudentProfileField title="My email notification preferences:"> 
-			<li>
-			  <DropdownList
-			   className={props.propsErrorMap.emailPreferences ? `${mediumDropDown} ${error} ${materialStyle}` : `${mediumDropDown} ${materialStyle}`}
-			   valueField="id" textField="description"
-			   data={props.emailPrefList}
-			   value={props.emailPreferences}
-			   messages={messages}
-			   onChange={value => props.updateProfileField('emailPreferences', value.id, true)}
-			 />
-			</li>
-			</StudentProfileField>
+			{
+			 /*
+			  * =============================================
+				* =============== BASIC INFO =================
+				* =============================================
+				*/
+			}
+
+			<div className={separator}>Basic</div>
 
 			{/* FIRST NAME, LAST NAME*, STATUS */}
 			<StudentProfileField title="My name is">
@@ -234,6 +235,111 @@ console.log(props)
 			    </input>
 			 </li> 
 			</StudentProfileField>
+
+			{/* GENDER */}
+			<StudentProfileField title="I am " 
+			 styles={nameField}>
+			 <DropdownList
+			  className={props.propsErrorMap.gender ? `${shortDropDown} ${materialStyle} ${error}` : `${shortDropDown} ${materialStyle}`}
+			  valueField="id" textField="gender_description"
+			  messages={messages}
+			  data={props.gendersList}
+              defaultValue={1}
+			  value={props.gender}
+			  onChange={value => props.updateProfileField('gender', value.id, true)}
+			/>	
+			</StudentProfileField>
+
+			{/* CITY */}
+			<StudentProfileField title="My hometown is">
+			 <input
+			 	 data-thing="input"
+			   className={props.propsErrorMap.hometown ? `${materialStyle} ${input} ${error}` : `${materialStyle} ${input}`}
+			   type="text"
+			   placeholder="City"
+			   id="student_hometown"
+			   onBlur={(e) => props.updateProfileField('hometown', e.target.value, true)}
+			   >
+			 </input>
+			</StudentProfileField>
+
+			{/* CAR */}
+			<StudentProfileField title="I " styles={nameField}>
+			 <li className={saveBtnList}>
+			   <button className={props.hasCar == true ? `${materialStyle} ${saveBtnClicked}` : `${materialStyle} ${saveBtn}`} 
+				   data-selection="0"
+				   data-field-name="hasCar"
+				   onClick={() => props.updateProfileField('hasCar', true, true)}
+			    >
+				    have
+			    </button>
+			   <button className={props.hasCar === false ? `${materialStyle} ${saveBtnClicked}` : `${materialStyle} ${saveBtn}`} 
+				   data-selection="1"
+				   data-field-name="hasCar"
+				   onClick={() => props.updateProfileField('hasCar', false, true)}
+					 >
+				    {'do not have'}
+			    </button>
+			 </li>
+			 <li className={space}>
+			 	<p>a car on campus.</p>
+			 </li>
+			</StudentProfileField>
+
+			{/* PERSONAL EMAIL
+			  Can be empty
+			*/}
+			<StudentProfileField title="My personal email is" 
+			 styles={nameField}>
+			 <li>
+			  <input
+					data-thing="input"
+			    className={props.propsErrorMap.personalEmail 
+						? `${materialStyle} ${input} ${error}` 
+						: props.personalEmail != "" 
+							? `${materialStyle} ${input} ${personalEmailStyle}` 
+							: `${materialStyle} ${input} ${personalEmailStyle} ${notActive}`}
+			    type="text"
+			    placeholder="Email"
+			    id="student_personalEmail"
+			    onChange={(e) => {props.updateProfileField('personalEmail', e.target.value, true); props.onHandleButtonToggle(false, 'emailToggle')}}
+			    >
+			  </input>
+			 </li> 
+			 <li>
+			   <p>or</p>
+			 </li>
+			 <li className={saveBtnList}>
+               <button className={props.personalEmail == "" || props.personalEmail == null 
+							 		? `${materialStyle} ${saveBtnClicked}` 
+									: `${materialStyle} ${unselectedButton}`} 
+							 	onClick={() => props.updateProfileField('personalEmail', "", true) }>I prefer school email</button>
+			 </li>
+			</StudentProfileField>
+
+			{/* EMAIL NOTIFICATIONS */}
+			<StudentProfileField title="My email notification preferences:"> 
+			<li>
+			  <DropdownList
+			   className={props.propsErrorMap.emailPreferences ? `${mediumDropDown} ${error} ${materialStyle}` : `${mediumDropDown} ${materialStyle}`}
+			   valueField="id" textField="description"
+			   data={props.emailPrefList}
+			   value={props.emailPreferences}
+			   messages={messages}
+			   onChange={value => props.updateProfileField('emailPreferences', value.id, true)}
+			 />
+			</li>
+			</StudentProfileField>
+
+			{
+			 /*
+			  * =============================================
+				* =============== SCHOOL INFO =================
+				* =============================================
+				*/
+			}
+
+			<div className={separator}>School Info</div>
 			
 			<StudentProfileField title="I am a ">
 			 
@@ -255,7 +361,6 @@ console.log(props)
 			</StudentProfileField>
 
 			{/* DEGREE */}
-
 			<StudentProfileField title={props.studentStatus == 3 ? 'I have a ' : "I am pursuing a " }
 			 styles={nameField}>
 			 <li>
@@ -348,50 +453,16 @@ console.log(props)
 			 </li>
 			</StudentProfileField>
 
-			{/* PERSONAL EMAIL
-			  Can be empty
-			*/}
-			<StudentProfileField title="My personal email is" 
-			 styles={nameField}>
-			 <li>
-			  <input
-					data-thing="input"
-			    className={props.propsErrorMap.personalEmail 
-						? `${materialStyle} ${input} ${error}` 
-						: props.personalEmail != "" 
-							? `${materialStyle} ${input} ${personalEmailStyle}` 
-							: `${materialStyle} ${input} ${personalEmailStyle} ${notActive}`}
-			    type="text"
-			    placeholder="Email"
-			    id="student_personalEmail"
-			    onChange={(e) => {props.updateProfileField('personalEmail', e.target.value, true); props.onHandleButtonToggle(false, 'emailToggle')}}
-			    >
-			  </input>
-			 </li> 
-			 <li>
-			   <p>or</p>
-			 </li>
-			 <li className={saveBtnList}>
-               <button className={props.personalEmail == "" || props.personalEmail == null 
-							 		? `${materialStyle} ${saveBtnClicked}` 
-									: `${materialStyle} ${unselectedButton}`} 
-							 	onClick={() => props.updateProfileField('personalEmail', "", true) }>I prefer school email</button>
-			 </li>
-			</StudentProfileField>
+			{
+			 /*
+			  * =============================================
+				* ============= EXTRACURRICULAR ===============
+				* =============================================
+				*/
+			}
 
-			{/* GENDER */}
-			<StudentProfileField title="I am " 
-			 styles={nameField}>
-			 <DropdownList
-			  className={props.propsErrorMap.gender ? `${shortDropDown} ${materialStyle} ${error}` : `${shortDropDown} ${materialStyle}`}
-			  valueField="id" textField="gender_description"
-			  messages={messages}
-			  data={props.gendersList}
-              defaultValue={1}
-			  value={props.gender}
-			  onChange={value => props.updateProfileField('gender', value.id, true)}
-			/>	
-			</StudentProfileField>
+			<div className={separator}>Extracurricular</div>
+
 
 			{/* SPORTS
 			  Can be empty
@@ -477,28 +548,16 @@ console.log(props)
             </li>
 			</StudentProfileField>
 
-			{/* CAR */}
-			<StudentProfileField title="I " styles={nameField}>
-			 <li className={saveBtnList}>
-			   <button className={props.hasCar == true ? `${materialStyle} ${saveBtnClicked}` : `${materialStyle} ${saveBtn}`} 
-				   data-selection="0"
-				   data-field-name="hasCar"
-				   onClick={() => props.updateProfileField('hasCar', true, true)}
-			    >
-				    have
-			    </button>
-			   <button className={props.hasCar === false ? `${materialStyle} ${saveBtnClicked}` : `${materialStyle} ${saveBtn}`} 
-				   data-selection="1"
-				   data-field-name="hasCar"
-				   onClick={() => props.updateProfileField('hasCar', false, true)}
-					 >
-				    {'do not have'}
-			    </button>
-			 </li>
-			 <li className={space}>
-			 	<p>a car on campus.</p>
-			 </li>
-			</StudentProfileField>
+			{
+			 /*
+			  * =============================================
+				* ============= SKILLS + EXPERIENCE ===============
+				* =============================================
+				*/
+			}
+
+			<div className={separator}>Skills & Experience</div>
+
 			
 			{/* EXPERIENCE
 			  Can be empty
@@ -515,7 +574,7 @@ console.log(props)
 			   >
 			  </input>
 			 </li>
-			  <li>
+			  <li className={minWidths}>
 			    <p>as a</p>
 			  </li>
 			  <li>
@@ -556,19 +615,6 @@ console.log(props)
 			  </li>
 			</StudentProfileField>
 
-			{/* CITY */}
-			<StudentProfileField title="My hometown is">
-			 <input
-			 	 data-thing="input"
-			   className={props.propsErrorMap.hometown ? `${materialStyle} ${input} ${error}` : `${materialStyle} ${input}`}
-			   type="text"
-			   placeholder="City"
-			   id="student_hometown"
-			   onBlur={(e) => props.updateProfileField('hometown', e.target.value, true)}
-			   >
-			 </input>
-			</StudentProfileField>
-
 			{/* HOBBIES */}
 			<StudentProfileField title="My favourite hobbies are"> 
 			 <li>
@@ -583,6 +629,38 @@ console.log(props)
 			  </input>
 			 </li>
 			</StudentProfileField>
+
+			{/* SKILLS */}
+			<StudentProfileField title="My skills are" styles={nameField}>
+        <li className={`${showInput} ${skillsSelect}`}>
+			    <Multiselect
+					className={`${materialStyle} ${shortInput} ${skillsSelect}`}
+					valueField='id' 
+					textField='name'
+					placeholder='Photoshop, killing dragons, HTML, UI/UX, Sound Design...'
+					data={props.skillsList}
+					value={props.studentSkills}
+					onSearch={value => {
+						props.handleQuerySkills();
+						props.skillsHelper.triggerLikeQuery(value)
+					}}
+					messages={skillsMessage}
+					busy={props.queryingSkillsList}
+					onChange={ value => props.updateProfileField('studentSkills', value, true)}
+					onCreate={ value => props.onCreateNewTag(value, 'studentSkills', 'name', 'studentSkills')}
+				/>
+        </li>
+			</StudentProfileField>
+
+			{
+			 /*
+			  * =============================================
+				* ================== FILE =====================
+				* =============================================
+				*/
+			}
+
+			<div className={separator}>Avatar & Resume</div>
 
 			{/* PHOTO & RESUME */}
 

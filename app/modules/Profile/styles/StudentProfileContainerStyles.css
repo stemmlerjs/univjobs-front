@@ -18,6 +18,7 @@
 .pageItemsContainer {
     margin: 0 auto;
     margin-top: 3%;
+    font-weight: 100;
 }
 
 .profileHeader {
@@ -320,6 +321,25 @@ outline: none
     top: -17px;
     font-weight: bold;
     font-size: 16px;
+}
+
+.separator {
+font-weight: 400;
+    font-size: 25px;
+    text-align: left;
+    border-bottom: solid 2px #959fa9;
+    margin-bottom: 20px;
+    color: #414a51;
+    margin-top: 32px;
+}
+
+.skillsSelect {
+      width: 100%;
+    min-height: 99px;
+}
+
+.minWidths {
+      min-width: 48px;
 }
 
 /* ============= MEDIA QUERIES =============== */
