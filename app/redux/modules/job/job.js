@@ -563,7 +563,8 @@ export function getAllJobsStudentJobView (callback) {
 // =======================================================
 
 const initialJobState = {
-	employerJobs: [],
+  employerJobs: [],
+  employerHasActiveJobs: false,
 	studentJobsView: [],
   publicJobView: {},
 	jobTypes: [],
@@ -847,10 +848,18 @@ export default function job (state = initialJobState, action) {
 				...state,
         isFetching: true
 			}
-		case FETCHED_EMPLOYER_JOBS_SUCCESS:
+    case FETCHED_EMPLOYER_JOBS_SUCCESS:
+    
+      let hasActiveJobs = false;
+
+      for (var i = 0; i < action.jobs.length; i++) {
+        if (action.jobs[i].active == 1 && action.jobs[i].verified == 1) hasActiveJobs = true;
+      }
+
 			return {
 				...state,
-				employerJobs: action.jobs
+        employerJobs: action.jobs,
+        employerHasActiveJobs: hasActiveJobs
 			}
 		case FETCHED_EMPLOYER_JOBS_FAILURE:
 			return {

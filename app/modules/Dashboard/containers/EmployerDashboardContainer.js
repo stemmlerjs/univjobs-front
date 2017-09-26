@@ -437,42 +437,40 @@ const EmployerDashboardContainer = React.createClass({
               afterClose={this.props.getAllJobsQuestionsAnswersForEmployer}
               ref="inviteStudentModal">
 
-            { Object.keys(this.props.jobs) == 1 ?
-
-
-                  <div className={inviteStudentModalContainer}>
-                    <div className={inviteStudentModalInputContainer}>
-                      <div>Invite this student to apply to </div>
-                        <Combobox
-                          className={comboBox}
-                          textField="title"
-                          valueField="job_id"
-                          filter="contains"
-                          itemComponent={InviteListItem}
-                          data={this.props.inviteStudentModal.jobInvitesForSelectedStudent ? this.props.inviteStudentModal.jobInvitesForSelectedStudent.filter((job) => {
-                            return job.active !== 0 && job.verified == 1
-                          }) : this.props.inviteStudentModal.jobInvitesForSelectedStudent}
-                          onChange={(value) => {
-                            this.selectInviteJob(value)
-                          }}
-                        />
+            { this.props.employerHasActiveJobs 
+              ? <div className={inviteStudentModalContainer}>
+                      <div className={inviteStudentModalInputContainer}>
+                        <div>Invite this student to apply to </div>
+                          <Combobox
+                            className={comboBox}
+                            textField="title"
+                            valueField="job_id"
+                            filter="contains"
+                            itemComponent={InviteListItem}
+                            data={this.props.inviteStudentModal.jobInvitesForSelectedStudent ? this.props.inviteStudentModal.jobInvitesForSelectedStudent.filter((job) => {
+                              return job.active !== 0 && job.verified == 1
+                            }) : this.props.inviteStudentModal.jobInvitesForSelectedStudent}
+                            onChange={(value) => {
+                              this.selectInviteJob(value)
+                            }}
+                          />
+                      </div>
+                      <div className={inviteStudentModalApplicantsCount}>
+                        {this.props.inviteStudentModal.currentApplicants !== undefined
+                          ? this.props.inviteStudentModal.currentApplicants
+                          : '#'} of {this.props.inviteStudentModal.maxApplicants 
+                            ? this.props.inviteStudentModal.maxApplicants
+                            : '#'} applicants
+                      </div>
+                      <div className={this.props.inviteStudentModal.isInviting ? loader : ''}></div>
                     </div>
-                    <div className={inviteStudentModalApplicantsCount}>
-                      {this.props.inviteStudentModal.currentApplicants !== undefined
-                        ? this.props.inviteStudentModal.currentApplicants
-                        : '#'} of {this.props.inviteStudentModal.maxApplicants 
-                          ? this.props.inviteStudentModal.maxApplicants
-                          : '#'} applicants
-                    </div>
-                    <div className={this.props.inviteStudentModal.isInviting ? loader : ''}></div>
-                  </div>
 
-                : 
-                  <div className={inviteStudentModalContainer}>
-                    <div className={inviteStudentModalInputContainer}>
-                      <div>You don't have any active jobs to invite students to yet! </div>
+                  : 
+                    <div className={inviteStudentModalContainer}>
+                      <div className={inviteStudentModalInputContainer}>
+                        <div>You don't have any active jobs to invite students to yet! </div>
+                      </div>
                     </div>
-                  </div>
              }
               
 
@@ -566,7 +564,8 @@ function mapStateToProps({user, profile, dashboard, job, list}) {
       program: '',
       industry: ''
     },
-    filterMenuOpen: dashboard.employerDashboard.filterMenuOpen ? dashboard.employerDashboard.filterMenuOpen : false
+    filterMenuOpen: dashboard.employerDashboard.filterMenuOpen ? dashboard.employerDashboard.filterMenuOpen : false,
+    employerHasActiveJobs: job.employerHasActiveJobs ? job.employerHasActiveJobs : false
   }
 }
 
