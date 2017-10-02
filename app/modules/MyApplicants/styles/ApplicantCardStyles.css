@@ -4,15 +4,16 @@
  */
 
 .applicantCardContainer {
-    background: white;
+    background: #fff;
     border-radius: 5px;
-    box-shadow: 0 1px 0 rgba(0,0,0,.1);
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
     display: flex;
     margin-bottom: 20px;
     height: 115px;
     max-width: 644px;
-    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
-        min-width: 554px;
+    transition: all .3s cubic-bezier(.25,.8,.25,1);
+    min-width: 554px;
+    border: solid 1px #a9a9a9;
     cursor: pointer;
 } 
 
@@ -22,7 +23,7 @@
  */
  
 .selectedCard {
-    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+box-shadow: 0 11px 6px rgba(0,0,0,.16), 0 14px 36px rgba(0,0,0,.23);
 }
 
 .applicantImageContainer {

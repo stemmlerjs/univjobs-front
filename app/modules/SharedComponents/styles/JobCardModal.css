@@ -121,6 +121,7 @@ font-size: 14px;
 
 .cardSectionText {
     font-size: 14px;
+    font-weight: 100;
 }
 
 .cardActionButtons {
@@ -168,6 +169,7 @@ display: flex;
     overflow-x: hidden;
     height: 343px;
     padding-top: 25px;
+    font-weight: 100;
 }
 
 .questionsContainer::-webkit-scrollbar-track {
