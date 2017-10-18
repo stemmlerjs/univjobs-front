@@ -311,14 +311,10 @@ export function getCSRFToken() {
   }
 
   export function attemptCompleteVerifyAccount (token) {
-    const accessToken = getAccessToken()
 
     return axios({
       method: 'post',
-      url: config.baseUrl + 'verify/' + sanitize(token),
-      headers: {
-        'Authorization':  accessToken
-      }
+      url: config.baseUrl + 'verify/' + sanitize(token)
     })
   } 
 

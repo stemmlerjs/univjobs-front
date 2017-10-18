@@ -499,7 +499,7 @@ const StudentProfileContainer = React.createClass({
       * The url at this point should look like: profile/st/token/:token
       */
 
-      var emailConfirmationToken = this.props.params.token
+      var emailConfirmationToken = this.props.params.token;
 
       if (emailConfirmationToken !== undefined && emailConfirmationToken !== "") {
 
@@ -514,7 +514,7 @@ const StudentProfileContainer = React.createClass({
 
             this.refs.container.success(
               "Thank you!",
-              "You've successfully validated your account. That wasn't so bad, was it?", {
+              "You've successfully validated your account. That wasn't so bad, was it? Now login and get ", {
                 timeout: 5000
             });
 
@@ -523,10 +523,12 @@ const StudentProfileContainer = React.createClass({
             * verified our email
             */
 
-            var verifiedEmailThisInstance = true;
+            setTimeout(() => {
 
-            regularComponentWillMountBehaviour(this, verifiedEmailThisInstance)
+              var verifiedEmailThisInstance = true;
+              regularComponentWillMountBehaviour(this, verifiedEmailThisInstance)
 
+            }, 5000);
           },
 
 
@@ -537,6 +539,8 @@ const StudentProfileContainer = React.createClass({
           
           () => {
 
+            alert("no")
+
             this.refs.container.error(
               "Please try again.",
               "Verification link expired or invalid!", {
@@ -545,7 +549,13 @@ const StudentProfileContainer = React.createClass({
                 extendedTimeOut: 10000
             });
 
-            regularComponentWillMountBehaviour(this)
+            setTimeout(() => {
+
+              var verifiedEmailThisInstance = true;
+              regularComponentWillMountBehaviour(this)
+
+            }, 5000);
+
             
           })
 
