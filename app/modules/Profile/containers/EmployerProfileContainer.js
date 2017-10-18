@@ -169,7 +169,13 @@ const EmployerProfileContainer = React.createClass({
                 timeout: 5000
             });
 
-            regularComponentWillMountBehaviour(this)
+            setTimeout(() => {
+
+              regularComponentWillMountBehaviour(this)
+
+            }, 5000);
+
+            
 
           },
 
@@ -187,7 +193,11 @@ const EmployerProfileContainer = React.createClass({
                 timeout: 5000
             });
 
-            regularComponentWillMountBehaviour(this)
+            setTimeout(() => {
+
+              regularComponentWillMountBehaviour(this)
+
+            }, 5000);
             
           })
 
