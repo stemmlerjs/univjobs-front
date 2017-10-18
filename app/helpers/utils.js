@@ -242,8 +242,17 @@ export function validateJobTitle(jobTitle) {
   return re.test(jobTitle)
 }
 
-export function validateWebURL(value){
-  return /^(http\:\/\/|https\:\/\/)?([a-z0-9][a-z0-9\-]*\.)+[a-z0-9][a-z0-9\-\/]*$/.test(value.toLowerCase())  
+export function validateWebURL(url){
+
+  var okFileExtensions = ['.aspx', '.jsp', '.html']
+
+  for (var i = 0; i < okFileExtensions.length; i++) {
+    if (url.indexOf(okFileExtensions[i]) !== -1) {
+      url = url.substring(0, url.indexOf(okFileExtensions[i]))
+    }
+  }
+
+  return /^(http\:\/\/|https\:\/\/)?([a-z0-9][a-z0-9\-]*\.)+[a-z0-9][a-z0-9\-\/]*$/.test(url.toLowerCase())  
 }
  /*
  * return false if it's an array 
