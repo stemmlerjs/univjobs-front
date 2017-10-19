@@ -780,10 +780,11 @@ const StudentProfileContainer = React.createClass({
       var el = document.getElementById('cropper');
       window.cropperInstance = new Croppie(el, {
         viewport: { width: 250, height: 250 },
-        boundary: { width: 250, height: 250 },
-        showZoomer: false,
+        boundary: { width: 300, height: 300 },
+        showZoomer: true,
         enableResize: false,
-        enableOrientation: true
+        enableOrientation: true,
+        enforceBoundary: false
       });
 
       window.cropperInstance.bind({
