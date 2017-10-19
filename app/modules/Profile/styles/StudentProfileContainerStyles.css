@@ -334,8 +334,9 @@ font-weight: 400;
 }
 
 .skillsSelect {
-      width: 100%;
+    max-width: 660px;
     min-height: 99px;
+    width: 100%;
 }
 
 .minWidths {
