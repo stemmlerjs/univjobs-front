@@ -327,7 +327,7 @@ export function validateJobLocation (location) {
 } 
 
 export function validateCompensation (comp) {
-  let re = /^[a-z0-9 ,+=$/.'-]{2,380}$/i // numbers, letters and spaces only
+  let re = /^[a-z0-9 \\,+=$/.'-]{2,380}$/igm // numbers, letters, spaces, $, forwardslashes, backslashes and multiline
   return re.test(comp)
 }
 
