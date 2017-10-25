@@ -8,8 +8,20 @@
     white-space: pre-line;
     padding-left: 7%;
     padding-right: 7%;
+        word-wrap: break-word;
 }
 
 .gloalModalTitle {
     text-align: center;
+}
+
+@media (max-width: 600px) {
+    .globalModalBody {
+            font-size: 14px;
+                right: 12%;
+    }
+
+    .gloalModalTitle {
+        font-size: 25px;
+    }
 }
