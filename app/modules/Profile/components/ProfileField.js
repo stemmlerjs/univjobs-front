@@ -14,11 +14,11 @@ ProfileField.propTypes = {
   title: PropTypes.string.isRequired
 }
 
-export default function ProfileField ({title, styles, children}) {
+export default function ProfileField ({title, contentStyles, children}) {
   return (
     <div className={flexContainer}>
       <div className={profileFieldName}>{ title }</div>
-      <div className={profileFieldContent}>
+      <div className={contentStyles != undefined ? `${profileFieldContent} ${contentStyles}` : profileFieldContent}>
         { children }
       </div>
     </div>

@@ -1,0 +1,78 @@
+
+.wrongEmailComponentContainer {
+    text-align: center;
+}
+
+.wrongEmailComponentContainer img {
+    width: 11%;
+    margin-bottom: 27px;
+}
+
+.wrongEmailComponentContainer div {
+    font-style: italic;
+}
+
+.wrongEmailComponentContainer img:hover {
+    animation: kick 0.82s cubic-bezier(.36,.07,.19,.97) both;
+    transform: translate3d(0, 0, 0);
+    transition: 0.2s ease; 
+}
+
+/* Tooltip container */
+.tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+    top: -80px;
+    left: 23px;
+    font-size: 14px;
+}
+
+/* Tooltip text */
+.tooltip .tooltiptext {
+    visibility: visible;
+    width: 183px;
+    background-color: black;
+    color: #fff;
+    text-align: left;
+    padding: 5px 0;
+    border-radius: 6px;
+    position: absolute;
+    z-index: 1;
+    padding: 10px;
+    -webkit-transition: 0.3s ease-in-out;
+    -moz-transition: 0.3s ease-in-out;
+    transition: 0.3s ease-in-out;
+}
+
+.tooltip .tooltiptext::after {
+    content: " ";
+    position: absolute;
+    top: 50%;
+    right: 100%; /* To the left of the tooltip */
+    margin-top: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent black transparent transparent;
+}
+
+
+  @keyframes kick {
+    10% {
+      transform: rotate(25deg);
+      transform: translate3d(-4px, 0, 0);
+    }
+    40% {
+      transform: rotate(60deg);
+    }
+    60% {
+      transform: rotate(-25deg);
+    }
+    80% {
+      transform: rotate(-60deg);
+      transform: translate3d(4px, 0, 0);
+    }
+    100% {
+      transform: rotate(0deg);
+    }
+  }

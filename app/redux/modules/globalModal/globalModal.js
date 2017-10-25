@@ -13,18 +13,20 @@ const CLOSE_GLOBAL_MODAL = 'CLOSE_GLOBAL_MODAL'
 const initialGlobalModal = {
   isModalOpen: false,
   modalHeaderText: '',
-  modalBodyText: ''
+  modalBodyText: '',
+  customComponent: undefined
 }
 
 /*
  * ==== Action Creators ====
  */
 
-export function openGlobalModal (modalHeaderText, modalBodyText) {
+export function openGlobalModal (modalHeaderText, modalBodyText, customComponent) {
   return {
     type: OPEN_GLOBAL_MODAL,
     modalHeaderText,
-    modalBodyText
+    modalBodyText,
+    customComponent
   }
 }
 
@@ -46,7 +48,8 @@ export default function job (state = initialGlobalModal, action) {
         ...state,
         isModalOpen: true,
         modalHeaderText: action.modalHeaderText,
-        modalBodyText: action.modalBodyText
+        modalBodyText: action.modalBodyText,
+        customComponent: action.customComponent
       }
     case CLOSE_GLOBAL_MODAL:
       return {

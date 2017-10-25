@@ -26,6 +26,7 @@ import { logout } from 'helpers/auth'
 // ================CSS IMPORTS============================== //
 import animationStyles from '../styles/InitialOverlayStyles.css'
 import { loadingFlexibleContainer } from 'sharedStyles/loading.css'
+import { globalModalDialog, globalModalBody, gloalModalTitle } from '../styles/GlobalModalStyles.css'
 
 import { FeedbackForm, LoadingSpinner } from 'modules/SharedComponents'
 import MobileSlider from '../components/MobileSlider'
@@ -335,9 +336,10 @@ const InitialOverlay = React.createClass({
 
           this.props.globalModal.isModalOpen
             ? <ModalContainer onClose={this.props.closeGlobalModal}>
-                <ModalDialog onClose={this.props.closeGlobalModal}>
-                  <h1>{this.props.globalModal ? this.props.globalModal.modalHeaderText : ''}</h1>
-                  <p>{this.props.globalModal ? this.props.globalModal.modalBodyText : ''}</p>
+                <ModalDialog className={globalModalDialog} onClose={this.props.closeGlobalModal}>
+                  <h1 className={gloalModalTitle}>{this.props.globalModal ? this.props.globalModal.modalHeaderText : ''}</h1>
+                  <p className={globalModalBody}>{this.props.globalModal ? this.props.globalModal.modalBodyText : ''}</p>
+                  {this.props.globalModal.customComponent ? this.props.globalModal.customComponent : ''}
                 </ModalDialog>
               </ModalContainer>
             : ''

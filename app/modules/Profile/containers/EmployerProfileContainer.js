@@ -24,6 +24,7 @@ import MobileEmployerProfilePage1 from '../components/MobileEmployerProfilePage1
 import MobileEmployerProfilePage2 from '../components/MobileEmployerProfilePage2'
 import MobileEmployerProfilePage3 from '../components/MobileEmployerProfilePage3'
 import MobileEmployerProfilePage4 from '../components/MobileEmployerProfilePage4'
+import WrongEmailComponent from '../components/WrongEmailComponent'
 
 import SkyLight from 'react-skylight'
 import { userProfileAdviceTitle, userProfileAdviceBody, cancelBtn, acceptBtn } from 'sharedStyles/sharedComponentStyles.css'
@@ -166,14 +167,14 @@ const EmployerProfileContainer = React.createClass({
             this.refs.container.success(
               "Thank you!",
               "You've successfully validated your account.", {
-                timeout: 5000
+                timeout: 3000
             });
 
             setTimeout(() => {
 
               regularComponentWillMountBehaviour(this)
 
-            }, 5000);
+            }, 3000);
 
             
 
@@ -241,11 +242,26 @@ const EmployerProfileContainer = React.createClass({
                 */
 
                 if (isProfileCompleted == 0 && !isEmailVerified) {
-                  _thisContext.refs.container.info(
-                    "You can click here to resend the verification email. Thanks!",
-                    "Before you can move on, we need you to finish your profile & confirm the email we sent you.", {
-                      timeout: 3000
-                  });
+                  // _thisContext.refs.container.info(
+                  //   "You can click here to resend the verification email. Thanks!",
+                  //   "Before you can move on, we need you to finish your profile & confirm the email we sent you.", {
+                  //     timeout: 3000
+                  // });
+
+                  setTimeout(() => {
+
+                    var title = 'Welcome to Univjobs!'
+                    var body = `We want to help you find local talent! Before you move on, we just need you to:
+                    
+                    1. Confirm the verification email we sent to ${_thisContext.props.user.email}.
+                    2. Complete and save your employer profile.
+                    
+                    That's it!`
+
+                    _thisContext.props.globalModal.open(title, body, 
+                      WrongEmailComponent(_thisContext.props.user.email, _thisContext.resendVerifyAccountEmail)
+                    );
+                  }, 500)
                 }
 
               /*
@@ -253,11 +269,37 @@ const EmployerProfileContainer = React.createClass({
                 */
 
                 else if (isProfileCompleted == 0) {
-                  _thisContext.refs.container.info(
-                    "Thanks!",
-                    "Before you can move on, we just need you to finish your profile.", {
-                      timeout: 3000
-                  });
+                  // _thisContext.refs.container.info(
+                  //   "Thanks!",
+                  //   "Before you can move on, we just need you to finish your profile.", {
+                  //     timeout: 3000
+                  // });
+
+                  setTimeout(() => {
+
+                    var title = 'One more thing left to do.'
+                    // var body = `Almost done. Here's what we still need to do:
+                    
+                    // 1. Confirm the verification email we sent to ${_thisContext.props.user.email}.
+                    // 2. Complete and save your student profile.
+                    
+                    // Then`;
+                    var body = function () {
+                      return (
+                        <div>
+                          You're almost ready to move on. Here's what we still need to do:<br/><br/>
+                    
+                          <span style={{ textDecoration: "line-through" }}>1. Confirm the verification email we sent to {_thisContext.props.user.email}</span>.
+                    <br/>2. Complete and save your employer profile.
+                    <br/><br/>
+                    
+                    Then you'll be all set!
+                        </div>
+                      )
+                    }
+
+                    _thisContext.props.globalModal.open(title, body());
+                  }, 500)
                 }
 
                 /*
@@ -265,11 +307,37 @@ const EmployerProfileContainer = React.createClass({
                 */
 
                 else {
-                  _thisContext.refs.container.info(
-                    "You can click here to resend the verification email. Thanks!",
-                    "Before you can move on, we just need you to confirm the email we sent you.", {
-                      timeout: 3000
-                  });
+                  // _thisContext.refs.container.info(
+                  //   "You can click here to resend the verification email. Thanks!",
+                  //   "Before you can move on, we just need you to confirm the email we sent you.", {
+                  //     timeout: 3000
+                  // });
+
+                  setTimeout(() => {
+
+                    var title = 'One more thing left to do.'
+                    // var body = `Almost done. Here's what we still need to do:
+                    
+                    // 1. Confirm the verification email we sent to ${_thisContext.props.user.email}.
+                    // 2. Complete and save your student profile.
+                    
+                    // Then`;
+                    var body = function () {
+                      return (
+                        <div>
+                          You're almost ready to move on. Here's what we still need to do:<br/><br/>
+                    
+                          1. Confirm the verification email we sent to {_thisContext.props.user.email}.
+                    <br/><span style={{ textDecoration: "line-through" }}>2. Complete and save your employer profile.</span>
+                    <br/><br/>
+                    
+                    Then you'll be all set!
+                        </div>
+                      )
+                    }
+
+                    _thisContext.props.globalModal.open(title, body(), WrongEmailComponent(_thisContext.props.user.email, _thisContext.resendVerifyAccountEmail));
+                  }, 500)
                 }
 
                 resolve()

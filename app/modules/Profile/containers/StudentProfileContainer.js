@@ -19,6 +19,7 @@ import MobileStudentProfilePage5 from '../components/MobileStudentProfilePage5'
 import MobileStudentProfilePage6 from '../components/MobileStudentProfilePage6'
 import MobileStudentProfilePage7 from '../components/MobileStudentProfilePage7'
 import MobileStudentProfilePage8 from '../components/MobileStudentProfilePage8'
+import WrongEmailComponent from '../components/WrongEmailComponent'
 
 import { scrollToY } from 'helpers/utils'
 import SkillsHelper from 'helpers/skills'
@@ -514,8 +515,8 @@ const StudentProfileContainer = React.createClass({
 
             this.refs.container.success(
               "Thank you!",
-              "You've successfully validated your account. That wasn't so bad, was it? Now login and get ", {
-                timeout: 5000
+              "You've successfully validated your account. That wasn't so bad, was it?", {
+                timeout: 3000
             });
 
            /*
@@ -528,7 +529,7 @@ const StudentProfileContainer = React.createClass({
               var verifiedEmailThisInstance = true;
               regularComponentWillMountBehaviour(this, verifiedEmailThisInstance)
 
-            }, 5000);
+            }, 3000);
           },
 
 
@@ -596,19 +597,37 @@ const StudentProfileContainer = React.createClass({
 
               /*
                 * A: Both
+                * 
+                * Neither the profile is completed not is the email verified.
                 */
+
 
                 if (isProfileCompleted == 0 && !isEmailVerified) {
 
-                  if (!window.isMobile) {
-                    _thisContext.refs.container.info(
-                      "Click here to resend the verification email. Thanks!",
-                      "Before you can move on, we need you to finish your profile & confirm the email we sent to your student email.", {
-                        closeButton:true,
-                        timeOut: 30000,
-                        extendedTimeOut: 10000
-                    });
-                  }
+                  // if (!window.isMobile) {
+                  //   _thisContext.refs.container.info(
+                  //     "Click here to resend the verification email. Thanks!",
+                  //     "Before you can move on, we need you to finish your profile & confirm the email we sent to your student email.", {
+                  //       closeButton: true,
+                  //       timeOut: 30000,
+                  //       extendedTimeOut: 10000
+                  //   });
+                  // }
+
+                  setTimeout(() => {
+
+                    var title = 'Welcome to Univjobs!'
+                    var body = `You're on your way to finding yourself some sweet gigs close to school. Before you move on, we just need you to:
+                    
+                    1. Confirm the verification email we sent to ${_thisContext.props.user.email}.
+                    2. Complete and save your student profile.
+                    
+                    That's it!`
+
+                    _thisContext.props.globalModal.open(title, body, 
+                      WrongEmailComponent(_thisContext.props.user.email, _thisContext.resendVerifyAccountEmail)
+                    );
+                  }, 500)
                   
                 }
 
@@ -617,15 +636,42 @@ const StudentProfileContainer = React.createClass({
                 */
 
                 else if (isProfileCompleted == 0) {
-                  if (!window.isMobile) {
-                    _thisContext.refs.container.info(
-                      "Thanks!",
-                      "Before you can move on, we just need you to finish your profile.", {
-                      closeButton:true,
-                      timeOut: 30000,
-                      extendedTimeOut: 10000
-                    });
-                  }
+
+                  setTimeout(() => {
+
+                    var title = 'One more thing left to do.'
+                    // var body = `Almost done. Here's what we still need to do:
+                    
+                    // 1. Confirm the verification email we sent to ${_thisContext.props.user.email}.
+                    // 2. Complete and save your student profile.
+                    
+                    // Then`;
+                    var body = function () {
+                      return (
+                        <div>
+                          Almost done. Here's what we still need to do:<br/><br/>
+                    
+                          <span style={{ textDecoration: "line-through" }}>1. Confirm the verification email we sent to {_thisContext.props.user.email}</span>.
+                    <br/>2. Complete and save your student profile.
+                    <br/><br/>
+                    
+                    Then you're ready to start applying to jobs!
+                        </div>
+                      )
+                    }
+
+                    _thisContext.props.globalModal.open(title, body());
+                  }, 500)
+
+                  // if (!window.isMobile) {
+                  //   _thisContext.refs.container.info(
+                  //     "Thanks!",
+                  //     "Before you can move on, we just need you to finish your profile.", {
+                  //     closeButton:true,
+                  //     timeOut: 30000,
+                  //     extendedTimeOut: 10000
+                  //   });
+                  // }
                 }
 
                 /*
@@ -634,17 +680,42 @@ const StudentProfileContainer = React.createClass({
 
                 else {
 
-                  if (!window.isMobile) {
-                    _thisContext.refs.container.info(
-                      "Click here to resend the verification email. Thanks!",
-                      "Before you can move on, we just need you to confirm the email we sent to your student email.", {
-                        closeButton:true,
-                        timeOut: 30000,
-                        extendedTimeOut: 10000
-                    });
-                  }
+                  // if (!window.isMobile) {
+                  //   _thisContext.refs.container.info(
+                  //     "Click here to resend the verification email. Thanks!",
+                  //     "Before you can move on, we just need you to confirm the email we sent to your student email.", {
+                  //       closeButton:true,
+                  //       timeOut: 30000,
+                  //       extendedTimeOut: 10000
+                  //   });
+                  // }
 
-                  
+                  setTimeout(() => {
+
+                    var title = 'One more thing left to do.'
+                    // var body = `Almost done. Here's what we still need to do:
+                    
+                    // 1. Confirm the verification email we sent to ${_thisContext.props.user.email}.
+                    // 2. Complete and save your student profile.
+                    
+                    // Then`;
+                    var body = function () {
+                      return (
+                        <div>
+                          Almost done. Here's what we still need to do:<br/><br/>
+                    
+                          1. Confirm the verification email we sent to {_thisContext.props.user.email}.
+                    <br/><span style={{ textDecoration: "line-through" }}>2. Complete and save your student profile.</span>
+                    <br/><br/>
+                    
+                    Then you're ready to start applying to jobs!
+                        </div>
+                      )
+                    }
+
+                    _thisContext.props.globalModal.open(title, body(), WrongEmailComponent(_thisContext.props.user.email, _thisContext.resendVerifyAccountEmail));
+                  }, 500)
+
                 }
 
                 resolve()

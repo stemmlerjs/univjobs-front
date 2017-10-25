@@ -24,7 +24,7 @@ import config from 'config'
 import { profileContainer, profileHeader, profileField, profileFieldName, profileFieldContent, input,
   textArea, dropzone, resetBtnContainer, dropzoneContent, photoIcon, saveBtnContainer, saveBtn,
   inlineDropzone, city, postalcode, citypostalcoderelative, dropPoint, error, industryMargin,
-  profilePictureDragDropAlt, profilePictureDragDrop } from '../styles/EmployerProfileStyles.css'
+  profilePictureDragDropAlt, profilePictureDragDrop, employerLogoContainer } from '../styles/EmployerProfileStyles.css'
 import { btn } from 'sharedStyles/widgets.css'
 import { title, comboBox } from 'sharedStyles/sharedComponentStyles.css'
 
@@ -180,7 +180,7 @@ function placePhoto(element, url) {
       </ProfileField>
 
     {/* LOGO */}
-      <ProfileField title="Logo">
+      <ProfileField title="Logo" contentStyles={employerLogoContainer}>
         <Dropzone id="dropPhotoDiv" style={profilePic} className={props.profileErrorsMap.logoUrl ? dropzone + ' ' + error : 
           props.logoUrl == "" ? dropzone : dropzone + " " + profilePictureDragDropAlt} onDrop={onDrop} accept='image/*' multiple={false}>
           <div onDragOver={props.onDragOver} onDragLeave={props.onDragLeave} className={dropzoneContent}>

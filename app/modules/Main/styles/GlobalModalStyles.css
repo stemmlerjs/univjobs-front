@@ -1,0 +1,15 @@
+
+.globalModalDialog {
+    left: 20%;
+    right: 20%;
+}
+
+.globalModalBody {
+    white-space: pre-line;
+    padding-left: 7%;
+    padding-right: 7%;
+}
+
+.gloalModalTitle {
+    text-align: center;
+}
