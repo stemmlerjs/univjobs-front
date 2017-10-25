@@ -3,8 +3,9 @@ import React, { PropTypes } from 'react'
 import { container, invitedStudentRow, invitedStudentImageContainer,
   invitedStudentDetailsContainer, invitedStudentAppliedContainer,
   invitedStudentName, invitedStudentSchool, invitationsContainer,
-  special } from '../styles/JobInvitationStyles.css'
+  special, altInvitedStudentImageContainer, altImageContainer } from '../styles/JobInvitationStyles.css'
 
+import { attrExists } from 'helpers/utils'
 
 import ReactTooltip from 'react-tooltip'
 import { Link } from 'react-router'
@@ -13,6 +14,7 @@ import { box } from '../styles/MyPostingsStyles.css'
 import config from 'config'
 
 export default function JobInvitations ({ students }) {
+  console.log("Invited students", students)
   return (
     <div className={box}>
       {
@@ -23,7 +25,11 @@ export default function JobInvitations ({ students }) {
                 students.map((student, index) => {
                   return (
                     <div className={invitedStudentRow} key={index}>
-                      <div className={invitedStudentImageContainer}><img src={config.mediaUrl + 'avatar/' + student.photo_url}/></div>
+                      {
+                        attrExists(student.photo_url)
+                          ? <div className={invitedStudentImageContainer}><img src={config.mediaUrl + 'avatar/' + student.photo_url}/></div>
+                          : <div className={altInvitedStudentImageContainer}><div className={altImageContainer}><i className={'fa fa-user'} aria-hidden="true"></i></div></div>
+                      }
                       <div className={invitedStudentDetailsContainer}>
                         <div className={invitedStudentName}>{student.user_firstName + " " + student.user_lastName}</div>
                         <div className={invitedStudentSchool}>{student.school_name}</div>

@@ -18,8 +18,9 @@
 }
 
 .formFieldContent {
-  width: 100%;
-  font-weight: 100;
+width: 100%;
+    font-weight: 100;
+    text-align: left;
 
 }
 
